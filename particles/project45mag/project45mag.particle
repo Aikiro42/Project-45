@@ -1,0 +1,20 @@
+{
+  "kind" : "project45mag",
+  "definition" : {
+    "type" : "animated",
+    "image" : "/particles/project45mag/project45mag.animation",
+    "fade" : 0.9,
+	"position" : [0, 0],
+	"size" : 1.0,
+    "initialVelocity" : [6, 0.0],
+    "finalVelocity" : [0, -60.0],
+    "approach" : [6, 60],
+    "timeToLive" : 2,
+    "layer" : "front",
+    "collidesForeground" : true,
+	"variance" : {
+	  "angularVelocity" : 240,
+      "initialVelocity" : [2, 2]
+    }
+  }
+}

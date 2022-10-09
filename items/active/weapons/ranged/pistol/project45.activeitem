@@ -1,0 +1,140 @@
+{
+  "itemName" : "project45",
+  "price" : 640,
+  "maxStack" : 1,
+  "rarity" : "Common",
+  "description" : "Shoot 'em up like a bad bitch.",
+  "shortdescription" : "Project .45",
+  "tooltipKind" : "base",
+  "category" : "Pistol",
+  "twoHanded" : false,
+  "itemTags" : ["weapon","ranged","pistol"],
+  "level" : 10,
+
+  "inventoryIcon" : "project45.png",
+
+  "animation" : "/items/active/weapons/ranged/project45gun.animation",
+  "animationParts" : {
+    "butt" : "",
+    "middle" : "project45.png",
+    "barrel" : "",
+    "muzzleFlash" : "/items/active/weapons/ranged/muzzleflash.png"
+  },
+  "animationCustom" : {
+    "sounds" : {
+      "fire" : ["/sfx/gun/project45_fire.ogg"],
+      "click" : ["/sfx/gun/project45_click.ogg"],
+      "reload" : ["/sfx/gun/project45_reload.ogg"],
+      "perfectReload" : ["/sfx/gun/project45_perfectreload.ogg"],
+      "ping" : ["/sfx/gun/project45_ping.ogg"],
+      "jammed" : ["/sfx/gun/project45_jammed.ogg"],
+      "unjam" : ["/sfx/gun/project45_unjam.ogg"],
+      "hollow" : ["/sfx/gun/project45_hollow.ogg"]
+    }
+  },
+
+  "baseOffset" : [0.6, 0.25],
+  "muzzleOffset" : [1.5, 0.125],
+  "ejectionPort": [0, 0.13],
+
+  "scripts" : ["/items/active/weapons/ranged/project45gun.lua"],
+  "animationScripts" : [
+		"/items/active/weapons/ranged/pistol/project45animation.lua"
+	],
+
+  "elementalType" : "physical",
+
+  "movementSpeedFactor": 1.32,
+  "jumpHeightFactor": 1.22,
+
+  "primaryAbility" : {
+    "scripts" : ["/items/active/weapons/ranged/project45gunfire.lua"],
+    "class" : "Project45GunFire",
+
+    "fireTime" : 0.25,
+    "baseDamage" : 11.25,
+
+    "runInaccuracy" : 0.025,
+
+    "critChance": 0.05,
+    "critMult": 4,
+    "guaranteedCrit": 45,
+    "reloadGracePeriod": 0.25,
+
+    "maxAmmo": 6,
+    "magEnergyCostRate": 0.5,
+
+    "goodReloadJamChance": 0,
+    "badReloadJamChance": 0.2,
+    "regularJamChance": 0.05,
+    "unjamPerShot": 0.34,
+
+    "minShotShakeAmount": 0.5,
+    "shotShakePerShot": 0.5,
+    "shotShakeDecayPerSecond": 0.5,
+    "maxShotShakeAmount": 2,
+
+    "reloadShakeAmount": 0.5,
+    "unjamShakeAmount": 0.5,
+
+    "perfectReloadRange": [0.5, 0.75],
+
+    "projectileCount" : 1,
+    "fireType" : "auto",
+
+    "projectileType" : "project45_hitexplosion",
+    "projectileParameters" : {
+      "knockback": 0,
+      "damageType": "IgnoresDef"
+    },
+    "stances" : {
+      "idle" : {
+        "armRotation" : 0,
+        "weaponRotation" : 0,
+        "twoHanded" : false,
+
+        "allowRotate" : true,
+        "allowFlip" : true
+      },
+      "fire" : {
+        "duration" : 0,
+        "armRotation" : 3,
+        "weaponRotation" : 3,
+        "twoHanded" : false,
+
+        "allowRotate" : false,
+        "allowFlip" : false
+      },
+      "unjam": {
+        "duration": 0.3,
+        "armRotation" : -15,
+        "weaponRotation" : -15,
+        "twoHanded" : false,
+
+        "allowRotate" : false,
+        "allowFlip" : false
+      },
+      "cooldown" : {
+        "duration" : 0.15,
+        "armRotation" : 15,
+        "weaponRotation" : 15,
+        "twoHanded" : false,
+
+        "allowRotate" : false,
+        "allowFlip" : false
+      },
+      "reload" : {
+        "duration" : 1,
+        "armRotation" : 15,
+        "weaponRotation" : 15,
+        "weaponAngularVelocity": 2880,
+        "twoHanded" : false,
+
+        "allowRotate" : false,
+        "allowFlip" : false
+      }
+    }
+  },
+
+  "builder" : "/items/buildscripts/buildunrandweapon.lua"
+}
