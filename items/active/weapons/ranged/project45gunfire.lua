@@ -17,6 +17,7 @@ function Project45GunFire:init()
   self.inaccuracy = self.runInaccuracy
   self.inputCooldownTimer = 0
   self.shotShakeAmount = self.minShotShakeAmount
+  self.critChance = self.runCritChance
   activeItem.setScriptedAnimationParameter("jammed", false)
   activeItem.setScriptedAnimationParameter("reloading", false)
 
@@ -35,6 +36,12 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
       table.remove(projectileStack, i)
     end
   end
+  
+  local laserOrig = self:firePosition()
+  local laserDest = vec2.add(laserOrig, vec2.mul(vec2.rotate(self:aimVector(0),(self.weapon.relativeArmRotation + self.weapon.relativeWeaponRotation) * mcontroller.facingDirection()), self.range))
+  laserDest = world.lineCollision(laserOrig, laserDest, {"Block", "Dynamic"}) or laserDest
+  activeItem.setScriptedAnimationParameter("laserOrig", laserOrig)
+  activeItem.setScriptedAnimationParameter("laserDest", laserDest)
   
   self.inputCooldownTimer = math.max(0, self.inputCooldownTimer - self.dt)
 
@@ -55,9 +62,13 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
   if shiftHeld then
     activeItem.setCursor("/cursors/project45reticle.cursor")
     self.inaccuracy = 0
+    self.critChance = self.walkCritChance
+    self.critMult = self.walkCritMult
   else
     activeItem.setCursor("/cursors/project45reticlerun.cursor")
     self.inaccuracy = self.runInaccuracy
+    self.critChance = self.runCritChance
+    self.critMult = self.runCritMult
   end
 
   if self.fireMode == (self.activatingFireMode or self.abilitySlot)
@@ -78,14 +89,14 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
           end
         end
       elseif self.inputCooldownTimer > 0 then
-        animator.playSound("click")
+        playSound("click")
         self.inputCooldownTimer = self.fireTime + 2*self.dt
         self.cooldownTimer = self.fireTime
       elseif not status.resourceLocked("energy") and self.inputCooldownTimer <= 0 then
         status.overConsumeResource("energy", self.magEnergyCostRate*status.resourceMax("energy"))
         self:setState(self.reload)
       else
-        animator.playSound("click")
+        playSound("click")
         self.cooldownTimer = self.fireTime
       end
     else
@@ -152,7 +163,7 @@ function Project45GunFire:reload()
   self.weapon:updateAim()
   animator.burstParticleEmitter("magazine")
   activeItem.setScriptedAnimationParameter("reloading", true)
-  animator.playSound("reload")
+  playSound("reload", 0.05)
 
   local reloadTimer = 0
   local perfectReload = false
@@ -175,7 +186,7 @@ function Project45GunFire:reload()
         break
       else
         reloadAttempt = -1
-        animator.playSound("click")
+        playSound("click")
         activeItem.setScriptedAnimationParameter("barColor", {255,0,0})
       end
     end
@@ -186,11 +197,11 @@ function Project45GunFire:reload()
   self:refillMag()
   self.weapon:setStance(self.stances.idle)
   self.weapon:updateAim()
-  animator.playSound("perfectReload")
+  playSound("perfectReload", 0.05)
   if reloadAttempt == 1 then
     self:screenShake(self.reloadShakeAmount)
     self.jamChance = self.goodReloadJamChance
-    animator.playSound("ping")
+    playSound("ping", 0.01)
     util.wait(self.stances.reload.duration/4)
   else
     if reloadAttempt == -1 then
@@ -211,18 +222,25 @@ end
 
 function Project45GunFire:unjam()
 
+  if not self.unjamMag then
+    animator.burstParticleEmitter("magazine")
+    self.unjamMag = true
+  end
+
   self.cooldownTimer = self.fireTime
   
   self.weapon:setStance(self.stances.unjam)
   self.weapon:updateAim()
-  animator.playSound("unjam")
+  playSound("unjam")
   self.jamScore = math.max(0, self.jamScore - self.unjamPerShot)
   status.overConsumeResource("energy", self.unjamPerShot*status.resourceMax("energy"))
   if self.jamScore == 0 then
+    animator.burstParticleEmitter("ejectionPort")
     self:screenShake(self.unjamShakeAmount)
-    animator.playSound("perfectReload")
+    playSound("perfectReload")
     self.jamChance = self.regularJamChance
     self:refillMag()
+    self.unjamMag = false
   end
 
   local progress = 0
@@ -240,7 +258,7 @@ function Project45GunFire:unjam()
 end
 
 function Project45GunFire:muzzleFlash()
-  animator.playSound("fire")
+  playSound("fire")
   animator.setPartTag("muzzleFlash", "variant", math.random(1, self.muzzleFlashVariants or 3))
   animator.setAnimationState("firing", "fire")
   animator.burstParticleEmitter("muzzleFlash")
@@ -252,8 +270,7 @@ end
 function Project45GunFire:fireProjectile(projectileType, projectileParams, inaccuracy, firePosition, projectileCount)
   self.ammo = self.ammo - 1
   local params = sb.jsonMerge(self.projectileParameters, projectileParams or {})
-  -- params.power = self:damagePerShot()
-  params.power = 10
+  params.power = self:damagePerShot()
   params.powerMultiplier = activeItem.ownerPowerMultiplier()
   params.speed = util.randomInRange(params.speed)
 
@@ -273,8 +290,10 @@ function Project45GunFire:fireProjectile(projectileType, projectileParams, inacc
     local projOrigin = firePosition or self:firePosition()
     local projVector = self:aimVector(inaccuracy or self.inaccuracy)
     
-    local projDestination = vec2.add(projOrigin, vec2.mul(projVector, 100))
+    local projDestination = vec2.add(projOrigin, vec2.mul(projVector, self.range))
     projDestination = world.lineCollision(projOrigin, projDestination, {"Block", "Dynamic"}) or projDestination
+    
+    world.debugLine(projOrigin, projDestination, {255,0,255})
     
     local targetIDs = world.entityLineQuery(projOrigin, projDestination, {
       withoutEntityId = entity.id(),
@@ -286,8 +305,6 @@ function Project45GunFire:fireProjectile(projectileType, projectileParams, inacc
       for _, id in ipairs(targetIDs) do
         -- damage
         if world.entityCanDamage(entity.id(), id) then
-
-          --[[
           local explosionPos = getIntersection(projOrigin, projDestination, world.entityPosition(id)[1])
           projectileId = world.spawnProjectile(
               projectileType,
@@ -298,8 +315,8 @@ function Project45GunFire:fireProjectile(projectileType, projectileParams, inacc
               false,
               params
           )
-          --]]
-          world.sendEntityMessage(id, "applyStatusEffect", "project45damage", self:damagePerShot(), entity.id())
+          
+          -- world.sendEntityMessage(id, "applyStatusEffect", "project45damage", self:damagePerShot(), entity.id())
 
         end
         coroutine.yield()
@@ -317,12 +334,10 @@ function Project45GunFire:fireProjectile(projectileType, projectileParams, inacc
       maxLifetime = life
     })
   end
-  activeItem.setScriptedAnimationParameter("bulletOrigin", nil)
-  activeItem.setScriptedAnimationParameter("bulletDestination", nil)
   animator.setSoundVolume("hollow", 1 - self.ammo/self.maxAmmo, 0)
-  animator.playSound("hollow")
+  playSound("hollow")
   if self.ammo <= 0 then
-    animator.playSound("click")
+    playSound("click")
     self.inputCooldownTimer = self.fireTime + 2*self.dt
   end
   return projectileId
@@ -339,9 +354,10 @@ function Project45GunFire:aimVector(inaccuracy)
 end
 
 function Project45GunFire:calculateCrit(critChance, critMultiplier)
-  math.randomseed(os.clock())
+  math.randomseed(os.time())
   local diceroll = math.random()
   if diceroll <= critChance or self.shotsBeforecrit == self.guaranteedCrit then
+    playSound("crit", 0.2)
     self.shotsBeforecrit = 0
     return critMultiplier
   end
@@ -350,10 +366,10 @@ function Project45GunFire:calculateCrit(critChance, critMultiplier)
 end
 
 function Project45GunFire:calculateJam(jamChance)
-  math.randomseed(os.clock())
+  math.randomseed(os.time())
   local diceroll = math.random()
   if diceroll < jamChance then
-    animator.playSound("jammed")
+    playSound("jammed")
     return 1
   end
   return 0
@@ -390,6 +406,9 @@ function getIntersection(a, b, x)
   return {x, y}
 end
 
-function playSound(soundName)
-  
+function playSound(soundName, pitchRange)
+  local pitchRange = pitchRange or 0.1
+  math.randomseed(os.time())
+  animator.setSoundPitch(soundName, 1 - (pitchRange / 2) + pitchRange*math.random(), 0)
+  animator.playSound(soundName);
 end

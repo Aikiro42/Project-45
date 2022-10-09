@@ -1,10 +1,6 @@
 {
   "name" : "project45damage",
-  "effectConfig" : {
-
-  },
-  "defaultDuration" : 45,
-
+  "defaultDuration" : 0,
   "scripts" : [
     "project45damage.lua"
   ]

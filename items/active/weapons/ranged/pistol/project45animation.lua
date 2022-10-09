@@ -5,6 +5,11 @@ function update()
   localAnimator.clearLightSources()
 
   -- main animation stuff
+
+  local laserOrig = animationConfig.animationParameter("laserOrig")
+  local laserDest = animationConfig.animationParameter("laserDest")
+  local shiftHeld = animationConfig.animationParameter("shiftHeld")
+
   local projectileStack = animationConfig.animationParameter("projectileStack")
   local gunHand = animationConfig.animationParameter("gunHand")
   local aimPosition = animationConfig.animationParameter("aimPosition")
@@ -20,6 +25,17 @@ function update()
   local jamScore = animationConfig.animationParameter("jamScore")
 
   
+  -- laser
+  if not (reloading or jammed) and shiftHeld then
+    local laserLine = worldify(laserOrig, laserDest)
+    localAnimator.addDrawable({
+      line = laserLine,
+      width = 0.25,
+      fullbright = true,
+      color = {255,0,0}
+    }, "Player-1")
+  end
+
   -- bullet trails
   for i, projectile in ipairs(projectileStack) do
     -- local bulletLine = worldify(projectile.origin, projectile.destination)
@@ -60,11 +76,12 @@ function update()
 end
 
 function worldify(alfa, beta)
+  local playerPos = animationConfig.animationParameter("playerPos")
   local a = alfa
   local b = beta
   local xmax = world.size()[1]
   local dispvec = vec2.sub(b, a)
-  if a[1] > xmax/2 then 
+  if playerPos[1] > xmax/2 then 
     a[1] = -1 * (xmax - a[1])
   end
   b = vec2.add(a, dispvec)
@@ -108,7 +125,7 @@ function renderReloadBar(time, timeMax, perfect, position, offset, barColor, len
   -- render perfect range
   a = vec2.add(base_a, {0, perfect[1]*length/timeMax})
   b = vec2.add(base_a, {0, perfect[2]*length/timeMax})
-  local perfectRange = worldify(a, b)
+  local perfectRange = {a, b}
   localAnimator.addDrawable({
     line = perfectRange,
     width = barWidth,
@@ -119,9 +136,9 @@ function renderReloadBar(time, timeMax, perfect, position, offset, barColor, len
   -- render arrow
   a = vec2.add(base_a, {-arrowLength/2, time*length/timeMax})
   b = vec2.add(base_a, {arrowLength/2, time*length/timeMax})
-  local perfectRange = worldify(a, b)
+  local arrow = {a, b}
   localAnimator.addDrawable({
-    line = perfectRange,
+    line = arrow,
     width = 0.75,
     fullbright = true,
     color = {255, 0, 0}
@@ -165,9 +182,9 @@ function renderJamBar(jamScore, position, offset, barColor, length, width, borde
   -- render jamScore
   a = base_a
   b = vec2.add(base_a, {0, jamScore*length})
-  local jamScore = worldify(a, b)
+  local jamScoreBar = {a, b}
   localAnimator.addDrawable({
-    line = jamScore,
+    line = jamScoreBar,
     width = barWidth,
     fullbright = true,
     color = {255, 0, 0}

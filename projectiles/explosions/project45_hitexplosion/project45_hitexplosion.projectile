@@ -1,28 +1,20 @@
 {
   "projectileName" : "project45_hitexplosion",
   "image" : "project45_hitexplosion.png",
-  "animationCycle" : 0.15,
-  "timeToLive": 0.15,
+  "animationCycle" : 0.1,
+  "timeToLive": 0.1,
   "fullbright": true,
-  "frameNumber" : 8,
+  "frameNumber" : 4,
   "speed" : 0,
   "damagePoly" : [
-    [36.50, 0.00],
-    [31.61, 18.25],
-    [18.25, 31.61],
-    [0.00, 36.50],
-    [-18.25, 31.61],
-    [-31.61, 18.25],
-    [-36.50, 0.00],
-    [-31.61, -18.25],
-    [-18.25, -31.61],
-    [-0.00, -36.50],
-    [18.25, -31.61],
-    [31.61, -18.25]
+    [0.5, 0.5],
+    [0.5, -0.5],
+    [-0.5, -0.5],
+    [-0.5, 0.5]
   ],
   "animationLoops" : false,
-  "piercing" : true,
+  "piercing" : false,
   "bounces" : -1,
   "flippable" : true,
-  "damageKind" : "slash"
+  "damageType" : "IgnoresDef"
 }

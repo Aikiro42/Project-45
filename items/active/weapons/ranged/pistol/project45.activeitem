@@ -9,7 +9,7 @@
   "category" : "Pistol",
   "twoHanded" : false,
   "itemTags" : ["weapon","ranged","pistol"],
-  "level" : 10,
+  "level" : 7,
 
   "inventoryIcon" : "project45.png",
 
@@ -29,7 +29,8 @@
       "ping" : ["/sfx/gun/project45_ping.ogg"],
       "jammed" : ["/sfx/gun/project45_jammed.ogg"],
       "unjam" : ["/sfx/gun/project45_unjam.ogg"],
-      "hollow" : ["/sfx/gun/project45_hollow.ogg"]
+      "hollow" : ["/sfx/gun/project45_hollow.ogg"],
+      "crit" : ["/sfx/gun/project45_crit.ogg"]
     }
   },
 
@@ -52,21 +53,29 @@
     "class" : "Project45GunFire",
 
     "fireTime" : 0.25,
-    "baseDamage" : 11.25,
+    "baseDamage" : 5,
+
+    "range": 100,
 
     "runInaccuracy" : 0.025,
 
-    "critChance": 0.05,
-    "critMult": 4,
+    "runCritChance": 0.05,
+    "runCritMult": 2,
+
+    "walkCritChance": 0.2,
+    "walkCritMult": 1.5,
+
     "guaranteedCrit": 45,
+    
     "reloadGracePeriod": 0.25,
 
     "maxAmmo": 6,
     "magEnergyCostRate": 0.5,
 
-    "goodReloadJamChance": 0,
-    "badReloadJamChance": 0.2,
-    "regularJamChance": 0.05,
+     "goodReloadJamChance": 0,
+     "badReloadJamChance": 0.2,
+     "regularJamChance": 0.05,
+
     "unjamPerShot": 0.34,
 
     "minShotShakeAmount": 0.5,
@@ -84,8 +93,7 @@
 
     "projectileType" : "project45_hitexplosion",
     "projectileParameters" : {
-      "knockback": 0,
-      "damageType": "IgnoresDef"
+      "knockback": 0
     },
     "stances" : {
       "idle" : {

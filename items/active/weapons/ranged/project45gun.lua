@@ -29,7 +29,9 @@ function update(dt, fireMode, shiftHeld)
   self.weapon:update(dt, fireMode, shiftHeld)
   
   activeItem.setScriptedAnimationParameter("gunHand", activeItem.hand())
+  activeItem.setScriptedAnimationParameter("shiftHeld", shiftHeld)
   activeItem.setScriptedAnimationParameter("aimPosition", activeItem.ownerAimPosition())
+  activeItem.setScriptedAnimationParameter("playerPos", mcontroller.position())
 
   if shiftHeld then
     mcontroller.controlModifiers({
