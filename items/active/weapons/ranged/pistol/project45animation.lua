@@ -8,7 +8,6 @@ function update()
 
   local laserOrig = animationConfig.animationParameter("laserOrig")
   local laserDest = animationConfig.animationParameter("laserDest")
-  local shiftHeld = animationConfig.animationParameter("shiftHeld")
 
   local projectileStack = animationConfig.animationParameter("projectileStack")
   local gunHand = animationConfig.animationParameter("gunHand")
@@ -26,8 +25,8 @@ function update()
 
   
   -- laser
-  if not (reloading or jammed) and shiftHeld then
-    local laserLine = worldify(laserOrig, laserDest)
+  if not (reloading or jammed) and laserOrig and laserDest then
+    local laserLine = {laserOrig, laserDest} -- already worldified
     localAnimator.addDrawable({
       line = laserLine,
       width = 0.25,
@@ -39,7 +38,7 @@ function update()
   -- bullet trails
   for i, projectile in ipairs(projectileStack) do
     -- local bulletLine = worldify(projectile.origin, projectile.destination)
-    local bulletLine = worldify(projectile.origin, projectile.destination)
+    local bulletLine = {projectile.origin, projectile.destination} -- already worldified
     localAnimator.addDrawable({
       line = bulletLine,
       width = projectile.lifetime/projectile.maxLifetime,
