@@ -1,8 +1,15 @@
 function init()
+  
   status.applySelfDamageRequest({
-    damageType="damage",
+    damageType="IgnoresDef",
     damage= effect.duration(),
-    sourceEntityId= effect.sourceEntity()
+    sourceEntityId= effect.sourceEntity(),
+    hitType="ShieldHit"
   })
+
+  effect.expire()
+end
+
+function update(dt)
   effect.expire()
 end

@@ -26,7 +26,7 @@ function update()
   
   -- laser
   if not (reloading or jammed) and laserOrig and laserDest then
-    local laserLine = {laserOrig, laserDest} -- already worldified
+    local laserLine = worldify(laserOrig, laserDest) -- already worldified
     localAnimator.addDrawable({
       line = laserLine,
       width = 0.25,
@@ -38,7 +38,7 @@ function update()
   -- bullet trails
   for i, projectile in ipairs(projectileStack) do
     -- local bulletLine = worldify(projectile.origin, projectile.destination)
-    local bulletLine = {projectile.origin, projectile.destination} -- already worldified
+    local bulletLine = worldify(projectile.origin, projectile.destination) -- already worldified
     localAnimator.addDrawable({
       line = bulletLine,
       width = projectile.lifetime/projectile.maxLifetime,
@@ -74,6 +74,13 @@ function update()
 
 end
 
+function worldify_v(a)
+  local xmax = world.size()[1]
+  if a[1] > xmax/2 then
+    a[1] = -1 * (xmax -a[1])
+  end
+end
+--[[
 function worldify(alfa, beta)
   local playerPos = animationConfig.animationParameter("playerPos")
   local a = alfa
@@ -85,6 +92,10 @@ function worldify(alfa, beta)
   end
   b = vec2.add(a, dispvec)
   return {a, b}
+end
+--]]
+function worldify(a, b)
+  return {worldify_v(a), worldify_v(b)}
 end
 
 function renderReloadBar(time, timeMax, perfect, position, offset, barColor, length, width, borderwidth)

@@ -1,6 +1,7 @@
 require "/scripts/util.lua"
 require "/scripts/interp.lua"
 
+
 -- Base gun fire ability
 Project45GunFire = WeaponAbility:new()
 
@@ -30,22 +31,44 @@ end
 
 function Project45GunFire:hitscan()
   local scanOrig = self:firePosition()
+
+  -- local armInaccuracy = sb.nrand(self.inaccuracy/2, 0)
+  -- local weaponInaccuracy = sb.nrand(self.inaccuracy/2, 0)
+  
+  -- self.weapon.relativeArmRotation = self.weapon.relativeArmRotation + armInaccuracy
+  -- self.weapon.relativeWeaponRotation = self.weapon.relativeArmRotation + weaponInaccuracy
+  
   local scanDest = vec2.add(scanOrig, vec2.mul(vec2.rotate(self:aimVector(self.inaccuracy),(self.weapon.relativeArmRotation + self.weapon.relativeWeaponRotation) * mcontroller.facingDirection()), self.range))
   scanDest = world.lineCollision(scanOrig, scanDest, {"Block", "Dynamic"}) or scanDest
+
+  -- hitreg
   local hitId = world.entityLineQuery(scanOrig, scanDest, {
     withoutEntityId = entity.id(),
     includedTypes = {"monster", "npc", "player"},
     order = "nearest"
   })
+  local eid = nil
   if #hitId > 0 then
-    for _, id in ipairs(hitId) do
+    for i, id in ipairs(hitId) do
       if world.entityCanDamage(entity.id(), id) then
-        scanDest = getIntersection(scanOrig, scanDest, world.entityPosition(id)[1])
+
+        local aimAngle = vec2.angle(world.distance(scanDest, scanOrig))
+        local entityAngle = vec2.angle(world.distance(world.entityPosition(id), scanOrig))
+        local rotation = aimAngle - entityAngle
+        
+        scanDest = vec2.rotate(world.distance(world.entityPosition(id), scanOrig), rotation)
+        scanDest = vec2.add(scanDest, scanOrig)
+
+        eid = id
+
         break
-      end
+      end      
     end
   end
-  return worldify(scanOrig, scanDest)
+  
+  world.debugLine(scanOrig, scanDest, {255,0,255})
+
+  return {scanOrig, scanDest, eid}
 end
 
 function Project45GunFire:update(dt, fireMode, shiftHeld)
@@ -336,18 +359,9 @@ end
 
 function Project45GunFire:fireProjectile(projectileType, projectileParams, inaccuracy, firePosition, projectileCount)
 
-  sb.logInfo("[PROJECT 45] Coordinates: " .. sb.printJson(mcontroller.position()))
-
   playSound("fire")
   self.ammo = self.ammo - 1
-  local params = sb.jsonMerge(self.projectileParameters, projectileParams or {})
-  params.power = self:damagePerShot()
-  params.powerMultiplier = activeItem.ownerPowerMultiplier()
-  params.speed = util.randomInRange(params.speed)
 
-  if not projectileType then
-    projectileType = self.projectileType
-  end
   if type(projectileType) == "table" then
     projectileType = projectileType[math.random(#projectileType)]
   end
@@ -355,25 +369,23 @@ function Project45GunFire:fireProjectile(projectileType, projectileParams, inacc
   local projectileId = 0  
   for i = 1, (projectileCount or self.projectileCount) do
     
-    if params.timeToLive then
-      params.timeToLive = util.randomInRange(params.timeToLive)
+    local hitReg = self:hitscan()
+    
+    if hitReg[3] then
+      world.sendEntityMessage(hitReg[3], "applyStatusEffect", "project45damage", self:damagePerShot() * activeItem.ownerPowerMultiplier(), entity.id())
     end
-
-    local hitReg = self:hitscan()        
-    sb.logInfo("[PROJECT 45] Hitscan: " .. sb.printJson(hitReg))
-
-    projectileId = world.spawnProjectile(
-        projectileType,
-        -- explosionPos,
-        hitReg[2],
-        activeItem.ownerEntityId(),
-        projVector,
-        false,
-        params
-      )
 
     -- vfx
     self:screenShake(self.shotShakeAmount)
+    projectileId = world.spawnProjectile(
+      "project45_hitexplosion",
+      hitReg[2],
+      activeItem.ownerEntityId(),
+      self:aimVector(),
+      false,
+      {}
+    )
+
     self.shotShakeAmount = math.min(self.maxShotShakeAmount, self.shotShakeAmount+self.shotShakePerShot)
     local life = 0.5
     table.insert(projectileStack, {
@@ -453,29 +465,9 @@ function Project45GunFire:screenShake(amount, shakeTime)
   activeItem.setCameraFocusEntity(cam)
 end
 
-function getIntersection(a, b, x)
-  local m = (b[2] - a[2])/(b[1] - a[1])
-  local b = a[2] - m*a[1]
-  local y = m*x + b
-  return {x, y}
-end
-
 function playSound(soundName, pitchRange)
   local pitchRange = pitchRange or 0.1
   math.randomseed(os.time())
   animator.setSoundPitch(soundName, 1 - (pitchRange / 2) + pitchRange*math.random(), 0)
   animator.playSound(soundName);
-end
-
-function worldify(alfa, beta)
-  local playerPos = mcontroller.position()
-  local a = alfa
-  local b = beta
-  local xmax = world.size()[1]
-  local dispvec = vec2.sub(b, a)
-  if playerPos[1] > xmax/2 then 
-    a[1] = -1 * (xmax - a[1])
-  end
-  b = vec2.add(a, dispvec)
-  return {a, b}
 end
