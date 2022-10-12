@@ -39,20 +39,21 @@
       "magazine" : {
         "transformationGroups" : ["magazine"],
         "offsetRegion" : [0, 0, 0, 0],
-        "particles" : [ 
+        "particles" : [
+          {"particle": "project45srmag"}
         ]
       }
     }
   },
 
   "baseOffset" : [2.1, 0.4],
-  "muzzleOffset" : [3, 0.125],
+  "muzzleOffset" : [3.25, 0.125],
   "ejectionPortOffset": [-1, 0.13],
-  "magazineOffset": [0, 0],
+  "magazineOffset": [2.125, -0.375],
 
   "scripts" : ["/items/active/weapons/ranged/project45gun.lua"],
   "animationScripts" : [
-		"/items/active/weapons/ranged/pistol/project45animation.lua"
+		"/items/active/weapons/ranged/project45animation.lua"
 	],
 
   "elementalType" : "physical",
@@ -64,97 +65,100 @@
     "scripts" : ["/items/active/weapons/ranged/project45gunfire.lua"],
     "class" : "Project45GunFire",
 
-    "fireTime" : 0.25,
-    "baseDamage" : 10,
-
+    "baseDamage" : 13,
     "range": 100,
+    "punchThrough": 3,
 
-    "runInaccuracy" : 0.075,
+    "maxAmmo": 5,
+    "fireType" : "boltaction",
+    "autoReload": false,
+    "projectileCount" : 1,
+    "projectileSpread": 0,
+    "burstCount": 1,
+    "burstTime": 0.125,
+    "fireTime" : 0.25,
+    "magEnergyCostRate": 0.5,
 
-    "runCritChance": 0.01,
-    "runCritMult": 1.5,
+    "runAcquisitionTime" : 10,
+    "walkAcquisitionTime" : 5,
 
-    "walkCritChance": 1,
-    "walkCritMult": 2,
-
+    "runCritChance": 0,
+    "runCritMult": 1,
+    "walkCritChance": 0.95,
+    "walkCritMult": 2.5,
     "guaranteedCrit": 99,
     
-    "reloadGracePeriod": 0.25,
+    "goodReloadJamChance": 0,
+    "badReloadJamChance": 1,
+    "regularJamChance": 0.05,
+    "misfireChance": 0.01,
+    "unjamPerShot": 0.5,
 
-    "maxAmmo": 1,
-    "autoReload": true,
-    "magEnergyCostRate": 0.25,
-
-     "goodReloadJamChance": 0,
-     "badReloadJamChance": 0.3,
-     "regularJamChance": 0.05,
-
-     "misfireChance": 0.01,
-
-    "unjamPerShot": 0.21,
-
-    "minShotShakeAmount": 3,
-    "shotShakePerShot": 0,
-    "shotShakeDecayPerSecond": 0,
-    "maxShotShakeAmount": 3.1,
+    "recoilDeg": 5,
+    "minShotShakeAmount": 0.5,
+    "shotShakePerShot": 0.5,
+    "shotShakeDecayPerSecond": 0.5,
+    "maxShotShakeAmount": 2,
 
     "reloadShakeAmount": 0.5,
-    "unjamShakeAmount": 1,
+    "unjamShakeAmount": 0.5,
 
-    "perfectReloadRange": [0.35, 0.6],
-
-    "projectileCount" : 1,
-    "fireType" : "auto",
+    "perfectReloadRange": [0.125, 0.325],
 
     "projectileType" : "project45_hitexplosion",
     "projectileParameters" : {
       "knockback": 0
     },
+
     "stances" : {
-      "idle" : {
+      "aim" : {
         "armRotation" : 0,
         "weaponRotation" : 0,
+        "twoHanded" : true,
+        "allowRotate" : true,
+        "allowFlip" : true
+      },
+
+      "unjam": {
+        "duration": 0.3,
+        "armRotation" : 5,
+        "weaponRotation" : 5,
         "twoHanded" : true,
 
         "allowRotate" : true,
         "allowFlip" : true
       },
-      "fire" : {
-        "duration" : 0,
-        "armRotation" : 1.5,
-        "weaponRotation" : 1.5,
-        "twoHanded" : true,
 
-        "allowRotate" : false,
-        "allowFlip" : false
-      },
-      "unjam": {
+      "unjamEnd": {
         "duration": 0.3,
-        "armRotation" : -7.5,
-        "weaponRotation" : -7.5,
+        "armRotation" : -15,
+        "weaponRotation" : -5,
         "twoHanded" : true,
 
-        "allowRotate" : false,
-        "allowFlip" : false
+        "allowRotate" : true,
+        "allowFlip" : true
       },
-      "cooldown" : {
-        "duration" : 0.15,
-        "armRotation" : 1.5,
-        "weaponRotation" : 1.5,
-        "twoHanded" : true,
-
-        "allowRotate" : false,
-        "allowFlip" : false
-      },
+      
       "reload" : {
-        "duration" : 0.75,
-        "armRotation" : 15,
-        "weaponRotation" : 15,
-        "twoHanded" : true,
+        "duration" : 0.5,
+        "armRotation" : 7,
+        "weaponRotation" : 7,
+        "twoHanded" : false,
 
         "allowRotate" : false,
-        "allowFlip" : false
+        "allowFlip" : true
+      },
+
+      "reloadEnd" : {
+        "duration" : 0.7,
+        "armRotation" : -3,
+        "weaponRotation" : -3,
+        "twoHanded" : true,
+
+        "allowRotate" : true,
+        "allowFlip" : true
       }
+
     }
   },
 

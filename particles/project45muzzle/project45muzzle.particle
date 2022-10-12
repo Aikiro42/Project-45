@@ -1,0 +1,19 @@
+{
+  "kind" : "project45muzzle",
+  "definition" : {
+    "type" : "ember",
+    "size" : 0.5,
+    "color" : [255, 238, 194, 255],
+    "fade" : 0.2,
+    "initialVelocity" : [7, 0],
+    "finalVelocity" : [0, 0],
+    "approach" : [-3, 0],
+    "timeToLive" : 0.2,
+    "layer" : "middle",
+    "fullbright" : true,
+    "variance" : {
+      "initialVelocity" : [2, 5],
+      "size" : 0.1
+    }
+  }
+}

@@ -47,6 +47,8 @@ function update(dt, fireMode, shiftHeld)
   activeItem.setScriptedAnimationParameter("gunHand", activeItem.hand())
   activeItem.setScriptedAnimationParameter("aimPosition", activeItem.ownerAimPosition())
   activeItem.setScriptedAnimationParameter("playerPos", mcontroller.position())
+  
+  if not status.resourceLocked("energy") then status.setResource("energyRegenBlock", 1.0) end
 
   if shiftHeld then
     mcontroller.controlModifiers({

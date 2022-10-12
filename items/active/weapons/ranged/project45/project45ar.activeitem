@@ -46,13 +46,13 @@
   },
 
   "baseOffset" : [0.6, 0.15],
-  "muzzleOffset" : [2, 0.5],
-  "ejectionPortOffset": [-1.75, 1],
-  "magazineOffset": [-1.75, 0.5],
+  "muzzleOffset" : [2.375, 0.4375],
+  "ejectionPortOffset": [0, 0.375],
+  "magazineOffset": [0.25, 0],
 
   "scripts" : ["/items/active/weapons/ranged/project45gun.lua"],
   "animationScripts" : [
-		"/items/active/weapons/ranged/pistol/project45animation.lua"
+		"/items/active/weapons/ranged/project45animation.lua"
 	],
 
   "elementalType" : "physical",
@@ -63,98 +63,101 @@
   "primaryAbility" : {
     "scripts" : ["/items/active/weapons/ranged/project45gunfire.lua"],
     "class" : "Project45GunFire",
-
-    "fireTime" : 0.1,
-    "baseDamage" : 1,
-
+    "baseDamage" : 1.5,
     "range": 100,
+    "punchThrough": 0,
 
-    "runInaccuracy" : 0.025,
+    "maxAmmo": 30,
+    "fireType" : "auto",
+    "autoReload": false,
+    "projectileCount" : 1,
+    "projectileSpread": 0,
+    "burstCount": 3,
+    "burstTime": 0.05,
+    "fireTime" : 0.1,
+    "magEnergyCostRate": 0.34,
 
-    "runCritChance": 0.05,
+    "runAcquisitionTime" : 2,
+    "walkAcquisitionTime" : 0.5,
+
+    "runCritChance": 0.2,
     "runCritMult": 2,
-
-    "walkCritChance": 0.2,
+    "walkCritChance": 0.4,
     "walkCritMult": 1.5,
-
     "guaranteedCrit": 45,
     
-    "reloadGracePeriod": 0.25,
+    "goodReloadJamChance": 0,
+    "badReloadJamChance": 0.15,
+    "regularJamChance": 0.01,
+    "misfireChance": 0,
+    "unjamPerShot": 0.25,
 
-    "maxAmmo": 20,
-    "autoReload": false,
-    "magEnergyCostRate": 1,
-
-     "goodReloadJamChance": 0,
-     "badReloadJamChance": 0.3,
-     "regularJamChance": 0.05,
-
-     "misfireChance": 0.05,
-
-    "unjamPerShot": 0.26,
-
-    "minShotShakeAmount": 0.25,
-    "shotShakePerShot": 0.3,
+    "recoilDeg": 1,
+    "minShotShakeAmount": 0.5,
+    "shotShakePerShot": 0.5,
     "shotShakeDecayPerSecond": 0.5,
-    "maxShotShakeAmount": 0.75,
+    "maxShotShakeAmount": 2,
 
     "reloadShakeAmount": 0.5,
     "unjamShakeAmount": 0.5,
 
-    "perfectReloadRange": [0.5, 0.75],
-
-    "projectileCount" : 1,
-    "fireType" : "auto",
+    "perfectReloadRange": [0.35, 0.60],
 
     "projectileType" : "project45_hitexplosion",
     "projectileParameters" : {
       "knockback": 0
     },
+
     "stances" : {
-      "idle" : {
+      
+      "aim" : {
         "armRotation" : 0,
         "weaponRotation" : 0,
+        "twoHanded" : true,
+        "allowRotate" : true,
+        "allowFlip" : true
+      },
+
+      "unjam": {
+        "duration": 0.3,
+        "armRotation" : -15,
+        "weaponRotation" : -5,
+        "twoHanded" : false,
+
+        "allowRotate" : true,
+        "allowFlip" : true
+      },
+
+      "unjamEnd": {
+        "duration": 0.3,
+        "armRotation" : -15,
+        "weaponRotation" : -5,
         "twoHanded" : true,
 
         "allowRotate" : true,
         "allowFlip" : true
       },
-      "fire" : {
-        "duration" : 0,
-        "armRotation" : 1.5,
-        "weaponRotation" : 1.5,
-        "twoHanded" : true,
-
-        "allowRotate" : false,
-        "allowFlip" : false
-      },
-      "unjam": {
-        "duration": 0.3,
-        "armRotation" : -7.5,
-        "weaponRotation" : -7.5,
-        "twoHanded" : true,
-
-        "allowRotate" : false,
-        "allowFlip" : false
-      },
-      "cooldown" : {
-        "duration" : 0.15,
-        "armRotation" : 1.5,
-        "weaponRotation" : 1.5,
-        "twoHanded" : true,
-
-        "allowRotate" : false,
-        "allowFlip" : false
-      },
+      
       "reload" : {
-        "duration" : 1,
-        "armRotation" : 15,
-        "weaponRotation" : 15,
+        "duration" : 0.75,
+        "armRotation" : -7,
+        "weaponRotation" : -7,
         "twoHanded" : false,
 
         "allowRotate" : false,
-        "allowFlip" : false
+        "allowFlip" : true
+      },
+
+      "reloadEnd" : {
+        "duration" : 0.7,
+        "armRotation" : 7,
+        "weaponRotation" : 7,
+        "twoHanded" : true,
+
+        "allowRotate" : true,
+        "allowFlip" : true
       }
+
     }
   },
 

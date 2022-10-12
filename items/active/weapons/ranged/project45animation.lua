@@ -13,7 +13,7 @@ function update()
   local gunHand = animationConfig.animationParameter("gunHand")
   local aimPosition = animationConfig.animationParameter("aimPosition")
   
-  local inputCooldownTimer = animationConfig.animationParameter("inputCooldownTimer")
+  local reloadGraceTimer = animationConfig.animationParameter("reloadGraceTimer")
   local reloading = animationConfig.animationParameter("reloading")
   local reloadTimer = animationConfig.animationParameter("reloadTimer")
   local reloadTime = animationConfig.animationParameter("reloadTime")
@@ -37,8 +37,7 @@ function update()
 
   -- bullet trails
   for i, projectile in ipairs(projectileStack) do
-    -- local bulletLine = worldify(projectile.origin, projectile.destination)
-    local bulletLine = worldify(projectile.origin, projectile.destination) -- already worldified
+    local bulletLine = worldify(projectile.origin, projectile.destination)
     localAnimator.addDrawable({
       line = bulletLine,
       width = projectile.lifetime/projectile.maxLifetime,
@@ -62,7 +61,7 @@ function update()
     local ammo = animationConfig.animationParameter("ammoLeft")
     localAnimator.spawnParticle({
       type = "text",
-      text= "^shadow;" .. ((ammo > 0 or inputCooldownTimer > 0) and ammo or (gunHand == "primary" and "L" or "R")),
+      text= "^shadow;" .. ((ammo > 0) and ammo or (gunHand == "primary" and "L" or "R")),
       color = {225,225,225},
       size = 1,
       fullbright = true,
@@ -74,28 +73,24 @@ function update()
 
 end
 
-function worldify_v(a)
-  local xmax = world.size()[1]
-  if a[1] > xmax/2 then
-    a[1] = -1 * (xmax -a[1])
-  end
-end
---[[
 function worldify(alfa, beta)
-  local playerPos = animationConfig.animationParameter("playerPos")
+  -- local playerPos = animationConfig.animationParameter("playerPos")
   local a = alfa
   local b = beta
   local xmax = world.size()[1]
-  local dispvec = vec2.sub(b, a)
-  if playerPos[1] > xmax/2 then 
+  local dispvec = world.distance(b, a)
+  if a[1] > xmax/2 then 
     a[1] = -1 * (xmax - a[1])
   end
   b = vec2.add(a, dispvec)
   return {a, b}
 end
---]]
-function worldify(a, b)
-  return {worldify_v(a), worldify_v(b)}
+
+function wrld(alpha)
+  local xmax = world.size()[1]
+  local dispvec = world.distance(playerPos, alpha)
+  local a = vec2.add(alpha, playerPos)
+  return a
 end
 
 function renderReloadBar(time, timeMax, perfect, position, offset, barColor, length, width, borderwidth)
@@ -105,8 +100,7 @@ function renderReloadBar(time, timeMax, perfect, position, offset, barColor, len
   local barColor = barColor or {255,255,255}
   local offset = offset or {-4, 0}
   local arrowLength = 0.4
-  
-  -- calculate bar stuff
+
   local base = vec2.add(position, offset)
   local base_a = vec2.add(base, {0, -length/2}) -- start (bottom)
   local base_b = vec2.add(base, {0, length/2})  -- end   (top)

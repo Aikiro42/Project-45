@@ -26,7 +26,21 @@
           "noMagUnracked": {},
           "noMagJammed": {},
           "misfire": {},
-          "jammed": {}
+          "jammed": {},
+          "boltPull": {},
+          "boltPush": {}
+        }
+      },
+      "flash" : {
+        "default": "off",
+        "states":{
+          "off" : {},
+          "flash" : {
+            "frames" : 2,
+            "cycle" : 0.07,
+            "mode" : "transition",
+            "transition" : "off"
+          }
         }
       }
     },
@@ -88,6 +102,16 @@
               "properties": {
                 "image": "<partImage>:jammed"
               }
+            },
+            "boltPull": {
+              "properties": {
+                "image": "<partImage>:fire.2"
+              }
+            },
+            "boltPush": {
+              "properties": {
+                "image": "<partImage>:fire.1"
+              }
             }
           }
         }
@@ -110,8 +134,8 @@
         },
 
         "partStates" : {
-          "firing" : {
-            "fire" : {
+          "flash" : {
+            "flash" : {
               "properties" : {
                 "image" : "<partImage>:<variant>.<frame>"
               }
@@ -139,8 +163,11 @@
     "muzzleFlash" : {
       "transformationGroups" : ["muzzle"],
       "offsetRegion" : [0, 0, 0, 0],
+      "emissionRate" : 100,
       "particles" : [ 
-
+        {"particle": "project45muzzle"},
+        {"particle": "project45muzzle"},
+        {"particle": "project45muzzle"}
       ]
     }
   },
@@ -158,6 +185,8 @@
     "click" : ["/sfx/gun/project45_click.ogg"],
     "reloadStart" : ["/sfx/gun/project45_reloadStart_ar.ogg"],
     "reloadEnd" : ["/sfx/gun/project45_reloadEnd.ogg"],
+    "boltPull" : ["/sfx/gun/project45_reloadStart_sr.ogg"],
+    "boltPush" : ["/sfx/gun/project45_reloadEnd_sr.ogg"],
     "ping" : ["/sfx/gun/project45_ping.ogg"],
     "jammed" : ["/sfx/gun/project45_jammed.ogg"],
     "unjam" : ["/sfx/gun/project45_unjam.ogg"],
