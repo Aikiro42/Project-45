@@ -1,6 +1,6 @@
 {  
   "frameGrid" : {
-    "size" : [28, 12],
+    "size" : [38, 12],
     "dimensions" : [3, 3],
     "names" : [
       ["fire.1", "fire.2", null],

@@ -1,0 +1,7 @@
+{
+  "image" : "project45shell.png",
+  "frameGrid" : {
+    "size" : [3, 3],
+    "dimensions" : [1, 1]
+  }
+}

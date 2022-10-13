@@ -260,8 +260,9 @@ function Project45GunFire:reload()
     if self.fireType == "boltaction" then
       animator.burstParticleEmitter("ejectionPort")
     end
-
-    animator.burstParticleEmitter("magazine")
+    if animator.animationState("firing") ~= "noMag" then
+      animator.burstParticleEmitter("magazine")
+    end
     activeItem.setScriptedAnimationParameter("reloading", true)
     playSound("reloadStart", 0.05)
     
@@ -301,6 +302,7 @@ function Project45GunFire:reload()
     self:refillMag()
     self.weapon:setStance(self.stances.reloadEnd)
     animator.setAnimationState("firing", "reload")
+    animator.stopAllSounds("reloadStart")
     playSound("reloadEnd", 0.05)
     self.aiming = true
     if reloadAttempt == 1 then
