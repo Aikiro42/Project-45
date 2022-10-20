@@ -64,7 +64,7 @@
   "primaryAbility" : {
     "scripts" : ["/items/active/weapons/ranged/project45gunfire.lua"],
     "class" : "Project45GunFire",
-    "baseDamage" : 0.4,
+    "baseDamage" : 0.6,
     "range": 100,
     "punchThrough": 0,
 
