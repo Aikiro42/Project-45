@@ -58,8 +58,8 @@
 
   "elementalType" : "physical",
 
-  "movementSpeedFactor": 1.32,
-  "jumpHeightFactor": 1.22,
+  "movementSpeedFactor": 1.1,
+  "jumpHeightFactor": 1,
 
   "primaryAbility" : {
     "scripts" : ["/items/active/weapons/ranged/project45gunfire.lua"],

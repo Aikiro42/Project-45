@@ -109,16 +109,15 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
   -- ability stuff
   if inputLog.new == (self.activatingFireMode or self.abilitySlot)
     and not self.weapon.currentAbility
-    and self.cooldownTimer == 0
-    and not world.lineTileCollision(mcontroller.position(), self:firePosition()) then
-
+    and self.cooldownTimer == 0 then
+    
       if self.jamScore == 0 then
         -- if gun is not jammed
         if self.ammo > 0 then
           -- if gun has ammo
           
-          if not self:calculateJam(self.misfireChance, "misfire") then
-            -- if the gun didn't misfire
+          if not self:calculateJam(self.misfireChance, "misfire") and not world.lineTileCollision(mcontroller.position(), self:firePosition()) then
+            -- if the gun didn't misfire, and it's not colliding with terrain
             -- fire the gun
             self:setState(self.firing)
           end

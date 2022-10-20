@@ -45,7 +45,7 @@
     }
   },
 
-  "baseOffset" : [0.6, 0.15],
+  "baseOffset" : [0.7, 0.15],
   "muzzleOffset" : [2.375, 0.4375],
   "ejectionPortOffset": [0, 0.375],
   "magazineOffset": [0.25, 0],
@@ -89,7 +89,7 @@
     "goodReloadJamChance": 0,
     "badReloadJamChance": 0.15,
     "regularJamChance": 0.01,
-    "misfireChance": 0,
+    "misfireChance": 0.01,
     "unjamPerShot": 0.25,
 
     "recoilDeg": 1,

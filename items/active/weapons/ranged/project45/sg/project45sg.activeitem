@@ -26,8 +26,8 @@
       "fire" : ["/sfx/gun/project45_fire_sg.ogg"],
       "reloadStart" : ["/sfx/gun/project45_reloadStart_sg.ogg"],
       "reloadEnd" : ["/sfx/gun/project45_reloadEnd_sg.ogg"],
-      "boltPull" : ["/sfx/gun/project45_reloadStart_sg.ogg"],
-      "boltPush" : ["/sfx/gun/project45_reloadEnd_sg.ogg"]
+      "boltPull" : ["/sfx/gun/project45_boltPull_sg.ogg"],
+      "boltPush" : ["/sfx/gun/project45_boltPush_sg.ogg"]
     },
 
     "particleEmitters": {
@@ -105,7 +105,7 @@
     "reloadShakeAmount": 0.5,
     "unjamShakeAmount": 0.5,
 
-    "perfectReloadRange": [0.125, 0.325],
+    "perfectReloadRange": [0.75, 1],
 
     "projectileType" : "project45_hitexplosion",
     "projectileParameters" : {
@@ -142,7 +142,7 @@
       },
       
       "reload" : {
-        "duration" : 0.5,
+        "duration" : 1.15,
         "armRotation" : 7,
         "weaponRotation" : 7,
         "twoHanded" : true,
