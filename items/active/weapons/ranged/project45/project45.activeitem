@@ -77,6 +77,7 @@
     "fireTime" : 0.175,
     "magEnergyCostRate": 0.2,
 
+    "allowLaser": true,
     "runAcquisitionTime" : 5,
     "walkAcquisitionTime" : 3,
 
@@ -103,7 +104,8 @@
 
     "perfectReloadRange": [0.125, 0.325],
 
-    "projectileType" : "project45_hitexplosion",
+    "isHitscan": true,
+    "projectileType" : "neomagnumbullet",
     "projectileParameters" : {
       "knockback": 0
     },

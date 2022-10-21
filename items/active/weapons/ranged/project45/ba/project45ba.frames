@@ -1,0 +1,16 @@
+{  
+  "frameGrid" : {
+    "size" : [28, 17],
+    "dimensions" : [3, 3],
+    "names" : [
+      ["fire.1", "fire.2", null],
+      ["nomag.1", "nomag.2", "nomag.3"],
+      ["jammed", null, null]
+    ]
+  },
+
+  "aliases" : {
+    "reload.1" : "fire.2",
+    "reload.2" : "fire.1"
+  }
+}

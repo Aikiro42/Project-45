@@ -67,7 +67,7 @@
     "scripts" : ["/items/active/weapons/ranged/project45gunfire.lua"],
     "class" : "Project45GunFire",
 
-    "baseDamage" : 5,
+    "baseDamage" : 10,
     "range": 50,
     "punchThrough": 2,
 
@@ -75,12 +75,13 @@
     "fireType" : "boltaction",
     "autoReload": false,
     "projectileCount" : 5,
-    "projectileSpread": 0.01,
+    "projectileSpread": 0.05,
     "burstCount": 1,
     "burstTime": 0.125,
     "fireTime" : 0.25,
     "magEnergyCostRate": 0.5,
 
+    "allowLaser": true,
     "runAcquisitionTime" : 10,
     "walkAcquisitionTime" : 5,
 
@@ -106,7 +107,8 @@
     "unjamShakeAmount": 0.5,
 
     "perfectReloadRange": [0.75, 1],
-
+    
+    "isHitscan": true,
     "projectileType" : "project45_hitexplosion",
     "projectileParameters" : {
       "knockback": 0

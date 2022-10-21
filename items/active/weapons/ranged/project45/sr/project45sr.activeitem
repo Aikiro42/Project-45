@@ -48,7 +48,7 @@
 
   "baseOffset" : [2.1, 0.4],
   "muzzleOffset" : [3.25, 0.125],
-  "ejectionPortOffset": [-1, 0.13],
+  "ejectionPortOffset": [0, 0.6],
   "magazineOffset": [2.125, -0.375],
 
   "scripts" : ["/items/active/weapons/ranged/project45gun.lua"],
@@ -79,6 +79,7 @@
     "fireTime" : 0.25,
     "magEnergyCostRate": 0.5,
 
+    "allowLaser": true,
     "runAcquisitionTime" : 10,
     "walkAcquisitionTime" : 5,
 
@@ -104,7 +105,8 @@
     "unjamShakeAmount": 0.5,
 
     "perfectReloadRange": [0.125, 0.325],
-
+    
+    "isHitscan": true,
     "projectileType" : "project45_hitexplosion",
     "projectileParameters" : {
       "knockback": 0

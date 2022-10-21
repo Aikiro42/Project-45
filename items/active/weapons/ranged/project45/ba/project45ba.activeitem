@@ -1,31 +1,43 @@
 {
-  "itemName" : "project45smg",
+  "itemName" : "project45ba",
   "price" : 640,
   "maxStack" : 1,
   "rarity" : "Common",
   "description" : "Shoot 'em up like a bad bitch.",
-  "shortdescription" : "Project .45 SMG",
+  "shortdescription" : "Project .45 Break Action",
   "tooltipKind" : "base",
   "category" : "Pistol",
   "twoHanded" : false,
   "itemTags" : ["weapon","ranged","pistol"],
   "level" : 7,
 
-  "inventoryIcon" : "project45smgicon.png",
+  "inventoryIcon" : "project45baicon.png",
 
   "animation" : "/items/active/weapons/ranged/project45gun.animation",
   "animationParts" : {
     "butt" : "",
-    "middle" : "project45smg.png",
+    "middle" : "project45ba.png",
     "barrel" : "",
     "muzzleFlash" : "/items/active/weapons/ranged/muzzleflash.png"
   },
   "animationCustom" : {
+
+    "animatedParts":{
+      "stateTypes":{
+        "firing":{
+          "states":{
+            "reload":{
+              "cycle": 0.1
+            }
+          }
+        }
+      }
+    },
     
     "sounds" : {
-      "fire" : ["/sfx/gun/project45_fire_smg.ogg"],
-      "reloadStart" : ["/sfx/gun/project45_reloadStart_smg.ogg"],
-      "reloadEnd" : ["/sfx/gun/project45_reloadEnd_smg.ogg"]
+      "fire" : ["/sfx/gun/project45_fire_pistol.ogg"],
+      "reloadStart" : ["/sfx/gun/project45_reloadStart_sr.ogg"],
+      "reloadEnd" : ["/sfx/gun/project45_reloadEnd_sr.ogg"]
     },
 
     "particleEmitters": {
@@ -40,15 +52,15 @@
         "transformationGroups" : ["magazine"],
         "offsetRegion" : [0, 0, 0, 0],
         "particles" : [ 
-          {"particle": "project45smgmag"}
+
         ]
       }
     }
   },
 
-  "baseOffset" : [0.3, 0.15],
-  "muzzleOffset" : [1.375, 0.4375],
-  "ejectionPortOffset": [-0.5, 0.875],
+  "baseOffset" : [1, -0.1],
+  "muzzleOffset" : [1.7, 0.7],
+  "ejectionPortOffset": [0.25, 0],
   "magazineOffset": [0.25, 0],
 
   "scripts" : ["/items/active/weapons/ranged/project45gun.lua"],
@@ -64,37 +76,37 @@
   "primaryAbility" : {
     "scripts" : ["/items/active/weapons/ranged/project45gunfire.lua"],
     "class" : "Project45GunFire",
-    "baseDamage" : 0.6,
+    "baseDamage" : 10.5,
     "range": 100,
     "punchThrough": 0,
 
-    "maxAmmo": 22,
-    "fireType" : "auto",
+    "maxAmmo": 2,
+    "fireType" : "breakaction",
     "autoReload": false,
     "projectileCount" : 1,
     "projectileSpread": 0,
     "burstCount": 1,
     "burstTime": 0.05,
-    "fireTime" : 0.075,
-    "magEnergyCostRate": 0.1,
+    "fireTime" : 0.05,
+    "magEnergyCostRate": 0.05,
 
-    "allowLaser": true,
-    "runAcquisitionTime" : 0.5,
-    "walkAcquisitionTime" : 0.1,
+    "allowLaser": false,
+    "runAcquisitionTime" : 1,
+    "walkAcquisitionTime" : 0.75,
 
     "runCritChance": 0.2,
-    "runCritMult": 1.5,
-    "walkCritChance": 0.3,
-    "walkCritMult": 2,
+    "runCritMult": 1.25,
+    "walkCritChance": 0.2,
+    "walkCritMult": 1.25,
     "guaranteedCrit": 45,
     
     "goodReloadJamChance": 0,
-    "badReloadJamChance": 0.15,
-    "regularJamChance": 0.075,
-    "misfireChance": 0.005,
-    "unjamPerShot": 0.25,
+    "badReloadJamChance": 1,
+    "regularJamChance": 0.1,
+    "misfireChance": 0.01,
+    "unjamPerShot": 0.5,
 
-    "recoilDeg": 0.4,
+    "recoilDeg": 30,
     "minShotShakeAmount": 0.1,
     "shotShakePerShot": 0.1,
     "shotShakeDecayPerSecond": 0.2,
@@ -103,7 +115,7 @@
     "reloadShakeAmount": 0.5,
     "unjamShakeAmount": 0.5,
 
-    "perfectReloadRange": [0.2, 0.5],
+    "perfectReloadRange": [0.4, 0.6],
     
     "isHitscan": true,
     "projectileType" : "standardbullet",
@@ -142,9 +154,9 @@
       },
       
       "reload" : {
-        "duration" : 0.75,
-        "armRotation" : -15,
-        "weaponRotation" : 60,
+        "duration" : 1,
+        "armRotation" : -45,
+        "weaponRotation" : 0,
         "twoHanded" : false,
 
         "allowRotate" : false,
@@ -152,9 +164,9 @@
       },
 
       "reloadEnd" : {
-        "duration" : 0.7,
-        "armRotation" : -90,
-        "weaponRotation" : 30,
+        "duration" : 0.1,
+        "armRotation" : 0,
+        "weaponRotation" : 0,
         "twoHanded" : false,
 
         "allowRotate" : true,

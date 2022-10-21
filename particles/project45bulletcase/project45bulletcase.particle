@@ -1,4 +1,6 @@
 {
+  // Particle copied from the 45 cal bullet case particle from The Starforge Mod.
+  // All the other particles in this mod are based on this very particle.
   "kind" : "project45bulletcase",
   "definition" : {
     "type" : "animated",

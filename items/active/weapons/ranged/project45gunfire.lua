@@ -1,6 +1,19 @@
 require "/scripts/util.lua"
 require "/scripts/interp.lua"
 
+--[[
+
+  Hitscan concept by Patman.
+  
+  Synthetik Reload System, Hitscan Bullet Trail Render Stack,
+  Recoil & Ammo System, Firemode System, Crit System, Jam System
+  and Weapon Design by Aikiro42.
+  
+  Hitscan damage and Bullet Case Concept by Nebulox and The Starforge Team.
+
+  Weapon balance by the Starbound Discord Community.
+
+--]]
 
 -- Base gun fire ability
 Project45GunFire = WeaponAbility:new()
@@ -20,7 +33,6 @@ function Project45GunFire:init()
   self.noAmmo = true
   self.shotsBeforecrit = 0
   self.jamScore = 0
-  self.inaccuracy = self.runInaccuracy
   self.shotShakeAmount = self.minShotShakeAmount
   self.critChance = self.runCritChance
   self.muzzleFlashTime = self.muzzleFlashTime or 0.1
@@ -38,6 +50,7 @@ end
 function Project45GunFire:update(dt, fireMode, shiftHeld)
   WeaponAbility.update(self, dt, fireMode, shiftHeld)
 
+  -- previous key
   inputLog.old = inputLog.new
   inputLog.new = self.fireMode
 
@@ -61,7 +74,7 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
   end
   
   -- update laser
-  local laserLine = (shiftHeld and self.ammo > 0) and self:hitscan(true) or {}
+  local laserLine = (self.allowLaser and shiftHeld and self.ammo > 0) and self:hitscan(true) or {}
 
   -- timer-conditional actions
   if self.muzzleFlashTimer == 0 then
@@ -92,7 +105,7 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
     self.acquisitionTime = self.walkAcquisitionTime
     self.critChance = self.walkCritChance
     self.critMult = self.walkCritMult
-    if not laserPlayed and self.ammo > 0 then 
+    if self.allowLaser and not laserPlayed and self.ammo > 0 then 
       playSound("laser", 0.025)
       laserPlayed = true
     end
@@ -144,7 +157,7 @@ function Project45GunFire:firing()
 
   local isBurst = self.burstCount > 1
   
-  if ((self.fireType == "semi" or self.fireType == "boltaction") and self:isFireHeld()) then return end -- don't fire if semi and click is held
+  if (self.fireType == "semi" or self.fireType == "boltaction" or self.fireType == "breakaction") and self:isFireHeld() then return end -- don't fire if semi firetype and click is held
 
   if (self.fireType == "boltaction" and not self.breechReady) then self:setState(self.boltReload) return end
 
@@ -249,16 +262,26 @@ function Project45GunFire:reload()
     -- begin reload
     self.aiming = self.autoReload
     self.weapon:setStance(self.stances.reload)
-    
-    if animator.animationState("firing") == "empty" then
-      animator.setAnimationState("firing", "noMagUnracked")
+
+    if self.fireType ~= "breakaction" then
+
+      if animator.animationState("firing") == "empty" then
+        animator.setAnimationState("firing", "noMagUnracked")
+      else
+        animator.setAnimationState("firing", "noMag")
+      end
+
+      if self.fireType == "boltaction" then
+        animator.burstParticleEmitter("ejectionPort")
+      end
+
     else
-      animator.setAnimationState("firing", "noMag")
+        animator.setAnimationState("firing", "empty")
+        for i = 1, self.maxAmmo do
+          animator.burstParticleEmitter("ejectionPort")
+        end
     end
 
-    if self.fireType == "boltaction" then
-      animator.burstParticleEmitter("ejectionPort")
-    end
     if animator.animationState("firing") ~= "noMag" then
       animator.burstParticleEmitter("magazine")
     end
@@ -330,12 +353,20 @@ function Project45GunFire:unjam()
   if self:isFireHeld() then return end
 
   if not self.unjamMag then
+
     animator.burstParticleEmitter("magazine")
     if animator.animationState("firing") == "misfire" then
       animator.setAnimationState("firing", "noMag")
     elseif animator.animationState("firing") == "jammed" then
       animator.setAnimationState("firing", "noMagJammed")
     end
+
+    if self.fireType == "breakaction" then
+      for i = 1, self.maxAmmo do
+        animator.burstParticleEmitter("ejectionPort")
+      end
+    end
+
     self.unjamMag = true
   end
   
@@ -348,7 +379,9 @@ function Project45GunFire:unjam()
   -- finished unjamming
   if self.jamScore == 0 then
     self.weapon:setStance(self.stances.unjamEnd)
-    animator.burstParticleEmitter("ejectionPort")
+    if self.fireType ~= "breakaction" then
+      animator.burstParticleEmitter("ejectionPort")
+    end
     animator.setAnimationState("firing", "reload")
     self:screenShake(self.unjamShakeAmount)
     playSound("reloadEnd")
@@ -365,7 +398,7 @@ function Project45GunFire:unjam()
 end
 
 function Project45GunFire:isFireHeld()
-  return inputLog.old == (self.activatingFireMode or self.abilitySlot)
+  return inputLog.new == (self.activatingFireMode or self.abilitySlot) and inputLog.old == inputLog.new
 end
 
 function Project45GunFire:muzzleFlash()
@@ -378,66 +411,126 @@ function Project45GunFire:muzzleFlash()
 end
 
 function Project45GunFire:cockGun()
-  if self.ammo > 0 or self.autoReload then
-    animator.setAnimationState("firing", "fire")
+  if self.fireType ~= "breakaction" then
+
+    if self.ammo > 0 or self.autoReload then
+      animator.setAnimationState("firing", "fire")
+    else
+      animator.setAnimationState("firing", "empty")
+    end
+      
+    if not (self:calculateJam(self.jamChance, "jammed") or self.autoReload) then
+      animator.burstParticleEmitter("ejectionPort")
+    end
+  
   else
-    animator.setAnimationState("firing", "empty")
+    self:calculateJam(self.jamChance, "jammed")
   end
 
-  if not (self:calculateJam(self.jamChance, "jammed") or self.autoReload) then
-    animator.burstParticleEmitter("ejectionPort")
-  end
 
   self.breechReady = true
 
 end
 
 function Project45GunFire:fireProjectile()
-  
+
+  local params = sb.jsonMerge(self.projectileParameters, projectileParams or {})
+  local projectiles = self.projectileType
+
+  -- reset Aim LERP Progress
   reAimProgress = 0
 
+  -- deduct ammo
   self.ammo = self.ammo - 1
 
-  -- for each projectile
+  -- only do these lines of code
+  -- if it's not hitscan
+  if not self.isHitscan then
+    params.power = self:damagePerShot()
+    params.powerMultiplier = activeItem.ownerPowerMultiplier()
+    params.speed = util.randomInRange(params.speed)
+  end
+  
+
+  -- for each projectile (bullet or buckshot)
   for i = 1, self.projectileCount do
     
-    -- scan hit down range
-    -- hitreg[2] is where the bullet trail terminates,
-    -- hitreg[3] is the array of hit entityIds
-    local hitReg = self:hitscan()
+    -- if hitscan,
+    if self.isHitscan then
+
+      -- scan hit down range
+      -- hitreg[2] is where the bullet trail terminates,
+      -- hitreg[3] is the array of hit entityIds
+      local hitReg = self:hitscan()
     
-    -- if damageable entity has been detected (hitreg[3] is not nil), damage it
-    if #hitReg[3] > 0 then
-      for _, hitId in ipairs(hitReg[3]) do
-        world.sendEntityMessage(hitId, "applyStatusEffect", "project45damage", self:damagePerShot() * activeItem.ownerPowerMultiplier(), entity.id())
+      -- if damageable entity has been detected (hitreg[3] is not nil), damage it
+      if #hitReg[3] > 0 then
+        for _, hitId in ipairs(hitReg[3]) do
+          world.sendEntityMessage(hitId, "applyStatusEffect", "project45damage", self:damagePerShot() * activeItem.ownerPowerMultiplier(), entity.id())
+        end
       end
+
+      -- bullet trail info inserted to projectile stack that's being passed to the animation script
+      -- each bullet trail in the stack is rendered, and the lifetime is updated in this very script too
+      local life = 0.5
+      table.insert(projectileStack, {
+        origin = hitReg[1],
+        destination = hitReg[2],
+        lifetime = life,
+        maxLifetime = life
+      })
+
+      -- hitscan explosion vfx
+      world.spawnProjectile(
+        "project45_hitexplosion",
+        hitReg[2],
+        activeItem.ownerEntityId(),
+        self:aimVector(3.14),
+        false,
+        {}
+      )
+
+    -- else, if not hitscan and projectile based,
+    else
+
+
+      
+
+      -- get projectile types
+      local projectileType = projectiles
+
+      -- if projectiletype is a list of projectiles, get a random projectile
+      if type(projectiles) == "table" then
+        projectileType = projectiles[math.random(#projectiles)]
+      end
+
+      -- variable bullet lifetime
+      if params.timeToLive then
+        params.timeToLive = util.randomInRange(params.timeToLive)
+      end
+  
+      -- spawn accurate projectile
+      projectileId = world.spawnProjectile(
+          projectileType,
+          self:firePosition(),
+          activeItem.ownerEntityId(),
+          vec2.rotate(
+            self:aimVector(self.projectileSpread),
+            (self.weapon.relativeArmRotation + self.weapon.relativeWeaponRotation) * mcontroller.facingDirection()
+          ),
+          false,
+          params
+        )
+
     end
 
     -- vfx
 
     -- screen shake for that oomph
     self:screenShake(self.shotShakeAmount)
-    projectileId = world.spawnProjectile(
-      "project45_hitexplosion",
-      hitReg[2],
-      activeItem.ownerEntityId(),
-      self:aimVector(),
-      false,
-      {}
-    )
 
     -- increases amount of screenshake for next shot
     self.shotShakeAmount = math.min(self.maxShotShakeAmount, self.shotShakeAmount+self.shotShakePerShot)
-
-    -- bullet trail info inserted to projectile stack that's being passed to the animation script
-    -- each bullet trail in the stack is rendered, and the lifetime is updated in this very script too
-    local life = 0.5
-    table.insert(projectileStack, {
-      origin = hitReg[1],
-      destination = hitReg[2],
-      lifetime = life,
-      maxLifetime = life
-    })
 
     coroutine.yield()
   end
@@ -460,7 +553,7 @@ function Project45GunFire:firePosition()
 end
 
 function Project45GunFire:aimVector(inaccuracy)
-  local aimVector = vec2.rotate({1, 0}, self.weapon.aimAngle + sb.nrand(inaccuracy, 0))
+  local aimVector = vec2.rotate({1, 0}, self.weapon.aimAngle + sb.nrand((inaccuracy or 0), 0))
   aimVector[1] = aimVector[1] * mcontroller.facingDirection()
   return aimVector
 end
@@ -469,7 +562,6 @@ function Project45GunFire:calculateCrit(critChance, critMultiplier)
   math.randomseed(os.time())
   local diceroll = math.random()
   if diceroll <= critChance or self.shotsBeforecrit == self.guaranteedCrit then
-    sb.logInfo("[PROJECT 45] : Crit!")
     playSound("crit", 0.2)
     self.shotsBeforecrit = 0
     return critMultiplier
