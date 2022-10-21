@@ -20,6 +20,9 @@ function update()
   local perfectReloadRange = animationConfig.animationParameter("perfectReloadRange")
   local barColor = animationConfig.animationParameter("barColor")
 
+  local hitscanColor = animationConfig.animationParameter("hitscanColor")
+  local laserColor = animationConfig.animationParameter("laserColor")
+
   local jammed = animationConfig.animationParameter("jammed")
   local jamScore = animationConfig.animationParameter("jamScore")
 
@@ -31,7 +34,7 @@ function update()
       line = laserLine,
       width = 0.25,
       fullbright = true,
-      color = {255,0,0}
+      color = laserColor or {255,0,0}
     }, "Player-1")
   end
 
@@ -42,7 +45,7 @@ function update()
       line = bulletLine,
       width = projectile.lifetime/projectile.maxLifetime,
       fullbright = true,
-      color = {255,255,255}
+      color = hitscanColor or {255,255,255}
     }, "Player-1")
   end
 

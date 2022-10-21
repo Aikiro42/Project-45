@@ -102,7 +102,7 @@
     "reloadShakeAmount": 0.5,
     "unjamShakeAmount": 0.5,
 
-    "perfectReloadRange": [0.125, 0.325],
+    "perfectReloadRange": [0.25, 0.4],
 
     "isHitscan": true,
     "projectileType" : "neomagnumbullet",

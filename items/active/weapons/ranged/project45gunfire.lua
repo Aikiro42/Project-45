@@ -9,9 +9,12 @@ require "/scripts/interp.lua"
   Recoil & Ammo System, Firemode System, Crit System, Jam System
   and Weapon Design by Aikiro42.
   
-  Hitscan damage and Bullet Case Concept by Nebulox and The Starforge Team.
+  Hitscan damage, Keyhold detection code and Bullet Case Concept (and code) by Nebulox and The Starforge Team.
 
   Weapon balance by the Starbound Discord Community.
+
+  I'm aware of a similar mod called Feast of Fire and Smoke that adds ammo, recoil and reload systems.
+  These systems were conceptualized and are developed independently of that mod.
 
 --]]
 
@@ -24,7 +27,7 @@ local laserPlayed = false
 local isCoolingDown = false
 local reAimProgress = 0
 local cammy = nil
-local inputLog = {new = "none", old = "none"}
+local fireHeld = false
 
 function Project45GunFire:init()
   self.weapon:setStance(self.stances.aim)
@@ -40,19 +43,23 @@ function Project45GunFire:init()
   self.aiming = true
   self.breechReady = false
   self.punchThrough = self.punchThrough or 0
+
   activeItem.setScriptedAnimationParameter("jammed", false)
   activeItem.setScriptedAnimationParameter("reloading", false)
+  activeItem.setScriptedAnimationParameter("hitscanColor", self.hitscanColor)
+  activeItem.setScriptedAnimationParameter("laserColor", self.laserColor)
   animator.setAnimationState("firing", "noMag")
   
 end
 
-
 function Project45GunFire:update(dt, fireMode, shiftHeld)
   WeaponAbility.update(self, dt, fireMode, shiftHeld)
 
-  -- previous key
-  inputLog.old = inputLog.new
-  inputLog.new = self.fireMode
+  -- detect keyhold
+  if self.fireMode ~= (self.activatingFireMode or self.abilitySlot) then
+    fireHeld = false
+  end
+
 
   -- sb.logInfo("[PROJECT 45] " .. self.fireMode)
 
@@ -120,7 +127,7 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
 
 
   -- ability stuff
-  if inputLog.new == (self.activatingFireMode or self.abilitySlot)
+  if self.fireMode == (self.activatingFireMode or self.abilitySlot)
     and not self.weapon.currentAbility
     and self.cooldownTimer == 0 then
     
@@ -135,7 +142,7 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
             self:setState(self.firing)
           end
 
-        elseif inputLog.new ~= inputLog.old then
+        elseif not fireHeld then
           -- if the gun has no ammo and the fire key has been let go of, reload
           self:setState(self.reload)
         elseif not self.noAmmo then
@@ -157,7 +164,7 @@ function Project45GunFire:firing()
 
   local isBurst = self.burstCount > 1
   
-  if (self.fireType == "semi" or self.fireType == "boltaction" or self.fireType == "breakaction") and self:isFireHeld() then return end -- don't fire if semi firetype and click is held
+  if (self.fireType == "semi" or self.fireType == "boltaction" or self.fireType == "breakaction") and fireHeld then return end -- don't fire if semi firetype and click is held
 
   if (self.fireType == "boltaction" and not self.breechReady) then self:setState(self.boltReload) return end
 
@@ -184,6 +191,8 @@ function Project45GunFire:firing()
         util.wait(self.burstTime)
     end
   end
+
+  fireHeld = true
 
   if self.autoReload and self.ammo <= 0 and self.jamScore <= 0 then
     self:setState(self.reload)
@@ -253,11 +262,14 @@ function Project45GunFire:boltReload()
   playSound("boltPush", 0.05)
   self.breechReady = true
   self.aiming = true
+  fireHeld = true
 end
 
 
 function Project45GunFire:reload()
   if status.overConsumeResource("energy", self.magEnergyCostRate*status.resourceMax("energy")) then
+
+    fireHeld = true
 
     -- begin reload
     self.aiming = self.autoReload
@@ -288,22 +300,18 @@ function Project45GunFire:reload()
     activeItem.setScriptedAnimationParameter("reloading", true)
     playSound("reloadStart", 0.05)
     
-    -- timing minigame
-    -- |                 |            self.stances.reload.duration       |
-    -- [<fireGracePeriod>|              |<perfectReloadRange>|           ]
     local reloadTimer = 0
     local reloadAttempt = 0
-    local fireGracePeriod = self.fireTime
     activeItem.setScriptedAnimationParameter("barColor", {225,225,225})
-    activeItem.setScriptedAnimationParameter("fireGracePeriod", fireGracePeriod)
-    while reloadTimer <= self.stances.reload.duration + fireGracePeriod do
+
+    while reloadTimer <= self.stances.reload.duration do
 
       activeItem.setScriptedAnimationParameter("reloadTimer", reloadTimer)
-      activeItem.setScriptedAnimationParameter("reloadTime", self.stances.reload.duration + fireGracePeriod)
-      activeItem.setScriptedAnimationParameter("perfectReloadRange", {self.perfectReloadRange[1] + fireGracePeriod, self.perfectReloadRange[2] + fireGracePeriod})
+      activeItem.setScriptedAnimationParameter("reloadTime", self.stances.reload.duration)
+      activeItem.setScriptedAnimationParameter("perfectReloadRange", {self.perfectReloadRange[1], self.perfectReloadRange[2]})
 
-      if reloadAttempt == 0 and inputLog.new == (self.activatingFireMode or self.abilitySlot) and reloadTimer >= fireGracePeriod and inputLog.old ~= inputLog.new then
-        if reloadTimer >= self.perfectReloadRange[1] + fireGracePeriod and reloadTimer <= self.perfectReloadRange[2] + fireGracePeriod then
+      if reloadAttempt == 0 and not fireHeld and self.fireMode == (self.activatingFireMode or self.abilitySlot) then
+        if reloadTimer >= self.perfectReloadRange[1] and reloadTimer <= self.perfectReloadRange[2] then
           reloadAttempt = 1
           activeItem.setScriptedAnimationParameter("barColor", {0,255,255})
           break
@@ -336,6 +344,9 @@ function Project45GunFire:reload()
     end
     util.wait(self.stances.reloadEnd.duration)
     activeItem.setScriptedAnimationParameter("reloading", false)
+
+    fireHeld = true
+
   else
     playSound("click")
   end
@@ -350,7 +361,7 @@ end
 -- Attempts to unjam the gun.
 function Project45GunFire:unjam()
   
-  if self:isFireHeld() then return end
+  if fireHeld then return end
 
   if not self.unjamMag then
 
@@ -395,11 +406,10 @@ function Project45GunFire:unjam()
 
   self.cooldownTimer = self.unjamGrace or 0.25
 
+  fireHeld = true
+
 end
 
-function Project45GunFire:isFireHeld()
-  return inputLog.new == (self.activatingFireMode or self.abilitySlot) and inputLog.old == inputLog.new
-end
 
 function Project45GunFire:muzzleFlash()
   playSound("fire")
@@ -435,7 +445,6 @@ end
 function Project45GunFire:fireProjectile()
 
   local params = sb.jsonMerge(self.projectileParameters, projectileParams or {})
-  local projectiles = self.projectileType
 
   -- reset Aim LERP Progress
   reAimProgress = 0
@@ -493,17 +502,6 @@ function Project45GunFire:fireProjectile()
     -- else, if not hitscan and projectile based,
     else
 
-
-      
-
-      -- get projectile types
-      local projectileType = projectiles
-
-      -- if projectiletype is a list of projectiles, get a random projectile
-      if type(projectiles) == "table" then
-        projectileType = projectiles[math.random(#projectiles)]
-      end
-
       -- variable bullet lifetime
       if params.timeToLive then
         params.timeToLive = util.randomInRange(params.timeToLive)
@@ -511,7 +509,7 @@ function Project45GunFire:fireProjectile()
   
       -- spawn accurate projectile
       projectileId = world.spawnProjectile(
-          projectileType,
+          util.randomInRange(self.projectileType),
           self:firePosition(),
           activeItem.ownerEntityId(),
           vec2.rotate(
@@ -577,6 +575,7 @@ function Project45GunFire:calculateJam(jamChance, animState)
   if diceroll < jamChance then
     animator.setAnimationState("firing", animState)
     playSound("jammed")
+    fireHeld = true
     self.jamScore = 1
     return true
   end

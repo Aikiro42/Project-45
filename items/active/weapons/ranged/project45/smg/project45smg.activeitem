@@ -94,7 +94,7 @@
     "misfireChance": 0.005,
     "unjamPerShot": 0.25,
 
-    "recoilDeg": 0.4,
+    "recoilDeg": 1,
     "minShotShakeAmount": 0.1,
     "shotShakePerShot": 0.1,
     "shotShakeDecayPerSecond": 0.2,

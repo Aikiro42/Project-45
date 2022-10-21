@@ -104,7 +104,7 @@
     "reloadShakeAmount": 0.5,
     "unjamShakeAmount": 0.5,
 
-    "perfectReloadRange": [0.125, 0.325],
+    "perfectReloadRange": [0.5, 0.8],
     
     "isHitscan": true,
     "projectileType" : "project45_hitexplosion",
@@ -142,7 +142,7 @@
       },
       
       "reload" : {
-        "duration" : 0.5,
+        "duration" : 1,
         "armRotation" : 7,
         "weaponRotation" : 7,
         "twoHanded" : true,

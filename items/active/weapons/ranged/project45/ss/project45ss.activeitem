@@ -90,7 +90,7 @@
     "guaranteedCrit": 99,
     
     "goodReloadJamChance": 0,
-    "badReloadJamChance": 0.5,
+    "badReloadJamChance": 0.25,
     "regularJamChance": 0.05,
     "misfireChance": 0.01,
     "unjamPerShot": 0.25,
@@ -104,7 +104,7 @@
     "reloadShakeAmount": 0.5,
     "unjamShakeAmount": 0.5,
 
-    "perfectReloadRange": [0.125, 0.325],
+    "perfectReloadRange": [0.65, 0.8],
 
     "isHitscan": true,
     "projectileType" : "project45_hitexplosion",
@@ -142,7 +142,7 @@
       },
       
       "reload" : {
-        "duration" : 0.5,
+        "duration" : 1,
         "armRotation" : 7,
         "weaponRotation" : 7,
         "twoHanded" : true,
