@@ -1,5 +1,6 @@
 require "/scripts/util.lua"
 require "/scripts/interp.lua"
+require "/scripts/poly.lua"
 
 --[[
 
@@ -43,6 +44,8 @@ function Project45GunFire:init()
   self.aiming = true
   self.breechReady = false
   self.punchThrough = self.punchThrough or 0
+  self.chargeTimer = 0
+  self.chargeTime = self.chargeTime or 0
 
   activeItem.setScriptedAnimationParameter("jammed", false)
   activeItem.setScriptedAnimationParameter("reloading", false)
@@ -75,6 +78,12 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
   -- update projectile stack
   for i, projectile in ipairs(projectileStack) do
     projectileStack[i].lifetime = projectileStack[i].lifetime - dt
+
+    -- LERPing; the commented lines work, but they kinda don't look good.
+    -- Still leaving it here just in case I feel like reincluding it.
+    projectileStack[i].origin = vec2.lerp((1 - projectileStack[i].lifetime/projectileStack[i].maxLifetime)*0.01, projectileStack[i].origin, projectileStack[i].destination)
+    -- projectileStack[i].destination = vec2.lerp((1 - projectileStack[i].lifetime/projectileStack[i].maxLifetime)*0.05, projectileStack[i].destination, projectileStack[i].origin)
+
     if projectileStack[i].lifetime <= 0 then
       table.remove(projectileStack, i)
     end
@@ -163,6 +172,39 @@ end
 function Project45GunFire:firing()
 
   local isBurst = self.burstCount > 1
+
+  if self.fireType == "charge" then
+    fireHeld = true
+    playSound("charge")
+
+    while fireHeld and self.chargeTimer < self.chargeTime do
+
+      -- vfx: shake aim
+      reAimProgress = 0.9
+      local inaccuracy = math.rad(math.random(0, 1)) * (self.chargeTimer / self.chargeTime)
+      self.weapon.relativeWeaponRotation = self.weapon.relativeWeaponRotation + inaccuracy
+      self.weapon.relativeArmRotation = self.weapon.relativeArmRotation + inaccuracy
+    
+      -- charge while fire key is held
+      -- will exit loop if fully charged or fire key is let go
+      self.chargeTimer = self.chargeTimer + self.dt
+      coroutine.yield()
+    end
+
+    -- exit state if fully charged
+    if self.chargeTimer < self.chargeTime then
+      self.chargeTimer = 0
+      animator.stopAllSounds("charge")
+      -- replace this comment with playing charge down sound
+      return
+    end
+
+  end
+
+  -- if fireType is charge and got to this point, it's fully charged and ready to fire.
+  -- otherwise, it just fires.
+
+  self.chargeTimer = 0
   
   if (self.fireType == "semi" or self.fireType == "boltaction" or self.fireType == "breakaction") and fireHeld then return end -- don't fire if semi firetype and click is held
 
@@ -201,6 +243,18 @@ function Project45GunFire:firing()
   self.cooldownTimer = (self.fireTime - (isBurst and self.burstTime or 0)) * self.burstCount
 end
 
+function generateRect(orig, dest, width)
+  local rect = {
+    {0, orig - width/2},
+    {0, orig + width/2},
+    {dest, orig + width/2},
+    {dest, orig - width/2},
+  }
+
+  return poly.rotate(rect, vec2.angle(world.distance(dest, orig)))
+
+end
+
 -- Utility function that scans for an entity to damage.
 function Project45GunFire:hitscan(isLaser)
 
@@ -215,6 +269,7 @@ function Project45GunFire:hitscan(isLaser)
     includedTypes = {"monster", "npc", "player"},
     order = "nearest"
   })
+
   local eid = {}
   local pen = 0
   if #hitId > 0 then
@@ -481,8 +536,9 @@ function Project45GunFire:fireProjectile()
 
       -- bullet trail info inserted to projectile stack that's being passed to the animation script
       -- each bullet trail in the stack is rendered, and the lifetime is updated in this very script too
-      local life = 0.5
+      local life = self.hitscanLifetime or 0.5
       table.insert(projectileStack, {
+        width = self.hitscanWidth,
         origin = hitReg[1],
         destination = hitReg[2],
         lifetime = life,

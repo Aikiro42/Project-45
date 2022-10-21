@@ -116,6 +116,70 @@
           }
         }
       },
+      "middleFullBright" : {
+        "properties" : {
+          "zLevel" : 2,
+          "centered" : true,
+          "fullbright" : true,
+          "image" : "<partImage>:fire.1",
+          "offset" : [0, 0], // x offset is set dynamically
+          "transformationGroups" : ["weapon"]
+        },
+        "partStates": {
+          "firing": {
+            "fire": {
+              "properties": {
+                "image": "<partImage>:fire.<frame>"
+              }
+            },
+            "empty": {
+              "properties": {
+                "image": "<partImage>:fire.2"
+              }
+            },
+            "reload": {
+              "properties": {
+                "image": "<partImage>:reload.<frame>"
+              }
+            },
+            "noMag": {
+              "properties": {
+                "image": "<partImage>:nomag.1"
+              }
+            },
+            "noMagUnracked": {
+              "properties": {
+                "image": "<partImage>:nomag.2"
+              }
+            },
+            "noMagJammed": {
+              "properties": {
+                "image": "<partImage>:nomag.3"
+              }
+            },
+            "misfire": {
+              "properties": {
+                "image": "<partImage>:fire.1"
+              }
+            },
+            "jammed": {
+              "properties": {
+                "image": "<partImage>:jammed"
+              }
+            },
+            "boltPull": {
+              "properties": {
+                "image": "<partImage>:fire.2"
+              }
+            },
+            "boltPush": {
+              "properties": {
+                "image": "<partImage>:fire.1"
+              }
+            }
+          }
+        }
+      },
       "barrel" : {
         "properties" : {
           "centered" : true,
@@ -192,6 +256,7 @@
     "unjam" : ["/sfx/gun/project45_unjam.ogg"],
     "hollow" : ["/sfx/gun/project45_hollow.ogg"],
     "crit" : ["/sfx/gun/project45_crit.ogg"],
-    "laser" : ["/sfx/gun/project45_laser.ogg"]
+    "laser" : ["/sfx/gun/project45_laser.ogg"],
+    "charge" : ["/sfx/gun/project45_charge_c.ogg"]
   }
 }

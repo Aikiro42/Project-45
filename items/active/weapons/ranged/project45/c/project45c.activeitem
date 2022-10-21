@@ -1,44 +1,31 @@
 {
-  "itemName" : "project45ba",
+  "itemName" : "project45c",
   "price" : 640,
   "maxStack" : 1,
   "rarity" : "Common",
   "description" : "Shoot 'em up like a bad bitch.",
-  "shortdescription" : "Project .45 Break Action",
+  "shortdescription" : "Project .45 Charge",
   "tooltipKind" : "base",
-  "category" : "Pistol",
-  "twoHanded" : false,
-  "itemTags" : ["weapon","ranged","pistol"],
+  "category" : "Rifle",
+  "twoHanded" : true,
+  "itemTags" : ["weapon","ranged","rifle"],
   "level" : 7,
 
-  "inventoryIcon" : "project45baicon.png",
+  "inventoryIcon" : "project45cicon.png",
 
   "animation" : "/items/active/weapons/ranged/project45gun.animation",
   "animationParts" : {
     "butt" : "",
-    "middle" : "project45ba.png",
-    "middleFullBright" : "",
+    "middle" : "project45c.png",
+    "middleFullBright" : "project45c_fullbright.png",
     "barrel" : "",
     "muzzleFlash" : "/items/active/weapons/ranged/muzzleflash.png"
   },
   "animationCustom" : {
-
-    "animatedParts":{
-      "stateTypes":{
-        "firing":{
-          "states":{
-            "reload":{
-              "cycle": 0.1
-            }
-          }
-        }
-      }
-    },
     
     "sounds" : {
-      "fire" : ["/sfx/gun/project45_fire_pistol.ogg"],
-      "reloadStart" : ["/sfx/gun/project45_reloadStart_sr.ogg"],
-      "reloadEnd" : ["/sfx/gun/project45_reloadEnd_sr.ogg"]
+      "fire" : ["/sfx/gun/project45_fire_c.ogg"],
+      "reloadStart" : ["/sfx/gun/project45_reloadStart_ar.ogg"]
     },
 
     "particleEmitters": {
@@ -53,15 +40,15 @@
         "transformationGroups" : ["magazine"],
         "offsetRegion" : [0, 0, 0, 0],
         "particles" : [ 
-
+          {"particle": "project45armag"}
         ]
       }
     }
   },
 
-  "baseOffset" : [1, -0.1],
-  "muzzleOffset" : [1.7, 0.7],
-  "ejectionPortOffset": [0.25, 0],
+  "baseOffset" : [0.7, 0.15],
+  "muzzleOffset" : [2.375, 0.4375],
+  "ejectionPortOffset": [0, 0.375],
   "magazineOffset": [0.25, 0],
 
   "scripts" : ["/items/active/weapons/ranged/project45gun.lua"],
@@ -77,51 +64,56 @@
   "primaryAbility" : {
     "scripts" : ["/items/active/weapons/ranged/project45gunfire.lua"],
     "class" : "Project45GunFire",
-    "baseDamage" : 10.5,
-    "range": 100,
-    "punchThrough": 0,
+    "baseDamage" : 45,
+    "range": 150,
+    "punchThrough": 10,
 
-    "maxAmmo": 2,
-    "fireType" : "breakaction",
-    "autoReload": false,
+    "maxAmmo": 1,
+    "fireType" : "charge",
+    "autoReload": true,
     "projectileCount" : 1,
     "projectileSpread": 0,
     "burstCount": 1,
     "burstTime": 0.05,
-    "fireTime" : 0.05,
-    "magEnergyCostRate": 0.05,
+    "fireTime" : 0.25,
+    "chargeTime": 3.7,
+    "magEnergyCostRate": 1,
 
-    "allowLaser": false,
-    "runAcquisitionTime" : 1,
-    "walkAcquisitionTime" : 0.75,
+    "allowLaser": true,
+    "runAcquisitionTime" : 2,
+    "walkAcquisitionTime" : 1,
 
     "runCritChance": 0.2,
-    "runCritMult": 1.25,
-    "walkCritChance": 0.2,
-    "walkCritMult": 1.25,
+    "runCritMult": 2,
+    "walkCritChance": 0.4,
+    "walkCritMult": 1.5,
     "guaranteedCrit": 45,
     
     "goodReloadJamChance": 0,
     "badReloadJamChance": 1,
-    "regularJamChance": 0.1,
-    "misfireChance": 0.01,
+    "regularJamChance": 0.01,
+    "misfireChance": 0,
     "unjamPerShot": 0.5,
 
-    "recoilDeg": 30,
-    "minShotShakeAmount": 0.1,
-    "shotShakePerShot": 0.1,
-    "shotShakeDecayPerSecond": 0.2,
-    "maxShotShakeAmount": 0.5,
+    "recoilDeg": 6,
+    "minShotShakeAmount": 0.5,
+    "shotShakePerShot": 0.5,
+    "shotShakeDecayPerSecond": 0.5,
+    "maxShotShakeAmount": 2,
 
     "reloadShakeAmount": 0.5,
     "unjamShakeAmount": 0.5,
 
-    "perfectReloadRange": [0.4, 0.6],
-    
+    "perfectReloadRange": [0.35, 0.60],
+
     "isHitscan": true,
-    "projectileType" : "standardbullet",
+    "hitscanLifetime": 1,
+    "hitscanWidth": 3,
+    "hitscanColor": [125, 255, 255],
+    // add hitscan width for beam weapons
+    "projectileType" : "project45_hitexplosion",
     "projectileParameters" : {
-      "knockback": 5
+      "knockback": 0
     },
 
     "stances" : {
@@ -129,7 +121,7 @@
       "aim" : {
         "armRotation" : 0,
         "weaponRotation" : 0,
-        "twoHanded" : false,
+        "twoHanded" : true,
         "allowRotate" : true,
         "allowFlip" : true
       },
@@ -148,16 +140,16 @@
         "duration": 0.3,
         "armRotation" : -15,
         "weaponRotation" : -5,
-        "twoHanded" : false,
+        "twoHanded" : true,
 
         "allowRotate" : true,
         "allowFlip" : true
       },
       
       "reload" : {
-        "duration" : 1,
-        "armRotation" : -45,
-        "weaponRotation" : 0,
+        "duration" : 0.75,
+        "armRotation" : -7,
+        "weaponRotation" : -7,
         "twoHanded" : false,
 
         "allowRotate" : false,
@@ -165,10 +157,10 @@
       },
 
       "reloadEnd" : {
-        "duration" : 0.1,
-        "armRotation" : 0,
-        "weaponRotation" : 0,
-        "twoHanded" : false,
+        "duration" : 0.7,
+        "armRotation" : 7,
+        "weaponRotation" : 7,
+        "twoHanded" : true,
 
         "allowRotate" : true,
         "allowFlip" : true

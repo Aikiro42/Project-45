@@ -43,7 +43,7 @@ function update()
     local bulletLine = worldify(projectile.origin, projectile.destination)
     localAnimator.addDrawable({
       line = bulletLine,
-      width = projectile.lifetime/projectile.maxLifetime,
+      width = (projectile.width or 1) * projectile.lifetime/projectile.maxLifetime,
       fullbright = true,
       color = hitscanColor or {255,255,255}
     }, "Player-1")

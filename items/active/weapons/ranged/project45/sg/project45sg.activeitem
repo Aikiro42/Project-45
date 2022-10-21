@@ -17,6 +17,7 @@
   "animationParts" : {
     "butt" : "",
     "middle" : "project45sg.png",
+    "middleFullBright" : "",
     "barrel" : "",
     "muzzleFlash" : "/items/active/weapons/ranged/muzzleflash.png"
   },
@@ -166,5 +167,5 @@
     }
   },
 
-  "builder" : "/items/buildscripts/buildunrandweapon.lua"
+  "builder" : "/items/buildscripts/buildproject45.lua"
 }
