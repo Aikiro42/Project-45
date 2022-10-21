@@ -19,13 +19,14 @@
     "middle" : "project45c.png",
     "middleFullBright" : "project45c_fullbright.png",
     "barrel" : "",
-    "muzzleFlash" : "/items/active/weapons/ranged/muzzleflash.png"
+    "muzzleFlash" : ""
   },
   "animationCustom" : {
     
     "sounds" : {
       "fire" : ["/sfx/gun/project45_fire_c.ogg"],
-      "reloadStart" : ["/sfx/gun/project45_reloadStart_ar.ogg"]
+      "reloadStart" : ["/sfx/gun/project45_reloadStart_ar.ogg"],
+      "hollow" : ["/assetmissing.ogg"]
     },
 
     "particleEmitters": {
@@ -33,21 +34,27 @@
         "transformationGroups" : ["ejectionPort"],
         "offsetRegion" : [0, 0, 0, 0],
         "particles" : [ 
-          {"particle": "project45bulletcase"}
+
         ]
       },
       "magazine" : {
         "transformationGroups" : ["magazine"],
         "offsetRegion" : [0, 0, 0, 0],
         "particles" : [ 
-          {"particle": "project45armag"}
+          {"particle": "project45cmag"}
         ]
+      }
+    },
+
+    "lights" : {
+      "muzzleFlash" : {
+        "color" : [125, 255, 255]
       }
     }
   },
 
-  "baseOffset" : [0.7, 0.15],
-  "muzzleOffset" : [2.375, 0.4375],
+  "baseOffset" : [0.9, 0.3],
+  "muzzleOffset" : [1.375, 0.1375],
   "ejectionPortOffset": [0, 0.375],
   "magazineOffset": [0.25, 0],
 
@@ -58,8 +65,8 @@
 
   "elementalType" : "physical",
 
-  "movementSpeedFactor": 1.32,
-  "jumpHeightFactor": 1.22,
+  "movementSpeedFactor": 1,
+  "jumpHeightFactor": 1,
 
   "primaryAbility" : {
     "scripts" : ["/items/active/weapons/ranged/project45gunfire.lua"],
@@ -70,13 +77,13 @@
 
     "maxAmmo": 1,
     "fireType" : "charge",
-    "autoReload": true,
+    "autoReload": false,
     "projectileCount" : 1,
     "projectileSpread": 0,
     "burstCount": 1,
     "burstTime": 0.05,
     "fireTime" : 0.25,
-    "chargeTime": 3.7,
+    "chargeTime": 1,
     "magEnergyCostRate": 1,
 
     "allowLaser": true,

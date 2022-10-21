@@ -10,7 +10,8 @@ require "/scripts/poly.lua"
   Recoil & Ammo System, Firemode System, Crit System, Jam System
   and Weapon Design by Aikiro42.
   
-  Hitscan damage, Keyhold detection code and Bullet Case Concept (and code) by Nebulox and The Starforge Team.
+  Hitscan damage, Keyhold detection code,
+  Weapon animation code snippets and Bullet Case Concept (and code) by Nebulox and The Starforge Team.
 
   Weapon balance by the Starbound Discord Community.
 
@@ -96,10 +97,22 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
   if self.muzzleFlashTimer == 0 then
     animator.setLightActive("muzzleFlash", false)
   end
+
+  if self.chargeTimer > 0 then
+    animator.setSoundPitch("chargeWhine", 1 + 0.1 * self.chargeTimer / self.chargeTime)
+    animator.setSoundVolume("chargeDrone", self.chargeTimer / self.chargeTime)
+    animator.setSoundVolume("chargeWhine", 2 * self.chargeTimer / self.chargeTime)
+  else
+    animator.stopAllSounds("chargeWhine")
+    animator.stopAllSounds("chargeDrone")
+  end
   
   -- timers and increments
   self.muzzleFlashTimer = math.max(0, self.muzzleFlashTimer - self.dt)
   self.cooldownTimer = math.max(0, self.cooldownTimer - self.dt)
+  if not fireHeld then
+    self.chargeTimer = math.max(0, self.chargeTimer - self.dt)
+  end
 
   self.shotShakeAmount = math.max(self.minShotShakeAmount, self.shotShakeAmount - self.dt*self.shotShakeDecayPerSecond)
 
@@ -175,7 +188,8 @@ function Project45GunFire:firing()
 
   if self.fireType == "charge" then
     fireHeld = true
-    playSound("charge")
+    animator.playSound("chargeWhine")
+    animator.playSound("chargeDrone")
 
     while fireHeld and self.chargeTimer < self.chargeTime do
 
@@ -190,11 +204,8 @@ function Project45GunFire:firing()
       self.chargeTimer = self.chargeTimer + self.dt
       coroutine.yield()
     end
-
     -- exit state if fully charged
     if self.chargeTimer < self.chargeTime then
-      self.chargeTimer = 0
-      animator.stopAllSounds("charge")
       -- replace this comment with playing charge down sound
       return
     end
@@ -203,7 +214,6 @@ function Project45GunFire:firing()
 
   -- if fireType is charge and got to this point, it's fully charged and ready to fire.
   -- otherwise, it just fires.
-
   self.chargeTimer = 0
   
   if (self.fireType == "semi" or self.fireType == "boltaction" or self.fireType == "breakaction") and fireHeld then return end -- don't fire if semi firetype and click is held
@@ -328,7 +338,9 @@ function Project45GunFire:reload()
 
     -- begin reload
     self.aiming = self.autoReload
-    self.weapon:setStance(self.stances.reload)
+    if not self.autoReload then
+      self.weapon:setStance(self.stances.reload)
+    end
 
     if self.fireType ~= "breakaction" then
 
@@ -519,6 +531,10 @@ function Project45GunFire:fireProjectile()
   -- for each projectile (bullet or buckshot)
   for i = 1, self.projectileCount do
     
+    if world.lineTileCollision(mcontroller.position(), self:firePosition()) then
+      goto next_projectile
+    end
+
     -- if hitscan,
     if self.isHitscan then
 
@@ -577,6 +593,9 @@ function Project45GunFire:fireProjectile()
         )
 
     end
+
+
+    ::next_projectile::
 
     -- vfx
 

@@ -257,6 +257,8 @@
     "hollow" : ["/sfx/gun/project45_hollow.ogg"],
     "crit" : ["/sfx/gun/project45_crit.ogg"],
     "laser" : ["/sfx/gun/project45_laser.ogg"],
-    "charge" : ["/sfx/gun/project45_charge_c.ogg"]
+    "charge" : ["/sfx/gun/project45_charge_c.ogg"],
+    "chargeWhine" : ["/sfx/gun/project45_chargewhine.ogg"],
+    "chargeDrone" : ["/sfx/gun/project45_chargedrone.ogg"]
   }
 }
