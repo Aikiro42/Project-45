@@ -97,6 +97,7 @@
     "unjamPerShot": 0.5,
 
     "recoilDeg": 5,
+    "recoilM": 50,
     "minShotShakeAmount": 0.5,
     "shotShakePerShot": 0.5,
     "shotShakeDecayPerSecond": 0.5,

@@ -159,7 +159,7 @@
         "armRotation" : -45,
         "weaponRotation" : 0,
         "twoHanded" : false,
-
+        "aimAngle": 0,
         "allowRotate" : false,
         "allowFlip" : true
       },

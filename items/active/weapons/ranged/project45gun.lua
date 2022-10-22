@@ -26,7 +26,8 @@ function init()
 
   self.movementSpeedFactor = config.getParameter("movementSpeedFactor", 1.15)
   self.jumpHeightFactor = config.getParameter("jumpHeightFactor", 1.15)
-
+  self.heavyWeapon = config.getParameter("heavyWeapon", false)
+  
   --[[
   damageL = damageListener("inflictedDamage", function(notifications)
     for _,notification in pairs(notifications) do
@@ -36,7 +37,7 @@ function init()
     end
   end)
   --]]
-
+  
 
   self.weapon:init()
 end
@@ -47,18 +48,18 @@ function update(dt, fireMode, shiftHeld)
   activeItem.setScriptedAnimationParameter("gunHand", activeItem.hand())
   activeItem.setScriptedAnimationParameter("aimPosition", activeItem.ownerAimPosition())
   activeItem.setScriptedAnimationParameter("playerPos", mcontroller.position())
-  
-  if not status.resourceLocked("energy") then status.setResource("energyRegenBlock", 1.0) end
 
   if shiftHeld then
     mcontroller.controlModifiers({
       speedModifier = 1,
-      airJumpModifier = self.jumpHeightFactor
+      airJumpModifier = self.jumpHeightFactor,
+      runningSuppressed = self.heavyWeapon
     })
   else
     mcontroller.controlModifiers({
       speedModifier = self.movementSpeedFactor,
-      airJumpModifier = self.jumpHeightFactor
+      airJumpModifier = self.jumpHeightFactor,
+      runningSuppressed = self.heavyWeapon
     })
   end
 

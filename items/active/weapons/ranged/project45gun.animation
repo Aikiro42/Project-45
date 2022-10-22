@@ -255,10 +255,11 @@
     "jammed" : ["/sfx/gun/project45_jammed.ogg"],
     "unjam" : ["/sfx/gun/project45_unjam.ogg"],
     "hollow" : ["/sfx/gun/project45_hollow.ogg"],
-    "crit" : ["/sfx/gun/project45_crit.ogg"],
+    // "crit" : ["/sfx/gun/project45_crit.ogg"],
+    "crit" : ["/assetmissing.ogg"],
     "laser" : ["/sfx/gun/project45_laser.ogg"],
     "charge" : ["/sfx/gun/project45_charge_c.ogg"],
-    "chargeWhine" : ["/sfx/gun/project45_chargewhine.ogg"],
-    "chargeDrone" : ["/sfx/gun/project45_chargedrone.ogg"]
+    "chargeWhine" : ["/sfx/gun/project45_chargewhine_c.ogg"],
+    "chargeDrone" : ["/sfx/gun/project45_chargedrone_c.ogg"]
   }
 }

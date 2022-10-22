@@ -126,6 +126,9 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
   
   -- conditional actions
 
+  if not status.resourceLocked("energy") or (self.energyRegenOnNoAmmoOnly and self.ammo > 0) then status.setResource("energyRegenBlock", 1.0) end
+
+
   -- walking decreases acquisition time
   -- walking changes critical stats
   -- walking turns on lasers
@@ -146,15 +149,19 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
     animator.stopAllSounds("laser")
     laserPlayed = false
   end
+  
+  if self.fireType == "windup" and self.chargeTimer > 0 then
+    animator.setAnimationState("firing", "fire")
+  end
 
 
   -- ability stuff
   if self.fireMode == (self.activatingFireMode or self.abilitySlot)
     and not self.weapon.currentAbility
     and self.cooldownTimer == 0 then
-    
       if self.jamScore == 0 then
         -- if gun is not jammed
+
         if self.ammo > 0 then
           -- if gun has ammo
           
@@ -185,13 +192,25 @@ end
 function Project45GunFire:firing()
 
   local isBurst = self.burstCount > 1
+  local animTimer = 0
 
-  if self.fireType == "charge" then
+
+  if self.fireType == "charge" or self.fireType == "windup" then
     fireHeld = true
-    animator.playSound("chargeWhine")
-    animator.playSound("chargeDrone")
+
+    if self.chargeTimer == 0 then
+      animator.playSound("chargeWhine", -1)
+      animator.playSound("chargeDrone", -1)
+    end
 
     while fireHeld and self.chargeTimer < self.chargeTime do
+
+      animTimer = math.max(0, animTimer - self.dt)
+        
+      if self.fireType == "windup" and animTimer == 0 then
+        animator.setAnimationState("firing", "fire")
+        animTimer = self.fireTime
+      end
 
       -- vfx: shake aim
       reAimProgress = 0.9
@@ -214,7 +233,9 @@ function Project45GunFire:firing()
 
   -- if fireType is charge and got to this point, it's fully charged and ready to fire.
   -- otherwise, it just fires.
-  self.chargeTimer = 0
+  if self.fireType ~= "windup" then
+    self.chargeTimer = 0
+  end
   
   if (self.fireType == "semi" or self.fireType == "boltaction" or self.fireType == "breakaction") and fireHeld then return end -- don't fire if semi firetype and click is held
 
@@ -330,12 +351,22 @@ function Project45GunFire:boltReload()
   fireHeld = true
 end
 
-
+-- my reload code is a fucking mess with a shitton of conditional statements and i hate it
+-- future me, if you'll ever need to refactor or debug this im genuinely sorry
 function Project45GunFire:reload()
+
+  fireHeld = true
+  self.chargeTimer = 0
+
+  sb.logInfo("[PROJECT 45] Entered Reload State: " .. animator.animationState("firing"))
+
+  if (self.fireType == "windup" or self.fireType == "boltaction") and not self.autoReload and animator.animationState("firing") ~= "noMag" then
+    animator.setAnimationState("firing", "empty")
+  end
+
+  -- if energy
   if status.overConsumeResource("energy", self.magEnergyCostRate*status.resourceMax("energy")) then
-
-    fireHeld = true
-
+    
     -- begin reload
     self.aiming = self.autoReload
     if not self.autoReload then
@@ -346,11 +377,13 @@ function Project45GunFire:reload()
 
       if animator.animationState("firing") == "empty" then
         animator.setAnimationState("firing", "noMagUnracked")
-      else
+      elseif self.fireType ~= "windup" and self.fireType ~= "boltaction" then
         animator.setAnimationState("firing", "noMag")
       end
 
-      if self.fireType == "boltaction" then
+      if self.fireType == "boltaction"
+      and animator.animationState("firing") ~= "noMag"
+      and animator.animationState("firing") ~= "off" then
         animator.burstParticleEmitter("ejectionPort")
       end
 
@@ -364,8 +397,14 @@ function Project45GunFire:reload()
     if animator.animationState("firing") ~= "noMag" then
       animator.burstParticleEmitter("magazine")
     end
+
+
+    -- reload minigame start
+
     activeItem.setScriptedAnimationParameter("reloading", true)
-    playSound("reloadStart", 0.05)
+    if not (self.fireType == "boltaction" and animator.animationState("firing") == "off") then
+      playSound("reloadStart", 0.05)
+    end
     
     local reloadTimer = 0
     local reloadAttempt = 0
@@ -397,7 +436,16 @@ function Project45GunFire:reload()
     -- end of reload
 
     self:refillMag()
+
+
     self.weapon:setStance(self.stances.reloadEnd)
+    sb.logInfo("[PROJECT 45] Reload Done: " .. animator.animationState("firing"))
+    if self.fireType == "boltaction" and animator.animationState("firing") == "off" then
+      playSound("reloadStart", 0.05)
+      animator.setAnimationState("firing", "noMagUnracked")
+      animator.burstParticleEmitter("ejectionPort")
+      util.wait(self.stances.reloadEnd.duration/2)
+    end
     animator.setAnimationState("firing", "reload")
     animator.stopAllSounds("reloadStart")
     playSound("reloadEnd", 0.05)
@@ -416,6 +464,7 @@ function Project45GunFire:reload()
 
   else
     playSound("click")
+    fireHeld = true
   end
 end
 
@@ -479,7 +528,7 @@ end
 
 
 function Project45GunFire:muzzleFlash()
-  playSound("fire")
+  playSound("fire", 0.05)
   animator.setPartTag("muzzleFlash", "variant", math.random(1, self.muzzleFlashVariants or 3))
   animator.burstParticleEmitter("muzzleFlash")
   animator.setLightActive("muzzleFlash", true)
@@ -517,7 +566,7 @@ function Project45GunFire:fireProjectile()
   reAimProgress = 0
 
   -- deduct ammo
-  self.ammo = self.ammo - 1
+  if not self.infAmmo then self.ammo = self.ammo - 1 end
 
   -- only do these lines of code
   -- if it's not hitscan
@@ -605,6 +654,10 @@ function Project45GunFire:fireProjectile()
     -- increases amount of screenshake for next shot
     self.shotShakeAmount = math.min(self.maxShotShakeAmount, self.shotShakeAmount+self.shotShakePerShot)
 
+    if self.recoilM then
+      mcontroller.addMomentum(vec2.mul(self:aimVector(), self.recoilM * -1))
+    end
+
     coroutine.yield()
   end
   
@@ -649,6 +702,9 @@ function Project45GunFire:calculateJam(jamChance, animState)
   local diceroll = math.random()
   if diceroll < jamChance then
     animator.setAnimationState("firing", animState)
+    animator.stopAllSounds("chargeDrone")
+    animator.stopAllSounds("chargeWhine")
+    self.chargeTimer = 0
     playSound("jammed")
     fireHeld = true
     self.jamScore = 1

@@ -68,7 +68,7 @@
     "scripts" : ["/items/active/weapons/ranged/project45gunfire.lua"],
     "class" : "Project45GunFire",
 
-    "baseDamage" : 10,
+    "baseDamage" : 13,
     "range": 50,
     "punchThrough": 2,
 
@@ -93,7 +93,7 @@
     "guaranteedCrit": 99,
     
     "goodReloadJamChance": 0,
-    "badReloadJamChance": 1,
+    "badReloadJamChance": 0.3,
     "regularJamChance": 0.05,
     "misfireChance": 0.01,
     "unjamPerShot": 0.5,

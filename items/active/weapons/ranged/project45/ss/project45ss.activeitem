@@ -66,7 +66,7 @@
     "scripts" : ["/items/active/weapons/ranged/project45gunfire.lua"],
     "class" : "Project45GunFire",
 
-    "baseDamage" : 13,
+    "baseDamage" : 8,
     "range": 100,
     "punchThrough": 2,
 
