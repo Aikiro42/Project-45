@@ -34,7 +34,8 @@ local fireHeld = false
 function Project45GunFire:init()
   self.weapon:setStance(self.stances.aim)
   self.cooldownTimer = self.fireTime
-  self.ammo = 0
+  storage.ammo = storage.ammo or 0
+  storage.jamChance = storage.jamChance or self.regularJamChance
   self.noAmmo = true
   self.shotsBeforecrit = 0
   self.jamScore = 0
@@ -91,7 +92,7 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
   end
   
   -- update laser
-  local laserLine = (self.allowLaser and shiftHeld and self.ammo > 0) and self:hitscan(true) or {}
+  local laserLine = (self.allowLaser and shiftHeld and storage.ammo > 0) and self:hitscan(true) or {}
 
   -- timer-conditional actions
   if self.muzzleFlashTimer == 0 then
@@ -120,13 +121,13 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
   activeItem.setScriptedAnimationParameter("laserOrig", laserLine[1])
   activeItem.setScriptedAnimationParameter("laserDest", laserLine[2])
   activeItem.setScriptedAnimationParameter("projectileStack", projectileStack)
-  activeItem.setScriptedAnimationParameter("ammoLeft", self.ammo)
+  activeItem.setScriptedAnimationParameter("ammoLeft", storage.ammo)
   activeItem.setScriptedAnimationParameter("jamScore", self.jamScore)
   activeItem.setScriptedAnimationParameter("jammed", self.jamScore > 0)
   
   -- conditional actions
 
-  if not status.resourceLocked("energy") or (self.energyRegenOnNoAmmoOnly and self.ammo > 0) then status.setResource("energyRegenBlock", 1.0) end
+  if not status.resourceLocked("energy") or (self.energyRegenOnNoAmmoOnly and storage.ammo > 0) then status.setResource("energyRegenBlock", 1.0) end
 
 
   -- walking decreases acquisition time
@@ -137,7 +138,7 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
     self.acquisitionTime = self.walkAcquisitionTime
     self.critChance = self.walkCritChance
     self.critMult = self.walkCritMult
-    if self.allowLaser and not laserPlayed and self.ammo > 0 then 
+    if self.allowLaser and not laserPlayed and storage.ammo > 0 then 
       playSound("laser", 0.025)
       laserPlayed = true
     end
@@ -162,7 +163,7 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
       if self.jamScore == 0 then
         -- if gun is not jammed
 
-        if self.ammo > 0 then
+        if storage.ammo > 0 then
           -- if gun has ammo
           
           if not self:calculateJam(self.misfireChance, "misfire") and not world.lineTileCollision(mcontroller.position(), self:firePosition()) then
@@ -248,13 +249,13 @@ function Project45GunFire:firing()
       if self.fireType ~= "boltaction" then
         self:cockGun()
       else
-        self:calculateJam(self.jamChance, "jammed")
+        self:calculateJam(storage.jamChance, "jammed")
       end
       self:applyInaccuracy()
     end
   else
     local shots = self.burstCount
-    while shots > 0 and self.jamScore <= 0 and self.ammo > 0 do
+    while shots > 0 and self.jamScore <= 0 and storage.ammo > 0 do
         if self:calculateJam(self.misfireChance, "misfire") then break end
         self:fireProjectile()
         self:muzzleFlash()
@@ -267,7 +268,7 @@ function Project45GunFire:firing()
 
   fireHeld = true
 
-  if self.autoReload and self.ammo <= 0 and self.jamScore <= 0 then
+  if self.autoReload and storage.ammo <= 0 and self.jamScore <= 0 then
     self:setState(self.reload)
   end
 
@@ -452,10 +453,10 @@ function Project45GunFire:reload()
     self.aiming = true
     if reloadAttempt == 1 then
       self:screenShake(self.reloadShakeAmount)
-      self.jamChance = self.goodReloadJamChance
+      storage.jamChance = self.goodReloadJamChance
       playSound("ping", 0.01)
     else
-      self.jamChance = reloadAttempt == -1 and self.badReloadJamChance or self.regularJamChance
+      storage.jamChance = reloadAttempt == -1 and self.badReloadJamChance or self.regularJamChance
     end
     util.wait(self.stances.reloadEnd.duration)
     activeItem.setScriptedAnimationParameter("reloading", false)
@@ -469,7 +470,7 @@ function Project45GunFire:reload()
 end
 
 function Project45GunFire:refillMag()
-  self.ammo = self.maxAmmo
+  storage.ammo = self.maxAmmo
   self.noAmmo = false
   self.breechReady = true
 end
@@ -512,7 +513,7 @@ function Project45GunFire:unjam()
     animator.setAnimationState("firing", "reload")
     self:screenShake(self.unjamShakeAmount)
     playSound("reloadEnd")
-    self.jamChance = self.regularJamChance
+    storage.jamChance = self.regularJamChance
     self:refillMag()
     self.unjamMag = false
   end
@@ -528,7 +529,8 @@ end
 
 
 function Project45GunFire:muzzleFlash()
-  playSound("fire", 0.05)
+  -- animator.stopAllSounds("fire")
+  playSound("fire", 0.01)
   animator.setPartTag("muzzleFlash", "variant", math.random(1, self.muzzleFlashVariants or 3))
   animator.burstParticleEmitter("muzzleFlash")
   animator.setLightActive("muzzleFlash", true)
@@ -538,19 +540,19 @@ end
 
 function Project45GunFire:cockGun()
   if self.fireType ~= "breakaction" then
-
-    if self.ammo > 0 or self.autoReload then
+    sb.logInfo("[PROJECT 45] " .. sb.printJson(storage.ammo))
+    if storage.ammo > 0 or self.autoReload then
       animator.setAnimationState("firing", "fire")
     else
       animator.setAnimationState("firing", "empty")
     end
       
-    if not (self:calculateJam(self.jamChance, "jammed") or self.autoReload) then
+    if not (self:calculateJam(storage.jamChance, "jammed") or self.autoReload) then
       animator.burstParticleEmitter("ejectionPort")
     end
   
   else
-    self:calculateJam(self.jamChance, "jammed")
+    self:calculateJam(storage.jamChance, "jammed")
   end
 
 
@@ -566,7 +568,7 @@ function Project45GunFire:fireProjectile()
   reAimProgress = 0
 
   -- deduct ammo
-  if not self.infAmmo then self.ammo = self.ammo - 1 end
+  if not self.infAmmo then storage.ammo = storage.ammo - 1 end
 
   -- only do these lines of code
   -- if it's not hitscan
@@ -662,11 +664,13 @@ function Project45GunFire:fireProjectile()
   end
   
   -- makes gun sound more hollow the less bullets there are
-  animator.setSoundVolume("hollow", 1 - self.ammo/self.maxAmmo, 0)
-  playSound("hollow")
+  -- 75% max hollow sound volume
+  -- pitch offset by -10%
+  animator.setSoundVolume("hollow", (1 - storage.ammo/self.maxAmmo) * 0.75, 0)
+  playSound("hollow", nil, -0.1)
 
   -- if ammo is out, click
-  if self.ammo <= 0 then
+  if storage.ammo <= 0 then
     playSound("click")
   end
 
@@ -737,9 +741,10 @@ function Project45GunFire:screenShake(amount, shakeTime)
   activeItem.setCameraFocusEntity(cam)
 end
 
-function playSound(soundName, pitchRange)
+function playSound(soundName, pitchRange, pitchOffset)
   local pitchRange = pitchRange or 0.1
+  local pitchOffset = pitchOffset or 0
   math.randomseed(os.time())
-  animator.setSoundPitch(soundName, 1 - (pitchRange / 2) + pitchRange*math.random(), 0)
+  animator.setSoundPitch(soundName, sb.nrand(pitchRange, 1) + pitchOffset)
   animator.playSound(soundName);
 end

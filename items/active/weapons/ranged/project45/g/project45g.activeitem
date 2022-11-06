@@ -67,9 +67,9 @@
     "range": 100,
     "punchThrough": 3,
 
-    "infAmmo": true,
+    "infAmmo": false,
 
-    "maxAmmo": 100,
+    "maxAmmo": 200,
     "fireType" : "windup",
     "autoReload": false,
     "projectileCount" : 1,
@@ -93,7 +93,7 @@
     "guaranteedCrit": 45,
     
     "goodReloadJamChance": 0,
-    "badReloadJamChance": 1,
+    "badReloadJamChance": 0.02,
     "regularJamChance": 0.01,
     "misfireChance": 0.005,
     "unjamPerShot": 0.5,
@@ -113,6 +113,9 @@
 
     "isHitscan": true,
     "hitscanLifetime": 0.1,
+    "hitscanWidth": 1,
+    "hitscanColor": [255, 255, 255],
+    // add hitscan width for beam weapons
     "projectileType" : "project45_hitexplosion",
     "projectileParameters" : {
       "knockback": 0
