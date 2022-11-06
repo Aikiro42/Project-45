@@ -2,6 +2,8 @@ require "/scripts/util.lua"
 require "/scripts/interp.lua"
 require "/scripts/poly.lua"
 
+-- SCHEMA: https://drive.google.com/file/d/1rOV_y6Wgv_WBZ8AGDXwRGHUBEG7w0zTF/view?usp=sharing
+
 --[[
 
   Hitscan concept by Patman.
@@ -36,7 +38,7 @@ function Project45GunFire:init()
   self.cooldownTimer = self.fireTime
   storage.ammo = storage.ammo or 0
   storage.jamChance = storage.jamChance or self.regularJamChance
-  self.noAmmo = true
+  self.noAmmo = storage.ammo == 0
   self.shotsBeforecrit = 0
   self.jamScore = 0
   self.shotShakeAmount = self.minShotShakeAmount
@@ -540,7 +542,6 @@ end
 
 function Project45GunFire:cockGun()
   if self.fireType ~= "breakaction" then
-    sb.logInfo("[PROJECT 45] " .. sb.printJson(storage.ammo))
     if storage.ammo > 0 or self.autoReload then
       animator.setAnimationState("firing", "fire")
     else
