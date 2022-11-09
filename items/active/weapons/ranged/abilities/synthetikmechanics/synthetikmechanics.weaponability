@@ -1,0 +1,143 @@
+{
+  "animationCustom" : {
+    
+  },
+
+  "animation" : "/items/active/weapons/ranged/abilities/synthetikmechanics/synthetikmechanics.animation",
+  "animationScripts" : [
+		"/items/active/weapons/ranged/abilities/synthetikmechanics/synthetikmechanicsanimation.lua"
+	],
+
+  "ability" : {
+    "name" : "Synthetik Mechanics",
+    "type" : "synthetikmechanics",
+    "scripts" : ["/items/active/weapons/ranged/abilities/synthetikmechanics/synthetikmechanics.lua"],
+    "class" : "SynthetikMechanics",
+
+    "recoilMomentum": 0, // momentum added to character opposite direction of aim vector when firing
+    "recoilDeg": [3, 1], // degrees of recoil every time the gun is shot (think spray control)
+    "aimTime": [3, 1], // time it takes to aim; first index is when you're running, second is when shift is held
+    
+    "chargeTime": 0, // amount of time the weapon will wind up before firing, in seconds
+    "autoFireAfterCharge": true, // automatically fires after fully charging
+    
+    // Depending on which is greater, cycleTime or fireTime will dictate the fire rate of the weapon.
+    "cycleTime": 0.1, // Time it takes to eject the bullet casing and feed the next cartridge.
+    "fireTime" : 0.01, // Amount of time between weapon triggers
+
+    "maxAmmo": 8, // maximum ammo of the weapon
+
+    "ammoPerShot": 1, // ammo consumed per shot
+    "burstCount": 1, // number of shots per burst
+
+    "magType": "default", // default, clip, strip; dictates how reloads happen
+    "keepCasings": false, // drops casings per shot if false; overrides magazine particles with casings on reload if true
+    "semi": false, // firing, pulling and pushing the bolt aren't continuously done on keypress if true
+    "manualFeed": false, // whether the player must manually
+  
+    "jamChances": {
+      "bad": 0.5, // chance for a weapon to jam if it missed a reload
+      "ok": 0.0, // chance for a weapon to jam if it waited a reload
+      "good": 0.01 // chance for a weapon to jam if it hit a reload
+    },
+    "unjamTime": 0.2, // time it takes to attempt to unjam the weapon
+    "unjamAmount": 0.125, // percent of unjam progress
+    
+    
+    "baseDamage": 1, // base damage per shot
+    "inaccuracy" : 0.01, // Generic RNG inaccuracy; causes spread
+    "projectileType": "hitscan", // if explicitly "hitscan", gun fires hitscan shots; otherwise, gun fires projectiles
+    "projectileCount" : 1, // number of projectiles launched per shot
+    "projectileParams": {
+
+
+      // hitscan params
+      "range": 100,  // range of the hitscan line in blocks
+      "punchthrough": 1,  // number of entities to register before stopping the scan
+      "fadeTime": 0.1, // how long the hitscan line fades away
+      "hitscanWidth": 1 // visual width of hitscan line in pixels
+    },
+
+    
+    "reloadEnergyCostRate": 0.2, // percent of energy consumed per reload
+    "reloadTime": 0.7, // time to reload, in seconds
+    "perfectReloadInterval": [0.7, 0.85], // (percentage) interval during which a perfect reload is possible
+    "cockTime": 0.6, // time it takes to cock the gun
+
+    "muzzleFlashTime": 0.05,
+
+    "stances" : {
+
+      // SUSTAINED STANCES - These stances are interpolated to
+      
+      // initial stance when re-equipping the weapon
+      "idle" : {
+        "armRotation" : -45,
+        "weaponRotation" : 0,
+        "twoHanded" : false,
+        "allowRotate" : true,
+        "allowFlip" : true
+      },
+
+      // stance while the gun is aimed
+      "aim" : {
+        "armRotation" : 0,
+        "weaponRotation" : 0,
+        "twoHanded" : true,
+        "allowRotate" : true,
+        "allowFlip" : true
+      },
+
+      // stance while the gun is jammed
+      "jammed" : {
+        "armRotation" : 0,
+        "weaponRotation" : -15,
+        "twoHanded" : true,
+        "allowRotate" : true,
+        "allowFlip" : true
+      },
+
+      // stance taken while ejecting the mag
+      // this stance is also snapped to
+      "ejectmag" : {
+        "armRotation" : -45,
+        "weaponRotation" : 0,
+        "twoHanded" : false,
+        "allowRotate" : false,
+        "allowFlip" : false
+      },
+
+      // SNAP STANCES - These stances will be snapped to briefly
+
+      // stance snaps to this when unjamming
+      "unjam" : {
+        "armRotation" : -45,
+        "weaponRotation" : 0,
+        "twoHanded" : false,
+        "allowRotate" : false,
+        "allowFlip" : false
+      },
+
+      // RELOAD STANCES
+
+      // stance taken while reloading
+      "reloading" : {
+        "armRotation" : -45,
+        "weaponRotation" : 0,
+        "twoHanded" : false,
+        "allowRotate" : false,
+        "allowFlip" : false
+      },
+
+      // stance taken upon finishing reload
+      "reloaded" : {
+        "armRotation" : -45,
+        "weaponRotation" : 0,
+        "twoHanded" : false,
+        "allowRotate" : false,
+        "allowFlip" : false
+      }
+
+    }
+  }
+}

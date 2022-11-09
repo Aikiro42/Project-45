@@ -1,0 +1,7 @@
+[
+    {
+        "op": "add",
+        "path": "/synthetikmechanics",
+        "value": "/items/active/weapons/ranged/abilities/synthetikmechanics/synthetikmechanics.weaponability"
+    }
+]

@@ -361,7 +361,7 @@ function Project45GunFire:reload()
   fireHeld = true
   self.chargeTimer = 0
 
-  sb.logInfo("[PROJECT 45] Entered Reload State: " .. animator.animationState("firing"))
+  -- sb.logInfo("[PROJECT 45] Entered Reload State: " .. animator.animationState("firing"))
 
   if (self.fireType == "windup" or self.fireType == "boltaction") and not self.autoReload and animator.animationState("firing") ~= "noMag" then
     animator.setAnimationState("firing", "empty")
