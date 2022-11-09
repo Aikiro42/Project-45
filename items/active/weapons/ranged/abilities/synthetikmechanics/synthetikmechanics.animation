@@ -253,21 +253,58 @@
   },
 
   "sounds" : {
+
+    // CHARGE AUDIO
+
+    // whine increases pitch and volume the closer the gun is to full charge
+    "chargeWhine" : ["/sfx/gun/project45_chargewhine_c.ogg"],
+    // drone increases volume the closer the gun is to full charge
+    "chargeDrone" : ["/sfx/gun/project45_chargedrone_g.ogg"],
+
+    // FIRING AUDIO
+
+    // gunshot sound
     "fire" : ["/sfx/gun/project45_fire_ar.ogg"],
+    // plays louder as the magazine grows empty
+    "hollow" : ["/sfx/gun/project45_hollow.ogg"],
+
+    // click sound for various purposes
     "click" : ["/sfx/gun/project45_click.ogg"],
+
+
+    // RELOAD AUDIO
+
+    // sound of mag sliding out
+    "ejectMag": ["/sfx/gun/project45_reloadStart_ar.ogg"],
+    // sound of mag sliding in
+    "insertMag": ["/sfx/gun/project45_reloadStart_ar.ogg"],
+
+    // sound of clip pinging out
+    "ping" : ["/sfx/gun/project45_ping.ogg"],
+    // sound of loading a single round into the gun (shotguns, single action)
+    // inaudible between firing cycles when not a manual feed weapon
+    "loadRound": ["/sfx/gun/project45_click.ogg"],
+    // sound of pulling back the slide/bolt, basically opening the gun in some way
+    "boltPull" : ["/sfx/gun/project45_reloadStart_sr.ogg"],
+    // sound of pulling back the slide/bolt, basically closing the gun in some way
+    "boltPush" : ["/sfx/gun/project45_reloadEnd_sr.ogg"],
+
+    // sound indicator for good reload
+    "goodReload" : ["/sfx/gun/project45_ping.ogg"],
+    // sound indicator for bad reload
+    "badReload" : ["/sfx/gun/project45_click.ogg"],
+
+    // sound indicator for when the gun jams
+    "jammed" : ["/sfx/gun/project45_jammed.ogg"],
+    // played when making an unjam attempt
+    "unjam" : ["/sfx/gun/project45_unjam.ogg"],
+
+
     "reloadStart" : ["/sfx/gun/project45_reloadStart_ar.ogg"],
     "reloadEnd" : ["/sfx/gun/project45_reloadEnd.ogg"],
-    "boltPull" : ["/sfx/gun/project45_reloadStart_sr.ogg"],
-    "boltPush" : ["/sfx/gun/project45_reloadEnd_sr.ogg"],
-    "ping" : ["/sfx/gun/project45_ping.ogg"],
-    "jammed" : ["/sfx/gun/project45_jammed.ogg"],
-    "unjam" : ["/sfx/gun/project45_unjam.ogg"],
-    "hollow" : ["/sfx/gun/project45_hollow.ogg"],
     // "crit" : ["/sfx/gun/project45_crit.ogg"],
     "crit" : ["/assetmissing.ogg"],
     "laser" : ["/sfx/gun/project45_laser.ogg"],
-    "charge" : ["/sfx/gun/project45_charge_c.ogg"],
-    "chargeWhine" : ["/sfx/gun/project45_chargewhine_c.ogg"],
-    "chargeDrone" : ["/sfx/gun/project45_chargedrone_g.ogg"]
+    "charge" : ["/sfx/gun/project45_charge_c.ogg"]
   }
 }

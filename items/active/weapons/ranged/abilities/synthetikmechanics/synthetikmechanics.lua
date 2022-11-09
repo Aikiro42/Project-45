@@ -42,6 +42,7 @@ function SynthetikMechanics:init()
     -- animation parameters
     activeItem.setScriptedAnimationParameter("reloadTime", self.reloadTime)
     activeItem.setScriptedAnimationParameter("perfectReloadRange", {self.reloadTime * self.perfectReloadInterval[1], self.reloadTime * self.perfectReloadInterval[2]})
+    activeItem.setScriptedAnimationParameter("ammoMax", self.maxAmmo)
 
     -- initialize visuals
 
@@ -63,6 +64,7 @@ function SynthetikMechanics:init()
     animator.setLightActive("muzzleFlash", false)
     animator.setAnimationState("flash", "off")
     self.weapon:setStance(self.stances.idle)
+
 end
 
 function SynthetikMechanics:update(dt, fireMode, shiftHeld)
@@ -97,9 +99,13 @@ function SynthetikMechanics:update(dt, fireMode, shiftHeld)
       self.chargeTimer = math.max(0, self.chargeTimer - self.dt)
     end
 
+    -- turn off muzzleflash automatically
     if self.muzzleFlashTimer <= 0 then
       animator.setLightActive("muzzleFlash", false)
     end
+
+    -- Prevent energy regen if there is energy or if currently reloading
+    if storage.ammo > 0 or self.reloadTimer > 0 then status.setResource("energyRegenBlock", 1.0) end
 
     -- I/O logic
     if self:triggering()
@@ -223,7 +229,7 @@ function SynthetikMechanics:firing()
   self.burstCounter = self.burstCounter + 1
 
   -- decrement ammo
-  storage.ammo = storage.ammo - self.ammoPerShot
+  storage.ammo = storage.ammo - math.min(self.ammoPerShot, storage.ammo)
   
   -- if manual feed e.g. bolt-action, exit state; otherwise, transist to next state
   if not self.manualFeed then
@@ -255,18 +261,23 @@ function SynthetikMechanics:ejectingCase()
   if (self.manualFeed and self:canTrigger()) or not self.manualFeed then
     self.triggered = true
       
+    if self.manualFeed then
+      self:snapStance(self.stances.manualFeed)
+      animator.playSound("boltPull")
+    end
+    
     -- eject projectile
-    -- TODO: spawn bullet case particle
-    if self.manualFeed then animator.playSound("boltPull") end
     animator.burstParticleEmitter("ejectionPort")
     self:setAnimationState("gun", "ejecting")
     self.chamberReady = false
 
     -- if no ammo left in clip magazine, eject clip magazine (like with the m1 garand)
-    if self.magType == "clip" and storage.ammo == 0 then
-      animator.playSound("ping")
+    if (self.magType == "clip" or self.manualFeed) and storage.ammo == 0 then
+      if self.manualFeed then util.wait(self.cockTime/2) end -- wait for a bit if it's a bolt-action
+      if self.magType == "clip" then animator.playSound("ping") end
       self:ejectMag()
     end
+
     util.wait((self.manualFeed and self.cockTime or self.cycleTime)/2)
 
 
@@ -283,14 +294,21 @@ end
 function SynthetikMechanics:feeding()
   
   -- vfx, delays and updates chamber status
-  if self.manualFeed then animator.playSound("boltPush") end
+  -- if self.manualFeed then animator.playSound("loadRound") end
   self:setAnimationState("gun", "feeding")
   util.wait((self.manualFeed and self.cockTime or self.cycleTime)/2)
+
+  if self.manualFeed then animator.playSound("boltPush") end
   self:setAnimationState("gun", "idle")
   self.chamberReady = true
 
   if self.burstCounter < self.burstCount then
     self:setState(self.firing)
+  end
+
+  if self.manualFeed and not self.slamFire then
+    self.triggered = true
+    self.cooldownTimer = self.fireTime
   end
 
 end
@@ -299,47 +317,112 @@ end
 function SynthetikMechanics:reloading()
   self.triggered = true
 
-  if status.overConsumeResource("energy", self.reloadEnergyCostRate*status.resourceMax("energy")) then
+  -- if status.overConsumeResource("energy", self.reloadEnergyCostRate*status.resourceMax("energy")) then
+  if not status.resourceLocked("energy") then
     
     self.chargeTimer = 0
     self.isCharging = false
     
     self:setAnimationState("mag", "present") -- insert mag
-    animator.playSound("click")
+    animator.playSound("insertMag")
+
     
     -- RELOAD MINIGAME  
     self.weapon:setStance(self.stances.reloading)
+    local badScore = 0 -- for bullet counted reload
+
     self.reloadTimer = 0 -- begin minigame
+
+    local uiUpdateTimer = 0
+    local uiUpdateTime = 0.5
+
     local reloadAttempted = false
     storage.reloadRating = "ok"
-    -- Possible TODO: randomize reload times
-    -- activeItem.setScriptedAnimationParameter("perfectReloadRange", {self.reloadTime * self.perfectReloadInterval[1], self.reloadTime * self.perfectReloadInterval[2]})
-    while self.reloadTimer < self.reloadTime do
 
-      activeItem.setScriptedAnimationParameter("reloadTimer", self.reloadTimer)
-      activeItem.setScriptedAnimationParameter("reloadRating", storage.reloadRating)
+    while self.reloadTimer < self.reloadTime
+    and storage.ammo < self.maxAmmo
+    and not status.resourceLocked("energy") do
 
+      -- increment timer
       self.reloadTimer = self.reloadTimer + self.dt
 
+      -- update UI
+      activeItem.setScriptedAnimationParameter("reloadRating", storage.reloadRating)
+      if uiUpdateTimer >= uiUpdateTime then
+        storage.reloadRating = "ok"
+      else
+        uiUpdateTimer = uiUpdateTimer + self.dt
+      end
+
+      -- if triggered,
       if self:triggering() and not self.triggered and not reloadAttempted then
+        self.triggered = true
         reloadAttempted = true
+        uiUpdateTimer = 0
+        -- replenish ammo
+        storage.ammo = storage.ammo < 0 and self.bulletsPerReload or storage.ammo + self.bulletsPerReload
+        
+        -- consume energy for this cycle
+        status.overConsumeResource("energy", status.resourceMax("energy") * math.min(self.maxAmmo, self.bulletsPerReload) * self.reloadEnergyCostRate / self.maxAmmo)
+      
+        -- if within perfect reload then indicate and set reloadRating to good (affects jam chance)
         if self.reloadTime * self.perfectReloadInterval[1] <= self.reloadTimer and self.reloadTimer <= self.reloadTime * self.perfectReloadInterval[2] then
-          animator.playSound("ping")
+          animator.playSound("goodReload")
           storage.reloadRating = "good"
-          break
+        
+        -- otherwise, indicate and set reloadRating to bad (affects jam chance)
+        -- also increment badScore for bullet counted reload
         else
-          animator.playSound("click")
+          animator.playSound("badReload")
+          badScore = badScore + self.bulletsPerReload
           storage.reloadRating = "bad"
         end
+
+        -- if amount reloaded isn't entire ammo capacity, it's bullet-counted
+        if storage.ammo < self.maxAmmo then
+          -- play sound
+          animator.playSound("loadRound")
+
+          -- reset reload attempt for next reload
+          reloadAttempted = false
+          
+          -- reset reload timer to stay in loop
+          self.reloadTimer = 0
+        end
+
       end
-      
+
+      -- after handling active reloads,
+
+      -- if ammo is at max capacity, cut off excess bullets and break
+      if storage.ammo >= self.maxAmmo then
+        storage.ammo  = self.maxAmmo
+        break
+      end
+
       coroutine.yield()
 
     end
-    self.weapon:setStance(self.stances.reloaded)
+    -- end minigame, update ui to indicate reload rating
 
-    -- replenish ammo
-    storage.ammo = self.maxAmmo
+    -- replenish ammo once if storage.ammo was untouched by reload minigame
+    if storage.ammo <= 0 then
+      status.overConsumeResource("energy", status.resourceMax("energy") * math.min(self.maxAmmo, self.bulletsPerReload) * self.reloadEnergyCostRate / self.maxAmmo)
+      storage.ammo = math.min(self.maxAmmo, self.bulletsPerReload)
+    end
+
+    -- if more than half of bullets were badly loaded, reload rating is bad
+    if badScore > storage.ammo / 2 then storage.reloadRating = "bad"
+
+    -- if all bullets were reloaded perfectly, reload rating is good
+    elseif badScore == 0 and storage.ammo > self.bulletsPerReload then storage.reloadRating = "good"
+
+    -- if at least one bullet is badly loaded, but less than half of the ammo capacity, reload rating is ok
+    else storage.reloadRating = "ok" end
+      
+    activeItem.setScriptedAnimationParameter("reloadRating", storage.reloadRating)
+    
+    self.weapon:setStance(self.stances.reloaded)
     self.burstCounter = self.burstCount
 
     if self.magType == "strip" then
@@ -362,10 +445,14 @@ function SynthetikMechanics:cocking()
     self:setAnimationState("gun", "ejecting")
     util.wait(self.cockTime/3)
   end
+
+  -- if single shot, play sound of single round being loaded
+  if self.maxAmmo == 1 then animator.playSound("loadRound") end
   self:setAnimationState("gun", "feeding")
+
   util.wait(self.cockTime/3)
 
-  self.reloadTimer = -1 -- end minigame
+  self.reloadTimer = -1 -- get rid of reload ui
 
   animator.playSound("boltPush")
   self:setAnimationState("gun", "idle")
@@ -385,7 +472,7 @@ function SynthetikMechanics:ejectMag()
   else
     animator.burstParticleEmitter("magazine")
   end
-  animator.playSound("reloadStart")
+  animator.playSound("ejectMag")
   self:setAnimationState("mag", "absent")
   if self.magType == "default" then self:snapStance(self.stances.ejectmag) end
   storage.ammo = -1
@@ -553,15 +640,12 @@ function SynthetikMechanics:updateScriptedAnimationParameters()
 
   -- display
   activeItem.setScriptedAnimationParameter("ammoDisplay",
-    storage.jamAmount > 0 and "J" or
-    self.reloadTimer >= 0 and "R" or
-    storage.ammo >= 0 and tostring(storage.ammo) or
-    "E"
+    storage.ammo >= 0 and storage.ammo or "E"
   )
   activeItem.setScriptedAnimationParameter("gunHand", activeItem.hand())
   activeItem.setScriptedAnimationParameter("aimPosition", activeItem.ownerAimPosition())
   activeItem.setScriptedAnimationParameter("playerPos", mcontroller.position())
-
+  activeItem.setScriptedAnimationParameter("reloadTimer", self.reloadTimer)
   activeItem.setScriptedAnimationParameter("jamAmount", storage.jamAmount)
   
 end
@@ -607,7 +691,17 @@ end
 -- HELPER FUNCTIONS
 
 function SynthetikMechanics:damagePerShot()
-  return self.baseDamage * activeItem.ownerPowerMultiplier() / self.projectileCount
+  --[[
+  Damage per shot is calculated by the following factors:
+  1. Base Damage as specified in the primaryAbility field of the activeItem
+  2. x1.1 damage if the reload rating is good
+  3. Power Multiplier of the player
+
+  The calculated damage is distributed between the projectiles spawned per shot. In eseence, hitting all pellets of
+  a shotgun shot deals the complete amount of damage.
+
+  --]]
+  return self.baseDamage * (storage.reloadRating == "good" and 1.1) * activeItem.ownerPowerMultiplier() / self.projectileCount
 end
 
 function SynthetikMechanics:screenShake(amount, shakeTime)
@@ -648,7 +742,7 @@ end
 
 function SynthetikMechanics:jam()
   if self:diceRoll() < self.jamChances[storage.reloadRating] then
-    storage.ammo = storage.ammo - self.ammoPerShot
+    storage.ammo = storage.ammo - math.min(self.ammoPerShot, storage.ammo)
     self.chargeTimer = 0
     self.isCharging = false
     storage.jamAmount = 1
@@ -677,6 +771,9 @@ function SynthetikMechanics:setStance(stance)
 end
 
 function SynthetikMechanics:snapStance(stance)
-  self.weapon:setStance(stance)
+  
+  self.weapon.relativeWeaponRotation = self.weapon.relativeWeaponRotation + math.rad(stance.weaponRotation)
+  self.weapon.relativeArmRotation = self.weapon.relativeArmRotation + math.rad(stance.weaponRotation)
+
   self.aimProgress = 0
 end

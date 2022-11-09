@@ -7,6 +7,7 @@ function update()
 
   local aimPosition = animationConfig.animationParameter("aimPosition")
   local ammoDisplay = animationConfig.animationParameter("ammoDisplay")
+  local ammoMax = animationConfig.animationParameter("ammoMax")
 
   local jamAmount = animationConfig.animationParameter("jamAmount")
 
@@ -14,7 +15,11 @@ function update()
   local reloadTime = animationConfig.animationParameter("reloadTime")
   local perfectReloadRange = animationConfig.animationParameter("perfectReloadRange")
   local reloadRating = animationConfig.animationParameter("reloadRating")
-  local reloadBarColor = reloadRating == "bad" and {255,0,0} or reloadRating == "good" and {255,0,255}
+  local reloadBarColor = reloadRating == "bad" and {255,0,0} or reloadRating == "good" and {0,255,255}
+
+  local goodReloadColor = {0, 255, 255}
+  local badReloadColor = {255, 0, 0}
+  local jamBarColor = {255, 128, 0}
   
   local gunHand = animationConfig.animationParameter("gunHand")
   local offset = {gunHand == "primary" and -1.75 or 1.75, 0}
@@ -30,23 +35,26 @@ function update()
     }, "Player-1")
   end
 
-  if ammoDisplay == "R" then
-    renderReloadBar(reloadTimer, reloadTime, perfectReloadRange, aimPosition, offset, reloadBarColor)
-
-  elseif ammoDisplay == "J" then
-    renderJamBar(jamAmount, aimPosition, offset)
-
-  else
-    localAnimator.spawnParticle({
-      type = "text",
-      text= "^shadow;" .. ammoDisplay,
-      color = {225,225,225},
-      size = 1,
-      fullbright = true,
-      flippable = false,
-      layer = "front"
-    }, vec2.add(aimPosition, offset))
+  if reloadTimer >= 0 then
+    renderReloadBar(reloadTimer, reloadTime, perfectReloadRange, string.upper(reloadRating), aimPosition, offset, reloadBarColor)
+    offset = vec2.add(offset, offset)
   end
+
+  if jamAmount > 0 then
+    renderJamBar(jamAmount, aimPosition, offset)
+    offset = vec2.add(offset, offset)
+  end
+
+  -- bullet counter
+  localAnimator.spawnParticle({
+    type = "text",
+    text= "^shadow;" .. ammoDisplay,
+    color = (jamAmount > 0 and jamBarColor) or (ammoDisplay == ammoMax and {100, 255, 255}) or {203, 203, 203},
+    size = 1,
+    fullbright = true,
+    flippable = false,
+    layer = "front"
+  }, vec2.add(aimPosition, offset))
 
 end
 
@@ -71,18 +79,19 @@ function wrld(alpha)
   return a
 end
 
-function renderReloadBar(time, timeMax, perfect, position, offset, barColor, length, width, borderwidth)
+function renderReloadBar(time, timeMax, perfect, rating, position, offset, barColor, length, width, borderwidth)
   local length = length or 4
   local barWidth = width or 2
   local borderwidth = borderwidth or 1
   local barColor = barColor or {255,255,255}
   local offset = offset or {-4, 0}
   local arrowLength = 0.4
+  local textSize = 0.5
 
   local base = vec2.add(position, offset)
   local base_a = vec2.add(base, {0, -length/2}) -- start (bottom)
   local base_b = vec2.add(base, {0, length/2})  -- end   (top)
-  local a, b
+  local a, b, o
 
   -- render border
   a = vec2.add(base_a, {0, -borderwidth/8})
@@ -94,6 +103,19 @@ function renderReloadBar(time, timeMax, perfect, position, offset, barColor, len
     fullbright = true,
     color = {0,0,0}
   }, "ForegroundEntity+1")
+
+  
+  -- render text
+  o = vec2.add(base_b, {0, borderwidth/8 + textSize})
+  localAnimator.spawnParticle({
+    type = "text",
+    text= "^shadow;" .. rating,
+    color = {203, 203, 203},
+    size = textSize,
+    fullbright = true,
+    flippable = false,
+    layer = "front"
+  }, o)
 
   -- render bar
   local reloadLine = worldify(base_a, base_b)

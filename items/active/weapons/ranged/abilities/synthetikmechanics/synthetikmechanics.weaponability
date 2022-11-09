@@ -32,15 +32,20 @@
 
     "magType": "default", // default, clip, strip; dictates how reloads happen
     "keepCasings": false, // drops casings per shot if false; overrides magazine particles with casings on reload if true
-    "semi": false, // firing, pulling and pushing the bolt aren't continuously done on keypress if true
-    "manualFeed": false, // whether the player must manually
+    "semi": true, // firing, pulling and pushing the bolt aren't continuously done on keypress if true
+    "manualFeed": true, // whether the player must manually
+    // dictates whether there's no cooldown between feeding a new catridge and firing;
+    // only has any purpose if manualFeed is tru
+    "slamFire": false,
+    // number of bullets reloaded at a time
+    "bulletsPerReload": 1,
   
     "jamChances": {
       "bad": 0.5, // chance for a weapon to jam if it missed a reload
       "ok": 0.0, // chance for a weapon to jam if it waited a reload
       "good": 0.01 // chance for a weapon to jam if it hit a reload
     },
-    "unjamTime": 0.2, // time it takes to attempt to unjam the weapon
+    "unjamTime": 0.1, // time it takes to attempt to unjam the weapon
     "unjamAmount": 0.125, // percent of unjam progress
     
     
@@ -60,8 +65,8 @@
 
     
     "reloadEnergyCostRate": 0.2, // percent of energy consumed per reload
-    "reloadTime": 0.7, // time to reload, in seconds
-    "perfectReloadInterval": [0.7, 0.85], // (percentage) interval during which a perfect reload is possible
+    "reloadTime": 0.5, // time to reload <bulletsPerReload>, in second
+    "perfectReloadInterval": [0.4, 0.6], // (percentage) interval during which a perfect reload is possible
     "cockTime": 0.6, // time it takes to cock the gun
 
     "muzzleFlashTime": 0.05,
@@ -108,11 +113,28 @@
       },
 
       // SNAP STANCES - These stances will be snapped to briefly
+      // only arm and weapon rotations matter
 
       // stance snaps to this when unjamming
       "unjam" : {
         "armRotation" : -45,
         "weaponRotation" : 0,
+        "twoHanded" : false,
+        "allowRotate" : false,
+        "allowFlip" : false
+      },
+
+      "manualFeed": {
+        "armRotation" : 5,
+        "weaponRotation" : 5,
+        "twoHanded" : false,
+        "allowRotate" : false,
+        "allowFlip" : false
+      },
+
+      "loadRound": {
+        "armRotation" : -45,
+        "weaponRotation" : 45,
         "twoHanded" : false,
         "allowRotate" : false,
         "allowFlip" : false
