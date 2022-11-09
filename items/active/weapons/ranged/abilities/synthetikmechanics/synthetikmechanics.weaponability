@@ -34,8 +34,8 @@
     "keepCasings": false, // drops casings per shot if false; overrides magazine particles with casings on reload if true
     "semi": true, // firing, pulling and pushing the bolt aren't continuously done on keypress if true
     "manualFeed": true, // whether the player must manually
-    // dictates whether there's no cooldown between feeding a new catridge and firing;
-    // only has any purpose if manualFeed is tru
+    // dictates whether holding the button while it's feeding will make it automatically shoot
+    // only has any purpose if manualFeed is true
     "slamFire": false,
     // number of bullets reloaded at a time
     "bulletsPerReload": 1,
