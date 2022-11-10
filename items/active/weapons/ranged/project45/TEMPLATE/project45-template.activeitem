@@ -36,6 +36,14 @@
   "jumpHeightFactor": 1.22,
 
   "primaryAbilityType": "synthetikmechanics",
+  "primaryAbility": {
+    "maxAmmo": 8,
+    "bulletsPerReload": 8,
+
+    "critChance": 0.5,
+    "critDamageMult": 2
+
+  },
 
   "builder" : "/items/buildscripts/buildproject45neo.lua"
 }

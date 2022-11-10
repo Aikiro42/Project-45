@@ -257,54 +257,54 @@
     // CHARGE AUDIO
 
     // whine increases pitch and volume the closer the gun is to full charge
-    "chargeWhine" : ["/sfx/gun/project45_chargewhine_c.ogg"],
+    "chargeWhine" : ["/sfx/project45-synthetikmechanics/charges/chargewhine_generic.ogg"],
     // drone increases volume the closer the gun is to full charge
-    "chargeDrone" : ["/sfx/gun/project45_chargedrone_g.ogg"],
+    "chargeDrone" : ["/sfx/project45-synthetikmechanics/charges/chargedrone_generic.ogg"],
 
     // FIRING AUDIO
 
     // gunshot sound
-    "fire" : ["/sfx/gun/project45_fire_ar.ogg"],
+    "fire" : ["/sfx/project45-synthetikmechanics/fires/fire_smg.ogg"],
     // plays louder as the magazine grows empty
-    "hollow" : ["/sfx/gun/project45_hollow.ogg"],
+    "hollow" : ["/sfx/project45-synthetikmechanics/hollow.ogg"],
 
     // click sound for various purposes
-    "click" : ["/sfx/gun/project45_click.ogg"],
+    "click" : ["/sfx/project45-synthetikmechanics/clicks/click_generic.ogg"],
 
 
     // RELOAD AUDIO
 
     // sound of mag sliding out
-    "ejectMag": ["/sfx/gun/project45_reloadStart_ar.ogg"],
+    "ejectMag": ["/sfx/project45-synthetikmechanics/reloads/ejectmag_generic_1.ogg"],
     // sound of mag sliding in
-    "insertMag": ["/sfx/gun/project45_reloadStart_ar.ogg"],
+    "insertMag": ["/sfx/project45-synthetikmechanics/reloads/insertmag_generic.ogg"],
 
     // sound of clip pinging out
-    "ping" : ["/sfx/gun/project45_ping.ogg"],
+    "ping" : ["/sfx/project45-synthetikmechanics/ping.ogg"],
     // sound of loading a single round into the gun (shotguns, single action)
     // inaudible between firing cycles when not a manual feed weapon
-    "loadRound": ["/sfx/gun/project45_click.ogg"],
+    "loadRound": ["/sfx/project45-synthetikmechanics/reloads/loadround_generic.ogg"],
     // sound of pulling back the slide/bolt, basically opening the gun in some way
-    "boltPull" : ["/sfx/gun/project45_reloadStart_sr.ogg"],
+    "boltPull" : ["/sfx/project45-synthetikmechanics/reloads/boltpull_generic.ogg"],
     // sound of pulling back the slide/bolt, basically closing the gun in some way
-    "boltPush" : ["/sfx/gun/project45_reloadEnd_sr.ogg"],
+    "boltPush" : ["/sfx/project45-synthetikmechanics/reloads/boltpush_generic.ogg"],
 
     // sound indicator for good reload
-    "goodReload" : ["/sfx/gun/project45_ping.ogg"],
+    "goodReload" : ["/sfx/project45-synthetikmechanics/ping.ogg"],
     // sound indicator for bad reload
-    "badReload" : ["/sfx/gun/project45_click.ogg"],
+    "badReload" : ["/sfx/project45-synthetikmechanics/clicks/click_generic.ogg"],
 
     // sound indicator for when the gun jams
-    "jammed" : ["/sfx/gun/project45_jammed.ogg"],
+    "jammed" : ["/sfx/project45-synthetikmechanics/clicks/click_jammed.ogg"],
     // played when making an unjam attempt
-    "unjam" : ["/sfx/gun/project45_unjam.ogg"],
+    "unjam" : ["/sfx/project45-synthetikmechanics/clicks/click_unjam.ogg"],
 
+    "laser" : ["/sfx/gun/project45_laser.ogg"],
 
     "reloadStart" : ["/sfx/gun/project45_reloadStart_ar.ogg"],
     "reloadEnd" : ["/sfx/gun/project45_reloadEnd.ogg"],
     // "crit" : ["/sfx/gun/project45_crit.ogg"],
     "crit" : ["/assetmissing.ogg"],
-    "laser" : ["/sfx/gun/project45_laser.ogg"],
     "charge" : ["/sfx/gun/project45_charge_c.ogg"]
   }
 }

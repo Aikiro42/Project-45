@@ -15,7 +15,7 @@
     "class" : "SynthetikMechanics",
 
     "recoilMomentum": 0, // momentum added to character opposite direction of aim vector when firing
-    "recoilDeg": [3, 1], // degrees of recoil every time the gun is shot (think spray control)
+    "recoilDeg": [2, 1], // degrees of recoil every time the gun is shot (think spray control)
     "aimTime": [3, 1], // time it takes to aim; first index is when you're running, second is when shift is held
     
     "chargeTime": 0, // amount of time the weapon will wind up before firing, in seconds
@@ -23,9 +23,11 @@
     
     // Depending on which is greater, cycleTime or fireTime will dictate the fire rate of the weapon.
     "cycleTime": 0.1, // Time it takes to eject the bullet casing and feed the next cartridge.
-    "fireTime" : 0.01, // Amount of time between weapon triggers
+    "fireTime" : 0.1, // Amount of time between weapon triggers
 
     "maxAmmo": 8, // maximum ammo of the weapon
+    // number of bullets reloaded at a time
+    "bulletsPerReload": 8,
 
     "ammoPerShot": 1, // ammo consumed per shot
     "burstCount": 1, // number of shots per burst
@@ -33,29 +35,26 @@
     "magType": "default", // default, clip, strip; dictates how reloads happen
     "keepCasings": false, // drops casings per shot if false; overrides magazine particles with casings on reload if true
     "semi": true, // firing, pulling and pushing the bolt aren't continuously done on keypress if true
-    "manualFeed": true, // whether the player must manually
+    "manualFeed": false, // whether the player must manually
     // dictates whether holding the button while it's feeding will make it automatically shoot
     // only has any purpose if manualFeed is true
     "slamFire": false,
-    // number of bullets reloaded at a time
-    "bulletsPerReload": 1,
   
     "jamChances": {
-      "bad": 0.5, // chance for a weapon to jam if it missed a reload
-      "ok": 0.0, // chance for a weapon to jam if it waited a reload
-      "good": 0.01 // chance for a weapon to jam if it hit a reload
+      "bad": 0.05, // chance for a weapon to jam if it missed a reload
+      "ok": 0.01, // chance for a weapon to jam if it waited a reload
+      "good": 0.0 // chance for a weapon to jam if it hit a reload
     },
     "unjamTime": 0.1, // time it takes to attempt to unjam the weapon
-    "unjamAmount": 0.125, // percent of unjam progress
+    "unjamAmount": 0.25, // percent of unjam progress
     
-    
-    "baseDamage": 1, // base damage per shot
+    "baseDamage": 6.25, // base damage per shot
     "inaccuracy" : 0.01, // Generic RNG inaccuracy; causes spread
-    "projectileType": "hitscan", // if explicitly "hitscan", gun fires hitscan shots; otherwise, gun fires projectiles
+    // if explicitly "hitscan", gun fires hitscan shots; otherwise, gun fires projectiles
+    // "projectileType": ["project45stdbullet", "hitscan"],
+    "projectileType": ["hitscan"],
     "projectileCount" : 1, // number of projectiles launched per shot
-    "projectileParams": {
-
-
+    "projectileParameters": {
       // hitscan params
       "range": 100,  // range of the hitscan line in blocks
       "punchthrough": 1,  // number of entities to register before stopping the scan
@@ -66,10 +65,34 @@
     
     "reloadEnergyCostRate": 0.2, // percent of energy consumed per reload
     "reloadTime": 0.5, // time to reload <bulletsPerReload>, in second
-    "perfectReloadInterval": [0.4, 0.6], // (percentage) interval during which a perfect reload is possible
+    "goodReloadInterval": [0.4, 0.8], // (percentage) interval during which a good reload is possible
+    "perfectReloadInterval": [0.6, 0.65], // (percentage) interval of the good reload interval during which a perfect reload is possible
     "cockTime": 0.6, // time it takes to cock the gun
 
     "muzzleFlashTime": 0.05,
+
+    "critChance": 0,
+    "critDamageMult": 1,
+
+    /*
+    Possible Attachments: (NOT IMPLEMENTED YET)
+    
+    "lasersight" - walking grants laser sights
+
+    "420sniperdragon" - hitting an enemy behind you after
+      hitting an enemy in front of you gives an extremely massive damage boost.
+
+    "grenadelauncher" - Chance to lob a grenade per shot.
+
+    "twinlink" - Chance to double projectile count without affecting damage.
+
+    "targetcogitator" - Chance to deal double damage. Affects grenade launcher damage.
+
+    "AP rounds" - projectiles ignore defense.
+
+    
+    */
+    "attachments": [],
 
     "stances" : {
 

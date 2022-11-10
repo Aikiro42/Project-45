@@ -25,7 +25,10 @@ function SynthetikMechanics:init()
     self.reloadTimer = -1 -- not reloading
     self.isCharging = false
     self.chamberReady = storage.ammo < 0 -- TODO: should really improve this thing
+    self.jamChances.perfect = 0
     
+    self.projectileParameters = self.projectileParameters or {}
+
     self.projectileStack = {}
 
     self.chargeLoopPlaying = false
@@ -41,6 +44,7 @@ function SynthetikMechanics:init()
 
     -- animation parameters
     activeItem.setScriptedAnimationParameter("reloadTime", self.reloadTime)
+    activeItem.setScriptedAnimationParameter("goodReloadRange", {self.reloadTime * self.goodReloadInterval[1], self.reloadTime * self.goodReloadInterval[2]})
     activeItem.setScriptedAnimationParameter("perfectReloadRange", {self.reloadTime * self.perfectReloadInterval[1], self.reloadTime * self.perfectReloadInterval[2]})
     activeItem.setScriptedAnimationParameter("ammoMax", self.maxAmmo)
 
@@ -127,7 +131,7 @@ function SynthetikMechanics:update(dt, fireMode, shiftHeld)
         -- if no ammo and fire is not held then eject mag
         elseif storage.ammo == 0 and not self.triggered then
           -- sb.logInfo("[PROJECT 45] Entered State: Ejecting Mag")
-          self:ejectMag()
+          if self.magType == "strip" then self:setState(self.reloading) else self:ejectMag() end
 
         -- if has ammo then fire
         elseif storage.ammo > 0 then
@@ -143,7 +147,7 @@ function SynthetikMechanics:update(dt, fireMode, shiftHeld)
       
       end
 
-      self.cooldownTimer = self.fireTime
+      self.cooldownTimer = storage.jamAmount == 0 and self.fireTime or self.unjamTime
     end
 end
 
@@ -211,11 +215,16 @@ function SynthetikMechanics:firing()
     self.burstCounter = 0
   end
 
+  local projectileType = self.projectileType
+  if type(projectileType) == "table" then
+    projectileType = projectileType[math.random(#projectileType)]
+  end
+
   -- fire projectile
-  if self.projectileType == "hitscan" then
+  if projectileType == "hitscan" then
     self:fireHitscan()
   else
-    self.fireProjectile()
+    self:fireProjectile(projectileType)
   end
 
   -- bullet fired, chamber is now unready
@@ -338,6 +347,7 @@ function SynthetikMechanics:reloading()
 
     local reloadAttempted = false
     storage.reloadRating = "ok"
+    activeItem.setScriptedAnimationParameter("reloadRating", "")
 
     while self.reloadTimer < self.reloadTime
     and storage.ammo < self.maxAmmo
@@ -347,7 +357,6 @@ function SynthetikMechanics:reloading()
       self.reloadTimer = self.reloadTimer + self.dt
 
       -- update UI
-      activeItem.setScriptedAnimationParameter("reloadRating", storage.reloadRating)
       if uiUpdateTimer >= uiUpdateTime then
         storage.reloadRating = "ok"
       else
@@ -367,6 +376,11 @@ function SynthetikMechanics:reloading()
       
         -- if within perfect reload then indicate and set reloadRating to good (affects jam chance)
         if self.reloadTime * self.perfectReloadInterval[1] <= self.reloadTimer and self.reloadTimer <= self.reloadTime * self.perfectReloadInterval[2] then
+          animator.playSound("goodReload")
+          badScore = badScore - self.bulletsPerReload
+          storage.reloadRating = "perfect"
+
+        elseif self.reloadTime * self.goodReloadInterval[1] <= self.reloadTimer and self.reloadTimer <= self.reloadTime * self.goodReloadInterval[2] then
           animator.playSound("goodReload")
           storage.reloadRating = "good"
         
@@ -411,14 +425,21 @@ function SynthetikMechanics:reloading()
       storage.ammo = math.min(self.maxAmmo, self.bulletsPerReload)
     end
 
-    -- if more than half of bullets were badly loaded, reload rating is bad
-    if badScore > storage.ammo / 2 then storage.reloadRating = "bad"
+    -- if reload was bullet-counted
+    if self.bulletsPerReload < self.maxAmmo then
 
-    -- if all bullets were reloaded perfectly, reload rating is good
-    elseif badScore == 0 and storage.ammo > self.bulletsPerReload then storage.reloadRating = "good"
+      -- if more than half of bullets were badly loaded, reload rating is bad
+      if badScore > storage.ammo / 2 then storage.reloadRating = "bad"
 
-    -- if at least one bullet is badly loaded, but less than half of the ammo capacity, reload rating is ok
-    else storage.reloadRating = "ok" end
+      -- if all bullets were reloaded good or perfectly, reload rating is either good or perfect
+      elseif storage.ammo > self.bulletsPerReload then
+        if badScore == 0 then storage.reloadRating = "good"
+        elseif badScore < 0 then storage.reloadRating = "perfect" end
+
+      -- if at least one bullet is badly loaded, but less than half of the ammo capacity, reload rating is ok
+      else storage.reloadRating = "ok" end
+    
+    end
       
     activeItem.setScriptedAnimationParameter("reloadRating", storage.reloadRating)
     
@@ -474,12 +495,26 @@ function SynthetikMechanics:ejectMag()
   end
   animator.playSound("ejectMag")
   self:setAnimationState("mag", "absent")
-  if self.magType == "default" then self:snapStance(self.stances.ejectmag) end
+  if self.magType == "default" then
+    self:snapStance(self.stances.ejectmag)
+  end
+  self:setStance(self.stances.reloading)
   storage.ammo = -1
 end
 
-function SynthetikMechanics:fireProjectile()
-
+function SynthetikMechanics:fireProjectile(projectileType)
+  local params = sb.jsonMerge(self.projectileParameters, {})
+  params.power = self:damagePerShot()
+  for i = 1, self.projectileCount do
+    local projectileId = world.spawnProjectile(
+      projectileType,
+      self:firePosition(),
+      activeItem.ownerEntityId(),
+      self:aimVector(self.inaccuracy),
+      false,
+      params
+    )
+  end
 end
 
 function SynthetikMechanics:fireHitscan()
@@ -497,6 +532,7 @@ function SynthetikMechanics:fireHitscan()
     local hitReg = self:hitscan()
 
     -- if damageable entity has been detected (hitreg[3] is not nil), damage it
+
     if #hitReg[3] > 0 then
       for _, hitId in ipairs(hitReg[3]) do
         world.sendEntityMessage(hitId, "applyStatusEffect", "project45damage", self:damagePerShot(), entity.id()) -- TODO: duplicate and rename damage status effect
@@ -505,9 +541,9 @@ function SynthetikMechanics:fireHitscan()
 
     -- bullet trail info inserted to projectile stack that's being passed to the animation script
     -- each bullet trail in the stack is rendered, and the lifetime is updated in this very script too
-    local life = self.projectileParams.fadeTime or 0.5
+    local life = self.projectileParameters.fadeTime or 0.5
     table.insert(self.projectileStack, {
-      width = self.projectileParams.hitscanWidth,
+      width = self.projectileParameters.hitscanWidth,
       origin = hitReg[1],
       destination = hitReg[2],
       lifetime = life,
@@ -516,12 +552,30 @@ function SynthetikMechanics:fireHitscan()
 
     -- hitscan explosion vfx
     world.spawnProjectile(
-      "project45_hitexplosion", -- TODO: duplicate and rename this explosion
+      "invisibleprojectile",
       hitReg[2],
       activeItem.ownerEntityId(),
       self:aimVector(3.14),
       false,
-      {}
+      {
+        timeToLive = 0,
+        actionOnReap = {
+          --[[
+          {
+            action = "sound",
+            options = {
+              "/sfx/project45-synthetikmechanics/bulletimpacts/bulletimpact_1.ogg",
+              "/sfx/project45-synthetikmechanics/bulletimpacts/bulletimpact_2.ogg",
+              "/sfx/project45-synthetikmechanics/bulletimpacts/bulletimpact_3.ogg"
+            }
+          }
+          --]]
+          {
+            action = "config",
+            file = "/projectiles/explosions/project45_hitexplosion/project45_hitscanexplosion.config"
+          }
+        }
+      }
     )
 
   end
@@ -532,7 +586,7 @@ end
 
     local scanOrig = self:firePosition()
   
-    local scanDest = vec2.add(scanOrig, vec2.mul(vec2.rotate(self:aimVector(isLaser and 0 or self.inaccuracy),(self.weapon.relativeArmRotation + self.weapon.relativeWeaponRotation) * mcontroller.facingDirection()), self.projectileParams.range or 100))
+    local scanDest = vec2.add(scanOrig, vec2.mul(self:aimVector(isLaser and 0 or self.inaccuracy), self.projectileParameters.range or 100))
     scanDest = world.lineCollision(scanOrig, scanDest, {"Block", "Dynamic"}) or scanDest
   
     -- hitreg
@@ -559,7 +613,7 @@ end
   
           pen = pen + 1
   
-          if pen > (self.projectileParams.punchThrough or 0) then break end
+          if pen > (self.projectileParameters.punchThrough or 0) then break end
         end      
       end
     end
@@ -572,13 +626,20 @@ end
 function SynthetikMechanics:aim()
   if self.reloadTimer < 0 then
     local stance = storage.targetStance
+    
     if self.aimProgress == 1 then activeItem.setRecoil(true) end
+    
     activeItem.setFrontArmFrame(stance.frontArmFrame)
     activeItem.setBackArmFrame(stance.backArmFrame)
+    
     if config.getParameter("twoHanded", false) then activeItem.setTwoHandedGrip(stance.twoHanded or false) end
+    
     self.weapon.aimAngle, self.weapon.aimDirection = activeItem.aimAngleAndDirection(0, activeItem.ownerAimPosition())
+    
     self.weapon.relativeWeaponRotation = util.toRadians(interp.sin(self.aimProgress, math.deg(self.weapon.relativeWeaponRotation), stance.weaponRotation))
     self.weapon.relativeArmRotation = util.toRadians(interp.sin(self.aimProgress, math.deg(self.weapon.relativeArmRotation), stance.armRotation))
+
+
   end
 end
 
@@ -598,7 +659,7 @@ function SynthetikMechanics:flashMuzzle()
 end
 
 function SynthetikMechanics:recoil()
-  self:screenShake()
+  self:screenShake(0.5)
   activeItem.setRecoil(true)
 
   local inaccuracy = math.rad(self.recoilDeg[self.shiftHeld and 2 or 1])
@@ -639,9 +700,7 @@ end
 function SynthetikMechanics:updateScriptedAnimationParameters()
 
   -- display
-  activeItem.setScriptedAnimationParameter("ammoDisplay",
-    storage.ammo >= 0 and storage.ammo or "E"
-  )
+  activeItem.setScriptedAnimationParameter("ammo", storage.ammo)
   activeItem.setScriptedAnimationParameter("gunHand", activeItem.hand())
   activeItem.setScriptedAnimationParameter("aimPosition", activeItem.ownerAimPosition())
   activeItem.setScriptedAnimationParameter("playerPos", mcontroller.position())
@@ -694,18 +753,24 @@ function SynthetikMechanics:damagePerShot()
   --[[
   Damage per shot is calculated by the following factors:
   1. Base Damage as specified in the primaryAbility field of the activeItem
-  2. x1.1 damage if the reload rating is good
+  2. x1.1 damage if the reload rating is good, x1.3 if perfect
   3. Power Multiplier of the player
+  4. Tier of the weapon
+  5. Critical Roll
 
   The calculated damage is distributed between the projectiles spawned per shot. In eseence, hitting all pellets of
   a shotgun shot deals the complete amount of damage.
 
   --]]
-  return self.baseDamage * (storage.reloadRating == "good" and 1.1) * activeItem.ownerPowerMultiplier() / self.projectileCount
+  local reloadDamageMultiplier = 1
+  if storage.reloadRating == "good" then reloadDamageMultiplier = 1.1 
+  elseif storage.reloadRating == "perfect" then reloadDamageMultiplier = 1.3 end
+  return self.baseDamage * reloadDamageMultiplier * config.getParameter("damageLevelMultiplier", 1) * activeItem.ownerPowerMultiplier() * self:crit() / self.projectileCount
 end
 
-function SynthetikMechanics:screenShake(amount, shakeTime)
+function SynthetikMechanics:screenShake(amount, shakeTime, random)
     local shake_dir = vec2.mul(self:aimVector(0), -1 * (amount or 0.1))
+    if random then vec2.rotate(shake_dir, 3.14 * truerand()) end
     local cam = world.spawnProjectile(
       "invisibleprojectile",
       vec2.add(mcontroller.position(), shake_dir),
@@ -722,12 +787,13 @@ function SynthetikMechanics:screenShake(amount, shakeTime)
 end
 
 function SynthetikMechanics:firePosition()
-    return vec2.add(mcontroller.position(), activeItem.handPosition(self.weapon.muzzleOffset))
+    return vec2.add(mcontroller.position(), activeItem.handPosition(vec2.rotate(self.weapon.muzzleOffset, self.weapon.relativeWeaponRotation)))
   end
 
 function SynthetikMechanics:aimVector(inaccuracy)
   local aimVector = vec2.rotate({1, 0}, self.weapon.aimAngle + sb.nrand((inaccuracy or 0), 0))
   aimVector[1] = aimVector[1] * mcontroller.facingDirection()
+  aimVector = vec2.rotate(aimVector, (self.weapon.relativeArmRotation + self.weapon.relativeWeaponRotation) * mcontroller.facingDirection())
   return aimVector
 end
 
@@ -741,7 +807,7 @@ function SynthetikMechanics:triggering()
 end
 
 function SynthetikMechanics:jam()
-  if self:diceRoll() < self.jamChances[storage.reloadRating] then
+  if self:diceRoll(self.jamChances[storage.reloadRating]) then
     storage.ammo = storage.ammo - math.min(self.ammoPerShot, storage.ammo)
     self.chargeTimer = 0
     self.isCharging = false
@@ -753,11 +819,46 @@ function SynthetikMechanics:jam()
   return false
 end
 
-function SynthetikMechanics:diceRoll()
-  math.randomseed(math.floor(sb.nrand(5, os.time()))) -- set random seed with sb.nrand, mean = epoch time, stdev = 5
-  local diceRoll = math.random()
+-- returns a critical multiplier
+-- follows warframe's critical chance mechanic
+function SynthetikMechanics:crit()
+
+  if self.critChance < 1 then
+    if self:diceRoll(self.critChance) then 
+      return self.critDamageMult
+    else
+      return 1
+    end
+  end
+
+  local critTier = math.floor(self.critChance)
+  local actualCritChance = self.critChance - critTier
+
+  local critDamage = self.critDamageMult - 1
+
+  local successfulCritDamage = critDamage * (critTier + 1)
+  local guaranteedCritDamage = critDamage * critTier
+
+  if self:diceRoll(actualCritChance) then 
+    return 1 + successfulCritDamage
+  else
+    return 1 + guaranteedCritDamage
+  end
+end
+
+-- Returns true if the diceroll for the given chance is successful
+function SynthetikMechanics:diceRoll(chance, inclusive)
+
+  -- clamp chance between 0% and 100%
+  local chance = chance < 0 and 0 or chance > 1 and 1 or chance
+  local diceRoll = truerand()
   -- sb.logInfo("[PROJECT 45] Dice Rolled: " .. diceRoll)
-  return diceRoll -- function like orig function
+  return inclusive and diceRoll <= chance or diceRoll < chance -- function like orig function
+end
+
+function truerand()
+  math.randomseed(math.floor(sb.nrand(5, os.time()))) -- set random seed with sb.nrand, mean = epoch time, stdev = 5
+  return math.random()
 end
 
 function SynthetikMechanics:setAnimationState(part, state)

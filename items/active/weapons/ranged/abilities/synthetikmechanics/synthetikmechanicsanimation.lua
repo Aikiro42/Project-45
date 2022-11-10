@@ -6,7 +6,7 @@ function update()
   local projectileStack = animationConfig.animationParameter("projectileStack")
 
   local aimPosition = animationConfig.animationParameter("aimPosition")
-  local ammoDisplay = animationConfig.animationParameter("ammoDisplay")
+  local ammo = animationConfig.animationParameter("ammo")
   local ammoMax = animationConfig.animationParameter("ammoMax")
 
   local jamAmount = animationConfig.animationParameter("jamAmount")
@@ -14,13 +14,18 @@ function update()
   local reloadTimer = animationConfig.animationParameter("reloadTimer")
   local reloadTime = animationConfig.animationParameter("reloadTime")
   local perfectReloadRange = animationConfig.animationParameter("perfectReloadRange")
+  local goodReloadRange = animationConfig.animationParameter("goodReloadRange")
   local reloadRating = animationConfig.animationParameter("reloadRating")
-  local reloadBarColor = reloadRating == "bad" and {255,0,0} or reloadRating == "good" and {0,255,255}
 
-  local goodReloadColor = {0, 255, 255}
-  local badReloadColor = {255, 0, 0}
-  local jamBarColor = {255, 128, 0}
-  
+  local reloadBarColors = {
+    bad = {255, 0, 0},
+    good = {0, 255, 255},
+    perfect = {255, 255, 0}
+  }
+
+  local reloadBarColor = reloadBarColors[reloadRating]
+  local jamBarColor = {255, 128, 0}  
+
   local gunHand = animationConfig.animationParameter("gunHand")
   local offset = {gunHand == "primary" and -1.75 or 1.75, 0}
 
@@ -36,7 +41,7 @@ function update()
   end
 
   if reloadTimer >= 0 then
-    renderReloadBar(reloadTimer, reloadTime, perfectReloadRange, string.upper(reloadRating), aimPosition, offset, reloadBarColor)
+    renderReloadBar(reloadTimer, reloadTime, goodReloadRange, perfectReloadRange, string.upper(reloadRating), aimPosition, offset, reloadBarColor)
     offset = vec2.add(offset, offset)
   end
 
@@ -45,11 +50,14 @@ function update()
     offset = vec2.add(offset, offset)
   end
 
+  local ammoDisplay = ammo
+  if ammo < 0 then ammoDisplay = "E" end
+
   -- bullet counter
   localAnimator.spawnParticle({
     type = "text",
     text= "^shadow;" .. ammoDisplay,
-    color = (jamAmount > 0 and jamBarColor) or (ammoDisplay == ammoMax and {100, 255, 255}) or {203, 203, 203},
+    color = (jamAmount > 0 and jamBarColor) or (reloadRating == "perfect" and ammo > 0 and {255, 255, 0}) or (ammo == ammoMax and {100, 255, 255}) or {203, 203, 203},
     size = 1,
     fullbright = true,
     flippable = false,
@@ -79,7 +87,7 @@ function wrld(alpha)
   return a
 end
 
-function renderReloadBar(time, timeMax, perfect, rating, position, offset, barColor, length, width, borderwidth)
+function renderReloadBar(time, timeMax, good, perfect, rating, position, offset, barColor, length, width, borderwidth)
   local length = length or 4
   local barWidth = width or 2
   local borderwidth = borderwidth or 1
@@ -103,7 +111,6 @@ function renderReloadBar(time, timeMax, perfect, rating, position, offset, barCo
     fullbright = true,
     color = {0,0,0}
   }, "ForegroundEntity+1")
-
   
   -- render text
   o = vec2.add(base_b, {0, borderwidth/8 + textSize})
@@ -126,6 +133,17 @@ function renderReloadBar(time, timeMax, perfect, rating, position, offset, barCo
     color = barColor
   }, "ForegroundEntity+1")
 
+  -- render good range
+  a = vec2.add(base_a, {0, good[1]*length/timeMax})
+  b = vec2.add(base_a, {0, good[2]*length/timeMax})
+  local perfectRange = {a, b}
+  localAnimator.addDrawable({
+    line = perfectRange,
+    width = barWidth,
+    fullbright = true,
+    color = {143, 0, 255}
+  }, "ForegroundEntity+1")
+
   -- render perfect range
   a = vec2.add(base_a, {0, perfect[1]*length/timeMax})
   b = vec2.add(base_a, {0, perfect[2]*length/timeMax})
@@ -134,7 +152,7 @@ function renderReloadBar(time, timeMax, perfect, rating, position, offset, barCo
     line = perfectRange,
     width = barWidth,
     fullbright = true,
-    color = {143, 0, 255}
+    color = {199, 128, 255}
   }, "ForegroundEntity+1")
 
   -- render arrow
