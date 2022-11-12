@@ -17,6 +17,12 @@ function update()
   local goodReloadRange = animationConfig.animationParameter("goodReloadRange")
   local reloadRating = animationConfig.animationParameter("reloadRating")
 
+  local muzzlePos = animationConfig.animationParameter("muzzlePos")
+
+  local muzzleSmokeTimer = animationConfig.animationParameter("muzzleSmokeTimer")
+  local muzzleSmokeTime = animationConfig.animationParameter("muzzleSmokeTime")
+
+
   local reloadBarColors = {
     bad = {255, 0, 0},
     good = {0, 255, 255},
@@ -28,6 +34,40 @@ function update()
 
   local gunHand = animationConfig.animationParameter("gunHand")
   local offset = {gunHand == "primary" and -1.75 or 1.75, 0}
+
+  -- smoke
+  --[[
+  local muzzleSmokeProgress = 1 - muzzleSmokeTimer/muzzleSmokeTime
+  if muzzleSmokeProgress < 1 then
+    localAnimator.spawnParticle(
+      {
+        type = "ember",
+        size = 0.5 + 0.2 * (1 - muzzleSmokeProgress),
+        color = {200, 200, 200, 100 * (-muzzleSmokeProgress^4 + 1)},
+        fade = 0.9,
+        initialVelocity = {(1 - muzzleSmokeProgress)*5, -1 + muzzleSmokeProgress*6},
+        approach = {-0.1, 5},
+        finalVelocity = {0, 5},
+        destructionTime = 0.9,
+        layer = "front",
+        collidesLiquid = true,
+        variance = {
+          initialVelocity = {0.5 * (1 - muzzleSmokeProgress), 0.5 * (1 - muzzleSmokeProgress)},
+          finalVelocity = {0.2, 0},
+          size = 0.5
+        }
+      },
+      muzzlePos
+    )
+  end
+  --]]
+
+  if 0 < muzzleSmokeTimer and muzzleSmokeTimer < muzzleSmokeTime - 0.1 then
+    localAnimator.spawnParticle(
+      "project45muzzlesmoke",
+      muzzlePos
+    )
+  end
 
   -- render hitscan trails
   for i, projectile in ipairs(projectileStack) do

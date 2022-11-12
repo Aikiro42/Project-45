@@ -1,0 +1,20 @@
+{
+    "animationScripts" : [
+		"/items/active/weapons/ranged/abilities/project45gunscope/project45gunscopeanimation.lua"
+	],
+
+    "ability": {
+        
+        "name" : "Scope",
+        "type" : "project45gunscope",
+        "scripts" : ["/items/active/weapons/ranged/abilities/project45gunscope/project45gunscope.lua"],
+        "class" : "Project45GunScope",
+
+        // How far the scope can go, in blocks.
+        "range": 50,
+
+        // How far from the center of the screen you must move your cursor to move the camera
+        "deadzone": 10
+
+    }
+}

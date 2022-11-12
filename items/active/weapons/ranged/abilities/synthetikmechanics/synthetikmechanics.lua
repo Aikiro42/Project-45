@@ -1,8 +1,10 @@
 require "/scripts/util.lua"
 require "/scripts/interp.lua"
 require "/scripts/poly.lua"
+require "/items/active/weapons/ranged/gunfire.lua"
 
-SynthetikMechanics = WeaponAbility:new()
+SynthetikMechanics = GunFire:new()
+-- SynthetikMechanics = WeaponAbility:new()
 
 -- MAIN FUNCTIONS
 
@@ -18,15 +20,26 @@ function SynthetikMechanics:init()
     storage.animationState = storage.animationState or {gun = "ejecting", mag = "absent"} -- initial animation state is empty gun
     self:setStance(storage.targetStance or self.stances.aim)
 
+    storage.critStats = storage.critStats or {
+      crits = 0,
+      shots = 0
+    }
+
     -- reset non-persistent timers and flags
     self.chargeTimer = 0
     self.muzzleFlashTimer = 0
+    self.muzzleSmokeTimer = 0
+    self.dashCooldownTimer = 0
+    self.dashTriggerTimer = -1
     self.cooldownTimer = self.fireTime
     self.reloadTimer = -1 -- not reloading
     self.isCharging = false
     self.chamberReady = storage.ammo < 0 -- TODO: should really improve this thing
     self.jamChances.perfect = 0
-    
+
+    -- validate bullets per reload
+    self.bulletsPerReload = math.min(self.maxAmmo, self.bulletsPerReload)
+
     self.projectileParameters = self.projectileParameters or {}
 
     self.projectileStack = {}
@@ -47,6 +60,7 @@ function SynthetikMechanics:init()
     activeItem.setScriptedAnimationParameter("goodReloadRange", {self.reloadTime * self.goodReloadInterval[1], self.reloadTime * self.goodReloadInterval[2]})
     activeItem.setScriptedAnimationParameter("perfectReloadRange", {self.reloadTime * self.perfectReloadInterval[1], self.reloadTime * self.perfectReloadInterval[2]})
     activeItem.setScriptedAnimationParameter("ammoMax", self.maxAmmo)
+    activeItem.setScriptedAnimationParameter("muzzleSmokeTime", self.muzzleSmokeTime)
 
     -- initialize visuals
 
@@ -79,16 +93,22 @@ function SynthetikMechanics:update(dt, fireMode, shiftHeld)
 
     self.shiftHeld = shiftHeld
 
+    -- <partImage>.<ammo>
     self:updateScriptedAnimationParameters()
+    self:updateMagAnimation()
     self:updateSoundProperties()
     self:updateCursor(shiftHeld)
     self:updateProjectileStack()
+
 
     -- local laserLine = (self.allowLaser and shiftHeld and storage.ammo > 0) and self:hitscan(true) or {}
 
 
     -- increments/decrements
     self.muzzleFlashTimer = math.max(0, self.muzzleFlashTimer - self.dt)
+    self.muzzleSmokeTimer = math.max(0, self.muzzleSmokeTimer - self.dt)
+    self.dashCooldownTimer = math.max(0, self.dashCooldownTimer - self.dt)
+    
     self.cooldownTimer = math.max(0, self.cooldownTimer - self.dt)
     self.aimProgress = math.min(1, self.aimProgress + self.dt / self.aimTime[shiftHeld and 2 or 1])
 
@@ -106,12 +126,25 @@ function SynthetikMechanics:update(dt, fireMode, shiftHeld)
     -- turn off muzzleflash automatically
     if self.muzzleFlashTimer <= 0 then
       animator.setLightActive("muzzleFlash", false)
+      activeItem.setScriptedAnimationParameter("muzzleFlash", false)
     end
 
     -- Prevent energy regen if there is energy or if currently reloading
     if storage.ammo > 0 or self.reloadTimer > 0 then status.setResource("energyRegenBlock", 1.0) end
 
     -- I/O logic
+    if shiftHeld and not self.weapon.currentAbility then
+      if self.dashTriggerTimer < 0 then
+        self.dashTriggerTimer = 0
+      end
+      self.dashTriggerTimer = self.dashTriggerTimer + self.dt
+    elseif not self.weapon.currentAbility then
+      if self.dashTriggerTimer <= self.dashParams.triggerTime and self.dashTriggerTimer >= 0 then
+        self:setState(self.dash)
+      end
+      self.dashTriggerTimer = -1
+    end
+
     if self:triggering()
      and not self.weapon.currentAbility
      and self.cooldownTimer == 0 then
@@ -224,7 +257,7 @@ function SynthetikMechanics:firing()
   if projectileType == "hitscan" then
     self:fireHitscan()
   else
-    self:fireProjectile(projectileType)
+    self:fireProjectileNeo(projectileType)
   end
 
   -- bullet fired, chamber is now unready
@@ -454,6 +487,8 @@ function SynthetikMechanics:reloading()
     -- cock gun
     self:setState(self.cocking)
 
+    sb.logInfo("[PROJECT 45] Empirical Crit Chance: " .. storage.critStats.crits * 100 / storage.critStats.shots .. "%%")
+
     self:setStance(self.stances.aim)
 
   end
@@ -502,7 +537,7 @@ function SynthetikMechanics:ejectMag()
   storage.ammo = -1
 end
 
-function SynthetikMechanics:fireProjectile(projectileType)
+function SynthetikMechanics:fireProjectileNeo(projectileType)
   local params = sb.jsonMerge(self.projectileParameters, {})
   params.power = self:damagePerShot()
   for i = 1, self.projectileCount do
@@ -530,12 +565,18 @@ function SynthetikMechanics:fireHitscan()
     -- hitreg[2] is where the bullet trail terminates,
     -- hitreg[3] is the array of hit entityIds
     local hitReg = self:hitscan()
-
+    local crit = self:crit()
+    local statusDamage = "project45damage"
+    storage.critStats.shots = storage.critStats.shots + 1
+    if crit > 1 then
+      storage.critStats.crits = storage.critStats.crits + 1
+      statusDamage = "project45critdamage"
+    end
     -- if damageable entity has been detected (hitreg[3] is not nil), damage it
 
     if #hitReg[3] > 0 then
       for _, hitId in ipairs(hitReg[3]) do
-        world.sendEntityMessage(hitId, "applyStatusEffect", "project45damage", self:damagePerShot(), entity.id()) -- TODO: duplicate and rename damage status effect
+        world.sendEntityMessage(hitId, "applyStatusEffect", statusDamage, self:damagePerShot() * crit, entity.id()) -- TODO: duplicate and rename damage status effect
       end
     end
 
@@ -558,18 +599,10 @@ function SynthetikMechanics:fireHitscan()
       self:aimVector(3.14),
       false,
       {
+        damageType = "NoDamage",
+        power = 0,
         timeToLive = 0,
         actionOnReap = {
-          --[[
-          {
-            action = "sound",
-            options = {
-              "/sfx/project45-synthetikmechanics/bulletimpacts/bulletimpact_1.ogg",
-              "/sfx/project45-synthetikmechanics/bulletimpacts/bulletimpact_2.ogg",
-              "/sfx/project45-synthetikmechanics/bulletimpacts/bulletimpact_3.ogg"
-            }
-          }
-          --]]
           {
             action = "config",
             file = "/projectiles/explosions/project45_hitexplosion/project45_hitscanexplosion.config"
@@ -577,6 +610,8 @@ function SynthetikMechanics:fireHitscan()
         }
       }
     )
+    
+    
 
   end
 end
@@ -654,8 +689,10 @@ function SynthetikMechanics:flashMuzzle()
   animator.setPartTag("muzzleFlash", "variant", math.random(1, self.muzzleFlashVariants or 3))
   animator.burstParticleEmitter("muzzleFlash")
   animator.setLightActive("muzzleFlash", true)
+  activeItem.setScriptedAnimationParameter("muzzleFlash", true)
   animator.setAnimationState("flash", "flash")
   self.muzzleFlashTimer = self.muzzleFlashTime
+  self.muzzleSmokeTimer = self.muzzleSmokeTime
 end
 
 function SynthetikMechanics:recoil()
@@ -672,6 +709,25 @@ function SynthetikMechanics:recoil()
   if self.recoilMomentum then
     mcontroller.addMomentum(vec2.mul(self:aimVector(), self.recoilMomentum * -1))
   end
+
+end
+
+function SynthetikMechanics:dash()
+  
+  local dashDirection
+  if mcontroller.xVelocity() ~= 0 then
+    dashDirection = mcontroller.movingDirection()
+  else
+    dashDirection = mcontroller.facingDirection()
+  end
+  animator.playSound("dash")
+  status.addEphemeralEffect("project45dash", self.dashParams.time)
+  util.wait(self.dashParams.time, function(dt)
+    mcontroller.setVelocity({self.dashParams.speed*dashDirection, 0})
+  end)
+  mcontroller.setXVelocity(mcontroller.xVelocity() * self.dashParams.endXVelMult)
+
+  self.dashCooldownTimer = self.dashParams.cooldown
 
 end
 
@@ -696,6 +752,37 @@ function SynthetikMechanics:unjam()
 end
 
 -- UPDATE FUNCTIONS
+--[[
+function SynthetikMechanics:updateCamera(shiftHeld)
+
+  if storage.cameraProjectile and world.entityExists(storage.cameraProjectile) then
+    world.callScriptedEntity(storage.cameraProjectile, "updateSource", mcontroller.position())
+    activeItem.setCameraFocusEntity(storage.cameraProjectile)
+  end
+
+  if shiftHeld then
+    storage.cameraProjectile = storage.cameraProjectile or world.spawnProjectile(
+      "project45camera",
+      mcontroller.position(),
+      activeItem.ownerEntityId(),
+      {0, 0},
+      true,
+      {power = 0}
+    )
+    if world.entityExists(storage.cameraProjectile) then
+      world.callScriptedEntity(storage.cameraProjectile, "updatePos", activeItem.ownerAimPosition(), mcontroller.position(), 100)
+      activeItem.setCameraFocusEntity(storage.cameraProjectile)
+    end
+  else
+    if storage.cameraProjectile and world.entityExists(storage.cameraProjectile) then
+      world.callScriptedEntity(storage.cameraProjectile, "moveToSource", mcontroller.position())
+      activeItem.setCameraFocusEntity(storage.cameraProjectile)
+    else
+      storage.cameraProjectile = nil
+    end
+  end
+end
+--]]
 
 function SynthetikMechanics:updateScriptedAnimationParameters()
 
@@ -706,7 +793,36 @@ function SynthetikMechanics:updateScriptedAnimationParameters()
   activeItem.setScriptedAnimationParameter("playerPos", mcontroller.position())
   activeItem.setScriptedAnimationParameter("reloadTimer", self.reloadTimer)
   activeItem.setScriptedAnimationParameter("jamAmount", storage.jamAmount)
+  activeItem.setScriptedAnimationParameter("muzzlePos", self:firePosition())
+
   
+  activeItem.setScriptedAnimationParameter("muzzleSmokeTimer", self.muzzleSmokeTimer)
+  
+end
+
+function SynthetikMechanics:updateMagAnimation()
+
+  local tag = self.magAnimRange[2]
+
+  -- validation; self.magAnimRange must be a subset of non-negative integers
+  if self.magAnimRange[1] >= self.magAnimRange[2] or math.min(self.magAnimRange[1], self.magAnimRange[2]) < 0 then
+    tag = "default"
+  
+  -- if ammo is below range
+  elseif storage.ammo < self.magAnimRange[1] then
+    tag = self.magAnimRange[1]
+  
+  -- if ammo is within animation range then
+  elseif self.magAnimRange[1] <= storage.ammo and storage.ammo <= self.magAnimRange[2] then
+    tag = storage.ammo
+  
+  -- if ammo is above range
+  else
+    tag = storage.ammo % 2 -- magazine animation loop
+  end
+
+  animator.setGlobalTag("ammo", tag)
+
 end
 
 function SynthetikMechanics:updateSoundProperties()
@@ -756,7 +872,7 @@ function SynthetikMechanics:damagePerShot()
   2. x1.1 damage if the reload rating is good, x1.3 if perfect
   3. Power Multiplier of the player
   4. Tier of the weapon
-  5. Critical Roll
+  5. Critical Roll (calculated when firing hitscan)
 
   The calculated damage is distributed between the projectiles spawned per shot. In eseence, hitting all pellets of
   a shotgun shot deals the complete amount of damage.
@@ -765,30 +881,31 @@ function SynthetikMechanics:damagePerShot()
   local reloadDamageMultiplier = 1
   if storage.reloadRating == "good" then reloadDamageMultiplier = 1.1 
   elseif storage.reloadRating == "perfect" then reloadDamageMultiplier = 1.3 end
-  return self.baseDamage * reloadDamageMultiplier * config.getParameter("damageLevelMultiplier", 1) * activeItem.ownerPowerMultiplier() * self:crit() / self.projectileCount
+  return self.baseDamage * reloadDamageMultiplier * config.getParameter("damageLevelMultiplier", 1) * activeItem.ownerPowerMultiplier() / self.projectileCount
 end
 
 function SynthetikMechanics:screenShake(amount, shakeTime, random)
-    local shake_dir = vec2.mul(self:aimVector(0), -1 * (amount or 0.1))
-    if random then vec2.rotate(shake_dir, 3.14 * truerand()) end
-    local cam = world.spawnProjectile(
-      "invisibleprojectile",
-      vec2.add(mcontroller.position(), shake_dir),
-      0,
-      {0, 0},
-      false,
-      {
-        power = 0,
-        timeToLive = shakeTime or 0.01,
-        damageType = "NoDamage"
-      }
-    )
-    activeItem.setCameraFocusEntity(cam)
+  local source = mcontroller.position()
+  local shake_dir = vec2.mul(self:aimVector(0), -1 * (amount or 0.1))
+  if random then vec2.rotate(shake_dir, 3.14 * truerand()) end
+  local cam = world.spawnProjectile(
+    "invisibleprojectile",
+    vec2.add(source, shake_dir),
+    0,
+    {0, 0},
+    false,
+    {
+      power = 0,
+      timeToLive = shakeTime or 0.01,
+      damageType = "NoDamage"
+    }
+  )
+  activeItem.setCameraFocusEntity(cam)
 end
 
 function SynthetikMechanics:firePosition()
-    return vec2.add(mcontroller.position(), activeItem.handPosition(vec2.rotate(self.weapon.muzzleOffset, self.weapon.relativeWeaponRotation)))
-  end
+  return vec2.add(mcontroller.position(), activeItem.handPosition(vec2.rotate(self.weapon.muzzleOffset, self.weapon.relativeWeaponRotation)))
+end
 
 function SynthetikMechanics:aimVector(inaccuracy)
   local aimVector = vec2.rotate({1, 0}, self.weapon.aimAngle + sb.nrand((inaccuracy or 0), 0))
@@ -820,30 +937,11 @@ function SynthetikMechanics:jam()
 end
 
 -- returns a critical multiplier
--- follows warframe's critical chance mechanic
 function SynthetikMechanics:crit()
-
-  if self.critChance < 1 then
-    if self:diceRoll(self.critChance) then 
-      return self.critDamageMult
-    else
-      return 1
-    end
+  if self:diceRoll(self.critChance, true) then
+    return self.critDamageMult
   end
-
-  local critTier = math.floor(self.critChance)
-  local actualCritChance = self.critChance - critTier
-
-  local critDamage = self.critDamageMult - 1
-
-  local successfulCritDamage = critDamage * (critTier + 1)
-  local guaranteedCritDamage = critDamage * critTier
-
-  if self:diceRoll(actualCritChance) then 
-    return 1 + successfulCritDamage
-  else
-    return 1 + guaranteedCritDamage
-  end
+  return 1
 end
 
 -- Returns true if the diceroll for the given chance is successful
@@ -870,6 +968,7 @@ function SynthetikMechanics:setStance(stance)
   storage.targetStance = copy(stance)
   self.aimProgress = 0
 end
+
 
 function SynthetikMechanics:snapStance(stance)
   

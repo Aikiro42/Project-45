@@ -13,33 +13,55 @@
     "type" : "synthetikmechanics",
     "scripts" : ["/items/active/weapons/ranged/abilities/synthetikmechanics/synthetikmechanics.lua"],
     "class" : "SynthetikMechanics",
+    
+    
 
-    "recoilMomentum": 0, // momentum added to character opposite direction of aim vector when firing
-    "recoilDeg": [2, 1], // degrees of recoil every time the gun is shot (think spray control)
-    "aimTime": [3, 1], // time it takes to aim; first index is when you're running, second is when shift is held
-    
+    // ________________________[ DAMAGE SETTINGS ]__________________________________
+    "baseDamage": 6.25, // base damage per shot
+    "critChance": 0,
+    "critDamageMult": 1,
+
+    // ________________________[ AMMO-RELATED SETTINGS ]__________________________________
+    "maxAmmo": 8, // maximum ammo of the weapon
+    "bulletsPerReload": 8,  // number of bullets reloaded at a time
+    "magAnimRange": [0, 0],
+    "ammoPerShot": 1, // ammo consumed per shot
+    "burstCount": 1, // number of shots per burst
+
+
+    // ________________________[ PROJECTILE SETTINGS ]__________________________________
+  
+    // if explicitly "hitscan", gun fires hitscan shots; otherwise, gun fires projectiles
+    // the projectileType field functions as any other projectileType field does
+    "projectileType": "hitscan",
+    "projectileCount" : 1, // number of projectiles launched per shot
+    "projectileParameters": {
+      // hitscan params
+      "range": 100,  // range of the hitscan line in blocks
+      "punchThrough": 1,  // number of entities to register before stopping the scan
+      "fadeTime": 0.1, // how long the hitscan line fades away
+      "hitscanWidth": 1 // visual width of hitscan line in pixels
+      // TODO: hitscan color
+    },
+
+    // ________________________[ GUN MECHANIC SETTINGS ]__________________________________
+    "magType": "default", // default, clip, strip; dictates reload visuals
+    "keepCasings": false, // drops casings per shot if false; overrides magazine particles with casings on reload if true
+    "semi": true, // firing, pulling and pushing the bolt aren't continuously done on keypress if true
+    "manualFeed": false, // whether the player must manually eject the case before firing another shot
     "chargeTime": 0, // amount of time the weapon will wind up before firing, in seconds
-    "autoFireAfterCharge": true, // automatically fires after fully charging
-    
+    "autoFireAfterCharge": true, // whether the gun automatically fires after fully charging
+
+    // dictates whether holding the button while it's feeding will make it automatically shoot
+    // only has any purpose if manualFeed is true
+    "slamFire": false,
+
     // Depending on which is greater, cycleTime or fireTime will dictate the fire rate of the weapon.
     "cycleTime": 0.1, // Time it takes to eject the bullet casing and feed the next cartridge.
     "fireTime" : 0.1, // Amount of time between weapon triggers
 
-    "maxAmmo": 8, // maximum ammo of the weapon
-    // number of bullets reloaded at a time
-    "bulletsPerReload": 8,
-
-    "ammoPerShot": 1, // ammo consumed per shot
-    "burstCount": 1, // number of shots per burst
-
-    "magType": "default", // default, clip, strip; dictates how reloads happen
-    "keepCasings": false, // drops casings per shot if false; overrides magazine particles with casings on reload if true
-    "semi": true, // firing, pulling and pushing the bolt aren't continuously done on keypress if true
-    "manualFeed": false, // whether the player must manually
-    // dictates whether holding the button while it's feeding will make it automatically shoot
-    // only has any purpose if manualFeed is true
-    "slamFire": false,
   
+    // ________________________[ JAM SETTINGS ]__________________________________
     "jamChances": {
       "bad": 0.05, // chance for a weapon to jam if it missed a reload
       "ok": 0.01, // chance for a weapon to jam if it waited a reload
@@ -47,32 +69,35 @@
     },
     "unjamTime": 0.1, // time it takes to attempt to unjam the weapon
     "unjamAmount": 0.25, // percent of unjam progress
-    
-    "baseDamage": 6.25, // base damage per shot
-    "inaccuracy" : 0.01, // Generic RNG inaccuracy; causes spread
-    // if explicitly "hitscan", gun fires hitscan shots; otherwise, gun fires projectiles
-    // "projectileType": ["project45stdbullet", "hitscan"],
-    "projectileType": ["hitscan"],
-    "projectileCount" : 1, // number of projectiles launched per shot
-    "projectileParameters": {
-      // hitscan params
-      "range": 100,  // range of the hitscan line in blocks
-      "punchthrough": 1,  // number of entities to register before stopping the scan
-      "fadeTime": 0.1, // how long the hitscan line fades away
-      "hitscanWidth": 1 // visual width of hitscan line in pixels
-    },
 
+    // ________________________[ ACCURACY SETTINGS ]__________________________________
+    "recoilMomentum": 0, // momentum added to character opposite direction of aim vector when firing
+    "recoilDeg": [2, 1], // degrees of recoil every time the gun is shot (think spray control)
+    "aimTime": [3, 1], // time it takes to aim; first index is when you're running, second is when shift is held
+    "inaccuracy" : 0.01, // Generic RNG inaccuracy; causes spread
     
+    // ________________________[ RELOAD SETTINGS ]__________________________________
     "reloadEnergyCostRate": 0.2, // percent of energy consumed per reload
     "reloadTime": 0.5, // time to reload <bulletsPerReload>, in second
     "goodReloadInterval": [0.4, 0.8], // (percentage) interval during which a good reload is possible
     "perfectReloadInterval": [0.6, 0.65], // (percentage) interval of the good reload interval during which a perfect reload is possible
     "cockTime": 0.6, // time it takes to cock the gun
 
-    "muzzleFlashTime": 0.05,
+    // ________________________[ DODGE SETTINGS ]__________________________________
+    "dashParams": {
+      "triggerTime": 0.2,
+      "time": 0.1,
+      "speed": 75,
+      "endXVelMult": 0.3,
+      "cooldown": 1
+    },
 
-    "critChance": 0,
-    "critDamageMult": 1,
+    // ________________________[ VISUAL SETTINGS SETTINGS ]__________________________________
+
+    "muzzleFlashTime": 0.05,
+    "muzzleSmokeTime": 5,
+    "muzzleSmokeDelay": 0.2,
+
 
     /*
     Possible Attachments: (NOT IMPLEMENTED YET)

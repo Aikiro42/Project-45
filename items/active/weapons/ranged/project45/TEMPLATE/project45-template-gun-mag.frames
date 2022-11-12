@@ -1,0 +1,16 @@
+{  
+  "frameGrid" : {
+    "size" : [40, 10],
+    "dimensions" : [7, 1],
+    "names" : [
+      ["absent", "present.8", "present.7", "present.6", "present.5", "present.4", "present.3"]
+    ]
+  },
+  
+  "aliases": {
+    // present.<ammo % 2>
+    "default": "present.8",
+    "present.0": "present.8",
+    "present.1": "present.7"
+  }
+}

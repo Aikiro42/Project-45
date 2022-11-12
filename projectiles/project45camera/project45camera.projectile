@@ -1,0 +1,20 @@
+{
+  "projectileName" : "project45camera",
+  "image" : "project45camera.png",
+  "scripts": ["project45camera.lua"],
+  "frameNumber" : 1,
+  "power": 0,
+  "speed" : 0,
+  "piercing": true,
+  "ignoreTerrain": true,
+  "timeToLive": 10,
+  "damagePoly" : [ [-36, 0], [-24, -24], [0, -36], [24, -24], [36, 0], [24, 24], [0, 36], [-24, 24] ],
+  "animationLoops" : false,
+  "flippable" : true,
+  "damageTeam" : { "type" : "indiscriminate" },
+  "damageKind" : "NoDamage",
+  "bounces": -1,
+  "movementSettings":{
+    "collisionEnabled": false
+  }
+}

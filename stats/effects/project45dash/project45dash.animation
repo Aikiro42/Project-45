@@ -1,0 +1,23 @@
+{
+  "particleEmitters" : {
+    "dodgeRight" : {
+      "emissionRate" : 40,
+      "particles" : [
+        {
+          "particle" : "project45dash",
+          "flip" : true
+        }
+      ]
+    },
+    "dodgeLeft" : {
+      "emissionRate" : 40,
+      "particles" : [
+        {
+          "particle" : "project45dashleft",
+          "flip" : true
+        }
+      ]
+    }
+  },
+  "sounds" : {}
+}

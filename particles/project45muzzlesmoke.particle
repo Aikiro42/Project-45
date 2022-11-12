@@ -1,0 +1,21 @@
+{
+    "kind" : "project45muzzlesmoke",
+    "definition" : {
+      "type" : "ember",
+      "size" : 1,
+      "color" : [200, 200, 200, 25],
+      "fade" : 0.9,
+      "initialVelocity" : [0, 5],
+      "finalVelocity" : [0, 1],
+      "approach" : [0, 1],
+      "light" : [0, 0, 0],
+      "destructionTime" : 0.8,
+      "layer" : "front",
+      "collidesLiquid" : true,
+      "variance" : {
+        "finalVelocity" : [1.5, 0],
+        "size" : 0.5
+      }
+    }
+  }
+  

@@ -1,0 +1,30 @@
+[
+    {
+        "op": "add",
+        "path": "/synthetikmechanics-hitscan",
+        "value": {
+            "resistanceStat": "physicalResistance",
+            "damageNumberParticles": {
+                "hit": "synthetikmechanics-damagenumber",
+                "stronghit": "synthetikmechanics-damagenumber",
+                "weakhit": "synthetikmechanics-damagenumber",
+                "shieldhit": "synthetikmechanics-damagenumber",
+                "kill": "synthetikmechanics-damagenumber"
+            }
+        }
+    },
+    {
+        "op": "add",
+        "path": "/synthetikmechanics-hitscancrit",
+        "value": {
+            "resistanceStat": "physicalResistance",
+            "damageNumberParticles": {
+                "hit": "synthetikmechanics-damagenumbercrit",
+                "stronghit": "synthetikmechanics-damagenumbercrit",
+                "weakhit": "synthetikmechanics-damagenumbercrit",
+                "shieldhit": "synthetikmechanics-damagenumbercrit",
+                "kill": "synthetikmechanics-damagenumbercrit"
+            }
+        }
+    }
+]

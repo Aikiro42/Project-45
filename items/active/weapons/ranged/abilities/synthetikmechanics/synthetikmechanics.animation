@@ -24,6 +24,15 @@
           "unjam": {}
         }
       },
+
+      "firing": {
+        "default": "off",
+        "states" : {
+          "off" : {},
+          "fire" : {}
+        }
+      },
+
       "flash" : {
         "default": "off",
         "states":{
@@ -36,6 +45,7 @@
           }
         }
       },
+      
       "mag": {
         "default": "present",
         "states": {
@@ -190,7 +200,7 @@
           "mag" : {
             "present": {
               "properties": {
-                "image": "<partImage>:present"
+                "image": "<partImage>:present.<ammo>"
               }
             },
             "absent": {
@@ -226,6 +236,14 @@
         {"particle": "project45muzzle"},
         {"particle": "project45muzzle"},
         {"particle": "project45muzzle"}
+      ]
+    },
+    "muzzleSmoke" : {
+      "transformationGroups" : ["muzzle"],
+      "offsetRegion" : [0, 0, 0, 0],
+      "emissionRate" : 100,
+      "particles" : [ 
+        {"particle": "project45muzzlesmoke"}
       ]
     },
     "ejectionPort" : {
@@ -292,12 +310,18 @@
     // sound indicator for good reload
     "goodReload" : ["/sfx/project45-synthetikmechanics/ping.ogg"],
     // sound indicator for bad reload
-    "badReload" : ["/sfx/project45-synthetikmechanics/clicks/click_generic.ogg"],
+    "badReload" : [
+      "/sfx/project45-synthetikmechanics/reloads/badreload_mag_1.ogg",
+      "/sfx/project45-synthetikmechanics/reloads/badreload_mag_2.ogg"
+    ],
 
     // sound indicator for when the gun jams
     "jammed" : ["/sfx/project45-synthetikmechanics/clicks/click_jammed.ogg"],
     // played when making an unjam attempt
     "unjam" : ["/sfx/project45-synthetikmechanics/clicks/click_unjam.ogg"],
+
+    // played when dodging
+    "dash": ["/sfx/tech/tech_jetpack_thrust2.ogg"],
 
     "laser" : ["/sfx/gun/project45_laser.ogg"],
 

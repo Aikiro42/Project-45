@@ -7,7 +7,7 @@
   "shortdescription" : "Project .45 Template",
   "tooltipKind" : "base",
   "category" : "Rifle",
-  "twoHanded" : false,
+  "twoHanded" : true,
   "itemTags" : ["weapon","ranged","rifle"],
   "level" : 7,
 
@@ -19,7 +19,7 @@
     "middle" : "project45-template-gun.png",
     "middleFullBright" : "",
     "barrel" : "",
-    "mag": "project45-template-mag.png",
+    "mag": "project45-template-gun-mag.png",
     "muzzleFlash" : "/items/active/weapons/ranged/muzzleflash.png"
   },
 
@@ -35,15 +35,28 @@
   "movementSpeedFactor": 1.32,
   "jumpHeightFactor": 1.22,
 
+  
   "primaryAbilityType": "synthetikmechanics",
   "primaryAbility": {
-    "maxAmmo": 8,
-    "bulletsPerReload": 8,
+
+    "recoilDeg": [0, 0],
+
+    "baseDamage": 3,
+    "cycleTime": 0.1,
+    "fireTime": 0.1,
+
+    "maxAmmo": 10,
+    "bulletsPerReload": 10,
+    "semi": false,
 
     "critChance": 0.5,
-    "critDamageMult": 2
+    "critDamageMult": 2,
+
+    "magAnimRange": [3, 8]
 
   },
+  
+  "altAbilityType": "bouncingshot",
 
   "builder" : "/items/buildscripts/buildproject45neo.lua"
 }

@@ -3,5 +3,10 @@
         "op": "add",
         "path": "/synthetikmechanics",
         "value": "/items/active/weapons/ranged/abilities/synthetikmechanics/synthetikmechanics.weaponability"
+    },
+    {
+        "op": "add",
+        "path": "/project45gunscope",
+        "value": "/items/active/weapons/ranged/abilities/project45gunscope/project45gunscope.weaponability"
     }
 ]
