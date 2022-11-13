@@ -1,4 +1,6 @@
 function update()
+    -- sb.logInfo("hi from project45gunscope")
+
     localAnimator.clearDrawables()
     localAnimator.clearLightSources()
     
@@ -10,12 +12,11 @@ function update()
         local laserLine = worldify(laser.origin, laser.destination)
         localAnimator.addDrawable({
             line = laserLine,
-            width = 1,
+            width = 0.3,
             fullbright = true,
             color = {255,0,0}
         }, "Player-1")  
     end
-
 end
 
 function worldify(alfa, beta)

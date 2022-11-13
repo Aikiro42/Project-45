@@ -81,7 +81,7 @@ function SynthetikMechanics:init()
     animator.setAnimationState("mag", storage.animationState["mag"])
     animator.setLightActive("muzzleFlash", false)
     animator.setAnimationState("flash", "off")
-    self.weapon:setStance(self.stances.idle)
+    self.weapon:setStance(self.stances.idleneo)
 
 end
 
@@ -254,7 +254,8 @@ function SynthetikMechanics:firing()
   end
 
   -- fire projectile
-  if projectileType == "hitscan" then
+  -- if projectileType == "hitscan" then
+  if (projectileType == "project45stdbullet" and not self.overrideHitscan) or projectileType == "hitscan" then
     self:fireHitscan()
   else
     self:fireProjectileNeo(projectileType)
@@ -264,7 +265,7 @@ function SynthetikMechanics:firing()
   self.chamberReady = false
 
   -- muzzle flash
-  self:flashMuzzle()
+  self:muzzleFlash()
   self:setAnimationState("gun", "firing")
 
   -- increment burst counter
@@ -490,6 +491,8 @@ function SynthetikMechanics:reloading()
     sb.logInfo("[PROJECT 45] Empirical Crit Chance: " .. storage.critStats.crits * 100 / storage.critStats.shots .. "%%")
 
     self:setStance(self.stances.aim)
+  else
+    animator.playSound("click")
 
   end
 
@@ -617,46 +620,46 @@ function SynthetikMechanics:fireHitscan()
 end
 
 -- Utility function that scans for an entity to damage.
-  function SynthetikMechanics:hitscan(isLaser)
+function SynthetikMechanics:hitscan(isLaser)
 
-    local scanOrig = self:firePosition()
-  
-    local scanDest = vec2.add(scanOrig, vec2.mul(self:aimVector(isLaser and 0 or self.inaccuracy), self.projectileParameters.range or 100))
-    scanDest = world.lineCollision(scanOrig, scanDest, {"Block", "Dynamic"}) or scanDest
-  
-    -- hitreg
-    local hitId = world.entityLineQuery(scanOrig, scanDest, {
-      withoutEntityId = entity.id(),
-      includedTypes = {"monster", "npc", "player"},
-      order = "nearest"
-    })
-  
-    local eid = {}
-    local pen = 0
-    if #hitId > 0 then
-      for i, id in ipairs(hitId) do
-        if world.entityCanDamage(entity.id(), id) then
-  
-          local aimAngle = vec2.angle(world.distance(scanDest, scanOrig))
-          local entityAngle = vec2.angle(world.distance(world.entityPosition(id), scanOrig))
-          local rotation = aimAngle - entityAngle
-          
-          scanDest = vec2.rotate(world.distance(world.entityPosition(id), scanOrig), rotation)
-          scanDest = vec2.add(scanDest, scanOrig)
-  
-          table.insert(eid, id)
-  
-          pen = pen + 1
-  
-          if pen > (self.projectileParameters.punchThrough or 0) then break end
-        end      
-      end
+  local scanOrig = self:firePosition()
+
+  local scanDest = vec2.add(scanOrig, vec2.mul(self:aimVector(isLaser and 0 or self.inaccuracy), self.projectileParameters.range or 100))
+  scanDest = world.lineCollision(scanOrig, scanDest, {"Block", "Dynamic"}) or scanDest
+
+  -- hitreg
+  local hitId = world.entityLineQuery(scanOrig, scanDest, {
+    withoutEntityId = entity.id(),
+    includedTypes = {"monster", "npc", "player"},
+    order = "nearest"
+  })
+
+  local eid = {}
+  local pen = 0
+  if #hitId > 0 then
+    for i, id in ipairs(hitId) do
+      if world.entityCanDamage(entity.id(), id) then
+
+        local aimAngle = vec2.angle(world.distance(scanDest, scanOrig))
+        local entityAngle = vec2.angle(world.distance(world.entityPosition(id), scanOrig))
+        local rotation = aimAngle - entityAngle
+        
+        scanDest = vec2.rotate(world.distance(world.entityPosition(id), scanOrig), rotation)
+        scanDest = vec2.add(scanDest, scanOrig)
+
+        table.insert(eid, id)
+
+        pen = pen + 1
+
+        if pen > (self.projectileParameters.punchThrough or 0) then break end
+      end      
     end
-    
-    world.debugLine(scanOrig, scanDest, {255,0,255})
-  
-    return {scanOrig, scanDest, eid}
   end
+  
+  world.debugLine(scanOrig, scanDest, {255,0,255})
+
+  return {scanOrig, scanDest, eid}
+end
 
 function SynthetikMechanics:aim()
   if self.reloadTimer < 0 then
@@ -674,11 +677,10 @@ function SynthetikMechanics:aim()
     self.weapon.relativeWeaponRotation = util.toRadians(interp.sin(self.aimProgress, math.deg(self.weapon.relativeWeaponRotation), stance.weaponRotation))
     self.weapon.relativeArmRotation = util.toRadians(interp.sin(self.aimProgress, math.deg(self.weapon.relativeArmRotation), stance.armRotation))
 
-
   end
 end
 
-function SynthetikMechanics:flashMuzzle()
+function SynthetikMechanics:muzzleFlash()
 
   self:recoil()
   animator.setSoundPitch("fire", sb.nrand(0.01, 1))
@@ -968,7 +970,6 @@ function SynthetikMechanics:setStance(stance)
   storage.targetStance = copy(stance)
   self.aimProgress = 0
 end
-
 
 function SynthetikMechanics:snapStance(stance)
   

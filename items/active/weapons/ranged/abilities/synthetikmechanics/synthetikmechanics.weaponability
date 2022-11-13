@@ -31,9 +31,11 @@
 
     // ________________________[ PROJECTILE SETTINGS ]__________________________________
   
-    // if explicitly "hitscan", gun fires hitscan shots; otherwise, gun fires projectiles
-    // the projectileType field functions as any other projectileType field does
-    "projectileType": "hitscan",
+    // if explicitly "project45stdbullet", gun fires hitscan shots; otherwise, gun fires projectiles
+    // this is to ensure compatibility with vanilla altfires
+    // either way, the projectileType field functions as any other projectileType field does
+    "projectileType": "project45stdbullet",
+    "overrideHitscan": false, // if true, "project45stdbullet" spawns the actual projectile while "hitscan" spawns hitscans
     "projectileCount" : 1, // number of projectiles launched per shot
     "projectileParameters": {
       // hitscan params
@@ -98,6 +100,9 @@
     "muzzleSmokeTime": 5,
     "muzzleSmokeDelay": 0.2,
 
+    // ________________________[ COMPATIBILITY SETTINGS ]__________________________________
+
+    "fireType": "auto",
 
     /*
     Possible Attachments: (NOT IMPLEMENTED YET)
@@ -124,7 +129,7 @@
       // SUSTAINED STANCES - These stances are interpolated to
       
       // initial stance when re-equipping the weapon
-      "idle" : {
+      "idleneo" : {
         "armRotation" : -45,
         "weaponRotation" : 0,
         "twoHanded" : false,
@@ -206,7 +211,34 @@
         "twoHanded" : false,
         "allowRotate" : false,
         "allowFlip" : false
+      },
+
+      // Legacy Stances for altfire compatibility
+      "fire": {
+        "armRotation": 0,
+        "weaponRotation": 0,
+        "twoHanded": false,
+        "allowRotate": true,
+        "allowFlip": true
+      },
+
+      "cooldown": {
+        "armRotation": 0,
+        "weaponRotation": 0,
+        "twoHanded": false,
+        "allowRotate": true,
+        "allowFlip": true
+      },
+
+      "idle" : {
+        "armRotation" : 0,
+        "weaponRotation" : 0,
+        "twoHanded" : false,
+
+        "allowRotate" : true,
+        "allowFlip" : true
       }
+
 
     }
   }
