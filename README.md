@@ -30,11 +30,7 @@ Welcome... to Project 45.
 - Implement scope
 - add hitscan knockback
 - figure out how to utilize two animation scripts
-    - Create your own custom `/items/buildscripts/abilities.lua`, import that into `items/buildscripts/buildproject45neo.lua`
-    - Make `addAbilities` in the new `/items/buildscripts/abilities.lua` return the `animationScripts` of the abilities
-    - In `buildproject45neo.lua`, add an a`altAnimationScripts` field to the item config
-    - In `project45gun.lua`, when the gun is initialized, make it send the value of `altAnimationScripts` into the local animator via `activeItem.setScriptedAnimationParameter()`
-    - In the animation script of the primary ability, code its `init()` function so that it requires the `altAnimationScripts`.
+
 
 ## Vanilla Altfires Compatibility List:
 - <span style="color: green">Bouncing Shot</span>
@@ -72,3 +68,153 @@ Welcome... to Project 45.
     - uses custom projectile
 - <span style="color: green">Sticky Shot</span>
 
+## Experiment
+
+### Problem
+I can't use more than one animation script on the gun.
+
+### Goal
+Use more than one animation script on the gun.
+
+### Methodology
+1. Create custom `/items/buildscripts/abilities.lua`, import that into `items/buildscripts/buildproject45neo.lua`
+
+2. Make `addAbilities` and `setupAbilities` in the new `/items/buildscripts/abilities.lua` return the `animationScripts` of the abilities:
+
+    ```lua
+
+    -- Adds the new ability to the config (modifying it)
+    -- abilitySlot is either "alt" or "primary"
+    function addAbility(config, parameters, abilitySlot, abilitySource)
+    if abilitySource then
+        local abilityConfig = root.assetJson(abilitySource)
+        
+        -- sb.logInfo("[PROJECT 45] (project45abilities.lua) setupAbility() : " .. sb.printJson(abilityConfig.animationScripts))
+        local retAnimScripts = {}
+        util.mergeTable(retAnimScripts, abilityConfig.animationScripts)
+
+        -- Stuff
+        sb.logInfo("[PROJECT 45] (project45abilities.lua)" .. sb.printJson(abilityConfig.animationScripts))
+
+        -- Rename "ability" key to primaryAbility or altAbility
+        local abilityType = abilityConfig.ability.type
+        abilityConfig[abilitySlot .. "Ability"] = abilityConfig.ability
+        abilityConfig.ability = nil
+
+        -- Allow parameters in the activeitem's config to override the abilityConfig
+        local newConfig = util.mergeTable(abilityConfig, config)
+        util.mergeTable(config, newConfig)
+
+        parameters[abilitySlot .. "AbilityType"] = abilityType
+        
+        -- Return the animationScripts
+        return retAnimScripts
+    end
+    return {}
+    end
+
+    -- Determines ability from config/parameters and then adds it.
+    -- abilitySlot is either "alt" or "primary"
+    -- If builderConfig is given, it will randomly choose an ability from
+    -- builderConfig if the ability is not specified in the config/parameters.
+    function setupAbility(config, parameters, abilitySlot, builderConfig, seed)
+    seed = seed or parameters.seed or config.seed or 0
+
+    local abilitySource = getAbilitySource(config, parameters, abilitySlot)
+    if not abilitySource and builderConfig then
+        local abilitiesKey = abilitySlot .. "Abilities"
+        if builderConfig[abilitiesKey] and #builderConfig[abilitiesKey] > 0 then
+        local abilityType = randomFromList(builderConfig[abilitiesKey], seed, abilitySlot .. "AbilityType")
+        abilitySource = getAbilitySourceFromType(abilityType)
+        end
+    end
+
+    if abilitySource then
+        return addAbility(config, parameters, abilitySlot, abilitySource)
+    end
+    end
+    ```
+
+3. In `buildproject45neo.lua`, add an a`altAnimationScripts` field to the item config:
+    ```lua
+    function build(directory, config, parameters, level, seed)
+        local configParameter = function(keyName, defaultValue)
+            if parameters[keyName] ~= nil then
+            return parameters[keyName]
+            elseif config[keyName] ~= nil then
+            return config[keyName]
+            else
+            return defaultValue
+            end
+        end
+
+        if level and not configParameter("fixedLevel", true) then
+            parameters.level = level
+        end
+
+        sb.logInfo("[PROJECT 45] Adding stuff...")
+        
+        local primaryAnimationScripts = setupAbility(config, parameters, "primary")
+        local altAnimationScripts = setupAbility(config, parameters, "alt")
+        
+        sb.logInfo("[PROJECT 45] (buildproject45neo.lua) retrieved altAnimationScripts: " .. sb.printJson(altAnimationScripts))
+        
+        -- TODO: Make sure the altAnimationScripts are passed to the config properly; copy it?
+        config.altAnimationScripts = {}
+        util.mergeTable(config.altAnimationScripts, altAnimationScripts or {})
+        
+        sb.logInfo("[PROJECT 45] (buildproject45neo.lua) config.altAnimationScripts = " .. sb.printJson(config.altAnimationScripts))
+        --]]
+
+        -- elemental type and config (for alt ability)
+        local elementalType = configParameter("elementalType", "physical")
+        replacePatternInData(config, nil, "<elementalType>", elementalType)
+        if config.altAbility and config.altAbility.elementalConfig then
+            util.mergeTable(config.altAbility, config.altAbility.elementalConfig[elementalType])
+        end
+
+        -- calculate damage level multiplier
+        config.damageLevelMultiplier = root.evalFunction("weaponDamageLevelMultiplier", configParameter("level", 1))
+
+        -- palette swaps
+        config.paletteSwaps = ""
+        if config.palette then
+    ```
+
+4. In `project45gun.lua`, when the gun is initialized, make it send the value of `altAnimationScripts` into the local animator via `activeItem.setScriptedAnimationParameter()`:
+    ```lua
+    function init()
+        activeItem.setCursor("/cursors/reticle0.cursor")
+        animator.setGlobalTag("paletteSwaps", config.getParameter("paletteSwaps", ""))
+
+        self.weapon = Weapon:new()
+
+        sb.logInfo("[PROJECT 45] (project45gun.lua) animationScripts:" .. sb.printJson(config.getParameter("animationScripts")))
+        sb.logInfo("[PROJECT 45] (project45gun.lua) altAnimationScripts:" .. sb.printJson(config.getParameter("altAnimationScripts")))
+        
+        activeItem.setScriptedAnimationParameter("altAnimationScripts", config.getParameter("altAnimationScripts", {}))
+        -- activeItem.setScriptedAnimationParameter("primaryAnimScripts", config.getParameter("animationScripts", {}))
+
+        self.weapon:addTransformationGroup("weapon", {0,0}, 0)
+        self.weapon:addTransformationGroup("muzzle", self.weapon.muzzleOffset, 0)
+    ```
+
+
+5. In the animation script of the primary ability, code its `init()` function so that it requires the `altAnimationScripts`:
+```lua
+function init()
+  
+  local altAnimScripts = animationConfig.animationParameter("altAnimationScripts")
+  -- local primaryAnimScripts = animationConfig.animationParameter("primaryAnimScripts")
+
+  -- oldUpdate = update
+  sb.logInfo("[PROJECT 45] (syntheticmechanicsanimation.lua) REQUIRING SCRIPT: " .. altAnimScripts[1])
+  require(altAnimScripts[1])
+
+  -- sb.logInfo("[PROJECT 45] (syntheticmechanicsanimation.lua) REQUIRING SCRIPT: " .. primaryAnimScripts[1])
+  -- require(primaryAnimScripts[1])
+  
+end
+```
+
+6. Do stuff
