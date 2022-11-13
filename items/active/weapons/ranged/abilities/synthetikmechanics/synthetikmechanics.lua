@@ -82,7 +82,7 @@ function SynthetikMechanics:init()
 
     animator.setAnimationState("gun", storage.animationState["gun"])
     animator.setAnimationState("mag", storage.animationState["mag"])
-    -- animator.setLightActive("muzzleFlash", false)
+    animator.setLightActive("muzzleFlash", false)
     activeItem.setScriptedAnimationParameter("muzzleFlash", false)
     animator.setAnimationState("flash", "off")
     self.weapon:setStance(self.stances.idleneo)
@@ -133,7 +133,7 @@ function SynthetikMechanics:update(dt, fireMode, shiftHeld)
 
     -- turn off muzzleflash automatically
     if self.muzzleFlashTimer <= 0 then
-      -- animator.setLightActive("muzzleFlash", false)
+      animator.setLightActive("muzzleFlash", false)
       activeItem.setScriptedAnimationParameter("muzzleFlash", false)
     end
 
@@ -739,7 +739,7 @@ function SynthetikMechanics:muzzleFlash()
   animator.playSound("hollow")
   animator.setPartTag("muzzleFlash", "variant", math.random(1, self.muzzleFlashVariants or 3))
   animator.burstParticleEmitter("muzzleFlash")
-  -- animator.setLightActive("muzzleFlash", true)
+  animator.setLightActive("muzzleFlash", true)
   activeItem.setScriptedAnimationParameter("muzzleFlash", true)
   animator.setAnimationState("flash", "flash")
   self.muzzleFlashTimer = self.muzzleFlashTime

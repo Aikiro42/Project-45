@@ -280,7 +280,7 @@
     "muzzleFlash" : {
       "active" : false,
       "position" : [0, 0],
-      "color" : [255, 255, 200]
+      "color" : [0, 0, 0]
     }
   },
 

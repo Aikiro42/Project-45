@@ -42,10 +42,10 @@ Welcome... to Project 45.
 - <span style="color: red">Erchius Beam</span>
     - Incompatible; intended to be used on the Erchius Eye.
 - <span style="color: green">Erchius Launcher</span>
-- <span style="color: yellow">Explosive Burst</span>
-    - Requires elemental configuration; not thoroughly tested.
+- <span style="color: green">Explosive Burst</span>
+    - Requires activeItem "elementalType" field.
 - <span style="color: green">Explosive Shot</span>
-- <span style="color: blue">Flamethrower</span>
+- <span style="color: green">Flamethrower</span>
     - Added compatibility.
 - <span style="color: green">Flashlight</span>
     - Note to self: base laser off this thing.
@@ -53,11 +53,11 @@ Welcome... to Project 45.
 - <span style="color: green">Grenade Launcher</span>
 - <span style="color: green">Guided Rocket</span>
     - Perfectly resembles synthetik mechanic.
-- <span style="color: yellow">Homing Rocket</span>
+- <span style="color: red">Homing Rocket</span>
     - Seemingly dysfunctional; it does shoot a rocket, but there aren't any indicators of it being guided.
-- <span style="color: yellow">Lance</span>
-    - May require elemental config; untested
-- <span style="color: yellow">Marked Shot</span>
+- <span style="color: green">Lance</span>
+    - Requires activeItem "elementalType" field.
+- <span style="color: red">Marked Shot</span>
     - Functional, but missing animated elements.
 - <span style="color: green">Piercing Shot</span>
 - <span style="color: green">Rocket Burst</span>
