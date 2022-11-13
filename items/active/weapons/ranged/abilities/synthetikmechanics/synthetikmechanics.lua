@@ -871,7 +871,7 @@ function SynthetikMechanics:updateMagAnimation()
   
   -- if ammo is above range
   else
-    tag = storage.ammo % 2 -- magazine animation loop
+    tag = storage.ammo % self.magLoopFrames -- magazine animation loop
   end
 
   animator.setGlobalTag("ammo", tag)

@@ -24,7 +24,6 @@
     // ________________________[ AMMO-RELATED SETTINGS ]__________________________________
     "maxAmmo": 8, // maximum ammo of the weapon
     "bulletsPerReload": 8,  // number of bullets reloaded at a time
-    "magAnimRange": [0, 0],
     "ammoPerShot": 1, // ammo consumed per shot
     "burstCount": 1, // number of shots per burst
 
@@ -50,7 +49,7 @@
       "punchThrough": 1,  // number of entities to register before stopping the scan
       "fadeTime": 0.1, // how long the hitscan line fades away
       "hitscanWidth": 1, // visual width of hitscan line in pixels
-      "hitscanColor": [255,255,200] // color of hitscan projectile
+      "hitscanColor": [255,255,200] // color of hitscan projectile; also dictates muzzle flash color
     },
 
     // ________________________[ GUN MECHANIC SETTINGS ]__________________________________
@@ -98,18 +97,21 @@
     "unjamTime": 0.1, // time it takes to attempt to unjam the weapon
     "unjamAmount": 0.25, // percent of unjam progress
 
+
     // ________________________[ ACCURACY SETTINGS ]__________________________________
     "recoilMomentum": 0, // momentum added to character opposite direction of aim vector when firing
     "recoilDeg": [2, 1], // degrees of recoil every time the gun is shot (think spray control)
     "aimTime": [3, 1], // time it takes to aim; first index is when you're running, second is when shift is held
     "inaccuracy" : 0.01, // Generic RNG inaccuracy; causes spread
     
+
     // ________________________[ RELOAD SETTINGS ]__________________________________
     "reloadEnergyCostRate": 0.2, // percent of energy consumed per reload
     "reloadTime": 0.5, // time to reload <bulletsPerReload>, in second
     "goodReloadInterval": [0.4, 0.8], // (percentage) interval during which a good reload is possible
     "perfectReloadInterval": [0.6, 0.65], // (percentage) interval of the good reload interval during which a perfect reload is possible
     "cockTime": 0.6, // time it takes to cock the gun
+
 
     // ________________________[ DODGE SETTINGS ]__________________________________
     "dashParams": {
@@ -121,35 +123,27 @@
       "cooldown": 1
     },
 
-    // ________________________[ VISUAL SETTINGS SETTINGS ]__________________________________
 
-    "muzzleFlashTime": 0.05,
-    "muzzleSmokeTime": 5,
+    // ________________________[ VISUAL SETTINGS ]__________________________________
+    /*
+    The magazine's sprite sheet should look like this:
+    [loop frame 1][loop frame 2] ... [loop frame L][n ammo][n-1 ammo] ... [x+1 ammo][x ammo]
+
+    Each frame should be referred to in the .frames file as such:
+    [present.0][present.1] .. [present.<>L-1][]
+
+    */
+    "magLoopFrames": 0, // L
+    "magAnimRange": [0, 0], // [n, x]
+
+    "muzzleFlashTime": 0.05, // number of seconds the muzzle light is active when firing
+    "muzzleSmokeTime": 5, // number of seconds the muzzle smoke is active
     "muzzleSmokeDelay": 0.2,
-
+    
     // ________________________[ COMPATIBILITY SETTINGS ]__________________________________
 
     "fireType": "auto",
 
-    /*
-    Possible Attachments: (NOT IMPLEMENTED YET)
-    
-    "lasersight" - walking grants laser sights
-
-    "420sniperdragon" - hitting an enemy behind you after
-      hitting an enemy in front of you gives an extremely massive damage boost.
-
-    "grenadelauncher" - Chance to lob a grenade per shot.
-
-    "twinlink" - Chance to double projectile count without affecting damage.
-
-    "targetcogitator" - Chance to deal double damage. Affects grenade launcher damage.
-
-    "AP rounds" - projectiles ignore defense.
-
-    
-    */
-    "attachments": [],
 
     "stances" : {
 

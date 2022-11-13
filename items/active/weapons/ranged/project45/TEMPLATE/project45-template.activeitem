@@ -50,6 +50,7 @@
     "critChance": 0.5,
     "critDamageMult": 2,
 
+    "magLoopFrames": 2,
     "magAnimRange": [3, 8]
 
   },
