@@ -18,6 +18,7 @@ function SynthetikMechanics:init()
     storage.reloadRating = storage.reloadRating or "ok"
     storage.jamAmount = storage.jamAmount or 0
     storage.animationState = storage.animationState or {gun = "ejecting", mag = "absent"} -- initial animation state is empty gun
+    storage.isLaserOn = storage.isLaserOn or false
     self:setStance(storage.targetStance or self.stances.aim)
 
     storage.critStats = storage.critStats or {
@@ -31,13 +32,14 @@ function SynthetikMechanics:init()
     self.muzzleSmokeTimer = 0
     self.dashCooldownTimer = 0
     self.dashTriggerTimer = -1
+    self.laserToggleTimer = -1
     self.cooldownTimer = self.fireTime
     self.reloadTimer = -1 -- not reloading
     self.isCharging = false
     self.chamberReady = storage.ammo < 0 -- TODO: should really improve this thing
     self.jamChances.perfect = 0
 
-    -- validate bullets per reload
+    -- validations
     self.bulletsPerReload = math.min(self.maxAmmo, self.bulletsPerReload)
 
     self.projectileParameters = self.projectileParameters or {}
@@ -55,12 +57,13 @@ function SynthetikMechanics:init()
     -- the weapon is "done" bursting on init
     self.burstCounter = self.burstCount
 
-    -- animation parameters
+    -- one-time initialized animation parameters
     activeItem.setScriptedAnimationParameter("reloadTime", self.reloadTime)
     activeItem.setScriptedAnimationParameter("goodReloadRange", {self.reloadTime * self.goodReloadInterval[1], self.reloadTime * self.goodReloadInterval[2]})
     activeItem.setScriptedAnimationParameter("perfectReloadRange", {self.reloadTime * self.perfectReloadInterval[1], self.reloadTime * self.perfectReloadInterval[2]})
     activeItem.setScriptedAnimationParameter("ammoMax", self.maxAmmo)
     activeItem.setScriptedAnimationParameter("muzzleSmokeTime", self.muzzleSmokeTime)
+    activeItem.setScriptedAnimationParameter("laserColor", self.laser.color)
 
     -- initialize visuals
 
@@ -79,9 +82,13 @@ function SynthetikMechanics:init()
 
     animator.setAnimationState("gun", storage.animationState["gun"])
     animator.setAnimationState("mag", storage.animationState["mag"])
-    animator.setLightActive("muzzleFlash", false)
+    -- animator.setLightActive("muzzleFlash", false)
+    activeItem.setScriptedAnimationParameter("muzzleFlash", false)
     animator.setAnimationState("flash", "off")
     self.weapon:setStance(self.stances.idleneo)
+
+    -- necessary updates
+    self:updateScriptedAnimationParameters()
 
 end
 
@@ -99,6 +106,7 @@ function SynthetikMechanics:update(dt, fireMode, shiftHeld)
     self:updateSoundProperties()
     self:updateCursor(shiftHeld)
     self:updateProjectileStack()
+    self:drawLaser()
 
 
     -- local laserLine = (self.allowLaser and shiftHeld and storage.ammo > 0) and self:hitscan(true) or {}
@@ -125,29 +133,69 @@ function SynthetikMechanics:update(dt, fireMode, shiftHeld)
 
     -- turn off muzzleflash automatically
     if self.muzzleFlashTimer <= 0 then
-      animator.setLightActive("muzzleFlash", false)
+      -- animator.setLightActive("muzzleFlash", false)
       activeItem.setScriptedAnimationParameter("muzzleFlash", false)
     end
 
     -- Prevent energy regen if there is energy or if currently reloading
     if storage.ammo > 0 or self.reloadTimer > 0 then status.setResource("energyRegenBlock", 1.0) end
 
-    -- I/O logic
-    if shiftHeld and not self.weapon.currentAbility then
-      if self.dashTriggerTimer < 0 then
-        self.dashTriggerTimer = 0
+    -- Walk I/O logic
+    if shiftHeld then
+      
+      -- begin Dash Trigger Timer when not in ability
+      if not self.weapon.currentAbility then
+        if self.dashTriggerTimer < 0 then
+          self.dashTriggerTimer = 0 -- set trigger timer
+        end
+        self.dashTriggerTimer = self.dashTriggerTimer + self.dt
       end
-      self.dashTriggerTimer = self.dashTriggerTimer + self.dt
-    elseif not self.weapon.currentAbility then
-      if self.dashTriggerTimer <= self.dashParams.triggerTime and self.dashTriggerTimer >= 0 then
-        self:setState(self.dash)
+
+      -- if laser is toggled
+      if self.laser.toggle then
+        -- set and start the toggle timer
+        if self.laserToggleTimer < 0 then
+          self.laserToggleTimer = 0
+        end
+        self.laserToggleTimer = self.laserToggleTimer + self.dt
+      
+      -- if laser is held instead, turn it on
+      else
+        if not storage.isLaserOn then animator.playSound("laser") end
+        storage.isLaserOn = true
       end
-      self.dashTriggerTimer = -1
+    
+
+    else
+      -- if triggered dash, dash when weapon isn't doing an ability
+      if not self.weapon.currentAbility then
+        if self.dashTriggerTimer <= self.dashParams.triggerTime and self.dashTriggerTimer >= 0 then
+          self:setState(self.dash)
+        end
+        self.dashTriggerTimer = -1 -- reset trigger timer
+      end
+
+      -- if laser is toggled,
+      if self.laser.toggle then
+        -- if the toggle timer was set and is below the toggle time, toggle laser
+        if self.laserToggleTimer <= self.laser.toggleTime and self.laserToggleTimer >= 0 then
+          storage.isLaserOn = not storage.isLaserOn
+          if storage.isLaserOn then animator.playSound("laser") end
+        end
+        -- reset the timer
+        self.laserToggleTimer = -1
+      
+      -- if laser is held instead, turn it off
+      else
+        storage.isLaserOn = false
+      end
+    
     end
 
     if self:triggering()
      and not self.weapon.currentAbility
      and self.cooldownTimer == 0 then
+
       -- if not jammed
       if storage.jamAmount <= 0 then
     
@@ -543,7 +591,7 @@ end
 function SynthetikMechanics:fireProjectileNeo(projectileType)
   local params = sb.jsonMerge(self.projectileParameters, {})
   params.power = self:damagePerShot()
-  for i = 1, self.projectileCount do
+  for i = 1, self.projectileCount * self:calculateMultishot() do
     local projectileId = world.spawnProjectile(
       projectileType,
       self:firePosition(),
@@ -556,7 +604,7 @@ function SynthetikMechanics:fireProjectileNeo(projectileType)
 end
 
 function SynthetikMechanics:fireHitscan()
-  for i = 1, self.projectileCount do
+  for i = 1, self.projectileCount * self:calculateMultishot() do
     --[[
     if world.lineTileCollision(mcontroller.position(), self:firePosition()) then
       goto next_projectile
@@ -591,7 +639,8 @@ function SynthetikMechanics:fireHitscan()
       origin = hitReg[1],
       destination = hitReg[2],
       lifetime = life,
-      maxLifetime = life
+      maxLifetime = life,
+      color = self.projectileParameters.hitscanColor
     })
 
     -- hitscan explosion vfx
@@ -690,7 +739,7 @@ function SynthetikMechanics:muzzleFlash()
   animator.playSound("hollow")
   animator.setPartTag("muzzleFlash", "variant", math.random(1, self.muzzleFlashVariants or 3))
   animator.burstParticleEmitter("muzzleFlash")
-  animator.setLightActive("muzzleFlash", true)
+  -- animator.setLightActive("muzzleFlash", true)
   activeItem.setScriptedAnimationParameter("muzzleFlash", true)
   animator.setAnimationState("flash", "flash")
   self.muzzleFlashTimer = self.muzzleFlashTime
@@ -715,6 +764,8 @@ function SynthetikMechanics:recoil()
 end
 
 function SynthetikMechanics:dash()
+
+  if not self.dashParams.enabled then return end
   
   local dashDirection
   if mcontroller.xVelocity() ~= 0 then
@@ -846,6 +897,36 @@ function SynthetikMechanics:updateCursor(shiftHeld)
   end
 end
 
+function SynthetikMechanics:drawLaser()
+  if not self.laser.enabled 
+  then return end
+  
+  if (storage.isLaserOn or self.laser.alwaysActive)
+  and storage.ammo > 0
+  and storage.jamAmount == 0  
+  then
+
+    -- laser origin is muzzle
+    local scanOrig = self:firePosition()
+
+    -- laser distance is distance between aim position and muzzle
+    local range = world.magnitude(scanOrig, activeItem.ownerAimPosition())
+    
+    -- laser destination is aimvector * distance
+    local scanDest = vec2.add(scanOrig, vec2.mul(self:aimVector(0), self.laser.maxRange and self.laser.range or math.min(self.laser.range, range)))
+    
+    -- collide laser with terrain
+    scanDest = world.lineCollision(scanOrig, scanDest, {"Block", "Dynamic"}) or scanDest
+
+    activeItem.setScriptedAnimationParameter("laserOrigin", scanOrig)
+    activeItem.setScriptedAnimationParameter("laserDestination", scanDest)
+
+  else
+    activeItem.setScriptedAnimationParameter("laserOrigin", nil)
+    activeItem.setScriptedAnimationParameter("laserDestination", nil)
+  end
+end
+
 function SynthetikMechanics:updateProjectileStack()
 
   -- update projectile stack
@@ -938,6 +1019,17 @@ function SynthetikMechanics:jam()
   return false
 end
 
+-- returns a projectile count multiplier
+function SynthetikMechanics:calculateMultishot()
+  -- make base multishot integer
+  local baseMultishot = math.floor(self.multishot)
+  
+  -- use decimal as chance for additional shot
+  if self:diceRoll(self.multishot - baseMultishot, false) then
+    return baseMultishot + 1
+  end
+  return baseMultishot
+end
 -- returns a critical multiplier
 function SynthetikMechanics:crit()
   if self:diceRoll(self.critChance, true) then
@@ -948,7 +1040,6 @@ end
 
 -- Returns true if the diceroll for the given chance is successful
 function SynthetikMechanics:diceRoll(chance, inclusive)
-
   -- clamp chance between 0% and 100%
   local chance = chance < 0 and 0 or chance > 1 and 1 or chance
   local diceRoll = truerand()

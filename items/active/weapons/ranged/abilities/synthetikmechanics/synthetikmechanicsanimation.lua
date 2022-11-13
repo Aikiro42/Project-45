@@ -22,6 +22,10 @@ function update()
   local muzzleSmokeTimer = animationConfig.animationParameter("muzzleSmokeTimer")
   local muzzleSmokeTime = animationConfig.animationParameter("muzzleSmokeTime")
 
+  local muzzleFlash = animationConfig.animationParameter("muzzleFlash")
+  local muzzleFlashPos = activeItemAnimation.ownerPosition()
+  local muzzleFlashColor = {0, 0, 0}
+
 
   local reloadBarColors = {
     bad = {255, 0, 0},
@@ -72,12 +76,23 @@ function update()
   -- render hitscan trails
   for i, projectile in ipairs(projectileStack) do
     local bulletLine = worldify(projectile.origin, projectile.destination)
+    muzzleFlashColor = projectile.color or {0, 0, 0}
     localAnimator.addDrawable({
       line = bulletLine,
       width = (projectile.width or 1) * projectile.lifetime/projectile.maxLifetime,
       fullbright = true,
-      color = hitscanColor or {255,255,255}
+      color = projectile.color or {0, 0, 0}
     }, "Player-1")
+  end
+
+  -- render muzzle flash
+  if muzzleFlash then
+    localAnimator.addLightSource({
+      position = muzzlePos,
+      color = muzzleFlashColor,
+      pointLight = true,
+      pointBeam = 0.3,
+    })
   end
 
   if reloadTimer >= 0 then
@@ -103,6 +118,22 @@ function update()
     flippable = false,
     layer = "front"
   }, vec2.add(aimPosition, offset))
+
+  -- laser
+  local laser = {}
+  laser.origin = animationConfig.animationParameter("laserOrigin")
+  laser.destination = animationConfig.animationParameter("laserDestination")
+  laser.color = animationConfig.animationParameter("laserColor")
+
+  if laser.origin and laser.destination then
+    local laserLine = worldify(laser.origin, laser.destination)
+    localAnimator.addDrawable({
+        line = laserLine,
+        width = 0.2,
+        fullbright = true,
+        color = laser.color
+    }, "Player-1")
+  end
 
 end
 

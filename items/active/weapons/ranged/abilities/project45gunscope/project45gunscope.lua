@@ -18,7 +18,7 @@ function Project45GunScope:update(dt, fireMode, shiftHeld)
   local trigger = self.fireMode
   self:updateCamera(trigger)
   self:drawLaser(trigger)
-    
+
 end
 
 function Project45GunScope:uninit()
@@ -31,22 +31,31 @@ function Project45GunScope:firePosition()
   return vec2.add(mcontroller.position(), activeItem.handPosition(vec2.rotate(self.weapon.muzzleOffset, self.weapon.relativeWeaponRotation)))
 end
 
+-- draws laser from gun to crosshair
 function Project45GunScope:drawLaser(trigger)
-  if trigger == "alt" then
-    activeItem.setScriptedAnimationParameter("laserOrigin", self:firePosition())
-    if storage.cameraProjectile and world.entityExists(storage.cameraProjectile) then
-      activeItem.setScriptedAnimationParameter("laserDestination", world.entityPosition(storage.cameraProjectile))
-    end
-  elseif trigger == "none" then
+  if not self.laser then return end
+  if trigger == "alt" and animator.animationState("firing") == "off" then
+
+    local scanOrig = self:firePosition()
+    local range = world.magnitude(scanOrig, activeItem.ownerAimPosition())
+    local scanDest = vec2.add(scanOrig, vec2.mul(self:aimVector(0), math.min(self.range, range)))
+    scanDest = world.lineCollision(scanOrig, scanDest, {"Block", "Dynamic"}) or scanDest
+
+    activeItem.setScriptedAnimationParameter("laserOrigin", scanOrig)
+    activeItem.setScriptedAnimationParameter("laserDestination", scanDest)
+
+  elseif trigger == "none" or animator.animationState("firing") ~= "off"then
     activeItem.setScriptedAnimationParameter("laserOrigin", nil)
     activeItem.setScriptedAnimationParameter("laserDestination", nil)
   end
 end
 
 function Project45GunScope:updateCamera(shiftHeld)
+
+  local source = mcontroller.position()
+
   -- if altfire then
   if shiftHeld == "alt" then
-
 
     -- update state
     if self.state == 0 then
@@ -58,7 +67,7 @@ function Project45GunScope:updateCamera(shiftHeld)
     -- generate projectile if nonexistent
     storage.cameraProjectile = storage.cameraProjectile or world.spawnProjectile(
       "project45camera",
-      mcontroller.position(),
+      source,
       activeItem.ownerEntityId(),
       {0, 0},
       true,
@@ -67,9 +76,24 @@ function Project45GunScope:updateCamera(shiftHeld)
 
     -- update projectile position
     if world.entityExists(storage.cameraProjectile) then
-      world.callScriptedEntity(storage.cameraProjectile, "updatePos", activeItem.ownerAimPosition(), mcontroller.position(), 100, self.deadzone, self.maxSpeed)
+      --[[
+      local scanOrig = self:firePosition()
+      local scanDest = vec2.add(scanOrig, vec2.mul(self:aimVector(0), self.range))
+      scanDest = world.lineCollision(scanOrig, scanDest, {"Block", "Dynamic"}) or scanDest
+      --]]
+      world.callScriptedEntity(
+        storage.cameraProjectile,
+        "updatePos",
+        activeItem.ownerAimPosition(),
+        source,
+        -- world.magnitude(mcontroller.position(), scanDest),
+        self.range,
+        self.deadzone, self.maxSpeed, self.maxSpeedDistance)
+
       activeItem.setCameraFocusEntity(storage.cameraProjectile)
     end
+
+  -- if no button is pressed
   elseif shiftHeld == "none" then
     
     if self.state == 1 then
@@ -77,15 +101,56 @@ function Project45GunScope:updateCamera(shiftHeld)
       self.state = 0
     end
 
+    -- move crosshair back to player if camera projectile exists and is trackable
     self.lerpProgress = math.min(1, self.lerpProgress + self.dt)
     if storage.cameraProjectile and world.entityExists(storage.cameraProjectile) then
-      world.callScriptedEntity(storage.cameraProjectile, "lerpToSource", mcontroller.position(), self.lerpProgress)
+      world.callScriptedEntity(
+        storage.cameraProjectile,
+        "lerpToSource",
+        mcontroller.position(), self.lerpProgress)
       activeItem.setCameraFocusEntity(storage.cameraProjectile)
     else
+      -- case for when a nonexistent cameraProjectile is tracked
+      -- important to nullify this variable to allow tracking camera projectiles
       storage.cameraProjectile = nil
     end
   end
 end
+
+function Project45GunScope:aimVector(inaccuracy)
+  local aimVector = vec2.rotate({1, 0}, self.weapon.aimAngle + sb.nrand((inaccuracy or 0), 0))
+  aimVector[1] = aimVector[1] * mcontroller.facingDirection()
+  aimVector = vec2.rotate(aimVector, (self.weapon.relativeArmRotation + self.weapon.relativeWeaponRotation) * mcontroller.facingDirection())
+  return aimVector
+end
+
+-- COMPATIBILITY FUNCTIONS
+
+function SynthetikMechanics:screenShake(amount, shakeTime, random)
+  if storage.cameraProjectile and world.entityExists(storage.cameraProjectile) then
+    world.callScriptedEntity(storage.cameraProjectile, "jerk")
+    activeItem.setCameraFocusEntity(storage.cameraProjectile)
+  else
+    local source = mcontroller.position()
+    local shake_dir = vec2.mul(self:aimVector(0), -1 * (amount or 0.1))
+    if random then vec2.rotate(shake_dir, 3.14 * truerand()) end
+    local cam = world.spawnProjectile(
+      "invisibleprojectile",
+      vec2.add(source, shake_dir),
+      0,
+      {0, 0},
+      false,
+      {
+        power = 0,
+        timeToLive = shakeTime or 0.01,
+        damageType = "NoDamage"
+      }
+    )
+    activeItem.setCameraFocusEntity(cam)
+  end
+end
+
+--[[
 
 function SynthetikMechanics:aim()
   if self.reloadTimer < 0 then
@@ -99,10 +164,8 @@ function SynthetikMechanics:aim()
     if config.getParameter("twoHanded", false) then activeItem.setTwoHandedGrip(stance.twoHanded or false) end
     
 
-    -- force weapon to face crosshair
-    if storage.cameraProjectile and world.entityExists(storage.cameraProjectile) then
-      self.weapon.aimAngle, self.weapon.aimDirection = activeItem.aimAngleAndDirection(0, world.entityPosition(storage.cameraProjectile))
-    else
+    -- let project45gunscipe make weapon aim at crosshair
+    if not (storage.cameraProjectile and world.entityExists(storage.cameraProjectile)) then
       self.weapon.aimAngle, self.weapon.aimDirection = activeItem.aimAngleAndDirection(0, activeItem.ownerAimPosition())
     end
     
@@ -113,7 +176,9 @@ function SynthetikMechanics:aim()
   end
 end
 
+--]]
 
+--[[
 function SynthetikMechanics:hitscan(isLaser)
 
   local scoped = storage.cameraProjectile and world.entityExists(storage.cameraProjectile)
@@ -161,27 +226,4 @@ function SynthetikMechanics:hitscan(isLaser)
 
   return {scanOrig, scanDest, eid}
 end
-  
-function SynthetikMechanics:screenShake(amount, shakeTime, random)
-  if storage.cameraProjectile and world.entityExists(storage.cameraProjectile) then
-    world.callScriptedEntity(storage.cameraProjectile, "jerk")
-    activeItem.setCameraFocusEntity(storage.cameraProjectile)
-  else
-    local source = mcontroller.position()
-    local shake_dir = vec2.mul(self:aimVector(0), -1 * (amount or 0.1))
-    if random then vec2.rotate(shake_dir, 3.14 * truerand()) end
-    local cam = world.spawnProjectile(
-      "invisibleprojectile",
-      vec2.add(source, shake_dir),
-      0,
-      {0, 0},
-      false,
-      {
-        power = 0,
-        timeToLive = shakeTime or 0.01,
-        damageType = "NoDamage"
-      }
-    )
-    activeItem.setCameraFocusEntity(cam)
-  end
-end
+--]]

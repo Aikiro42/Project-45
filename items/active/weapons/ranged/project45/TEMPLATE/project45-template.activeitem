@@ -24,7 +24,7 @@
   },
 
   "baseOffset" : [0.6, 0.1],
-  "muzzleOffset" : [2.625, 0.375],
+  "muzzleOffset" : [2.5, 0.3],
   "ejectionPortOffset": [0.2, 0.7],
   "magazineOffset": [0.375, 0],
 
@@ -35,11 +35,9 @@
   "movementSpeedFactor": 1.32,
   "jumpHeightFactor": 1.22,
 
-  /*
+  
   "primaryAbilityType": "synthetikmechanics",
   "primaryAbility": {
-
-    "recoilDeg": [0, 0],
 
     "baseDamage": 3,
     "cycleTime": 0.1,
@@ -55,21 +53,27 @@
     "magAnimRange": [3, 8]
 
   },
-  */
+  //*/
   
+  /*
   "animation" : "/items/active/weapons/ranged/abilities/synthetikmechanics/synthetikmechanics.animation",
   "primaryAbility" : {
     "scripts" : ["/items/active/weapons/ranged/gunfire.lua"],
     "class" : "GunFire",
 
-    "fireTime" : 0.5,
-    "baseDps" : 6,
+    "fireTime" : 0.1,
+    "cooldownTime": 0.1,
+    "baseDps" : 100,
     "energyUsage" : 17.5,
     "projectileCount" : 1,
     "inaccuracy" : 0.01,
     "fireType" : "auto",
 
-    "projectileType" : "neotommygunbullet",
+    "projectileType" : "project45stdbullet",
+    "projectileParameters":{
+      "damageType": "IgnoresDef",
+      "damageKind": "synthetikmechanics-hitscan"
+    },
     "muzzleFlashVariants" : 1,
 
     "stances" : {
@@ -101,12 +105,14 @@
       }
     }
   },
+  //*/
   
   "altAbilityType": "project45gunscope",
   "altAbility": {
     "fireTime": 0.1,
     "cooldownTime": 0.1
   },
+  //*/
 
   "builder" : "/items/buildscripts/buildproject45neo.lua"
 }

@@ -1,5 +1,6 @@
+require "/scripts/vec2.lua"
+
 function update()
-    -- sb.logInfo("hi from project45gunscope")
 
     localAnimator.clearDrawables()
     localAnimator.clearLightSources()
@@ -14,7 +15,7 @@ function update()
             line = laserLine,
             width = 0.3,
             fullbright = true,
-            color = {255,0,0}
+            color = {144, 0, 255}
         }, "Player-1")  
     end
 end

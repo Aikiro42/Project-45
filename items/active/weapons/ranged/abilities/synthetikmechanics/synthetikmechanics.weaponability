@@ -35,23 +35,35 @@
     // this is to ensure compatibility with vanilla altfires
     // either way, the projectileType field functions as any other projectileType field does
     "projectileType": "project45stdbullet",
+    
     "overrideHitscan": false, // if true, "project45stdbullet" spawns the actual projectile while "hitscan" spawns hitscans
+    
+    // number multiplied to projectile count without affecting the damage;
+    // values 0 and below will make the gun unable to shoot anything
+    "multishot": 1, 
+
     "projectileCount" : 1, // number of projectiles launched per shot
+    
     "projectileParameters": {
       // hitscan params
       "range": 100,  // range of the hitscan line in blocks
       "punchThrough": 1,  // number of entities to register before stopping the scan
       "fadeTime": 0.1, // how long the hitscan line fades away
-      "hitscanWidth": 1 // visual width of hitscan line in pixels
-      // TODO: hitscan color
+      "hitscanWidth": 1, // visual width of hitscan line in pixels
+      "hitscanColor": [255,255,200] // color of hitscan projectile
     },
 
     // ________________________[ GUN MECHANIC SETTINGS ]__________________________________
     "magType": "default", // default, clip, strip; dictates reload visuals
+    
     "keepCasings": false, // drops casings per shot if false; overrides magazine particles with casings on reload if true
+    
     "semi": true, // firing, pulling and pushing the bolt aren't continuously done on keypress if true
+    
     "manualFeed": false, // whether the player must manually eject the case before firing another shot
+    
     "chargeTime": 0, // amount of time the weapon will wind up before firing, in seconds
+    
     "autoFireAfterCharge": true, // whether the gun automatically fires after fully charging
 
     // dictates whether holding the button while it's feeding will make it automatically shoot
@@ -60,14 +72,28 @@
 
     // Depending on which is greater, cycleTime or fireTime will dictate the fire rate of the weapon.
     "cycleTime": 0.1, // Time it takes to eject the bullet casing and feed the next cartridge.
+    
     "fireTime" : 0.1, // Amount of time between weapon triggers
+    
+    "laser": {
+      "enabled": true, // if true, laser is rendered
+      "color": [255, 0, 0], // laser color
+      "range": 100, // max distance to which the laser is drawn
+      "maxRange": true, // if false, laser is rendered up to player's aim position only
+      // always renders laser if true; otherwise it's rendered if the player is walking
+      "alwaysActive": false, 
+
+      "toggle": false, // if true, laser is toggled whenever activated
+      "toggleTime": 0.2 // time it takes to toggle
+
+    },
 
   
     // ________________________[ JAM SETTINGS ]__________________________________
     "jamChances": {
-      "bad": 0.05, // chance for a weapon to jam if it missed a reload
-      "ok": 0.01, // chance for a weapon to jam if it waited a reload
-      "good": 0.0 // chance for a weapon to jam if it hit a reload
+      "bad": 0.2, // chance for a weapon to jam if it missed a reload
+      "ok": 0.05, // chance for a weapon to jam if it waited a reload
+      "good": 0.01 // chance for a weapon to jam if it hit a reload
     },
     "unjamTime": 0.1, // time it takes to attempt to unjam the weapon
     "unjamAmount": 0.25, // percent of unjam progress
@@ -87,6 +113,7 @@
 
     // ________________________[ DODGE SETTINGS ]__________________________________
     "dashParams": {
+      "enabled": true,
       "triggerTime": 0.2,
       "time": 0.1,
       "speed": 75,

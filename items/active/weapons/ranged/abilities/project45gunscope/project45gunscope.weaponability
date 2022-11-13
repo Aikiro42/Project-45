@@ -13,11 +13,15 @@
         // How far the scope can go, in blocks.
         "range": 50,
 
-        "maxSpeed": 0.25,
+        "laser": false,
+
 
         // How far from the center of the screen you must move your cursor to move the camera
-        // "deadzone": 2.75
-        "deadzone": 1
+        "deadzone": 2.7,
+        
+        // How far from the deadzone you must move your cursor to move the camera at max speed.
+        "maxSpeed": 1,
+        "maxSpeedDistance": 20
 
     }
 }

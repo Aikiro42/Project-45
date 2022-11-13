@@ -7,7 +7,7 @@ end
 function update(dt)
 end
 
-function updatePos(position, source, range, deadzone, maxSpeed)
+function updatePos(position, source, range, deadzone, maxSpeed, maxSpeedDistance)
     projectile.setTimeToLive(10)
 
     local newPos = position -- set new position as cursor position
@@ -16,7 +16,7 @@ function updatePos(position, source, range, deadzone, maxSpeed)
     -- if cursor is a bit further away from center of screen (where crosshair is)
     if world.magnitude(position, oldPos) > deadzone then
 
-        local speed = math.min(world.magnitude(newPos, oldPos) - deadzone, maxSpeed)
+        local speed = (world.magnitude(newPos, oldPos) - deadzone)*maxSpeed/maxSpeedDistance
 
         -- let posVector be the displacement vector from the crosshair to the mouse position
         local posVector = vec2.mul(vec2.norm(world.distance(position, oldPos)), speed)
@@ -36,35 +36,6 @@ function updatePos(position, source, range, deadzone, maxSpeed)
         mcontroller.setPosition(newPos)
     end
 
-end
-
-function updatePosOld(position, source, range, deadzone)
-    -- refresh projectile
-    projectile.setTimeToLive(10)
-
-    local deadzone = deadzone or 5
-
-    if world.magnitude(position, source) < range then end
-
-    local newPos = position
-    local oldPos = mcontroller.position()
-    if world.magnitude(position, oldPos) > deadzone then
-
-        local posVector = vec2.mul(vec2.norm(world.distance(position, oldPos)), self.speed)
-        if world.magnitude(position, oldPos) < world.magnitude(posVector) then
-            posVector = world.distance(position, oldPos)
-        end
-        newPos = vec2.add(oldPos, posVector)
-
-        if world.magnitude(source, newPos) > range then
-            posVector = vec2.mul(vec2.norm(world.distance(newPos, source)), range)
-            newPos = vec2.add(source, posVector)
-        end
-
-        mcontroller.setPosition(newPos)
-    end
-
-    projectile.setTimeToLive(10)
 end
 
 function moveToSource(source)
