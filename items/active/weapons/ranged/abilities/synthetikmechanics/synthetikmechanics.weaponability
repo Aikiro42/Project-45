@@ -1,8 +1,4 @@
 {
-  "animationCustom" : {
-    
-  },
-
   "animation" : "/items/active/weapons/ranged/abilities/synthetikmechanics/synthetikmechanics.animation",
   "animationScripts" : [
 		"/items/active/weapons/ranged/abilities/synthetikmechanics/synthetikmechanicsanimation.lua"
@@ -79,11 +75,12 @@
       "color": [255, 0, 0], // laser color
       "range": 100, // max distance to which the laser is drawn
       "maxRange": true, // if false, laser is rendered up to player's aim position only
+
       // always renders laser if true; otherwise it's rendered if the player is walking
       "alwaysActive": false, 
 
-      "toggle": false, // if true, laser is toggled whenever activated
-      "toggleTime": 0.2 // time it takes to toggle
+      "toggle": true, // if true, laser is toggled whenever activated
+      "toggleTime": 0.5 // time it takes to toggle
 
     },
 
@@ -107,6 +104,7 @@
 
     // ________________________[ RELOAD SETTINGS ]__________________________________
     "reloadEnergyCostRate": 0.2, // percent of energy consumed per reload
+    "ejectTime": 1,
     "reloadTime": 0.5, // time to reload <bulletsPerReload>, in second
     "goodReloadInterval": [0.4, 0.8], // (percentage) interval during which a good reload is possible
     "perfectReloadInterval": [0.6, 0.65], // (percentage) interval of the good reload interval during which a perfect reload is possible
@@ -180,8 +178,8 @@
       // this stance is also snapped to
       "ejectmag" : {
         "armRotation" : -45,
-        "weaponRotation" : 0,
-        "twoHanded" : false,
+        "weaponRotation" : 45,
+        "twoHanded" : true,
         "allowRotate" : false,
         "allowFlip" : false
       },
@@ -191,8 +189,8 @@
 
       // stance snaps to this when unjamming
       "unjam" : {
-        "armRotation" : -45,
-        "weaponRotation" : 0,
+        "armRotation" : -30,
+        "weaponRotation" : 25,
         "twoHanded" : false,
         "allowRotate" : false,
         "allowFlip" : false
@@ -220,7 +218,7 @@
       "reloading" : {
         "armRotation" : -45,
         "weaponRotation" : 0,
-        "twoHanded" : false,
+        "twoHanded" : true,
         "allowRotate" : false,
         "allowFlip" : false
       },
@@ -229,7 +227,7 @@
       "reloaded" : {
         "armRotation" : -45,
         "weaponRotation" : 0,
-        "twoHanded" : false,
+        "twoHanded" : true,
         "allowRotate" : false,
         "allowFlip" : false
       },

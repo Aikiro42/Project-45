@@ -132,7 +132,7 @@ function update()
         width = 0.2,
         fullbright = true,
         color = laser.color
-    }, "Player-1")
+    }, "Player+1")
   end
 
 end

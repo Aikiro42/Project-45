@@ -337,7 +337,8 @@
     // played when dodging
     "dash": ["/sfx/tech/tech_jetpack_thrust2.ogg"],
 
-    "laser" : ["/sfx/gun/project45_laser.ogg"],
+    // played with turning on laser
+    "laser" : ["/sfx/project45-synthetikmechanics/laser.ogg"],
 
     // COMPATIBILITY SOUNDS
 

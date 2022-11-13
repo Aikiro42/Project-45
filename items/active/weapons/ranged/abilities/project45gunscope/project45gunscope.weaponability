@@ -1,4 +1,22 @@
 {
+    "animationCustom" : {
+        "animatedParts" : { "parts" : {
+            "flashlight" : {
+            "properties" : {
+                "zLevel" : -1,
+                "centered" : true,
+                "offset" : [0.620, 0.125],
+                "transformationGroups" : ["ejectionPort"],
+                "image" : "/items/active/weapons/ranged/abilities/project45gunscope/project45gunscope.png"
+            }
+            }
+        }},
+        "sounds" : {
+            "aimFoley" : [ "/sfx/project45-synthetikmechanics/reloads/insertmag_generic.ogg" ],
+            "laser" : [ "/sfx/project45-synthetikmechanics/laser.ogg" ]
+        }
+    },
+
     "animationScripts" : [
 		"/items/active/weapons/ranged/abilities/project45gunscope/project45gunscopeanimation.lua"
 	],
@@ -13,7 +31,8 @@
         // How far the scope can go, in blocks.
         "range": 50,
 
-        "laser": false,
+        "laser": true,
+        "laserColor": [175, 80, 255],
 
 
         // How far from the center of the screen you must move your cursor to move the camera

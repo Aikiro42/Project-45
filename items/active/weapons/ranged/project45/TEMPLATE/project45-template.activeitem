@@ -40,12 +40,20 @@
   "primaryAbility": {
 
     "baseDamage": 3,
-    "cycleTime": 0.1,
-    "fireTime": 0.1,
+    "cycleTime": 0.2,
+    "fireTime": 0.2,
 
-    "maxAmmo": 10,
-    "bulletsPerReload": 10,
-    "semi": false,
+    "jamChances": {
+      "bad": 0.5,
+      "ok": 0.05,
+      "good": 0.01
+    },
+    "maxAmmo": 25,
+    "magType": "default",
+    "bulletsPerReload": 5,
+    "semi": true,
+    "burstCount": 5,
+    "manualFeed": true,
 
     "critChance": 0.5,
     "critDamageMult": 2,

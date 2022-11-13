@@ -362,11 +362,17 @@ function SynthetikMechanics:ejectingCase()
     self:setAnimationState("gun", "ejecting")
     self.chamberReady = false
 
-    -- if no ammo left in clip magazine, eject clip magazine (like with the m1 garand)
-    if (self.magType == "clip" or self.manualFeed) and storage.ammo == 0 then
-      if self.manualFeed then util.wait(self.cockTime/2) end -- wait for a bit if it's a bolt-action
-      if self.magType == "clip" then animator.playSound("ping") end
-      self:ejectMag()
+    -- if no ammo left,
+    if storage.ammo == 0 then
+      -- if it's manual feed and not a clip mag, wait for a bit
+      if self.manualFeed and self.magType ~= "clip" then
+        util.wait(self.cockTime/2)
+      end
+      -- if it's a clip mag, immediately eject
+      if self.magType == "clip" then
+        self:ejectMag()
+      end
+      -- do nothing otherwise
     end
 
     util.wait((self.manualFeed and self.cockTime or self.cycleTime)/2)
@@ -584,6 +590,7 @@ function SynthetikMechanics:ejectMag()
   if self.magType == "default" then
     self:snapStance(self.stances.ejectmag)
   end
+
   self:setStance(self.stances.reloading)
   storage.ammo = -1
 end
@@ -898,10 +905,10 @@ function SynthetikMechanics:updateCursor(shiftHeld)
 end
 
 function SynthetikMechanics:drawLaser()
-  if not self.laser.enabled 
-  then return end
-  
-  if (storage.isLaserOn or self.laser.alwaysActive)
+
+  if self.laser.enabled
+  and not world.lineTileCollision(mcontroller.position(), self:firePosition())
+  and (storage.isLaserOn or self.laser.alwaysActive)
   and storage.ammo > 0
   and storage.jamAmount == 0  
   then
@@ -1065,7 +1072,7 @@ end
 function SynthetikMechanics:snapStance(stance)
   
   self.weapon.relativeWeaponRotation = self.weapon.relativeWeaponRotation + math.rad(stance.weaponRotation)
-  self.weapon.relativeArmRotation = self.weapon.relativeArmRotation + math.rad(stance.weaponRotation)
+  self.weapon.relativeArmRotation = self.weapon.relativeArmRotation + math.rad(stance.armRotation)
 
   self.aimProgress = 0
 end

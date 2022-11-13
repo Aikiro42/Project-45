@@ -8,6 +8,7 @@ Project45GunScope = WeaponAbility:new()
 
 function Project45GunScope:init()
   storage.cameraProjectile = storage.cameraProjectile or nil
+  activeItem.setScriptedAnimationParameter("laserColor", self.laserColor)
   self.lerpProgress = 0
   self.state = 0
 end
@@ -45,8 +46,6 @@ function Project45GunScope:drawLaser(trigger)
     activeItem.setScriptedAnimationParameter("laserDestination", scanDest)
 
   elseif trigger == "none" or animator.animationState("firing") ~= "off"then
-    activeItem.setScriptedAnimationParameter("laserOrigin", nil)
-    activeItem.setScriptedAnimationParameter("laserDestination", nil)
   end
 end
 
@@ -59,7 +58,8 @@ function Project45GunScope:updateCamera(shiftHeld)
 
     -- update state
     if self.state == 0 then
-      -- play sound of looking into scope
+      animator.playSound("aimFoley")
+      if self.laser then animator.playSound("laser") end
       self.state = 1
     end
     self.lerpProgress = math.max(0, self.lerpProgress - self.dt)
@@ -97,7 +97,9 @@ function Project45GunScope:updateCamera(shiftHeld)
   elseif shiftHeld == "none" then
     
     if self.state == 1 then
-      -- play sound of putting scope away
+      -- turn off laser
+      activeItem.setScriptedAnimationParameter("laserOrigin", nil)
+      activeItem.setScriptedAnimationParameter("laserDestination", nil)
       self.state = 0
     end
 
