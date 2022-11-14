@@ -19,8 +19,14 @@ function SynthetikMechanics:init()
     storage.jamAmount = storage.jamAmount or 0
     storage.animationState = storage.animationState or {gun = "ejecting", mag = "absent"} -- initial animation state is empty gun
     storage.isLaserOn = storage.isLaserOn or false
+    -- sb.logInfo("[PROJECT 45] chamber ready? " .. sb.printJson(storage.chamberReady))
+    sb.logInfo("[PROJECT 45] World threat level: " .. world.threatLevel())
+
+    storage.chamberReady = storage.chamberReady or storage.ammo <= 0
+    storage.dodgeCooldownTimer = storage.dodgeCooldownTimer or 0
     self:setStance(storage.targetStance or self.stances.aim)
 
+    -- DEBUG - Critical Statistics
     storage.critStats = storage.critStats or {
       crits = 0,
       shots = 0
@@ -36,7 +42,7 @@ function SynthetikMechanics:init()
     self.cooldownTimer = self.fireTime
     self.reloadTimer = -1 -- not reloading
     self.isCharging = false
-    self.chamberReady = storage.ammo < 0 -- TODO: should really improve this thing
+    -- storage.chamberReady = storage.ammo < 0 -- TODO: should really improve this thing
     self.jamChances.perfect = 0
 
     -- validations
@@ -108,7 +114,6 @@ function SynthetikMechanics:update(dt, fireMode, shiftHeld)
     self:updateProjectileStack()
     self:drawLaser()
 
-
     -- local laserLine = (self.allowLaser and shiftHeld and storage.ammo > 0) and self:hitscan(true) or {}
 
 
@@ -116,7 +121,7 @@ function SynthetikMechanics:update(dt, fireMode, shiftHeld)
     self.muzzleFlashTimer = math.max(0, self.muzzleFlashTimer - self.dt)
     self.muzzleSmokeTimer = math.max(0, self.muzzleSmokeTimer - self.dt)
     self.dashCooldownTimer = math.max(0, self.dashCooldownTimer - self.dt)
-    
+    storage.dodgeCooldownTimer = math.max(0, storage.dodgeCooldownTimer - self.dt)
     self.cooldownTimer = math.max(0, self.cooldownTimer - self.dt)
     self.aimProgress = math.min(1, self.aimProgress + self.dt / self.aimTime[shiftHeld and 2 or 1])
 
@@ -137,6 +142,16 @@ function SynthetikMechanics:update(dt, fireMode, shiftHeld)
       activeItem.setScriptedAnimationParameter("muzzleFlash", false)
     end
 
+    -- if chargeTimer is up and gun is charging, set animation state of gun to idle
+    if self.chargeTimer <= 0 and animator.animationState("gun") == "charging" then
+      sb.logInfo("[PROJECT 45] chargeTimer <= 0 and gun is charging; switching animation state to idle")
+      self:setAnimationState("gun", "idle")
+    end
+
+    if storage.ammo <= 0 and self.chargeTimer > 0 then
+      self:setAnimationState("gun", "charging")
+    end
+
     -- Prevent energy regen if there is energy or if currently reloading
     if storage.ammo > 0 or self.reloadTimer > 0 then status.setResource("energyRegenBlock", 1.0) end
 
@@ -144,7 +159,8 @@ function SynthetikMechanics:update(dt, fireMode, shiftHeld)
     if shiftHeld then
       
       -- begin Dash Trigger Timer when not in ability
-      if not self.weapon.currentAbility then
+      -- and can dash
+      if not self.weapon.currentAbility and storage.dodgeCooldownTimer == 0  then
         if self.dashTriggerTimer < 0 then
           self.dashTriggerTimer = 0 -- set trigger timer
         end
@@ -168,8 +184,10 @@ function SynthetikMechanics:update(dt, fireMode, shiftHeld)
 
     else
       -- if triggered dash, dash when weapon isn't doing an ability
-      if not self.weapon.currentAbility then
+      -- and can dash
+      if not self.weapon.currentAbility and storage.dodgeCooldownTimer == 0 then
         if self.dashTriggerTimer <= self.dashParams.triggerTime and self.dashTriggerTimer >= 0 then
+          storage.dodgeCooldownTimer = self.dashParams.cooldown
           self:setState(self.dash)
         end
         self.dashTriggerTimer = -1 -- reset trigger timer
@@ -205,7 +223,7 @@ function SynthetikMechanics:update(dt, fireMode, shiftHeld)
           self:setState(self.reloading)
 
         -- if chamber is not ready then eject case
-        elseif not self.chamberReady and self:canTrigger() and self.manualFeed then
+        elseif not storage.chamberReady and self:canTrigger() and storage.ammo > 0 --[[and self.manualFeed]] then
           -- sb.logInfo("[PROJECT 45] Entered State: Ejecting Case")
           self:setState(self.ejectingCase)
   
@@ -263,7 +281,7 @@ function SynthetikMechanics:charging()
     while self:triggering() do
 
       -- TODO: play charging sound
-      self.chargeTimer = self.chargeTimer + self.dt
+      self.chargeTimer = math.min(self.chargeTime, self.chargeTimer + self.dt)
       coroutine.yield()
 
       -- automatically transist to firing state when fully charged
@@ -273,11 +291,14 @@ function SynthetikMechanics:charging()
     end
 
     if self.chargeTimer >= self.chargeTime then
+      if self.resetChargeAfterFire then self.chargeTimer = 0 end
       self:setState(self.firing)
     end
     
     self.isCharging = false
-    animator.setAnimationState("gun", "idle")
+    if self.chargeTimer <= 0 then
+      self:setAnimationState("gun", "idle")
+    end
   end
 
 end
@@ -310,7 +331,7 @@ function SynthetikMechanics:firing()
   end
 
   -- bullet fired, chamber is now unready
-  self.chamberReady = false
+  storage.chamberReady = false
 
   -- muzzle flash
   self:muzzleFlash()
@@ -320,10 +341,16 @@ function SynthetikMechanics:firing()
   self.burstCounter = self.burstCounter + 1
 
   -- decrement ammo
-  storage.ammo = storage.ammo - math.min(self.ammoPerShot, storage.ammo)
+  if self:willConsumeAmmo() then
+    storage.ammo = storage.ammo - math.min(self.ammoPerShot, storage.ammo)
+  end
   
   -- if manual feed e.g. bolt-action, exit state; otherwise, transist to next state
-  if not self.manualFeed then
+
+
+  if not self.manualFeed or self.burstCounter < self.burstCount then
+    -- TEST
+    util.wait(self.cycleTime/3)
     self:setState(self.ejectingCase)
     return
   else
@@ -336,10 +363,13 @@ end
 -- ejecting can be driven by user input
 -- CHARGING -> FIRING -> [EJECTING CASE] -> FEEDING
 function SynthetikMechanics:ejectingCase()
-
+  
+  -- sb.logInfo("[PROJECT 45] Entered state: ejectingCase")
+  
   -- if casings are kept (e.g. break-action, fixed-magazine revolvers)
   if self.keepCasings then
-    util.wait(self.cycleTime/2) -- maintain fire rate
+    -- sb.logInfo("[PROJECT 45] Casings kept; waiting cycle time")
+    util.wait(self.cycleTime/3) -- maintain fire rate
 
     if storage.ammo > 0 then
       self:setState(self.feeding) -- immediately transist
@@ -349,10 +379,12 @@ function SynthetikMechanics:ejectingCase()
   end
 
   -- if manual feed and can "fire" then eject case
-  if (self.manualFeed and self:canTrigger()) or not self.manualFeed then
+  if (self.manualFeed and self:canTrigger()) or not self.manualFeed or self.burstCounter < self.burstCount then
+    -- sb.logInfo("[PROJECT 45] Entering if block")
+
     self.triggered = true
       
-    if self.manualFeed then
+    if self.manualFeed and self.burstCounter >= self.burstCount then
       self:snapStance(self.stances.manualFeed)
       animator.playSound("boltPull")
     end
@@ -360,27 +392,37 @@ function SynthetikMechanics:ejectingCase()
     -- eject projectile
     animator.burstParticleEmitter("ejectionPort")
     self:setAnimationState("gun", "ejecting")
-    self.chamberReady = false
+    storage.chamberReady = false
 
     -- if no ammo left,
     if storage.ammo == 0 then
       -- if it's manual feed and not a clip mag, wait for a bit
       if self.manualFeed and self.magType ~= "clip" then
+        -- sb.logInfo("[PROJECT 45] Manual-fed and non-clip mag; waiting cock time")
         util.wait(self.cockTime/2)
       end
       -- if it's a clip mag, immediately eject
-      if self.magType == "clip" then
+      if self.magType == "clip" or self.manualFeed then
         self:ejectMag()
       end
       -- do nothing otherwise
     end
 
-    util.wait((self.manualFeed and self.cockTime or self.cycleTime)/2)
+    local waitTime = 0
+    if self.manualFeed and self.burstCounter >= self.burstCount then
+      -- sb.logInfo("[PROJECT 45] Manual-fed and burstCounter >= burstCount; waiting cock time")
+      waitTime = self.cockTime/2
+    else
+      -- sb.logInfo("[PROJECT 45] Not Manual-fed or burstCounter < burstCount; waiting cycle time")
+      waitTime = self.cycleTime/3
+    end
+    util.wait(waitTime)
 
 
-        -- transist state if there's ammo left
-        -- otherwise, exit loop
-    if storage.ammo > 0 then self:setState(self.feeding) end
+    -- transist state if there's ammo left
+    if storage.ammo > 0 then
+      self:setState(self.feeding)
+    end
 
     return
   end
@@ -389,21 +431,39 @@ end
 -- happens automatically; inserts catridge into gun breech
 -- CHARGING -> FIRING -> EJECTING CASE -> [FEEDING]
 function SynthetikMechanics:feeding()
-  
+  -- sb.logInfo("[PROJECT 45] Entered gun state: feeding")
+
   -- vfx, delays and updates chamber status
   -- if self.manualFeed then animator.playSound("loadRound") end
   self:setAnimationState("gun", "feeding")
-  util.wait((self.manualFeed and self.cockTime or self.cycleTime)/2)
 
-  if self.manualFeed then animator.playSound("boltPush") end
-  self:setAnimationState("gun", "idle")
-  self.chamberReady = true
+  local waitTime = 0
+  if self.manualFeed and self.burstCounter >= self.burstCount then
+    -- sb.logInfo("[PROJECT 45] Manual-fed and burstCounter >= burstCount; waiting cock time")
+    waitTime = self.cockTime/2
+  else
+    -- sb.logInfo("[PROJECT 45] Not Manual-fed or burstCounter < burstCount; waiting cycle time")
+    waitTime = self.cycleTime/3
+  end
+  util.wait(waitTime)
+  
+  -- if was just done bursting, push bolt
+  if self.manualFeed and self.burstCounter >= self.burstCount then animator.playSound("boltPush") end
+
+  if self.chargeTimer <= 0 then
+    self:setAnimationState("gun", "idle")
+  else
+    self:setAnimationState("gun", "charging")
+  end
+  storage.chamberReady = true
 
   if self.burstCounter < self.burstCount then
     self:setState(self.firing)
   end
 
-  if self.manualFeed and not self.slamFire then
+  -- gives cooldown when either manual feeding a non-slam-fire gun (like a bolt-action rifle)
+  -- or if it's a charged/woundup gun and charge progress is reset every shot (think apex legends charge rifle)
+  if (self.manualFeed and not self.slamFire) or (self.resetChargeAfterFire and self.chargeTime > 0) then
     self.triggered = true
     self.cooldownTimer = self.fireTime
   end
@@ -571,7 +631,7 @@ function SynthetikMechanics:cocking()
   self:setAnimationState("gun", "idle")
   util.wait(self.cockTime/3)
   self.burstCounter = self.burstCount
-  self.chamberReady = true
+  storage.chamberReady = true
 end
 
 -- ACTIONS
@@ -742,12 +802,12 @@ function SynthetikMechanics:muzzleFlash()
   animator.setSoundPitch("fire", sb.nrand(0.01, 1))
   animator.setSoundVolume("hollow", 1 - storage.ammo/self.maxAmmo)
 
-  animator.playSound("fire")
+  animator.playSound("fire" .. (self.suppressed and "silent" or ""))
   animator.playSound("hollow")
-  animator.setPartTag("muzzleFlash", "variant", math.random(1, self.muzzleFlashVariants or 3))
+  if not self.flashHidden then animator.setPartTag("muzzleFlash", "variant", math.random(1, self.muzzleFlashVariants or 3)) end
   animator.burstParticleEmitter("muzzleFlash")
-  animator.setLightActive("muzzleFlash", true)
-  activeItem.setScriptedAnimationParameter("muzzleFlash", true)
+  animator.setLightActive("muzzleFlash", not self.flashHidden)
+  activeItem.setScriptedAnimationParameter("muzzleFlash", not self.flashHidden)
   animator.setAnimationState("flash", "flash")
   self.muzzleFlashTimer = self.muzzleFlashTime
   self.muzzleSmokeTimer = self.muzzleSmokeTime
@@ -757,7 +817,7 @@ function SynthetikMechanics:recoil()
   self:screenShake(0.5)
   activeItem.setRecoil(true)
 
-  local inaccuracy = math.rad(self.recoilDeg[self.shiftHeld and 2 or 1])
+  local inaccuracy = math.rad(self.recoilDeg[self.shiftHeld and 2 or 1]) / self.recoilMult
   
   self.weapon.relativeWeaponRotation = self.weapon.relativeWeaponRotation + inaccuracy
   self.weapon.relativeArmRotation = self.weapon.relativeArmRotation + inaccuracy
@@ -878,7 +938,7 @@ function SynthetikMechanics:updateMagAnimation()
   
   -- if ammo is above range
   else
-    tag = storage.ammo % self.magLoopFrames -- magazine animation loop
+    tag = "loop." .. storage.ammo % self.magLoopFrames -- magazine animation loop
   end
 
   animator.setGlobalTag("ammo", tag)
@@ -963,18 +1023,24 @@ function SynthetikMechanics:damagePerShot()
   3. Power Multiplier of the player
   4. Tier of the weapon
   5. Critical Roll (calculated when firing hitscan)
+  6. Last Shot Damage Multiplier
 
   The calculated damage is distributed between the projectiles spawned per shot. In eseence, hitting all pellets of
   a shotgun shot deals the complete amount of damage.
 
   --]]
   local reloadDamageMultiplier = 1
+
+  -- projectile is fired before ammo is decremented
+  local lastShotDamageMultiplier = storage.ammo == math.min(self.ammoPerShot, storage.ammo) and self.lastShotDamageMult or 1
+  
   if storage.reloadRating == "good" then reloadDamageMultiplier = 1.1 
   elseif storage.reloadRating == "perfect" then reloadDamageMultiplier = 1.3 end
-  return self.baseDamage * reloadDamageMultiplier * config.getParameter("damageLevelMultiplier", 1) * activeItem.ownerPowerMultiplier() / self.projectileCount
+  return self.baseDamage * reloadDamageMultiplier * lastShotDamageMultiplier * config.getParameter("damageLevelMultiplier", 1) * activeItem.ownerPowerMultiplier() / self.projectileCount
 end
 
 function SynthetikMechanics:screenShake(amount, shakeTime, random)
+  if not self.doScreenShake then return end
   local source = mcontroller.position()
   local shake_dir = vec2.mul(self:aimVector(0), -1 * (amount or 0.1))
   if random then vec2.rotate(shake_dir, 3.14 * truerand()) end
@@ -1026,6 +1092,14 @@ function SynthetikMechanics:jam()
   return false
 end
 
+-- returns whether ammo will be consumed
+function SynthetikMechanics:willConsumeAmmo()
+  if self:diceRoll(self.ammoConsumeChance, true) then
+    return true
+  end
+  return false
+end
+
 -- returns a projectile count multiplier
 function SynthetikMechanics:calculateMultishot()
   -- make base multishot integer
@@ -1037,6 +1111,7 @@ function SynthetikMechanics:calculateMultishot()
   end
   return baseMultishot
 end
+
 -- returns a critical multiplier
 function SynthetikMechanics:crit()
   if self:diceRoll(self.critChance, true) then

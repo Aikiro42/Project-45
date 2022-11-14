@@ -42,5 +42,7 @@
         "maxSpeed": 1,
         "maxSpeedDistance": 20
 
+        // "doScreenShake": false
+
     }
 }

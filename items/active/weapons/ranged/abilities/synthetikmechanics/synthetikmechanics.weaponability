@@ -4,24 +4,34 @@
 		"/items/active/weapons/ranged/abilities/synthetikmechanics/synthetikmechanicsanimation.lua"
 	],
 
+  "animationCustom":{
+    "animatedParts" : {"stateTypes" : {"gun" : {"states" : {
+            "charging": {
+              // set this value to cycleTime
+              "cycle" : 0.1
+            }
+    }}}}
+  },
+
   "ability" : {
     "name" : "Synthetik Mechanics",
     "type" : "synthetikmechanics",
     "scripts" : ["/items/active/weapons/ranged/abilities/synthetikmechanics/synthetikmechanics.lua"],
     "class" : "SynthetikMechanics",
     
-    
-
     // ________________________[ DAMAGE SETTINGS ]__________________________________
     "baseDamage": 6.25, // base damage per shot
     "critChance": 0,
     "critDamageMult": 1,
+    // This value is multiplied to the total damage on the last shot
+    "lastShotDamageMult": 1.1,
 
     // ________________________[ AMMO-RELATED SETTINGS ]__________________________________
     "maxAmmo": 8, // maximum ammo of the weapon
     "bulletsPerReload": 8,  // number of bullets reloaded at a time
     "ammoPerShot": 1, // ammo consumed per shot
     "burstCount": 1, // number of shots per burst
+    "ammoConsumeChance": 1, // chance to consume ammo; can only be 1 and below
 
 
     // ________________________[ PROJECTILE SETTINGS ]__________________________________
@@ -59,8 +69,13 @@
     
     "chargeTime": 0, // amount of time the weapon will wind up before firing, in seconds
     
-    "autoFireAfterCharge": true, // whether the gun automatically fires after fully charging
-
+    // whether the gun automatically fires after fully charging
+    // set this to true on regular guns
+    "autoFireAfterCharge": true, 
+    
+    // whether charge is reset when firing
+    "resetChargeAfterFire": false, 
+    
     // dictates whether holding the button while it's feeding will make it automatically shoot
     // only has any purpose if manualFeed is true
     "slamFire": false,
@@ -87,9 +102,9 @@
   
     // ________________________[ JAM SETTINGS ]__________________________________
     "jamChances": {
-      "bad": 0.2, // chance for a weapon to jam if it missed a reload
-      "ok": 0.05, // chance for a weapon to jam if it waited a reload
-      "good": 0.01 // chance for a weapon to jam if it hit a reload
+      "bad": 0.2, // chance for a weapon to jam if it missed a reload (20% default, d5 roll)
+      "ok": 0.05, // chance for a weapon to jam if it waited a reload (5% default, d20 roll)
+      "good": 0.01 // chance for a weapon to jam if it hit a reload (1% default, d100 roll)
     },
     "unjamTime": 0.1, // time it takes to attempt to unjam the weapon
     "unjamAmount": 0.25, // percent of unjam progress
@@ -98,16 +113,26 @@
     // ________________________[ ACCURACY SETTINGS ]__________________________________
     "recoilMomentum": 0, // momentum added to character opposite direction of aim vector when firing
     "recoilDeg": [2, 1], // degrees of recoil every time the gun is shot (think spray control)
+    "recoilMult": 0.5, // muzzle brake; multiplied to recoilDeg
     "aimTime": [3, 1], // time it takes to aim; first index is when you're running, second is when shift is held
     "inaccuracy" : 0.01, // Generic RNG inaccuracy; causes spread
     
 
     // ________________________[ RELOAD SETTINGS ]__________________________________
     "reloadEnergyCostRate": 0.2, // percent of energy consumed per reload
-    "ejectTime": 1,
-    "reloadTime": 0.5, // time to reload <bulletsPerReload>, in second
-    "goodReloadInterval": [0.4, 0.8], // (percentage) interval during which a good reload is possible
-    "perfectReloadInterval": [0.6, 0.65], // (percentage) interval of the good reload interval during which a perfect reload is possible
+    "reloadTime": 0.5, // time to reload <bulletsPerReload>, in seconds
+    
+    // (percentage) interval during which a good reload is possible
+    // good reloads grant 1.1x more damage
+    "goodReloadInterval": [0.4, 0.8], 
+    
+    // (percentage) interval during which a perfect reload is possible
+    // perfect reloads grant 1.3x more damage and completely prevent jamming
+    "perfectReloadInterval": [0.6, 0.65],
+    
+    // time it takes to cock the gun
+    // can affect net reload times depending on when the gun was reloaded
+    // affects net fire rate on manual-feed guns (since you cock every shot)
     "cockTime": 0.6, // time it takes to cock the gun
 
 
@@ -115,9 +140,17 @@
     "dashParams": {
       "enabled": true,
       "triggerTime": 0.2,
-      "time": 0.1,
+      // speed at which the player travels for the duration of the dash
       "speed": 75,
+      
+      // duration for which the indicated speed is applied on the movement controller
+      "time": 0.1,
+      
+      // number multiplied to your final velocity after the dodge
+      // i.e. if this is 1 then you are essentially given momentum
+      // from the speed of your dash
       "endXVelMult": 0.3,
+
       "cooldown": 1
     },
 
@@ -133,15 +166,19 @@
     */
     "magLoopFrames": 0, // L
     "magAnimRange": [0, 0], // [n, x]
-
+    "flashHidden": false,
+    "suppressed": false,
     "muzzleFlashTime": 0.05, // number of seconds the muzzle light is active when firing
     "muzzleSmokeTime": 5, // number of seconds the muzzle smoke is active
     "muzzleSmokeDelay": 0.2,
+    "doScreenShake": true,
     
     // ________________________[ COMPATIBILITY SETTINGS ]__________________________________
 
     "fireType": "auto",
 
+
+    // ________________________[ STANCE SETTINGS ]__________________________________
 
     "stances" : {
 
@@ -220,6 +257,7 @@
         "weaponRotation" : 0,
         "twoHanded" : true,
         "allowRotate" : false,
+        "aimAngle": 0,
         "allowFlip" : false
       },
 

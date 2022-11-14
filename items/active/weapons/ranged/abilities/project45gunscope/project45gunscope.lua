@@ -129,6 +129,7 @@ end
 -- COMPATIBILITY FUNCTIONS
 
 function SynthetikMechanics:screenShake(amount, shakeTime, random)
+  if not self.doScreenShake then return end
   if storage.cameraProjectile and world.entityExists(storage.cameraProjectile) then
     world.callScriptedEntity(storage.cameraProjectile, "jerk")
     activeItem.setCameraFocusEntity(storage.cameraProjectile)

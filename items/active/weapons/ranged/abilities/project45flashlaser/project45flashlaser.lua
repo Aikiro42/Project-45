@@ -14,7 +14,7 @@ function Project45FlashLaser:update(dt, fireMode, shiftHeld)
   WeaponAbility.update(self, dt, fireMode, shiftHeld)
 
   -- render laser
-  if (self.state == BOTH or self.state == LASER) and not world.lineTileCollision(mcontroller.position(), self:firePosition()) then
+  if (storage.state == BOTH or storage.state == LASER) and not world.lineTileCollision(mcontroller.position(), self:firePosition()) then
     local scanOrig = self:firePosition()
     local range = world.magnitude(scanOrig, activeItem.ownerAimPosition())
     local scanDest = vec2.add(scanOrig, vec2.mul(self:aimVector(), self.laserRange))
@@ -24,8 +24,8 @@ function Project45FlashLaser:update(dt, fireMode, shiftHeld)
   end
 
   if self.fireMode == "alt" and self.lastFireMode ~= "alt" then
-    self.state = (self.state + 1) % STATES
-    if self.state == FLASHLIGHT or self.state == BOTH then
+    storage.state = (storage.state + 1) % STATES
+    if storage.state == FLASHLIGHT or storage.state == BOTH then
       animator.setLightActive("flashlight", true)
       animator.setLightActive("flashlightSpread", true)
       animator.playSound("flashlight")
@@ -35,7 +35,7 @@ function Project45FlashLaser:update(dt, fireMode, shiftHeld)
     end
     
 
-    if not (self.state == BOTH or self.state == LASER) then
+    if not (storage.state == BOTH or storage.state == LASER) then
       activeItem.setScriptedAnimationParameter("laserOrigin", nil)
       activeItem.setScriptedAnimationParameter("laserDestination", nil)
     else
@@ -47,9 +47,15 @@ function Project45FlashLaser:update(dt, fireMode, shiftHeld)
 end
 
 function Project45FlashLaser:reset()
-  animator.setLightActive("flashlight", false)
-  animator.setLightActive("flashlightSpread", false)
-  self.state = OFF
+  storage.state = storage.state or OFF
+  if storage.state == FLASHLIGHT or storage.state == BOTH then
+    animator.setLightActive("flashlight", true)
+    animator.setLightActive("flashlightSpread", true)
+    animator.playSound("flashlight")
+  else
+    animator.setLightActive("flashlight", false)
+    animator.setLightActive("flashlightSpread", false)
+  end
 end
 
 function Project45FlashLaser:uninit()

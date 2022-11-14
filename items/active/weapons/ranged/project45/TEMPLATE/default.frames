@@ -4,11 +4,16 @@
     "dimensions" : [6, 2],
     "names" : [
       ["idle", "firing", "ejecting", "feeding", "jammed", "unjam"],
-      ["charging.1", "charging.2", "charging.3", "charging.4", "charging.5", "charging.6"]
+      // standard loop
+      // loop frames should be a multiple of three, one for each phase in the firing process
+      ["charging.1", "charging.2", "charging.3", null, null, null]
     ]
   },
 
   "aliases" : {
-    "charging": "charging.1"
+    "charging": "charging.1",
+    "charging.firing": "charging.1",
+    "charging.ejecting": "charging.2",
+    "charging.feeding": "charging.3"
   }
 }

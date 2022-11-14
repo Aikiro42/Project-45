@@ -1,3 +1,11 @@
+/*
+
+KNOWN ISSUES:
+
+When gun is a windup-type and 
+
+*/
+
 {
   "itemName" : "project45-template",
   "price" : 1,
@@ -20,7 +28,20 @@
     "middleFullBright" : "",
     "barrel" : "",
     "mag": "project45-template-gun-mag.png",
-    "muzzleFlash" : "/items/active/weapons/ranged/muzzleflash.png"
+    "muzzleFlash" : "/items/active/weapons/ranged/muzzleflash.png",
+    
+    "muzzle": "",
+    "grip": ""
+
+  },
+
+  "animationCustom":{
+    "animatedParts" : {"stateTypes" : {"gun" : {"states" : {
+            "charging": {
+              // set this value to cycleTime
+              "cycle" : 0.2
+            }
+    }}}}
   },
 
   "baseOffset" : [0.6, 0.1],
@@ -42,18 +63,23 @@
     "baseDamage": 3,
     "cycleTime": 0.2,
     "fireTime": 0.2,
-
     "jamChances": {
-      "bad": 0.5,
-      "ok": 0.05,
-      "good": 0.01
+      "bad": 0.0,
+      "ok": 0.00,
+      "good": 0.00
     },
-    "maxAmmo": 25,
+    "maxAmmo": 10,
     "magType": "default",
-    "bulletsPerReload": 5,
-    "semi": true,
-    "burstCount": 5,
-    "manualFeed": true,
+    "bulletsPerReload": 10,
+    "chargeTime": 0,
+    "semi": false,
+    "burstCount": 1,
+    "manualFeed": false,
+
+    "flashHidden": false,
+    "suppressed": false,
+    // "recoilDeg": [0, 0],
+    "recoilMult": 0.5,
 
     "critChance": 0.5,
     "critDamageMult": 2,

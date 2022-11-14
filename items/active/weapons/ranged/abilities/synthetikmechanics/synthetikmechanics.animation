@@ -12,7 +12,7 @@
           // "charging": {},
           
           "charging": {
-            "frames" : 6,
+            "frames" : 3,
             "cycle" : 1,
             "mode" : "loop"
           },
@@ -219,7 +219,7 @@
             },
             "absent": {
               "properties": {
-                "image": "<partImage>:absent"
+                "image": ""
               }
             }
           }
@@ -297,6 +297,7 @@
 
     // gunshot sound
     "fire" : ["/sfx/project45-synthetikmechanics/fires/fire_smg.ogg"],
+    "firesilent" : ["/sfx/project45-synthetikmechanics/fires/fire_silenced_generic.ogg"],
     // plays louder as the magazine grows empty
     "hollow" : ["/sfx/project45-synthetikmechanics/hollow.ogg"],
 
