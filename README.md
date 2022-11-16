@@ -48,6 +48,29 @@ Welcome... to Project 45.
         - should feature clip mags (eject on empty)
     - Mosin Nagant
         - should feature strip mags (appear only on reload)
+- Add gun upgrades:
+    - Shotgun (Upgraded)
+        - Fires Dragon's Breath Rounds
+    - Sniper Rifle (Upgraded)
+        - Rounds explode on impact
+        - Deals bonus damage on last shot
+    - Submachine gun
+        - 50% Crit Chance
+    - Pistol
+        - Increased Mag Size
+        - Always good reloads
+        - Larger perfect reload interval
+    - Assault Rifle
+        - Give multishot chance
+- Add weapon abilities:
+    - Sonar
+        - reveals enemies in a radius for a period of time
+        - could optionally be automatic
+    - Drone
+        - lets a drone fly around and target nearby enemies
+        - make projectile modifiable, make it able to fire hitscans
+    - Melee Swipe
+        - high-damage melee swipe but short range.
 
 ## Vanilla Altfires Compatibility List:
 - <span style="color: green">Bouncing Shot</span>
