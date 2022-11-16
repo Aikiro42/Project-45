@@ -29,7 +29,25 @@ Welcome... to Project 45.
     - robotic (metallic)
 - add hitscan knockback
 - figure out how to utilize two animation scripts
-
+- Add no-movement requirement to firing weapons
+- Add new guns:
+    - Sniper Rifle (Mag-fed, Bolt-action)
+        - should feature bolt-action mechanic
+    - Grenade Launcher
+        - should feature firing projectiles
+    - AMR (Single-shot bolt-action)
+        - should feature single-shot mechanic
+    - Charge rifle ((Over)Charged, semi)
+        - should feature chargeup and overcharge mechanic
+        - Optional: auto-fire-after-charge rifle, resets charge every shot
+    - Gatling Gun
+        - should feature windup and whirring
+    - Revolver
+        - should feature kept bulletcases.
+    - Garand
+        - should feature clip mags (eject on empty)
+    - Mosin Nagant
+        - should feature strip mags (appear only on reload)
 
 ## Vanilla Altfires Compatibility List:
 - <span style="color: green">Bouncing Shot</span>
