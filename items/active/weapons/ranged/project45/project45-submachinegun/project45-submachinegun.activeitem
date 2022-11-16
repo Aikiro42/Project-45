@@ -74,8 +74,8 @@
     "fireTime": 0.05,
     "jamChances": {
       "bad": 0.1,
-      "ok": 0.05,
-      "good": 0.01
+      "ok": 0.01,
+      "good": 0
     },
     "maxAmmo": 50,
     "magType": "default",
@@ -104,6 +104,9 @@
 
     "magLoopFrames": 2,
     "magAnimRange": [1, 11],
+
+    "screenShakeAmount": [0.1, 0.5],
+    "screenShakeDelta": [0.02, 0.01],
 
     "stances": {
       "ejectmag" : {

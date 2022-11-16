@@ -1,7 +1,7 @@
 require "/scripts/util.lua"
 require "/scripts/vec2.lua"
 require "/scripts/versioningutils.lua"
-require "/items/buildscripts/abilities.lua"
+require "/items/buildscripts/project45abilities.lua"
 
 function build(directory, config, parameters, level, seed)
   local configParameter = function(keyName, defaultValue)
@@ -18,9 +18,22 @@ function build(directory, config, parameters, level, seed)
     parameters.level = level
   end
 
-  setupAbility(config, parameters, "primary")
-  setupAbility(config, parameters, "alt")
+  -- retrieve ability animation scripts
+  local primaryAnimationScripts = setupAbility(config, parameters, "primary")
+  local altAnimationScripts = setupAbility(config, parameters, "alt")
 
+  -- push primary animation scripts
+  -- to altAnimationScripts
+  for i, animationScript in ipairs(primaryAnimationScripts) do
+    table.insert(altAnimationScripts, animationScript)
+  end
+
+  -- let the item's animationScripts be altAnimationScripts
+  config.animationScripts = {}
+  util.mergeTable(config.animationScripts, altAnimationScripts or {})
+
+  sb.logInfo("[PROJECT 45] (buildproject45neo.lua) config.animationScripts = " .. sb.printJson(config.animationScripts))
+  
   -- elemental type and config (for alt ability)
   local elementalType = configParameter("elementalType", "physical")
   replacePatternInData(config, nil, "<elementalType>", elementalType)

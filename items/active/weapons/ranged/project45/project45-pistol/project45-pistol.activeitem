@@ -85,7 +85,7 @@
     "recoilMult": 1,
 
     "critChance": 0.1,
-    "critDamageMult": 3,
+    "critDamageMult": 1.5,
 
     "magLoopFrames": 2,
     "magAnimRange": [0, 0],

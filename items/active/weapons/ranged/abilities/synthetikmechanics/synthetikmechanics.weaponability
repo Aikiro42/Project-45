@@ -23,14 +23,14 @@
     // Base Damage per shot.
     /*
     Standard damage is 6.25 (Vanilla).
-
     */
     "baseDamage": 6.25,
 
     "critChance": 0,
     "critDamageMult": 1,
+
     // This value is multiplied to the total damage on the last shot
-    "lastShotDamageMult": 1.1,
+    "lastShotDamageMult": 1,
 
     // ________________________[ AMMO-RELATED SETTINGS ]__________________________________
     "maxAmmo": 8, // maximum ammo of the weapon
@@ -49,8 +49,9 @@
     
     "overrideHitscan": false, // if true, "project45stdbullet" spawns the actual projectile while "hitscan" spawns hitscans
     
-    // number multiplied to projectile count without affecting the damage;
-    // values 0 and below will make the gun unable to shoot anything
+    // number multiplied to projectile count without affecting the damage.
+    // if number is a float, the float is used as a chance to roll for an additional shot
+    // values 0 and below can make the gun not shoot anything
     "multishot": 1, 
 
     "projectileCount" : 1, // number of projectiles launched per shot
@@ -139,7 +140,7 @@
     
 
     // ________________________[ RELOAD SETTINGS ]__________________________________
-    "reloadEnergyCostRate": 0.2, // percent of energy consumed per reload
+    "reloadCost": 0.2, // percent of energy consumed per reload
     "reloadTime": 0.5, // time to reload <bulletsPerReload>, in seconds
     
     // (percentage) interval during which a good reload is possible

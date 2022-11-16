@@ -95,10 +95,11 @@ Welcome... to Project 45.
     - Perfectly resembles synthetik mechanic.
 - <span style="color: red">Homing Rocket</span>
     - Seemingly dysfunctional; it does shoot a rocket, but there aren't any indicators of it being guided.
+    - Seems to only work with certain rocket launchers.
 - <span style="color: green">Lance</span>
     - Requires activeItem "elementalType" field.
-- <span style="color: red">Marked Shot</span>
-    - Functional, but missing animated elements.
+- <span style="color: green">Marked Shot</span>
+    - ~~Functional, but missing animated elements.~~ Functional and compatible with synthetikmechanics via altering buildscripts.
 - <span style="color: green">Piercing Shot</span>
 - <span style="color: green">Rocket Burst</span>
 - <span style="color: green">Shrapnel Bomb</span>
@@ -114,7 +115,7 @@ Welcome... to Project 45.
 I can't use more than one animation script on the gun.
 
 ### Goal
-Use more than one animation script on the gun.
+Use more than one animation script on the gun. ACHIEVED!
 
 ### Methodology
 1. Create custom `/items/buildscripts/abilities.lua`, import that into `items/buildscripts/buildproject45neo.lua`
@@ -221,40 +222,4 @@ Use more than one animation script on the gun.
         if config.palette then
     ```
 
-4. In `project45gun.lua`, when the gun is initialized, make it send the value of `altAnimationScripts` into the local animator via `activeItem.setScriptedAnimationParameter()`:
-    ```lua
-    function init()
-        activeItem.setCursor("/cursors/reticle0.cursor")
-        animator.setGlobalTag("paletteSwaps", config.getParameter("paletteSwaps", ""))
-
-        self.weapon = Weapon:new()
-
-        sb.logInfo("[PROJECT 45] (project45gun.lua) animationScripts:" .. sb.printJson(config.getParameter("animationScripts")))
-        sb.logInfo("[PROJECT 45] (project45gun.lua) altAnimationScripts:" .. sb.printJson(config.getParameter("altAnimationScripts")))
-        
-        activeItem.setScriptedAnimationParameter("altAnimationScripts", config.getParameter("altAnimationScripts", {}))
-        -- activeItem.setScriptedAnimationParameter("primaryAnimScripts", config.getParameter("animationScripts", {}))
-
-        self.weapon:addTransformationGroup("weapon", {0,0}, 0)
-        self.weapon:addTransformationGroup("muzzle", self.weapon.muzzleOffset, 0)
-    ```
-
-
-5. In the animation script of the primary ability, code its `init()` function so that it requires the `altAnimationScripts`:
-```lua
-function init()
-  
-  local altAnimScripts = animationConfig.animationParameter("altAnimationScripts")
-  -- local primaryAnimScripts = animationConfig.animationParameter("primaryAnimScripts")
-
-  -- oldUpdate = update
-  sb.logInfo("[PROJECT 45] (syntheticmechanicsanimation.lua) REQUIRING SCRIPT: " .. altAnimScripts[1])
-  require(altAnimScripts[1])
-
-  -- sb.logInfo("[PROJECT 45] (syntheticmechanicsanimation.lua) REQUIRING SCRIPT: " .. primaryAnimScripts[1])
-  -- require(primaryAnimScripts[1])
-  
-end
-```
-
-6. Do stuff
+4. Patch the animation script of the primary weaponability on the animation script of the alt weaponability.

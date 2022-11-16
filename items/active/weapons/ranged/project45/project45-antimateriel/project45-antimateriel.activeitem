@@ -99,8 +99,9 @@
     "recoilDeg": [5, 2],
     "recoilMult": 0.85,
 
-    "critChance": 0.5,
-    "critDamageMult": 1.5,
+    // make all shots orange
+    "critChance": 1,
+    "critDamageMult": 1.1,
     "screenShakeAmount": [1.5,2.5],
     "screenShakeDelta": [0.1, 0.5],
     "magLoopFrames": 0,

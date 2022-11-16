@@ -70,10 +70,10 @@
     "baseDps": 100,
     
     "projectileCount": 5,
-    "multishot": 1.5,
-    "inaccuracy": 0.01,
+    "multishot": 1.2,
+    "inaccuracy": 0.02,
     "manualFeed": true,
-    "semi": false,
+    "semi": true,
     "slamFire": true,
     "cockTime": 0.3,
     "cycleTime": 0.1,
@@ -83,7 +83,7 @@
       "ok": 0.01,
       "good": 0.00
     },
-
+        
     "maxAmmo": 8,
     "magType": "strip",
     "bulletsPerReload": 1,
