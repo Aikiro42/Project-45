@@ -1,8 +1,8 @@
 {
-  "kind" : "project45mag",
+  "kind" : "project45gmag",
   "definition" : {
     "type" : "animated",
-    "image" : "/particles/magazines/project45mag/project45mag.animation",
+    "image" : "/particles/magazines/old/project45gmag/project45gmag.animation",
     "fade" : 0.9,
 	"position" : [0, 0],
 	"size" : 1.0,

@@ -26,7 +26,6 @@ function update()
   local muzzleFlashPos = activeItemAnimation.ownerPosition()
   local muzzleFlashColor = {0, 0, 0}
 
-
   local reloadBarColors = {
     bad = {255, 0, 0},
     good = {0, 255, 255},
@@ -67,10 +66,12 @@ function update()
   --]]
 
   if 0 < muzzleSmokeTimer and muzzleSmokeTimer < muzzleSmokeTime - 0.1 then
+
     localAnimator.spawnParticle(
       "project45muzzlesmoke",
       muzzlePos
     )
+
   end
 
   -- render hitscan trails

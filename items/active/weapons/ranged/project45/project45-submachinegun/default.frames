@@ -1,6 +1,6 @@
 {  
   "frameGrid" : {
-    "size" : [40, 10],
+    "size" : [23, 15],
     "dimensions" : [6, 2],
     "names" : [
       ["idle", "firing", "ejecting", "feeding", "jammed", "unjam"],

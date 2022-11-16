@@ -33,12 +33,14 @@ function SynthetikMechanics:init()
     }
 
     -- reset non-persistent timers and flags
+    self.currentScreenShake = self.screenShakeAmount[1]
     self.chargeTimer = 0
     self.muzzleFlashTimer = 0
     self.muzzleSmokeTimer = 0
     self.dashCooldownTimer = 0
     self.dashTriggerTimer = -1
     self.laserToggleTimer = -1
+    self.chargeDamageMult = 1
     self.cooldownTimer = self.fireTime
     self.reloadTimer = -1 -- not reloading
     self.isCharging = false
@@ -71,6 +73,10 @@ function SynthetikMechanics:init()
     activeItem.setScriptedAnimationParameter("muzzleSmokeTime", self.muzzleSmokeTime)
     activeItem.setScriptedAnimationParameter("laserColor", self.laser.color)
 
+    -- debug
+    -- animator.setParticleEmitterActive("ejectionPort", true)
+    -- animator.setParticleEmitterActive("magazine", true)
+
     -- initialize visuals
 
     -- initialize gun animation state
@@ -101,12 +107,18 @@ end
 function SynthetikMechanics:update(dt, fireMode, shiftHeld)
 
     WeaponAbility.update(self, dt, fireMode, shiftHeld)
+
+    -- ENABLE THESE LINES TO APPROXIMATE OFFSETS
+    if self.DEBUG then
+      animator.burstParticleEmitter("ejectionPort")
+      animator.burstParticleEmitter("magazine")
+    end
+
     self.weapon:updateAim()
     self:aim()
 
     self.shiftHeld = shiftHeld
 
-    -- <partImage>.<ammo>
     self:updateScriptedAnimationParameters()
     self:updateMagAnimation()
     self:updateSoundProperties()
@@ -121,6 +133,9 @@ function SynthetikMechanics:update(dt, fireMode, shiftHeld)
     self.muzzleFlashTimer = math.max(0, self.muzzleFlashTimer - self.dt)
     self.muzzleSmokeTimer = math.max(0, self.muzzleSmokeTimer - self.dt)
     self.dashCooldownTimer = math.max(0, self.dashCooldownTimer - self.dt)
+    self.currentScreenShake = math.max(self.screenShakeAmount[1],
+      self.currentScreenShake - self.dt * self.screenShakeDelta[1] * (self.screenShakeAmount[2] - self.screenShakeAmount[1])
+    )
     storage.dodgeCooldownTimer = math.max(0, storage.dodgeCooldownTimer - self.dt)
     self.cooldownTimer = math.max(0, self.cooldownTimer - self.dt)
     self.aimProgress = math.min(1, self.aimProgress + self.dt / self.aimTime[shiftHeld and 2 or 1])
@@ -154,7 +169,9 @@ function SynthetikMechanics:update(dt, fireMode, shiftHeld)
 
     -- Prevent energy regen if there is energy or if currently reloading
     if storage.ammo > 0 or self.reloadTimer > 0 then status.setResource("energyRegenBlock", 1.0) end
-
+    if self.weapon.currentAbility then
+      self.dashTriggerTimer = -1
+    end
     -- Walk I/O logic
     if shiftHeld then
       
@@ -168,17 +185,19 @@ function SynthetikMechanics:update(dt, fireMode, shiftHeld)
       end
 
       -- if laser is toggled
-      if self.laser.toggle then
-        -- set and start the toggle timer
-        if self.laserToggleTimer < 0 then
-          self.laserToggleTimer = 0
+      if self.laser.enabled then
+        if self.laser.toggle then
+          -- set and start the toggle timer
+          if self.laserToggleTimer < 0 then
+            self.laserToggleTimer = 0
+          end
+          self.laserToggleTimer = self.laserToggleTimer + self.dt
+        
+        -- if laser is held instead, turn it on
+        else
+          if not storage.isLaserOn then animator.playSound("laser") end
+          storage.isLaserOn = true
         end
-        self.laserToggleTimer = self.laserToggleTimer + self.dt
-      
-      -- if laser is held instead, turn it on
-      else
-        if not storage.isLaserOn then animator.playSound("laser") end
-        storage.isLaserOn = true
       end
     
 
@@ -194,18 +213,20 @@ function SynthetikMechanics:update(dt, fireMode, shiftHeld)
       end
 
       -- if laser is toggled,
-      if self.laser.toggle then
-        -- if the toggle timer was set and is below the toggle time, toggle laser
-        if self.laserToggleTimer <= self.laser.toggleTime and self.laserToggleTimer >= 0 then
-          storage.isLaserOn = not storage.isLaserOn
-          if storage.isLaserOn then animator.playSound("laser") end
+      if self.laser.enabled then
+        if self.laser.toggle then
+          -- if the toggle timer was set and is below the toggle time, toggle laser
+          if self.laserToggleTimer <= self.laser.toggleTime and self.laserToggleTimer >= 0 then
+            storage.isLaserOn = not storage.isLaserOn
+            if storage.isLaserOn then animator.playSound("laser") end
+          end
+          -- reset the timer
+          self.laserToggleTimer = -1
+        
+        -- if laser is held instead, turn it off
+        else
+          storage.isLaserOn = false
         end
-        -- reset the timer
-        self.laserToggleTimer = -1
-      
-      -- if laser is held instead, turn it off
-      else
-        storage.isLaserOn = false
       end
     
     end
@@ -281,21 +302,28 @@ function SynthetikMechanics:charging()
     while self:triggering() do
 
       -- TODO: play charging sound
-      self.chargeTimer = math.min(self.chargeTime, self.chargeTimer + self.dt)
+      self.chargeTimer = math.min(self.chargeTime + self.overchargeTime, self.chargeTimer + self.dt)
       coroutine.yield()
 
-      -- automatically transist to firing state when fully charged
-      if self.autoFireAfterCharge and self.chargeTimer >= self.chargeTime then
+      -- automatically transist to firing state when fully charged/overcharged
+      if self.autoFireAfterCharge and
+      self.chargeTimer >= (self.chargeTime + self.overchargeTime)
+      then
         break
       end
+    end
+    
+    -- condition prevents dividing by zero
+    if self.overchargeTime > 0 then
+      self.chargeDamageMult = 1 + (self.chargeTimer - self.chargeTime)/self.overchargeTime
     end
 
     if self.chargeTimer >= self.chargeTime then
       if self.resetChargeAfterFire then self.chargeTimer = 0 end
       self:setState(self.firing)
     end
-    
     self.isCharging = false
+
     if self.chargeTimer <= 0 then
       self:setAnimationState("gun", "idle")
     end
@@ -325,17 +353,23 @@ function SynthetikMechanics:firing()
   -- fire projectile
   -- if projectileType == "hitscan" then
   if (projectileType == "project45stdbullet" and not self.overrideHitscan) or projectileType == "hitscan" then
-    self:fireHitscan()
+    self:fireHitscan(projectileType)
   else
     self:fireProjectileNeo(projectileType)
   end
 
   -- bullet fired, chamber is now unready
   storage.chamberReady = false
+  self.chargeDamageMult = 1
 
   -- muzzle flash
   self:muzzleFlash()
   self:setAnimationState("gun", "firing")
+
+  -- update screenShakeAmount
+  self.currentScreenShake = math.min(self.screenShakeAmount[2],
+    self.currentScreenShake + self.screenShakeDelta[2] * (self.screenShakeAmount[2] - self.screenShakeAmount[1])
+  )
 
   -- increment burst counter
   self.burstCounter = self.burstCounter + 1
@@ -373,6 +407,8 @@ function SynthetikMechanics:ejectingCase()
 
     if storage.ammo > 0 then
       self:setState(self.feeding) -- immediately transist
+    else
+      self:setState(self.whirring) -- see state function for specific conditions
     end
     -- gun doesn't visually eject
     return
@@ -422,6 +458,10 @@ function SynthetikMechanics:ejectingCase()
     -- transist state if there's ammo left
     if storage.ammo > 0 then
       self:setState(self.feeding)
+    
+    -- see state function for specific conditions
+    else
+      self:setState(self.whirring)
     end
 
     return
@@ -473,7 +513,7 @@ end
 -- done after magazine is absent
 function SynthetikMechanics:reloading()
   self.triggered = true
-
+  self.currentScreenShake = self.screenShakeAmount[1]
   -- if status.overConsumeResource("energy", self.reloadEnergyCostRate*status.resourceMax("energy")) then
   if not status.resourceLocked("energy") then
     
@@ -544,7 +584,7 @@ function SynthetikMechanics:reloading()
         if storage.ammo < self.maxAmmo then
           -- play sound
           animator.playSound("loadRound")
-
+          -- self:snapStance(self.stances.loadRound)
           -- reset reload attempt for next reload
           reloadAttempted = false
           
@@ -593,6 +633,7 @@ function SynthetikMechanics:reloading()
     
     self.weapon:setStance(self.stances.reloaded)
     self.burstCounter = self.burstCount
+    self:screenShake(self.currentScreenShake)
 
     if self.magType == "strip" then
       animator.setAnimationState("mag", "absent")
@@ -610,6 +651,26 @@ function SynthetikMechanics:reloading()
 
   end
 
+end
+
+-- State specific to charged/windup weapons that are out of ammo
+-- Will make them whirr as the trigger key is held
+-- Imagine a gatling gun spinning, that'd be nice
+function SynthetikMechanics:whirring()
+  -- If gun is a gatling gun:
+  --[[
+    1. Gun is auto
+    2. Gun autofires after charge
+  --]]
+  if self.chargeTimer > 0
+  and not self.semi
+  and self.autoFireAfterCharge 
+  and not self.resetChargeAfterFire then
+    while self:triggering() do
+      self.chargeTimer = math.min(self.chargeTime, self.chargeTimer + self.dt)
+      coroutine.yield()
+    end
+  end
 end
 
 function SynthetikMechanics:cocking()
@@ -651,13 +712,13 @@ function SynthetikMechanics:ejectMag()
     self:snapStance(self.stances.ejectmag)
   end
 
-  self:setStance(self.stances.reloading)
+  self:setStance(self.stances.empty)
   storage.ammo = -1
 end
 
 function SynthetikMechanics:fireProjectileNeo(projectileType)
   local params = sb.jsonMerge(self.projectileParameters, {})
-  params.power = self:damagePerShot()
+  params.power = self:damagePerShot(projectileType)
   for i = 1, self.projectileCount * self:calculateMultishot() do
     local projectileId = world.spawnProjectile(
       projectileType,
@@ -670,7 +731,7 @@ function SynthetikMechanics:fireProjectileNeo(projectileType)
   end
 end
 
-function SynthetikMechanics:fireHitscan()
+function SynthetikMechanics:fireHitscan(projectileType)
   for i = 1, self.projectileCount * self:calculateMultishot() do
     --[[
     if world.lineTileCollision(mcontroller.position(), self:firePosition()) then
@@ -694,7 +755,7 @@ function SynthetikMechanics:fireHitscan()
 
     if #hitReg[3] > 0 then
       for _, hitId in ipairs(hitReg[3]) do
-        world.sendEntityMessage(hitId, "applyStatusEffect", statusDamage, self:damagePerShot() * crit, entity.id()) -- TODO: duplicate and rename damage status effect
+        world.sendEntityMessage(hitId, "applyStatusEffect", statusDamage, self:damagePerShot(projectileType) * crit, entity.id()) -- TODO: duplicate and rename damage status effect
       end
     end
 
@@ -786,7 +847,11 @@ function SynthetikMechanics:aim()
     activeItem.setFrontArmFrame(stance.frontArmFrame)
     activeItem.setBackArmFrame(stance.backArmFrame)
     
-    if config.getParameter("twoHanded", false) then activeItem.setTwoHandedGrip(stance.twoHanded or false) end
+    if config.getParameter("twoHanded", true) then
+      activeItem.setTwoHandedGrip(stance.twoHanded or false)
+    else
+      activeItem.setTwoHandedGrip(false)
+    end
     
     self.weapon.aimAngle, self.weapon.aimDirection = activeItem.aimAngleAndDirection(0, activeItem.ownerAimPosition())
     
@@ -800,7 +865,7 @@ function SynthetikMechanics:muzzleFlash()
 
   self:recoil()
   animator.setSoundPitch("fire", sb.nrand(0.01, 1))
-  animator.setSoundVolume("hollow", 1 - storage.ammo/self.maxAmmo)
+  animator.setSoundVolume("hollow", (1 - storage.ammo/self.maxAmmo) * 0.8)
 
   animator.playSound("fire" .. (self.suppressed and "silent" or ""))
   animator.playSound("hollow")
@@ -814,10 +879,10 @@ function SynthetikMechanics:muzzleFlash()
 end
 
 function SynthetikMechanics:recoil()
-  self:screenShake(0.5)
+  self:screenShake(self.currentScreenShake)
   activeItem.setRecoil(true)
 
-  local inaccuracy = math.rad(self.recoilDeg[self.shiftHeld and 2 or 1]) / self.recoilMult
+  local inaccuracy = math.rad(self.recoilDeg[self.shiftHeld and 2 or 1]) * self.recoilMult
   
   self.weapon.relativeWeaponRotation = self.weapon.relativeWeaponRotation + inaccuracy
   self.weapon.relativeArmRotation = self.weapon.relativeArmRotation + inaccuracy
@@ -841,8 +906,8 @@ function SynthetikMechanics:dash()
     dashDirection = mcontroller.facingDirection()
   end
   animator.playSound("dash")
-  status.addEphemeralEffect("project45dash", self.dashParams.time)
-  util.wait(self.dashParams.time, function(dt)
+  status.addEphemeralEffect("project45dash", self.dashParams.statusTime)
+  util.wait(self.dashParams.dashTime, function(dt)
     mcontroller.setVelocity({self.dashParams.speed*dashDirection, 0})
   end)
   mcontroller.setXVelocity(mcontroller.xVelocity() * self.dashParams.endXVelMult)
@@ -856,6 +921,7 @@ function SynthetikMechanics:unjam()
     self.triggered = true
     self:setAnimationState("gun", "unjam")
     animator.playSound("unjam")
+    self:screenShake(self.screenShakeAmount[1])
     self:setStance(self.stances.jammed)
     self:snapStance(self.stances.unjam)
     storage.jamAmount = math.max(0, storage.jamAmount - self.unjamAmount)
@@ -865,6 +931,7 @@ function SynthetikMechanics:unjam()
     else
       storage.reloadRating = "ok"
       animator.burstParticleEmitter("ejectionPort")
+      self:screenShake(self.screenShakeAmount[2])
       self:setState(self.cocking)
       self:setStance(self.stances.aim)
     end
@@ -924,21 +991,26 @@ function SynthetikMechanics:updateMagAnimation()
 
   local tag = self.magAnimRange[2]
 
-  -- validation; self.magAnimRange must be a subset of non-negative integers
-  if self.magAnimRange[1] >= self.magAnimRange[2] or math.min(self.magAnimRange[1], self.magAnimRange[2]) < 0 then
+  -- validation:
+  -- self.magAnimRange must be a subset of non-negative integers
+  -- the first index of magAnimRange must be strictly greater than the second index
+  if self.magAnimRange[1] >= self.magAnimRange[2] or math.min(self.magAnimRange[1], self.magAnimRange[2]) < 0 or self.magLoopFrames <= 0 then
     tag = "default"
   
-  -- if ammo is below range
-  elseif storage.ammo < self.magAnimRange[1] then
-    tag = self.magAnimRange[1]
-  
+  -- if ammo is above range or reloading
+  elseif storage.ammo > self.magAnimRange[2] or (self.reloadTimer >= 0 and self.bulletsPerReload >= self.maxAmmo) then
+    tag = "loop." .. storage.ammo % self.magLoopFrames -- magazine animation loop
+    
   -- if ammo is within animation range then
+  -- let tag = storage.ammo
   elseif self.magAnimRange[1] <= storage.ammo and storage.ammo <= self.magAnimRange[2] then
     tag = storage.ammo
   
-  -- if ammo is above range
+    -- if ammo is below range (i.e. almost empty)
   else
-    tag = "loop." .. storage.ammo % self.magLoopFrames -- magazine animation loop
+    -- let tag be low end of anim
+    tag = self.magAnimRange[1]
+
   end
 
   animator.setGlobalTag("ammo", tag)
@@ -1015,10 +1087,12 @@ end
 
 -- HELPER FUNCTIONS
 
-function SynthetikMechanics:damagePerShot()
+function SynthetikMechanics:damagePerShot(projectileType)
   --[[
   Damage per shot is calculated by the following factors:
   1. Base Damage as specified in the primaryAbility field of the activeItem
+     OR
+     Base DPS * (Cycle time + Fire time)
   2. x1.1 damage if the reload rating is good, x1.3 if perfect
   3. Power Multiplier of the player
   4. Tier of the weapon
@@ -1029,6 +1103,12 @@ function SynthetikMechanics:damagePerShot()
   a shotgun shot deals the complete amount of damage.
 
   --]]
+
+  local baseDamage = self.baseDamage
+  if self.baseDps then
+    baseDamage = self.baseDps * (self.manualFeed and self.cockTime or self.cycleTime + self.fireTime)
+  end
+
   local reloadDamageMultiplier = 1
 
   -- projectile is fired before ammo is decremented
@@ -1036,7 +1116,14 @@ function SynthetikMechanics:damagePerShot()
   
   if storage.reloadRating == "good" then reloadDamageMultiplier = 1.1 
   elseif storage.reloadRating == "perfect" then reloadDamageMultiplier = 1.3 end
-  return self.baseDamage * reloadDamageMultiplier * lastShotDamageMultiplier * config.getParameter("damageLevelMultiplier", 1) * activeItem.ownerPowerMultiplier() / self.projectileCount
+  return baseDamage -- or (self.baseDps * (self.cycleTime + self.fireTime))
+   * self.chargeDamageMult
+   * reloadDamageMultiplier
+   * lastShotDamageMultiplier
+   * config.getParameter("damageLevelMultiplier", 1)
+   * activeItem.ownerPowerMultiplier()
+   / (((projectileType == "project45stdbullet" and not self.overrideHitscan) or projectileType == "hitscan") and 1 or self.projectileCount)
+   --]]
 end
 
 function SynthetikMechanics:screenShake(amount, shakeTime, random)
@@ -1082,6 +1169,7 @@ end
 function SynthetikMechanics:jam()
   if self:diceRoll(self.jamChances[storage.reloadRating]) then
     storage.ammo = storage.ammo - math.min(self.ammoPerShot, storage.ammo)
+    self.currentScreenShake = self.screenShakeAmount[1]
     self.chargeTimer = 0
     self.isCharging = false
     storage.jamAmount = 1

@@ -1,8 +1,8 @@
 {
-  "kind" : "project45gmag",
+  "kind" : "project45armag",
   "definition" : {
     "type" : "animated",
-    "image" : "/particles/magazines/project45gmag/project45gmag.animation",
+    "image" : "/particles/magazines/old/project45armag/project45armag.animation",
     "fade" : 0.9,
 	"position" : [0, 0],
 	"size" : 1.0,
@@ -12,7 +12,6 @@
     "timeToLive" : 2,
     "layer" : "back",
     "collidesForeground" : true,
-    "rotation": -45,
 	"variance" : {
 	  "angularVelocity" : 240,
       "initialVelocity" : [2, 2]

@@ -27,7 +27,6 @@ Welcome... to Project 45.
     - stone
     - wood
     - robotic (metallic)
-- Implement scope
 - add hitscan knockback
 - figure out how to utilize two animation scripts
 

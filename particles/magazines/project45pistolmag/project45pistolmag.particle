@@ -1,8 +1,8 @@
 {
-  "kind" : "project45cmag",
+  "kind" : "project45pistolmag",
   "definition" : {
     "type" : "animated",
-    "image" : "/particles/magazines/project45cmag/project45cmag.animation",
+    "image" : "/particles/magazines/project45pistolmag/project45pistolmag.animation",
     "fade" : 0.9,
 	"position" : [0, 0],
 	"size" : 1.0,
@@ -12,7 +12,7 @@
     "timeToLive" : 2,
     "layer" : "back",
     "collidesForeground" : true,
-    "rotation": -45,
+    "rotation": 0,
 	"variance" : {
 	  "angularVelocity" : 240,
       "initialVelocity" : [2, 2]

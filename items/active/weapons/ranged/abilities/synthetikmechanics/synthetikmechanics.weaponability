@@ -20,7 +20,13 @@
     "class" : "SynthetikMechanics",
     
     // ________________________[ DAMAGE SETTINGS ]__________________________________
-    "baseDamage": 6.25, // base damage per shot
+    // Base Damage per shot.
+    /*
+    Standard damage is 6.25 (Vanilla).
+
+    */
+    "baseDamage": 6.25,
+
     "critChance": 0,
     "critDamageMult": 1,
     // This value is multiplied to the total damage on the last shot
@@ -52,7 +58,7 @@
     "projectileParameters": {
       // hitscan params
       "range": 100,  // range of the hitscan line in blocks
-      "punchThrough": 1,  // number of entities to register before stopping the scan
+      "punchThrough": 0,  // number of entities to register before stopping the scan
       "fadeTime": 0.1, // how long the hitscan line fades away
       "hitscanWidth": 1, // visual width of hitscan line in pixels
       "hitscanColor": [255,255,200] // color of hitscan projectile; also dictates muzzle flash color
@@ -69,8 +75,15 @@
     
     "chargeTime": 0, // amount of time the weapon will wind up before firing, in seconds
     
+    // amount of time in seconds wherein the gun will overcharge
+    // overcharging grants additional damage: 1 + <time charged> - chargeTime / overchargeTime
+    // i.e. max overcharge damage multiplier is 2x
+    // has no effect if chargeTime <= 0
+    "overchargeTime": 0,
+
     // whether the gun automatically fires after fully charging
     // set this to true on regular guns
+    // if gun is semifire, and this value is false, charge is automatically reset after fire
     "autoFireAfterCharge": true, 
     
     // whether charge is reset when firing
@@ -81,12 +94,19 @@
     "slamFire": false,
 
     // Depending on which is greater, cycleTime or fireTime will dictate the fire rate of the weapon.
-    "cycleTime": 0.1, // Time it takes to eject the bullet casing and feed the next cartridge.
     
-    "fireTime" : 0.1, // Amount of time between weapon triggers
+    // Seconds it takes to fire eject and reload.
+    // In burst weapons, this dictates the bursttime;
+    // 
+    "cycleTime": 0.1,
     
+    // Seconds before you're able to use the weapon again.
+    // Should not affect the reload minigame.
+    "fireTime" : 0.1,
+    
+    // Laser settings.
     "laser": {
-      "enabled": true, // if true, laser is rendered
+      "enabled": false, // if true, laser is rendered
       "color": [255, 0, 0], // laser color
       "range": 100, // max distance to which the laser is drawn
       "maxRange": true, // if false, laser is rendered up to player's aim position only
@@ -113,7 +133,7 @@
     // ________________________[ ACCURACY SETTINGS ]__________________________________
     "recoilMomentum": 0, // momentum added to character opposite direction of aim vector when firing
     "recoilDeg": [2, 1], // degrees of recoil every time the gun is shot (think spray control)
-    "recoilMult": 0.5, // muzzle brake; multiplied to recoilDeg
+    "recoilMult": 1, // muzzle brake; multiplied to recoilDeg
     "aimTime": [3, 1], // time it takes to aim; first index is when you're running, second is when shift is held
     "inaccuracy" : 0.01, // Generic RNG inaccuracy; causes spread
     
@@ -141,17 +161,19 @@
       "enabled": true,
       "triggerTime": 0.2,
       // speed at which the player travels for the duration of the dash
-      "speed": 75,
+      "speed": 80,
       
       // duration for which the indicated speed is applied on the movement controller
-      "time": 0.1,
+      "dashTime": 0.1,
+      // duration for which you're invincible
+      "statusTime": 0.2,
       
       // number multiplied to your final velocity after the dodge
       // i.e. if this is 1 then you are essentially given momentum
       // from the speed of your dash
       "endXVelMult": 0.3,
 
-      "cooldown": 1
+      "cooldown": 0.5
     },
 
 
@@ -172,6 +194,10 @@
     "muzzleSmokeTime": 5, // number of seconds the muzzle smoke is active
     "muzzleSmokeDelay": 0.2,
     "doScreenShake": true,
+    // amount of minimum and maximum screenshake, in that order.
+    "screenShakeAmount": [0.1, 0.5],
+    // percent of screenshake subtracted per second and added per shot, in that order.
+    "screenShakeDelta": [0.2, 0.1],
     
     // ________________________[ COMPATIBILITY SETTINGS ]__________________________________
 
@@ -188,7 +214,7 @@
       "idleneo" : {
         "armRotation" : -45,
         "weaponRotation" : 0,
-        "twoHanded" : false,
+        "twoHanded" : true,
         "allowRotate" : true,
         "allowFlip" : true
       },
@@ -206,9 +232,18 @@
       "jammed" : {
         "armRotation" : 0,
         "weaponRotation" : -15,
-        "twoHanded" : true,
+        "twoHanded" : false,
         "allowRotate" : true,
         "allowFlip" : true
+      },
+
+      // stance while the gun has no mag
+      "empty" : {
+        "armRotation" : -45,
+        "weaponRotation" : 0,
+        "twoHanded" : true,
+        "allowRotate" : false,
+        "allowFlip" : false
       },
 
       // stance taken while ejecting the mag
@@ -228,7 +263,7 @@
       "unjam" : {
         "armRotation" : -30,
         "weaponRotation" : 25,
-        "twoHanded" : false,
+        "twoHanded" : true,
         "allowRotate" : false,
         "allowFlip" : false
       },
@@ -236,7 +271,7 @@
       "manualFeed": {
         "armRotation" : 5,
         "weaponRotation" : 5,
-        "twoHanded" : false,
+        "twoHanded" : true,
         "allowRotate" : false,
         "allowFlip" : false
       },
@@ -244,7 +279,7 @@
       "loadRound": {
         "armRotation" : -45,
         "weaponRotation" : 45,
-        "twoHanded" : false,
+        "twoHanded" : true,
         "allowRotate" : false,
         "allowFlip" : false
       },
@@ -255,7 +290,7 @@
       "reloading" : {
         "armRotation" : -45,
         "weaponRotation" : 0,
-        "twoHanded" : true,
+        "twoHanded" : false,
         "allowRotate" : false,
         "aimAngle": 0,
         "allowFlip" : false

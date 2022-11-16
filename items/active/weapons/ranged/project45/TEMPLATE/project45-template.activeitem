@@ -17,7 +17,7 @@ When gun is a windup-type and
   "category" : "Rifle",
   "twoHanded" : true,
   "itemTags" : ["weapon","ranged","rifle"],
-  "level" : 7,
+  "level" : 1,
 
   "inventoryIcon" : "project45-template-icon.png",
 
@@ -39,9 +39,19 @@ When gun is a windup-type and
     "animatedParts" : {"stateTypes" : {"gun" : {"states" : {
             "charging": {
               // set this value to cycleTime
-              "cycle" : 0.2
+              "cycle" : 0.05
             }
-    }}}}
+    }}}},
+    "particleEmitters": {
+      "ejectionPort" : { "particles" : [ 
+          {"particle": "project45bulletcase"}
+          // {"particle": "project45muzzlesmoke"}
+        ]},
+      "magazine" : { "particles" : [
+          {"particle": "project45mag"}
+          // {"particle": "project45muzzlesmoke"}
+        ]}
+    }
   },
 
   "baseOffset" : [0.6, 0.1],
@@ -61,8 +71,8 @@ When gun is a windup-type and
   "primaryAbility": {
 
     "baseDamage": 3,
-    "cycleTime": 0.2,
-    "fireTime": 0.2,
+    "cycleTime": 0.05,
+    "fireTime": 0.05,
     "jamChances": {
       "bad": 0.0,
       "ok": 0.00,
@@ -70,15 +80,18 @@ When gun is a windup-type and
     },
     "maxAmmo": 10,
     "magType": "default",
-    "bulletsPerReload": 10,
+    "bulletsPerReload": 1,
     "chargeTime": 0,
-    "semi": false,
+    "overchargeTime": 1,
+    "autoFireAfterCharge": false,
+    "semi": true,
     "burstCount": 1,
     "manualFeed": false,
 
     "flashHidden": false,
     "suppressed": false,
     // "recoilDeg": [0, 0],
+    "recoilDeg": [0.5, 0.1],
     "recoilMult": 0.5,
 
     "critChance": 0.5,

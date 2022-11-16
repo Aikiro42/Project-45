@@ -1,0 +1,7 @@
+{
+  "image" : "project45assaultriflemag.png",
+  "frameGrid" : {
+    "size" : [4, 9],
+    "dimensions" : [1, 1]
+  }
+}

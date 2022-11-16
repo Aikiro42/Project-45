@@ -1,8 +1,8 @@
 {
-  "kind" : "project45smgmag",
+  "kind" : "project45assaultriflemag",
   "definition" : {
     "type" : "animated",
-    "image" : "/particles/magazines/project45smgmag/project45smgmag.animation",
+    "image" : "/particles/magazines/project45assaultriflemag/project45assaultriflemag.animation",
     "fade" : 0.9,
 	"position" : [0, 0],
 	"size" : 1.0,

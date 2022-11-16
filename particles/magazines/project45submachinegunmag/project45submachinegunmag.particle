@@ -1,8 +1,8 @@
 {
-  "kind" : "project45srmag",
+  "kind" : "project45submachinegunmag",
   "definition" : {
     "type" : "animated",
-    "image" : "/particles/magazines/project45srmag/project45srmag.animation",
+    "image" : "/particles/magazines/project45submachinegunmag/project45submachinegunmag.animation",
     "fade" : 0.9,
 	"position" : [0, 0],
 	"size" : 1.0,
@@ -12,6 +12,7 @@
     "timeToLive" : 2,
     "layer" : "back",
     "collidesForeground" : true,
+    "rotation": 0,
 	"variance" : {
 	  "angularVelocity" : 240,
       "initialVelocity" : [2, 2]
