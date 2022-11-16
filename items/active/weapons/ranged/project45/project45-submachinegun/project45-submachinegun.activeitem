@@ -73,7 +73,7 @@
     "cycleTime": 0.05,
     "fireTime": 0.05,
     "jamChances": {
-      "bad": 0.3,
+      "bad": 0.1,
       "ok": 0.05,
       "good": 0.01
     },

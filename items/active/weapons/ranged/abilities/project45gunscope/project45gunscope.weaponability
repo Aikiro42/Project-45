@@ -1,7 +1,7 @@
 {
     "animationCustom" : {
         "animatedParts" : { "parts" : {
-            "flashlight" : {
+            "scope" : {
             "properties" : {
                 "zLevel" : -1,
                 "centered" : true,
