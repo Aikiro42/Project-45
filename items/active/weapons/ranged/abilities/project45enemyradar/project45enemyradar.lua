@@ -5,6 +5,7 @@ Project45EnemyRadar = WeaponAbility:new()
 function Project45EnemyRadar:init()
   self:reset()
   activeItem.setScriptedAnimationParameter("radius", self.radius)
+  activeItem.setScriptedAnimationParameter("offset", self.offset)
 end
 
 function Project45EnemyRadar:update(dt, fireMode, shiftHeld)

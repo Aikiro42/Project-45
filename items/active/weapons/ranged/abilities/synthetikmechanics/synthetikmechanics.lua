@@ -835,6 +835,11 @@ function SynthetikMechanics:fireHitscan(projectileType)
       for _, hitId in ipairs(hitReg[3]) do
         if world.entityExists(hitId) then
           world.sendEntityMessage(hitId, "applyStatusEffect", statusDamage, self:damagePerShot() * crit, entity.id())
+          if self.projectileParameters.hitregPower == 0 then
+            for i, stateffect in ipairs(self.projectileParameters.statusEffects) do
+              world.sendEntityMessage(hitId, "applyStatusEffect", stateffect)
+            end
+          end
         end
       end
     end
@@ -851,7 +856,19 @@ function SynthetikMechanics:fireHitscan(projectileType)
       color = self.projectileParameters.hitscanColor
     })
 
-    -- hitscan explosion vfx
+    -- hitscan explosion
+
+    local hitscanActionsOnReap = {
+      {
+        action = "config",
+        file = "/projectiles/explosions/project45_hitexplosion/project45_hitscanexplosion.config"
+      }
+    }
+
+    for i, a in ipairs(self.projectileParameters.actionOnHit) do
+      table.insert(hitscanActionsOnReap, a)
+    end
+
     world.spawnProjectile(
       "invisibleprojectile",
       hitReg[2],
@@ -859,15 +876,11 @@ function SynthetikMechanics:fireHitscan(projectileType)
       self:aimVector(3.14),
       false,
       {
-        damageType = "NoDamage",
-        power = 0,
+        damageType = self.projectileParameters.hitregPower == 0 and "NoDamage" or "damage",
+        power = self.projectileParameters.hitregPower,
+        statusEffects = self.projectileParameters.statusEffects,
         timeToLive = 0,
-        actionOnReap = {
-          {
-            action = "config",
-            file = "/projectiles/explosions/project45_hitexplosion/project45_hitscanexplosion.config"
-          }
-        }
+        actionOnReap = hitscanActionsOnReap
       }
     )
 end
@@ -891,7 +904,9 @@ function SynthetikMechanics:hitscan(isLaser)
   local pen = 0
   if #hitId > 0 then
     for i, id in ipairs(hitId) do
-      if world.entityCanDamage(entity.id(), id) then
+      if world.entityCanDamage(entity.id(), id)
+      and world.entityDamageTeam(id) ~= "ghostly" -- prevents from hitting those annoying floaty things
+      then
 
         local aimAngle = vec2.angle(world.distance(scanDest, scanOrig))
         local entityAngle = vec2.angle(world.distance(world.entityPosition(id), scanOrig))

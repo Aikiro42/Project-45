@@ -63,7 +63,11 @@
       "hitscanIgnoresTerrain": false,  // pierces through terrain if true
       "fadeTime": 0.1, // how long the hitscan line fades away
       "hitscanWidth": 1, // visual width of hitscan line in pixels
-      "hitscanColor": [255,255,200] // color of hitscan projectile; also dictates muzzle flash color
+      "hitscanColor": [255,255,200], // color of hitscan projectile; also dictates muzzle flash color
+      "actionOnHit": [], // actions to do when hitscan registers hits, whether it be terrain, entities, or hitscan line termination
+      "statusEffects" : [],
+      // path to explosion config on hit
+      "hitregPower": 0
     },
 
     // ________________________[ GUN MECHANIC SETTINGS ]__________________________________

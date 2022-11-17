@@ -3,11 +3,11 @@ function update()
     -- laser
     local enemyEntities = animationConfig.animationParameter("enemyEntities")
     local radius = animationConfig.animationParameter("radius")
-    local offset = 3
+    local offset = animationConfig.animationParameter("offset")
     for i, enemyEntity in ipairs(enemyEntities) do
         
         local arrowPos = vec2.add(activeItemAnimation.ownerPosition(), {offset * math.cos(enemyEntity.angle), offset * math.sin(enemyEntity.angle)})
-        local distanceTextPos = vec2.add(activeItemAnimation.ownerPosition(), {(offset + 0.3) * math.cos(enemyEntity.angle), (offset + 0.3) * math.sin(enemyEntity.angle)})
+        local distanceTextPos = vec2.add(activeItemAnimation.ownerPosition(), {(offset*1.25) * math.cos(enemyEntity.angle), (offset*1.25) * math.sin(enemyEntity.angle)})
         local indicatorColor = {0, 255, 0, 100}
         if enemyEntity.canDamageOwner then
             if enemyEntity.aggressive then

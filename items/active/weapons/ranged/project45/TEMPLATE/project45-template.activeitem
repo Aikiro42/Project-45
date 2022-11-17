@@ -71,22 +71,36 @@ When gun is a windup-type and
   "primaryAbility": {
 
     "baseDamage": 3,
-    "cycleTime": 0.05,
-    "fireTime": 0.05,
+    "cycleTime": 0.1,
+    "fireTime": 0.1,
     "jamChances": {
       "bad": 0.0,
       "ok": 0.00,
       "good": 0.00
     },
-    "maxAmmo": 27,
+    "maxAmmo": 10,
     "magType": "default",
-    "bulletsPerReload": 27,
+    "bulletsPerReload": 10,
     "chargeTime": 0,
     "overchargeTime": 1,
     "autoFireAfterCharge": false,
     "semi": true,
-    "burstCount": 3,
-    "manualFeed": true,
+    "burstCount": 1,
+    "manualFeed": false,
+    "projectileParameters": {
+      "actionOnHit": [
+        {
+          "action": "config",
+          "file": "/projectiles/explosions/elementimpact/poisonimpact.config"
+        }
+      ],
+      "statusEffects": [
+        "weakpoison",
+        "burning",
+        "l6doomed"
+      ],
+      "hitregPower": 0
+    },
 
     "flashHidden": false,
     "suppressed": false,

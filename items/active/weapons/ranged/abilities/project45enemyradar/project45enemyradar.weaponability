@@ -38,6 +38,6 @@
     "class" : "Project45EnemyRadar",
 
     "radius": 100,
-    "entityLimit": 5
+    "offset": 3
   }
 }
