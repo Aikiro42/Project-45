@@ -155,7 +155,7 @@ When gun is a windup-type and
   },
   //*/
   
-  "altAbilityType": "project45gunscope",
+  "altAbilityType": "project45enemyradar",
   "altAbility": {
     "fireTime": 0.1,
     "cooldownTime": 0.1

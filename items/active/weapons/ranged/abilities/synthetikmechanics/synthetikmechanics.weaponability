@@ -60,6 +60,7 @@
       // hitscan params
       "range": 100,  // range of the hitscan line in blocks
       "punchThrough": 0,  // number of entities to register before stopping the scan
+      "hitscanIgnoresTerrain": false,  // pierces through terrain if true
       "fadeTime": 0.1, // how long the hitscan line fades away
       "hitscanWidth": 1, // visual width of hitscan line in pixels
       "hitscanColor": [255,255,200] // color of hitscan projectile; also dictates muzzle flash color

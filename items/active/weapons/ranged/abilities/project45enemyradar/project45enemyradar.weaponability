@@ -1,0 +1,43 @@
+{
+  "animationCustom" : {
+    "animatedParts" : { "parts" : {
+      "enemyradar" : {
+        "properties" : {
+          "zLevel" : 5,
+          "centered" : true,
+          "offset" : [0, 0],
+          "transformationGroups" : ["weapon"],
+          "image" : "/items/active/weapons/ranged/abilities/project45enemyradar/project45enemyradar.png"
+        }
+      },
+      "enemyradarfullbright" : {
+        "properties" : {
+          "zLevel" : 5,
+          "centered" : true,
+          "offset" : [0, 0],
+          "transformationGroups" : ["weapon"],
+          "fullbright": true,
+          "image" : "/items/active/weapons/ranged/abilities/project45enemyradar/project45enemyradarfullbright.png"
+        }
+      }
+    }},
+    "sounds" : {
+      "sonar" : [ "/sfx/tools/flashlight_toggle.ogg" ]
+    }
+  },
+
+  "animationScripts" : [
+		"/items/active/weapons/ranged/abilities/project45enemyradar/project45enemyradaranimation.lua"
+	],
+
+
+  "ability" : {
+    "name" : "Enemy Radar",
+    "type" : "project45enemyradar",
+    "scripts" : ["/items/active/weapons/ranged/abilities/project45enemyradar/project45enemyradar.lua"],
+    "class" : "Project45EnemyRadar",
+
+    "radius": 100,
+    "entityLimit": 5
+  }
+}

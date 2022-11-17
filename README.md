@@ -109,6 +109,10 @@ Welcome... to Project 45.
     - uses custom projectile
 - <span style="color: green">Sticky Shot</span>
 
+# Known Issues
+> by the way, here’s an odd quirk that happens with sending a vanilla “applyStatusEffect” message to entities - if the player somehow has greater than 60 frames per second, the sent message straight up doesn’t work. had it happen to something for GiC; although you’re making your own message handler, there’s still a decent chance this bug can still occur, depending on what exactly triggers this bug. be ready to acknowledge this bug should it occur.
+
+
 ## Experiment
 
 ### Problem

@@ -362,7 +362,7 @@ function SynthetikMechanics:firing()
   self.triggered = true
 
   -- don't fire when muzzle collides with terrain
-  if world.lineTileCollision(mcontroller.position(), self:firePosition()) then return end
+  if not self.projectileParameters.hitscanIgnoresTerrain and world.lineTileCollision(mcontroller.position(), self:firePosition()) then return end
 
   --[[
   the following line resets charge time if the gun is semi;
@@ -878,7 +878,7 @@ function SynthetikMechanics:hitscan(isLaser)
   local scanOrig = self:firePosition()
 
   local scanDest = vec2.add(scanOrig, vec2.mul(self:aimVector(isLaser and 0 or self.inaccuracy), self.projectileParameters.range or 100))
-  scanDest = world.lineCollision(scanOrig, scanDest, {"Block", "Dynamic"}) or scanDest
+  scanDest = not self.projectileParameters.hitscanIgnoresTerrain and world.lineCollision(scanOrig, scanDest, {"Block", "Dynamic"}) or scanDest
 
   -- hitreg
   local hitId = world.entityLineQuery(scanOrig, scanDest, {
@@ -905,7 +905,7 @@ function SynthetikMechanics:hitscan(isLaser)
         pen = pen + 1
 
         if pen > (self.projectileParameters.punchThrough or 0) then break end
-      end      
+      end
     end
   end
   
@@ -1148,7 +1148,7 @@ function SynthetikMechanics:damagePerShot()
 
   local baseDamage = self.baseDamage
   if self.baseDps then
-    baseDamage = self.baseDps * ((self.manualFeed and self.cockTime or self.cycleTime) + self.fireTime)
+    baseDamage = self.baseDps * ((self.manualFeed and self.cockTime or 0) + self.cycleTime + self.fireTime)
   end
 
   local reloadDamageMultiplier = 1
