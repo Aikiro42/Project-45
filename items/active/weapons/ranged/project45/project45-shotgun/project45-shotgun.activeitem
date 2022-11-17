@@ -28,12 +28,22 @@
   },
 
   "animationCustom":{
-    "animatedParts" : {"stateTypes" : {"gun" : {"states" : {
+    "animatedParts" : {
+      "stateTypes" : {"gun" : {"states" : {
             "charging": {
               // set this value to cycleTime
               "cycle" : 0.05
             }
-    }}}},
+      }}},
+      "parts" : {
+        "enemyradar" : { "properties" : {
+        "offset" : [2.2, 0.3]
+        }},
+        "enemyradarfullbright" : { "properties" : {
+          "offset" : [2.2, 0.3]
+        }}
+      }
+    },
     "particleEmitters": {
       "ejectionPort" : { "particles" : [ 
           {"particle": "project45shell"}
@@ -104,7 +114,7 @@
 
   },
 
-  "altAbilityType": "",
+  "altAbilityType": "project45enemyradar",
 
   "builder" : "/items/buildscripts/buildproject45neo.lua"
 }

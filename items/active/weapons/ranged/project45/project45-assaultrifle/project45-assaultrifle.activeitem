@@ -83,6 +83,7 @@
       "ok": 0.05,
       "good": 0.0
     },
+    "reloadCost": 0.34,
     "maxAmmo": 27,
     "magType": "default",
     "bulletsPerReload": 27,

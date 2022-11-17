@@ -63,13 +63,11 @@ Welcome... to Project 45.
     - Assault Rifle
         - Give multishot chance
 - Add weapon abilities:
-    - Sonar
-        - reveals enemies in a radius for a period of time
-        - could optionally be automatic
     - Drone
         - lets a drone fly around and target nearby enemies
         - make projectile modifiable, make it able to fire hitscans
     - Melee Swipe
+        - projectile that looks like a melee swipe
         - high-damage melee swipe but short range.
 
 ## Vanilla Altfires Compatibility List:
