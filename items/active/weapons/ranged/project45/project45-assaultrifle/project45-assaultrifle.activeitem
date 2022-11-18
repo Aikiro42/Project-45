@@ -114,7 +114,8 @@
 
     "stances": {
       "aim":{
-        "armRotation": -0.1
+        "armRotation": 0,
+        "weaponRotation": 0
       }
     }
 

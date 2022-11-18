@@ -313,6 +313,7 @@
     "insertMag": ["/sfx/project45-synthetikmechanics/reloads/insertmag_generic.ogg"],
 
     // sound of clip pinging out
+    // TODO: GET RID OF THIS THING, WE HAVE EJECTMAG FOR THAT
     "ping" : ["/sfx/project45-synthetikmechanics/ping.ogg"],
     // sound of loading a single round into the gun (shotguns, single action)
     // inaudible between firing cycles when not a manual feed weapon
@@ -323,7 +324,9 @@
     "boltPush" : ["/sfx/project45-synthetikmechanics/reloads/boltpush_generic.ogg"],
 
     // sound indicator for good reload
-    "goodReload" : ["/sfx/project45-synthetikmechanics/ping.ogg"],
+    // "goodReload" : ["/sfx/project45-synthetikmechanics/ping.ogg"],
+    "goodReload" : ["/sfx/project45-synthetikmechanics/reloads/goodreload_generic_1.ogg"],
+    "perfectReload" : ["/sfx/project45-synthetikmechanics/reloads/goodreload_generic_1.ogg"],
     // sound indicator for bad reload
     "badReload" : [
       "/sfx/project45-synthetikmechanics/reloads/badreload_mag_1.ogg",

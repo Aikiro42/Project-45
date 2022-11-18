@@ -67,6 +67,7 @@ function SynthetikMechanics:init()
     
     -- max ammo should not go below 1
     self.maxAmmo = math.max(1, self.maxAmmo)
+    self.ammoPerShot = math.min(self.ammoPerShot, self.maxAmmo)
     
     -- Bullets per reload should not exceed max ammo
     self.bulletsPerReload = math.min(self.maxAmmo, self.bulletsPerReload)
@@ -108,7 +109,7 @@ function SynthetikMechanics:init()
       storage.animationState["gun"] = "idle"
     end
 
-    if storage.ammo >= 0 and self.magType ~= "strip" then
+    if storage.ammo >= 0 and self.magType == "default" then
       storage.animationState["mag"] = "present"
     else
       storage.animationState["mag"] = "absent"
@@ -137,7 +138,12 @@ function SynthetikMechanics:update(dt, fireMode, shiftHeld)
     end
 
     self.weapon:updateAim()
-    self:aim()
+    self:updateStance()  -- Updates stance manually
+
+    local scanOrig = self:firePosition()
+    local scanDest = vec2.add(scanOrig, vec2.mul(self:aimVector(0), self.projectileParameters.range or 100))
+    scanDest = not self.projectileParameters.hitscanIgnoresTerrain and world.lineCollision(scanOrig, scanDest, {"Block", "Dynamic"}) or scanDest
+    world.debugLine(scanOrig, scanDest, "red")
 
     self.shiftHeld = shiftHeld
 
@@ -274,8 +280,9 @@ function SynthetikMechanics:update(dt, fireMode, shiftHeld)
           if self.magType == "strip" then self:setState(self.reloading) else self:ejectMag() end
         
         -- Is the chamber ready? If not, cock the gun.
+        -- THIS STATE CAN BE REACHABLE WHEN THE PLAYER SUDDENLY SWITCHES TOOLBAR SLOTS
+        -- or when the wall jump does some fucky wucky with the weapon
         elseif storage.chamberState == EMPTY and not self.triggered then
-          sb.logInfo("[PROJECT 45] Something that shouldn't happen happened: The gun was cocked while it had ammo.")
           self:setState(self.cocking)
 
         -- If the chamber is clear/ready,
@@ -477,11 +484,17 @@ function SynthetikMechanics:ejectingCase()
 
     -- if no ammo left after ejecting,
     if storage.ammo == 0 then
+      
+      -- if it's a single shot gun, immediately reload on eject
+      if self.maxAmmo == self.ammoPerShot then
+        self:setState(self.reloading)
+        return
+      end
 
       -- if it's manual-fed, wait for a bit then eject the mag
       -- if it's a clip-mag, immediately eject the mag
       -- if it's neither manual-fed nor a clip-mag, do nothing
-      
+
       if self.manualFeed and self.magType ~= "clip" then
         util.wait(self.cockTime/2)
       end
@@ -489,6 +502,8 @@ function SynthetikMechanics:ejectingCase()
       if self.magType == "clip" or self.manualFeed then
         self:ejectMag()
       end
+
+      self:setState(self.whirring)
 
       return
 
@@ -515,6 +530,7 @@ function SynthetikMechanics:ejectingCase()
     
     -- see state function for specific conditions
     else
+      debug.print("Entering whirring state.", "[PROJECT 45] ")
       self:setState(self.whirring)
     end
 
@@ -582,8 +598,10 @@ function SynthetikMechanics:reloading()
     self:setAnimationState("mag", "present") -- insert mag
     animator.playSound("insertMag")
     
-    -- RELOAD MINIGAME  
-    self.weapon:setStance(self.stances.reloading)
+    -- START RELOAD MINIGAME
+    if not self.maxAmmo == self.ammoPerShot or self.manualFeed then
+      self.weapon:setStance(self.stances.reloading)
+    end
     local badScore = 0 -- for bullet counted reload
 
     self.reloadTimer = 0 -- begin minigame
@@ -693,10 +711,12 @@ function SynthetikMechanics:reloading()
     self.burstCounter = self.burstCount
     self:screenShake(self.currentScreenShake)
 
-    if self.magType == "strip" then
+    if self.magType ~= "default" then
       animator.setAnimationState("mag", "absent")
-      animator.burstParticleEmitter("magazine")
+      if self.magType == "strip" then animator.burstParticleEmitter("magazine") end
     end
+
+    util.wait(self.cockTime/4)
 
     -- cock gun
     self:setState(self.cocking)
@@ -705,6 +725,8 @@ function SynthetikMechanics:reloading()
 
     self:setStance(self.stances.aim)
   else
+    
+    -- click on no energy
     animator.playSound("click")
 
   end
@@ -720,6 +742,7 @@ function SynthetikMechanics:whirring()
     1. Gun is auto
     2. Gun autofires after charge
   --]]
+  -- sb.logInfo("[PROJECT 45] Whirring.")
   if self.chargeTimer > 0
   and not self.semi
   and self.autoFireAfterCharge 
@@ -746,8 +769,11 @@ function SynthetikMechanics:cocking()
     util.wait(self.cockTime/3)
   end
 
+  -- exit state when no ammo
+  if storage.ammo <= 0 then return end
+
   -- if single shot, play sound of single round being loaded
-  if self.maxAmmo == 1 then animator.playSound("loadRound") end
+  if self.maxAmmo == self.ammoPerShot then animator.playSound("loadRound") end
   self:setAnimationState("gun", "feeding")
   util.wait(self.cockTime/3)
 
@@ -811,13 +837,6 @@ end
 
 function SynthetikMechanics:fireHitscan(projectileType)
 
-    --[[
-    if world.lineTileCollision(mcontroller.position(), self:firePosition()) then
-      goto next_projectile
-    end
-    --]]
-
-  
     -- scan hit down range
     -- hitreg[2] is where the bullet trail terminates,
     -- hitreg[3] is the array of hit entityIds
@@ -929,12 +948,13 @@ function SynthetikMechanics:hitscan(isLaser)
   return {scanOrig, scanDest, eid}
 end
 
-function SynthetikMechanics:aim()
-  if self.reloadTimer < 0 then
+function SynthetikMechanics:updateStance()
+  if self.reloadTimer < 0 or (self.maxAmmo == self.ammoPerShot and not self.manualFeed) then
+
+    -- get the stored target stance
     local stance = storage.targetStance
-    
-    if self.aimProgress == 1 then activeItem.setRecoil(true) end
-    
+
+    -- set arm frames
     activeItem.setFrontArmFrame(stance.frontArmFrame)
     activeItem.setBackArmFrame(stance.backArmFrame)
     
@@ -943,11 +963,13 @@ function SynthetikMechanics:aim()
     else
       activeItem.setTwoHandedGrip(false)
     end
-    
+  
     self.weapon.aimAngle, self.weapon.aimDirection = activeItem.aimAngleAndDirection(0, activeItem.ownerAimPosition())
     
     self.weapon.relativeWeaponRotation = util.toRadians(interp.sin(self.aimProgress, math.deg(self.weapon.relativeWeaponRotation), stance.weaponRotation))
     self.weapon.relativeArmRotation = util.toRadians(interp.sin(self.aimProgress, math.deg(self.weapon.relativeArmRotation), stance.armRotation))
+
+    -- TODO: correct aim
 
   end
 end
@@ -971,7 +993,7 @@ end
 
 function SynthetikMechanics:recoil()
   self:screenShake(self.currentScreenShake)
-  activeItem.setRecoil(true)
+  -- activeItem.setRecoil(true)
 
   local inaccuracy = math.rad(self.recoilDeg[self.shiftHeld and 2 or 1]) * self.recoilMult
   
@@ -1055,7 +1077,7 @@ function SynthetikMechanics:updateMagAnimation()
     tag = "default"
   
   -- if ammo is above range or reloading
-  elseif storage.ammo > self.magAnimRange[2] or (self.reloadTimer >= 0 and self.bulletsPerReload >= self.maxAmmo) then
+  elseif storage.ammo > self.magAnimRange[2] or (not self.beltMag and self.reloadTimer >= 0 and self.bulletsPerReload >= self.maxAmmo) then
     tag = "loop." .. storage.ammo % self.magLoopFrames -- magazine animation loop
     
   -- if ammo is within animation range then
@@ -1209,9 +1231,21 @@ function SynthetikMechanics:firePosition()
 end
 
 function SynthetikMechanics:aimVector(inaccuracy)
+
+  --[[ works, but lags
+  --]]
+  local firePos = self:firePosition()
+  local basePos =  vec2.add(mcontroller.position(), activeItem.handPosition(vec2.rotate({0, self.weapon.muzzleOffset[2]}, self.weapon.relativeWeaponRotation)))
+  world.debugPoint(firePos, "cyan")
+  world.debugPoint(basePos, "cyan")
+  local aimVector = vec2.norm(world.distance(firePos, basePos))
+  --]]
+  
+  --[[
   local aimVector = vec2.rotate({1, 0}, self.weapon.aimAngle + sb.nrand((inaccuracy or 0), 0))
   aimVector[1] = aimVector[1] * mcontroller.facingDirection()
   aimVector = vec2.rotate(aimVector, (self.weapon.relativeArmRotation + self.weapon.relativeWeaponRotation) * mcontroller.facingDirection())
+  --]]
   return aimVector
 end
 

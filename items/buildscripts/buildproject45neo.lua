@@ -32,7 +32,7 @@ function build(directory, config, parameters, level, seed)
   config.animationScripts = {}
   util.mergeTable(config.animationScripts, altAnimationScripts or {})
 
-  sb.logInfo("[PROJECT 45] (buildproject45neo.lua) config.animationScripts = " .. sb.printJson(config.animationScripts))
+  -- sb.logInfo("[PROJECT 45] (buildproject45neo.lua) config.animationScripts = " .. sb.printJson(config.animationScripts))
   
   -- elemental type and config (for alt ability)
   local elementalType = configParameter("elementalType", "physical")

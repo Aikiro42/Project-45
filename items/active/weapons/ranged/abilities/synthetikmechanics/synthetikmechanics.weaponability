@@ -194,6 +194,7 @@
     */
     "magLoopFrames": 0, // L
     "magAnimRange": [0, 0], // [n, x]
+    "beltMag": false, // affects visual reload; 
     "flashHidden": false,
     "suppressed": false,
     "muzzleFlashTime": 0.05, // number of seconds the muzzle light is active when firing
@@ -214,7 +215,7 @@
 
     "stances" : {
 
-      // SUSTAINED STANCES - These stances are interpolated to
+      // SUSTAINED STANCES - These stances are constantly interpolated to
       
       // initial stance when re-equipping the weapon
       "idleneo" : {

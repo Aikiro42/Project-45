@@ -19,6 +19,17 @@ And let's dehumanize ourselves together.
 
 Welcome... to Project 45.
 
+## About
+
+Project 45 is a weapons system that attempts to replicate the gun mechanics of Synthetik. This modding utility features:
+- Template guns you can base your custom weapons from
+- A reload mechanic extremely reminiscent of that of Synthetik's.
+- 
+
+## Credits
+
+---
+
 ## Todo
 
 - Add generic bullet hit sounds to the hitscan explosion config
@@ -31,12 +42,8 @@ Welcome... to Project 45.
 - figure out how to utilize two animation scripts
 - Add no-movement requirement to firing weapons
 - Add new guns:
-    - Sniper Rifle (Mag-fed, Bolt-action)
-        - should feature bolt-action mechanic
     - Grenade Launcher
         - should feature firing projectiles
-    - AMR (Single-shot bolt-action)
-        - should feature single-shot mechanic
     - Charge rifle ((Over)Charged, semi)
         - should feature chargeup and overcharge mechanic
         - Optional: auto-fire-after-charge rifle, resets charge every shot
@@ -44,8 +51,6 @@ Welcome... to Project 45.
         - should feature windup and whirring
     - Revolver
         - should feature kept bulletcases.
-    - Garand
-        - should feature clip mags (eject on empty)
     - Mosin Nagant
         - should feature strip mags (appear only on reload)
 - Add gun upgrades:

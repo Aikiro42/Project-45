@@ -1,25 +1,25 @@
 {
-  "itemName" : "project45-sniperrifle",
+  "itemName" : "project45-garand",
   "price" : 1,
   "maxStack" : 1,
   "rarity" : "Essential",
-  "shortdescription" : ".308 Bullpup Sniper Rifle",
-  "description" : "A novel sniper rifle with an integrated suppressor.",
+  "shortdescription" : "M5K Garand",
+  "description" : "Present-day materials built around a classic firing mechanism.",
   "tooltipKind" : "base",
-  "category" : "Sniper",
+  "category" : "Rifle",
   "twoHanded" : true,
-  "itemTags" : ["weapon","ranged","sniper"],
+  "itemTags" : ["weapon","ranged","rifle"],
   "level" : 1,
 
-  "inventoryIcon" : "project45-sniperrifle-icon.png",
+  "inventoryIcon" : "project45-garand-icon.png",
 
   // "animation" : "project45-template.animation",
   "animationParts" : {
     "butt" : "",
-    "middle" : "project45-sniperrifle.png",
+    "middle" : "project45-garand.png",
     "middleFullBright" : "",
     "barrel" : "",
-    "mag": "project45-sniperrifle-mag.png",
+    "mag": "project45-garand-mag.png",
     "muzzleFlash" : "/items/active/weapons/ranged/muzzleflash.png",
     
     "muzzle": "",
@@ -35,9 +35,14 @@
               "cycle" : 0.05
             }
       }}},
-      "parts" : { "scope" : { "properties" : {
+      "parts" : {
+        "enemyradar" : { "properties" : {
         "offset" : [2.2, 0.3]
-      }}}
+        }},
+        "enemyradarfullbright" : { "properties" : {
+          "offset" : [2.2, 0.3]
+        }}
+      }
     },
     "particleEmitters": {
       "ejectionPort" : { "particles" : [ 
@@ -45,20 +50,21 @@
           // {"particle": "project45muzzlesmoke"}
         ]},
       "magazine" : { "particles" : [
-          {"particle": "project45sniperriflemag"}
+        {"particle": "project45garandclip"}
           // {"particle": "project45muzzlesmoke"}
         ]}
     },
     
     "sounds":{
-      "fire" : ["/sfx/project45-synthetikmechanics/fires/fire_sniper.ogg"]
+      "fire" : ["/sfx/project45-synthetikmechanics/fires/fire_smg.ogg"],
+      "ejectMag" : ["/sfx/project45-synthetikmechanics/ping.ogg"]
     }
   },
 
-  "baseOffset" : [1, 0.1],
-  "muzzleOffset" : [2.25, 0.5],
-  "ejectionPortOffset": [-1, 0.7],
-  "magazineOffset": [-1, 0],
+  "baseOffset" : [1, 0.15],
+  "muzzleOffset" : [2.4, 0.4],
+  "ejectionPortOffset": [0.7, 0.5],
+  "magazineOffset": [1, 0.5],
 
   "scripts" : ["/items/active/weapons/ranged/project45gun.lua"],
   
@@ -73,41 +79,35 @@
     
     // "DEBUG": true,
 
-    "baseDamage": 50,
+    "baseDps": 100,
     
+    "projectileCount": 1,
+    "multishot": 1,
     "inaccuracy": 0,
-    "manualFeed": true,
+    "manualFeed": false,
     "semi": true,
-    "slamFire": false,
     "cockTime": 0.3,
     "cycleTime": 0.1,
-    "fireTime": 0.2,
+    "fireTime": 0.1,
     "jamChances": {
-      "bad": 0.3,
-      "ok": 0.02,
-      "good": 0.01
+      "bad": 0.2,
+      "ok": 0.01,
+      "good": 0.00
     },
+        
+    "maxAmmo": 8,
+    "magType": "clip",
+    "bulletsPerReload": 8,
 
-    "suppressed": true,
-    "flashHidden": true,
 
-    "reloadCost": 1,
-    "maxAmmo": 10,
-    "bulletsPerReload": 10,
-    "magType": "default",
-    "projectileParameters": {
-      "punchThrough": 4
-    },
+    "recoilDeg": [3, 1],
+    "recoilMult": 0.75,
 
-    "recoilDeg": [5, 2],
-    "recoilMult": 0.85,
-
-    // make all shots orange
-    "critChance": 1,
-    "critDamageMult": 1.1,
-    "screenShakeAmount": [0.3,0.5],
+    "critChance": 0.1,
+    "critDamageMult": 2,
+    "screenShakeAmount": [0.5,1],
     "screenShakeDelta": [0.1, 0.2],
-    "magLoopFrames": 0,
+    "magLoopFrames": 2,
     "magAnimRange": [0, 0],
 
     "stances": {
@@ -115,7 +115,7 @@
 
   },
 
-  "altAbilityType": "project45gunscope",
+  "altAbilityType": "project45enemyradar",
 
   "builder" : "/items/buildscripts/buildproject45neo.lua"
 }
