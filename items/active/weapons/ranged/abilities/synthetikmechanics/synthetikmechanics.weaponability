@@ -23,6 +23,9 @@
     // Base Damage per shot.
     /*
     Standard damage is 6.25 (Vanilla).
+
+    5.56: 10
+
     */
     "baseDamage": 6.25,
 
@@ -139,6 +142,9 @@
     // ________________________[ ACCURACY SETTINGS ]__________________________________
     "recoilMomentum": 0, // momentum added to character opposite direction of aim vector when firing
     "recoilDeg": [2, 1], // degrees of recoil every time the gun is shot (think spray control)
+    // for extremely high fire rate guns, the gun will begin seesaw around this angle range
+    // when the amount of recoil you accrue reaches the second value.
+    "recoilThresholdDeg": [27, 30],
     "recoilMult": 1, // muzzle brake; multiplied to recoilDeg
     "aimTime": [3, 1], // time it takes to aim; first index is when you're running, second is when shift is held
     "inaccuracy" : 0.01, // Generic RNG inaccuracy; causes spread

@@ -68,7 +68,7 @@
 
     // "DEBUG": true,
 
-    "baseDps": 100,
+    "baseDamage": 7,
     
     "cycleTime": 0.05,
     "fireTime": 0.05,

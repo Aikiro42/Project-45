@@ -79,7 +79,7 @@
     
     // "DEBUG": true,
 
-    "baseDps": 100,
+    "baseDamage": 10,
     
     "projectileCount": 1,
     "multishot": 1,
@@ -103,7 +103,7 @@
     "recoilDeg": [3, 1],
     "recoilMult": 0.75,
 
-    "critChance": 0.1,
+    "critChance": 0.05,
     "critDamageMult": 2,
     "screenShakeAmount": [0.5,1],
     "screenShakeDelta": [0.1, 0.2],

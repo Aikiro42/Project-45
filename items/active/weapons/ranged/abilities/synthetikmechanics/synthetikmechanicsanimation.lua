@@ -122,8 +122,10 @@ function update()
     offset = vec2.add(offset, offset)
   end
 
+
   local ammoDisplay = ammo
   if ammo < 0 then ammoDisplay = "E" end
+  offset[1] = offset[1] + (offset[1] > 0 and (string.len("" .. ammoDisplay)-1)/2 or -(string.len("" .. ammoDisplay)-1)/2)
 
   -- bullet counter
   localAnimator.spawnParticle({

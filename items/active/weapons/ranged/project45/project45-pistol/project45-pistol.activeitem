@@ -66,7 +66,7 @@
   "primaryAbilityType": "synthetikmechanics",
   "primaryAbility": {
 
-    "baseDps": 100,
+    "baseDamage": 7,
 
     "cycleTime": 0.1,
     "fireTime": 0.1,
@@ -78,9 +78,13 @@
     "maxAmmo": 12,
     "magType": "default",
     "bulletsPerReload": 12,
-
+    "laser":{
+      "enabled": true,
+      "alwaysActive": true
+    },
     "semi": true,
 
+    "inaccuracy": 0.01,
     "recoilDeg": [1, 0.5],
     "recoilMult": 1,
 

@@ -31,7 +31,7 @@
     "animatedParts" : {"stateTypes" : {"gun" : {"states" : {
             "charging": {
               // set this value to cycleTime
-              "cycle" : 0.05
+              "cycle" : 0.01
             }
     }}}},
     "particleEmitters": {
@@ -68,29 +68,31 @@
 
     // "DEBUG": true,
 
-    "baseDps": 100,
+    "baseDamage": 5,
     
     "cycleTime": 0.01,
     "fireTime": 0.01,
     "jamChances": {
-      "bad": 0.0,
-      "ok": 0.00,
+      "bad": 0.1,
+      "ok": 0.01,
       "good": 0
     },
-    "maxAmmo": 10,
+    "maxAmmo": 300,
     "magType": "default",
-    "bulletsPerReload": 50,
+    "bulletsPerReload": 300,
     "chargeTime": 1,
     "laser": {
       "enabled": true,
-      "toggle": false
+      "alwaysActive": true
     },
     "beltMag": true,
+
+    "reloadCost": 1,
     "reloadTime": 0.7,
     "goodReloadInterval": [0.45, 0.75], 
     "perfectReloadInterval": [0.59, 0.66],
 
-
+    "inaccuracy": 0.01,
     "semi": false,
 
     "flashHidden": false,
@@ -100,12 +102,12 @@
     "recoilMult": 0.8,
 
     "critChance": 0.05,
-    "critDamageMult": 3,
+    "critDamageMult": 1.2,
 
     "magLoopFrames": 2,
     "magAnimRange": [1, 5],
 
-    "screenShakeAmount": [0.1, 0.5],
+    "screenShakeAmount": [0, 0],
     "screenShakeDelta": [0.02, 0.01],
 
     "stances": {
@@ -119,9 +121,7 @@
         "backArmFrame" : "swim.4"
       },
       "aim": {
-        // "armRotation": -45,
         "armRotation": -45,
-        // "weaponRotation": 45,
         "weaponRotation": 45,
         "twoHanded": true,
         "allowRotate": true,

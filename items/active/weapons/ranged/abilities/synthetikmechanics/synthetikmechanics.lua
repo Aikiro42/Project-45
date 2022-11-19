@@ -61,7 +61,10 @@ function SynthetikMechanics:init()
     self.cooldownTimer = self.fireTime
     self.reloadTimer = -1 -- not reloading
     self.isCharging = false
+    self.isFiring = false
     self.jamChances.perfect = 0
+
+    self.recoilPerShot = 0.1
 
     -- VALIDATIONS
     
@@ -121,7 +124,15 @@ function SynthetikMechanics:init()
     activeItem.setScriptedAnimationParameter("muzzleFlash", false)
     animator.setAnimationState("flash", "off")
     self.weapon:setStance(self.stances.idleneo)
-
+    if storage.jamAmount == 0 then
+      if storage.ammo >= 0 then
+        self:setStance(self.stances.aim)
+      else
+        self:setStance(self.stances.empty)
+      end
+    else
+      self:setStance(self.stances.jammed)
+    end
     -- necessary updates
     self:updateScriptedAnimationParameters()
 
@@ -140,10 +151,12 @@ function SynthetikMechanics:update(dt, fireMode, shiftHeld)
     self.weapon:updateAim()
     self:updateStance()  -- Updates stance manually
 
+    -- update debug stuff
     local scanOrig = self:firePosition()
-    local scanDest = vec2.add(scanOrig, vec2.mul(self:aimVector(0), self.projectileParameters.range or 100))
+    local scanDest = vec2.add(scanOrig, vec2.mul(self:aimVector(isLaser and 0 or self.inaccuracy), self.projectileParameters.range or 100))
     scanDest = not self.projectileParameters.hitscanIgnoresTerrain and world.lineCollision(scanOrig, scanDest, {"Block", "Dynamic"}) or scanDest
     world.debugLine(scanOrig, scanDest, "red")
+    -- update debug stuff end
 
     self.shiftHeld = shiftHeld
 
@@ -166,16 +179,18 @@ function SynthetikMechanics:update(dt, fireMode, shiftHeld)
     )
     storage.dodgeCooldownTimer = math.max(0, storage.dodgeCooldownTimer - self.dt)
     self.cooldownTimer = math.max(0, self.cooldownTimer - self.dt)
-    self.aimProgress = math.min(1, self.aimProgress + self.dt / self.aimTime[shiftHeld and 2 or 1])
+    self.aimProgress = math.min(1, self.aimProgress + self.dt / math.max(self.aimTime[shiftHeld and 2 or 1], 0.01))
 
     -- updating logic
 
     if self.fireMode ~= (self.activatingFireMode or self.abilitySlot) then
       self.triggered = false
+      self.isFiring = false
     end
 
+    -- BUG: fire rate is limited by charge timer because charge timer is decremented while the gun is fired
     -- if firing and cycling don't decrement chargeTimer
-    if not self.isCharging and not self.weapon.currentAbility then
+    if not (self.isCharging or self.isFiring or self.weapon.currentAbility) then
       self.chargeTimer = math.max(0, self.chargeTimer - self.dt)
     end
 
@@ -212,7 +227,7 @@ function SynthetikMechanics:update(dt, fireMode, shiftHeld)
       end
 
       -- if laser is toggled
-      if self.laser.enabled then
+      if self.laser.enabled and not self.laser.alwaysActive then
         if self.laser.toggle then
           -- set and start the toggle timer
           if self.laserToggleTimer < 0 then
@@ -240,7 +255,7 @@ function SynthetikMechanics:update(dt, fireMode, shiftHeld)
       end
 
       -- if laser is toggled,
-      if self.laser.enabled then
+      if self.laser.enabled and not self.laser.alwaysActive then
         if self.laser.toggle then
           -- if the toggle timer was set and is below the toggle time, toggle laser
           if self.laserToggleTimer <= self.laser.toggleTime and self.laserToggleTimer >= 0 then
@@ -288,8 +303,12 @@ function SynthetikMechanics:update(dt, fireMode, shiftHeld)
         -- If the chamber is clear/ready,
         -- and the gun has ammo
         elseif storage.ammo > 0 then
-          -- sb.logInfo("[PROJECT 45] Entered State: Charging")
-          self:setState(self.charging)
+          if self.chargeTimer < self.chargeTime then
+            sb.logInfo("hi")
+            self:setState(self.charging)
+          elseif self:canTrigger() and not self:jam() then
+            self:setState(self.firing)
+          end
 
         end
       
@@ -367,6 +386,7 @@ end
 -- CHARGING -> [FIRING] -> EJECTING CASE -> FEEDING
 function SynthetikMechanics:firing()
   self.triggered = true
+  self.isFiring = true
 
   -- don't fire when muzzle collides with terrain
   if not self.projectileParameters.hitscanIgnoresTerrain and world.lineTileCollision(mcontroller.position(), self:firePosition()) then return end
@@ -446,6 +466,7 @@ function SynthetikMechanics:firing()
   --]]
   else
     util.wait(self.cycleTime)
+    self.isFiring = false
     self:setAnimationState("gun", "idle") -- TEST
     self.cooldownTimer = self.fireTime
     return
@@ -487,6 +508,7 @@ function SynthetikMechanics:ejectingCase()
       
       -- if it's a single shot gun, immediately reload on eject
       if self.maxAmmo == self.ammoPerShot then
+        self.isFiring = false
         self:setState(self.reloading)
         return
       end
@@ -498,6 +520,7 @@ function SynthetikMechanics:ejectingCase()
       if self.manualFeed and self.magType ~= "clip" then
         util.wait(self.cockTime/2)
       end
+      self.isFiring = false
 
       if self.magType == "clip" or self.manualFeed then
         self:ejectMag()
@@ -527,11 +550,6 @@ function SynthetikMechanics:ejectingCase()
     -- transist state if there's ammo left
     if storage.ammo > 0 then
       self:setState(self.feeding)
-    
-    -- see state function for specific conditions
-    else
-      debug.print("Entering whirring state.", "[PROJECT 45] ")
-      self:setState(self.whirring)
     end
 
     return
@@ -572,11 +590,13 @@ function SynthetikMechanics:feeding()
   -- if not done bursting, fire immediately
   if self.burstCounter < self.burstCount or (self.manualFeed and self.slamFire and self.triggered) then
     self:setState(self.firing)
+    return
   end
 
   -- gives cooldown when either manual feeding a non-slam-fire gun (like a bolt-action rifle)
   -- or if it's a charged/woundup gun and charge progress is reset every shot (think apex legends charge rifle)
   if (self.manualFeed and not self.slamFire) or (self.resetChargeAfterFire and self.chargeTime > 0) then
+    self.isFiring = false
     self.triggered = true
     self.cooldownTimer = self.fireTime
   end
@@ -599,7 +619,7 @@ function SynthetikMechanics:reloading()
     animator.playSound("insertMag")
     
     -- START RELOAD MINIGAME
-    if not self.maxAmmo == self.ammoPerShot or self.manualFeed then
+    if not (self.maxAmmo == self.ammoPerShot and not self.manualFeed) then
       self.weapon:setStance(self.stances.reloading)
     end
     local badScore = 0 -- for bullet counted reload
@@ -969,8 +989,6 @@ function SynthetikMechanics:updateStance()
     self.weapon.relativeWeaponRotation = util.toRadians(interp.sin(self.aimProgress, math.deg(self.weapon.relativeWeaponRotation), stance.weaponRotation))
     self.weapon.relativeArmRotation = util.toRadians(interp.sin(self.aimProgress, math.deg(self.weapon.relativeArmRotation), stance.armRotation))
 
-    -- TODO: correct aim
-
   end
 end
 
@@ -995,8 +1013,21 @@ function SynthetikMechanics:recoil()
   self:screenShake(self.currentScreenShake)
   -- activeItem.setRecoil(true)
 
+  -- self.weapon.relativeWeaponRotation = util.toRadians(interp.sin(self.aimProgress, math.deg(self.weapon.relativeWeaponRotation), stance.weaponRotation))
   local inaccuracy = math.rad(self.recoilDeg[self.shiftHeld and 2 or 1]) * self.recoilMult
-  
+
+  if math.deg(self.weapon.relativeArmRotation - math.rad(self.weapon.stance.armRotation)) >= self.recoilThresholdDeg[2] then
+    self.threshed = true
+  end
+
+  if math.deg(self.weapon.relativeArmRotation - math.rad(self.weapon.stance.armRotation)) < self.recoilThresholdDeg[1] then
+    self.threshed = false
+  end
+
+  if self.threshed then
+    inaccuracy = -inaccuracy
+  end
+
   self.weapon.relativeWeaponRotation = self.weapon.relativeWeaponRotation + inaccuracy
   self.weapon.relativeArmRotation = self.weapon.relativeArmRotation + inaccuracy
 
@@ -1185,7 +1216,7 @@ function SynthetikMechanics:damagePerShot()
 
   local baseDamage = self.baseDamage
   if self.baseDps then
-    baseDamage = self.baseDps * ((self.manualFeed and self.cockTime or 0) + self.cycleTime + self.fireTime)
+    baseDamage = self.baseDps * ((self.manualFeed and self.cockTime or 0) + math.max(0.01, self.cycleTime + self.fireTime))
   end
 
   local reloadDamageMultiplier = 1
@@ -1239,6 +1270,7 @@ function SynthetikMechanics:aimVector(inaccuracy)
   world.debugPoint(firePos, "cyan")
   world.debugPoint(basePos, "cyan")
   local aimVector = vec2.norm(world.distance(firePos, basePos))
+  aimVector = vec2.rotate(aimVector, sb.nrand((inaccuracy or 0), 0))
   --]]
   
   --[[
@@ -1335,6 +1367,8 @@ end
 
 function SynthetikMechanics:setStance(stance)
   storage.targetStance = copy(stance)
+  self.weapon.stance = stance
+
   self.aimProgress = 0
 end
 

@@ -74,7 +74,7 @@
 
     // "DEBUG": true,
 
-    "baseDps": 100,
+    "baseDamage": 10,
     
     "cycleTime": 0.05,
     "fireTime": 0.3,
@@ -103,7 +103,7 @@
     "flashHidden": false,
     "suppressed": false,
 
-    "recoilDeg": [1, 0.8],
+    "recoilDeg": [1, 0.5],
     "recoilMult": 0.8,
 
     "critChance": 0.1,

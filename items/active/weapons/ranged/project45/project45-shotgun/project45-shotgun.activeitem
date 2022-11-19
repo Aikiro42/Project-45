@@ -77,11 +77,11 @@
     
     // "DEBUG": true,
 
-    "baseDps": 100,
+    "baseDamage": 35,
     
     "projectileCount": 5,
     "multishot": 1.2,
-    "inaccuracy": 0.02,
+    "inaccuracy": 0.04,
     "manualFeed": true,
     "semi": true,
     "slamFire": true,
@@ -99,7 +99,7 @@
     "bulletsPerReload": 1,
 
 
-    "recoilDeg": [5, 2],
+    "recoilDeg": [15, 5],
     "recoilMult": 0.75,
 
     "critChance": 0.1,

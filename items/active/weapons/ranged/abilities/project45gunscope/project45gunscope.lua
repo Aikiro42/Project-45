@@ -120,9 +120,12 @@ function Project45GunScope:updateCamera(shiftHeld)
 end
 
 function Project45GunScope:aimVector(inaccuracy)
-  local aimVector = vec2.rotate({1, 0}, self.weapon.aimAngle + sb.nrand((inaccuracy or 0), 0))
-  aimVector[1] = aimVector[1] * mcontroller.facingDirection()
-  aimVector = vec2.rotate(aimVector, (self.weapon.relativeArmRotation + self.weapon.relativeWeaponRotation) * mcontroller.facingDirection())
+  local firePos = self:firePosition()
+  local basePos =  vec2.add(mcontroller.position(), activeItem.handPosition(vec2.rotate({0, self.weapon.muzzleOffset[2]}, self.weapon.relativeWeaponRotation)))
+  world.debugPoint(firePos, "cyan")
+  world.debugPoint(basePos, "cyan")
+  local aimVector = vec2.norm(world.distance(firePos, basePos))
+  aimVector = vec2.rotate(aimVector, sb.nrand((inaccuracy or 0), 0))
   return aimVector
 end
 
