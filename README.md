@@ -33,40 +33,39 @@ Project 45 is a weapons system that attempts to replicate the gun mechanics of S
 ## Todo
 
 - Add generic bullet hit sounds to the hitscan explosion config
-- Add bullet sounds to the damage type:
-    - organic (visceral)
-    - stone
-    - wood
-    - robotic (metallic)
+- Add SFX:
+    - Perfect Reload must be a satisfying click
+    - More insert mag sounds
+    - More insert round sounds 
+        - Proper shotgun shell insert sound
+        - Proper bullet insert sounds
+    - More bolt pull/push sounds
+    - More firing sounds
+        - Garand
+        - Semi-auto Pistol
+    - Add bullet sounds to the damage type:
+        - organic (visceral)
+        - stone
+        - wood
+        - robotic (metallic)
 - add hitscan knockback
-- figure out how to utilize two animation scripts
 - Add no-movement requirement to firing weapons
 - Add new guns:
     - Grenade Launcher
         - should feature firing projectiles
-    - Charge rifle ((Over)Charged, semi)
-        - should feature chargeup and overcharge mechanic
-        - Optional: auto-fire-after-charge rifle, resets charge every shot
-    - Gatling Gun
-        - should feature windup and whirring
-    - Revolver
-        - should feature kept bulletcases.
     - Mosin Nagant
         - should feature strip mags (appear only on reload)
-- Add gun upgrades:
-    - Shotgun (Upgraded)
-        - Fires Dragon's Breath Rounds
-    - Sniper Rifle (Upgraded)
-        - Rounds explode on impact
-        - Deals bonus damage on last shot
-    - Submachine gun
-        - 50% Crit Chance
-    - Pistol
-        - Increased Mag Size
-        - Always good reloads
-        - Larger perfect reload interval
-    - Assault Rifle
-        - Give multishot chance
+    - Gauss Sniper
+        - Chargetime is 0, Overchargetime is positive;
+        - Can tap-shoot, but can overcharge, too
+    - Accelerator
+        - Firerate (cycleTime) increases over time
+        - Done when cycle time is a 2-element array `[high cycle time, low cycle time]`
+        - Implement Fire Rate Reset Timer `fireRateResetTimer`
+            - After `self.fireRateResetTimer` passes, `self.currentCycleTime` is reset to`self.cycleTime[1]`
+        - Implement Fire Rate Growth Factor `fireRateGrowthFactor`
+            - On fire, `self.currentCycleTime` is decremented by `(self.cycleTime[2] - self.cycleTime[1]) * self.fireRateGrowthFactor`
+            - `currentCycleTime` is at least `self.cycleTime[2]` and at most `self.cycleTime[1]`
 - Add weapon abilities:
     - Drone
         - lets a drone fly around and target nearby enemies

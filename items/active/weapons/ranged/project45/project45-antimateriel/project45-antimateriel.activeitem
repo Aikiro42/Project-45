@@ -17,9 +17,10 @@
   "animationParts" : {
     "butt" : "",
     "middle" : "project45-antimateriel.png",
-    "middleFullBright" : "",
+    "middleFullbright" : "",
     "barrel" : "",
     "mag": "project45-antimateriel-mag.png",
+    "magFullbright": "project45-antimateriel-mag.png",
     "muzzleFlash" : "/items/active/weapons/ranged/muzzleflash.png",
     
     "muzzle": "",

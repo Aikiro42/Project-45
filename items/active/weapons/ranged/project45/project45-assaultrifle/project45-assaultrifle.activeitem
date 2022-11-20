@@ -17,9 +17,10 @@
   "animationParts" : {
     "butt" : "",
     "middle" : "project45-assaultrifle.png",
-    "middleFullBright" : "",
+    "middleFullbright" : "",
     "barrel" : "",
     "mag": "project45-assaultrifle-mag.png",
+    "magFullbright": "",
     "muzzleFlash" : "/items/active/weapons/ranged/muzzleflash.png",
     
     "muzzle": "",
@@ -52,7 +53,7 @@
         ]}
     },
     "sounds":{
-      "fire" : ["/sfx/project45-synthetikmechanics/fires/fire_rifle.ogg"]
+      "fire" : ["/sfx/gun/ar4.ogg"]
     }
   },
 

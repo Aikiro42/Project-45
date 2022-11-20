@@ -82,6 +82,11 @@
     
     "manualFeed": false, // whether the player must manually eject the case before firing another shot
     
+    // Determines whether the charge is looped,
+    // or progressed depending on the charge progress.
+    "progressiveCharge": false,
+    "chargeFrames": 3,
+
     "chargeTime": 0, // amount of time the weapon will wind up before firing, in seconds
     
     // amount of time in seconds wherein the gun will overcharge
@@ -147,7 +152,7 @@
     "recoilThresholdDeg": [27, 30],
     "recoilMult": 1, // muzzle brake; multiplied to recoilDeg
     "aimTime": [3, 1], // time it takes to aim; first index is when you're running, second is when shift is held
-    "inaccuracy" : 0.01, // Generic RNG inaccuracy; causes spread
+    "inaccuracy" : 0, // Generic RNG inaccuracy; causes spread
     
 
     // ________________________[ RELOAD SETTINGS ]__________________________________
@@ -202,7 +207,6 @@
     "magAnimRange": [0, 0], // [n, x]
     "beltMag": false, // affects visual reload; 
     "flashHidden": false,
-    "suppressed": false,
     "muzzleFlashTime": 0.05, // number of seconds the muzzle light is active when firing
     "muzzleSmokeTime": 5, // number of seconds the muzzle smoke is active
     "muzzleSmokeDelay": 0.2,

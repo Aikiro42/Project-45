@@ -69,12 +69,17 @@ function build(directory, config, parameters, level, seed)
     config.animationCustom.animatedParts.parts.middle.properties.offset = config.baseOffset
   
     -- fullbright parts
-    construct(config, "animationCustom", "animatedParts", "parts", "middleFullBright", "properties")
-    config.animationCustom.animatedParts.parts.middleFullBright.properties.offset = config.baseOffset
+    construct(config, "animationCustom", "animatedParts", "parts", "middleFullbright", "properties")
+    config.animationCustom.animatedParts.parts.middleFullbright.properties.offset = config.baseOffset
 
     -- magazine parts
     construct(config, "animationCustom", "animatedParts", "parts", "mag", "properties")
     config.animationCustom.animatedParts.parts.mag.properties.offset = config.baseOffset
+
+    -- fullbright parts
+    construct(config, "animationCustom", "animatedParts", "parts", "magFullbright", "properties")
+    config.animationCustom.animatedParts.parts.magFullbright.properties.offset = config.baseOffset
+    
     
     if config.muzzleOffset then
       config.muzzleOffset = vec2.add(config.muzzleOffset, config.baseOffset)

@@ -17,9 +17,10 @@
   "animationParts" : {
     "butt" : "",
     "middle" : "project45-shotgun.png",
-    "middleFullBright" : "",
+    "middleFullbright" : "",
     "barrel" : "",
     "mag": "",
+    "magFullbright": "",
     "muzzleFlash" : "/items/active/weapons/ranged/muzzleflash.png",
     
     "muzzle": "",

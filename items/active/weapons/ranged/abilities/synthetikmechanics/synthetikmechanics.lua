@@ -28,6 +28,7 @@ function SynthetikMechanics:init()
 
     -- initialize storage
     storage.ammo = storage.ammo or -1 -- -1 ammo means we don't have a mag in the gun
+    storage.unejectedCasings = storage.unejectedCasings or 0
     storage.reloadRating = storage.reloadRating or "ok"
     storage.jamAmount = storage.jamAmount or 0
     storage.animationState = storage.animationState or {gun = "ejecting", mag = "absent"} -- initial animation state is empty gun
@@ -188,8 +189,18 @@ function SynthetikMechanics:update(dt, fireMode, shiftHeld)
       self.isFiring = false
     end
 
-    -- BUG: fire rate is limited by charge timer because charge timer is decremented while the gun is fired
-    -- if firing and cycling don't decrement chargeTimer
+    if self.progressiveCharge then
+
+      local chargeProgress = 1
+      if self.chargeTime > 0 then
+        chargeProgress = self.chargeTimer / self.chargeTime
+      elseif self.overchargeTime > 0 then
+        chargeProgress = self.chargeTimer / self.overchargeTime
+      end
+
+      animator.setGlobalTag("chargeProgressFrame", math.min(self.chargeFrames, math.floor(1 + ((self.chargeFrames) * chargeProgress))))
+    end
+
     if not (self.isCharging or self.isFiring or self.weapon.currentAbility) then
       self.chargeTimer = math.max(0, self.chargeTimer - self.dt)
     end
@@ -201,12 +212,16 @@ function SynthetikMechanics:update(dt, fireMode, shiftHeld)
     end
 
     -- if chargeTimer is up and gun is charging, set animation state of gun to idle
-    if self.chargeTimer <= 0 and animator.animationState("gun") == "charging" then
+    if self.chargeTimer <= 0 and (animator.animationState("gun") == "charging" or animator.animationState("gun") == "chargingprog") then
       self:setAnimationState("gun", "idle")
     end
 
     if storage.ammo <= 0 and self.chargeTimer > 0 then
-      self:setAnimationState("gun", "charging")
+      if self.progressiveCharge then
+        self:setAnimationState("gun", "chargingprog")
+      else
+        self:setAnimationState("gun", "charging")
+      end
     end
 
     -- Prevent energy regen if there is energy or if currently reloading
@@ -303,8 +318,7 @@ function SynthetikMechanics:update(dt, fireMode, shiftHeld)
         -- If the chamber is clear/ready,
         -- and the gun has ammo
         elseif storage.ammo > 0 then
-          if self.chargeTimer < self.chargeTime then
-            sb.logInfo("hi")
+          if self.chargeTimer < self.chargeTime + self.overchargeTime then
             self:setState(self.charging)
           elseif self:canTrigger() and not self:jam() then
             self:setState(self.firing)
@@ -341,10 +355,14 @@ function SynthetikMechanics:charging()
     if self:jam() then return end -- attempt to jam
 
     -- If there's no charge time then don't waste cpu cycles doing a pointless loop
-    if self.chargeTime <= 0 then self:setState(self.firing) return end
+    if self.chargeTimer >= self.chargeTime + self.overchargeTime then self:setState(self.firing) return end
 
-    self:setAnimationState("gun", "charging")
-
+    if self.progressiveCharge then
+      self:setAnimationState("gun", "chargingprog")
+    else
+      self:setAnimationState("gun", "charging")
+    end
+    
     self.isCharging = true
     if not self.chargeLoopPlaying then
       animator.playSound("chargeDrone", -1)
@@ -370,7 +388,6 @@ function SynthetikMechanics:charging()
     end
 
     if self.chargeTimer >= self.chargeTime then
-      if self.resetChargeAfterFire then self.chargeTimer = 0 end
       self:setState(self.firing)
     end
     self.isCharging = false
@@ -390,7 +407,7 @@ function SynthetikMechanics:firing()
 
   -- don't fire when muzzle collides with terrain
   if not self.projectileParameters.hitscanIgnoresTerrain and world.lineTileCollision(mcontroller.position(), self:firePosition()) then return end
-
+  
   --[[
   the following line resets charge time if the gun is semi;
   since there's new code that handles that over at SynthetikMechanics:charging(),
@@ -423,7 +440,10 @@ function SynthetikMechanics:firing()
 
   end
 
+  if self.resetChargeAfterFire then self.chargeTimer = 0 end
+
   -- bullet fired, chamber is now filled with an empty case.
+  storage.unejectedCasings = storage.unejectedCasings + self.ammoPerShot
   storage.chamberState = FILLED
 
   -- reset charge damage multiplier
@@ -467,7 +487,7 @@ function SynthetikMechanics:firing()
   else
     util.wait(self.cycleTime)
     self.isFiring = false
-    self:setAnimationState("gun", "idle") -- TEST
+    if not self.keepCasings then self:setAnimationState("gun", "idle") end
     self.cooldownTimer = self.fireTime
     return
   end
@@ -496,7 +516,9 @@ function SynthetikMechanics:ejectingCase()
     
     -- visually eject projectile if casings are not kept
     if not self.keepCasings then
+      animator.setParticleEmitterBurstCount("ejectionPort", storage.unejectedCasings)
       animator.burstParticleEmitter("ejectionPort")
+      storage.unejectedCasings = 0
       self:setAnimationState("gun", "ejecting")
     end
 
@@ -580,7 +602,11 @@ function SynthetikMechanics:feeding()
   if self.chargeTimer <= 0 then
     self:setAnimationState("gun", "idle")
   else
-    self:setAnimationState("gun", "charging")
+    if self.progressiveCharge then
+      self:setAnimationState("gun", "chargingprog")
+    else
+      self:setAnimationState("gun", "charging")
+    end
   end
 
   if self.manualFeed and self.burstCounter >= self.burstCount then
@@ -614,7 +640,6 @@ function SynthetikMechanics:reloading()
     
     self.chargeTimer = 0
     self.isCharging = false
-    
     self:setAnimationState("mag", "present") -- insert mag
     animator.playSound("insertMag")
     
@@ -812,12 +837,14 @@ end
 -- note that the chamber isn't affected by this action
 function SynthetikMechanics:ejectMag()
   self.triggered = true
+  self.chargeTimer = 0
   -- if casings are kept, visually eject all stored bullet casings
   if self.keepCasings then
-    animator.setParticleEmitterBurstCount("ejectionPort", self.maxAmmo)
+    animator.setParticleEmitterBurstCount("ejectionPort", storage.unejectedCasings)
+    storage.unejectedCasings = 0
     animator.burstParticleEmitter("ejectionPort")
-  
-  -- otherwise, if there's a mag to eject, visually eject magazine 
+    animator.setAnimationState("gun", "ejecting")
+  -- otherwise, if there's a mag to eject, visually eject magazine  
   elseif self.magType ~= "strip" then
     animator.burstParticleEmitter("magazine")
   end
@@ -993,12 +1020,16 @@ function SynthetikMechanics:updateStance()
 end
 
 function SynthetikMechanics:muzzleFlash()
-
+  -- knock off aim
   self:recoil()
+  
+  -- set sfx values; the lower the ammo of a gun, the hollower it sounds
+  -- also randomzies values
   animator.setSoundPitch("fire", sb.nrand(0.01, 1))
   animator.setSoundVolume("hollow", (1 - storage.ammo/self.maxAmmo) * 0.8)
 
-  animator.playSound("fire" .. (self.suppressed and "silent" or ""))
+  -- play sfx values
+  animator.playSound("fire")
   animator.playSound("hollow")
   if not self.flashHidden then animator.setPartTag("muzzleFlash", "variant", math.random(1, self.muzzleFlashVariants or 3)) end
   animator.burstParticleEmitter("muzzleFlash")
@@ -1109,7 +1140,7 @@ function SynthetikMechanics:updateMagAnimation()
   
   -- if ammo is above range or reloading
   elseif storage.ammo > self.magAnimRange[2] or (not self.beltMag and self.reloadTimer >= 0 and self.bulletsPerReload >= self.maxAmmo) then
-    tag = "loop." .. storage.ammo % self.magLoopFrames -- magazine animation loop
+    tag = "loop." .. storage.ammo % math.max(1, self.magLoopFrames) -- magazine animation loop
     
   -- if ammo is within animation range then
   -- let tag = storage.ammo
@@ -1128,9 +1159,15 @@ function SynthetikMechanics:updateMagAnimation()
 end
 
 function SynthetikMechanics:updateSoundProperties()
-  animator.setSoundVolume("chargeDrone", 0.25 + 0.7 * self.chargeTimer / self.chargeTime)
-  animator.setSoundPitch("chargeWhine", 1 + 0.3 * self.chargeTimer / self.chargeTime)
-  animator.setSoundVolume("chargeWhine", 0.25 + 0.75 * self.chargeTimer / self.chargeTime)
+  local chargeProgress = 1
+  if self.chargeTime > 0 then
+    chargeProgress = self.chargeTimer / self.chargeTime
+  elseif self.overchargeTime > 0 then
+    chargeProgress = self.chargeTimer / self.overchargeTime
+  end
+  animator.setSoundVolume("chargeDrone", 0.25 + 0.7 * chargeProgress)
+  animator.setSoundPitch("chargeWhine", 1 + 0.3 * chargeProgress)
+  animator.setSoundVolume("chargeWhine", 0.25 + 0.75 * chargeProgress)
   if self.chargeTimer == 0 then
     animator.stopAllSounds("chargeWhine")
     animator.stopAllSounds("chargeDrone")
@@ -1262,22 +1299,12 @@ function SynthetikMechanics:firePosition()
 end
 
 function SynthetikMechanics:aimVector(inaccuracy)
-
-  --[[ works, but lags
-  --]]
   local firePos = self:firePosition()
   local basePos =  vec2.add(mcontroller.position(), activeItem.handPosition(vec2.rotate({0, self.weapon.muzzleOffset[2]}, self.weapon.relativeWeaponRotation)))
   world.debugPoint(firePos, "cyan")
   world.debugPoint(basePos, "cyan")
   local aimVector = vec2.norm(world.distance(firePos, basePos))
   aimVector = vec2.rotate(aimVector, sb.nrand((inaccuracy or 0), 0))
-  --]]
-  
-  --[[
-  local aimVector = vec2.rotate({1, 0}, self.weapon.aimAngle + sb.nrand((inaccuracy or 0), 0))
-  aimVector[1] = aimVector[1] * mcontroller.facingDirection()
-  aimVector = vec2.rotate(aimVector, (self.weapon.relativeArmRotation + self.weapon.relativeWeaponRotation) * mcontroller.facingDirection())
-  --]]
   return aimVector
 end
 

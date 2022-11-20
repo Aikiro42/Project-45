@@ -17,9 +17,10 @@
   "animationParts" : {
     "butt" : "",
     "middle" : "project45-garand.png",
-    "middleFullBright" : "",
+    "middleFullcright" : "",
     "barrel" : "",
     "mag": "project45-garand-mag.png",
+    "magFullbright": "",
     "muzzleFlash" : "/items/active/weapons/ranged/muzzleflash.png",
     
     "muzzle": "",

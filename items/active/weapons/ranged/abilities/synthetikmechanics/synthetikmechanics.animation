@@ -11,11 +11,15 @@
           "idle": {},
           // "charging": {},
           
+          // loop charging
           "charging": {
             "frames" : 3,
             "cycle" : 1,
             "mode" : "loop"
           },
+
+          // progressive charging
+          "chargingprog": {},
           
           "firing": {},
           "ejecting": {},
@@ -90,6 +94,11 @@
                 "image": "<partImage>:charging.<frame>"
               }
             },
+            "chargingprog": {
+              "properties": {
+                "image": "<partImage>:charging.<chargeProgressFrame>"
+              }
+            },
             "firing": {
               "properties": {
                 "image": "<partImage>:firing"
@@ -118,7 +127,7 @@
           }
         }
       },
-      "middleFullBright" : {
+      "middleFullbright" : {
         "properties" : {
           "zLevel" : 2,
           "centered" : true,
@@ -136,7 +145,12 @@
             },
             "charging": {
               "properties": {
-                "image": "<partImage>:charging"
+                "image": "<partImage>:charging.<frame>"
+              }
+            },
+            "chargingprog": {
+              "properties": {
+                "image": "<partImage>:charging.<chargeProgressFrame>"
               }
             },
             "firing": {
@@ -205,6 +219,31 @@
         "properties" : {
           "zLevel" : 4,
           "centered" : true,
+          "image" : "<partImage>:present",
+          "offset" : [0, 0],
+          "transformationGroups" : ["weapon"]
+        },
+
+        "partStates" : {
+          "mag" : {
+            "present": {
+              "properties": {
+                "image": "<partImage>:present.<ammo>"
+              }
+            },
+            "absent": {
+              "properties": {
+                "image": ""
+              }
+            }
+          }
+        }
+      },
+      "magFullbright" : {
+        "properties" : {
+          "zLevel" : 5,
+          "centered" : true,
+          "fullbright" : true,
           "image" : "<partImage>:present",
           "offset" : [0, 0],
           "transformationGroups" : ["weapon"]
@@ -297,7 +336,7 @@
 
     // gunshot sound
     "fire" : ["/sfx/project45-synthetikmechanics/fires/fire_smg.ogg"],
-    "firesilent" : ["/sfx/project45-synthetikmechanics/fires/fire_silenced_generic.ogg"],
+
     // plays louder as the magazine grows empty
     "hollow" : ["/sfx/project45-synthetikmechanics/hollow.ogg"],
 
