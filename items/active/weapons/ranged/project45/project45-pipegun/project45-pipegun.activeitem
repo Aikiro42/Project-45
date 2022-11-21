@@ -77,8 +77,8 @@
     "baseDps": 10,
     
     "inaccuracy": 0.0625,
-    "manualFeed": true,
-    "semi": true,
+    "manualFeed": false,
+    "semi": false,
     "slamFire": false,
     "cockTime": 0.5,
     "cycleTime": 0.1,

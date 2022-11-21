@@ -37,7 +37,7 @@
             }
       }}},
       "parts" : { "scope" : { "properties" : {
-        "offset" : [2.2, 0.3]
+        "offset" : [2.2, 0.25]
       }}}
     },
     "particleEmitters": {
@@ -56,10 +56,10 @@
     }
   },
 
-  "baseOffset" : [1, 0.1],
+  "baseOffset" : [0.75, 0.1],
   "muzzleOffset" : [2.25, 0.5],
-  "ejectionPortOffset": [-1, 0.7],
-  "magazineOffset": [-1, 0],
+  "ejectionPortOffset": [-2, 0.7],
+  "magazineOffset": [-2, 0],
 
   "scripts" : ["/items/active/weapons/ranged/project45gun.lua"],
   

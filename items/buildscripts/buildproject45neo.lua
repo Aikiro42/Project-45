@@ -84,6 +84,15 @@ function build(directory, config, parameters, level, seed)
     if config.muzzleOffset then
       config.muzzleOffset = vec2.add(config.muzzleOffset, config.baseOffset)
     end
+
+    if config.ejectionPortOffset then
+      config.ejectionPortOffset = vec2.add(config.ejectionPortOffset, config.baseOffset)
+    end
+
+    if config.magazineOffset then
+      config.magazineOffset = vec2.add(config.magazineOffset, config.baseOffset)
+    end
+
   end
 
   -- populate tooltip fields

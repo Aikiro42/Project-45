@@ -110,6 +110,10 @@
     "screenShakeDelta": [0.02, 0.01],
 
     "stances": {
+      "aim": {
+        "frontArmFrame": "rotation",
+        "weaponOffset": [0, 0]
+      },
       "ejectmag" : {
         "armRotation" : -45,
         "weaponRotation" : 45,

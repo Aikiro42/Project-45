@@ -70,7 +70,7 @@
       "butt" : {
         "properties" : {
           "centered" : true,
-          "image" : "<partImage><paletteSwaps>",
+          "image" : "<partImage><paletteSwaps><directives>",
           "offset" : [0, 0], // x offset is set dynamically
           "transformationGroups" : ["weapon"]
         }
@@ -78,7 +78,7 @@
       "middle" : {
         "properties" : {
           "centered" : true,
-          "image" : "<partImage>:idle",
+          "image" : "<partImage>:idle<directives>",
           "offset" : [0, 0], // x offset is set dynamically
           "transformationGroups" : ["weapon"]
         },
@@ -86,42 +86,42 @@
           "gun": {
             "idle": {
               "properties": {
-                "image": "<partImage>:idle"
+                "image": "<partImage>:idle<directives>"
               }
             },
             "charging": {
               "properties": {
-                "image": "<partImage>:charging.<frame>"
+                "image": "<partImage>:charging.<frame><directives>"
               }
             },
             "chargingprog": {
               "properties": {
-                "image": "<partImage>:charging.<chargeProgressFrame>"
+                "image": "<partImage>:charging.<chargeProgressFrame><directives>"
               }
             },
             "firing": {
               "properties": {
-                "image": "<partImage>:firing"
+                "image": "<partImage>:firing<directives>"
               }
             },
             "ejecting": {
               "properties": {
-                "image": "<partImage>:ejecting"
+                "image": "<partImage>:ejecting<directives>"
               }
             },
             "feeding": {
               "properties": {
-                "image": "<partImage>:feeding"
+                "image": "<partImage>:feeding<directives>"
               }
             },
             "jammed": {
               "properties": {
-                "image": "<partImage>:jammed"
+                "image": "<partImage>:jammed<directives>"
               }
             },
             "unjam": {
               "properties": {
-                "image": "<partImage>:unjam"
+                "image": "<partImage>:unjam<directives>"
               }
             }
           }
@@ -132,7 +132,7 @@
           "zLevel" : 2,
           "centered" : true,
           "fullbright" : true,
-          "image" : "<partImage>:idle",
+          "image" : "<partImage>:idle<directives>",
           "offset" : [0, 0], // x offset is set dynamically
           "transformationGroups" : ["weapon"]
         },
@@ -140,42 +140,42 @@
           "gun": {
             "idle": {
               "properties": {
-                "image": "<partImage>:idle"
+                "image": "<partImage>:idle<directives>"
               }
             },
             "charging": {
               "properties": {
-                "image": "<partImage>:charging.<frame>"
+                "image": "<partImage>:charging.<frame><directives>"
               }
             },
             "chargingprog": {
               "properties": {
-                "image": "<partImage>:charging.<chargeProgressFrame>"
+                "image": "<partImage>:charging.<chargeProgressFrame><directives>"
               }
             },
             "firing": {
               "properties": {
-                "image": "<partImage>:firing"
+                "image": "<partImage>:firing<directives>"
               }
             },
             "ejecting": {
               "properties": {
-                "image": "<partImage>:ejecting"
+                "image": "<partImage>:ejecting<directives>"
               }
             },
             "feeding": {
               "properties": {
-                "image": "<partImage>:feeding"
+                "image": "<partImage>:feeding<directives>"
               }
             },
             "jammed": {
               "properties": {
-                "image": "<partImage>:jammed"
+                "image": "<partImage>:jammed<directives>"
               }
             },
             "unjam": {
               "properties": {
-                "image": "<partImage>:unjam"
+                "image": "<partImage>:unjam<directives>"
               }
             }
           }
@@ -184,7 +184,7 @@
       "barrel" : {
         "properties" : {
           "centered" : true,
-          "image" : "<partImage><paletteSwaps>",
+          "image" : "<partImage><paletteSwaps><directives>",
           "offset" : [0, 0], // x offset is set dynamically
           "transformationGroups" : ["weapon"]
         }
@@ -202,14 +202,14 @@
           "flash" : {
             "flash" : {
               "properties" : {
-                "image" : "<partImage>:<variant>.<frame>"
+                "image" : "<partImage>:<variant>.<frame><directives>"
               }
             }
           },
           "firing" : {
             "fire" : {
               "properties" : {
-                "image" : "<partImage>:<variant>.<frame>"
+                "image" : "<partImage>:<variant>.<frame><directives>"
               }
             }
           }
@@ -219,7 +219,7 @@
         "properties" : {
           "zLevel" : 4,
           "centered" : true,
-          "image" : "<partImage>:present",
+          "image" : "<partImage>:present<directives>",
           "offset" : [0, 0],
           "transformationGroups" : ["weapon"]
         },
@@ -228,7 +228,7 @@
           "mag" : {
             "present": {
               "properties": {
-                "image": "<partImage>:present.<ammo>"
+                "image": "<partImage>:present.<ammo><directives>"
               }
             },
             "absent": {
@@ -244,7 +244,7 @@
           "zLevel" : 5,
           "centered" : true,
           "fullbright" : true,
-          "image" : "<partImage>:present",
+          "image" : "<partImage>:present<directives>",
           "offset" : [0, 0],
           "transformationGroups" : ["weapon"]
         },
@@ -253,7 +253,7 @@
           "mag" : {
             "present": {
               "properties": {
-                "image": "<partImage>:present.<ammo>"
+                "image": "<partImage>:present.<ammo><directives>"
               }
             },
             "absent": {
@@ -348,7 +348,10 @@
 
     // sound of mag sliding out
     "ejectMag": ["/sfx/project45-synthetikmechanics/reloads/ejectmag_generic_1.ogg"],
-    // sound of mag sliding in
+    // sound of mag being procured
+    "getMag": ["/sfx/project45-synthetikmechanics/reloads/insertmag_generic.ogg"],
+
+    //sound of mag being inserted
     "insertMag": ["/sfx/project45-synthetikmechanics/reloads/insertmag_generic.ogg"],
 
     // sound of clip pinging out

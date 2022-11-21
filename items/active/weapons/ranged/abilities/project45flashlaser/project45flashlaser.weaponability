@@ -7,7 +7,7 @@
           "centered" : true,
           "offset" : [-1.25, -0.2],
           "transformationGroups" : ["muzzle"],
-          "image" : "/items/active/weapons/ranged/abilities/project45flashlaser/project45flashlaser.png"
+          "image" : "/items/active/weapons/ranged/abilities/project45flashlaser/project45flashlaser.png<directives>"
         }
       }
     }},

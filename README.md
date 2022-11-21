@@ -55,9 +55,6 @@ Project 45 is a weapons system that attempts to replicate the gun mechanics of S
         - should feature firing projectiles
     - Mosin Nagant
         - should feature strip mags (appear only on reload)
-    - Gauss Sniper
-        - Chargetime is 0, Overchargetime is positive;
-        - Can tap-shoot, but can overcharge, too
     - Accelerator
         - Firerate (cycleTime) increases over time
         - Done when cycle time is a 2-element array `[high cycle time, low cycle time]`

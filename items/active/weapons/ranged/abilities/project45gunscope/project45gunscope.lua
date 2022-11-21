@@ -35,7 +35,7 @@ end
 -- draws laser from gun to crosshair
 function Project45GunScope:drawLaser(trigger)
   if not self.laser then return end
-  if trigger == "alt" and animator.animationState("firing") == "off" then
+  if storage.cameraProjectile and world.entityExists(storage.cameraProjectile) then
 
     local scanOrig = self:firePosition()
     local range = world.magnitude(scanOrig, activeItem.ownerAimPosition())

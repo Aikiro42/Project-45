@@ -102,6 +102,14 @@
     "magAnimRange": [0, 0],
 
     "stances": {
+
+      "idleneo": {
+        "twoHanded": false
+      },
+      "aim": {
+        "twoHanded": false
+      },
+
       "ejectmag" : {
         "armRotation" : -45,
         "weaponRotation" : 45,
@@ -109,11 +117,14 @@
         "allowRotate" : false,
         "allowFlip" : false
       },
+      "empty": {
+        "twoHanded": false
+      },
       
       "manualFeed": {
         "armRotation" : 0,
         "weaponRotation" : 1,
-        "twoHanded" : true,
+        "twoHanded" : false,
         "allowRotate" : false,
         "allowFlip" : false
       },
@@ -136,6 +147,17 @@
         "twoHanded" : false,
         "allowRotate" : false,
         "allowFlip" : false
+      },
+      "loadRound": {
+        "disabled": true
+      },
+      "boltPull": {
+        "disabled": true,
+        "twoHanded": false
+      },
+      "boltPush": {
+        "disabled": true,
+        "twoHanded": false
       }
     }
 

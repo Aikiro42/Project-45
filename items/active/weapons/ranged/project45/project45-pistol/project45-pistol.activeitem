@@ -72,7 +72,7 @@
     "cycleTime": 0.1,
     "fireTime": 0.1,
     "jamChances": {
-      "bad": 0.2,
+      "bad": 0.99,
       "ok": 0.01,
       "good": 0.00
     },
@@ -96,6 +96,15 @@
     "magAnimRange": [0, 0],
 
     "stances": {
+      "idleneo": {
+        "twoHanded": false
+      },
+      "aim": {
+        "twoHanded": false
+      },
+      "empty": {
+        "twoHanded": false
+      },
       "ejectmag" : {
         "armRotation" : -45,
         "weaponRotation" : 45,
@@ -107,21 +116,31 @@
         "armRotation" : 45,
         "weaponRotation" : 0,
         "weaponAngularVelocity": 3600,
-        "twoHanded" : false,
-        "allowRotate" : false,
-        "aimAngle": 0,
-        "allowFlip" : false
-
+        "twoHanded": false
         // "weaponOffset" : [0.25, 0.575],
         // "frontArmFrame" : "run.2",
         // "backArmFrame" : "jump.3"
       },
       "reloaded" : {
-        "armRotation" : 45,
+        "armRotation" : -90,
         "weaponRotation" : 15,
         "twoHanded" : false,
         "allowRotate" : false,
         "allowFlip" : false
+      },
+      "boltPull": {
+        "twoHanded": false
+      },
+      "boltPush": {
+        "twoHanded": false
+      },
+      "jammed": {
+        "twoHanded": false
+      },
+      "unjam": {
+        "armRotation": -45,
+        "weaponRotation": -45,
+        "twoHanded": false
       }
     }
 

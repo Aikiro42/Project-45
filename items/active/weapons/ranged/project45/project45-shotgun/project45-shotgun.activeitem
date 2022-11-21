@@ -38,10 +38,10 @@
       }}},
       "parts" : {
         "enemyradar" : { "properties" : {
-        "offset" : [2.2, 0.3]
+        "offset" : [0, -0.3]
         }},
         "enemyradarfullbright" : { "properties" : {
-          "offset" : [2.2, 0.3]
+          "offset" : [0, -0.3]
         }}
       }
     },
@@ -60,9 +60,10 @@
     }
   },
 
-  "baseOffset" : [1, 0.15],
+  // "baseOffset" : [1, 0.15],
+  "baseOffset" : [0, -0.45],
   "muzzleOffset" : [2.5, 0.4],
-  "ejectionPortOffset": [0.7, 0.5],
+  "ejectionPortOffset": [-0.7, 0.5],
   "magazineOffset": [0, 0],
 
   "scripts" : ["/items/active/weapons/ranged/project45gun.lua"],
@@ -111,6 +112,44 @@
     "magAnimRange": [0, 0],
 
     "stances": {
+      "idleneo": {
+        "frontArmFrame": "run.3"
+      },
+      "aim": {
+        "frontArmFrame": "run.3",
+        "backArmFrame": "fall.1"
+      },
+      "empty": {
+        "frontArmFrame": "run.3",
+        "backArmFrame": "fall.1"
+      },
+      "boltPull": {
+        "frontArmFrame": "run.3",
+        "backArmFrame": "jump.2"
+      },
+      "boltPush": {
+        "frontArmFrame": "run.3",
+        "backArmFrame": "fall.1"
+      },
+      "reloading": {
+        "armRotation": -15,
+        "weaponRotation": 0,
+        "frontArmFrame": "run.2",
+        "backArmFrame": "fall.1",
+        "flipWeapon": true,
+        "allowRotate": false,
+        "weaponOffset": [0, 0.5],
+        "twoHanded": true
+      },
+      "loadRound": {
+        "armRotation": -20,
+        "weaponRotation": 0,
+        "flipWeapon": true,
+        "allowRotate": false,
+        "weaponOffset": [0, 0.5],
+        "frontArmFrame": "rotation",
+        "backArmFrame": "fall.1"
+      }
     }
 
   },

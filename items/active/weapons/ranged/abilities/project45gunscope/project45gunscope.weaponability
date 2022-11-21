@@ -7,7 +7,7 @@
                 "centered" : true,
                 "offset" : [0.620, 0.125],
                 "transformationGroups" : ["ejectionPort"],
-                "image" : "/items/active/weapons/ranged/abilities/project45gunscope/project45gunscope.png"
+                "image" : "/items/active/weapons/ranged/abilities/project45gunscope/project45gunscope.png<directives>"
             }
             }
         }},

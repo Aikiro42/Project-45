@@ -7,7 +7,7 @@
           "centered" : true,
           "offset" : [0, 0],
           "transformationGroups" : ["weapon"],
-          "image" : "/items/active/weapons/ranged/abilities/project45enemyradar/project45enemyradar.png"
+          "image" : "/items/active/weapons/ranged/abilities/project45enemyradar/project45enemyradar.png<directives>"
         }
       },
       "enemyradarfullbright" : {
@@ -17,7 +17,7 @@
           "offset" : [0, 0],
           "transformationGroups" : ["weapon"],
           "fullbright": true,
-          "image" : "/items/active/weapons/ranged/abilities/project45enemyradar/project45enemyradarfullbright.png"
+          "image" : "/items/active/weapons/ranged/abilities/project45enemyradar/project45enemyradarfullbright.png<directives>"
         }
       }
     }},

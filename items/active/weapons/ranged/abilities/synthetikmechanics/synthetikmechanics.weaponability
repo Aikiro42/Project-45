@@ -140,13 +140,13 @@
       "ok": 0.05, // chance for a weapon to jam if it waited a reload (5% default, d20 roll)
       "good": 0.01 // chance for a weapon to jam if it hit a reload (1% default, d100 roll)
     },
-    "unjamTime": 0.1, // time it takes to attempt to unjam the weapon
+    "unjamTime": 0.2, // time it takes to attempt to unjam the weapon
     "unjamAmount": 0.25, // percent of unjam progress
 
 
     // ________________________[ ACCURACY SETTINGS ]__________________________________
     "recoilMomentum": 0, // momentum added to character opposite direction of aim vector when firing
-    "recoilDeg": [2, 1], // degrees of recoil every time the gun is shot (think spray control)
+    "recoilDeg": [10, 5], // degrees of recoil every time the gun is shot (think spray control)
     // for extremely high fire rate guns, the gun will begin seesaw around this angle range
     // when the amount of recoil you accrue reaches the second value.
     "recoilThresholdDeg": [27, 30],
@@ -161,7 +161,7 @@
     
     // (percentage) interval during which a good reload is possible
     // good reloads grant 1.1x more damage
-    "goodReloadInterval": [0.4, 0.8], 
+    "goodReloadInterval": [0.425, 0.775], 
     
     // (percentage) interval during which a perfect reload is possible
     // perfect reloads grant 1.3x more damage and completely prevent jamming
@@ -243,31 +243,37 @@
         "twoHanded" : true,
         "allowRotate" : true,
         "allowFlip" : true
+        // "frontArmFrame": "run.3"
+        // "weaponOffset": [-1, 0]
       },
 
       // stance while the gun is jammed
       "jammed" : {
         "armRotation" : 0,
         "weaponRotation" : -15,
-        "twoHanded" : false,
-        "allowRotate" : true,
+        "twoHanded" : true,
+        "allowRotate" : false,
+        "aimAngle": 0,
         "allowFlip" : true
       },
 
       // stance while the gun has no mag
       "empty" : {
-        "armRotation" : -45,
+        "armRotation" : -15,
         "weaponRotation" : 0,
         "twoHanded" : true,
         "allowRotate" : false,
+        "aimAngle": 0,
         "allowFlip" : false
+        // "frontArmFrame": "swimIdle.2",
+        // "weaponOffset": [-1, 0]
       },
 
       // stance taken while ejecting the mag
       // this stance is also snapped to
       "ejectmag" : {
-        "armRotation" : -45,
-        "weaponRotation" : 45,
+        "armRotation" : -30,
+        "weaponRotation" : 5,
         "twoHanded" : true,
         "allowRotate" : false,
         "allowFlip" : false
@@ -278,19 +284,33 @@
 
       // stance snaps to this when unjamming
       "unjam" : {
-        "armRotation" : -30,
-        "weaponRotation" : 25,
+        "armRotation" : 5,
+        "weaponRotation" : -20,
         "twoHanded" : true,
         "allowRotate" : false,
-        "allowFlip" : false
+        "aimAngle": 0,
+        "allowFlip" : false,
+        "frontArmFrame" : "run.2"
       },
 
-      "manualFeed": {
+      "boltPull": {
         "armRotation" : 5,
         "weaponRotation" : 5,
         "twoHanded" : true,
         "allowRotate" : false,
-        "allowFlip" : false
+        "allowFlip" : false,
+        "frontArmFrame" : "run.2"
+        // "weaponOffset": [-1, 0]
+      },
+
+      "boltPush": {
+        "armRotation" : 5,
+        "weaponRotation" : 0,
+        "twoHanded" : true,
+        "allowRotate" : false,
+        "allowFlip" : false,
+        "frontArmFrame" : "rotation"
+        // "weaponOffset": [-1, 0]
       },
 
       "loadRound": {
@@ -298,16 +318,18 @@
         "weaponRotation" : 45,
         "twoHanded" : true,
         "allowRotate" : false,
-        "allowFlip" : false
+        "allowFlip" : false,
+        "duration": 0.25
       },
 
       // RELOAD STANCES
 
       // stance taken while reloading
       "reloading" : {
-        "armRotation" : -45,
+        "armRotation" : -15,
         "weaponRotation" : 0,
-        "twoHanded" : false,
+        "twoHanded" : true,
+        "frontArmFrame": "run.5",
         "allowRotate" : false,
         "aimAngle": 0,
         "allowFlip" : false
@@ -315,11 +337,13 @@
 
       // stance taken upon finishing reload
       "reloaded" : {
-        "armRotation" : -45,
-        "weaponRotation" : 0,
+        "armRotation" : 5,
+        "weaponRotation" : 5,
         "twoHanded" : true,
         "allowRotate" : false,
-        "allowFlip" : false
+        "aimAngle": 0,
+        "allowFlip" : false,
+        "frontArmFrame": "swim.3"
       },
 
       // Legacy Stances for altfire compatibility
