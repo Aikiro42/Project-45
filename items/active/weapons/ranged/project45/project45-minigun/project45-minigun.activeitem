@@ -62,7 +62,7 @@
 
   "movementSpeedFactor": 1.2,
   "jumpHeightFactor": 1.2,
-
+  "heavyWeapon": true,
   
   "primaryAbilityType": "synthetikmechanics",
   "primaryAbility": {

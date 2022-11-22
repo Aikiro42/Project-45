@@ -7,7 +7,7 @@
   "description" : "A .50 BMG firing mechanism shoddily attached to a handle. A very unreliable last-resort weapon.",
   "tooltipKind" : "base",
   "category" : "Pistol",
-  "twoHanded" : false,
+  "twoHanded" : true,
   "itemTags" : ["weapon","ranged","pistol"],
   "level" : 1,
 

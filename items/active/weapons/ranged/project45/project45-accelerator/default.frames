@@ -1,0 +1,14 @@
+{  
+  "frameGrid" : {
+    "size" : [18, 11],
+    "dimensions" : [6, 1],
+    "names" : [
+      ["idle", "firing", "ejecting", "feeding", "jammed", "unjam"]
+    ]
+  },
+
+  "aliases" : {
+    "charging": "idle",
+    "charging.default": "idle"
+  }
+}

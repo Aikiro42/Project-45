@@ -24,11 +24,9 @@
     /*
     Standard damage is 6.25 (Vanilla).
 
-    5.56: 10
-
     */
     "baseDamage": 6.25,
-
+    
     "critChance": 0,
     "critDamageMult": 1,
 
@@ -45,7 +43,7 @@
 
     // ________________________[ PROJECTILE SETTINGS ]__________________________________
   
-    // if explicitly "project45stdbullet", gun fires hitscan shots; otherwise, gun fires projectiles
+    // if explicitly "project45stdbullet", gun damages via hitscan; otherwise, gun fires projectiles
     // this is to ensure compatibility with vanilla altfires
     // either way, the projectileType field functions as any other projectileType field does
     "projectileType": "project45stdbullet",
@@ -55,7 +53,7 @@
     // number multiplied to projectile count without affecting the damage.
     // if number is a float, the float is used as a chance to roll for an additional shot
     // values 0 and below can make the gun not shoot anything
-    "multishot": 1, 
+    "multishot": 1,
 
     "projectileCount" : 1, // number of projectiles launched per shot
     
@@ -74,20 +72,39 @@
     },
 
     // ________________________[ GUN MECHANIC SETTINGS ]__________________________________
-    "magType": "default", // default, clip, strip; dictates reload visuals
     
-    "keepCasings": false, // drops casings per shot if false; overrides magazine particles with casings on reload if true
+    // default, clip, strip; dictates reload visuals
+    // and whether you have to eject before reloading
+    "magType": "default",
     
-    "semi": true, // firing, pulling and pushing the bolt aren't continuously done on keypress if true
+    // drops casings per shot if false
+    // overrides magazine particles with casings on reload if true
+    "keepCasings": false,
     
-    "manualFeed": false, // whether the player must manually eject the case before firing another shot
+    // dictates whether holding the trigger makes the weapon
+    // eject automatically after firing (if manual feed)
+    // and fire immediately after feeding\
+    // if this is true, you have to release the trigger
+    // and press it again to fire another shot (and eject casings if manual feed)
+    "semi": true,
     
+    // whether the player must manually eject the case before firing another shot
+    // firing, pulling and pushing the bolt are continuously done on keypress if false
+    "manualFeed": false,
+
+    // dictates whether holding the button while it's feeding will make it automatically shoot
+    // only has any purpose if manualFeed is true
+    "slamFire": false,
+
+    // ________________________[ CHARGE SETTINGS ]__________________________________
+
     // Determines whether the charge is looped,
-    // or progressed depending on the charge progress.
+    // or progressed as the weapon charges up.
     "progressiveCharge": false,
     "chargeFrames": 3,
-
-    "chargeTime": 0, // amount of time the weapon will wind up before firing, in seconds
+    
+    // amount of time the weapon will wind up before firing, in seconds
+    "chargeTime": 0,
     
     // amount of time in seconds wherein the gun will overcharge
     // overcharging grants additional damage: 1 + <time charged> - chargeTime / overchargeTime
@@ -103,20 +120,32 @@
     // whether charge is reset when firing
     "resetChargeAfterFire": false, 
     
-    // dictates whether holding the button while it's feeding will make it automatically shoot
-    // only has any purpose if manualFeed is true
-    "slamFire": false,
+    // ________________________[ FIRE RATE SETTINGS ]__________________________________
 
     // Depending on which is greater, cycleTime or fireTime will dictate the fire rate of the weapon.
+    /*
+    Seconds it takes to fire, eject and feed.
+    In burst weapons, this ultimately dictates the bursttime;
+    Can either be a float (in which case it turns into the array as indicated by the default value below)
+    or a 2-element array, in which case the other cycle paramters matter.
+
+    If the former element is greater than the latter, the fire rate increases the longer the gun is fired.
+    If the former element is lesser than the latter, the fire rate decreases the longer the gun is fired.
+
+    */
+    "cycleTime": [0.1, 0.1],
     
-    // Seconds it takes to fire eject and reload.
-    // In burst weapons, this dictates the bursttime;
-    // 
-    "cycleTime": 0.1,
+    // Every shot, the current cycle time grows by <cycleGrowthRate> * (<cycleTime[2]> - <cycletime[1]>)
+    "cycleTimeGrowthRate": 0.1,
+
+    // Every second, the current cycle time decays by <cycleDecayRate> * (<cycleTime[2]> - <cycletime[1]>)
+    "cycleTimeDecayRate": 0.2,
     
-    // Seconds before you're able to use the weapon again.
+    // Seconds before you're able to trigger the weapon again.
     // Should not affect the reload minigame.
     "fireTime" : 0.1,
+    
+    // ________________________[ MISC SETTINGS ]__________________________________
     
     // Laser settings.
     "laser": {
@@ -130,7 +159,28 @@
 
       "toggle": true, // if true, laser is toggled whenever activated
       "toggleTime": 0.5 // time it takes to toggle
+    },
+    
+    // Dodge settings.
+    "dashParams": {
+      "enabled": true,
 
+      // Amount of time to press and release the walk key to initiate a dash.
+      "triggerTime": 0.2,
+      // speed at which the player travels for the duration of the dash
+      "speed": 80,
+      
+      // duration for which the indicated speed is applied on the movement controller
+      "dashTime": 0.1,
+      // duration for which you're invincible
+      "statusTime": 0.2,
+      
+      // number multiplied to your final velocity after the dodge
+      // i.e. if this is 1 then you are essentially given momentum
+      // from the speed of your dash
+      "endXVelMult": 0.3,
+
+      "cooldown": 0.5
     },
 
   
@@ -170,28 +220,7 @@
     // time it takes to cock the gun
     // can affect net reload times depending on when the gun was reloaded
     // affects net fire rate on manual-feed guns (since you cock every shot)
-    "cockTime": 0.6, // time it takes to cock the gun
-
-
-    // ________________________[ DODGE SETTINGS ]__________________________________
-    "dashParams": {
-      "enabled": true,
-      "triggerTime": 0.2,
-      // speed at which the player travels for the duration of the dash
-      "speed": 80,
-      
-      // duration for which the indicated speed is applied on the movement controller
-      "dashTime": 0.1,
-      // duration for which you're invincible
-      "statusTime": 0.2,
-      
-      // number multiplied to your final velocity after the dodge
-      // i.e. if this is 1 then you are essentially given momentum
-      // from the speed of your dash
-      "endXVelMult": 0.3,
-
-      "cooldown": 0.5
-    },
+    "cockTime": 0.6, // time it takes to cock the gun    
 
 
     // ________________________[ VISUAL SETTINGS ]__________________________________

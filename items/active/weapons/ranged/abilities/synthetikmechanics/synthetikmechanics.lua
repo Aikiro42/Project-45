@@ -64,6 +64,14 @@ function SynthetikMechanics:init()
     self.recoilPerShot = 0.1
 
     -- VALIDATIONS
+
+    if type(self.cycleTime) ~= "table" then
+      self.cycleTime = {self.cycleTime, self.cycleTime}
+    end
+
+    self.cycleTimeDelta = self.cycleTime[2] - self.cycleTime[1]
+    self.currentCycleTime = self.cycleTime[1]
+    self.cycleTimeProgress = 0
     
     -- max ammo should not go below 1
     self.maxAmmo = math.max(1, self.maxAmmo)
@@ -169,8 +177,7 @@ function SynthetikMechanics:update(dt, fireMode, shiftHeld)
     self:drawLaser()
 
     -- local laserLine = (self.allowLaser and shiftHeld and storage.ammo > 0) and self:hitscan(true) or {}
-
-
+    
     -- increments/decrements
     self.muzzleFlashTimer = math.max(0, self.muzzleFlashTimer - self.dt)
     self.muzzleSmokeTimer = math.max(0, self.muzzleSmokeTimer - self.dt)
@@ -181,6 +188,7 @@ function SynthetikMechanics:update(dt, fireMode, shiftHeld)
     storage.dodgeCooldownTimer = math.max(0, storage.dodgeCooldownTimer - self.dt)
     self.cooldownTimer = math.max(0, self.cooldownTimer - self.dt)
     self.aimProgress = math.min(1, self.aimProgress + self.dt / math.max(self.aimTime[shiftHeld and 2 or 1], 0.01))
+    self.currentCycleTime = self.cycleTime[1] + self.cycleTimeDelta * self.cycleTimeProgress
 
     -- updating logic
 
@@ -204,6 +212,10 @@ function SynthetikMechanics:update(dt, fireMode, shiftHeld)
 
     if not (self.isCharging or self.isFiring or self.weapon.currentAbility) then
       self.chargeTimer = math.max(0, self.chargeTimer - self.dt)
+      if not self.triggered then
+        self.cycleTimeProgress = math.max(0, self.cycleTimeProgress - self.cycleTimeDecayRate * self.dt)
+        -- sb.logInfo("[PROJECT 45] Cycle Time Increased! Cycle Time: " .. self.currentCycleTime)
+      end
     end
 
     -- turn off muzzleflash automatically
@@ -462,6 +474,10 @@ function SynthetikMechanics:firing()
     self.currentScreenShake + self.screenShakeDelta[2] * (self.screenShakeAmount[2] - self.screenShakeAmount[1])
   )
 
+  -- decrease cycleTime: at most, the minimum cycle time;
+  self.cycleTimeProgress = math.min(1, self.cycleTimeProgress + self.cycleTimeGrowthRate)
+  -- sb.logInfo("[PROJECT 45] Gun shot! Cycle Time: " .. self.currentCycleTime)
+
   -- increment burst counter
   self.burstCounter = self.burstCounter + 1
 
@@ -476,7 +492,7 @@ function SynthetikMechanics:firing()
   transist the state
   --]]
   if not self.manualFeed or self.burstCounter < self.burstCount then
-    util.wait(self.cycleTime/3)
+    util.wait(self.currentCycleTime/3)
     self:setState(self.ejectingCase)
     return
   
@@ -489,7 +505,7 @@ function SynthetikMechanics:firing()
   moving barrels)
   --]]
   else
-    util.wait(self.cycleTime)
+    util.wait(self.currentCycleTime)
     self.isFiring = false
     if not self.keepCasings then self:setAnimationState("gun", "idle") end
     self.cooldownTimer = self.fireTime
@@ -568,7 +584,7 @@ function SynthetikMechanics:ejectingCase()
     if self.manualFeed and self.burstCounter >= self.burstCount then
       waitTime = self.cockTime/3
     else
-      waitTime = self.cycleTime/3
+      waitTime = self.currentCycleTime/3
     end
     util.wait(waitTime)
 
@@ -599,7 +615,7 @@ function SynthetikMechanics:feeding()
   if self.manualFeed and self.burstCounter >= self.burstCount then
     waitTime = self.cockTime/3
   else
-    waitTime = self.cycleTime/3
+    waitTime = self.currentCycleTime/3
   end
   util.wait(waitTime)
 
@@ -643,6 +659,7 @@ function SynthetikMechanics:reloading()
 
   self.triggered = true
   self.currentScreenShake = self.screenShakeAmount[1]
+  self.cycleTimeProgress = 0
   -- if status.overConsumeResource("energy", self.reloadCost*status.resourceMax("energy")) then
   if not status.resourceLocked("energy") then
     
@@ -805,7 +822,10 @@ function SynthetikMechanics:reloading()
     -- cock gun
     self:setState(self.cocking)
 
-    sb.logInfo("[PROJECT 45] Empirical Crit Chance: " .. storage.critStats.crits * 100 / storage.critStats.shots .. "%%")
+    sb.logInfo("[PROJECT 45] Gun has been reloaded!")
+    if storage.critStats.shots > 0 then
+      sb.logInfo("[PROJECT 45] Empirical Crit Chance: " .. storage.critStats.crits * 100 / storage.critStats.shots .. "%%")
+    end
 
     -- self:setStance(self.stances.aim)
   else
@@ -1284,7 +1304,7 @@ function SynthetikMechanics:damagePerShot()
 
   local baseDamage = self.baseDamage
   if self.baseDps then
-    baseDamage = self.baseDps * ((self.manualFeed and self.cockTime or 0) + math.max(0.01, self.cycleTime + self.fireTime))
+    baseDamage = self.baseDps * ((self.manualFeed and self.cockTime or 0) + math.max(0.01, self.currentCycleTime + self.fireTime))
   end
 
   local reloadDamageMultiplier = 1
@@ -1294,7 +1314,7 @@ function SynthetikMechanics:damagePerShot()
   
   if storage.reloadRating == "good" then reloadDamageMultiplier = 1.1 
   elseif storage.reloadRating == "perfect" then reloadDamageMultiplier = 1.3 end
-  return baseDamage -- or (self.baseDps * (self.cycleTime + self.fireTime))
+  return baseDamage -- or (self.baseDps * (self.currentCycleTime + self.fireTime))
   
    * self.chargeDamageMult
    * reloadDamageMultiplier
@@ -1363,6 +1383,9 @@ function SynthetikMechanics:jam()
 
     -- Reset charge timer
     self.chargeTimer = 0
+
+    -- Reset cycleTimeProgress
+    self.cycleTimeProgress = 0
 
     -- Gun is jammed; it's not charging.
     self.isCharging = false

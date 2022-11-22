@@ -72,23 +72,26 @@ When gun is a windup-type and
   "primaryAbility": {
 
     "baseDamage": 3,
-    "cycleTime": 0.1,
+    "cycleTime": [0.2, 0.1],
     "fireTime": 0.1,
-    "cockTime": 1,
+    "cockTime": 0.1,
 
-    "reloadTime": 60,
-
+    "reloadTime": 0.7,
     "jamChances": {
-      "bad": 1,
+      "bad": 0,
       "ok": 0.00,
       "good": 0.00
     },
-    "maxAmmo": 10,
+    "recoilDeg": [1, 0],
+    
     "magType": "default",
-    "bulletsPerReload": 10,
-    "semi": true,
+    "maxAmmo": 20,
+    "bulletsPerReload": 20,
+    
+    "semi": false,
     "burstCount": 1,
     "manualFeed": false,
+    
     "projectileParameters": {
       "actionOnHit": [
         {
