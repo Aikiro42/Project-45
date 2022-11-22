@@ -451,7 +451,7 @@ function SynthetikMechanics:firing()
     if (projectileType == "project45stdbullet" and not self.overrideHitscan) or projectileType == "hitscan" then
       self:fireHitscan()
     else
-      self:fireProjectileNeo()
+      self:fireProjectileNeo(projectileType)
     end
 
   end
@@ -1177,7 +1177,9 @@ function SynthetikMechanics:unjam()
     else
       storage.reloadRating = "ok"
       activeItem.setScriptedAnimationParameter("reloadRating", "ok")
+      animator.setParticleEmitterBurstCount("ejectionPort", storage.unejectedCasings)
       animator.burstParticleEmitter("ejectionPort")
+      storage.unejectedCasings = 0
       storage.chamberState = EMPTY
       self:screenShake(self.screenShakeAmount[2])
       self:setState(self.cocking)
