@@ -43,13 +43,20 @@ function update()
   local muzzleFlashColor = {0, 0, 0}
 
   local reloadBarColors = {
-    bad = {255, 0, 0},
-    good = {0, 255, 255},
-    perfect = {255, 255, 0}
+    bad = {255, 30, 0},
+    good = {0, 195, 255},
+    perfect = {255, 187, 0}
+  }
+
+  local ammoCounterColors = {
+    bad = {255, 181, 171},
+    good = {133, 226, 255},
+    perfect = {255, 220, 124}
   }
 
   local reloadBarColor = reloadBarColors[reloadRating]
-  local jamBarColor = {255, 128, 0}  
+  local jamBarColor = {255, 128, 0}
+  local jamAmmoCounterColor = {255, 193, 131}
 
   local gunHand = animationConfig.animationParameter("gunHand")
   local offset = {gunHand == "primary" and -1.75 or 1.75, 0}
@@ -128,10 +135,21 @@ function update()
   offset[1] = offset[1] + (offset[1] > 0 and (string.len("" .. ammoDisplay)-1)/2 or -(string.len("" .. ammoDisplay)-1)/2)
 
   -- bullet counter
+  local ammoCounterColor = {203, 203, 203}
+  if jamAmount > 0 then
+    ammoCounterColor = jamAmmoCounterColor
+  else
+    if reloadRating ~= "ok" and ammo > 0 then
+      ammoCounterColor = ammoCounterColors[reloadRating]
+    else
+      ammoCounterColor = {203, 203, 203}
+    end
+  end
+  
   localAnimator.spawnParticle({
     type = "text",
     text= "^shadow;" .. ammoDisplay,
-    color = (jamAmount > 0 and jamBarColor) or (reloadRating == "perfect" and ammo > 0 and {255, 255, 0}) or (ammo == ammoMax and {100, 255, 255}) or {203, 203, 203},
+    color = ammoCounterColor,
     size = 1,
     fullbright = true,
     flippable = false,
@@ -302,4 +320,12 @@ function renderJamBar(jamScore, position, offset, barColor, length, width, borde
     color = {255, 128, 0}
   }, "ForegroundEntity+1")
 
+end
+
+function brighten(color, brightness)
+  local newColor = {0, 0, 0}
+  for i, rgb in ipairs(color) do
+    newColor[i] = math.min(255, rgb * brightness)
+  end
+  return newColor
 end

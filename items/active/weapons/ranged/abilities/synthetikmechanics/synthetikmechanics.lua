@@ -660,41 +660,51 @@ function SynthetikMechanics:reloading()
   self.triggered = true
   self.currentScreenShake = self.screenShakeAmount[1]
   self.cycleTimeProgress = 0
-  -- if status.overConsumeResource("energy", self.reloadCost*status.resourceMax("energy")) then
+
   if not status.resourceLocked("energy") then
     
     self.chargeTimer = 0
     self.isCharging = false
+
     if self.magType ~= "default" then
       -- prepare to insert clip/strip
       self:setAnimationState("mag", "present") -- insert mag
     end
     animator.playSound("getMag")
     
-    -- START RELOAD MINIGAME
+    -- PREPARE FOR RELOAD MINIGAME
+
+    -- don't take on stance if using an autofeed single shot
+    -- i.e. reloading immediately after firing
     if not (self.maxAmmo == self.ammoPerShot and not self.manualFeed) then
       self:setStance(self.stances.reloading, true)
     end
-    local badScore = 0 -- for bullet counted reload
 
-    self.reloadTimer = 0 -- begin minigame
+    local reloadScore = 0 -- reload score; will be evaluated by the end of the reload minigame
 
     local uiUpdateTimer = 0
-    local uiUpdateTime = 0.5
+    local uiUpdateTime = 0.1
 
     local reloadAttempted = false
     local loadRoundStanceTimer = 0
     storage.reloadRating = "ok"
     activeItem.setScriptedAnimationParameter("reloadRating", "")
 
+
+    -- START RELOAD MINIGAME
+    self.reloadTimer = 0 -- set timer
+    
+    -- reload minigame loop start
     while self.reloadTimer < self.reloadTime
     and storage.ammo < self.maxAmmo
     and not status.resourceLocked("energy") do
 
-      -- increment timer
+      -- increment timers
       self.reloadTimer = self.reloadTimer + self.dt
-      loadRoundStanceTimer = math.max(0, loadRoundStanceTimer - self.dt)
+      loadRoundStanceTimer = math.max(0, loadRoundStanceTimer - self.dt)  -- stance timer
+      uiUpdateTimer = math.min(uiUpdateTime, uiUpdateTimer + self.dt)  -- ui timer
 
+      -- update magazine presence and round loading stance
       if self.weapon.stance ~= self.stances.reloading and loadRoundStanceTimer == 0 then
         if not (self.maxAmmo == self.ammoPerShot and not self.manualFeed) then
           self:setStance(self.stances.reloading, true)
@@ -707,20 +717,23 @@ function SynthetikMechanics:reloading()
 
 
       -- update UI
-      if uiUpdateTimer >= uiUpdateTime then
-        storage.reloadRating = "ok"
-      else
-        uiUpdateTimer = uiUpdateTimer + self.dt
+      if uiUpdateTimer >= uiUpdateTime and not reloadAttempted then
+        activeItem.setScriptedAnimationParameter("reloadRating", "ok")
       end
 
       -- if reload has been attempted,
       if self:triggering() and not self.triggered and not reloadAttempted then
-        self.triggered = true
-        reloadAttempted = true
+        self.triggered = true  -- trigger
+        reloadAttempted = true -- indicate that a reload has been attempted
+
+        -- reset timer for UI updating
         uiUpdateTimer = 0
-        -- replenish ammo
+        
+        -- bullet counted reload
         if self.maxAmmo > self.bulletsPerReload then
-          self:setStance(self.stances.loadRound, true)
+          self:setStance(self.stances.loadRound, true)  -- player visually loads round
+
+          -- if the magazine is a clip or a strip mag, do clip/strip specific stuff
           if self.magType ~= "default" then
             -- insert clip/strip
             self:setAnimationState("mag", "absent")
@@ -730,35 +743,40 @@ function SynthetikMechanics:reloading()
             end
           end
         end
+
+        -- reset stance timer
         loadRoundStanceTimer = self.reloadTime * self.goodReloadInterval[1] / 2
+
+        -- replenish ammo
         storage.ammo = storage.ammo < 0 and self.bulletsPerReload or storage.ammo + self.bulletsPerReload
         
         -- consume energy for this cycle
         status.overConsumeResource("energy", status.resourceMax("energy") * math.min(self.maxAmmo, self.bulletsPerReload) * self.reloadCost / self.maxAmmo)
       
-        -- if within perfect reload then indicate and set reloadRating to good (affects jam chance)
+        -- perfect reload
         if self.reloadTime * self.perfectReloadInterval[1] <= self.reloadTimer and self.reloadTimer <= self.reloadTime * self.perfectReloadInterval[2] then
-          animator.playSound("goodReload")
-          badScore = badScore - self.bulletsPerReload
-          storage.reloadRating = "perfect"
+          reloadScore = reloadScore + self.bulletsPerReload -- increase reload score on perfect reload
+          animator.playSound("perfectReload")
+          activeItem.setScriptedAnimationParameter("reloadRating", "perfect")
 
+        -- good reload
         elseif self.reloadTime * self.goodReloadInterval[1] <= self.reloadTimer and self.reloadTimer <= self.reloadTime * self.goodReloadInterval[2] then
+          -- reload score unaffected on good reload
           animator.playSound("goodReload")
-          storage.reloadRating = "good"
+          activeItem.setScriptedAnimationParameter("reloadRating", "good")
         
-        -- otherwise, indicate and set reloadRating to bad (affects jam chance)
-        -- also increment badScore for bullet counted reload
+        -- bad reload
         else
+          reloadScore = reloadScore - self.bulletsPerReload -- decrease reloadScore on perfect reload
           animator.playSound("badReload")
-          badScore = badScore + self.bulletsPerReload
-          storage.reloadRating = "bad"
+          activeItem.setScriptedAnimationParameter("reloadRating", "bad")
         end
 
         -- if amount reloaded isn't entire ammo capacity, it's bullet-counted
         if storage.ammo < self.maxAmmo then
-          -- play sound
+          -- play sound of loading round(s)
           animator.playSound("loadRound")
-          -- self:snapStance(self.stances.loadRound)
+
           -- reset reload attempt for next reload
           reloadAttempted = false
           
@@ -767,8 +785,7 @@ function SynthetikMechanics:reloading()
         end
 
       end
-
-      -- after handling active reloads,
+      -- end of active reload handling
 
       -- if ammo is at max capacity, cut off excess bullets and break
       if storage.ammo >= self.maxAmmo then
@@ -779,38 +796,40 @@ function SynthetikMechanics:reloading()
       coroutine.yield()
 
     end
-    -- end minigame, update ui to indicate reload rating
+    -- reload minigame loop end
+
+    -- RELOAD MINIGAME POSTMORTEM
+    
+    -- alter magazine presence accordingly
     if self.magType == "default" then
-      self:setAnimationState("mag", "present") -- insert mag
+      -- if default mag, insert mag and now it's present
+      self:setAnimationState("mag", "present")
     else
+      -- if clip/strip, magazine is absent since it's either thrown away or inside the gun
       self:setAnimationState("mag", "absent")
-      if self.magType == "strip" then
-        animator.burstParticleEmitter("magazine")
-      end
     end
 
     -- replenish ammo once if storage.ammo was untouched by reload minigame
     if storage.ammo <= 0 then
+      storage.reloadRating = "ok"
       status.overConsumeResource("energy", status.resourceMax("energy") * math.min(self.maxAmmo, self.bulletsPerReload) * self.reloadCost / self.maxAmmo)
       storage.ammo = math.min(self.maxAmmo, self.bulletsPerReload)
-    end
-
-    -- if reload was bullet-counted
-    if self.bulletsPerReload < self.maxAmmo then
-
-      -- if more than half of bullets were badly loaded, reload rating is bad
-      if badScore > storage.ammo / 2 then storage.reloadRating = "bad"
-
-      -- if all bullets were reloaded good or perfectly, reload rating is either good or perfect
-      elseif storage.ammo > self.bulletsPerReload then
-        if badScore == 0 then storage.reloadRating = "good"
-        elseif badScore < 0 then storage.reloadRating = "perfect" end
-
-      -- if at least one bullet is badly loaded, but less than half of the ammo capacity, reload rating is ok
-      else storage.reloadRating = "ok" end
     
-    end
+    -- otherwise,
+    else
       
+      -- if reload score is negative and is absolutely more than half the loaded rounds,
+      if reloadScore < 0 and math.abs(reloadScore) > storage.ammo / 2 then
+        storage.reloadRating = "bad"
+      elseif reloadScore == 0 then
+        storage.reloadRating = "good"
+      else
+        storage.reloadRating = "perfect"
+      end
+
+    end
+
+    -- update UI to reflect changes
     activeItem.setScriptedAnimationParameter("reloadRating", storage.reloadRating)
     
     self:setStance(self.stances.reloaded, true)
@@ -1157,6 +1176,7 @@ function SynthetikMechanics:unjam()
       self:setAnimationState("gun", "jammed")
     else
       storage.reloadRating = "ok"
+      activeItem.setScriptedAnimationParameter("reloadRating", "ok")
       animator.burstParticleEmitter("ejectionPort")
       storage.chamberState = EMPTY
       self:screenShake(self.screenShakeAmount[2])

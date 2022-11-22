@@ -1,0 +1,7 @@
+{
+  "image" : "project45mosinstrip.png",
+  "frameGrid" : {
+    "size" : [1, 3],
+    "dimensions" : [1, 1]
+  }
+}

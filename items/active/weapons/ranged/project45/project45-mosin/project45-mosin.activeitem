@@ -1,25 +1,25 @@
 {
-  "itemName" : "project45-garand",
+  "itemName" : "project45-mosin",
   "price" : 1,
   "maxStack" : 1,
   "rarity" : "Essential",
-  "shortdescription" : "M5K Garand",
-  "description" : "Present-day materials built around a classic firing mechanism.",
+  "shortdescription" : "Padayuschaya Zvezda",
+  "description" : "Novakid-make. Reminiscent of the ancient Mosin Nagant.",
   "tooltipKind" : "base",
   "category" : "Rifle",
   "twoHanded" : true,
   "itemTags" : ["weapon","ranged","rifle"],
   "level" : 1,
 
-  "inventoryIcon" : "project45-garand-icon.png",
+  "inventoryIcon" : "project45-mosin-icon.png",
 
   // "animation" : "project45-template.animation",
   "animationParts" : {
     "butt" : "",
-    "middle" : "project45-garand.png",
+    "middle" : "project45-mosin.png",
     "middleFullbright" : "",
     "barrel" : "",
-    "mag": "project45-garand-mag.png",
+    "mag": "project45-mosin-mag.png",
     "magFullbright": "",
     "muzzleFlash" : "/items/active/weapons/ranged/muzzleflash.png",
     
@@ -51,14 +51,14 @@
           // {"particle": "project45muzzlesmoke"}
         ]},
       "magazine" : { "particles" : [
-        {"particle": "project45garandclip"}
+        {"particle": "project45mosinstrip"}
           // {"particle": "project45muzzlesmoke"}
         ]}
     },
     
     "sounds":{
-      "fire" : ["/sfx/project45-synthetikmechanics/fires/fire_smg.ogg"],
-      "ejectMag" : ["/sfx/project45-synthetikmechanics/ping.ogg"]
+      "fire" : ["/sfx/project45-synthetikmechanics/fires/fire_pistol.ogg"],
+      "ejectMag" : ["/sfx/project45-synthetikmechanics/clicks/click_generic.ogg"]
     }
   },
 
@@ -85,7 +85,7 @@
     "projectileCount": 1,
     "multishot": 1,
     "inaccuracy": 0,
-    "manualFeed": false,
+    "manualFeed": true,
     "semi": true,
     "cockTime": 0.3,
     "cycleTime": 0.1,
@@ -96,9 +96,9 @@
       "good": 0.00
     },
         
-    "maxAmmo": 8,
-    "magType": "clip",
-    "bulletsPerReload": 8,
+    "maxAmmo": 6,
+    "magType": "strip",
+    "bulletsPerReload": 3,
 
 
     "recoilDeg": [3, 1],
@@ -132,7 +132,7 @@
 
   },
 
-  "altAbilityType": "project45enemyradar",
+  "altAbilityType": "",
 
   "builder" : "/items/buildscripts/buildproject45neo.lua"
 }
