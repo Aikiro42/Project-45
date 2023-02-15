@@ -338,7 +338,7 @@
     "fire" : ["/sfx/project45-synthetikmechanics/fires/fire_smg.ogg"],
 
     // plays louder as the magazine grows empty
-    "hollow" : ["/sfx/project45-synthetikmechanics/hollow.ogg"],
+    "hollow" : ["/sfx/project45-synthetikmechanics/foleys/hollow.ogg"],
 
     // click sound for various purposes
     "click" : ["/sfx/project45-synthetikmechanics/clicks/click_generic.ogg"],
@@ -349,14 +349,14 @@
     // sound of mag sliding out
     "ejectMag": ["/sfx/project45-synthetikmechanics/reloads/ejectmag_generic_1.ogg"],
     // sound of mag being procured
-    "getMag": ["/sfx/project45-synthetikmechanics/reloads/insertmag_generic.ogg"],
+    "getMag": ["/sfx/project45-synthetikmechanics/foleys/getmag_generic.ogg"],
 
     //sound of mag being inserted
     "insertMag": ["/sfx/project45-synthetikmechanics/reloads/insertmag_generic.ogg"],
 
     // sound of clip pinging out
     // TODO: GET RID OF THIS THING, WE HAVE EJECTMAG FOR THAT
-    "ping" : ["/sfx/project45-synthetikmechanics/ping.ogg"],
+    "ping" : ["/sfx/project45-synthetikmechanics/foleys/ping.ogg"],
     // sound of loading a single round into the gun (shotguns, single action)
     // inaudible between firing cycles when not a manual feed weapon
     "loadRound": ["/sfx/project45-synthetikmechanics/reloads/loadround_generic.ogg"],
@@ -391,12 +391,6 @@
     // flamethrower
     "fireStart": ["/assetmissing.ogg"],
     "fireLoop": ["/assetmissing.ogg"],
-    "fireEnd": ["/assetmissing.ogg"],
-
-    "reloadStart" : ["/sfx/gun/project45_reloadStart_ar.ogg"],
-    "reloadEnd" : ["/sfx/gun/project45_reloadEnd.ogg"],
-    // "crit" : ["/sfx/gun/project45_crit.ogg"],
-    "crit" : ["/assetmissing.ogg"],
-    "charge" : ["/sfx/gun/project45_charge_c.ogg"]
+    "fireEnd": ["/assetmissing.ogg"]
   }
 }

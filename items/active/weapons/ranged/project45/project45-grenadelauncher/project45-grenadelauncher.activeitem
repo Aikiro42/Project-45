@@ -7,7 +7,7 @@
   "description" : "When dakka can't solve problems, boom can.",
   "tooltipKind" : "base",
   "category" : "Grenade Launcher",
-  "twoHanded" : false,
+  "twoHanded" : true,
   "itemTags" : ["weapon","ranged","grenadeLauncher"],
   "level" : 1,
 
@@ -37,7 +37,7 @@
     }}}},
     "particleEmitters": {
       "ejectionPort" : { "particles" : [ 
-          {"particle": "project45bulletcasesmall"}
+          {"particle": "project45grenadeshell"}
         ]},
       "magazine" : { "particles" : [
           {"particle": "project45muzzlesmoke"}
@@ -45,13 +45,13 @@
     },
     
     "sounds":{
-      "fire" : ["/sfx/project45-synthetikmechanics/fires/fire_pistol.ogg"],
-      "insertMag" : ["/sfx/project45-synthetikmechanics/reloads/insertmag_revolver.ogg"]
+      "fire" : ["/sfx/project45-synthetikmechanics/fires/fire_grenadelauncher.ogg"],
+      "loadRound" : ["/sfx/project45-synthetikmechanics/reloads/loadround_grenadelauncher.ogg"]
     }
   },
 
-  "baseOffset" : [0.7, 0.07],
-  "muzzleOffset" : [1.55, 0.675],
+  "baseOffset" : [-0.125, 0],
+  "muzzleOffset" : [2, 0.225],
   "ejectionPortOffset": [0.3, 0.7],
   "magazineOffset": [0, 0],
 
@@ -65,10 +65,12 @@
   "primaryAbilityType": "synthetikmechanics",
   "primaryAbility": {
 
-    "baseDamage": 20,
+    "baseDamage": 100,
 
-    "cycleTime": 0.1,
-    "fireTime": 0.1,
+    "cycleTime": 0.25,
+    "fireTime": 0.25,
+    "cockTime": 0.5,
+
     "jamChances": {
       "bad": 0.2,
       "ok": 0.01,
@@ -78,8 +80,8 @@
     "maxAmmo": 6,
     "bulletsPerReload": 1,
     "reloadTime": 0.5,
-    "goodReloadInterval": [0.5, 0.7], 
-    "perfectReloadInterval": [0.55, 0.65], 
+    "goodReloadInterval": [0.5, 0.9], 
+    "perfectReloadInterval": [0.6, 0.7], 
     "magType": "default",
     "laser":{
       "enabled": true,
@@ -88,9 +90,12 @@
     "flashHidden": true,
     "semi": true,
 
-    "projectileType": "shrapnelbomb",
+    "projectileType": "fireplasmaimpactgrenade",
+    "projectileParameters": {
+      "power": 500,
+      "speed": 100
+    },
 
-    "cockTime": 0.1,
     "inaccuracy": 0.01,
     "recoilDeg": [15, 10],
     "recoilMult": 1,
@@ -102,62 +107,39 @@
     "magAnimRange": [0, 0],
 
     "stances": {
-
       "idleneo": {
-        "twoHanded": false
+        "frontArmFrame": "run.3"
       },
       "aim": {
-        "twoHanded": false
-      },
-
-      "ejectmag" : {
-        "armRotation" : -45,
-        "weaponRotation" : 45,
-        "twoHanded" : false,
-        "allowRotate" : false,
-        "allowFlip" : false
+        "frontArmFrame": "run.3",
+        "backArmFrame": "fall.1"
       },
       "empty": {
-        "twoHanded": false
-      },
-      
-      "manualFeed": {
-        "armRotation" : 0,
-        "weaponRotation" : 1,
-        "twoHanded" : false,
-        "allowRotate" : false,
-        "allowFlip" : false
-      },
-
-      "reloading" : {
-        "armRotation" : 45,
-        "weaponRotation" : 0,
-        "twoHanded" : false,
-        "allowRotate" : false,
-        "aimAngle": 0,
-        "allowFlip" : false
-
-        // "weaponOffset" : [0.25, 0.575],
-        // "frontArmFrame" : "run.2",
-        // "backArmFrame" : "jump.3"
-      },
-      "reloaded" : {
-        "armRotation" : 45,
-        "weaponRotation" : 15,
-        "twoHanded" : false,
-        "allowRotate" : false,
-        "allowFlip" : false
-      },
-      "loadRound": {
-        "disabled": true
+        "frontArmFrame": "run.3",
+        "backArmFrame": "fall.1"
       },
       "boltPull": {
-        "disabled": true,
-        "twoHanded": false
+        "frontArmFrame": "run.3",
+        "backArmFrame": "jump.2"
       },
       "boltPush": {
-        "disabled": true,
-        "twoHanded": false
+        "frontArmFrame": "run.3",
+        "backArmFrame": "fall.1"
+      },
+      "reloading": {
+        "armRotation": -15,
+        "weaponRotation": 0,
+        "frontArmFrame": "run.2",
+        "backArmFrame": "fall.1",
+        "allowRotate": false,
+        "twoHanded": true
+      },
+      "loadRound": {
+        "armRotation": -20,
+        "weaponRotation": 0,
+        "allowRotate": false,
+        "frontArmFrame": "rotation",
+        "backArmFrame": "fall.1"
       }
     }
 

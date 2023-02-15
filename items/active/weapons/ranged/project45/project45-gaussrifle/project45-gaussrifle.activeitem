@@ -53,7 +53,7 @@ When gun is a windup-type and
           // {"particle": "project45muzzlesmoke"}
         ]},
       "magazine" : { "particles" : [
-          {"particle": "project45energygunmag"}
+          {"particle": "project45gaussriflemag"}
         ]}
     },
     "sounds": {
@@ -65,7 +65,7 @@ When gun is a windup-type and
   "baseOffset" : [1, 0.3],
   "muzzleOffset" : [2.5, 0.3],
   "ejectionPortOffset": [0.2, 0.7],
-  "magazineOffset": [1.1, 0],
+  "magazineOffset": [0.1, 0],
 
   "scripts" : ["/items/active/weapons/ranged/project45gun.lua"],
   
@@ -79,7 +79,7 @@ When gun is a windup-type and
   "primaryAbility": {
 
     // "DEBUG": true,
-    
+    "baseDamage": 12.5,
     "maxAmmo": 6,
     "ammoPerReload": 6,
     "magLoopFrames": 2,
@@ -104,7 +104,8 @@ When gun is a windup-type and
 
     "progressiveCharge": true,
     "chargeFrames": 6,
-
+    "reloadCost": 0.5,
+    
     "autoFireAfterCharge": false,
     "resetChargeAfterFire": true
   },

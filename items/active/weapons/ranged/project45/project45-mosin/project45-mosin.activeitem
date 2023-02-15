@@ -58,12 +58,14 @@
     
     "sounds":{
       "fire" : ["/sfx/project45-synthetikmechanics/fires/fire_pistol.ogg"],
-      "ejectMag" : ["/sfx/project45-synthetikmechanics/clicks/click_generic.ogg"]
+      "ejectMag" : ["/sfx/project45-synthetikmechanics/clicks/click_generic.ogg"],
+      "boltPull" : ["/sfx/project45-synthetikmechanics/reloads/boltpull_lightbolt.ogg"],
+      "boltPush" : ["/sfx/project45-synthetikmechanics/reloads/boltpush_lightbolt.ogg"]
     }
   },
 
   "baseOffset" : [1, 0.15],
-  "muzzleOffset" : [2.4, 0.4],
+  "muzzleOffset" : [2.65, 0.4],
   "ejectionPortOffset": [-0.35, 0.5],
   "magazineOffset": [0, 0.5],
 
@@ -84,7 +86,7 @@
     
     "projectileCount": 1,
     "multishot": 1,
-    "inaccuracy": 0,
+    "inaccuracy": 0.01,
     "manualFeed": true,
     "semi": true,
     "cockTime": 0.3,

@@ -65,7 +65,7 @@
   "primaryAbilityType": "synthetikmechanics",
   "primaryAbility": {
 
-    "baseDamage": 6,
+    "baseDamage": 3,
     
     "cycleTime": [0.2, 0.05],
     "cycleTimeGrowthRate": 0.05,

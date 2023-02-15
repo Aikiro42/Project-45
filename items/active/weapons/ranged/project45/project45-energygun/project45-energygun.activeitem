@@ -74,7 +74,8 @@ When gun is a windup-type and
   "primaryAbility": {
 
     // "DEBUG": true,
-    
+    "baseDamage": 25,
+
     "maxAmmo": 6,
     "ammoPerReload": 6,
     "magLoopFrames": 2,
@@ -93,8 +94,8 @@ When gun is a windup-type and
 
     "semi": false,
     
-    "chargeTime": 0,
-    "overchargeTime": 1,
+    "chargeTime": 1.25,
+    "overchargeTime": 0,
 
     "progressiveCharge": true,
     "chargeFrames": 6,

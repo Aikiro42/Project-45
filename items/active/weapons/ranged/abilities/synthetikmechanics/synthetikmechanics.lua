@@ -22,6 +22,9 @@ local EMPTY, READY, FILLED = 0, 1, 2
 
 
 function SynthetikMechanics:init()
+    
+    self.debugTime = 0.1
+    self.debugTimer = self.debugTime
 
     -- Initial state of gun
     self.aimProgress = 0
@@ -68,6 +71,18 @@ function SynthetikMechanics:init()
     if type(self.cycleTime) ~= "table" then
       self.cycleTime = {self.cycleTime, self.cycleTime}
     end
+
+    if type(self.inaccuracy) ~= "table" then
+      self.inaccuracy = {
+        mobile = self.inaccuracy*2,  -- double inaccuracy while running
+        walking = self.inaccuracy,  -- standard inaccuracy while walking
+        stationary = self.inaccuracy/2, -- halved inaccuracy while standing
+        crouching = 0 -- nil inaccuracy while crouching
+      }
+    end
+
+    -- set default inaccuracy
+    self.currentInaccuracy = self.inaccuracy.stationary
 
     self.cycleTimeDelta = self.cycleTime[2] - self.cycleTime[1]
     self.currentCycleTime = self.cycleTime[1]
@@ -148,7 +163,9 @@ function SynthetikMechanics:update(dt, fireMode, shiftHeld)
 
     WeaponAbility.update(self, dt, fireMode, shiftHeld)
 
-    -- ENABLE THESE LINES TO APPROXIMATE OFFSETS
+    self:logStuff()  -- DEBUG
+
+    -- USED TO MANUALLY APPROXIMATE EJECTION PORT AND MAGAZINE OFFSETS
     if self.DEBUG then
       animator.burstParticleEmitter("ejectionPort")
       animator.burstParticleEmitter("magazine")
@@ -161,7 +178,7 @@ function SynthetikMechanics:update(dt, fireMode, shiftHeld)
     -- update debug stuff
     --[[
     local scanOrig = self:firePosition()
-    local scanDest = vec2.add(scanOrig, vec2.mul(self:aimVector(isLaser and 0 or self.inaccuracy), self.projectileParameters.range or 100))
+    local scanDest = vec2.add(scanOrig, vec2.mul(self:aimVector(isLaser and 0 or self.spread), self.projectileParameters.range or 100))
     scanDest = not self.projectileParameters.hitscanIgnoresTerrain and world.lineCollision(scanOrig, scanDest, {"Block", "Dynamic"}) or scanDest
     world.debugLine(scanOrig, scanDest, "red")
     --]]
@@ -175,10 +192,11 @@ function SynthetikMechanics:update(dt, fireMode, shiftHeld)
     self:updateCursor(shiftHeld)
     self:updateProjectileStack()
     self:drawLaser()
-
+    self:updateInaccuracy(shiftHeld)
     -- local laserLine = (self.allowLaser and shiftHeld and storage.ammo > 0) and self:hitscan(true) or {}
     
     -- increments/decrements
+    self.debugTimer = math.max(0, self.debugTimer - self.dt)
     self.muzzleFlashTimer = math.max(0, self.muzzleFlashTimer - self.dt)
     self.muzzleSmokeTimer = math.max(0, self.muzzleSmokeTimer - self.dt)
     self.dashCooldownTimer = math.max(0, self.dashCooldownTimer - self.dt)
@@ -187,7 +205,7 @@ function SynthetikMechanics:update(dt, fireMode, shiftHeld)
     )
     storage.dodgeCooldownTimer = math.max(0, storage.dodgeCooldownTimer - self.dt)
     self.cooldownTimer = math.max(0, self.cooldownTimer - self.dt)
-    self.aimProgress = math.min(1, self.aimProgress + self.dt / math.max(self.aimTime[shiftHeld and 2 or 1], 0.01))
+    self.aimProgress = math.min(1, self.aimProgress + self.dt / math.max(self.aimTime[(shiftHeld or mcontroller.crouching()) and 2 or 1], 0.01))
     self.currentCycleTime = self.cycleTime[1] + self.cycleTimeDelta * self.cycleTimeProgress
 
     -- updating logic
@@ -242,9 +260,11 @@ function SynthetikMechanics:update(dt, fireMode, shiftHeld)
     if self.weapon.currentAbility then
       self.dashTriggerTimer = -1
     end
+
+
     -- Walk I/O logic
     if shiftHeld then
-      
+            
       -- begin Dash Trigger Timer when not in ability
       -- and can dash
       if not self.weapon.currentAbility and storage.dodgeCooldownTimer == 0  then
@@ -270,8 +290,8 @@ function SynthetikMechanics:update(dt, fireMode, shiftHeld)
         end
       end
     
-
     else
+
       -- if triggered dash, dash when weapon isn't doing an ability
       -- and can dash
       if not self.weapon.currentAbility and storage.dodgeCooldownTimer == 0 then
@@ -300,6 +320,7 @@ function SynthetikMechanics:update(dt, fireMode, shiftHeld)
       end
     
     end
+
 
     -- trigger I/O logic
     if self:triggering()
@@ -438,6 +459,9 @@ function SynthetikMechanics:firing()
     self.burstCounter = 0
   end
   
+  -- rotate arm a bit
+  self:knockOffAim(math.abs(sb.nrand(self.currentInaccuracy, 0)))
+
   -- for <projectile count * multishot> times,
   for i = 1, self.projectileCount * self:calculateMultishot() do
 
@@ -841,10 +865,12 @@ function SynthetikMechanics:reloading()
     -- cock gun
     self:setState(self.cocking)
 
-    sb.logInfo("[PROJECT 45] Gun has been reloaded!")
+    -- sb.logInfo("[PROJECT 45] Gun has been reloaded!")
+    --[[
     if storage.critStats.shots > 0 then
       sb.logInfo("[PROJECT 45] Empirical Crit Chance: " .. storage.critStats.crits * 100 / storage.critStats.shots .. "%%")
     end
+    --]]
 
     -- self:setStance(self.stances.aim)
   else
@@ -958,7 +984,7 @@ function SynthetikMechanics:fireProjectileNeo(projectileType)
     projectileType,
     self:firePosition(),
     activeItem.ownerEntityId(),
-    self:aimVector(self.inaccuracy),
+    self:aimVector(self.spread),
     false,
     params
   )
@@ -1038,7 +1064,7 @@ function SynthetikMechanics:hitscan(isLaser)
 
   local scanOrig = self:firePosition()
 
-  local scanDest = vec2.add(scanOrig, vec2.mul(self:aimVector(isLaser and 0 or self.inaccuracy), self.projectileParameters.range or 100))
+  local scanDest = vec2.add(scanOrig, vec2.mul(self:aimVector(isLaser and 0 or self.spread), self.projectileParameters.range or 100))
   scanDest = not self.projectileParameters.hitscanIgnoresTerrain and world.lineCollision(scanOrig, scanDest, {"Block", "Dynamic"}) or scanDest
 
   -- hitreg
@@ -1115,7 +1141,7 @@ function SynthetikMechanics:recoil(screenShake, momentum)
   -- activeItem.setRecoil(true)
 
   -- self.weapon.relativeWeaponRotation = util.toRadians(interp.sin(self.aimProgress, math.deg(self.weapon.relativeWeaponRotation), stance.weaponRotation))
-  local inaccuracy = math.rad(self.recoilDeg[self.shiftHeld and 2 or 1]) * self.recoilMult
+  local inaccuracy = math.rad(self.recoilDeg[mcontroller.crouching() and 2 or 1]) * self.recoilMult
 
   if math.deg(self.weapon.relativeArmRotation - math.rad(self.weapon.stance.armRotation)) >= self.recoilThresholdDeg[2] then
     self.threshed = true
@@ -1323,11 +1349,13 @@ function SynthetikMechanics:damagePerShot()
   a shotgun shot deals the complete amount of damage.
 
   --]]
-
+  
+  --[[
   local baseDamage = self.baseDamage
   if self.baseDps then
     baseDamage = self.baseDps * ((self.manualFeed and self.cockTime or 0) + math.max(0.01, self.currentCycleTime + self.fireTime))
   end
+  --]]
 
   local reloadDamageMultiplier = 1
 
@@ -1336,7 +1364,7 @@ function SynthetikMechanics:damagePerShot()
   
   if storage.reloadRating == "good" then reloadDamageMultiplier = 1.1 
   elseif storage.reloadRating == "perfect" then reloadDamageMultiplier = 1.3 end
-  return baseDamage -- or (self.baseDps * (self.currentCycleTime + self.fireTime))
+  return self.baseDamage -- or (self.baseDps * (self.currentCycleTime + self.fireTime))
   
    * self.chargeDamageMult
    * reloadDamageMultiplier
@@ -1371,13 +1399,13 @@ function SynthetikMechanics:firePosition()
   return vec2.add(mcontroller.position(), activeItem.handPosition(vec2.rotate(vec2.add(self.weapon.muzzleOffset, self.weapon.weaponOffset), self.weapon.relativeWeaponRotation)))
 end
 
-function SynthetikMechanics:aimVector(inaccuracy)
+function SynthetikMechanics:aimVector(spread)
   local firePos = self:firePosition()
   local basePos =  vec2.add(mcontroller.position(), activeItem.handPosition(vec2.rotate(vec2.add({self.weapon.muzzleOffset[1] - 1, self.weapon.muzzleOffset[2]}, self.weapon.weaponOffset), self.weapon.relativeWeaponRotation)))
   world.debugPoint(firePos, "cyan")
   world.debugPoint(basePos, "cyan")
   local aimVector = vec2.norm(world.distance(firePos, basePos))
-  aimVector = vec2.rotate(aimVector, sb.nrand((inaccuracy or 0), 0))
+  aimVector = vec2.rotate(aimVector, sb.nrand((spread or 0), 0))
   return aimVector
 end
 
@@ -1495,6 +1523,11 @@ function SynthetikMechanics:setStance(stance, snap)
   self.aimProgress = 0
 end
 
+function SynthetikMechanics:knockOffAim(rotationRad)
+  self.weapon.relativeArmRotation = self.weapon.relativeArmRotation + rotationRad
+  self.aimProgress = 0
+end
+
 -- Manually set weapon and arm rotation
 function SynthetikMechanics:snap(weaponRotationDeg, armRotationDeg)
   self.weapon.relativeWeaponRotation = math.rad(weaponRotationDeg)
@@ -1507,4 +1540,55 @@ function SynthetikMechanics:snapStance(stance)
   self.weapon.relativeWeaponRotation = math.rad(stance.weaponRotation)
   self.weapon.relativeArmRotation = math.rad(stance.armRotation)
   self.aimProgress = 0
+end
+
+function SynthetikMechanics:logStuff()
+  if self.debugTimer == 0 then
+    -- sb.logInfo("[PROJECT 45] Current Inaccuracy: " .. self.currentInaccuracy)
+
+    self.debugTimer = self.debugTime
+  end
+end
+
+function SynthetikMechanics:updateInaccuracy(shiftHeld)
+
+  --[[
+    if type(self.inaccuracy) ~= "table" then
+      self.inaccuracy = {
+        mobile = self.inaccuracy*2,  -- double inaccuracy while running
+        walking = self.inaccuracy,  -- standard inaccuracy while walking
+        stationary = self.inaccuracy/2, -- halved inaccuracy while standing
+        crouching = 0 -- nil inaccuracy while crouching
+      }
+    end
+  --]]
+
+  self.currentInaccuracy = self.inaccuracy.stationary
+  
+  -- if running or walking
+  if (mcontroller.walking() or mcontroller.running()) and mcontroller.onGround() then
+    if shiftHeld then
+      self.currentInaccuracy = self.inaccuracy.walking
+    else
+      self.currentInaccuracy = self.inaccuracy.mobile
+    end
+  
+  -- if mobile in general
+  elseif mcontroller.liquidMovement()
+  or mcontroller.jumping()
+  or mcontroller.falling()
+  or mcontroller.flying()
+  then
+    self.currentInaccuracy = self.inaccuracy.mobile
+
+  -- if not mobile
+  else
+
+    -- if crouching
+    if mcontroller.crouching() then
+      self.currentInaccuracy = self.inaccuracy.crouching
+    else
+      self.currentInaccuracy = self.inaccuracy.stationary
+    end
+  end
 end

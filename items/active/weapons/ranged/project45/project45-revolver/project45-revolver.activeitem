@@ -46,7 +46,9 @@
     
     "sounds":{
       "fire" : ["/sfx/project45-synthetikmechanics/fires/fire_pistol.ogg"],
-      "insertMag" : ["/sfx/project45-synthetikmechanics/reloads/insertmag_revolver.ogg"]
+      "getMag" : ["/sfx/project45-synthetikmechanics/foleys/getmag_revolver.ogg"],
+      "boltPush": ["/sfx/project45-synthetikmechanics/reloads/boltpush_revolver.ogg"],
+      "boltPull": ["/sfx/project45-synthetikmechanics/reloads/boltpush_revolver.ogg"]
     }
   },
 
@@ -65,7 +67,7 @@
   "primaryAbilityType": "synthetikmechanics",
   "primaryAbility": {
 
-    "baseDamage": 20,
+    "baseDamage": 15,
 
     "cycleTime": 0.1,
     "fireTime": 0.1,
@@ -82,7 +84,7 @@
     "perfectReloadInterval": [0.55, 0.65], 
     "magType": "strip",
     "laser":{
-      "enabled": true,
+      "enabled": false,
       "alwaysActive": true
     },
 

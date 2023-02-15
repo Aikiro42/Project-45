@@ -202,7 +202,11 @@
     "recoilThresholdDeg": [27, 30],
     "recoilMult": 1, // muzzle brake; multiplied to recoilDeg
     "aimTime": [3, 1], // time it takes to aim; first index is when you're running, second is when shift is held
-    "inaccuracy" : 0, // Generic RNG inaccuracy; causes spread
+    
+     // Aim Inaccuracy; right before you fire the projectile your arm is rotated;
+     // this value dictates how intense the arm rotation is
+    "inaccuracy" : 0.05,
+    "spread": 0, // Generic projectile spread
     
 
     // ________________________[ RELOAD SETTINGS ]__________________________________

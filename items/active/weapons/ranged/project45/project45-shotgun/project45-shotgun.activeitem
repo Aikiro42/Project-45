@@ -56,7 +56,13 @@
     },
     
     "sounds":{
-      "fire" : ["/sfx/project45-synthetikmechanics/fires/fire_shotgun.ogg"]
+      "fire" : ["/sfx/project45-synthetikmechanics/fires/fire_shotgun.ogg"],
+      "loadRound": [
+        "/sfx/project45-synthetikmechanics/reloads/loadRound_shotgun_01.ogg",
+        "/sfx/project45-synthetikmechanics/reloads/loadRound_shotgun_02.ogg"
+      ],
+      "boltPull": ["/sfx/project45-synthetikmechanics/reloads/boltpull_shotgun.ogg"],
+      "boltPush": ["/sfx/project45-synthetikmechanics/reloads/boltpush_shotgun.ogg"]
     }
   },
 
@@ -83,7 +89,7 @@
     
     "projectileCount": 5,
     "multishot": 1.2,
-    "inaccuracy": 0.04,
+    "spread": 0.04,
     "manualFeed": true,
     "semi": true,
     "slamFire": true,

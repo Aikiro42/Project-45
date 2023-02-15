@@ -51,7 +51,9 @@
     },
     
     "sounds":{
-      "fire" : ["/sfx/project45-synthetikmechanics/fires/fire_sniper.ogg"]
+      "fire" : ["/sfx/project45-synthetikmechanics/fires/fire_sniper.ogg"],
+      "boltPull" : ["/sfx/project45-synthetikmechanics/reloads/boltpull_lightbolt.ogg"],
+      "boltPush" : ["/sfx/project45-synthetikmechanics/reloads/boltpush_lightbolt.ogg"]
     }
   },
 
@@ -74,9 +76,10 @@
     // "DEBUG": true,
 
     // lethal joke weapon
-    "baseDps": 10,
+    "baseDamage": 2,
     
-    "inaccuracy": 0.0625,
+    "inaccuracy": 0.1,
+    "spread": 0.05,
     "manualFeed": false,
     "semi": false,
     "slamFire": false,
@@ -101,8 +104,9 @@
     "recoilMult": 1,
 
     // 1% chance for 50,000% damage
+    // i.e. a d20 roll
     "critChance": 0.05,
-    "critDamageMult": 500,
+    "critDamageMult": 65535,
     "screenShakeAmount": [1,2],
     "screenShakeDelta": [0.3, 0.5],
     "magLoopFrames": 0,

@@ -54,7 +54,9 @@
     },
     
     "sounds":{
-      "fire" : ["/sfx/project45-synthetikmechanics/fires/fire_sniper.ogg"]
+      "fire" : ["/sfx/project45-synthetikmechanics/fires/fire_sniper.ogg"],
+      "boltPull" : ["/sfx/project45-synthetikmechanics/reloads/boltpull_nagant.ogg"],
+      "boltPush" : ["/sfx/project45-synthetikmechanics/reloads/boltpush_nagant.ogg"]
     }
   },
 
@@ -78,7 +80,7 @@
 
     // yes, base damage is 100, why the fuck not?
     "baseDamage": 100,
-    "inaccuracy": 0,
+    "inaccuracy": 0.1,
     "manualFeed": true,
     "semi": true,
     "slamFire": false,

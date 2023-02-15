@@ -7,7 +7,7 @@
   "shortdescription" : ".45 Submachine Gun",
   "tooltipKind" : "base",
   "category" : "Pistol",
-  "twoHanded" : false,
+  "twoHanded" : true,
   "itemTags" : ["weapon","ranged","pistol"],
   "level" : 1,
 
@@ -29,12 +29,17 @@
   },
 
   "animationCustom":{
-    "animatedParts" : {"stateTypes" : {"gun" : {"states" : {
+    "animatedParts" : {
+      "stateTypes" : {"gun" : {"states" : {
             "charging": {
               // set this value to cycleTime
               "cycle" : 0.05
             }
-    }}}},
+      }}},
+      "parts" : { "flashlight" : { "properties" : {
+          "offset" : [-0.25, -0.6]
+      }}}
+    },
     "particleEmitters": {
       "ejectionPort" : { "particles" : [ 
           {"particle": "project45bulletcasesmall"}
@@ -69,7 +74,7 @@
 
     // "DEBUG": true,
 
-    "baseDamage": 6,
+    "baseDamage": 1,
     
     "cycleTime": 0.05,
     "fireTime": 0.05,
@@ -97,10 +102,11 @@
     "flashHidden": false,
     "suppressed": false,
 
-    "recoilDeg": [0.4, 0.08],
+    "inaccuracy": 0.01,
+    "recoilDeg": [0.1, 0.01],
     "recoilMult": 0.8,
 
-    "critChance": 0.05,
+    "critChance": 0.1,
     "critDamageMult": 3,
 
     "magLoopFrames": 2,
@@ -110,42 +116,30 @@
     "screenShakeDelta": [0.02, 0.01],
 
     "stances": {
-      "aim": {
-        "frontArmFrame": "rotation",
-        "weaponOffset": [0, 0]
-      },
       "ejectmag" : {
         "armRotation" : -45,
-        "weaponRotation" : 45,
-        "twoHanded" : false,
-        "allowRotate" : false,
-        "allowFlip" : false
+        "weaponRotation" : 45
       },
       "reloading" : {
-        "armRotation" : -30,
-        "weaponRotation" : 0,
-        // "weaponAngularVelocity": 3600,
-        "twoHanded" : false,
-        "allowRotate" : false,
-        "aimAngle": 0,
-        "allowFlip" : false
-
-        // "weaponOffset" : [0.25, 0.575],
-        // "frontArmFrame" : "run.2",
-        // "backArmFrame" : "jump.3"
+        "armRotation" : 0,
+        "weaponRotation" : 15,
+        "twoHanded": false
       },
       "reloaded" : {
-        "armRotation" : -15,
-        "weaponRotation" : 15,
-        "twoHanded" : false,
-        "allowRotate" : false,
-        "allowFlip" : false
+        "armRotation" : -20,
+        "weaponRotation" : 20,
+        "weaponOffset": [0.25, 0]
+      },
+      "unjam": {
+        "armRotation": -5,
+        "weaponRotation": 5,
+        "frontArmFrame": "rotation"
       }
     }
 
   },
 
-  "altAbilityType": "",
+  "altAbilityType": "project45flashlaser",
 
   "builder" : "/items/buildscripts/buildproject45neo.lua"
 }

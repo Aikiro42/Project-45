@@ -67,7 +67,7 @@
   "primaryAbilityType": "synthetikmechanics",
   "primaryAbility": {
 
-    "baseDamage": 9,
+    "baseDamage": 8.5,
 
     "cycleTime": 0.1,
     "fireTime": 0.1,

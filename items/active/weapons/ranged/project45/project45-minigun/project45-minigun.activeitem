@@ -47,7 +47,8 @@
     },
     
     "sounds":{
-      "fire" : ["/sfx/project45-synthetikmechanics/fires/fire_rifle.ogg"]
+      "fire" : ["/sfx/project45-synthetikmechanics/fires/fire_heavy.ogg"],
+      "getMag": ["/sfx/project45-synthetikmechanics/foleys/getmag_ammobox.ogg"]
     }
   },
 
@@ -60,8 +61,8 @@
   
   "elementalType" : "fire",
 
-  "movementSpeedFactor": 1.2,
-  "jumpHeightFactor": 1.2,
+  "movementSpeedFactor": 1,
+  "jumpHeightFactor": 0.7,
   "heavyWeapon": true,
   
   "primaryAbilityType": "synthetikmechanics",
