@@ -1,12 +1,4 @@
 function init()
-  
-  status.applySelfDamageRequest({
-    damageType="IgnoresDef",
-    damageSourceKind="synthetikmechanics-hitscancrit",
-    damage=effect.duration(),
-    sourceEntityId= effect.sourceEntity(),
-    hitType="ShieldHit"
-  })
 
   message.setHandler("applyStatusEffect", function(messageType, b, effectConfig, duration, sourceEntityId)
     --[[

@@ -1,13 +1,4 @@
 function init()
-
-  status.applySelfDamageRequest({
-    damageType="IgnoresDef",
-    damageSourceKind="synthetikmechanics-hitscan",
-    damage=effect.duration(),
-    sourceEntityId= effect.sourceEntity(),
-    hitType="ShieldHit"
-  })
-
   
   message.setHandler("applyStatusEffect", function(messageType, b, effectConfig, duration, sourceEntityId)
     --[[
@@ -34,6 +25,7 @@ function init()
           sourceEntityId=sourceEntityId,
           hitType="ShieldHit"
         })
+        sb.logInfo("[PROJECT 45] Damage Dealt: " .. duration)
       end
     else
       status.addEphemeralEffect(effectConfig, duration, sourceEntityId)

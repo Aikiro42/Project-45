@@ -85,10 +85,11 @@
     
     // "DEBUG": true,
 
-    "baseDamage": 35,
+    "baseDamage": 10,
     
     "projectileCount": 5,
-    "multishot": 1.2,
+    // "multishot": 1.2,
+    "multishot": 1,
     "spread": 0.04,
     "manualFeed": true,
     "semi": true,
@@ -110,7 +111,8 @@
     "recoilDeg": [15, 5],
     "recoilMult": 0.75,
 
-    "critChance": 0.1,
+    // "critChance": 0.1,
+    "critChance": 0,
     "critDamageMult": 2,
     "screenShakeAmount": [1,2],
     "screenShakeDelta": [0.1, 0.3],
