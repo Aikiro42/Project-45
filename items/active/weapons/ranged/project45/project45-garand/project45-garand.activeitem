@@ -58,7 +58,7 @@
     
     "sounds":{
       "fire" : ["/sfx/project45-synthetikmechanics/fires/fire_rifle.ogg"],
-      "ejectMag" : ["/sfx/project45-synthetikmechanics/ping.ogg"]
+      "ejectMag" : ["/sfx/project45-synthetikmechanics/foleys/ping.ogg"]
     }
   },
 
