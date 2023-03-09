@@ -57,8 +57,25 @@ Project 45 is a weapons system that attempts to replicate the gun mechanics of S
     - Melee Swipe
         - projectile that looks like a melee swipe
         - high-damage melee swipe but short range.
+- Make a codex
+- Use `activeitem.setInstanceValue(<String jsonParam>, <Jsonval val>)` to save the state of the weapon.
 
+Tooltip todo:
+- Fire Mode (Semi/Auto, Charged)
+- Base Damage
+- Ammo Capacity
+- Reload Cost
+- Special
+
+- Multishot
+- Critical Chance
+- Critical Multiplier
+- Last Shot Damage Mult
+
+- Movement Penalty
+- Jump Penalty
 ## Vanilla Altfires Compatibility List:
+
 - <span style="color: green">Bouncing Shot</span>
 - <span style="color: green">Burst Shot</span>
 - <span style="color: yellow">Charge Fire</span>
@@ -96,10 +113,26 @@ Project 45 is a weapons system that attempts to replicate the gun mechanics of S
 - <span style="color: green">Sticky Shot</span>
 
 # Known Issues
-> by the way, here’s an odd quirk that happens with sending a vanilla “applyStatusEffect” message to entities - if the player somehow has greater than 60 frames per second, the sent message straight up doesn’t work. had it happen to something for GiC; although you’re making your own message handler, there’s still a decent chance this bug can still occur, depending on what exactly triggers this bug. be ready to acknowledge this bug should it occur.
+- > by the way, here’s an odd quirk that happens with sending a vanilla “applyStatusEffect” message to entities - if the player somehow has greater than 60 frames per second, the sent message straight up doesn’t work. had it happen to something for GiC; although you’re making your own message handler, there’s still a decent chance this bug can still occur, depending on what exactly triggers this bug. be ready to acknowledge this bug should it occur.
+
+- Bullet trails, lasers, and bars disappear when near world borders.
+
+- Ammo resets when adding gun to hotbar, but not when removing it.
 
 
-## Experiment
+# Experiments
+
+## DPS Calculation Thought Experiment
+
+We have the following factors that affect the amount of damage a gun can put out over a period of time:
+- Damage per shot (what we want to find out)
+- 
+
+We factor out the following:
+- Crit stats (they aren't guaranteed)
+- Overcharge time (if we're gonna 
+
+## Retrieving alt ability animation scripts
 
 ### Problem
 I can't use more than one animation script on the gun.

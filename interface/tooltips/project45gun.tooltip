@@ -1,98 +1,136 @@
 {
   "background" : {
     "type" : "background",
-    "fileHeader" : "/interface/tooltips/header.png",
-    "fileBody" : "/interface/tooltips/bodyobject3.png",
-    "fileFooter" : "/interface/tooltips/footerobject3.png"
+    "fileHeader" : "/interface/tooltips/project45tooltip-header.png",
+    "fileBody" : "/interface/tooltips/project45tooltip-body.png",
+    "fileFooter" : "/interface/tooltips/project45tooltip-footer.png"
   },
+  
+  "objectImage" : {
+    "type" : "image",
+    "position" : [100, 126],
+    "file" : "",
+    "centered" : true,
+    "maxSize" : [170, 40],
+    "minSize" : [170, 40]
+  },
+
+  /*
+  "altAbilityTitleLabel" : {
+    "type" : "label",
+    "position" : [102, 89],
+    "hAnchor" : "left",
+    "value": "Special:"
+  },
+  */
+  "altAbilityLabel" : {
+    "type" : "label",
+    "position" : [192, 89],
+    "hAnchor" : "right",
+    "centered" : true,
+    "wrapWidth" : 126
+  },
+
+  "descriptionLabel": {
+    "type": "label",
+    "position": [102, 87],
+    "hAnchor": "left",
+    "vAnchor": "top",
+    "wrapWidth": 90
+  },
+  
+  
+  "damageTitleLabel": {
+    "type" : "label",
+    "position" : [9, 89],
+    "hAnchor" : "left",
+    "centered": true,
+    "wrapWidth" : 126,
+    "value": "Damage per shot"
+  },
+  "damagePerShotLabel" : {
+    "type" : "label",
+    "position" : [18, 79],
+    "hAnchor" : "left",
+    "wrapWidth" : 126
+  },
+
+  "fireRateTitleLabel": {
+    "type" : "label",
+    "position" : [9, 69],
+    "hAnchor" : "left",
+    "centered": true,
+    "wrapWidth" : 126,
+    "value": "Fire Rate"
+  },
+  "fireRateLabel": {
+    "type" : "label",
+    "position" : [18, 59],
+    "hAnchor" : "left",
+    "centered": true,
+    "wrapWidth" : 126
+  },
+
+  "reloadTitleLabel": {
+    "type" : "label",
+    "position" : [9, 49],
+    "hAnchor" : "left",
+    "wrapWidth" : 126,
+    "value": "Reload Cost & Time"
+  },
+  "reloadCostLabel" : {
+    "type" : "label",
+    "position" : [18, 39],
+    "hAnchor" : "left",
+    "wrapWidth" : 126
+  },
+  "reloadTimeLabel" : {
+    "type" : "label",
+    "position" : [65, 39],
+    "hAnchor" : "left",
+    "wrapWidth" : 126
+  },
+
+  "critTitleLabel": {
+    "type" : "label",
+    "position" : [9, 29],
+    "hAnchor" : "left",
+    "wrapWidth" : 126,
+    "value": "Crit Chance & Damage"
+  },
+  "critChanceLabel" : {
+    "type" : "label",
+    "position" : [18, 19],
+    "hAnchor" : "left",
+    "centered" : true,
+    "wrapWidth" : 126
+  },
+  "critDamageLabel" : {
+    "type" : "label",
+    "position" : [65, 19],
+    "hAnchor" : "left",
+    "centered" : true,
+    "wrapWidth" : 126,
+    "value": "2x"
+  },
+
   "moneyIcon" : {
     "type" : "image",
-    "position" : [97, 23],
+    "position" : [125, 4],
     "file" : "/interface/money.png"
   },
   "priceLabel" : {
     "type" : "label",
-    "position" : [110, 23],
+    "position" : [139, 4],
     "hAnchor" : "left",
     "value" : "tree"
   },
-  "altAbilityTitleLabel" : {
-    "type" : "label",
-    "position" : [9, 41],
-    "hAnchor" : "left",
-    "value" : ""
-  },
-  "altAbilityLabel" : {
-    "type" : "label",
-    "position" : [130, 41],
-    "hAnchor" : "right",
-    "centered" : true,
-    "wrapWidth" : 126
-  },
-  "speedTitleLabel" : {
-    "type" : "label",
-    "position" : [9, 59],
-    "hAnchor" : "left",
-    "value" : "Rate of Fire:"
-  },
-  "speedLabel" : {
-    "type" : "label",
-    "position" : [130, 59],
-    "hAnchor" : "right",
-    "wrapWidth" : 126
-  },
-  "damagePerShotTitleLabel" : {
-    "type" : "label",
-    "position" : [9, 68],
-    "hAnchor" : "left",
-    "value" : "Damage Per Shot:"
-  },
-  "damagePerShotLabel" : {
-    "type" : "label",
-    "position" : [130, 68],
-    "hAnchor" : "right",
-    "wrapWidth" : 126
-  },
-  "energyPerShotTitleLabel" : {
-    "type" : "label",
-    "position" : [9, 50],
-    "hAnchor" : "left",
-    "value" : "Energy Per Shot:"
-  },
-  "energyPerShotLabel" : {
-    "type" : "label",
-    "position" : [130, 50],
-    "hAnchor" : "right",
-    "wrapWidth" : 126
-  },
-  "handednessLabel" : {
-    "type" : "label",
-    "position" : [90, 134],
-    "hAnchor" : "right",
-    "centered" : true,
-    "wrapWidth" : 126
-  },
   "rarityLabel" : {
     "type" : "label",
-    "position" : [7, 23],
+    "position" : [14, 7],
     "hAnchor" : "left",
+    "vAnchor": "mid",
     "centered" : true,
     "wrapWidth" : 126
-  },
-  "damageKindImage" : {
-    "type" : "image",
-    "position" : [120, 90],
-    "file" : "",
-    "centered" : true,
-    "maxSize" : [16, 16],
-    "minSize" : [16, 16]
-  },
-  "objectImage" : {
-    "type" : "image",
-    "position" : [70, 105],
-    "file" : "",
-    "centered" : true,
-    "maxSize" : [60, 60],
-    "minSize" : [60, 60]
   }
 }

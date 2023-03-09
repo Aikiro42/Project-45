@@ -30,7 +30,8 @@ function SynthetikMechanics:init()
     self.aimProgress = 0
 
     -- initialize storage
-    storage.ammo = storage.ammo or -1 -- -1 ammo means we don't have a mag in the gun
+    -- sb.logInfo("[PROJECT 45] storage.ammo = " .. sb.printJson(storage.ammo))
+    storage.ammo = storage.ammo or config.getParameter("currentAmmo", -1) -- -1 ammo means we don't have a mag in the gun
     storage.unejectedCasings = storage.unejectedCasings or 0
     storage.reloadRating = storage.reloadRating or "ok"
     storage.jamAmount = storage.jamAmount or 0
@@ -113,6 +114,8 @@ function SynthetikMechanics:init()
 
     -- one-time initialized animation parameters
     activeItem.setScriptedAnimationParameter("reloadTime", self.reloadTime)
+    activeItem.setScriptedAnimationParameter("chargeTime", self.chargeTime)
+    activeItem.setScriptedAnimationParameter("overchargeTime", self.overchargeTime)
     activeItem.setScriptedAnimationParameter("goodReloadRange", {self.reloadTime * self.goodReloadInterval[1], self.reloadTime * self.goodReloadInterval[2]})
     activeItem.setScriptedAnimationParameter("perfectReloadRange", {self.reloadTime * self.perfectReloadInterval[1], self.reloadTime * self.perfectReloadInterval[2]})
     activeItem.setScriptedAnimationParameter("ammoMax", self.maxAmmo)
@@ -209,6 +212,21 @@ function SynthetikMechanics:update(dt, fireMode, shiftHeld)
     self.currentCycleTime = self.cycleTime[1] + self.cycleTimeDelta * self.cycleTimeProgress
 
     -- updating logic
+
+    -- movement
+    if shiftHeld then
+      mcontroller.controlModifiers({
+        speedModifier = self.movementSpeedFactor > 1 and 1 or self.movementSpeedFactor,
+        airJumpModifier = self.jumpHeightFactor,
+        runningSuppressed = self.heavyWeapon
+      })
+    else
+      mcontroller.controlModifiers({
+        speedModifier = self.movementSpeedFactor,
+        airJumpModifier = self.jumpHeightFactor,
+        runningSuppressed = self.heavyWeapon
+      })
+    end
 
     if self.fireMode ~= (self.activatingFireMode or self.abilitySlot) then
       self.triggered = false
@@ -508,6 +526,7 @@ function SynthetikMechanics:firing()
   -- decrement ammo
   if self:willConsumeAmmo() then
     storage.ammo = storage.ammo - math.min(self.ammoPerShot, storage.ammo)
+    activeItem.setInstanceValue("currentAmmo", storage.ammo)
   end
   
   --[[
@@ -773,7 +792,8 @@ function SynthetikMechanics:reloading()
 
         -- replenish ammo
         storage.ammo = storage.ammo < 0 and self.bulletsPerReload or storage.ammo + self.bulletsPerReload
-        
+        activeItem.setInstanceValue("currentAmmo", storage.ammo)
+
         -- consume energy for this cycle
         status.overConsumeResource("energy", status.resourceMax("energy") * math.min(self.maxAmmo, self.bulletsPerReload) * self.reloadCost / self.maxAmmo)
       
@@ -838,6 +858,7 @@ function SynthetikMechanics:reloading()
       storage.reloadRating = "ok"
       status.overConsumeResource("energy", status.resourceMax("energy") * math.min(self.maxAmmo, self.bulletsPerReload) * self.reloadCost / self.maxAmmo)
       storage.ammo = math.min(self.maxAmmo, self.bulletsPerReload)
+      activeItem.setInstanceValue("currentAmmo", storage.ammo)
     
     -- otherwise,
     else
@@ -912,6 +933,7 @@ function SynthetikMechanics:cocking()
       animator.burstParticleEmitter("ejectionPort")
       if storage.chamberState == READY then
         storage.ammo = math.max(0, storage.ammo - self.ammoPerShot)
+        activeItem.setInstanceValue("currentAmmo", storage.ammo)
       end
     end
     storage.chamberState = EMPTY
@@ -975,6 +997,7 @@ function SynthetikMechanics:ejectMag()
 
   -- reflect mag absence on ammo count
   storage.ammo = -1
+  activeItem.setInstanceValue("currentAmmo", storage.ammo)
 end
 
 function SynthetikMechanics:fireProjectileNeo(projectileType)
@@ -1224,7 +1247,8 @@ function SynthetikMechanics:updateScriptedAnimationParameters()
   activeItem.setScriptedAnimationParameter("jamAmount", storage.jamAmount)
   activeItem.setScriptedAnimationParameter("muzzlePos", self:firePosition())
   activeItem.setScriptedAnimationParameter("muzzleSmokeTimer", self.muzzleSmokeTimer)
-  
+  activeItem.setScriptedAnimationParameter("chargeTimer", self.chargeTimer)
+
 end
 
 function SynthetikMechanics:updateMagAnimation()
@@ -1264,9 +1288,9 @@ function SynthetikMechanics:updateSoundProperties()
   elseif self.overchargeTime > 0 then
     chargeProgress = self.chargeTimer / self.overchargeTime
   end
-  animator.setSoundVolume("chargeDrone", 0.25 + 0.7 * chargeProgress)
-  animator.setSoundPitch("chargeWhine", 1 + 0.3 * chargeProgress)
-  animator.setSoundVolume("chargeWhine", 0.25 + 0.75 * chargeProgress)
+  animator.setSoundVolume("chargeDrone", 0.25 + 0.7 * math.min(chargeProgress, 2))
+  animator.setSoundPitch("chargeWhine", 1 + 0.3 * math.min(chargeProgress, 2))
+  animator.setSoundVolume("chargeWhine", 0.25 + 0.75 * math.min(chargeProgress, 2))
   if self.chargeTimer == 0 then
     animator.stopAllSounds("chargeWhine")
     animator.stopAllSounds("chargeDrone")
@@ -1426,6 +1450,7 @@ function SynthetikMechanics:jam()
     
     -- Decrement ammo; imagine that the bullet is a dud/broken
     storage.ammo = storage.ammo - math.min(self.ammoPerShot, storage.ammo)
+    activeItem.setInstanceValue("currentAmmo", storage.ammo)
     storage.chamberState = FILLED
 
     -- Reset screenshake
@@ -1540,6 +1565,39 @@ function SynthetikMechanics:snapStance(stance)
   self.weapon.relativeWeaponRotation = math.rad(stance.weaponRotation)
   self.weapon.relativeArmRotation = math.rad(stance.armRotation)
   self.aimProgress = 0
+end
+
+function SynthetikMechanics:saveState()
+  
+  --[[
+  
+    -- initialize storage
+    -- sb.logInfo("[PROJECT 45] storage.ammo = " .. sb.printJson(storage.ammo))
+    storage.ammo = storage.ammo or config.getParameter("currentAmmo", -1) -- -1 ammo means we don't have a mag in the gun
+    storage.unejectedCasings = storage.unejectedCasings or 0
+    storage.reloadRating = storage.reloadRating or "ok"
+    storage.jamAmount = storage.jamAmount or 0
+    storage.animationState = storage.animationState or {gun = "ejecting", mag = "absent"} -- initial animation state is empty gun
+    storage.isLaserOn = storage.isLaserOn or false
+  
+  --]]
+
+  activeitem.setInstanceValue("synthetikMechanicsState", {
+    ammo = storage.ammo,
+    unejectedCasings = storage.unejectedCasings,
+    reloadRating = storage.reloadRating,
+    jamAmount = storage.jamAmount,
+    animationSTate = storage.animationState,
+    isLaserOn = storage.isLaserOn
+  })
+
+end
+
+function SynthetikMechanics:loadState()
+  local state = config.getParameter("SynthetikMechanicsState", {})
+  for k, v in pairs(state) do
+    storage[k] = state[k]
+  end
 end
 
 function SynthetikMechanics:logStuff()

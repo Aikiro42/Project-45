@@ -5,7 +5,7 @@
   "rarity" : "Essential",
   "shortdescription" : "Padayuschaya Zvezda",
   "description" : "Novakid-make. Reminiscent of the ancient Mosin Nagant.",
-  "tooltipKind" : "base",
+  "tooltipKind" : "project45gun",
   "category" : "Rifle",
   "twoHanded" : true,
   "itemTags" : ["weapon","ranged","rifle"],
@@ -73,9 +73,6 @@
   
   "elementalType" : "fire",
 
-  "movementSpeedFactor": 1.2,
-  "jumpHeightFactor": 1.2,
-
   
   "primaryAbilityType": "synthetikmechanics",
   "primaryAbility": {
@@ -84,6 +81,9 @@
 
     "baseDamage": 10,
     
+    "movementSpeedFactor": 1.2,
+    "jumpHeightFactor": 1.2,
+
     "projectileCount": 1,
     "multishot": 1,
     "inaccuracy": 0.01,

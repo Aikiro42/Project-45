@@ -13,7 +13,7 @@ When gun is a windup-type and
   "rarity" : "Essential",
   "description" : "TEMPLATE",
   "shortdescription" : "Project .45 Template",
-  "tooltipKind" : "base",
+  "tooltipKind" : "project45gun",
   "category" : "Rifle",
   "twoHanded" : true,
   "itemTags" : ["weapon","ranged","rifle"],
@@ -64,9 +64,6 @@ When gun is a windup-type and
   
   "elementalType" : "fire",
 
-  "movementSpeedFactor": 1.32,
-  "jumpHeightFactor": 1.22,
-
   
   "primaryAbilityType": "synthetikmechanics",
   "primaryAbility": {
@@ -75,6 +72,9 @@ When gun is a windup-type and
     "cycleTime": [0.2, 0.1],
     "fireTime": 0.1,
     "cockTime": 0.1,
+
+    "movementSpeedFactor": 1.99,
+    "jumpHeightFactor": 1.99,
 
     "reloadTime": 0.7,
     "jamChances": {

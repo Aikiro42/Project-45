@@ -183,6 +183,10 @@
       "cooldown": 0.5
     },
 
+    "movementSpeedFactor": 1, // Movement speed multiplier
+    "jumpHeightFactor": 1,    // Jump height multiplier
+    "heavyWeapon": false,     // Forces walk if true
+
   
     // ________________________[ JAM SETTINGS ]__________________________________
     "jamChances": {

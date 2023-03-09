@@ -5,7 +5,7 @@
   "rarity" : "Essential",
   "shortdescription" : "Pipe gun",
   "description" : "A .50 BMG firing mechanism shoddily attached to a handle. A very unreliable last-resort weapon.",
-  "tooltipKind" : "base",
+  "tooltipKind" : "project45gun",
   "category" : "Pistol",
   "twoHanded" : true,
   "itemTags" : ["weapon","ranged","pistol"],
@@ -66,14 +66,13 @@
   
   "elementalType" : "fire",
 
-  "movementSpeedFactor": 1.2,
-  "jumpHeightFactor": 1.2,
-
-  
   "primaryAbilityType": "synthetikmechanics",
   "primaryAbility": {
     
     // "DEBUG": true,
+
+    "movementSpeedFactor": 1.2,
+    "jumpHeightFactor": 1.2,  
 
     // lethal joke weapon
     "baseDamage": 2,

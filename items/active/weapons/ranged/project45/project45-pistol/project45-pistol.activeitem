@@ -3,9 +3,9 @@
   "price" : 1,
   "maxStack" : 1,
   "rarity" : "Essential",
-  "description" : "A Generic 9mm Pistol.",
+  "description" : "Lorem Ipsum is simply dummy text of printing and typesetting.",
   "shortdescription" : "9mm Pistol",
-  "tooltipKind" : "base",
+  "tooltipKind" : "project45gun",
   "category" : "Pistol",
   "twoHanded" : false,
   "itemTags" : ["weapon","ranged","pistol"],
@@ -58,14 +58,13 @@
 
   "scripts" : ["/items/active/weapons/ranged/project45gun.lua"],
   
-  "elementalType" : "fire",
-
-  "movementSpeedFactor": 1.2,
-  "jumpHeightFactor": 1.2,
-
+  "elementalType" : "electric",
   
   "primaryAbilityType": "synthetikmechanics",
   "primaryAbility": {
+
+    "movementSpeedFactor": 1.2,
+    "jumpHeightFactor": 1.2,  
 
     "baseDamage": 8.5,
 

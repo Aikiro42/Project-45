@@ -98,22 +98,83 @@ function build(directory, config, parameters, level, seed)
   -- populate tooltip fields
   if config.tooltipKind ~= "base" then
     config.tooltipFields = {}
+    -- config.tooltipFields.title = "^FF0000;FUCK"  -- doesn't work
+    -- config.tooltipFields.subTitle = "^#FFFFFF;BASE"  -- works
+    -- config.tooltipFields.subTitle.color = {255,255,255} -- doesn't work
     config.tooltipFields.levelLabel = util.round(configParameter("level", 1), 1)
-    config.tooltipFields.dpsLabel = util.round((config.primaryAbility.baseDps or 0) * config.damageLevelMultiplier, 1)
-    config.tooltipFields.speedLabel = util.round(1 / (config.primaryAbility.fireTime or 1.0), 1)
-    config.tooltipFields.damagePerShotLabel = util.round((config.primaryAbility.baseDps or 0) * (config.primaryAbility.fireTime or 1.0) * config.damageLevelMultiplier, 1)
-    config.tooltipFields.energyPerShotLabel = util.round((config.primaryAbility.energyUsage or 0) * (config.primaryAbility.fireTime or 1.0), 1)
+
+    -- damage
+    local loDamage = (config.primaryAbility.baseDamage or 0) * config.damageLevelMultiplier
+    -- perfect reload * last shot damage mult * overcharge mult
+    local hiDamage = loDamage * 1.3 * config.primaryAbility.lastShotDamageMult * (config.primaryAbility.overchargeTime > 0 and 2 or 1)
+    config.tooltipFields.damagePerShotLabel = "^#FF9000;" .. util.round(loDamage, 1) .. " - " .. util.round(hiDamage, 1)
+
+    -- fire rate
+    if type(config.primaryAbility.cycleTime) ~= "table" then
+      config.primaryAbility.cycleTime = {config.primaryAbility.cycleTime, config.primaryAbility.cycleTime}
+    end
+    local loFireRate = config.primaryAbility.cycleTime[1] + config.primaryAbility.fireTime
+    local hiFireRate = config.primaryAbility.cycleTime[2] + config.primaryAbility.fireTime
+    config.tooltipFields.fireRateLabel = ("^#FFD400;" .. util.round(loFireRate, 1))
+    .. (loFireRate == hiFireRate and "s" or (" - " .. util.round(hiFireRate, 1) .. "s"))
+
+    config.tooltipFields.reloadCostLabel = "^#b0ff78;" .. util.round(
+      (config.primaryAbility.reloadCost or 0) * 100,
+      1
+    ) .. "%"
+
+    config.tooltipFields.reloadTimeLabel = util.round(
+      (config.primaryAbility.reloadTime or 0),
+      1
+    ) .. "s"
+
     if elementalType ~= "physical" then
       config.tooltipFields.damageKindImage = "/interface/elements/"..elementalType..".png"
     end
+
     if config.primaryAbility then
-      config.tooltipFields.primaryAbilityTitleLabel = "Primary:"
-      config.tooltipFields.primaryAbilityLabel = config.primaryAbility.name or "unknown"
+
+      config.tooltipFields.critChanceLabel = (config.primaryAbility.critChance > 0 and "^#FF6767;" or "^#777777;") .. util.round(
+        (config.primaryAbility.critChance or 0) * 100,
+        1
+      ) .. "%"
+
+      config.tooltipFields.critDamageLabel = (config.primaryAbility.critChance > 0 and "^#FF6767;" or "^#777777;") .. util.round(
+        (config.primaryAbility.critDamageMult or 1),
+        1
+      ) .. "x"
+
+      local heavyDesc = config.primaryAbility.heavyWeapon and "^#FF5050;Heavy.^reset; " or ""
+      local multishotDesc = config.primaryAbility.multishot ~= 1 and (
+        "^#9dc6f5;".. util.round(
+          (config.primaryAbility.multishot - math.floor(config.primaryAbility.multishot)) * 100, 1) .. 
+          "% chance to shoot " .. math.ceil(config.primaryAbility.multishot) .. "x the amount of bullets.^reset; ") or ""
+      local chargeDesc = config.primaryAbility.chargeTime > 0 and ("^#FF5050;" .. util.round(config.primaryAbility.chargeTime, 1) .. "s charge time.^reset; ") or ""
+      local overchargeDesc = config.primaryAbility.overchargeTime > 0 and ("^#9dc6f5;" .. util.round(config.primaryAbility.overchargeTime, 1) .. "s overcharge.^reset; ") or ""
+      
+      config.description = heavyDesc .. chargeDesc .. overchargeDesc .. multishotDesc .. config.description
+
     end
-    if config.altAbility then
-      config.tooltipFields.altAbilityTitleLabel = "Special:"
-      config.tooltipFields.altAbilityLabel = config.altAbility.name or "unknown"
+    
+    --[[
+    -- mods
+    local mods = {}
+    if config.altAbility then table.insert(mods, config.altAbility.name) end
+    if config.primaryAbility.dashParams.enabled then table.insert(mods, "Dash") end
+    if config.primaryAbility.laser.enabled then table.insert(mods, "Laser") end
+    local modLabel = ""
+    for i=1,#mods,1 do
+      if mods[i] then
+        modLabel = modLabel .. mods[i]
+        if i < #mods then modLabel = modLabel .. ", " end
+      end
     end
+  
+    config.tooltipFields.altAbilityLabel = modLabel ~= "" and ("^#ABD2FF;" .. modLabel) or "^#777777;None"
+    --]]
+
+    config.tooltipFields.altAbilityLabel = config.altAbility and ("^#ABD2FF;" .. (config.altAbility.name or "unknown")) or "^#777777;None"
+
   end
 
   -- set price

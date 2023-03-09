@@ -25,7 +25,7 @@ function init()
           sourceEntityId=sourceEntityId,
           hitType="ShieldHit"
         })
-        sb.logInfo("[PROJECT 45] Damage Dealt: " .. duration)
+        -- sb.logInfo("[PROJECT 45] Damage Dealt: " .. duration)
       end
     else
       status.addEphemeralEffect(effectConfig, duration, sourceEntityId)

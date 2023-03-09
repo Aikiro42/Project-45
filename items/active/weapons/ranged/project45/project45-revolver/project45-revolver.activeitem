@@ -5,7 +5,7 @@
   "rarity" : "Essential",
   "shortdescription" : ".45 Revolver",
   "description" : "\"To town rode a stranger, had a big iron on his hip... \n and he's here to kill the outlaw... the stranger killed the outlaw. The end.\"",
-  "tooltipKind" : "base",
+  "tooltipKind" : "project45gun",
   "category" : "Pistol",
   "twoHanded" : false,
   "itemTags" : ["weapon","ranged","pistol"],
@@ -61,9 +61,6 @@
   
   "elementalType" : "fire",
 
-  "movementSpeedFactor": 1.2,
-  "jumpHeightFactor": 1.2,
-
   "primaryAbilityType": "synthetikmechanics",
   "primaryAbility": {
 
@@ -87,6 +84,11 @@
       "enabled": false,
       "alwaysActive": true
     },
+
+    
+    "movementSpeedFactor": 1.2,
+    "jumpHeightFactor": 1.2,
+
 
     "semi": true,
     "slamFire": true,

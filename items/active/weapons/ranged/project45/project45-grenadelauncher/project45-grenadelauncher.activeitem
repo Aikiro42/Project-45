@@ -5,7 +5,7 @@
   "rarity" : "Essential",
   "shortdescription" : "40mm Grenade Launcher",
   "description" : "When dakka can't solve problems, boom can.",
-  "tooltipKind" : "base",
+  "tooltipKind" : "project45gun",
   "category" : "Grenade Launcher",
   "twoHanded" : true,
   "itemTags" : ["weapon","ranged","grenadeLauncher"],
@@ -59,9 +59,6 @@
   
   "elementalType" : "fire",
 
-  "movementSpeedFactor": 1.2,
-  "jumpHeightFactor": 1.2,
-
   "primaryAbilityType": "synthetikmechanics",
   "primaryAbility": {
 
@@ -89,6 +86,10 @@
     },
     "flashHidden": true,
     "semi": true,
+
+    
+    "movementSpeedFactor": 1.15,
+    "jumpHeightFactor": 1.15,
 
     "projectileType": "fireplasmaimpactgrenade",
     "projectileParameters": {

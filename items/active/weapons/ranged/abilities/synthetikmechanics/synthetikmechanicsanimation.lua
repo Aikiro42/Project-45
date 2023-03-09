@@ -5,7 +5,7 @@ local warningTriggered = false
 synthethikmechanics_altUpdate = update or function()
     if not warningTriggered then
       warningTriggered = true
-      sb.logInfo("[PROJECT 45] Failed to get alt-ability animation script update function. Weapon may be one-handed, not have an alt-ability, or may not have an alt-ability animation script.")
+      sb.logInfo("[PROJECT 45] (" .. animationConfig.animationParameter("shortDescription") .. ") Failed to get alt-ability animation script update function. Weapon may be one-handed, not have an alt-ability, or may not have an alt-ability animation script.")
     end
   end
 
@@ -32,6 +32,10 @@ function update()
   local perfectReloadRange = animationConfig.animationParameter("perfectReloadRange")
   local goodReloadRange = animationConfig.animationParameter("goodReloadRange")
   local reloadRating = animationConfig.animationParameter("reloadRating")
+
+  local chargeTimer = animationConfig.animationParameter("chargeTimer")
+  local chargeTime = animationConfig.animationParameter("chargeTime")
+  local overchargeTime = animationConfig.animationParameter("overchargeTime")
 
   local muzzlePos = animationConfig.animationParameter("muzzlePos")
 
@@ -119,14 +123,21 @@ function update()
     })
   end
 
+  -- render reload bar if reloading
   if reloadTimer >= 0 then
     renderReloadBar(reloadTimer, reloadTime, goodReloadRange, perfectReloadRange, string.upper(reloadRating), aimPosition, offset, reloadBarColor)
     offset = vec2.add(offset, offset)
   end
 
+  -- render jam bar if jammed
   if jamAmount > 0 then
     renderJamBar(jamAmount, aimPosition, offset)
     offset = vec2.add(offset, offset)
+  end
+
+  -- render horizontal charge bar if charging
+  if chargeTimer > 0 then
+    renderChargeBar(chargeTimer, chargeTime, overchargeTime, aimPosition)
   end
 
 
@@ -318,6 +329,65 @@ function renderJamBar(jamScore, position, offset, barColor, length, width, borde
     width = barWidth,
     fullbright = true,
     color = {255, 128, 0}
+  }, "ForegroundEntity+1")
+
+end
+
+function renderChargeBar(chargeTimer, chargeTime, overchargeTime,
+  position, offset, barColor, length, width, borderwidth)
+
+  local length = length or 2
+  local barWidth = width or 1
+  local borderwidth = borderwidth or 0.7
+  local barColor = barColor or {75,75,75}
+  local offset = offset or {0, -1.25}
+  
+  -- calculate bar stuff
+  local base = vec2.add(position, offset)
+  local base_a = vec2.add(base, {-length/2, 0}) -- start (left)
+  local base_b = vec2.add(base, {length/2, 0})  -- end   (right)
+  local a, b
+
+  -- render border
+  a = vec2.add(base_a, {-borderwidth/8, 0})
+  b = vec2.add(base_b, {borderwidth/8, 0})
+  local chargeBarBorder = worldify(a, b)
+  localAnimator.addDrawable({
+    line = chargeBarBorder,
+    width = barWidth + borderwidth*2,
+    fullbright = true,
+    color = {0,0,0}
+  }, "ForegroundEntity+1")
+
+  local chargeLength = length * chargeTime / (chargeTime + overchargeTime)
+
+  -- render chargetime bar
+  local chargeTimeBar = worldify(base_a, vec2.add(base_a, {chargeLength, 0}))
+  localAnimator.addDrawable({
+    line = chargeTimeBar,
+    width = barWidth,
+    fullbright = true,
+    color = barColor
+  }, "ForegroundEntity+1")
+
+  -- render overcharge time bar
+  local overchargeTimeBar = worldify(vec2.add(base_a, {chargeLength, 0}), base_b)
+  localAnimator.addDrawable({
+    line = overchargeTimeBar,
+    width = barWidth,
+    fullbright = true,
+    color = {255, 0, 0}
+  }, "ForegroundEntity+1")
+
+  -- render jamScore
+  a = base_a
+  b = vec2.add(base_a, {length * chargeTimer / (chargeTime + overchargeTime), 0})
+  local jamScoreBar = {a, b}
+  localAnimator.addDrawable({
+    line = jamScoreBar,
+    width = barWidth,
+    fullbright = true,
+    color = {255, 255, 0}
   }, "ForegroundEntity+1")
 
 end

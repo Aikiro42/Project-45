@@ -5,11 +5,11 @@
   "rarity" : "Essential",
   "description" : "A burst-auto rifle with a transluscent mag.",
   "shortdescription" : "5.56 Assault Rifle",
-  "tooltipKind" : "base",
+  "tooltipKind" : "project45gun",
   "category" : "Rifle",
   "twoHanded" : true,
   "itemTags" : ["weapon","ranged","rifle"],
-  "level" : 1,
+  "level" : 5,
 
   "inventoryIcon" : "project45-assaultrifle-icon.png",
 
@@ -66,9 +66,6 @@
   
   "elementalType" : "fire",
 
-  "movementSpeedFactor": 1.2,
-  "jumpHeightFactor": 1.2,
-
   
   "primaryAbilityType": "synthetikmechanics",
   "primaryAbility": {
@@ -90,6 +87,10 @@
     "magType": "default",
     "bulletsPerReload": 27,
     "burstCount": 3,
+
+
+    "movementSpeedFactor": 1.1,
+    "jumpHeightFactor": 1.1,
 
     "laser": {
       "enabled": false

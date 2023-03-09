@@ -5,7 +5,7 @@
   "rarity" : "Essential",
   "shortdescription" : ".308 Bullpup Sniper Rifle",
   "description" : "A novel sniper rifle with an integrated suppressor.",
-  "tooltipKind" : "base",
+  "tooltipKind" : "project45gun",
   "category" : "Sniper",
   "twoHanded" : true,
   "itemTags" : ["weapon","ranged","sniper"],
@@ -66,10 +66,6 @@
   "scripts" : ["/items/active/weapons/ranged/project45gun.lua"],
   
   "elementalType" : "fire",
-
-  "movementSpeedFactor": 1.2,
-  "jumpHeightFactor": 1.2,
-
   
   "primaryAbilityType": "synthetikmechanics",
   "primaryAbility": {
@@ -78,6 +74,9 @@
 
     "baseDamage": 50,
     
+    "movementSpeedFactor": 1.2,
+    "jumpHeightFactor": 1.2,  
+
     "inaccuracy": 0,
     "manualFeed": true,
     "semi": true,

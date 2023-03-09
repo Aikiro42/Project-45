@@ -5,7 +5,7 @@
   "rarity" : "Essential",
   "shortdescription" : "HyperExcel 2700",
   "description" : "A gun that fires faster the more it fires.",
-  "tooltipKind" : "base",
+  "tooltipKind" : "project45gun",
   "category" : "Pistol",
   "twoHanded" : false,
   "itemTags" : ["weapon","ranged","pistol"],
@@ -57,15 +57,15 @@
 
   "scripts" : ["/items/active/weapons/ranged/project45gun.lua"],
   
-  "elementalType" : "fire",
-
-  "movementSpeedFactor": 1.2,
-  "jumpHeightFactor": 1.2,
+  // "elementalType" : "fire",
 
   "primaryAbilityType": "synthetikmechanics",
   "primaryAbility": {
 
-    "baseDamage": 3,
+    "baseDamage": 2.5,
+  
+    "movementSpeedFactor": 1.1,
+    "jumpHeightFactor": 1.1,
     
     "cycleTime": [0.2, 0.05],
     "cycleTimeGrowthRate": 0.05,
@@ -73,7 +73,7 @@
     "fireTime": 0.05,
 
     "jamChances": {
-      "bad": 0.1,
+      "bad": 0.2,
       "ok": 0.01,
       "good": 0
     },

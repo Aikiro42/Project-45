@@ -5,11 +5,11 @@
   "rarity" : "Essential",
   "shortdescription" : ".50 BMG AMR",
   "description" : "An Anti-materiel rifle with a weird muzzlebreak on a barrel.",
-  "tooltipKind" : "base",
+  "tooltipKind" : "project45gun",
   "category" : "Sniper",
   "twoHanded" : true,
   "itemTags" : ["weapon","ranged","sniper"],
-  "level" : 1,
+  "level" : 6,
 
   "inventoryIcon" : "project45-antimateriel-icon.png",
 
@@ -68,18 +68,13 @@
   "scripts" : ["/items/active/weapons/ranged/project45gun.lua"],
   
   "elementalType" : "fire",
-
-  "movementSpeedFactor": 1.2,
-  "jumpHeightFactor": 1.2,
-  "heavyWeapon": true,
   
   "primaryAbilityType": "synthetikmechanics",
   "primaryAbility": {
     
     // "DEBUG": true,
 
-    // yes, base damage is 100, why the fuck not?
-    "baseDamage": 100,
+    "baseDamage": 10,
     "inaccuracy": 0.1,
     "manualFeed": true,
     "semi": true,
@@ -92,6 +87,11 @@
       "ok": 0.02,
       "good": 0.01
     },
+
+      
+    "movementSpeedFactor": 0.85,
+    "jumpHeightFactor": 0.85,
+    "heavyWeapon": true,
 
     "reloadCost": 1,
     "maxAmmo": 3,

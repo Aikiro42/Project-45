@@ -5,7 +5,7 @@
   "rarity" : "Essential",
   "description" : "An SMG with a top-mounted magazine.",
   "shortdescription" : ".45 Submachine Gun",
-  "tooltipKind" : "base",
+  "tooltipKind" : "project45gun",
   "category" : "Pistol",
   "twoHanded" : true,
   "itemTags" : ["weapon","ranged","pistol"],
@@ -64,10 +64,6 @@
   "scripts" : ["/items/active/weapons/ranged/project45gun.lua"],
   
   "elementalType" : "fire",
-
-  "movementSpeedFactor": 1.2,
-  "jumpHeightFactor": 1.2,
-
   
   "primaryAbilityType": "synthetikmechanics",
   "primaryAbility": {
@@ -90,6 +86,11 @@
     "laser": {
       "enabled": false
     },
+
+    
+    "movementSpeedFactor": 1.2,
+    "jumpHeightFactor": 1.2,
+
 
     "reloadTime": 0.7,
     "goodReloadInterval": [0.45, 0.75], 
