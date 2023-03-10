@@ -1,0 +1,7 @@
+{
+  "image" : "project45energygunmag.png",
+  "frameGrid" : {
+    "size" : [10, 10],
+    "dimensions" : [1, 1]
+  }
+}

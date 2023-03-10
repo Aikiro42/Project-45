@@ -1,0 +1,25 @@
+{
+  "kind" : "synthetikmechanics-damagenumber",
+  "definition" : {
+    "type" : "text",
+    "text" : "^shadow;$dmg$",
+    "color" : [232, 232, 232, 180],
+    "light" : [70, 70, 70],
+    "fullbright" : true,
+    "initialVelocity" : [0.0, 20.0],
+    "finalVelocity" : [0.0, 0.0],
+    "size" : 1,
+    "approach" : [40, 40],
+    "angularVelocity" : 0,
+    "timeToLive" : 0,
+    "layer" : "front",
+    "destructionAction" : "fade",
+    "destructionTime" : 1,
+    "variance" : {
+      "initialVelocity" : [20.0, 0],
+      "approach" : [40, 0]
+
+    },
+    "flippable" : false
+  }
+}

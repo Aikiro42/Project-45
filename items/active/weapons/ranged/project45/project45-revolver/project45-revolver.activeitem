@@ -1,0 +1,173 @@
+{
+  "itemName" : "project45-revolver",
+  "price" : 1,
+  "maxStack" : 1,
+  "rarity" : "Essential",
+  "shortdescription" : ".45 Revolver",
+  "description" : "\"To town rode a stranger, had a big iron on his hip... \n and he's here to kill the outlaw... the stranger killed the outlaw. The end.\"",
+  "tooltipKind" : "project45gun",
+  "category" : "Pistol",
+  "twoHanded" : false,
+  "itemTags" : ["weapon","ranged","pistol"],
+  "level" : 1,
+
+  "inventoryIcon" : "project45-revolver-icon.png",
+
+  // "animation" : "project45-template.animation",
+  "animationParts" : {
+    "butt" : "",
+    "middle" : "project45-revolver.png",
+    "middleFullbright" : "",
+    "barrel" : "",
+    "mag": "",
+    "magFullbright": "",
+    "muzzleFlash" : "/items/active/weapons/ranged/muzzleflash.png",
+    
+    "muzzle": "",
+    "grip": ""
+
+  },
+
+  "animationCustom":{
+    "animatedParts" : {"stateTypes" : {"gun" : {"states" : {
+            "charging": {
+              // set this value to cycleTime
+              "cycle" : 0.05
+            }
+    }}}},
+    "particleEmitters": {
+      "ejectionPort" : { "particles" : [ 
+          {"particle": "project45bulletcasesmall"}
+        ]},
+      "magazine" : { "particles" : [
+          {"particle": "project45muzzlesmoke"}
+        ]}
+    },
+    
+    "sounds":{
+      "fire" : ["/sfx/project45-synthetikmechanics/fires/fire_pistol.ogg"],
+      "getMag" : ["/sfx/project45-synthetikmechanics/foleys/getmag_revolver.ogg"],
+      "boltPush": ["/sfx/project45-synthetikmechanics/reloads/boltpush_revolver.ogg"],
+      "boltPull": ["/sfx/project45-synthetikmechanics/reloads/boltpush_revolver.ogg"]
+    }
+  },
+
+  "baseOffset" : [0.7, 0.07],
+  "muzzleOffset" : [1.55, 0.675],
+  "ejectionPortOffset": [0.3, 0.7],
+  "magazineOffset": [0, 0],
+
+  "scripts" : ["/items/active/weapons/ranged/project45gun.lua"],
+  
+  "elementalType" : "fire",
+
+  "primaryAbilityType": "synthetikmechanics",
+  "primaryAbility": {
+
+    "baseDamage": 15,
+
+    "cycleTime": 0.1,
+    "fireTime": 0.1,
+    "jamChances": {
+      "bad": 0.2,
+      "ok": 0.01,
+      "good": 0.00
+    },
+    "keepCasings": true,
+    "maxAmmo": 6,
+    "bulletsPerReload": 1,
+    "reloadTime": 0.5,
+    "goodReloadInterval": [0.5, 0.7], 
+    "perfectReloadInterval": [0.55, 0.65], 
+    "magType": "strip",
+    "laser":{
+      "enabled": false,
+      "alwaysActive": true
+    },
+
+    
+    "movementSpeedFactor": 1.2,
+    "jumpHeightFactor": 1.2,
+
+
+    "semi": true,
+    "slamFire": true,
+    "manualFeed": true,
+    "cockTime": 0.1,
+
+    "inaccuracy": 0.01,
+    "recoilDeg": [15, 10],
+    "recoilMult": 1,
+
+    "critChance": 0.25,
+    "critDamageMult": 1.75,
+
+    "magLoopFrames": 2,
+    "magAnimRange": [0, 0],
+
+    "stances": {
+
+      "idleneo": {
+        "twoHanded": false
+      },
+      "aim": {
+        "twoHanded": false
+      },
+
+      "ejectmag" : {
+        "armRotation" : -45,
+        "weaponRotation" : 45,
+        "twoHanded" : false,
+        "allowRotate" : false,
+        "allowFlip" : false
+      },
+      "empty": {
+        "twoHanded": false
+      },
+      
+      "manualFeed": {
+        "armRotation" : 0,
+        "weaponRotation" : 1,
+        "twoHanded" : false,
+        "allowRotate" : false,
+        "allowFlip" : false
+      },
+      "reloading" : {
+        "armRotation" : 45,
+        "weaponRotation" : 0,
+        "weaponAngularVelocity": 3600,
+        "twoHanded" : false,
+        "allowRotate" : false,
+        "aimAngle": 0,
+        "allowFlip" : false
+
+        // "weaponOffset" : [0.25, 0.575],
+        // "frontArmFrame" : "run.2",
+        // "backArmFrame" : "jump.3"
+      },
+      "reloaded" : {
+        "armRotation" : 45,
+        "weaponRotation" : 15,
+        "twoHanded" : false,
+        "allowRotate" : false,
+        "allowFlip" : false
+      },
+      "loadRound": {
+        "disabled": true
+      },
+      "boltPull": {
+        "disabled": true,
+        "twoHanded": false
+      },
+      "boltPush": {
+        "disabled": true,
+        "twoHanded": false
+      }
+    }
+
+  },
+
+  "altAbilityType": "",
+
+  "builder" : "/items/buildscripts/buildproject45neo.lua"
+}

@@ -1,0 +1,156 @@
+{
+  "objectName" : "project45-gunshop",
+  "colonyTags" : ["human","humanbunker","mechanical","commerce"],
+  "rarity" : "Essential",
+  "shortdescription" : "^#FF9000;Gun Shop",
+  "description" : "A revolutionary standard for weapons of war, brought to you in a nifty vending machine.",
+  "race" : "human",
+  "category" : "decorative",
+  "price" : 4200,
+  "lightColor" : [120, 65, 0],
+  "printable" : false,
+
+  "apexDescription" : "I have a single question: Do you... enjoy violence?",
+  "avianDescription" : "Of course you do.",
+  "floranDescription" : "It'ss a... part of you.",
+  "glitchDescription" : "Confrontational. And who are you to deny your own nature?",
+  "humanDescription" : "So come with me...",
+  "hylotlDescription" : "...and let me show you... ",
+  "novakidDescription" : "some real. Ultra. Violence.",
+
+  "inventoryIcon" : "project45-gunshopicon.png",
+  
+  "orientations" : [
+    
+    {
+      "imageLayers" : [
+        { "image" : "project45-gunshopleft.png:default.<frame>" },
+        { "image" : "project45-gunshopleftfullbright.png:default.<frame>", "fullbright" : true  }
+      ],
+      "imagePosition" : [0, 0],
+      "direction": "left",
+
+      "frames" : 60,
+      "animationCycle" : 5,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ],
+      "collision" : "platform"
+    },
+    {
+      "imageLayers" : [
+        { "image" : "project45-gunshopright.png:default.<frame>" },
+        { "image" : "project45-gunshoprightfullbright.png:default.<frame>", "fullbright" : true  }
+      ],
+      "imagePosition" : [0, 0],
+      "direction": "right",
+
+      "frames" : 60,
+      "animationCycle" : 5,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ],
+      "collision" : "platform"
+    }
+  ],
+
+  "soundEffect" : "/sfx/objects/fluorescent_light_loud.ogg",
+  "soundEffectRangeMultiplier" : 0.5,
+
+  "scripts": ["/objects/scripts/project45-gunshop.lua"],
+  "resetInterval" : 30, //minutes
+
+  "guiConfig" : {
+    "baseConfig" : "/interface/scripted/project45-gunshop/project45-gunshopscripted.config",
+    "gui" : {
+      "windowtitle" : {
+        "title" : "^#FF9000;Gun Shop",
+        "subtitle" : "^#c48636;Dehumanize yourself."
+      }
+    },
+    "weapons": [
+      "project45-pipegun",
+      "project45-pistol",
+      "project45-revolver",
+      "project45-submachinegun",
+      "project45-shotgun",
+      "project45-assaultrifle",
+      "project45-garand",
+      "project45-mosin",
+      "project45-sniperrifle",
+      "project45-antimateriel",
+      "project45-grenadelauncher",
+      "project45-minigun",
+      "project45-accelerator",
+      "project45-energygun",
+      "project45-gaussrifle"
+    ]
+  }
+
+  // "interactAction" : "OpenMerchantInterface",
+  /*
+  "interactData" : {
+    "config" : "/interface/scripted/project45-gunshop/project45-gunshopscripted.config",
+    "paneLayoutOverride" : {
+      "windowtitle" : {
+        "title" : "^#FF9000;Gun Shop",
+        "subtitle" : "^#c48636;Let's dehumanize ourselves together."
+      }
+    },
+    "buyFactor" : 1,
+    "sellFactor" : 0.9,
+    "items" : [
+      { "item" : "project45-pipegun" },
+      { "item" : "project45-pistol" },
+      { "item" : "project45-revolver" },
+      { "item" : "project45-submachinegun" },
+      { "item" : "project45-assaultrifle" },
+      { "item" : "project45-garand" },
+      { "item" : "project45-mosin" },
+      { "item" : "project45-sniperrifle" },
+      { "item" : "project45-antimateriel" },
+      { "item" : "project45-grenadelauncher" },
+      { "item" : "project45-minigun" },
+      { "item" : "project45-accelerator" },
+      { "item" : "project45-energygun" },
+      { "item" : "project45-gaussrifle" }
+    ]
+  },
+  */
+
+
+  /*
+  "scripts" : [
+    "/scripts/npcToyObject.lua"
+  ],
+  "scriptDelta" : 60,
+
+  "npcToy" : {
+    "influence" : [
+      "vendingmachineActivate",
+      "vendingmachineCollect",
+      "vendingmachineConsume",
+      "vendingmachineComplete"
+    ],
+    "defaultReactions" : {
+      "vendingmachineActivate" : [
+        [1.0, "pressbutton"]
+      ],
+      "vendingmachineCollect" : [
+        [1.0, "crouchcollect"]
+      ],
+      "vendingmachineConsume" : [
+        [1.0, "drink"]
+      ],
+      "vendingmachineComplete" : [
+        [1.0, "smile"],
+        [0.1, "vomit"]
+      ]
+    },
+    "preciseStandPositionLeft" : [-0.5, 1.0],
+    "preciseStandPositionRight" : [2.0, 1.0],
+    "maxNpcs" : 1
+  }
+  */
+}
+

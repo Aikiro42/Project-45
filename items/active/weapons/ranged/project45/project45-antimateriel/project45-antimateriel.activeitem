@@ -1,0 +1,125 @@
+{
+  "itemName" : "project45-antimateriel",
+  "price" : 1,
+  "maxStack" : 1,
+  "rarity" : "Essential",
+  "shortdescription" : ".50 BMG AMR",
+  "description" : "An Anti-materiel rifle with a weird muzzlebreak on a barrel.",
+  "tooltipKind" : "project45gun",
+  "category" : "Sniper",
+  "twoHanded" : true,
+  "itemTags" : ["weapon","ranged","sniper"],
+  "level" : 6,
+
+  "inventoryIcon" : "project45-antimateriel-icon.png",
+
+  // "animation" : "project45-template.animation",
+  "animationParts" : {
+    "butt" : "",
+    "middle" : "project45-antimateriel.png",
+    "middleFullbright" : "",
+    "barrel" : "",
+    "mag": "project45-antimateriel-mag.png",
+    "magFullbright": "project45-antimateriel-mag.png",
+    "muzzleFlash" : "/items/active/weapons/ranged/muzzleflash.png",
+    
+    "muzzle": "",
+    "grip": ""
+
+  },
+
+  "animationCustom":{
+    "animatedParts" : {
+      "stateTypes" : {"gun" : {"states" : {
+            "charging": {
+              // set this value to cycleTime
+              "cycle" : 0.05
+            }
+      }}},
+      "parts" : {
+        "scope" : { "properties" : {
+          "offset" : [0.4, 0.125]
+        }}
+      }
+    },
+    "particleEmitters": {
+      "ejectionPort" : { "particles" : [ 
+          {"particle": "project45bulletcase"}
+          // {"particle": "project45muzzlesmoke"}
+        ]},
+      "magazine" : { "particles" : [
+          {"particle": "project45antimaterielmag"}
+          // {"particle": "project45muzzlesmoke"}
+        ]}
+    },
+    
+    "sounds":{
+      "fire" : ["/sfx/project45-synthetikmechanics/fires/fire_sniper.ogg"],
+      "boltPull" : ["/sfx/project45-synthetikmechanics/reloads/boltpull_nagant.ogg"],
+      "boltPush" : ["/sfx/project45-synthetikmechanics/reloads/boltpush_nagant.ogg"]
+    }
+  },
+
+  "baseOffset" : [1.8, 0.15],
+  "muzzleOffset" : [3.4, 0.4],
+  "ejectionPortOffset": [-0.7, 0.7],
+  "magazineOffset": [-1, 0],
+
+  "scripts" : ["/items/active/weapons/ranged/project45gun.lua"],
+  
+  "elementalType" : "fire",
+  
+  "primaryAbilityType": "synthetikmechanics",
+  "primaryAbility": {
+    
+    // "DEBUG": true,
+
+    "baseDamage": 10,
+    "inaccuracy": 0.1,
+    "manualFeed": true,
+    "semi": true,
+    "slamFire": false,
+    "cockTime": 0.5,
+    "cycleTime": 0.1,
+    "fireTime": 0.2,
+    "jamChances": {
+      "bad": 0.3,
+      "ok": 0.02,
+      "good": 0.01
+    },
+
+      
+    "movementSpeedFactor": 0.85,
+    "jumpHeightFactor": 0.85,
+    "heavyWeapon": true,
+
+    "reloadCost": 1,
+    "maxAmmo": 3,
+    "bulletsPerReload": 3,
+    "magType": "default",
+    "projectileParameters": {
+      "punchThrough": 4
+    },
+
+    "recoilDeg": [15, 5],
+    "recoilMomentum": 40,
+    "recoilMult": 0.85,
+
+    // make all shots orange
+    "critChance": 1,
+    "critDamageMult": 1.1,
+    "screenShakeAmount": [1.5,2.5],
+    "screenShakeDelta": [0.1, 0.5],
+    "magLoopFrames": 0,
+    "magAnimRange": [0, 0],
+
+    "stances": {
+
+    }
+
+  },
+
+  "altAbilityType": "project45gunscope",
+
+  "builder" : "/items/buildscripts/buildproject45neo.lua"
+}

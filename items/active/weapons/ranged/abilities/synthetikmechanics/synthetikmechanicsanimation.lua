@@ -1,7 +1,23 @@
 require "/scripts/vec2.lua"
+
+local warningTriggered = false
+
+synthethikmechanics_altUpdate = update or function()
+    if not warningTriggered then
+      warningTriggered = true
+      sb.logInfo("[PROJECT 45] (" .. animationConfig.animationParameter("shortDescription") .. ") Failed to get alt-ability animation script update function. Weapon may be one-handed, not have an alt-ability, or may not have an alt-ability animation script.")
+    end
+  end
+
 function update()
   localAnimator.clearDrawables()
   localAnimator.clearLightSources()
+  
+  synthethikmechanics_altUpdate()
+  if not warningTriggered then
+    warningTriggered = true
+    sb.logInfo("[PROJECT 45] Obtained alt-ability animation update script.")
+  end
 
   local projectileStack = animationConfig.animationParameter("projectileStack")
 
@@ -17,52 +33,155 @@ function update()
   local goodReloadRange = animationConfig.animationParameter("goodReloadRange")
   local reloadRating = animationConfig.animationParameter("reloadRating")
 
+  local chargeTimer = animationConfig.animationParameter("chargeTimer")
+  local chargeTime = animationConfig.animationParameter("chargeTime")
+  local overchargeTime = animationConfig.animationParameter("overchargeTime")
+
+  local muzzlePos = animationConfig.animationParameter("muzzlePos")
+
+  local muzzleSmokeTimer = animationConfig.animationParameter("muzzleSmokeTimer")
+  local muzzleSmokeTime = animationConfig.animationParameter("muzzleSmokeTime")
+
+  local muzzleFlash = animationConfig.animationParameter("muzzleFlash")
+  local muzzleFlashPos = activeItemAnimation.ownerPosition()
+  local muzzleFlashColor = {0, 0, 0}
+
   local reloadBarColors = {
-    bad = {255, 0, 0},
-    good = {0, 255, 255},
-    perfect = {255, 255, 0}
+    bad = {255, 30, 0},
+    good = {0, 195, 255},
+    perfect = {255, 187, 0}
+  }
+
+  local ammoCounterColors = {
+    bad = {255, 181, 171},
+    good = {133, 226, 255},
+    perfect = {255, 220, 124}
   }
 
   local reloadBarColor = reloadBarColors[reloadRating]
-  local jamBarColor = {255, 128, 0}  
+  local jamBarColor = {255, 128, 0}
+  local jamAmmoCounterColor = {255, 193, 131}
 
   local gunHand = animationConfig.animationParameter("gunHand")
   local offset = {gunHand == "primary" and -1.75 or 1.75, 0}
 
+  -- smoke
+  --[[
+  local muzzleSmokeProgress = 1 - muzzleSmokeTimer/muzzleSmokeTime
+  if muzzleSmokeProgress < 1 then
+    localAnimator.spawnParticle(
+      {
+        type = "ember",
+        size = 0.5 + 0.2 * (1 - muzzleSmokeProgress),
+        color = {200, 200, 200, 100 * (-muzzleSmokeProgress^4 + 1)},
+        fade = 0.9,
+        initialVelocity = {(1 - muzzleSmokeProgress)*5, -1 + muzzleSmokeProgress*6},
+        approach = {-0.1, 5},
+        finalVelocity = {0, 5},
+        destructionTime = 0.9,
+        layer = "front",
+        collidesLiquid = true,
+        variance = {
+          initialVelocity = {0.5 * (1 - muzzleSmokeProgress), 0.5 * (1 - muzzleSmokeProgress)},
+          finalVelocity = {0.2, 0},
+          size = 0.5
+        }
+      },
+      muzzlePos
+    )
+  end
+  --]]
+
+  if 0 < muzzleSmokeTimer and muzzleSmokeTimer < muzzleSmokeTime - 0.1 then
+
+    localAnimator.spawnParticle(
+      "project45muzzlesmoke",
+      muzzlePos
+    )
+
+  end
+
   -- render hitscan trails
   for i, projectile in ipairs(projectileStack) do
     local bulletLine = worldify(projectile.origin, projectile.destination)
+    muzzleFlashColor = projectile.color or {0, 0, 0}
     localAnimator.addDrawable({
       line = bulletLine,
       width = (projectile.width or 1) * projectile.lifetime/projectile.maxLifetime,
       fullbright = true,
-      color = hitscanColor or {255,255,255}
+      color = projectile.color or {0, 0, 0}
     }, "Player-1")
   end
 
+  -- render muzzle flash
+  if muzzleFlash then
+    localAnimator.addLightSource({
+      position = muzzlePos,
+      color = muzzleFlashColor,
+      pointLight = true,
+      pointBeam = 0.3,
+    })
+  end
+
+  -- render reload bar if reloading
   if reloadTimer >= 0 then
     renderReloadBar(reloadTimer, reloadTime, goodReloadRange, perfectReloadRange, string.upper(reloadRating), aimPosition, offset, reloadBarColor)
     offset = vec2.add(offset, offset)
   end
 
+  -- render jam bar if jammed
   if jamAmount > 0 then
     renderJamBar(jamAmount, aimPosition, offset)
     offset = vec2.add(offset, offset)
   end
 
+  -- render horizontal charge bar if charging
+  if chargeTimer > 0 then
+    renderChargeBar(chargeTimer, chargeTime, overchargeTime, aimPosition)
+  end
+
+
   local ammoDisplay = ammo
   if ammo < 0 then ammoDisplay = "E" end
+  offset[1] = offset[1] + (offset[1] > 0 and (string.len("" .. ammoDisplay)-1)/2 or -(string.len("" .. ammoDisplay)-1)/2)
 
   -- bullet counter
+  local ammoCounterColor = {203, 203, 203}
+  if jamAmount > 0 then
+    ammoCounterColor = jamAmmoCounterColor
+  else
+    if reloadRating ~= "ok" and ammo > 0 then
+      ammoCounterColor = ammoCounterColors[reloadRating]
+    else
+      ammoCounterColor = {203, 203, 203}
+    end
+  end
+  
   localAnimator.spawnParticle({
     type = "text",
     text= "^shadow;" .. ammoDisplay,
-    color = (jamAmount > 0 and jamBarColor) or (reloadRating == "perfect" and ammo > 0 and {255, 255, 0}) or (ammo == ammoMax and {100, 255, 255}) or {203, 203, 203},
+    color = ammoCounterColor,
     size = 1,
     fullbright = true,
     flippable = false,
     layer = "front"
   }, vec2.add(aimPosition, offset))
+
+  -- laser
+  local laser = {}
+  laser.origin = animationConfig.animationParameter("laserOrigin")
+  laser.destination = animationConfig.animationParameter("laserDestination")
+  laser.color = animationConfig.animationParameter("laserColor")
+
+  if laser.origin and laser.destination then
+    local laserLine = worldify(laser.origin, laser.destination)
+    localAnimator.addDrawable({
+        line = laserLine,
+        width = 0.2,
+        fullbright = true,
+        color = laser.color
+    }, "Player+1")
+  end
 
 end
 
@@ -212,4 +331,71 @@ function renderJamBar(jamScore, position, offset, barColor, length, width, borde
     color = {255, 128, 0}
   }, "ForegroundEntity+1")
 
+end
+
+function renderChargeBar(chargeTimer, chargeTime, overchargeTime,
+  position, offset, barColor, length, width, borderwidth)
+
+  local length = length or 2
+  local barWidth = width or 1
+  local borderwidth = borderwidth or 0.7
+  local barColor = barColor or {75,75,75}
+  local offset = offset or {0, -1.25}
+  
+  -- calculate bar stuff
+  local base = vec2.add(position, offset)
+  local base_a = vec2.add(base, {-length/2, 0}) -- start (left)
+  local base_b = vec2.add(base, {length/2, 0})  -- end   (right)
+  local a, b
+
+  -- render border
+  a = vec2.add(base_a, {-borderwidth/8, 0})
+  b = vec2.add(base_b, {borderwidth/8, 0})
+  local chargeBarBorder = worldify(a, b)
+  localAnimator.addDrawable({
+    line = chargeBarBorder,
+    width = barWidth + borderwidth*2,
+    fullbright = true,
+    color = {0,0,0}
+  }, "ForegroundEntity+1")
+
+  local chargeLength = length * chargeTime / (chargeTime + overchargeTime)
+
+  -- render chargetime bar
+  local chargeTimeBar = worldify(base_a, vec2.add(base_a, {chargeLength, 0}))
+  localAnimator.addDrawable({
+    line = chargeTimeBar,
+    width = barWidth,
+    fullbright = true,
+    color = barColor
+  }, "ForegroundEntity+1")
+
+  -- render overcharge time bar
+  local overchargeTimeBar = worldify(vec2.add(base_a, {chargeLength, 0}), base_b)
+  localAnimator.addDrawable({
+    line = overchargeTimeBar,
+    width = barWidth,
+    fullbright = true,
+    color = {255, 0, 0}
+  }, "ForegroundEntity+1")
+
+  -- render jamScore
+  a = base_a
+  b = vec2.add(base_a, {length * chargeTimer / (chargeTime + overchargeTime), 0})
+  local jamScoreBar = {a, b}
+  localAnimator.addDrawable({
+    line = jamScoreBar,
+    width = barWidth,
+    fullbright = true,
+    color = {255, 255, 0}
+  }, "ForegroundEntity+1")
+
+end
+
+function brighten(color, brightness)
+  local newColor = {0, 0, 0}
+  for i, rgb in ipairs(color) do
+    newColor[i] = math.min(255, rgb * brightness)
+  end
+  return newColor
 end

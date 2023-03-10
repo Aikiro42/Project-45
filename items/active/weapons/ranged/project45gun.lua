@@ -15,6 +15,7 @@ function init()
   self.weapon:addTransformationGroup("muzzle", self.weapon.muzzleOffset, 0)
   self.weapon:addTransformationGroup("ejectionPort", config.getParameter("ejectionPortOffset", {0,0}), 0)
   self.weapon:addTransformationGroup("magazine", config.getParameter("magazineOffset", {0,0}), 0)
+  activeItem.setScriptedAnimationParameter("shortDescription", config.getParameter("shortdescription", "unknown"))
 
   local primaryAbility = getPrimaryAbility()
   self.weapon:addAbility(primaryAbility)
@@ -23,10 +24,6 @@ function init()
   if secondaryAbility then
     self.weapon:addAbility(secondaryAbility)
   end
-
-  self.movementSpeedFactor = config.getParameter("movementSpeedFactor", 1.15)
-  self.jumpHeightFactor = config.getParameter("jumpHeightFactor", 1.15)
-  self.heavyWeapon = config.getParameter("heavyWeapon", false)
   
   --[[
   damageL = damageListener("inflictedDamage", function(notifications)
@@ -48,20 +45,6 @@ function update(dt, fireMode, shiftHeld)
   activeItem.setScriptedAnimationParameter("gunHand", activeItem.hand())
   activeItem.setScriptedAnimationParameter("aimPosition", activeItem.ownerAimPosition())
   activeItem.setScriptedAnimationParameter("playerPos", mcontroller.position())
-
-  if shiftHeld then
-    mcontroller.controlModifiers({
-      speedModifier = 1,
-      airJumpModifier = self.jumpHeightFactor,
-      runningSuppressed = self.heavyWeapon
-    })
-  else
-    mcontroller.controlModifiers({
-      speedModifier = self.movementSpeedFactor,
-      airJumpModifier = self.jumpHeightFactor,
-      runningSuppressed = self.heavyWeapon
-    })
-  end
 
 end
 

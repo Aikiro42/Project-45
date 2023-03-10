@@ -11,11 +11,15 @@
           "idle": {},
           // "charging": {},
           
+          // loop charging
           "charging": {
-            "frames" : 6,
+            "frames" : 3,
             "cycle" : 1,
             "mode" : "loop"
           },
+
+          // progressive charging
+          "chargingprog": {},
           
           "firing": {},
           "ejecting": {},
@@ -24,6 +28,22 @@
           "unjam": {}
         }
       },
+
+      // Ensures compatibility with vanilla altfires; doesn't really do anything
+      "firing": {
+        "default": "off",
+        "states" : {
+          "off" : {},
+          "fire" : {
+            "frames" : 2,
+            "cycle" : 0.07,
+            "mode" : "transition",
+            "transition" : "off"
+          },
+          "charge": {}
+        }
+      },
+
       "flash" : {
         "default": "off",
         "states":{
@@ -36,6 +56,7 @@
           }
         }
       },
+      
       "mag": {
         "default": "present",
         "states": {
@@ -49,7 +70,7 @@
       "butt" : {
         "properties" : {
           "centered" : true,
-          "image" : "<partImage><paletteSwaps>",
+          "image" : "<partImage><paletteSwaps><directives>",
           "offset" : [0, 0], // x offset is set dynamically
           "transformationGroups" : ["weapon"]
         }
@@ -57,7 +78,7 @@
       "middle" : {
         "properties" : {
           "centered" : true,
-          "image" : "<partImage>:idle",
+          "image" : "<partImage>:idle<directives>",
           "offset" : [0, 0], // x offset is set dynamically
           "transformationGroups" : ["weapon"]
         },
@@ -65,48 +86,53 @@
           "gun": {
             "idle": {
               "properties": {
-                "image": "<partImage>:idle"
+                "image": "<partImage>:idle<directives>"
               }
             },
             "charging": {
               "properties": {
-                "image": "<partImage>:charging.<frame>"
+                "image": "<partImage>:charging.<frame><directives>"
+              }
+            },
+            "chargingprog": {
+              "properties": {
+                "image": "<partImage>:charging.<chargeProgressFrame><directives>"
               }
             },
             "firing": {
               "properties": {
-                "image": "<partImage>:firing"
+                "image": "<partImage>:firing<directives>"
               }
             },
             "ejecting": {
               "properties": {
-                "image": "<partImage>:ejecting"
+                "image": "<partImage>:ejecting<directives>"
               }
             },
             "feeding": {
               "properties": {
-                "image": "<partImage>:feeding"
+                "image": "<partImage>:feeding<directives>"
               }
             },
             "jammed": {
               "properties": {
-                "image": "<partImage>:jammed"
+                "image": "<partImage>:jammed<directives>"
               }
             },
             "unjam": {
               "properties": {
-                "image": "<partImage>:unjam"
+                "image": "<partImage>:unjam<directives>"
               }
             }
           }
         }
       },
-      "middleFullBright" : {
+      "middleFullbright" : {
         "properties" : {
           "zLevel" : 2,
           "centered" : true,
           "fullbright" : true,
-          "image" : "<partImage>:idle",
+          "image" : "<partImage>:idle<directives>",
           "offset" : [0, 0], // x offset is set dynamically
           "transformationGroups" : ["weapon"]
         },
@@ -114,37 +140,42 @@
           "gun": {
             "idle": {
               "properties": {
-                "image": "<partImage>:idle"
+                "image": "<partImage>:idle<directives>"
               }
             },
             "charging": {
               "properties": {
-                "image": "<partImage>:charging"
+                "image": "<partImage>:charging.<frame><directives>"
+              }
+            },
+            "chargingprog": {
+              "properties": {
+                "image": "<partImage>:charging.<chargeProgressFrame><directives>"
               }
             },
             "firing": {
               "properties": {
-                "image": "<partImage>:firing"
+                "image": "<partImage>:firing<directives>"
               }
             },
             "ejecting": {
               "properties": {
-                "image": "<partImage>:ejecting"
+                "image": "<partImage>:ejecting<directives>"
               }
             },
             "feeding": {
               "properties": {
-                "image": "<partImage>:feeding"
+                "image": "<partImage>:feeding<directives>"
               }
             },
             "jammed": {
               "properties": {
-                "image": "<partImage>:jammed"
+                "image": "<partImage>:jammed<directives>"
               }
             },
             "unjam": {
               "properties": {
-                "image": "<partImage>:unjam"
+                "image": "<partImage>:unjam<directives>"
               }
             }
           }
@@ -153,7 +184,7 @@
       "barrel" : {
         "properties" : {
           "centered" : true,
-          "image" : "<partImage><paletteSwaps>",
+          "image" : "<partImage><paletteSwaps><directives>",
           "offset" : [0, 0], // x offset is set dynamically
           "transformationGroups" : ["weapon"]
         }
@@ -171,7 +202,14 @@
           "flash" : {
             "flash" : {
               "properties" : {
-                "image" : "<partImage>:<variant>.<frame>"
+                "image" : "<partImage>:<variant>.<frame><directives>"
+              }
+            }
+          },
+          "firing" : {
+            "fire" : {
+              "properties" : {
+                "image" : "<partImage>:<variant>.<frame><directives>"
               }
             }
           }
@@ -181,7 +219,7 @@
         "properties" : {
           "zLevel" : 4,
           "centered" : true,
-          "image" : "<partImage>:present",
+          "image" : "<partImage>:present<directives>",
           "offset" : [0, 0],
           "transformationGroups" : ["weapon"]
         },
@@ -190,12 +228,37 @@
           "mag" : {
             "present": {
               "properties": {
-                "image": "<partImage>:present"
+                "image": "<partImage>:present.<ammo><directives>"
               }
             },
             "absent": {
               "properties": {
-                "image": "<partImage>:absent"
+                "image": ""
+              }
+            }
+          }
+        }
+      },
+      "magFullbright" : {
+        "properties" : {
+          "zLevel" : 5,
+          "centered" : true,
+          "fullbright" : true,
+          "image" : "<partImage>:present<directives>",
+          "offset" : [0, 0],
+          "transformationGroups" : ["weapon"]
+        },
+
+        "partStates" : {
+          "mag" : {
+            "present": {
+              "properties": {
+                "image": "<partImage>:present.<ammo><directives>"
+              }
+            },
+            "absent": {
+              "properties": {
+                "image": ""
               }
             }
           }
@@ -228,6 +291,14 @@
         {"particle": "project45muzzle"}
       ]
     },
+    "muzzleSmoke" : {
+      "transformationGroups" : ["muzzle"],
+      "offsetRegion" : [0, 0, 0, 0],
+      "emissionRate" : 100,
+      "particles" : [ 
+        {"particle": "project45muzzlesmoke"}
+      ]
+    },
     "ejectionPort" : {
       "transformationGroups" : ["ejectionPort"],
       "offsetRegion" : [0, 0, 0, 0],
@@ -248,7 +319,7 @@
     "muzzleFlash" : {
       "active" : false,
       "position" : [0, 0],
-      "color" : [255, 255, 200]
+      "color" : [0, 0, 0]
     }
   },
 
@@ -265,8 +336,9 @@
 
     // gunshot sound
     "fire" : ["/sfx/project45-synthetikmechanics/fires/fire_smg.ogg"],
+
     // plays louder as the magazine grows empty
-    "hollow" : ["/sfx/project45-synthetikmechanics/hollow.ogg"],
+    "hollow" : ["/sfx/project45-synthetikmechanics/foleys/hollow.ogg"],
 
     // click sound for various purposes
     "click" : ["/sfx/project45-synthetikmechanics/clicks/click_generic.ogg"],
@@ -276,11 +348,15 @@
 
     // sound of mag sliding out
     "ejectMag": ["/sfx/project45-synthetikmechanics/reloads/ejectmag_generic_1.ogg"],
-    // sound of mag sliding in
+    // sound of mag being procured
+    "getMag": ["/sfx/project45-synthetikmechanics/foleys/getmag_generic.ogg"],
+
+    //sound of mag being inserted
     "insertMag": ["/sfx/project45-synthetikmechanics/reloads/insertmag_generic.ogg"],
 
     // sound of clip pinging out
-    "ping" : ["/sfx/project45-synthetikmechanics/ping.ogg"],
+    // TODO: GET RID OF THIS THING, WE HAVE EJECTMAG FOR THAT
+    "ping" : ["/sfx/project45-synthetikmechanics/foleys/ping.ogg"],
     // sound of loading a single round into the gun (shotguns, single action)
     // inaudible between firing cycles when not a manual feed weapon
     "loadRound": ["/sfx/project45-synthetikmechanics/reloads/loadround_generic.ogg"],
@@ -290,21 +366,31 @@
     "boltPush" : ["/sfx/project45-synthetikmechanics/reloads/boltpush_generic.ogg"],
 
     // sound indicator for good reload
-    "goodReload" : ["/sfx/project45-synthetikmechanics/ping.ogg"],
+    // "goodReload" : ["/sfx/project45-synthetikmechanics/ping.ogg"],
+    "goodReload" : ["/sfx/project45-synthetikmechanics/reloads/goodreload_generic_1.ogg"],
+    "perfectReload" : ["/sfx/project45-synthetikmechanics/reloads/goodreload_generic_1.ogg"],
     // sound indicator for bad reload
-    "badReload" : ["/sfx/project45-synthetikmechanics/clicks/click_generic.ogg"],
+    "badReload" : [
+      "/sfx/project45-synthetikmechanics/reloads/badreload_mag_1.ogg",
+      "/sfx/project45-synthetikmechanics/reloads/badreload_mag_2.ogg"
+    ],
 
     // sound indicator for when the gun jams
     "jammed" : ["/sfx/project45-synthetikmechanics/clicks/click_jammed.ogg"],
     // played when making an unjam attempt
     "unjam" : ["/sfx/project45-synthetikmechanics/clicks/click_unjam.ogg"],
 
-    "laser" : ["/sfx/gun/project45_laser.ogg"],
+    // played when dodging
+    "dash": ["/sfx/tech/tech_jetpack_thrust2.ogg"],
 
-    "reloadStart" : ["/sfx/gun/project45_reloadStart_ar.ogg"],
-    "reloadEnd" : ["/sfx/gun/project45_reloadEnd.ogg"],
-    // "crit" : ["/sfx/gun/project45_crit.ogg"],
-    "crit" : ["/assetmissing.ogg"],
-    "charge" : ["/sfx/gun/project45_charge_c.ogg"]
+    // played with turning on laser
+    "laser" : ["/sfx/project45-synthetikmechanics/laser.ogg"],
+
+    // COMPATIBILITY SOUNDS
+
+    // flamethrower
+    "fireStart": ["/assetmissing.ogg"],
+    "fireLoop": ["/assetmissing.ogg"],
+    "fireEnd": ["/assetmissing.ogg"]
   }
 }

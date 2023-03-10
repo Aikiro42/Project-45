@@ -6,6 +6,7 @@
   "fullbright": true,
   "frameNumber" : 4,
   "speed" : 0.01,
+  "renderLayer": "MiddleParticle",
   "damagePoly" : [
     /*
     [0.5, 0.5],
@@ -22,5 +23,7 @@
   "piercing" : false,
   "bounces" : -1,
   "flippable" : true,
-  "damageType" : "NoDamage"
+  "power": 0,
+  "damageType" : "NoDamage",
+  "damageKind" : "hidden"
 }

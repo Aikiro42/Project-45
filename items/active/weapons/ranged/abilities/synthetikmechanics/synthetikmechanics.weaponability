@@ -1,108 +1,274 @@
 {
-  "animationCustom" : {
-    
-  },
-
   "animation" : "/items/active/weapons/ranged/abilities/synthetikmechanics/synthetikmechanics.animation",
   "animationScripts" : [
 		"/items/active/weapons/ranged/abilities/synthetikmechanics/synthetikmechanicsanimation.lua"
 	],
+
+  "animationCustom":{
+    "animatedParts" : {"stateTypes" : {"gun" : {"states" : {
+            "charging": {
+              // set this value to cycleTime
+              "cycle" : 0.1
+            }
+    }}}}
+  },
 
   "ability" : {
     "name" : "Synthetik Mechanics",
     "type" : "synthetikmechanics",
     "scripts" : ["/items/active/weapons/ranged/abilities/synthetikmechanics/synthetikmechanics.lua"],
     "class" : "SynthetikMechanics",
-
-    "recoilMomentum": 0, // momentum added to character opposite direction of aim vector when firing
-    "recoilDeg": [2, 1], // degrees of recoil every time the gun is shot (think spray control)
-    "aimTime": [3, 1], // time it takes to aim; first index is when you're running, second is when shift is held
     
-    "chargeTime": 0, // amount of time the weapon will wind up before firing, in seconds
-    "autoFireAfterCharge": true, // automatically fires after fully charging
+    // ________________________[ DAMAGE SETTINGS ]__________________________________
+    // Base Damage per shot.
+    /*
+    Standard damage is 6.25 (Vanilla).
+
+    */
+    "baseDamage": 6.25,
     
-    // Depending on which is greater, cycleTime or fireTime will dictate the fire rate of the weapon.
-    "cycleTime": 0.1, // Time it takes to eject the bullet casing and feed the next cartridge.
-    "fireTime" : 0.1, // Amount of time between weapon triggers
-
-    "maxAmmo": 8, // maximum ammo of the weapon
-    // number of bullets reloaded at a time
-    "bulletsPerReload": 8,
-
-    "ammoPerShot": 1, // ammo consumed per shot
-    "burstCount": 1, // number of shots per burst
-
-    "magType": "default", // default, clip, strip; dictates how reloads happen
-    "keepCasings": false, // drops casings per shot if false; overrides magazine particles with casings on reload if true
-    "semi": true, // firing, pulling and pushing the bolt aren't continuously done on keypress if true
-    "manualFeed": false, // whether the player must manually
-    // dictates whether holding the button while it's feeding will make it automatically shoot
-    // only has any purpose if manualFeed is true
-    "slamFire": false,
-  
-    "jamChances": {
-      "bad": 0.05, // chance for a weapon to jam if it missed a reload
-      "ok": 0.01, // chance for a weapon to jam if it waited a reload
-      "good": 0.0 // chance for a weapon to jam if it hit a reload
-    },
-    "unjamTime": 0.1, // time it takes to attempt to unjam the weapon
-    "unjamAmount": 0.25, // percent of unjam progress
-    
-    "baseDamage": 6.25, // base damage per shot
-    "inaccuracy" : 0.01, // Generic RNG inaccuracy; causes spread
-    // if explicitly "hitscan", gun fires hitscan shots; otherwise, gun fires projectiles
-    // "projectileType": ["project45stdbullet", "hitscan"],
-    "projectileType": ["hitscan"],
-    "projectileCount" : 1, // number of projectiles launched per shot
-    "projectileParameters": {
-      // hitscan params
-      "range": 100,  // range of the hitscan line in blocks
-      "punchthrough": 1,  // number of entities to register before stopping the scan
-      "fadeTime": 0.1, // how long the hitscan line fades away
-      "hitscanWidth": 1 // visual width of hitscan line in pixels
-    },
-
-    
-    "reloadEnergyCostRate": 0.2, // percent of energy consumed per reload
-    "reloadTime": 0.5, // time to reload <bulletsPerReload>, in second
-    "goodReloadInterval": [0.4, 0.8], // (percentage) interval during which a good reload is possible
-    "perfectReloadInterval": [0.6, 0.65], // (percentage) interval of the good reload interval during which a perfect reload is possible
-    "cockTime": 0.6, // time it takes to cock the gun
-
-    "muzzleFlashTime": 0.05,
-
     "critChance": 0,
     "critDamageMult": 1,
 
+    // This value is multiplied to the total damage on the last shot
+    "lastShotDamageMult": 1,
+
+    // ________________________[ AMMO-RELATED SETTINGS ]__________________________________
+    "maxAmmo": 8, // maximum ammo of the weapon
+    "bulletsPerReload": 8,  // number of bullets reloaded at a time
+    "ammoPerShot": 1, // ammo consumed per shot
+    "burstCount": 1, // number of shots per burst
+    "ammoConsumeChance": 1, // chance to consume ammo; can only be 1 and below
+
+
+    // ________________________[ PROJECTILE SETTINGS ]__________________________________
+  
+    // if explicitly "project45stdbullet", gun damages via hitscan; otherwise, gun fires projectiles
+    // this is to ensure compatibility with vanilla altfires
+    // either way, the projectileType field functions as any other projectileType field does
+    "projectileType": "project45stdbullet",
+    
+    "overrideHitscan": false, // if true, "project45stdbullet" spawns the actual projectile while "hitscan" spawns hitscans
+    
+    // number multiplied to projectile count without affecting the damage.
+    // if number is a float, the float is used as a chance to roll for an additional shot
+    // values 0 and below can make the gun not shoot anything
+    "multishot": 1,
+
+    "projectileCount" : 1, // number of projectiles launched per shot
+    
+    "projectileParameters": {
+      // hitscan params
+      "range": 100,  // range of the hitscan line in blocks
+      "punchThrough": 0,  // number of entities to register before stopping the scan
+      "hitscanIgnoresTerrain": false,  // pierces through terrain if true
+      "fadeTime": 0.1, // how long the hitscan line fades away
+      "hitscanWidth": 1, // visual width of hitscan line in pixels
+      "hitscanColor": [255,255,200], // color of hitscan projectile; also dictates muzzle flash color
+      "actionOnHit": [], // actions to do when hitscan registers hits, whether it be terrain, entities, or hitscan line termination
+      "statusEffects" : [],
+      // path to explosion config on hit
+      "hitregPower": 0
+    },
+
+    // ________________________[ GUN MECHANIC SETTINGS ]__________________________________
+    
+    // default, clip, strip; dictates reload visuals
+    // and whether you have to eject before reloading
+    "magType": "default",
+    
+    // drops casings per shot if false
+    // overrides magazine particles with casings on reload if true
+    "keepCasings": false,
+    
+    // dictates whether holding the trigger makes the weapon
+    // eject automatically after firing (if manual feed)
+    // and fire immediately after feeding\
+    // if this is true, you have to release the trigger
+    // and press it again to fire another shot (and eject casings if manual feed)
+    "semi": true,
+    
+    // whether the player must manually eject the case before firing another shot
+    // firing, pulling and pushing the bolt are continuously done on keypress if false
+    "manualFeed": false,
+
+    // dictates whether holding the button while it's feeding will make it automatically shoot
+    // only has any purpose if manualFeed is true
+    "slamFire": false,
+
+    // ________________________[ CHARGE SETTINGS ]__________________________________
+
+    // Determines whether the charge is looped,
+    // or progressed as the weapon charges up.
+    "progressiveCharge": false,
+    "chargeFrames": 3,
+    
+    // amount of time the weapon will wind up before firing, in seconds
+    "chargeTime": 0,
+    
+    // amount of time in seconds wherein the gun will overcharge
+    // overcharging grants additional damage: 1 + <time charged> - chargeTime / overchargeTime
+    // i.e. max overcharge damage multiplier is 2x
+    // has no effect if chargeTime <= 0
+    "overchargeTime": 0,
+
+    // whether the gun automatically fires after fully charging
+    // set this to true on regular guns
+    // if gun is semifire, and this value is false, charge is automatically reset after fire
+    "autoFireAfterCharge": true, 
+    
+    // whether charge is reset when firing
+    "resetChargeAfterFire": false, 
+    
+    // ________________________[ FIRE RATE SETTINGS ]__________________________________
+
+    // Depending on which is greater, cycleTime or fireTime will dictate the fire rate of the weapon.
     /*
-    Possible Attachments: (NOT IMPLEMENTED YET)
-    
-    "lasersight" - walking grants laser sights
+    Seconds it takes to fire, eject and feed.
+    In burst weapons, this ultimately dictates the bursttime;
+    Can either be a float (in which case it turns into the array as indicated by the default value below)
+    or a 2-element array, in which case the other cycle paramters matter.
 
-    "420sniperdragon" - hitting an enemy behind you after
-      hitting an enemy in front of you gives an extremely massive damage boost.
+    If the former element is greater than the latter, the fire rate increases the longer the gun is fired.
+    If the former element is lesser than the latter, the fire rate decreases the longer the gun is fired.
 
-    "grenadelauncher" - Chance to lob a grenade per shot.
-
-    "twinlink" - Chance to double projectile count without affecting damage.
-
-    "targetcogitator" - Chance to deal double damage. Affects grenade launcher damage.
-
-    "AP rounds" - projectiles ignore defense.
-
-    
     */
-    "attachments": [],
+    "cycleTime": [0.1, 0.1],
+    
+    // Every shot, the current cycle time grows by <cycleGrowthRate> * (<cycleTime[2]> - <cycletime[1]>)
+    "cycleTimeGrowthRate": 0.1,
+
+    // Every second, the current cycle time decays by <cycleDecayRate> * (<cycleTime[2]> - <cycletime[1]>)
+    "cycleTimeDecayRate": 0.2,
+    
+    // Seconds before you're able to trigger the weapon again.
+    // Should not affect the reload minigame.
+    "fireTime" : 0.1,
+    
+    // ________________________[ MISC SETTINGS ]__________________________________
+    
+    // Laser settings.
+    "laser": {
+      "enabled": false, // if true, laser is rendered
+      "color": [255, 0, 0], // laser color
+      "range": 100, // max distance to which the laser is drawn
+      "maxRange": true, // if false, laser is rendered up to player's aim position only
+
+      // always renders laser if true; otherwise it's rendered if the player is walking
+      "alwaysActive": false, 
+
+      "toggle": true, // if true, laser is toggled whenever activated
+      "toggleTime": 0.5 // time it takes to toggle
+    },
+    
+    // Dodge settings.
+    "dashParams": {
+      "enabled": true,
+
+      // Amount of time to press and release the walk key to initiate a dash.
+      "triggerTime": 0.2,
+      // speed at which the player travels for the duration of the dash
+      "speed": 80,
+      
+      // duration for which the indicated speed is applied on the movement controller
+      "dashTime": 0.1,
+      // duration for which you're invincible
+      "statusTime": 0.2,
+      
+      // number multiplied to your final velocity after the dodge
+      // i.e. if this is 1 then you are essentially given momentum
+      // from the speed of your dash
+      "endXVelMult": 0.3,
+
+      "cooldown": 0.5
+    },
+
+    "movementSpeedFactor": 1, // Movement speed multiplier
+    "jumpHeightFactor": 1,    // Jump height multiplier
+    "heavyWeapon": false,     // Forces walk if true
+
+  
+    // ________________________[ JAM SETTINGS ]__________________________________
+    "jamChances": {
+      "bad": 0.2, // chance for a weapon to jam if it missed a reload (20% default, d5 roll)
+      "ok": 0.05, // chance for a weapon to jam if it waited a reload (5% default, d20 roll)
+      "good": 0.01 // chance for a weapon to jam if it hit a reload (1% default, d100 roll)
+    },
+    "unjamTime": 0.2, // time it takes to attempt to unjam the weapon
+    "unjamAmount": 0.25, // percent of unjam progress
+
+
+    // ________________________[ ACCURACY SETTINGS ]__________________________________
+    "recoilMomentum": 0, // momentum added to character opposite direction of aim vector when firing
+    "recoilDeg": [10, 5], // degrees of recoil every time the gun is shot (think spray control)
+    // for extremely high fire rate guns, the gun will begin seesaw around this angle range
+    // when the amount of recoil you accrue reaches the second value.
+    "recoilThresholdDeg": [27, 30],
+    "recoilMult": 1, // muzzle brake; multiplied to recoilDeg
+    "aimTime": [3, 1], // time it takes to aim; first index is when you're running, second is when shift is held
+    
+     // Aim Inaccuracy; right before you fire the projectile your arm is rotated;
+     // this value dictates how intense the arm rotation is
+    "inaccuracy" : 0.05,
+    "spread": 0, // Generic projectile spread
+    
+
+    // ________________________[ RELOAD SETTINGS ]__________________________________
+    "reloadCost": 0.2, // percent of energy consumed per reload
+    "reloadTime": 0.5, // time to reload <bulletsPerReload>, in seconds
+    
+    // (percentage) interval during which a good reload is possible
+    // good reloads grant 1.1x more damage
+    "goodReloadInterval": [0.425, 0.775], 
+    
+    // (percentage) interval during which a perfect reload is possible
+    // perfect reloads grant 1.3x more damage and completely prevent jamming
+    "perfectReloadInterval": [0.6, 0.65],
+    
+    // time it takes to cock the gun
+    // can affect net reload times depending on when the gun was reloaded
+    // affects net fire rate on manual-feed guns (since you cock every shot)
+    "cockTime": 0.6, // time it takes to cock the gun    
+
+
+    // ________________________[ VISUAL SETTINGS ]__________________________________
+    /*
+    The magazine's sprite sheet should look like this:
+    [loop frame 1][loop frame 2] ... [loop frame L][n ammo][n-1 ammo] ... [x+1 ammo][x ammo]
+
+    Each frame should be referred to in the .frames file as such:
+    [present.0][present.1] .. [present.<>L-1][]
+
+    */
+    "magLoopFrames": 0, // L
+    "magAnimRange": [0, 0], // [n, x]
+    "beltMag": false, // affects visual reload; 
+    "flashHidden": false,
+    "muzzleFlashTime": 0.05, // number of seconds the muzzle light is active when firing
+    "muzzleSmokeTime": 5, // number of seconds the muzzle smoke is active
+    "muzzleSmokeDelay": 0.2,
+    "doScreenShake": true,
+    // amount of minimum and maximum screenshake, in that order.
+    "screenShakeAmount": [0.1, 0.5],
+    // percent of screenshake subtracted per second and added per shot, in that order.
+    "screenShakeDelta": [0.2, 0.1],
+    
+    // ________________________[ COMPATIBILITY SETTINGS ]__________________________________
+
+    "fireType": "auto",
+
+
+    // ________________________[ STANCE SETTINGS ]__________________________________
 
     "stances" : {
 
-      // SUSTAINED STANCES - These stances are interpolated to
+      // SUSTAINED STANCES - These stances are constantly interpolated to
       
       // initial stance when re-equipping the weapon
-      "idle" : {
+      "idleneo" : {
         "armRotation" : -45,
         "weaponRotation" : 0,
-        "twoHanded" : false,
+        "twoHanded" : true,
         "allowRotate" : true,
         "allowFlip" : true
       },
@@ -114,6 +280,8 @@
         "twoHanded" : true,
         "allowRotate" : true,
         "allowFlip" : true
+        // "frontArmFrame": "run.3"
+        // "weaponOffset": [-1, 0]
       },
 
       // stance while the gun is jammed
@@ -121,16 +289,29 @@
         "armRotation" : 0,
         "weaponRotation" : -15,
         "twoHanded" : true,
-        "allowRotate" : true,
+        "allowRotate" : false,
+        "aimAngle": 0,
         "allowFlip" : true
+      },
+
+      // stance while the gun has no mag
+      "empty" : {
+        "armRotation" : -15,
+        "weaponRotation" : 0,
+        "twoHanded" : true,
+        "allowRotate" : false,
+        "aimAngle": 0,
+        "allowFlip" : false
+        // "frontArmFrame": "swimIdle.2",
+        // "weaponOffset": [-1, 0]
       },
 
       // stance taken while ejecting the mag
       // this stance is also snapped to
       "ejectmag" : {
-        "armRotation" : -45,
-        "weaponRotation" : 0,
-        "twoHanded" : false,
+        "armRotation" : -30,
+        "weaponRotation" : 5,
+        "twoHanded" : true,
         "allowRotate" : false,
         "allowFlip" : false
       },
@@ -140,48 +321,94 @@
 
       // stance snaps to this when unjamming
       "unjam" : {
-        "armRotation" : -45,
-        "weaponRotation" : 0,
-        "twoHanded" : false,
+        "armRotation" : 5,
+        "weaponRotation" : -20,
+        "twoHanded" : true,
         "allowRotate" : false,
-        "allowFlip" : false
+        "aimAngle": 0,
+        "allowFlip" : false,
+        "frontArmFrame" : "run.2"
       },
 
-      "manualFeed": {
+      "boltPull": {
         "armRotation" : 5,
         "weaponRotation" : 5,
-        "twoHanded" : false,
+        "twoHanded" : true,
         "allowRotate" : false,
-        "allowFlip" : false
+        "allowFlip" : false,
+        "frontArmFrame" : "run.2"
+        // "weaponOffset": [-1, 0]
+      },
+
+      "boltPush": {
+        "armRotation" : 5,
+        "weaponRotation" : 0,
+        "twoHanded" : true,
+        "allowRotate" : false,
+        "allowFlip" : false,
+        "frontArmFrame" : "rotation"
+        // "weaponOffset": [-1, 0]
       },
 
       "loadRound": {
         "armRotation" : -45,
         "weaponRotation" : 45,
-        "twoHanded" : false,
+        "twoHanded" : true,
         "allowRotate" : false,
-        "allowFlip" : false
+        "allowFlip" : false,
+        "duration": 0.25
       },
 
       // RELOAD STANCES
 
       // stance taken while reloading
       "reloading" : {
-        "armRotation" : -45,
+        "armRotation" : -15,
         "weaponRotation" : 0,
-        "twoHanded" : false,
+        "twoHanded" : true,
+        "frontArmFrame": "run.5",
         "allowRotate" : false,
+        "aimAngle": 0,
         "allowFlip" : false
       },
 
       // stance taken upon finishing reload
       "reloaded" : {
-        "armRotation" : -45,
+        "armRotation" : 5,
+        "weaponRotation" : 5,
+        "twoHanded" : true,
+        "allowRotate" : false,
+        "aimAngle": 0,
+        "allowFlip" : false,
+        "frontArmFrame": "swim.3"
+      },
+
+      // Legacy Stances for altfire compatibility
+      "fire": {
+        "armRotation": 0,
+        "weaponRotation": 0,
+        "twoHanded": false,
+        "allowRotate": true,
+        "allowFlip": true
+      },
+
+      "cooldown": {
+        "armRotation": 0,
+        "weaponRotation": 0,
+        "twoHanded": false,
+        "allowRotate": true,
+        "allowFlip": true
+      },
+
+      "idle" : {
+        "armRotation" : 0,
         "weaponRotation" : 0,
         "twoHanded" : false,
-        "allowRotate" : false,
-        "allowFlip" : false
+
+        "allowRotate" : true,
+        "allowFlip" : true
       }
+
 
     }
   }

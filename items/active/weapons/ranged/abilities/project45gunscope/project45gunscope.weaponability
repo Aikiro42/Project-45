@@ -1,0 +1,48 @@
+{
+    "animationCustom" : {
+        "animatedParts" : { "parts" : {
+            "scope" : {
+            "properties" : {
+                "zLevel" : -1,
+                "centered" : true,
+                "offset" : [0.620, 0.125],
+                "transformationGroups" : ["ejectionPort"],
+                "image" : "/items/active/weapons/ranged/abilities/project45gunscope/project45gunscope.png<directives>"
+            }
+            }
+        }},
+        "sounds" : {
+            "aimFoley" : [ "/sfx/project45-synthetikmechanics/reloads/insertmag_generic.ogg" ],
+            "laser" : [ "/sfx/project45-synthetikmechanics/laser.ogg" ]
+        }
+    },
+
+    "animationScripts" : [
+		"/items/active/weapons/ranged/abilities/project45gunscope/project45gunscopeanimation.lua"
+	],
+
+    "ability": {
+        
+        "name" : "Scope",
+        "type" : "project45gunscope",
+        "scripts" : ["/items/active/weapons/ranged/abilities/project45gunscope/project45gunscope.lua"],
+        "class" : "Project45GunScope",
+
+        // How far the scope can go, in blocks.
+        "range": 50,
+
+        "laser": true,
+        "laserColor": [175, 80, 255],
+
+
+        // How far from the center of the screen you must move your cursor to move the camera
+        "deadzone": 2.7,
+        
+        // How far from the deadzone you must move your cursor to move the camera at max speed.
+        "maxSpeed": 1,
+        "maxSpeedDistance": 20
+
+        // "doScreenShake": false
+
+    }
+}

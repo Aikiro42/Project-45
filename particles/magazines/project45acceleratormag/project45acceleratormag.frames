@@ -1,0 +1,7 @@
+{
+  "image" : "project45acceleratormag.png",
+  "frameGrid" : {
+    "size" : [10, 3],
+    "dimensions" : [1, 1]
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "name" : "project45dash",
+  "blockingStat" : "",
+
+  "effectConfig" : {},
+  "defaultDuration" : 0.1,
+
+  "scripts" : [
+    "project45dash.lua"
+  ],
+
+  "animationConfig" : "project45dash.animation"
+}
