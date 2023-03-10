@@ -32,14 +32,17 @@ function SynthetikMechanics:init()
     -- initialize storage
     -- sb.logInfo("[PROJECT 45] storage.ammo = " .. sb.printJson(storage.ammo))
     storage.ammo = storage.ammo or config.getParameter("currentAmmo", -1) -- -1 ammo means we don't have a mag in the gun
-    storage.unejectedCasings = storage.unejectedCasings or 0
-    storage.reloadRating = storage.reloadRating or "ok"
-    storage.jamAmount = storage.jamAmount or 0
-    storage.animationState = storage.animationState or {gun = "ejecting", mag = "absent"} -- initial animation state is empty gun
+    storage.unejectedCasings = storage.unejectedCasings or config.getParameter("currentUnejectedCasings", 0)
+    
+    storage.reloadRating = storage.reloadRating or config.getParameter("currentReloadRating", "ok")
+    activeItem.setScriptedAnimationParameter("reloadRating", storage.reloadRating)
+    
+    storage.jamAmount = storage.jamAmount or config.getParameter("currentJamAmount", 0)
+    storage.animationState = storage.animationState or config.getParameter("currentAnimationState", {gun = "ejecting", mag = "absent"}) -- initial animation state is empty gun
     storage.isLaserOn = storage.isLaserOn or false
     
     -- gun has no magazine on first use, so chamber is empty
-    storage.chamberState = storage.chamberState or EMPTY
+    storage.chamberState = storage.chamberState or config.getParameter("currentChamberState", EMPTY)
 
     -- dodge is off cooldown on first use
     storage.dodgeCooldownTimer = storage.dodgeCooldownTimer or 0
@@ -274,7 +277,9 @@ function SynthetikMechanics:update(dt, fireMode, shiftHeld)
     end
 
     -- Prevent energy regen if there is energy or if currently reloading
-    if storage.ammo > 0 or self.reloadTimer > 0 then status.setResource("energyRegenBlock", 1.0) end
+    if storage.ammo > 0 or self.reloadTimer > 0 or not status.resourceLocked("energy") then
+      status.setResource("energyRegenBlock", 1)
+    end
     if self.weapon.currentAbility then
       self.dashTriggerTimer = -1
     end
@@ -390,6 +395,11 @@ function SynthetikMechanics:update(dt, fireMode, shiftHeld)
 end
 
 function SynthetikMechanics:uninit()
+  activeItem.setInstanceValue("currentAmmo", storage.ammo)
+  activeItem.setInstanceValue("currentReloadRating", storage.reloadRating)
+  activeItem.setInstanceValue("currentChamberState", storage.chamberState)
+  activeItem.setInstanceValue("currentUnejectedCasings", storage.unejectedCasings)
+  activeItem.setInstanceValue("currentAnimationState", storage.animationState)
 end
 
 -- STATES
@@ -526,7 +536,6 @@ function SynthetikMechanics:firing()
   -- decrement ammo
   if self:willConsumeAmmo() then
     storage.ammo = storage.ammo - math.min(self.ammoPerShot, storage.ammo)
-    activeItem.setInstanceValue("currentAmmo", storage.ammo)
   end
   
   --[[
@@ -792,7 +801,6 @@ function SynthetikMechanics:reloading()
 
         -- replenish ammo
         storage.ammo = storage.ammo < 0 and self.bulletsPerReload or storage.ammo + self.bulletsPerReload
-        activeItem.setInstanceValue("currentAmmo", storage.ammo)
 
         -- consume energy for this cycle
         status.overConsumeResource("energy", status.resourceMax("energy") * math.min(self.maxAmmo, self.bulletsPerReload) * self.reloadCost / self.maxAmmo)
@@ -858,7 +866,6 @@ function SynthetikMechanics:reloading()
       storage.reloadRating = "ok"
       status.overConsumeResource("energy", status.resourceMax("energy") * math.min(self.maxAmmo, self.bulletsPerReload) * self.reloadCost / self.maxAmmo)
       storage.ammo = math.min(self.maxAmmo, self.bulletsPerReload)
-      activeItem.setInstanceValue("currentAmmo", storage.ammo)
     
     -- otherwise,
     else
@@ -873,6 +880,7 @@ function SynthetikMechanics:reloading()
       end
 
     end
+    
 
     -- update UI to reflect changes
     activeItem.setScriptedAnimationParameter("reloadRating", storage.reloadRating)
@@ -933,7 +941,6 @@ function SynthetikMechanics:cocking()
       animator.burstParticleEmitter("ejectionPort")
       if storage.chamberState == READY then
         storage.ammo = math.max(0, storage.ammo - self.ammoPerShot)
-        activeItem.setInstanceValue("currentAmmo", storage.ammo)
       end
     end
     storage.chamberState = EMPTY
@@ -997,7 +1004,6 @@ function SynthetikMechanics:ejectMag()
 
   -- reflect mag absence on ammo count
   storage.ammo = -1
-  activeItem.setInstanceValue("currentAmmo", storage.ammo)
 end
 
 function SynthetikMechanics:fireProjectileNeo(projectileType)
@@ -1450,7 +1456,6 @@ function SynthetikMechanics:jam()
     
     -- Decrement ammo; imagine that the bullet is a dud/broken
     storage.ammo = storage.ammo - math.min(self.ammoPerShot, storage.ammo)
-    activeItem.setInstanceValue("currentAmmo", storage.ammo)
     storage.chamberState = FILLED
 
     -- Reset screenshake
@@ -1565,39 +1570,6 @@ function SynthetikMechanics:snapStance(stance)
   self.weapon.relativeWeaponRotation = math.rad(stance.weaponRotation)
   self.weapon.relativeArmRotation = math.rad(stance.armRotation)
   self.aimProgress = 0
-end
-
-function SynthetikMechanics:saveState()
-  
-  --[[
-  
-    -- initialize storage
-    -- sb.logInfo("[PROJECT 45] storage.ammo = " .. sb.printJson(storage.ammo))
-    storage.ammo = storage.ammo or config.getParameter("currentAmmo", -1) -- -1 ammo means we don't have a mag in the gun
-    storage.unejectedCasings = storage.unejectedCasings or 0
-    storage.reloadRating = storage.reloadRating or "ok"
-    storage.jamAmount = storage.jamAmount or 0
-    storage.animationState = storage.animationState or {gun = "ejecting", mag = "absent"} -- initial animation state is empty gun
-    storage.isLaserOn = storage.isLaserOn or false
-  
-  --]]
-
-  activeitem.setInstanceValue("synthetikMechanicsState", {
-    ammo = storage.ammo,
-    unejectedCasings = storage.unejectedCasings,
-    reloadRating = storage.reloadRating,
-    jamAmount = storage.jamAmount,
-    animationSTate = storage.animationState,
-    isLaserOn = storage.isLaserOn
-  })
-
-end
-
-function SynthetikMechanics:loadState()
-  local state = config.getParameter("SynthetikMechanicsState", {})
-  for k, v in pairs(state) do
-    storage[k] = state[k]
-  end
 end
 
 function SynthetikMechanics:logStuff()

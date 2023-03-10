@@ -1,76 +1,81 @@
 {
   "objectName" : "project45-gunshop",
-  "colonyTags" : ["human", "humanbunker","mechanical","commerce"],
+  "colonyTags" : ["human","humanbunker","mechanical","commerce"],
   "rarity" : "Rare",
-  "description" : "Where the heck does this thing store its stock...?",
-  "shortdescription" : "Gun Vending Machine",
+  "shortdescription" : "AHC-754 Gun Shop",
+  "description" : "A revolutionary standard for weapons of war, brought to you in a nifty vending machine.",
   "race" : "human",
   "category" : "decorative",
-  "price" : 3000,
-  "lightColor" : [43, 32, 84],
-  "printable" : true,
+  "price" : 4200,
+  "lightColor" : [120, 65, 0],
+  "printable" : false,
 
   "apexDescription" : "A vending machine. No banana-flavoured snacks, sadly.",
   "avianDescription" : "Perfect to stave off hunger.",
   "floranDescription" : "Clever machine gives Floran treatsss.",
   "glitchDescription" : "Indecisive. I can't decide what to buy.",
-  "humanDescription" : "Oh boy, it's the kind of vending machine where you win every time!",
+  "humanDescription" : "I can't help but feel proud ",
   "hylotlDescription" : "A vending machine for sugary drinks. They will have to do.",
   "novakidDescription" : "A vendin' machine for sugary type drinks.",
 
   "interactAction" : "OpenMerchantInterface",
   "interactData" : {
-    "config" : "/interface/windowconfig/vendingmachine.config",
+    "config" : "/interface/windowconfig/project45-gunshop.config",
     "paneLayoutOverride" : {
       "windowtitle" : {
-        "title" : " Gun Shop",
-        "subtitle" : " Give in to your nature."
+        "title" : "^#FF9000;Gun Shop",
+        "subtitle" : "^#c48636;Let's dehumanize ourselves together."
       }
     },
     "buyFactor" : 1,
     "sellFactor" : 0.9,
     "items" : [
       { "item" : "project45-pipegun" },
-      
       { "item" : "project45-pistol" },
       { "item" : "project45-revolver" },
-      
       { "item" : "project45-submachinegun" },
-      
-      { "item" : "project45-shotgun" },
       { "item" : "project45-assaultrifle" },
-      { "item" : "project45-mosin" },
       { "item" : "project45-garand" },
-      
+      { "item" : "project45-mosin" },
       { "item" : "project45-sniperrifle" },
       { "item" : "project45-antimateriel" },
-      
-      { "item" : "project45-minigun" },
       { "item" : "project45-grenadelauncher" },
-      
+      { "item" : "project45-minigun" },
       { "item" : "project45-accelerator" },
       { "item" : "project45-energygun" },
       { "item" : "project45-gaussrifle" }
     ]
   },
 
-  "inventoryIcon" : "vendingmachineicon.png",
+  "inventoryIcon" : "project45-gunshopicon.png",
 
   "orientations" : [
+    
     {
-      "imageLayers" : [ { "image" : "vendingmachineleft.png:default.<frame>", "fullbright" : true }, { "image" : "vendingmachineleftlit.png:default.<frame>" } ],
-      "imagePosition" : [-8, 0],
-      "direction" : "left",
-      "flipImages" : true,
+      "imageLayers" : [
+        { "image" : "project45-gunshopleft.png:default.<frame>" },
+        { "image" : "project45-gunshopleftfullbright.png:default.<frame>", "fullbright" : true  }
+      ],
+      "imagePosition" : [0, 0],
+      "direction": "left",
+
+      "frames" : 60,
+      "animationCycle" : 5,
 
       "spaceScan" : 0.1,
       "anchors" : [ "bottom" ],
       "collision" : "platform"
     },
     {
-      "imageLayers" : [ { "image" : "vendingmachineright.png:default.<frame>", "fullbright" : true }, { "image" : "vendingmachinerightlit.png:default.<frame>" } ],
-      "imagePosition" : [-8, 0],
-      "direction" : "right",
+      "imageLayers" : [
+        { "image" : "project45-gunshopright.png:default.<frame>" },
+        { "image" : "project45-gunshoprightfullbright.png:default.<frame>", "fullbright" : true  }
+      ],
+      "imagePosition" : [0, 0],
+      "direction": "right",
+
+      "frames" : 60,
+      "animationCycle" : 5,
 
       "spaceScan" : 0.1,
       "anchors" : [ "bottom" ],
@@ -79,8 +84,9 @@
   ],
 
   "soundEffect" : "/sfx/objects/fluorescent_light_loud.ogg",
-  "soundEffectRangeMultiplier" : 0.5,
-
+  "soundEffectRangeMultiplier" : 0.5
+  
+  /*
   "scripts" : [
     "/scripts/npcToyObject.lua"
   ],
@@ -112,5 +118,6 @@
     "preciseStandPositionRight" : [2.0, 1.0],
     "maxNpcs" : 1
   }
+  */
 }
 

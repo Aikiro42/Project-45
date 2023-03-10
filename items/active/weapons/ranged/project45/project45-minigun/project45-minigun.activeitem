@@ -74,8 +74,12 @@
     "chargeTime": 1,
     "overchargeTime": 0,
 
-    "cycleTime": 0.01,
-    "fireTime": 0.01,
+    "cycleTime": [0.1, 0],
+    "cycleTimeGrowthRate": 0.05,
+    "fireTime": 0.001,
+    
+    "recoilDeg": [0.2, 0.04],
+    "recoilMult": 0.4,
 
     "jamChances": {
       "bad": 0.1,
@@ -103,9 +107,6 @@
 
     "flashHidden": false,
     "suppressed": false,
-
-    "recoilDeg": [0.4, 0.08],
-    "recoilMult": 0.8,
 
     "critChance": 0.05,
     "critDamageMult": 1.2,
