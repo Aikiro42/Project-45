@@ -18,6 +18,8 @@ function build(directory, config, parameters, level, seed)
     parameters.level = level
   end
 
+  parameters.shortdescription = config.shortdescription
+
   -- retrieve ability animation scripts
   local primaryAnimationScripts = setupAbility(config, parameters, "primary")
   local altAnimationScripts = setupAbility(config, parameters, "alt")
@@ -145,33 +147,13 @@ function build(directory, config, parameters, level, seed)
       ) .. "x"
 
       local heavyDesc = config.primaryAbility.heavyWeapon and "^#FF5050;Heavy.^reset; " or ""
-      local multishotDesc = config.primaryAbility.multishot ~= 1 and (
-        "^#9dc6f5;".. util.round(
-          (config.primaryAbility.multishot - math.floor(config.primaryAbility.multishot)) * 100, 1) .. 
-          "% chance to shoot " .. math.ceil(config.primaryAbility.multishot) .. "x the amount of bullets.^reset; ") or ""
+      local multishotDesc = config.primaryAbility.multishot ~= 1 and ("^#9dc6f5;" .. util.round(config.primaryAbility.multishot, 1) .. "x multishot.^reset; ") or ""
       local chargeDesc = config.primaryAbility.chargeTime > 0 and ("^#FF5050;" .. util.round(config.primaryAbility.chargeTime, 1) .. "s charge time.^reset; ") or ""
       local overchargeDesc = config.primaryAbility.overchargeTime > 0 and ("^#9dc6f5;" .. util.round(config.primaryAbility.overchargeTime, 1) .. "s overcharge.^reset; ") or ""
       
       config.description = heavyDesc .. chargeDesc .. overchargeDesc .. multishotDesc .. config.description
 
     end
-    
-    --[[
-    -- mods
-    local mods = {}
-    if config.altAbility then table.insert(mods, config.altAbility.name) end
-    if config.primaryAbility.dashParams.enabled then table.insert(mods, "Dash") end
-    if config.primaryAbility.laser.enabled then table.insert(mods, "Laser") end
-    local modLabel = ""
-    for i=1,#mods,1 do
-      if mods[i] then
-        modLabel = modLabel .. mods[i]
-        if i < #mods then modLabel = modLabel .. ", " end
-      end
-    end
-  
-    config.tooltipFields.altAbilityLabel = modLabel ~= "" and ("^#ABD2FF;" .. modLabel) or "^#777777;None"
-    --]]
 
     config.tooltipFields.altAbilityLabel = config.altAbility and ("^#ABD2FF;" .. (config.altAbility.name or "unknown")) or "^#777777;None"
 
@@ -180,6 +162,7 @@ function build(directory, config, parameters, level, seed)
   -- set price
   -- TODO: should this be handled elsewhere?
   config.price = (config.price or 0) * root.evalFunction("itemLevelPriceMultiplier", configParameter("level", 1))
+  parameters.price = config.price
 
   return config, parameters
 end

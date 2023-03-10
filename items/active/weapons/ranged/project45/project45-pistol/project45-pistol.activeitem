@@ -1,6 +1,6 @@
 {
   "itemName" : "project45-pistol",
-  "price" : 1,
+  "price" : 1000,
   "maxStack" : 1,
   "rarity" : "Essential",
   "description" : "An entry-level firearm for enthusiasts of the .",

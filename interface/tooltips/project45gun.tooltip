@@ -116,18 +116,19 @@
 
   "moneyIcon" : {
     "type" : "image",
-    "position" : [125, 4],
-    "file" : "/interface/money.png"
+    "position" : [189, 3],
+    "file" : "/interface/project45-gunshop/pixels.png"
   },
   "priceLabel" : {
     "type" : "label",
-    "position" : [139, 4],
-    "hAnchor" : "left",
+    "position" : [187, 6],
+    "hAnchor" : "right",
+    "vAnchor": "mid",
     "value" : "tree"
   },
   "rarityLabel" : {
     "type" : "label",
-    "position" : [14, 7],
+    "position" : [18, 6],
     "hAnchor" : "left",
     "vAnchor": "mid",
     "centered" : true,

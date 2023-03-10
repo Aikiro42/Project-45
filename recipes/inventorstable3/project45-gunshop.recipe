@@ -1,0 +1,15 @@
+{
+  "input" : [
+    { "item" : "durasteelbar", "count" : 20 },
+    { "item" : "battery", "count" : 1 },
+    { "item" : "wire", "count" : 6 },
+    { "item" : "siliconboard", "count" : 3 },
+    { "item" : "teleportercore", "count" : 3 }
+  ],
+  "output" : {
+    "item" : "project45-gunshop",
+    "count" : 1
+  },
+  "duration" : 3,
+  "groups" : [ "inventorstable3", "craftingstations", "all" ]
+}
