@@ -1,21 +1,21 @@
 {
   "animationCustom" : {
     "animatedParts" : { "parts" : {
-      "enemyradar" : {
+      "rail" : {
         "properties" : {
           "zLevel" : 5,
           "centered" : true,
           "offset" : [0, 0],
-          "transformationGroups" : ["weapon"],
+          "transformationGroups" : ["muzzle"],
           "image" : "/items/active/weapons/ranged/abilities/project45enemyradar/project45enemyradar.png<directives>"
         }
       },
-      "enemyradarfullbright" : {
+      "railfullbright" : {
         "properties" : {
           "zLevel" : 5,
           "centered" : true,
           "offset" : [0, 0],
-          "transformationGroups" : ["weapon"],
+          "transformationGroups" : ["muzzle"],
           "fullbright": true,
           "image" : "/items/active/weapons/ranged/abilities/project45enemyradar/project45enemyradarfullbright.png<directives>"
         }

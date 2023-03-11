@@ -5,7 +5,10 @@ function init()
   self.totalCost = "lblCostTotal"
 
   self.weapons = config.getParameter("weapons", {"project45-pistol"})
+  self.mods = config.getParameter("mods", {"project45-gunscopemod"})
   
+  self.mode = "weapons"
+
   self.selectedItem = nil
   self.prevSelectedItem = nil
 	
@@ -13,12 +16,70 @@ function init()
 end
 
 function update(dt)
-  populateItemList()
+  if self.mode == "weapons" then
+    populateItemList()
+  elseif self.mode == "mods" then
+    populateModList()
+  end
+end
+
+function switchMode(mode)
+  if mode == "0" then
+    populateItemList(true)
+  end
+  if mode == "1" then
+    populateModList(true)
+  end
+end
+
+function populateModList(forceRepop)
+  local playerMoney = player.currency("money")
+  self.mode = "mods"
+  if forceRepop then
+    widget.clearListItems(self.itemList)
+
+    local showEmptyLabel = true
+
+    for i = 1, #self.mods do
+      local generatedMod = root.createItem(self.mods[i])
+      --local randomWeapon = self.weaponTypes[(math.random(1, 4294967295) % #self.weaponTypes) + 1]
+      --root.itemConfig(randomWeapon)
+
+      local config = root.itemConfig(self.mods[i]).config
+      -- sb.logInfo("[ PROJECT 45 ] " .. sb.printJson(modConfig))
+      
+      showEmptyLabel = false
+
+      local listItem = string.format("%s.%s", self.itemList, widget.addListItem(self.itemList))
+      local name = config.shortdescription or "Failed to reach item name"
+      local cost = config.price or 1
+      generatedMod.parameters.price = cost
+
+      widget.setItemSlotItem(string.format("%s.itemIcon", listItem), generatedMod)
+      widget.setText(string.format("%s.itemName", listItem), "^#FF9000;" .. name)
+      
+      widget.setText(string.format("%s.priceLabel", listItem), "^#FF9000;" .. math.ceil(cost))
+
+      widget.setData(listItem,
+      {
+        item = generatedMod,
+        price = math.ceil(cost)
+      }
+      )
+      
+      widget.setVisible(string.format("%s.unavailableoverlay", listItem), cost > playerMoney)
+    end
+
+    self.selectedItem = nil
+    showWeapon(nil)
+
+    widget.setVisible("emptyLabel", showEmptyLabel)
+  end
 end
 
 function populateItemList(forceRepop)
   local playerMoney = player.currency("money")
-
+  self.mode = "weapons"
   if forceRepop then
     widget.clearListItems(self.itemList)
 
@@ -34,7 +95,7 @@ function populateItemList(forceRepop)
       showEmptyLabel = false
 
       local listItem = string.format("%s.%s", self.itemList, widget.addListItem(self.itemList))
-      local name = config.shortdescription or config.shortdescription or "Failed to reach item name"
+      local name = config.shortdescription or "Failed to reach item name"
       local cost = config.price or 1
 
       widget.setItemSlotItem(string.format("%s.itemIcon", listItem), generatedWeapon)
@@ -103,21 +164,29 @@ function purchase()
     local selectedItem = selectedData.item
 
     if selectedItem then
-	  --If we successfully consumed enough currency, give the new item to the player
-	  local consumedCurrency = player.consumeCurrency("money", selectedItem.parameters.price)
-	  if consumedCurrency then
-		player.giveItem(selectedItem)
-	    widget.setData(listItem,
-		  {
-		    price = "Sold!"
-		  }
-	    )
-	    widget.setVisible(string.format("%s.unavailableoverlay", listItem), true)
-	    widget.setText(string.format("%s.priceLabel", listItem), "^#190700;Sold!")
-		widget.setText(self.totalCost, string.format("^#190700;--"))
-		widget.setButtonEnabled("btnBuy", false)
-	  end
+      --If we successfully consumed enough currency, give the new item to the player
+      local consumedCurrency = player.consumeCurrency("money", selectedItem.parameters.price)
+
+      if consumedCurrency then
+        player.giveItem(selectedItem)
+        --[[
+        widget.setData(listItem,
+        {
+          price = "Sold!"
+        }
+        )
+        widget.setVisible(string.format("%s.unavailableoverlay", listItem), true)
+        widget.setText(string.format("%s.priceLabel", listItem), "^#190700;Sold!")
+        widget.setText(self.totalCost, string.format("^#190700;--"))
+        widget.setButtonEnabled("btnBuy", false)
+        --]]
+      end
+
     end
-    populateItemList()
+    if self.mode == "weapons" then
+      populateItemList(true)
+    elseif self.mode == "mods" then
+      populateModList(true)
+    end
   end
 end

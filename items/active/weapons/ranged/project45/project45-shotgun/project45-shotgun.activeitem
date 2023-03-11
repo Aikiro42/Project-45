@@ -12,7 +12,11 @@
   "level" : 1,
 
   "inventoryIcon" : "project45-shotgun-icon.png",
-
+  "acceptsModType": {
+    "sights": false,
+    "rail": true,
+    "stat": true
+  },
   // "animation" : "project45-template.animation",
   "animationParts" : {
     "butt" : "",
@@ -37,10 +41,10 @@
             }
       }}},
       "parts" : {
-        "enemyradar" : { "properties" : {
+        "rail" : { "properties" : {
         "offset" : [0, -0.3]
         }},
-        "enemyradarfullbright" : { "properties" : {
+        "railfullbright" : { "properties" : {
           "offset" : [0, -0.3]
         }}
       }

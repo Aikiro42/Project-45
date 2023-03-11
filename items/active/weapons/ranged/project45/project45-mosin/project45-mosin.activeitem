@@ -28,6 +28,12 @@
 
   },
 
+  "acceptsModType": {
+    "sights": true,
+    "rail": false,
+    "stat": true
+  },
+
   "animationCustom":{
     "animatedParts" : {
       "stateTypes" : {"gun" : {"states" : {

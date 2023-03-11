@@ -20,7 +20,11 @@ When gun is a windup-type and
   "level" : 1,
 
   "inventoryIcon" : "project45-energygun-icon.png",
-
+  "acceptsModType": {
+    "sights": true,
+    "rail": false,
+    "stat": true
+  },
   // "animation" : "project45-template.animation",
   "animationParts" : {
     "butt" : "",

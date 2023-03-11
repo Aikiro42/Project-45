@@ -12,6 +12,12 @@
   "level" : 1,
 
   "inventoryIcon" : "project45-grenadelauncher-icon.png",
+  
+  "acceptsModType": {
+    "sights": false,
+    "rail": true,
+    "stat": true
+  },
 
   // "animation" : "project45-template.animation",
   "animationParts" : {

@@ -84,73 +84,12 @@
       "project45-accelerator",
       "project45-energygun",
       "project45-gaussrifle"
-    ]
-  }
-
-  // "interactAction" : "OpenMerchantInterface",
-  /*
-  "interactData" : {
-    "config" : "/interface/scripted/project45-gunshop/project45-gunshopscripted.config",
-    "paneLayoutOverride" : {
-      "windowtitle" : {
-        "title" : "^#FF9000;Gun Shop",
-        "subtitle" : "^#c48636;Let's dehumanize ourselves together."
-      }
-    },
-    "buyFactor" : 1,
-    "sellFactor" : 0.9,
-    "items" : [
-      { "item" : "project45-pipegun" },
-      { "item" : "project45-pistol" },
-      { "item" : "project45-revolver" },
-      { "item" : "project45-submachinegun" },
-      { "item" : "project45-assaultrifle" },
-      { "item" : "project45-garand" },
-      { "item" : "project45-mosin" },
-      { "item" : "project45-sniperrifle" },
-      { "item" : "project45-antimateriel" },
-      { "item" : "project45-grenadelauncher" },
-      { "item" : "project45-minigun" },
-      { "item" : "project45-accelerator" },
-      { "item" : "project45-energygun" },
-      { "item" : "project45-gaussrifle" }
-    ]
-  },
-  */
-
-
-  /*
-  "scripts" : [
-    "/scripts/npcToyObject.lua"
-  ],
-  "scriptDelta" : 60,
-
-  "npcToy" : {
-    "influence" : [
-      "vendingmachineActivate",
-      "vendingmachineCollect",
-      "vendingmachineConsume",
-      "vendingmachineComplete"
     ],
-    "defaultReactions" : {
-      "vendingmachineActivate" : [
-        [1.0, "pressbutton"]
-      ],
-      "vendingmachineCollect" : [
-        [1.0, "crouchcollect"]
-      ],
-      "vendingmachineConsume" : [
-        [1.0, "drink"]
-      ],
-      "vendingmachineComplete" : [
-        [1.0, "smile"],
-        [0.1, "vomit"]
-      ]
-    },
-    "preciseStandPositionLeft" : [-0.5, 1.0],
-    "preciseStandPositionRight" : [2.0, 1.0],
-    "maxNpcs" : 1
+    "mods": [
+      "project45-gunscopemod",
+      "project45-enemyradarmod",
+      "project45-flashlasermod"
+    ]
   }
-  */
 }
 

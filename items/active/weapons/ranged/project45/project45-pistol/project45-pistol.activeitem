@@ -28,13 +28,29 @@
 
   },
 
+  "acceptsModType": {
+    "sights": false,
+    "rail": true,
+    "stat": true
+  },
+
   "animationCustom":{
-    "animatedParts" : {"stateTypes" : {"gun" : {"states" : {
+    "animatedParts" : {
+      "stateTypes" : {"gun" : {"states" : {
             "charging": {
               // set this value to cycleTime
               "cycle" : 0.05
             }
-    }}}},
+      }}},
+      "parts" : {
+        "rail" : { "properties" : {
+        "offset" : [-0.3, -0.4]
+        }},
+        "railfullbright" : { "properties" : {
+          "offset" : [-0.3, -0.4]
+        }}
+      }
+    },
     "particleEmitters": {
       "ejectionPort" : { "particles" : [ 
           {"particle": "project45bulletcasesmall"}
@@ -79,8 +95,7 @@
     "magType": "default",
     "bulletsPerReload": 12,
     "laser":{
-      "enabled": true,
-      "alwaysActive": true
+      "enabled": false
     },
     "semi": true,
 

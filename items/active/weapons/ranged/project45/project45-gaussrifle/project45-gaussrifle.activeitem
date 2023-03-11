@@ -44,7 +44,7 @@ When gun is a windup-type and
               "cycle" : 0.05
             }
       }}},
-      "parts" : { "scope" : { "properties" : {
+      "parts" : { "sights" : { "properties" : {
         "offset" : [-0.2, 0.125]
       }}}
     },

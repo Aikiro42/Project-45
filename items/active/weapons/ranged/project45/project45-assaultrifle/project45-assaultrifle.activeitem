@@ -28,6 +28,12 @@
 
   },
 
+  "acceptsModType": {
+    "sights": true,
+    "rail": true,
+    "stat": true
+  },
+
   "animationCustom":{
 
     "animatedParts" : {
@@ -37,9 +43,14 @@
               "cycle" : 0.05
             }
       }}},
-      "parts" : { "flashlight" : { "properties" : {
+      "parts" : {
+        "rail" : { "properties" : {
           "offset" : [-0.75, -0.3]
-      }}}
+        }},
+        "railfullbright" : { "properties" : {
+          "offset" : [-0.75, -0.3]
+        }}
+      }
     },
 
     "particleEmitters": {

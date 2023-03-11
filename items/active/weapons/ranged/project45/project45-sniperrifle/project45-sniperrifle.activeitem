@@ -12,6 +12,11 @@
   "level" : 1,
 
   "inventoryIcon" : "project45-sniperrifle-icon.png",
+  "acceptsModType": {
+    "sights": true,
+    "rail": true,
+    "stat": true
+  },
 
   // "animation" : "project45-template.animation",
   "animationParts" : {
@@ -36,7 +41,7 @@
               "cycle" : 0.05
             }
       }}},
-      "parts" : { "scope" : { "properties" : {
+      "parts" : { "sights" : { "properties" : {
         "offset" : [2.2, 0.25]
       }}}
     },
@@ -116,8 +121,6 @@
     }
 
   },
-
-  "altAbilityType": "project45gunscope",
 
   "builder" : "/items/buildscripts/buildproject45neo.lua"
 }
