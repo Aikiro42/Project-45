@@ -442,7 +442,7 @@ function Project45GunFire:reload()
 
 
     self.weapon:setStance(self.stances.reloadEnd)
-    sb.logInfo("[PROJECT 45] Reload Done: " .. animator.animationState("firing"))
+    -- sb.logInfo("[PROJECT 45] Reload Done: " .. animator.animationState("firing"))
     if self.fireType == "boltaction" and animator.animationState("firing") == "off" then
       playSound("reloadStart", 0.05)
       animator.setAnimationState("firing", "noMagUnracked")
