@@ -141,7 +141,7 @@ function itemSelected()
   if self.prevSelectedItem then
     local listItem = string.format("%s.%s", self.itemList, self.prevSelectedItem)
     local itemData = widget.getData(listItem)
-    sb.logInfo(sb.printJson(itemData))
+    -- sb.logInfo(sb.printJson(itemData))
     widget.setText(string.format("%s.priceLabel", listItem), "^#FF9000;" .. itemData.price)
   end
   
@@ -151,7 +151,7 @@ function itemSelected()
   if listItem then
     local listItem = string.format("%s.%s", self.itemList, self.selectedItem)
     local itemData = widget.getData(listItem)
-    sb.logInfo(sb.printJson(itemData))
+    -- sb.logInfo(sb.printJson(itemData))
     widget.setText(string.format("%s.priceLabel", listItem), "^#190700;" .. itemData.price)
     showWeapon(itemData.item)
   end
