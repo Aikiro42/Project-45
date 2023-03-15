@@ -4,7 +4,7 @@
   "rarity" : "Legendary",
   "tooltipKind" : "project45gunmod",
   "category" : "Stat Mod",
-  "inventoryIcon" : "/items/augments/project45-gunmods/project45-fireratemod.png",
+  "inventoryIcon" : "/items/augments/project45-gunmods/stat/project45-fireratemod/project45-fireratemod.png",
   "description" : "Decreases firing time by 20%.",
   "shortdescription" : "Fire Rate Improvement",
 

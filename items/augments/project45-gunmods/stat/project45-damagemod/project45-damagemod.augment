@@ -4,7 +4,7 @@
   "rarity" : "Legendary",
   "tooltipKind" : "project45gunmod",
   "category" : "Stat Mod",
-  "inventoryIcon" : "/items/augments/project45-gunmods/project45-damagemod.png",
+  "inventoryIcon" : "/items/augments/project45-gunmods/stat/project45-damagemod/project45-damagemod.png",
   "description" : "Improves a weapon's base damage by x120%.",
   "shortdescription" : "Damage Improvement",
 

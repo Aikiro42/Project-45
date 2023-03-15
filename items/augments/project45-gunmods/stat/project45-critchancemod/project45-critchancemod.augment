@@ -4,7 +4,7 @@
   "rarity" : "Legendary",
   "tooltipKind" : "project45gunmod",
   "category" : "Stat Mod",
-  "inventoryIcon" : "/items/augments/project45-gunmods/project45-critchancemod.png",
+  "inventoryIcon" : "/items/augments/project45-gunmods/stat/project45-critchancemod/project45-critchancemod.png",
   "description" : "Increases a weapon's critical chance by +10%",
   "shortdescription" : "Crit Chance Improvement",
 
