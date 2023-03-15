@@ -4,7 +4,7 @@
   "rarity" : "Essential",
   "tooltipKind" : "project45gunmod",
   "category" : "Ability Mod",
-  "inventoryIcon" : "/items/augments/project45-gunmods/project45-flashlasermod.png",
+  "inventoryIcon" : "/items/augments/project45-gunmods/ability/project45-flashlasermod/project45-flashlasermod.png",
   "description" : "A compact flashlight and laser. Helps in combat under low-visibility conditions.",
   "shortdescription" : "Military Flashlight Mod",
 

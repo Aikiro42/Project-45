@@ -4,7 +4,7 @@
   "rarity" : "Essential",
   "tooltipKind" : "project45gunmod",
   "category" : "Ability Mod",
-  "inventoryIcon" : "/items/augments/project45-gunmods/project45-gunscopemod.png",
+  "inventoryIcon" : "/items/augments/project45-gunmods/ability/project45-gunscopemod/project45-gunscopemod.png",
   "description" : "A scope meant to be installed on",
   "shortdescription" : "Scope Mod",
 

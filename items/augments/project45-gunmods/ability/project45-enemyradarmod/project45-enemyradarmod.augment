@@ -4,7 +4,7 @@
   "rarity" : "Essential",
   "tooltipKind" : "project45gunmod",
   "category" : "Ability Mod",
-  "inventoryIcon" : "/items/augments/project45-gunmods/project45-enemyradarmod.png",
+  "inventoryIcon" : "/items/augments/project45-gunmods/ability/project45-enemyradarmod/project45-enemyradarmod.png",
   "description" : "Passively shows directions of nearby entities.",
   "shortdescription" : "Enemy Radar Mod",
 
