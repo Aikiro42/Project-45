@@ -15,11 +15,11 @@
     "recoilMult": 0.1
     ,"animationCustom": {
       "animatedParts" : { "parts" : {
-        "grip" : {
+        "underbarrel" : {
           "properties" : {
             "zLevel" : 5,
             "centered" : true,
-            "transformationGroups" : ["muzzle"],
+            "transformationGroups" : ["weapon"],
             "image" : "/items/augments/project45-gunmods/mods/project45-gripmod/project45-gripmodsprite.png<directives>"
           }
         }}}

@@ -96,7 +96,8 @@
         "project45-silencermod",
         "project45-autofiremod",
         "project45-extendedmagmod",
-        "project45-weightmod"
+        "project45-weightmod",
+        "project45-vanitylaunchermod"
       ],
 
       "stat": [

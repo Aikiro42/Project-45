@@ -1,0 +1,34 @@
+{
+  "itemName" : "project45-vanitylaunchermod",
+  "price" : 15000,
+  "rarity" : "Legendary",
+  "tooltipKind" : "project45gunmod",
+  "category" : "MOD TEMPLATE",
+  "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-vanitylaunchermod/project45-vanitylaunchermod.png",
+  "description" : "Mod Template.",
+  "shortdescription" : "Mod Template.",
+
+  "radioMessagesOnPickup" : [ "pickupaugment" ],
+
+  "augment": {
+    "type": "vanity",
+    "modName": "Vanity Launcher",
+    "slot": "underbarrel",
+
+    // animation custom for custom sprites to be applied on the weapon
+    "animationCustom": {
+      "animatedParts" : { "parts" : {
+        "underbarrel" : {
+          "properties" : {
+            "zLevel" : 5,
+            "centered" : true,
+            "transformationGroups" : ["weapon"],
+            "image" : "/items/augments/project45-gunmods/mods/project45-vanitylaunchermod/project45-vanitylaunchermodsprite.png<directives>"
+          }
+        }}}
+    }
+
+  },
+
+  "scripts" : [ "/scripts/augments/project45-gunmod.lua" ]
+}
