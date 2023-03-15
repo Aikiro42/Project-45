@@ -20,10 +20,7 @@ When gun is a windup-type and
   "level" : 1,
 
   "inventoryIcon" : "project45-energygun-icon.png",
-<<<<<<< Updated upstream
-=======
   "acceptsGunMods": true,
->>>>>>> Stashed changes
 
   // "animation" : "project45-template.animation",
   "animationParts" : {

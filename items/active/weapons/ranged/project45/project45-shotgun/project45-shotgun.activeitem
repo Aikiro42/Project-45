@@ -12,13 +12,9 @@
   "level" : 1,
 
   "inventoryIcon" : "project45-shotgun-icon.png",
-<<<<<<< Updated upstream
-
-=======
   "acceptsGunMods": true,
 
   
->>>>>>> Stashed changes
   // "animation" : "project45-template.animation",
   "animationParts" : {
     "butt" : "",

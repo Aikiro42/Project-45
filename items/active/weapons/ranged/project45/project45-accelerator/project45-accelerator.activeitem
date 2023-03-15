@@ -12,11 +12,8 @@
   "level" : 1,
 
   "inventoryIcon" : "project45-accelerator-icon.png",
-<<<<<<< Updated upstream
-=======
   
   "acceptsGunMods": true,
->>>>>>> Stashed changes
 
   // "animation" : "project45-template.animation",
   "animationParts" : {
