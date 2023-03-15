@@ -68,8 +68,6 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
   end
 
 
-  -- sb.logInfo("[PROJECT 45] " .. self.fireMode)
-
   -- correct aim when not idle
   if self.aiming then
     self.weapon.relativeWeaponRotation = util.toRadians(interp.sin(reAimProgress, math.deg(self.weapon.relativeWeaponRotation), self.stances.aim.weaponRotation))
@@ -361,8 +359,6 @@ function Project45GunFire:reload()
   fireHeld = true
   self.chargeTimer = 0
 
-  -- sb.logInfo("[PROJECT 45] Entered Reload State: " .. animator.animationState("firing"))
-
   if (self.fireType == "windup" or self.fireType == "boltaction") and not self.autoReload and animator.animationState("firing") ~= "noMag" then
     animator.setAnimationState("firing", "empty")
   end
@@ -442,7 +438,6 @@ function Project45GunFire:reload()
 
 
     self.weapon:setStance(self.stances.reloadEnd)
-    sb.logInfo("[PROJECT 45] Reload Done: " .. animator.animationState("firing"))
     if self.fireType == "boltaction" and animator.animationState("firing") == "off" then
       playSound("reloadStart", 0.05)
       animator.setAnimationState("firing", "noMagUnracked")
