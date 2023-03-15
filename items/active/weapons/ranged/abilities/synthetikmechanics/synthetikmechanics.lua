@@ -1522,7 +1522,7 @@ end
 -- Returns true if the diceroll for the given chance is successful
 function SynthetikMechanics:diceRoll(chance, inclusive)
   -- clamp chance between 0% and 100%
-  local chance = chance < 0 and 0 or chance > 1 and 1 or chance
+  local chance = math.clamp(chance, 0, 1)
   local diceRoll = truerand()
   -- sb.logInfo("[PROJECT 45] Dice Rolled: " .. diceRoll)
   return inclusive and diceRoll <= chance or diceRoll < chance -- function like orig function

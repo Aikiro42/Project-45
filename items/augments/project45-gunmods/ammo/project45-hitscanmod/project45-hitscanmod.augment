@@ -9,7 +9,7 @@
   "shortdescription" : "Hitscan Bullets",
 
   "augment":{
-    "type": "projectile",
+    "type": "ammo",
     "modName": "Hitscan Bullets",
     "slot": "ammotype",
     "primaryAbility":{

@@ -9,7 +9,7 @@
   "shortdescription" : "Standard Bullets",
 
   "augment":{
-    "type": "projectile",
+    "type": "ammo",
     "modName": "Standard Bullets",
     "slot": "ammotype",
     "primaryAbility":{

@@ -12,15 +12,73 @@
 
   "augment": {
     /*
-    
-    "type" field:
-    This field dictates 
-      "ability" - for mods that alter the weaponability
-      "rifling" - for stat-modifying mods that alter damage
-      "crystal" - same as "rifling" but for energy weapons
-    ""
+    can either be "stat" or anything else
     */
-    "type": "stat"
+    "type": "stat",
+    
+    /*
+    NON-STAT MODS REQUIRE THIS FIELD
+    */
+    "modName": "Template Mod",
+    
+    /*
+    NON-STAT MODS REQUIRE THIS FIELD
+    slots are self-explanatory:
+    - underrail
+    - siderail
+    - toprail
+    - sights
+    - muzzle
+    - barrel
+    - receiver
+    - stock
+    - ammotype
+    */
+    "slot": "underrail",
+
+    // changes ability type
+    "altAbilityType": "project45gunscope",
+    "altAbility": {},  // overwrite certain altAbility parameters
+
+    "muzzleOffsetAdd": [0, 0], // useful for muzzle mods
+    "primaryAbility": {}, // overwrite certain primaryAbility parameters directly
+    
+    // multiplier applied to weapon's current base damage.
+    // if you instasll three project45-damagemods on a weapon,
+    // the resulting baseDamage parameter of the weapon would be
+    // baseDamage * (0.2 ^ 3)
+    "baseDamageMult": 1,
+
+    // multiplier applied to both the weapon's
+    // cycleTime (read: burstTime), fireTime, chargeTime and overchargeTime
+    "cycleTimeMult": 1,
+
+    // multiplier applied to weapon's reload cost
+    "reloadCostMult": 1,
+
+    // amount added to weapon's critical chance
+    // e.g. if you want to add 20% CC, set this value to 0.2
+    "critChanceAdd": 0,
+
+    // multiplier applied to weapon's critical damage
+    "critDamageMult": 1,
+
+    // multiplier applied to weapon's maximum ammo
+    // also affects bullets per reload if it was greater than or equal to
+    // the weapon's maximum ammo
+    "maxAmmoMult": 1,
+
+    // multiplier applied to weapon's movement speed and jump height factors
+    // if either factor is less than 1, it will be set to 1
+    "mobilityMult": 1,
+
+    // multiplier applied to weapon's recoil multiplier
+    // affects muzzle rise rate
+    "recoilMult": 1,
+
+    // animation custom for custom sprites to be applied on the weapon
+    "animationCustom": {}
+
   },
 
   "scripts" : [ "/scripts/augments/project45-gunmod.lua" ]

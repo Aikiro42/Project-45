@@ -19,8 +19,8 @@ function disassemble()
     if input.parameters then
         if input.parameters.acceptsGunMods and input.parameters.isModded then
     
-            if input.parameters.modList then
-              for k, v in pairs(input.parameters.modList) do
+            if input.parameters.modSlots then
+              for k, v in pairs(input.parameters.modSlots) do
                 player.giveItem(v[2])
               end
             end
