@@ -11,6 +11,7 @@
   "augment":{
     "type": "ability",
     "modName": "Enemy Radar",
+    "slot": "siderail",
     "altAbilityType" : "project45enemyradar"
   },
 

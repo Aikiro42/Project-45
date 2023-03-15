@@ -11,6 +11,7 @@
   "augment":{
     "type": "weight",
     "modName": "Aegisalt Alloy Parts",
+    "slot": "material",
     "mobilityMult": 1.15,
     "primaryAbility": {
       "heavyWeapon": false

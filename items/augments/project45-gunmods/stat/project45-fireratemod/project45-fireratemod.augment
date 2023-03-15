@@ -10,7 +10,6 @@
 
   "augment":{
     "type": "stat",
-    "modName": null,
     "cycleTimeMult": 0.8
   },
 

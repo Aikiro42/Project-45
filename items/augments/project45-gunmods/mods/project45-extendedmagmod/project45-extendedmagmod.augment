@@ -11,6 +11,7 @@
   "augment":{
     "type": "mag",
     "modName": "Extended Magazines",
+    "slot": "mag",
     "maxAmmoMult": 2
   },
 

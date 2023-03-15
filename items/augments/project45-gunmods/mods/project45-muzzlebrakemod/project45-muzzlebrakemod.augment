@@ -11,6 +11,7 @@
   "augment":{
     "type": "muzzle",
     "modName": "Muzzle Brake",
+    "slot": "muzzle",
     "recoilMult": 0.5
     
     ,"animationCustom": {

@@ -11,6 +11,7 @@
   "augment":{
     "type": "projectile",
     "modName": "Hitscan Bullets",
+    "slot": "ammotype",
     "primaryAbility":{
       "projectileType": "hitscan",
       "overrideHitscan": true

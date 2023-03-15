@@ -13,6 +13,7 @@
   "augment": {
     "type": "receiver",
     "modName": "Automatic Receiver",
+    "slot": "receiver",
     "primaryAbility": {
       "semi": false,
       "manualFeed": false,

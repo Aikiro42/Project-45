@@ -10,7 +10,6 @@
 
   "augment":{
     "type": "stat",
-    "modName": null,
     "reloadCostMult": 0.8
   },
 
