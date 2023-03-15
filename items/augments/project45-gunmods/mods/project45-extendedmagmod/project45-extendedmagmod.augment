@@ -4,7 +4,7 @@
   "rarity" : "Legendary",
   "tooltipKind" : "project45gunmod",
   "category" : "Magazine Mod",
-  "inventoryIcon" : "/items/augments/project45-gunmods/project45-extendedmagmod.png",
+  "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-extendedmagmod/project45-extendedmagmod.png",
   "description" : "Doubles ammo capacity.",
   "shortdescription" : "Extended Magazines",
 

@@ -4,7 +4,7 @@
   "rarity" : "Legendary",
   "tooltipKind" : "project45gunmod",
   "category" : "Grip Mod",
-  "inventoryIcon" : "/items/augments/project45-gunmods/project45-gripmod.png",
+  "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-gripmod/project45-gripmod.png",
   "description" : "Provides better handling of the gun, reducing recoil by 50%.",
   "shortdescription" : "Vertical Grip",
 
