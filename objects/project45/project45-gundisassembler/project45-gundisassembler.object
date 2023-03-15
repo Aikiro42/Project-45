@@ -1,0 +1,56 @@
+{
+  "objectName" : "project45-gundisassembler",
+  "rarity" : "Essential",
+  "description" : "Retrieve your modifications using this kit.",
+  "shortdescription" : "^orange;Gun Disassembly Kit^white;",
+  "race" : "generic",
+  "category" : "crafting",
+  "price" : 1000,
+  "objectType" : "container",
+  "printable" : false,
+
+  "apexDescription" : "A healthy campfire. I could cook some food using it.",
+  "avianDescription" : "A campfire. It's useful for very basic cooking.",
+  "floranDescription" : "Floran hate flames, but likesss to cook. Cooking leadss to eating.",
+  "glitchDescription" : "Informed. Heating meat with fire is a basic form of cooking.",
+  "humanDescription" : "I've always enjoyed watching the flames of a campfire dance.",
+  "hylotlDescription" : "A campfire, I enjoy the simplicity of flame-cooked food.",
+  "novakidDescription" : "A toasty campfire for cookin'. What more d'ya need?",
+
+
+  "scripts": ["/objects/scripts/project45-gundisassembler.lua"],
+  "scriptDelta": 10,
+
+  "openSounds" : [ "/sfx/objects/miningchest_open.ogg" ],
+  "closeSounds" : [ "/sfx/objects/miningchest_close.ogg" ],
+  "slotCount" : 1,
+  "uiConfig" : "/interface/scripted/project45-gundisassembler/project45-gundisassemblerscripted.config",
+  "frameCooldown" : 16,
+  "autoCloseCooldown" : 3600,
+
+  "inventoryIcon" : "project45-gundisassemblericon.png",
+  "orientations" : [
+    {
+      "imageLayers" : [
+        { "image" : "project45-gundisassembler.png:default.<key>"},
+        { "image" : "project45-gundisassembler.png:default.<key>", "fullbright": true}
+      ],
+      "direction" : "left",
+      "imagePosition" : [-8, 0],
+      "spaces" : [[-1, 0], [0, 0], [-1, 1], [0, 1], [-1, 2], [0, 2]],
+      "anchors" : [ "bottom" ]
+    },
+    {
+      "imageLayers" : [
+        { "image" : "project45-gundisassembler.png:default.<key>"},
+        { "image" : "project45-gundisassembler.png:default.<key>", "fullbright": true}
+      ],
+      "direction" : "right",
+      "flipImages" : true,
+      "imagePosition" : [-8, 0],
+      "spaces" : [[-1, 0], [0, 0], [-1, 1], [0, 1], [-1, 2], [0, 2]],
+      "anchors" : [ "bottom" ]
+    }
+  ]
+
+}

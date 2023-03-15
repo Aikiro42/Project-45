@@ -12,6 +12,7 @@
   "level" : 5,
 
   "inventoryIcon" : "project45-assaultrifle-icon.png",
+  "acceptsGunMods": true,
 
   // "animation" : "project45-template.animation",
   "animationParts" : {
@@ -39,7 +40,18 @@
       }}},
       "parts" : { "flashlight" : { "properties" : {
           "offset" : [-0.75, -0.3]
+<<<<<<< Updated upstream
       }}}
+=======
+        }},
+        "railfullbright" : { "properties" : {
+          "offset" : [-0.75, -0.3]
+        }},
+        "grip" : { "properties" : {
+          "offset" : [-2, -1]
+        }}
+      }
+>>>>>>> Stashed changes
     },
 
     "particleEmitters": {

@@ -1,0 +1,42 @@
+{
+  "itemName" : "project45-silencermod",
+  "price" : 15000,
+  "rarity" : "Legendary",
+  "tooltipKind" : "project45gunmod",
+  "category" : "Muzzle Mod",
+  "inventoryIcon" : "/items/augments/project45-gunmods/project45-silencermod.png",
+  "description" : "Dissipates existing gas, reducing gunshot noise and reducing vertical recoil by 10%.",
+  "shortdescription" : "Silencer",
+
+  "augment":{
+    "type": "muzzle",
+    "modName": "Silencer",
+    "recoilMult": 0.9,
+    "muzzleOffsetAdd": [1, 0],
+    "primaryAbility": {
+      "flashHidden": true,
+      "hollowSoundMult": 0.3
+    }
+    ,"animationCustom": {
+      "sounds": {
+        "fire" : ["/sfx/project45-synthetikmechanics/fires/fire_silenced_generic.ogg"]
+      },
+      "animatedParts" : { "parts" : {
+        "muzzle" : {
+          "properties" : {
+            "zLevel" : 5,
+            "centered" : true,
+            "offset" : [-0.5, -0.125],
+            "transformationGroups" : ["muzzle"],
+            "image" : "/items/augments/project45-gunmods/project45-silencermodsprite.png<directives>"
+          }
+        }}}
+    }
+    
+  },
+
+
+  "radioMessagesOnPickup" : [ "pickupaugment" ],
+
+  "scripts" : [ "/scripts/augments/project45-gunmod.lua" ]
+}

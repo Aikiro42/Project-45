@@ -50,9 +50,9 @@
     { 
       "action" : "sound",
       "options" : [
-        "/sfx/project45-synthetikmechanics/bulletimpacts/bulletimpact_1.ogg",
-        "/sfx/project45-synthetikmechanics/bulletimpacts/bulletimpact_2.ogg",
-        "/sfx/project45-synthetikmechanics/bulletimpacts/bulletimpact_3.ogg"
+        "/sfx/project45-synthetikmechanics/bulletimpacts/bulletimpact_generic_1.ogg",
+        "/sfx/project45-synthetikmechanics/bulletimpacts/bulletimpact_generic_2.ogg",
+        "/sfx/project45-synthetikmechanics/bulletimpacts/bulletimpact_generic_3.ogg"
       ]
     },
     {

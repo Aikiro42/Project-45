@@ -244,6 +244,7 @@
     "magAnimRange": [0, 0], // [n, x]
     "beltMag": false, // affects visual reload; 
     "flashHidden": false,
+    "hollowSoundMult": 0.8, // affects loudness of hollow sound
     "muzzleFlashTime": 0.05, // number of seconds the muzzle light is active when firing
     "muzzleSmokeTime": 5, // number of seconds the muzzle smoke is active
     "muzzleSmokeDelay": 0.2,

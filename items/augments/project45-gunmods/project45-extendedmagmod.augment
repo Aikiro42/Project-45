@@ -1,0 +1,21 @@
+{
+  "itemName" : "project45-extendedmagmod",
+  "price" : 15000,
+  "rarity" : "Legendary",
+  "tooltipKind" : "project45gunmod",
+  "category" : "Magazine Mod",
+  "inventoryIcon" : "/items/augments/project45-gunmods/project45-extendedmagmod.png",
+  "description" : "Doubles ammo capacity.",
+  "shortdescription" : "Extended Magazines",
+
+  "augment":{
+    "type": "mag",
+    "modName": "Extended Magazines",
+    "maxAmmoMult": 2
+  },
+
+
+  "radioMessagesOnPickup" : [ "pickupaugment" ],
+
+  "scripts" : [ "/scripts/augments/project45-gunmod.lua" ]
+}

@@ -1,0 +1,18 @@
+{
+  "itemName" : "project45-critdamagemod",
+  "price" : 15000,
+  "rarity" : "Legendary",
+  "tooltipKind" : "project45gunmod",
+  "category" : "Stat Mod",
+  "inventoryIcon" : "/items/augments/project45-gunmods/project45-critdamagemod.png",
+  "description" : "Increases a weapon's critical damage by x120%",
+  "shortdescription" : "Crit Damage Improvement",
+
+  "augment":{
+    "type": "stat",
+    "modName": null,
+    "critDamageMult": 1.2
+  },
+
+  "scripts" : [ "/scripts/augments/project45-gunmod.lua" ]
+}

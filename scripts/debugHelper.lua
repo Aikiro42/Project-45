@@ -8,7 +8,7 @@ function debug.timedPrint(text, dtAccumulator, prefix)
     return dtAccumulator
 end
 
-function debug.print(text, prefix)
-    sb.logInfo((prefix or "") .. text)
+function print(text, prefix)
+    sb.logInfo((prefix or "[PROJECT 45] ") .. text)
     return 0
 end

@@ -1,0 +1,27 @@
+{
+  "itemName" : "project45-templatemod",
+  "price" : 15000,
+  "rarity" : "Legendary",
+  "tooltipKind" : "project45gunmod",
+  "category" : "MOD TEMPLATE",
+  "inventoryIcon" : "/items/augments/project45-gunmods/project45-resetmod.png",
+  "description" : "Mod Template.",
+  "shortdescription" : "Mod Template.",
+
+  "radioMessagesOnPickup" : [ "pickupaugment" ],
+
+  "augment": {
+    /*
+    
+    "type" field:
+    This field dictates 
+      "ability" - for mods that alter the weaponability
+      "rifling" - for stat-modifying mods that alter damage
+      "crystal" - same as "rifling" but for energy weapons
+    ""
+    */
+    "type": "stat"
+  },
+
+  "scripts" : [ "/scripts/augments/project45-gunmod.lua" ]
+}

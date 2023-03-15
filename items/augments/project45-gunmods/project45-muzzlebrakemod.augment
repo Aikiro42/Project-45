@@ -1,0 +1,35 @@
+{
+  "itemName" : "project45-muzzlebrakemod",
+  "price" : 15000,
+  "rarity" : "Legendary",
+  "tooltipKind" : "project45gunmod",
+  "category" : "Muzzle Mod",
+  "inventoryIcon" : "/items/augments/project45-gunmods/project45-muzzlebrakemod.png",
+  "description" : "Makes exiting gas counteract the muzzle rise, reducing vertical recoil by 50%.",
+  "shortdescription" : "Muzzle Brake",
+
+  "augment":{
+    "type": "muzzle",
+    "modName": "Muzzle Brake",
+    "recoilMult": 0.5
+    
+    ,"animationCustom": {
+      "animatedParts" : { "parts" : {
+        "muzzle" : {
+          "properties" : {
+            "zLevel" : 5,
+            "centered" : true,
+            "offset" : [0.375, -0.125],
+            "transformationGroups" : ["muzzle"],
+            "image" : "/items/augments/project45-gunmods/project45-muzzlebrakemodsprite.png<directives>"
+          }
+        }}}
+    }
+    
+  },
+
+
+  "radioMessagesOnPickup" : [ "pickupaugment" ],
+
+  "scripts" : [ "/scripts/augments/project45-gunmod.lua" ]
+}

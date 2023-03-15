@@ -1,28 +1,63 @@
 require "/scripts/util.lua"
 
+local radioButtonIDs = {
+  "guns",
+  "mods",
+  "stat",
+  "ammo",
+}
+
 function init()
   self.itemList = "itemScrollArea.itemList"
   self.totalCost = "lblCostTotal"
 
+<<<<<<< Updated upstream
   self.weapons = config.getParameter("weapons", {"project45-pistol"})
   
+=======
+  self.goods = config.getParameter("goods", {
+    guns = {},
+    mods = {},
+    stat = {},
+    ammo = {},
+  })
+  
+  self.mode = "guns"
+  widget.setSelectedOption("shopTabs", 1)
+
+>>>>>>> Stashed changes
   self.selectedItem = nil
   self.prevSelectedItem = nil
-	
-  populateItemList(true)
+  
+  populateItemList(true, self.mode)
 end
 
 function update(dt)
   populateItemList()
 end
 
+<<<<<<< Updated upstream
 function populateItemList(forceRepop)
   local playerMoney = player.currency("money")
 
+=======
+function radioButton(radioButtonId)
+  return radioButtonIDs[tonumber(radioButtonId)]
+end
+
+function switchMode(mode)
+  populateItemList(true, radioButton(mode))
+end
+
+function populateItemList(forceRepop, mode)
+  local playerMoney = player.currency("money")
+  self.mode = mode or self.mode
+>>>>>>> Stashed changes
   if forceRepop then
     widget.clearListItems(self.itemList)
 
     local showEmptyLabel = true
+<<<<<<< Updated upstream
 
     for i = 1, #self.weapons do
       local generatedWeapon = root.createItem(self.weapons[i], world.threatLevel())
@@ -38,13 +73,37 @@ function populateItemList(forceRepop)
       local cost = config.price or 1
 
       widget.setItemSlotItem(string.format("%s.itemIcon", listItem), generatedWeapon)
+=======
+    local goods = self.goods[mode]
+
+    for _, item in ipairs(goods) do
+      local generatedItem = root.createItem(item, world.threatLevel())
+      --local randomWeapon = self.weaponTypes[(math.random(1, 4294967295) % #self.weaponTypes) + 1]
+      --root.itemConfig(randomWeapon)
+
+      local config = root.itemConfig(item).config
+      -- sb.logInfo("[ PROJECT 45 ] " .. sb.printJson(modConfig))
+      
+      showEmptyLabel = false
+
+      local listItem = string.format("%s.%s", self.itemList, widget.addListItem(self.itemList))
+      local name = config.shortdescription or "Failed to reach item name"
+      local cost = config.price or 1
+      generatedItem.parameters.price = cost
+
+      widget.setItemSlotItem(string.format("%s.itemIcon", listItem), generatedItem)
+>>>>>>> Stashed changes
       widget.setText(string.format("%s.itemName", listItem), "^#FF9000;" .. name)
       
       widget.setText(string.format("%s.priceLabel", listItem), "^#FF9000;" .. math.ceil(cost))
 
       widget.setData(listItem,
       {
+<<<<<<< Updated upstream
         item = generatedWeapon,
+=======
+        item = generatedItem,
+>>>>>>> Stashed changes
         price = math.ceil(cost)
       }
       )
@@ -103,6 +162,7 @@ function purchase()
     local selectedItem = selectedData.item
 
     if selectedItem then
+<<<<<<< Updated upstream
 	  --If we successfully consumed enough currency, give the new item to the player
 	  local consumedCurrency = player.consumeCurrency("money", selectedItem.parameters.price)
 	  if consumedCurrency then
@@ -119,5 +179,27 @@ function purchase()
 	  end
     end
     populateItemList()
+=======
+      --If we successfully consumed enough currency, give the new item to the player
+      local consumedCurrency = player.consumeCurrency("money", selectedItem.parameters.price)
+
+      if consumedCurrency then
+        player.giveItem(selectedItem)
+        --[[
+        widget.setData(listItem,
+        {
+          price = "Sold!"
+        }
+        )
+        widget.setVisible(string.format("%s.unavailableoverlay", listItem), true)
+        widget.setText(string.format("%s.priceLabel", listItem), "^#190700;Sold!")
+        widget.setText(self.totalCost, string.format("^#190700;--"))
+        widget.setButtonEnabled("btnBuy", false)
+        --]]
+      end
+
+    end
+    populateItemList(true, self.mode)
+>>>>>>> Stashed changes
   end
 end

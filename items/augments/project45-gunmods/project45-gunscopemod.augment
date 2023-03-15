@@ -1,0 +1,21 @@
+{
+  "itemName" : "project45-gunscopemod",
+  "price" : 15000,
+  "rarity" : "Essential",
+  "tooltipKind" : "project45gunmod",
+  "category" : "Ability Mod",
+  "inventoryIcon" : "/items/augments/project45-gunmods/project45-gunscopemod.png",
+  "description" : "A scope meant to be installed on",
+  "shortdescription" : "Scope Mod",
+
+  "augment":{
+    "type": "ability",
+    "modName": "Scope",
+    "altAbilityType" : "project45gunscope"
+  },
+
+
+  "radioMessagesOnPickup" : [ "pickupaugment" ],
+
+  "scripts" : [ "/scripts/augments/project45-gunmod.lua" ]
+}

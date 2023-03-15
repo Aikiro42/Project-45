@@ -1,0 +1,14 @@
+{
+  "itemName" : "project45-resetmod",
+  "price" : 15000,
+  "rarity" : "Legendary",
+  "tooltipKind" : "project45gunmod",
+  "category" : "Mod Reset Tool",
+  "inventoryIcon" : "/items/augments/project45-gunmods/project45-resetmod.png",
+  "description" : "Uninstalls all equipped mods and reverts your weapon to its stock form. ^#FFAAAA;Works on all items.^reset;",
+  "shortdescription" : "Gun Disassembly Kit",
+
+  "radioMessagesOnPickup" : [ "pickupaugment" ],
+
+  "scripts" : [ "/scripts/augments/project45-gununmod.lua" ]
+}

@@ -1,0 +1,35 @@
+{
+  "itemName" : "project45-autofiremod",
+  "price" : 15000,
+  "rarity" : "Legendary",
+  "tooltipKind" : "project45gunmod",
+  "category" : "Receiver Mod",
+  "inventoryIcon" : "/items/augments/project45-gunmods/project45-autofiremod.png",
+  "description" : "Allows a weapon to have an automatic firemode. ^#FFAAAA; Has no effect on automatic weapons.",
+  "shortdescription" : "Automatic Receiver",
+
+  "radioMessagesOnPickup" : [ "pickupaugment" ],
+
+  "augment": {
+    /*
+    
+    "type" field:
+    This field dictates 
+      "ability" - for mods that alter the weaponability
+      "rifling" - for stat-modifying mods that alter damage
+      "crystal" - same as "rifling" but for energy weapons
+    ""
+    */
+    "type": "receiver",
+    "modName": "Automatic Receiver",
+    "primaryAbility": {
+      "semi": false,
+      "manualFeed": false,
+      "autoFireAfterCharge": true,
+      "burstCount": 1,
+      "fireTime": 0.1
+    }
+  },
+
+  "scripts" : [ "/scripts/augments/project45-gunmod.lua" ]
+}

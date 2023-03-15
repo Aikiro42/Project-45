@@ -20,6 +20,7 @@ When gun is a windup-type and
   "level" : 1,
 
   "inventoryIcon" : "project45-gaussrifle-icon.png",
+  "acceptsGunMods": true,
 
   // "animation" : "project45-template.animation",
   "animationParts" : {

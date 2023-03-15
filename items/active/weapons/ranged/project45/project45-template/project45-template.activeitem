@@ -20,6 +20,7 @@ When gun is a windup-type and
   "level" : 1,
 
   "inventoryIcon" : "project45-template-icon.png",
+  "acceptsGunMods": true,
 
   // "animation" : "project45-template.animation",
   "animationParts" : {
@@ -34,6 +35,10 @@ When gun is a windup-type and
     "muzzle": "",
     "grip": ""
 
+  },
+
+  "rejectsModType": {
+    
   },
 
   "animationCustom":{

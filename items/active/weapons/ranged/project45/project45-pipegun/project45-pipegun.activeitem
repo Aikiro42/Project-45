@@ -12,6 +12,7 @@
   "level" : 1,
 
   "inventoryIcon" : "project45-pipegun-icon.png",
+  "acceptsGunMods": true,
 
   // "animation" : "project45-template.animation",
   "animationParts" : {

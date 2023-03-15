@@ -20,6 +20,10 @@ When gun is a windup-type and
   "level" : 1,
 
   "inventoryIcon" : "project45-energygun-icon.png",
+<<<<<<< Updated upstream
+=======
+  "acceptsGunMods": true,
+>>>>>>> Stashed changes
 
   // "animation" : "project45-template.animation",
   "animationParts" : {
@@ -72,8 +76,8 @@ When gun is a windup-type and
     // "DEBUG": true,
     "baseDamage": 25,
 
-    "maxAmmo": 6,
-    "ammoPerReload": 6,
+    "maxAmmo": 12,
+    "bulletsPerReload": 12,
     "magLoopFrames": 2,
     "magAnimRange": [0, 6],
 

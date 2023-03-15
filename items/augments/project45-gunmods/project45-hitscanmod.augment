@@ -1,0 +1,24 @@
+{
+  "itemName" : "project45-hitscanmod",
+  "price" : 15000,
+  "rarity" : "Legendary",
+  "tooltipKind" : "project45gunmod",
+  "category" : "Projectile Mod",
+  "inventoryIcon" : "/items/augments/project45-gunmods/project45-hitscanmod.png",
+  "description" : "Makes your gun fire hitscan bullets.",
+  "shortdescription" : "Hitscan Bullets",
+
+  "augment":{
+    "type": "projectile",
+    "modName": "Hitscan Bullets",
+    "primaryAbility":{
+      "projectileType": "hitscan",
+      "overrideHitscan": true
+    }
+  },
+
+
+  "radioMessagesOnPickup" : [ "pickupaugment" ],
+
+  "scripts" : [ "/scripts/augments/project45-gunmod.lua" ]
+}

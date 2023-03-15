@@ -1,0 +1,18 @@
+{
+  "itemName" : "project45-fireratemod",
+  "price" : 15000,
+  "rarity" : "Legendary",
+  "tooltipKind" : "project45gunmod",
+  "category" : "Stat Mod",
+  "inventoryIcon" : "/items/augments/project45-gunmods/project45-fireratemod.png",
+  "description" : "Decreases firing time by 20%.",
+  "shortdescription" : "Fire Rate Improvement",
+
+  "augment":{
+    "type": "stat",
+    "modName": null,
+    "cycleTimeMult": 0.8
+  },
+
+  "scripts" : [ "/scripts/augments/project45-gunmod.lua" ]
+}

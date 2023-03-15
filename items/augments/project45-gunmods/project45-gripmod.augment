@@ -1,0 +1,35 @@
+{
+  "itemName" : "project45-gripmod",
+  "price" : 15000,
+  "rarity" : "Legendary",
+  "tooltipKind" : "project45gunmod",
+  "category" : "Grip Mod",
+  "inventoryIcon" : "/items/augments/project45-gunmods/project45-gripmod.png",
+  "description" : "Provides better handling of the gun, reducing recoil by 50%.",
+  "shortdescription" : "Vertical Grip",
+
+  "augment":{
+    "type": "grip",
+    "modName": "Vertical Grip",
+    "recoilMult": 0.1
+    /*
+    ,"animationCustom": {
+      "animatedParts" : { "parts" : {
+        "grip" : {
+          "properties" : {
+            "zLevel" : 5,
+            "centered" : true,
+            "offset" : [-1, -0.5],
+            "transformationGroups" : ["muzzle"],
+            "image" : "/items/augments/project45-gunmods/project45-gripmodsprite.png<directives>"
+          }
+        }}}
+    }
+    */
+  },
+
+
+  "radioMessagesOnPickup" : [ "pickupaugment" ],
+
+  "scripts" : [ "/scripts/augments/project45-gunmod.lua" ]
+}

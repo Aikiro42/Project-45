@@ -58,16 +58,16 @@
   "soundEffectRangeMultiplier" : 0.5,
 
   "scripts": ["/objects/scripts/project45-gunshop.lua"],
-  "resetInterval" : 30, //minutes
 
   "guiConfig" : {
     "baseConfig" : "/interface/scripted/project45-gunshop/project45-gunshopscripted.config",
     "gui" : {
       "windowtitle" : {
         "title" : "^#FF9000;Gun Shop",
-        "subtitle" : "^#c48636;Dehumanize yourself."
+        "subtitle" : "^#c48636;A new standard for ranged combat."
       }
     },
+<<<<<<< Updated upstream
     "weapons": [
       "project45-pipegun",
       "project45-pistol",
@@ -85,6 +85,53 @@
       "project45-energygun",
       "project45-gaussrifle"
     ]
+=======
+    "goods":{
+      "guns": [
+        "project45-pipegun",
+        "project45-pistol",
+        "project45-revolver",
+        "project45-submachinegun",
+        "project45-shotgun",
+        "project45-assaultrifle",
+        "project45-garand",
+        "project45-mosin",
+        "project45-sniperrifle",
+        "project45-antimateriel",
+        "project45-grenadelauncher",
+        "project45-minigun",
+        "project45-accelerator",
+        "project45-energygun",
+        "project45-gaussrifle"
+      ],
+      "mods": [
+        "project45-gundisassembler",
+        "project45-gunscopemod",
+        "project45-enemyradarmod",
+        "project45-flashlasermod",
+
+        "project45-gripmod",
+        "project45-muzzlebrakemod",
+        "project45-silencermod",
+        "project45-autofiremod",
+        "project45-extendedmagmod",
+        "project45-weightmod"
+      ],
+
+      "stat": [
+        "project45-damagemod",
+        "project45-fireratemod",
+        "project45-reloadcostmod",
+        "project45-critchancemod",
+        "project45-critdamagemod"
+      ],
+      
+      "ammo": [
+        "project45-bulletmod",
+        "project45-hitscanmod"
+      ]
+    }
+>>>>>>> Stashed changes
   }
 
   // "interactAction" : "OpenMerchantInterface",

@@ -1,0 +1,18 @@
+{
+  "itemName" : "project45-critchancemod",
+  "price" : 15000,
+  "rarity" : "Legendary",
+  "tooltipKind" : "project45gunmod",
+  "category" : "Stat Mod",
+  "inventoryIcon" : "/items/augments/project45-gunmods/project45-critchancemod.png",
+  "description" : "Increases a weapon's critical chance by +10%",
+  "shortdescription" : "Crit Chance Improvement",
+
+  "augment":{
+    "type": "stat",
+    "modName": null,
+    "critChanceAdd": 0.1
+  },
+
+  "scripts" : [ "/scripts/augments/project45-gunmod.lua" ]
+}

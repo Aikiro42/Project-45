@@ -1,0 +1,21 @@
+{
+  "itemName" : "project45-enemyradarmod",
+  "price" : 15000,
+  "rarity" : "Essential",
+  "tooltipKind" : "project45gunmod",
+  "category" : "Ability Mod",
+  "inventoryIcon" : "/items/augments/project45-gunmods/project45-enemyradarmod.png",
+  "description" : "Passively shows directions of nearby entities.",
+  "shortdescription" : "Enemy Radar Mod",
+
+  "augment":{
+    "type": "ability",
+    "modName": "Enemy Radar",
+    "altAbilityType" : "project45enemyradar"
+  },
+
+
+  "radioMessagesOnPickup" : [ "pickupaugment" ],
+
+  "scripts" : [ "/scripts/augments/project45-gunmod.lua" ]
+}

@@ -1151,7 +1151,7 @@ function SynthetikMechanics:muzzleFlash()
   -- set sfx values; the lower the ammo of a gun, the hollower it sounds
   -- also randomzies values
   animator.setSoundPitch("fire", sb.nrand(0.01, 1))
-  animator.setSoundVolume("hollow", (1 - storage.ammo/self.maxAmmo) * 0.8)
+  animator.setSoundVolume("hollow", (1 - storage.ammo/self.maxAmmo) * self.hollowSoundMult)
 
   -- play sfx values
   animator.playSound("fire")
@@ -1408,7 +1408,7 @@ end
 function SynthetikMechanics:screenShake(amount, shakeTime, random)
   if not self.doScreenShake then return end
   local source = mcontroller.position()
-  local shake_dir = vec2.mul(self:aimVector(0), -1 * (amount or 0.1))
+  local shake_dir = vec2.mul(self:aimVector(0), amount or 0.1)
   if random then vec2.rotate(shake_dir, 3.14 * truerand()) end
   local cam = world.spawnProjectile(
     "invisibleprojectile",

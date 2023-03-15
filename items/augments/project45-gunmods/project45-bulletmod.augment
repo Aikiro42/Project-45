@@ -1,0 +1,23 @@
+{
+  "itemName" : "project45-bulletmod",
+  "price" : 15000,
+  "rarity" : "Legendary",
+  "tooltipKind" : "project45gunmod",
+  "category" : "Projectile Mod",
+  "inventoryIcon" : "/items/augments/project45-gunmods/project45-bulletmod.png",
+  "description" : "Makes your gun fire regular bullets.",
+  "shortdescription" : "Standard Bullets",
+
+  "augment":{
+    "type": "projectile",
+    "modName": "Standard Bullets",
+    "primaryAbility":{
+      "projectileType": "project45stdbullet",
+      "overrideHitscan": true
+    }
+  },
+
+  "radioMessagesOnPickup" : [ "pickupaugment" ],
+
+  "scripts" : [ "/scripts/augments/project45-gunmod.lua" ]
+}

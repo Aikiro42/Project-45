@@ -1,0 +1,18 @@
+{
+  "itemName" : "project45-reloadcostmod",
+  "price" : 15000,
+  "rarity" : "Legendary",
+  "tooltipKind" : "project45gunmod",
+  "category" : "Stat Mod",
+  "inventoryIcon" : "/items/augments/project45-gunmods/project45-reloadcostmod.png",
+  "description" : "Decreases a weapon's reload cost by x20%.",
+  "shortdescription" : "Reload Cost Improvement",
+
+  "augment":{
+    "type": "stat",
+    "modName": null,
+    "reloadCostMult": 0.8
+  },
+
+  "scripts" : [ "/scripts/augments/project45-gunmod.lua" ]
+}

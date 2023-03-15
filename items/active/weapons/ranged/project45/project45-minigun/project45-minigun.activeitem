@@ -12,6 +12,10 @@
   "level" : 1,
 
   "inventoryIcon" : "project45-minigun-icon.png",
+<<<<<<< Updated upstream
+=======
+  "acceptsGunMods": true,
+>>>>>>> Stashed changes
 
   // "animation" : "project45-template.animation",
   "animationParts" : {
@@ -74,7 +78,7 @@
     "chargeTime": 1,
     "overchargeTime": 0,
 
-    "cycleTime": [0.1, 0],
+    "cycleTime": [0.01, 0],
     "cycleTimeGrowthRate": 0.05,
     "fireTime": 0.001,
     
