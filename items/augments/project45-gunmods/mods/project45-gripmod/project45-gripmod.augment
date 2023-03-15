@@ -13,20 +13,17 @@
     "modName": "Vertical Grip",
     "slot": "underbarrel",
     "recoilMult": 0.1
-    /*
     ,"animationCustom": {
       "animatedParts" : { "parts" : {
         "grip" : {
           "properties" : {
             "zLevel" : 5,
             "centered" : true,
-            "offset" : [-1, -0.5],
             "transformationGroups" : ["muzzle"],
-            "image" : "/items/augments/project45-gunmods/project45-gripmodsprite.png<directives>"
+            "image" : "/items/augments/project45-gunmods/mods/project45-gripmod/project45-gripmodsprite.png<directives>"
           }
         }}}
     }
-    */
   },
 
 

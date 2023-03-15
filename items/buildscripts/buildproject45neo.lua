@@ -70,45 +70,22 @@ function build(directory, config, parameters, level, seed)
 
   -- gun offsets
   if config.baseOffset then
-    
-    -- middle
-    construct(config, "animationCustom", "animatedParts", "parts", "middle", "properties")
-    config.animationCustom.animatedParts.parts.middle.properties.offset = config.baseOffset
-  
-    -- fullbright parts
-    construct(config, "animationCustom", "animatedParts", "parts", "middleFullbright", "properties")
-    config.animationCustom.animatedParts.parts.middleFullbright.properties.offset = config.baseOffset
 
-    -- magazine parts
-    construct(config, "animationCustom", "animatedParts", "parts", "mag", "properties")
-    config.animationCustom.animatedParts.parts.mag.properties.offset = config.baseOffset
-    construct(config, "animationCustom", "animatedParts", "parts", "magFullbright", "properties")
-    config.animationCustom.animatedParts.parts.magFullbright.properties.offset = config.baseOffset
-    
-    -- rail parts
-    construct(config, "animationCustom", "animatedParts", "parts", "rail", "properties")
-    config.animationCustom.animatedParts.parts.rail.properties.offset = config.baseOffset
-    construct(config, "animationCustom", "animatedParts", "parts", "railFullbright", "properties")
-    config.animationCustom.animatedParts.parts.railFullbright.properties.offset = config.baseOffset
+    local parts = {
+      "middle",
+      "mag",
+      "rail",
+      "sights",
+      "underbarrel",
+      "stock"
+    }
 
-    -- sights parts
-    construct(config, "animationCustom", "animatedParts", "parts", "sights", "properties")
-    config.animationCustom.animatedParts.parts.sights.properties.offset = config.baseOffset
-    construct(config, "animationCustom", "animatedParts", "parts", "sightsFullbright", "properties")
-    config.animationCustom.animatedParts.parts.sightsFullbright.properties.offset = config.baseOffset
-
-    -- underbarrel parts
-    construct(config, "animationCustom", "animatedParts", "parts", "underbarrel", "properties")
-    config.animationCustom.animatedParts.parts.underbarrel.properties.offset = config.baseOffset
-    construct(config, "animationCustom", "animatedParts", "parts", "underbarrelFullbright", "properties")
-    config.animationCustom.animatedParts.parts.underbarrelFullbright.properties.offset = config.baseOffset
-
-    -- stock parts
-    construct(config, "animationCustom", "animatedParts", "parts", "stock", "properties")
-    config.animationCustom.animatedParts.parts.stock.properties.offset = config.baseOffset
-    construct(config, "animationCustom", "animatedParts", "parts", "stockFullbright", "properties")
-    config.animationCustom.animatedParts.parts.stockFullbright.properties.offset = config.baseOffset
-
+    for _, part in ipairs(parts) do
+      construct(config, "animationCustom", "animatedParts", "parts", part, "properties")
+      config.animationCustom.animatedParts.parts[part].properties.offset = config.baseOffset
+      construct(config, "animationCustom", "animatedParts", "parts", part .. "Fullbright", "properties")
+      config.animationCustom.animatedParts.parts[part .. "Fullbright"].properties.offset = config.baseOffset
+    end
     
     if config.muzzleOffset then
       config.muzzleOffset = vec2.add(config.muzzleOffset, config.baseOffset)
@@ -122,20 +99,17 @@ function build(directory, config, parameters, level, seed)
       config.magazineOffset = vec2.add(config.magazineOffset, config.baseOffset)
     end
 
-    if config.railOffset then
-      config.railOffset = vec2.add(config.railOffset, config.baseOffset)
-    end
 
-    if config.sightsOffset then
-      config.sightsOffset = vec2.add(config.sightsOffset, config.baseOffset)
-    end
-
-    if config.underbarrelOffset then
-      config.underbarrelOffset = vec2.add(config.underbarrelOffset, config.baseOffset)
-    end
-
-    if config.stockOffset then
-      config.stockOffset = vec2.add(config.stockOffset, config.baseOffset)
+    local offsetConfig = {
+      "rail",
+      "sights",
+      "underbarrel",
+      "stock"
+    }
+    for _, part in ipairs(offsetConfig) do
+      if config[part .. "Offset"] then
+        config[part .. "Offset"] = vec2.add(config[part .. "Offset"], config.baseOffset)
+      end
     end
 
   end
