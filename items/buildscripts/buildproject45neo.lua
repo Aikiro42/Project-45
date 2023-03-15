@@ -82,26 +82,32 @@ function build(directory, config, parameters, level, seed)
     -- magazine parts
     construct(config, "animationCustom", "animatedParts", "parts", "mag", "properties")
     config.animationCustom.animatedParts.parts.mag.properties.offset = config.baseOffset
-
-    -- fullbright parts
     construct(config, "animationCustom", "animatedParts", "parts", "magFullbright", "properties")
     config.animationCustom.animatedParts.parts.magFullbright.properties.offset = config.baseOffset
     
     -- rail parts
     construct(config, "animationCustom", "animatedParts", "parts", "rail", "properties")
     config.animationCustom.animatedParts.parts.rail.properties.offset = config.baseOffset
+    construct(config, "animationCustom", "animatedParts", "parts", "railFullbright", "properties")
+    config.animationCustom.animatedParts.parts.railFullbright.properties.offset = config.baseOffset
 
     -- sights parts
     construct(config, "animationCustom", "animatedParts", "parts", "sights", "properties")
     config.animationCustom.animatedParts.parts.sights.properties.offset = config.baseOffset
+    construct(config, "animationCustom", "animatedParts", "parts", "sightsFullbright", "properties")
+    config.animationCustom.animatedParts.parts.sightsFullbright.properties.offset = config.baseOffset
 
     -- underbarrel parts
     construct(config, "animationCustom", "animatedParts", "parts", "underbarrel", "properties")
     config.animationCustom.animatedParts.parts.underbarrel.properties.offset = config.baseOffset
+    construct(config, "animationCustom", "animatedParts", "parts", "underbarrelFullbright", "properties")
+    config.animationCustom.animatedParts.parts.underbarrelFullbright.properties.offset = config.baseOffset
 
     -- stock parts
     construct(config, "animationCustom", "animatedParts", "parts", "stock", "properties")
     config.animationCustom.animatedParts.parts.stock.properties.offset = config.baseOffset
+    construct(config, "animationCustom", "animatedParts", "parts", "stockFullbright", "properties")
+    config.animationCustom.animatedParts.parts.stockFullbright.properties.offset = config.baseOffset
 
     
     if config.muzzleOffset then
@@ -209,7 +215,7 @@ function build(directory, config, parameters, level, seed)
       config.primaryAbility.overchargeTime = parameters.primaryAbility.overchargeTime or config.primaryAbility.overchargeTime
       local overchargeDesc = config.primaryAbility.overchargeTime > 0 and ("^#9dc6f5;" .. util.round(config.primaryAbility.overchargeTime, 1) .. "s overcharge.^reset;\n") or ""
       
-      local modList = parameters.modList or config.modList or {}
+      local modList = parameters.modSlots or config.modSlots or {}
       local modListDesc = ""
       if modList then
         modListDesc = "^#abfc6d;"

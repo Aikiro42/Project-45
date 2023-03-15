@@ -22,7 +22,7 @@
             "centered" : true,
             "offset" : [0.375, -0.125],
             "transformationGroups" : ["muzzle"],
-            "image" : "/items/augments/project45-gunmods/project45-muzzlebrakemodsprite.png<directives>"
+            "image" : "/items/augments/project45-gunmods/mods/project45-muzzlebrakemod/project45-muzzlebrakemodsprite.png<directives>"
           }
         }}}
     }

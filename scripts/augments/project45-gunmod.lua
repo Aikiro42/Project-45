@@ -40,6 +40,7 @@ function apply(input)
       stock = true,
       ammotype = true,
       material = true,
+      magazine = true
     })
     
     -- retrieve stat limit
@@ -83,12 +84,12 @@ function apply(input)
     end
 
     -- prepare to alter stats and the primary ability in general
-    local oldPrimaryAbility = output:instanceValue("primaryAbility")
+    local oldPrimaryAbility = output.config.primaryAbility or {}
     local newPrimaryAbility = {}
 
     -- replace general primaryability stats
     if augment.primaryAbility then
-      newPrimaryAbility = sb.jsonMerge(newPrimaryAbility, augment.primaryAbility)
+      newPrimaryAbility = sb.jsonMerge(oldPrimaryAbility, augment.primaryAbility)
     end
 
     -- multiply base damage directly
@@ -100,8 +101,6 @@ function apply(input)
     -- multiply general fire rate directly
     if augment.cycleTimeMult then
       
-      -- sb.logInfo(sb.printJson(oldPrimaryAbility))
-
       local oldCycleTime = oldPrimaryAbility.cycleTime
       
       if type(oldCycleTime) == "table" then

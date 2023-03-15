@@ -1,7 +1,7 @@
 {
   "animationCustom" : {
     "animatedParts" : { "parts" : {
-      "enemyradar" : {
+      "rail" : {
         "properties" : {
           "zLevel" : 5,
           "centered" : true,
@@ -10,7 +10,7 @@
           "image" : "/items/active/weapons/ranged/abilities/project45enemyradar/project45enemyradar.png<directives>"
         }
       },
-      "enemyradarfullbright" : {
+      "railFullbright" : {
         "properties" : {
           "zLevel" : 5,
           "centered" : true,

@@ -33,8 +33,9 @@
     - stock
     - ammotype
     - material
+    - magazine
     */
-    "slot": "underrail",
+    "slot": "rail",
 
     // changes ability type
     "altAbilityType": "project45gunscope",

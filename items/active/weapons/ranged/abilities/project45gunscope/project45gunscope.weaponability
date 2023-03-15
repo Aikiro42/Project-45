@@ -1,7 +1,7 @@
 {
     "animationCustom" : {
         "animatedParts" : { "parts" : {
-            "scope" : {
+            "sights" : {
             "properties" : {
                 "zLevel" : -1,
                 "centered" : true,

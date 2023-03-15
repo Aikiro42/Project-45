@@ -1,7 +1,7 @@
 {
   "animationCustom" : {
     "animatedParts" : { "parts" : {
-      "flashlight" : {
+      "rail" : {
         "properties" : {
           "zLevel" : 5,
           "centered" : true,
