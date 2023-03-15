@@ -1,7 +1,6 @@
 require "/scripts/augments/item.lua"
 require "/scripts/util.lua"
 require "/scripts/vec2.lua"
-require "/scripts/debugHelper.lua"
 
 function apply(input)
 
