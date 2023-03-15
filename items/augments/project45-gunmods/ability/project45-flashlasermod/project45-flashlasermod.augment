@@ -11,7 +11,7 @@
   "augment":{
     "type": "ability",
     "modName": "Military Flashlight",
-    "slot": "siderail",
+    "slot": "rail",
     "altAbilityType" : "project45flashlaser"
   },
 

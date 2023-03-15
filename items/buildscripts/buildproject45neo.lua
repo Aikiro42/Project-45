@@ -87,6 +87,22 @@ function build(directory, config, parameters, level, seed)
     construct(config, "animationCustom", "animatedParts", "parts", "magFullbright", "properties")
     config.animationCustom.animatedParts.parts.magFullbright.properties.offset = config.baseOffset
     
+    -- rail parts
+    construct(config, "animationCustom", "animatedParts", "parts", "rail", "properties")
+    config.animationCustom.animatedParts.parts.rail.properties.offset = config.baseOffset
+
+    -- sights parts
+    construct(config, "animationCustom", "animatedParts", "parts", "sights", "properties")
+    config.animationCustom.animatedParts.parts.sights.properties.offset = config.baseOffset
+
+    -- underbarrel parts
+    construct(config, "animationCustom", "animatedParts", "parts", "underbarrel", "properties")
+    config.animationCustom.animatedParts.parts.underbarrel.properties.offset = config.baseOffset
+
+    -- stock parts
+    construct(config, "animationCustom", "animatedParts", "parts", "stock", "properties")
+    config.animationCustom.animatedParts.parts.stock.properties.offset = config.baseOffset
+
     
     if config.muzzleOffset then
       config.muzzleOffset = vec2.add(config.muzzleOffset, config.baseOffset)
@@ -98,6 +114,22 @@ function build(directory, config, parameters, level, seed)
 
     if config.magazineOffset then
       config.magazineOffset = vec2.add(config.magazineOffset, config.baseOffset)
+    end
+
+    if config.railOffset then
+      config.railOffset = vec2.add(config.railOffset, config.baseOffset)
+    end
+
+    if config.sightsOffset then
+      config.sightsOffset = vec2.add(config.sightsOffset, config.baseOffset)
+    end
+
+    if config.underbarrelOffset then
+      config.underbarrelOffset = vec2.add(config.underbarrelOffset, config.baseOffset)
+    end
+
+    if config.stockOffset then
+      config.stockOffset = vec2.add(config.stockOffset, config.baseOffset)
     end
 
   end

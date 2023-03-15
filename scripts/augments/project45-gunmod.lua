@@ -19,7 +19,28 @@ function apply(input)
     
     -- retrieve dictionary of rejected types
     local rejectsModType = output:instanceValue("rejectsModType", {})
-    local rejectsModSlot = output:instanceValue("rejectsModSlot", {})
+    local acceptsModSlot = output:instanceValue("acceptsModSlot", {
+      --[[
+      - rail
+      - sights
+      - muzzle
+      - underbarrel
+      - barrel
+      - receiver
+      - stock
+      - ammotype
+      - material
+      --]]
+      rail = true,
+      sights = true,
+      muzzle = true,
+      underbarrel = true,
+      barrel = true,
+      receiver = true,
+      stock = true,
+      ammotype = true,
+      material = true,
+    })
     
     -- retrieve stat limit
     local statModLimit = input.parameters.primaryAbility and
@@ -38,7 +59,7 @@ function apply(input)
 
     -- do not install mod if gun denies installation of such type/slot
     if rejectsModType[augment.type] then return end
-    if rejectsModSlot[augment.slot] then return end
+    if augment.type ~= "stat" and not acceptsModSlot[augment.slot] then return end
 
     -- MOD INSTALLATION PROCESS
 

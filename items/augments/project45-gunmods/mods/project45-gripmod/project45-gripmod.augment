@@ -11,7 +11,7 @@
   "augment":{
     "type": "grip",
     "modName": "Vertical Grip",
-    "slot": "underrail",
+    "slot": "underbarrel",
     "recoilMult": 0.1
     /*
     ,"animationCustom": {

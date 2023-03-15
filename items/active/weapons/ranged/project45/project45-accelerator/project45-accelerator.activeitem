@@ -84,7 +84,7 @@
     "bulletsPerReload": 50,
 
     "laser": {
-      "enabled": true,
+      "enabled": false,
       "toggle": false
     },
 

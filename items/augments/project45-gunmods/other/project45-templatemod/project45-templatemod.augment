@@ -24,15 +24,15 @@
     /*
     NON-STAT MODS REQUIRE THIS FIELD
     slots are self-explanatory:
-    - underrail
-    - siderail
-    - toprail
+    - rail
     - sights
     - muzzle
+    - underbarrel
     - barrel
     - receiver
     - stock
     - ammotype
+    - material
     */
     "slot": "underrail",
 
