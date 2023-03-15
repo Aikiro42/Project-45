@@ -4,7 +4,7 @@
   "rarity" : "Legendary",
   "tooltipKind" : "project45gunmod",
   "category" : "Projectile Mod",
-  "inventoryIcon" : "/items/augments/project45-gunmods/project45-bulletmod.png",
+  "inventoryIcon" : "/items/augments/project45-gunmods/ammo/project45-bulletmod/project45-bulletmod.png",
   "description" : "Makes your gun fire regular bullets.",
   "shortdescription" : "Standard Bullets",
 
