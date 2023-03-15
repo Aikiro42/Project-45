@@ -1007,6 +1007,15 @@ function SynthetikMechanics:ejectMag()
 end
 
 function SynthetikMechanics:fireProjectileNeo(projectileType)
+    
+  local crit = self:crit()
+  
+  local hitscanDamageParams = projectileType == "project45stdbullet" and {
+    damageKind = "synthetikmechanics-hitscan" .. (crit > 1 and "crit" or "")
+  } or {}
+  local params = sb.jsonMerge(self.projectileParameters, hitscanDamageParams)
+  params.power = self:damagePerShot() * crit
+  
   local params = sb.jsonMerge(self.projectileParameters, {})
   params.power = self:damagePerShot()
   local projectileId = world.spawnProjectile(
