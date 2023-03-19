@@ -57,7 +57,7 @@
     "sights": true,
     "muzzle": false,
     "underbarrel": false,
-    "stock": true
+    "stock": false
   },
   "baseOffset" : [0.7, 0.07],
   "muzzleOffset" : [1.55, 0.675],
