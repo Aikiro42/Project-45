@@ -107,8 +107,11 @@ function build(directory, config, parameters, level, seed)
       "stock"
     }
     for _, part in ipairs(offsetConfig) do
+      -- sb.logInfo(sb.printJson(config[part .. "Offset"]))
       if config[part .. "Offset"] then
-        config[part .. "Offset"] = vec2.add(config[part .. "Offset"], config.baseOffset)
+        config.animationCustom.animatedParts.parts[part].properties.offset = config[part .. "Offset"]
+        config.animationCustom.animatedParts.parts[part .. "Fullbright"].properties.offset = config[part .. "Offset"]
+        -- config[part .. "Offset"] = vec2.add(config[part .. "Offset"], config.baseOffset)
       end
     end
 
@@ -189,6 +192,7 @@ function build(directory, config, parameters, level, seed)
       config.primaryAbility.overchargeTime = parameters.primaryAbility.overchargeTime or config.primaryAbility.overchargeTime
       local overchargeDesc = config.primaryAbility.overchargeTime > 0 and ("^#9dc6f5;" .. util.round(config.primaryAbility.overchargeTime, 1) .. "s overcharge.^reset;\n") or ""
       
+
       local modList = parameters.modSlots or config.modSlots or {}
       local modListDesc = ""
       if modList then

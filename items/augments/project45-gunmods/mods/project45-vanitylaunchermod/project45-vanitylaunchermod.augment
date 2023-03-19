@@ -5,8 +5,8 @@
   "tooltipKind" : "project45gunmod",
   "category" : "MOD TEMPLATE",
   "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-vanitylaunchermod/project45-vanitylaunchermod.png",
-  "description" : "Mod Template.",
-  "shortdescription" : "Mod Template.",
+  "description" : "A launcher that's just there for show.",
+  "shortdescription" : "Vanity Launcher",
 
   "radioMessagesOnPickup" : [ "pickupaugment" ],
 

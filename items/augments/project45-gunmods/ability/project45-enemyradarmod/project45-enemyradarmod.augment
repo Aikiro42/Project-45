@@ -10,7 +10,7 @@
 
   "augment":{
     "type": "ability",
-    "modName": "Enemy Radar",
+    "modName": "ability",
     "slot": "rail",
     "altAbilityType" : "project45enemyradar"
   },

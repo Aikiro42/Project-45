@@ -58,7 +58,13 @@
       "boltPush" : ["/sfx/project45-synthetikmechanics/reloads/boltpush_lightbolt.ogg"]
     }
   },
-
+  "acceptsModSlot": {
+    "rail": false,
+    "sights": true,
+    "muzzle": false,
+    "underbarrel": true,
+    "stock": false
+  },
   "baseOffset" : [0.75, 0.1],
   "muzzleOffset" : [2.25, 0.5],
   "ejectionPortOffset": [-2, 0.7],

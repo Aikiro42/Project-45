@@ -1,0 +1,43 @@
+{
+  "itemName" : "project45-stockmod",
+  "price" : 15000,
+  "rarity" : "Legendary",
+  "tooltipKind" : "project45gunmod",
+  "category" : "Stock Mod",
+  "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-stockmod/project45-stockmod.png",
+  "shortdescription" : "Padded Stock",
+  "description" : "Reduces screen shake.",
+
+  "radioMessagesOnPickup" : [ "pickupaugment" ],
+
+  "augment": {
+    /*
+    can either be "stat" or anything else
+    */
+    "type": "mod",
+    
+    /*
+    NON-STAT MODS REQUIRE THIS FIELD
+    */
+    "modName": "Padded Stock",
+    
+    "slot": "stock",
+    
+    "screenShakeMult": 0.1,
+    
+    "animationCustom": {
+      "animatedParts" : { "parts" : {
+        "stock" : {
+          "properties" : {
+            "zLevel" : -1,
+            "centered" : true,
+            "transformationGroups" : ["weapon"],
+            "image" : "/items/augments/project45-gunmods/mods/project45-stockmod/project45-stockmodsprite.png<directives>"
+          }
+        }}}
+    }
+
+  },
+
+  "scripts" : [ "/scripts/augments/project45-gunmod.lua" ]
+}

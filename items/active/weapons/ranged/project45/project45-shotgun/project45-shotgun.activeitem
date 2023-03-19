@@ -67,7 +67,13 @@
       "boltPush": ["/sfx/project45-synthetikmechanics/reloads/boltpush_shotgun.ogg"]
     }
   },
-
+  "acceptsModSlot": {
+    "rail": false,
+    "sights": true,
+    "muzzle": true,
+    "underbarrel": false,
+    "stock": false
+  },
   // "baseOffset" : [1, 0.15],
   "baseOffset" : [0, -0.45],
   "muzzleOffset" : [2.5, 0.4],

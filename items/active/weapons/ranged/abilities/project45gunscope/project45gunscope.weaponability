@@ -3,10 +3,9 @@
         "animatedParts" : { "parts" : {
             "sights" : {
             "properties" : {
-                "zLevel" : -1,
+                "zLevel" : 5,
                 "centered" : true,
-                "offset" : [0.620, 0.25],
-                "transformationGroups" : ["ejectionPort"],
+                "transformationGroups" : ["weapon"],
                 "image" : "/items/active/weapons/ranged/abilities/project45gunscope/project45gunscope.png<directives>"
             }
             }

@@ -19,7 +19,8 @@ function apply(input)
     
     -- retrieve dictionary of rejected types
     local rejectsModType = output:instanceValue("rejectsModType", {})
-    local acceptsModSlot = output:instanceValue("acceptsModSlot", {
+
+    local defaultModSlots = {
       --[[
       - rail
       - sights
@@ -31,6 +32,7 @@ function apply(input)
       - ammotype
       - material
       --]]
+      ability = true,
       rail = true,
       sights = true,
       muzzle = true,
@@ -41,7 +43,10 @@ function apply(input)
       ammotype = true,
       material = true,
       magazine = true
-    })
+    }
+
+    local acceptsModSlot = output:instanceValue("acceptsModSlot", {})
+    acceptsModSlot = sb.jsonMerge(defaultModSlots, acceptsModSlot)
     
     -- retrieve stat limit
     local statModLimit = input.parameters.primaryAbility and
@@ -53,7 +58,10 @@ function apply(input)
     -- this ensures that mod installations are a one-time thing
     -- implies that you can't install a different alt ability if
     -- you installed the wrong one (you need to use the disassembler)
-    if modSlots[augment.slots] then return end
+    if modSlots[augment.slot] then
+      sb.logInfo(sb.printJson(modSlots[augment.slot]))
+      return
+    end
 
     -- do not install mod if stat mod limit is reached
     if statModLimit > 0 and #statList > statModLimit then return end
@@ -61,6 +69,9 @@ function apply(input)
     -- do not install mod if gun denies installation of such type/slot
     if rejectsModType[augment.type] then return end
     if augment.type ~= "stat" and not acceptsModSlot[augment.slot] then return end
+    
+    -- abilities occupy two modslots - the slot they're assigned to, and the "ability" slot
+    if augment.type == "ability" and modSlots.ability then return end
 
     -- MOD INSTALLATION PROCESS
 
@@ -85,11 +96,11 @@ function apply(input)
 
     -- prepare to alter stats and the primary ability in general
     local oldPrimaryAbility = output.config.primaryAbility or {}
-    local newPrimaryAbility = {}
+    local newPrimaryAbility = input.parameters.primaryAbility or {}
 
     -- replace general primaryability stats
     if augment.primaryAbility then
-      newPrimaryAbility = sb.jsonMerge(oldPrimaryAbility, augment.primaryAbility)
+      newPrimaryAbility = sb.jsonMerge(newPrimaryAbility, augment.primaryAbility)
     end
 
     -- multiply base damage directly
@@ -104,7 +115,7 @@ function apply(input)
       local oldCycleTime = oldPrimaryAbility.cycleTime
       
       if type(oldCycleTime) == "table" then
-        oldCycleTime = {oldCycleTime[1] * augment.cycleTimeMult, oldCycleTime[2] * augment.cycleTimeMult}
+        oldCycleTime = vec2.mul(oldCycleTime, augment.cycleTimeMult)
       else
         oldCycleTime = oldCycleTime * augment.cycleTimeMult
       end
@@ -175,6 +186,15 @@ function apply(input)
       newPrimaryAbility = sb.jsonMerge(newPrimaryAbility, {recoilMult = newRecoilMult})
     end
 
+    if augment.screenShakeMult then
+      local newScreenShakeAmount = vec2.mul(oldPrimaryAbility.screenShakeAmount, augment.screenShakeMult)
+      local newScrenShakeDelta = vec2.mul(oldPrimaryAbility.screenShakeDelta, augment.screenShakeMult)
+      newPrimaryAbility = sb.jsonMerge(newPrimaryAbility, {
+        oldScreenShakeAmount = newScreenShakeAmount,
+        screenShakeDelta = newScrenShakeDelta
+      })
+    end
+
     -- merge changes
     output:setInstanceValue("primaryAbility", sb.jsonMerge(oldPrimaryAbility, newPrimaryAbility))
 
@@ -185,6 +205,12 @@ function apply(input)
 
     -- add mod name to list of installed mods or stats
     if augment.type ~= "stat" then
+      if augment.type == "ability" then
+        modSlots.ability = {
+          augment.modName,
+          config.getParameter("itemName")
+        }
+      end
       modSlots[augment.slot] = {
         augment.modName,
         config.getParameter("itemName")
@@ -194,13 +220,9 @@ function apply(input)
     end
     
     output:setInstanceValue("modSlots", modSlots)
-    sb.logInfo(sb.printJson(statList))
     output:setInstanceValue("statList", statList)
     output:setInstanceValue("isModded", true)
     -- print(sb.printJson(output:descriptor()))
-
-    sb.logInfo(sb.printJson(output:descriptor()))
-
     return output:descriptor(), 1
 
   

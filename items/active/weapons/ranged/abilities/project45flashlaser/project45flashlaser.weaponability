@@ -5,8 +5,7 @@
         "properties" : {
           "zLevel" : 5,
           "centered" : true,
-          "offset" : [-1.25, -0.2],
-          "transformationGroups" : ["muzzle"],
+          "transformationGroups" : ["weapon"],
           "image" : "/items/active/weapons/ranged/abilities/project45flashlaser/project45flashlaser.png<directives>"
         }
       }

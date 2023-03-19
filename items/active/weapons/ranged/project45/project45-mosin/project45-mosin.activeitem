@@ -36,15 +36,7 @@
               // set this value to cycleTime
               "cycle" : 0.05
             }
-      }}},
-      "parts" : {
-        "enemyradar" : { "properties" : {
-        "offset" : [2.2, 0.3]
-        }},
-        "enemyradarfullbright" : { "properties" : {
-          "offset" : [2.2, 0.3]
-        }}
-      }
+      }}}
     },
     "particleEmitters": {
       "ejectionPort" : { "particles" : [ 
@@ -64,11 +56,20 @@
       "boltPush" : ["/sfx/project45-synthetikmechanics/reloads/boltpush_lightbolt.ogg"]
     }
   },
-
+  "acceptsModSlot": {
+    "rail": true,
+    "sights": true,
+    "muzzle": true,
+    "underbarrel": true,
+    "stock": false
+  },
   "baseOffset" : [1, 0.15],
   "muzzleOffset" : [2.65, 0.4],
   "ejectionPortOffset": [-0.35, 0.5],
   "magazineOffset": [0, 0.5],
+  "railOffset": [1.5, 0.375],
+  "sightsOffset": [1.125, 0.875],
+  "underbarrelOffset": [1.5, -0.2],
 
   "scripts" : ["/items/active/weapons/ranged/project45gun.lua"],
   

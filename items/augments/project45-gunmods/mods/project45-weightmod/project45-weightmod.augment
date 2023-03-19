@@ -9,7 +9,7 @@
   "shortdescription" : "Aegisalt Alloy Parts",
 
   "augment":{
-    "type": "weight",
+    "type": "mod",
     "modName": "Aegisalt Alloy Parts",
     "slot": "material",
     "mobilityMult": 1.15,

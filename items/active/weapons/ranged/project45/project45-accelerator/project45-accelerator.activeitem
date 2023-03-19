@@ -51,7 +51,14 @@
       "hollow": ["/assetmissing.ogg"]
     }
   },
-
+  
+  "acceptsModSlot": {
+    "rail": false,
+    "sights": false,
+    "muzzle": false,
+    "underbarrel": false,
+    "stock": true
+  },
   "baseOffset" : [0.5, 0],
   "muzzleOffset" : [1, 0.25],
   "ejectionPortOffset": [-0.1, 0.7],

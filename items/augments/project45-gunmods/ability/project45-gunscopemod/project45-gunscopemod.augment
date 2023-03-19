@@ -10,7 +10,7 @@
 
   "augment":{
     "type": "ability",
-    "modName": "Scope",
+    "modName": "ability",
     "slot": "sights",
     "altAbilityType" : "project45gunscope"
   },

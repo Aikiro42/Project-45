@@ -52,7 +52,13 @@
       "boltPull": ["/sfx/project45-synthetikmechanics/reloads/boltpush_revolver.ogg"]
     }
   },
-
+  "acceptsModSlot": {
+    "rail": false,
+    "sights": true,
+    "muzzle": false,
+    "underbarrel": false,
+    "stock": true
+  },
   "baseOffset" : [0.7, 0.07],
   "muzzleOffset" : [1.55, 0.675],
   "ejectionPortOffset": [0.3, 0.7],

@@ -15,7 +15,7 @@ end
 
 function disassemble()
     local input = widget.itemGridItems("itemGrid")[1]
-
+    if not input then return end
     if input.parameters then
         if input.parameters.acceptsGunMods and input.parameters.isModded then
     

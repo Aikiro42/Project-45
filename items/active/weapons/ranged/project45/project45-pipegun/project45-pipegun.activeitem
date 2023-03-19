@@ -36,9 +36,6 @@
               // set this value to cycleTime
               "cycle" : 0.05
             }
-      }}},
-      "parts" : { "scope" : { "properties" : {
-        "offset" : [0.6, 0.3]
       }}}
     },
     "particleEmitters": {
@@ -57,11 +54,21 @@
       "boltPush" : ["/sfx/project45-synthetikmechanics/reloads/boltpush_lightbolt.ogg"]
     }
   },
-
+  "acceptsModSlot": {
+    "rail": true,
+    "sights": true,
+    "muzzle": true,
+    "underbarrel": true,
+    "stock": true
+  },
   "baseOffset" : [1, 0.15],
   "muzzleOffset" : [1.6, 0.4],
   "ejectionPortOffset": [0.7, 0.7],
   "magazineOffset": [1, 0],
+  "railOffset": [1.5, 0.25],
+  "sightsOffset": [1.75, 1],
+  "underbarrelOffset": [1.5, -0.125],
+  "stockOffset": [-1, 0.125],
 
   "scripts" : ["/items/active/weapons/ranged/project45gun.lua"],
   
@@ -106,7 +113,7 @@
     // 1% chance for 50,000% damage
     // i.e. a d20 roll
     "critChance": 0.05,
-    "critDamageMult": 65535,
+    "critDamageMult": 45,
     "screenShakeAmount": [1,2],
     "screenShakeDelta": [0.3, 0.5],
     "magLoopFrames": 0,
