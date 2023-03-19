@@ -30,7 +30,6 @@ function SynthetikMechanics:init()
     self.aimProgress = 0
 
     -- initialize storage
-    -- sb.logInfo("[PROJECT 45] storage.ammo = " .. sb.printJson(storage.ammo))
     storage.ammo = storage.ammo or config.getParameter("currentAmmo", -1) -- -1 ammo means we don't have a mag in the gun
     storage.unejectedCasings = storage.unejectedCasings or config.getParameter("currentUnejectedCasings", 0)
     
@@ -253,7 +252,6 @@ function SynthetikMechanics:update(dt, fireMode, shiftHeld)
       self.chargeTimer = math.max(0, self.chargeTimer - self.dt)
       if not self.triggered then
         self.cycleTimeProgress = math.max(0, self.cycleTimeProgress - self.cycleTimeDecayRate * self.dt)
-        -- sb.logInfo("[PROJECT 45] Cycle Time Increased! Cycle Time: " .. self.currentCycleTime)
       end
     end
 
@@ -528,7 +526,6 @@ function SynthetikMechanics:firing()
 
   -- decrease cycleTime: at most, the minimum cycle time;
   self.cycleTimeProgress = math.min(1, self.cycleTimeProgress + self.cycleTimeGrowthRate)
-  -- sb.logInfo("[PROJECT 45] Gun shot! Cycle Time: " .. self.currentCycleTime)
 
   -- increment burst counter
   self.burstCounter = self.burstCounter + 1
@@ -893,13 +890,6 @@ function SynthetikMechanics:reloading()
 
     -- cock gun
     self:setState(self.cocking)
-
-    -- sb.logInfo("[PROJECT 45] Gun has been reloaded!")
-    --[[
-    if storage.critStats.shots > 0 then
-      sb.logInfo("[PROJECT 45] Empirical Crit Chance: " .. storage.critStats.crits * 100 / storage.critStats.shots .. "%%")
-    end
-    --]]
 
     -- self:setStance(self.stances.aim)
   else
@@ -1583,8 +1573,6 @@ end
 
 function SynthetikMechanics:logStuff()
   if self.debugTimer == 0 then
-    -- sb.logInfo("[PROJECT 45] Current Inaccuracy: " .. self.currentInaccuracy)
-
     self.debugTimer = self.debugTime
   end
 end

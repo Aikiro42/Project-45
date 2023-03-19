@@ -12,7 +12,7 @@
 
   "augment": {
     /*
-    can either be "stat" or anything else
+    can either be "stat", "ability" or anything else
     */
     "type": "stat",
     
@@ -23,6 +23,7 @@
     
     /*
     NON-STAT MODS REQUIRE THIS FIELD
+    ABILITY MODS REQUIRE THIS FIELD
     slots are self-explanatory:
     - rail
     - sights

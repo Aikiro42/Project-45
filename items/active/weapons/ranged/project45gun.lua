@@ -24,17 +24,6 @@ function init()
   if secondaryAbility then
     self.weapon:addAbility(secondaryAbility)
   end
-  
-  --[[
-  damageL = damageListener("inflictedDamage", function(notifications)
-    for _,notification in pairs(notifications) do
-      if notification.sourceEntityId == activeItem.ownerEntityId() then
-        sb.logInfo("[PROJECT 45] " .. sb.printJson(notification))
-      end
-    end
-  end)
-  --]]
-  
 
   self.weapon:init()
 end

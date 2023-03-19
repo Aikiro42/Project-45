@@ -21,13 +21,17 @@ function disassemble()
     
             if input.parameters.modSlots then
               for k, v in pairs(input.parameters.modSlots) do
-                player.giveItem(v[2])
+                if k ~= "ability" then
+                  player.giveItem(v[2])
+                end
               end
             end
 
             if input.parameters.statList then
-                for _, v in ipairs(input.parameters.statList) do
-                    player.giveItem(v)
+                for k, v in pairs(input.parameters.statList) do
+                    player.giveItem({
+                      name = k,
+                      count = v})
                 end
             end
             

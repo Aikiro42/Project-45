@@ -15,7 +15,8 @@ function apply(input)
     
     -- local modTypeCheck = output:instanceValue("rejectsModtype", {})
     local modSlots = input.parameters.modSlots or {} -- retrieve occupied slots
-    local statList = input.parameters.statList or {} -- retrieve stat mods
+    local statList = input.parameters.statList or {nil} -- retrieve stat mods
+    sb.logInfo(sb.printJson(statList))
     
     -- retrieve dictionary of rejected types
     local rejectsModType = output:instanceValue("rejectsModType", {})
@@ -47,10 +48,6 @@ function apply(input)
 
     local acceptsModSlot = output:instanceValue("acceptsModSlot", {})
     acceptsModSlot = sb.jsonMerge(defaultModSlots, acceptsModSlot)
-    
-    -- retrieve stat limit
-    local statModLimit = input.parameters.primaryAbility and
-      input.parameters.primaryAbility.statModLimit or 0
 
     -- MOD INSTALLATION GATES
     
@@ -59,12 +56,9 @@ function apply(input)
     -- implies that you can't install a different alt ability if
     -- you installed the wrong one (you need to use the disassembler)
     if modSlots[augment.slot] then
-      sb.logInfo(sb.printJson(modSlots[augment.slot]))
+      -- sb.logInfo(sb.printJson(modSlots[augment.slot]))
       return
     end
-
-    -- do not install mod if stat mod limit is reached
-    if statModLimit > 0 and #statList > statModLimit then return end
 
     -- do not install mod if gun denies installation of such type/slot
     if rejectsModType[augment.type] then return end
@@ -216,7 +210,8 @@ function apply(input)
         config.getParameter("itemName")
       }
     else
-      statList[#statList+1] = config.getParameter("itemName")
+      statList[config.getParameter("itemName")] = (statList[config.getParameter("itemName")] or 0) + 1
+      -- table.insert(statList, config.getParameter("itemName"))
     end
     
     output:setInstanceValue("modSlots", modSlots)

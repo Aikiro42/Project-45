@@ -147,12 +147,6 @@
     
     // ________________________[ MISC SETTINGS ]__________________________________
     
-    // Modding settings.
-    // Stat mods affect the primary ability stats multiplicatively,
-    // so a hard limit is established.
-    // Test value is 3; final value should be 8
-    "statModLimit": 3,
-
     // Laser settings.
     "laser": {
       "enabled": false, // if true, laser is rendered

@@ -5,7 +5,7 @@ local warningTriggered = false
 synthethikmechanics_altUpdate = update or function()
     if not warningTriggered then
       warningTriggered = true
-      sb.logInfo("[PROJECT 45] (" .. animationConfig.animationParameter("shortDescription") .. ") Failed to get alt-ability animation script update function. Weapon may be one-handed, not have an alt-ability, or may not have an alt-ability animation script.")
+      -- sb.logInfo("[PROJECT 45] (" .. animationConfig.animationParameter("shortDescription") .. ") Failed to get alt-ability animation script update function. Weapon may be one-handed, not have an alt-ability, or may not have an alt-ability animation script.")
     end
   end
 
@@ -16,7 +16,7 @@ function update()
   synthethikmechanics_altUpdate()
   if not warningTriggered then
     warningTriggered = true
-    sb.logInfo("[PROJECT 45] Obtained alt-ability animation update script.")
+    -- sb.logInfo("[PROJECT 45] Obtained alt-ability animation update script.")
   end
 
   local projectileStack = animationConfig.animationParameter("projectileStack")

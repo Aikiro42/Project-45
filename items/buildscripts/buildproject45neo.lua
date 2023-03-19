@@ -38,8 +38,6 @@ function build(directory, config, parameters, level, seed)
   -- let the item's animationScripts be altAnimationScripts
   config.animationScripts = {}
   util.mergeTable(config.animationScripts, altAnimationScripts or {})
-
-  -- sb.logInfo("[PROJECT 45] (buildproject45neo.lua) config.animationScripts = " .. sb.printJson(config.animationScripts))
   
   -- elemental type and config (for alt ability)
   local elementalType = configParameter("elementalType", "physical")
@@ -107,7 +105,6 @@ function build(directory, config, parameters, level, seed)
       "stock"
     }
     for _, part in ipairs(offsetConfig) do
-      -- sb.logInfo(sb.printJson(config[part .. "Offset"]))
       if config[part .. "Offset"] then
         config.animationCustom.animatedParts.parts[part].properties.offset = config[part .. "Offset"]
         config.animationCustom.animatedParts.parts[part .. "Fullbright"].properties.offset = config[part .. "Offset"]

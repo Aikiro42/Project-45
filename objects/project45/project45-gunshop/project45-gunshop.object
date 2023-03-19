@@ -69,6 +69,7 @@
     },
     "goods":{
       "guns": [
+        "project45-modulargun",
         "project45-pipegun",
         "project45-pistol",
         "project45-revolver",
