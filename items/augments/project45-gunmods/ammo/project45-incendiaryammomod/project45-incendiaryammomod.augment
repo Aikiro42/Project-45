@@ -1,0 +1,25 @@
+{
+  "itemName" : "project45-incendiaryammomod",
+  "price" : 15000,
+  "rarity" : "Legendary",
+  "tooltipKind" : "project45gunmod",
+  "category" : "Universal Ammo Mod",
+  "inventoryIcon" : "/items/augments/project45-gunmods/ammo/project45-incendiaryammomod/project45-incendiaryammomod.png",
+  "description" : "Universally compatible standard incendiary bullets.",
+  "shortdescription" : "Incendiary Bullets",
+
+  "augment":{
+    "type": "univAmmo",
+    "modName": "Incendiary Bullets",
+    "slot": "ammotype",
+    "projectileSettings":{
+      "projectileType": "project45stdfirebullet",
+      "overrideHitscan": true
+    }
+  },
+
+
+  "radioMessagesOnPickup" : [ "pickupaugment" ],
+
+  "scripts" : [ "/scripts/augments/project45-gunmod.lua" ]
+}

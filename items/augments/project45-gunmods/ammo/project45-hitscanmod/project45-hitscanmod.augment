@@ -3,16 +3,16 @@
   "price" : 15000,
   "rarity" : "Legendary",
   "tooltipKind" : "project45gunmod",
-  "category" : "Projectile Mod",
+  "category" : "Universal Ammo Mod",
   "inventoryIcon" : "/items/augments/project45-gunmods/ammo/project45-hitscanmod/project45-hitscanmod.png",
-  "description" : "Makes your gun fire hitscan bullets.",
+  "description" : "Universally compatible hitscan bullets.",
   "shortdescription" : "Hitscan Bullets",
 
   "augment":{
-    "type": "ammo",
+    "type": "univAmmo",
     "modName": "Hitscan Bullets",
     "slot": "ammotype",
-    "primaryAbility":{
+    "projectileSettings":{
       "projectileType": "hitscan",
       "overrideHitscan": true
     }

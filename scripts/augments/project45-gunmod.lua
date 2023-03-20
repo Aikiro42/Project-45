@@ -97,6 +97,25 @@ function apply(input)
       newPrimaryAbility = sb.jsonMerge(newPrimaryAbility, augment.primaryAbility)
     end
 
+    -- replace projectile information
+    if augment.projectileSettings then
+      
+      local projectileSettingsList = {
+        "projectileType",
+        "overrideHitscan",
+        "multishot",
+        "projectileCount",
+        "projectileParameters"
+      }
+
+      for _, v in ipairs(projectileSettingsList) do
+        if augment.projectileSettings[v] then
+          newPrimaryAbility[v] = augment.projectileSettings[v]
+        end
+      end
+      
+    end
+
     -- multiply base damage directly
     if augment.baseDamageMult then
       local newBaseDamage = math.min(oldPrimaryAbility.baseDamage * augment.baseDamageMult, 99)

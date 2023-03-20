@@ -3,16 +3,16 @@
   "price" : 15000,
   "rarity" : "Legendary",
   "tooltipKind" : "project45gunmod",
-  "category" : "Projectile Mod",
+  "category" : "Universal Ammo Mod",
   "inventoryIcon" : "/items/augments/project45-gunmods/ammo/project45-bulletmod/project45-bulletmod.png",
-  "description" : "Makes your gun fire regular bullets.",
+  "description" : "Universally compatible standard issue bullets.",
   "shortdescription" : "Standard Bullets",
 
   "augment":{
-    "type": "ammo",
+    "type": "univAmmo",
     "modName": "Standard Bullets",
     "slot": "ammotype",
-    "primaryAbility":{
+    "projectileSettings":{
       "projectileType": "project45stdbullet",
       "overrideHitscan": true
     }

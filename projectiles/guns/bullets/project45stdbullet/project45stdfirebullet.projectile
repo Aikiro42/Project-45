@@ -1,18 +1,18 @@
 {
-  "projectileName" : "project45stdbullet",
-  "image" : "project45stdbullet.png",
+  "projectileName" : "project45stdfirebullet",
+  "image" : "project45stdbullet.png?multiply=FFDD00FF",
   "scripts": ["project45stdbullet.lua"],
   "physics" : "sticky",
   "animationCycle" : 0.25,
   "frameNumber" : 1,
   "damageKind" : "standardbullet",
   "pointLight" : true,
-  "lightColor": [75, 75, 75],
+  "lightColor": [255, 170, 0],
   "fullbright": true,
   "flippable" : true,
-  "statusEffects" : [ ],
+  "statusEffects" : ["burning"],
   "power" : 5.0,
-  "speed" : 241,
+  "speed" : 300,
   "knockback" : 0,
   "collisionPoly": [
     [-8.5, 0],
@@ -23,29 +23,10 @@
   "movementSettings":{
     "collisionEnabled": true
   },
+
   "bounces" : 0,
 
   "periodicActions" : [
-    /*
-    {
-      "time" : 0.01,
-      "repeat" : true,
-      "action" : "particle",
-      "rotate" : true,
-      
-      "specification" : {
-        "type" : "textured",
-        "image" : "/projectiles/guns/bullets/project45stdbullet/project45stdbullettrail.png",
-        "position" : [-2, 0],
-        "layer" : "back",
-        "timeToLive" : 0.0,
-        "destructionTime" : 0.25,
-        "destructionAction" : "fade",
-        "fullbright" : false
-      }
-
-    }
-    */
     {
       "time" : 0.01,
       "repeat" : true,
@@ -58,7 +39,7 @@
         "fullbright" : true,
         "destructionAction" : "shrink",
         "size" : 1,
-        "color" : [255, 255, 200, 255],
+        "color" : [255, 170, 0, 255],
         "collidesForeground" : false,
         "length" : 50,
         "position" : [0, 0],
@@ -70,6 +51,7 @@
 
     }
   ],
+
   "actionOnReap": [
     { 
       "action" : "sound",
@@ -79,14 +61,6 @@
         "/sfx/project45-synthetikmechanics/bulletimpacts/bulletimpact_generic_3.ogg"
       ]
     },
-    /*
-    
-    {
-      "action": "config",
-      "file": "/projectiles/explosions/project45_hitexplosion/project45_hitexplosion.config"
-    },
-    
-    */
     {
       "action" : "loop",
       "count" : 6,
@@ -95,8 +69,8 @@
           "action" : "particle",
           "specification" : {
             "type" : "ember",
-            "size" : 1,
-            "color" : [255, 255, 200, 255],
+            "size" : 2,
+            "color" : [255, 170, 0, 255],
             "light" : [65, 65, 51],
             "fullbright" : true,
             "destructionTime" : 0.2,
@@ -109,8 +83,8 @@
             "layer" : "middle",
             "variance" : {
               "position" : [0.25, 0.25],
-              "size" : 0.5,
-              "initialVelocity" : [10, 10],
+              "size" : 1,
+              "initialVelocity" : [25, 25],
               "timeToLive" : 0.2
             }
           }
