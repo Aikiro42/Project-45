@@ -1,0 +1,27 @@
+{
+  "itemName" : "project45-iceammomod",
+  "price" : 15000,
+  "rarity" : "Legendary",
+  "tooltipKind" : "project45gunmod",
+  "category" : "Energy Ammo Mod",
+  "inventoryIcon" : "/items/augments/project45-gunmods/ammo/project45-iceammomod/project45-iceammomod.png",
+  "description" : "Sub-zero configuration for energy guns. Incompatible with ballistic guns.",
+  "shortdescription" : "Cryo Beam Configuration",
+
+  "augment":{
+    "type": "energyAmmo",
+    "modName": "Cryo Beams",
+    "slot": "ammotype",
+    "projectileSettings":{
+      "projectileParameters":{
+        "hitscanColor": [150,203,231],
+        "statusEffects":["frostsnare", "frostslow"]
+      }
+    }
+  },
+
+
+  "radioMessagesOnPickup" : [ "pickupaugment" ],
+
+  "scripts" : [ "/scripts/augments/project45-gunmod.lua" ]
+}

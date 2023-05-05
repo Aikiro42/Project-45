@@ -3,13 +3,13 @@
   "price" : 15000,
   "rarity" : "Legendary",
   "tooltipKind" : "project45gunmod",
-  "category" : "Universal Ammo Mod",
+  "category" : "Ballistic Ammo Mod",
   "inventoryIcon" : "/items/augments/project45-gunmods/ammo/project45-poisonammomod/project45-poisonammomod.png",
-  "description" : "Universally compatible standard mercury-tipped bullets.",
+  "description" : "Custom mercury-tipped bullets. Incompatible with energy guns.",
   "shortdescription" : "Mercury-tipped Bullets",
 
   "augment":{
-    "type": "univAmmo",
+    "type": "ballisticAmmo",
     "modName": "Mercury-tipped Bullets",
     "slot": "ammotype",
     "projectileSettings":{

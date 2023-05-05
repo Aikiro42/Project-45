@@ -64,6 +64,9 @@ When gun is a windup-type and
     "underbarrel": false,
     "stock": false
   },
+  "rejectsModType": {
+    "ballisticAmmo": true
+  },
   "baseOffset" : [0.1, -0.1],
   "muzzleOffset" : [2, 0.5],
   "ejectionPortOffset": [0.2, 0.7],
