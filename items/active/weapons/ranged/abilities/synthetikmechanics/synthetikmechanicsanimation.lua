@@ -103,14 +103,18 @@ function update()
 
   -- render hitscan trails
   for i, projectile in ipairs(projectileStack) do
-    local bulletLine = worldify(projectile.origin, projectile.destination)
     muzzleFlashColor = projectile.color or {0, 0, 0}
-    localAnimator.addDrawable({
-      line = bulletLine,
-      width = (projectile.width or 1) * projectile.lifetime/projectile.maxLifetime,
-      fullbright = true,
-      color = projectile.color or {0, 0, 0}
-    }, "Player-1")
+    -- don't calculate the bullet line when the origin is the same as the destination
+    -- there is no scanline if projectiles are shot
+    if projectile.origin ~= projectile.destination then
+      local bulletLine = worldify(projectile.origin, projectile.destination)
+      localAnimator.addDrawable({
+        line = bulletLine,
+        width = (projectile.width or 1) * projectile.lifetime/projectile.maxLifetime,
+        fullbright = true,
+        color = projectile.color or {0, 0, 0}
+      }, "Player-1")
+    end
   end
 
   -- render muzzle flash

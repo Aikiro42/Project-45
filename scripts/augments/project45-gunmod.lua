@@ -16,7 +16,7 @@ function apply(input)
     -- local modTypeCheck = output:instanceValue("rejectsModtype", {})
     local modSlots = input.parameters.modSlots or {} -- retrieve occupied slots
     local statList = input.parameters.statList or {nil} -- retrieve stat mods
-    sb.logInfo(sb.printJson(statList))
+    -- sb.logInfo(sb.printJson(statList))
     
     -- retrieve dictionary of rejected types
     local rejectsModType = output:instanceValue("rejectsModType", {})
@@ -64,10 +64,56 @@ function apply(input)
     if rejectsModType[augment.type] then return end
     if augment.type ~= "stat" and not acceptsModSlot[augment.slot] then return end
     
-    -- abilities occupy two modslots - the slot they're assigned to, and the "ability" slot
+    --[[
+      Abilities occupy two modslots - the slot they're assigned to, and the "ability" slot.
+      Abilities cannot be replaced.
+      If the ability is occupied and the augment to be installed is an ability mod,
+      then we don't apply the mod.
+    --]]
     if augment.type == "ability" and modSlots.ability then return end
 
     -- MOD INSTALLATION PROCESS
+
+    -- prepare to alter stats and the primary ability in general
+    local oldPrimaryAbility = output.config.primaryAbility or {}
+    local newPrimaryAbility = input.parameters.primaryAbility or {}
+    
+    -- replace projectile information
+    -- this replacement process takes priority
+    --[[
+      POTENTIAL BUGS:
+      - If mod A and mod B are ammotype mods that modify different sets of projectile settings,
+        and mod A is installed before mod B,
+        then for each setting mod A modified that mod B doesn't modify,
+        that setting will persist after mod B's installation.
+        
+        e.g.
+        Mod A only modifies the multishot value, say, increase to 5
+        Mod B only modifies the projectile type, say, replace with incendiary mullets
+        Installing either one after the other (since they modify mutually exclusive settings)
+        will make the gun fire incendiary buckshot rounds.
+        Sounds cool, but there can be unforeseen complications due to certain settings conflicting with each other
+        in terms of implementation.
+        
+    --]]
+    if augment.projectileSettings then
+      
+      local projectileSettingsList = {
+        "projectileType",
+        "overrideHitscan",
+        "multishot",
+        "projectileCount",
+        "projectileParameters",
+        "spread"
+      }
+
+      for _, v in ipairs(projectileSettingsList) do
+        if augment.projectileSettings[v] then
+          newPrimaryAbility[v] = augment.projectileSettings[v] or oldPrimaryAbility[v]
+        end
+      end
+
+    end
 
     -- alter or set ability type if present
     if augment.altAbilityType and input.parameters.altAbilityType ~= augment.altAbilityType then
@@ -88,32 +134,9 @@ function apply(input)
       output:setInstanceValue("muzzleOffset", vec2.add(oldMuzzleOffset, augment.muzzleOffsetAdd))
     end
 
-    -- prepare to alter stats and the primary ability in general
-    local oldPrimaryAbility = output.config.primaryAbility or {}
-    local newPrimaryAbility = input.parameters.primaryAbility or {}
-
     -- replace general primaryability stats
     if augment.primaryAbility then
       newPrimaryAbility = sb.jsonMerge(newPrimaryAbility, augment.primaryAbility)
-    end
-
-    -- replace projectile information
-    if augment.projectileSettings then
-      
-      local projectileSettingsList = {
-        "projectileType",
-        "overrideHitscan",
-        "multishot",
-        "projectileCount",
-        "projectileParameters"
-      }
-
-      for _, v in ipairs(projectileSettingsList) do
-        if augment.projectileSettings[v] then
-          newPrimaryAbility[v] = augment.projectileSettings[v]
-        end
-      end
-      
     end
 
     -- multiply base damage directly
@@ -235,6 +258,7 @@ function apply(input)
     
     output:setInstanceValue("modSlots", modSlots)
     output:setInstanceValue("statList", statList)
+    sb.logInfo(sb.printJson(modSlots))
     output:setInstanceValue("isModded", true)
     -- print(sb.printJson(output:descriptor()))
     return output:descriptor(), 1

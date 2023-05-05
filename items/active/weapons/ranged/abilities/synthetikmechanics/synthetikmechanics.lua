@@ -1013,6 +1013,20 @@ function SynthetikMechanics:fireProjectileNeo(projectileType)
     false,
     params
   )
+
+    -- muzzleflash info inserted to projectile stack that's being passed to the animation script
+    -- each bullet trail in the stack is rendered, and the lifetime is updated in this very script too
+    -- the animation script just flashes the thing
+    local life = self.projectileParameters.fadeTime or 0.5
+    table.insert(self.projectileStack, {
+      width = 0,
+      origin = self:firePosition(),
+      destination = self:firePosition(),
+      lifetime = life,
+      maxLifetime = life,
+      color = self.projectileParameters.hitscanColor
+    })
+
 end
 
 function SynthetikMechanics:fireHitscan(projectileType)
