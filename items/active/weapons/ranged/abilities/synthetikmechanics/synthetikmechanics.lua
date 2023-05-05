@@ -1047,7 +1047,16 @@ function SynthetikMechanics:fireHitscan(projectileType)
     if #hitReg[3] > 0 then
       for _, hitId in ipairs(hitReg[3]) do
         if world.entityExists(hitId) then
-          world.sendEntityMessage(hitId, "applyStatusEffect", statusDamage, self:damagePerShot() * crit, entity.id())
+
+          local damageAmount = self:damagePerShot() * crit
+          
+          if self.projectileParameters.hitscanDamageKind then
+            damageAmount = damageAmount / 2
+            world.sendEntityMessage(hitId, "applyStatusEffect", self.projectileParameters.hitscanDamageKind, damageAmount, entity.id())
+          end
+          
+          world.sendEntityMessage(hitId, "applyStatusEffect", statusDamage, damageAmount, entity.id())
+          
           if self.projectileParameters.hitregPower == 0 then
             for i, stateffect in ipairs(self.projectileParameters.statusEffects) do
               world.sendEntityMessage(hitId, "applyStatusEffect", stateffect)
@@ -1070,6 +1079,37 @@ function SynthetikMechanics:fireHitscan(projectileType)
     })
 
     -- hitscan explosion
+    --[[
+    {
+      action="loop",
+      count=6,
+      body={
+        {
+          action="particle",
+          specification={
+            type="ember"
+            size=1,
+            color={255, 255, 200, 255},
+            light={65, 65, 51},
+            fullbright=true,
+            destructionTime=0.2,
+            destructionAction="shrink",
+            fade=0.9,
+            initialVelocity={0, 5},
+            finalVelocity={0, -50},
+            approach={0, 30},
+            timeToLive=0,
+            layer="middle",
+            variance={
+              position={0.25, 0.25},
+              size=0.5,
+              initialVelocity={10, 10},
+              timeToLive=0.2
+            }
+          }
+        }
+      }
+    }  
 
     local hitscanActionsOnReap = {
       {
@@ -1077,11 +1117,44 @@ function SynthetikMechanics:fireHitscan(projectileType)
         file = "/projectiles/explosions/project45_hitexplosion/project45_hitscanexplosion.config"
       }
     }
+    --]]
+    local hitscanActionsOnReap = {
+      {
+        action="loop",
+        count=6,
+        body={
+          {
+            action="particle",
+            specification={
+              type="ember",
+              size=1,
+              color=self.projectileParameters.hitscanColor or {255, 255, 200, 255},
+              light={65, 65, 51},
+              fullbright=true,
+              destructionTime=0.2,
+              destructionAction="shrink",
+              fade=0.9,
+              initialVelocity={0, 5},
+              finalVelocity={0, -50},
+              approach={0, 30},
+              timeToLive=0,
+              layer="middle",
+              variance={
+                position={0.25, 0.25},
+                size=0.5,
+                initialVelocity={10, 10},
+                timeToLive=0.2
+              }
+            }
+          }
+        }
+      }
+    }
 
     for i, a in ipairs(self.projectileParameters.actionOnHit) do
       table.insert(hitscanActionsOnReap, a)
     end
-
+    sb.logInfo(self.projectileParameters.hitregPower)
     world.spawnProjectile(
       "invisibleprojectile",
       hitReg[2],
@@ -1089,7 +1162,7 @@ function SynthetikMechanics:fireHitscan(projectileType)
       self:aimVector(3.14),
       false,
       {
-        damageType = self.projectileParameters.hitregPower == 0 and "NoDamage" or "damage",
+        damageType = "NoDamage",
         power = self.projectileParameters.hitregPower,
         statusEffects = self.projectileParameters.statusEffects,
         timeToLive = 0,

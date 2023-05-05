@@ -114,7 +114,9 @@
         "project45-bulletmod",
         "project45-hitscanmod",
         "project45-incendiaryammomod",
-        "project45-poisonammomod"
+        "project45-poisonammomod",
+        "project45-iceammomod",
+        "project45-elecammomod"
       ]
     }
   }

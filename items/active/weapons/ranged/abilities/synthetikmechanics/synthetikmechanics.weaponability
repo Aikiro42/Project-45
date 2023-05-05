@@ -66,11 +66,16 @@
       "fadeTime": 0.1, // how long the hitscan line fades away
       "hitscanWidth": 1, // visual width of hitscan line in pixels
       "hitscanColor": [255,255,200], // color of hitscan projectile; also dictates muzzle flash color
+      /* additional instance of damage of different damage kind.
+      Possible damage kinds (actually status effects):
+      - project45hitscanicedamage
+      */
+      "hitscanDamageKind": null,
       
+
       // regular parameters
       "actionOnHit": [], // actions to do when hitscan registers hits, whether it be terrain, entities, or hitscan line termination
       "statusEffects" : [], // status effects to inflict on hitscan hit
-      
       // path to explosion config on hit
       "hitregPower": 0
     },
