@@ -4,7 +4,7 @@
   "maxStack" : 1,
   "rarity" : "Essential",
   "description" : "An entry-level firearm for enthusiasts of the .",
-  "shortdescription" : "9mm Pistol",
+  "shortdescription" : "Pistol",
   "tooltipKind" : "project45gun",
   "category" : "Pistol",
   "twoHanded" : false,

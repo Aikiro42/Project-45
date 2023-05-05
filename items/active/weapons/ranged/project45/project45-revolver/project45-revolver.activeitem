@@ -1,9 +1,9 @@
 {
   "itemName" : "project45-revolver",
-  "price" : 1,
+  "price" : 3000,
   "maxStack" : 1,
   "rarity" : "Essential",
-  "shortdescription" : ".45 Revolver",
+  "shortdescription" : "Revolver",
   "description" : "\"To town rode a stranger, had a big iron on his hip... \n and he's here to kill the outlaw... the stranger killed the outlaw. The end.\"",
   "tooltipKind" : "project45gun",
   "category" : "Pistol",

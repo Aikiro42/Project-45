@@ -1,15 +1,15 @@
 {
   "itemName" : "project45-antimateriel",
-  "price" : 1,
+  "price" : 5000,
   "maxStack" : 1,
   "rarity" : "Essential",
-  "shortdescription" : ".50 BMG AMR",
+  "shortdescription" : "Anti-Materiel Rifle",
   "description" : "An Anti-materiel rifle with a weird muzzlebreak on a barrel.",
   "tooltipKind" : "project45gun",
   "category" : "Sniper",
   "twoHanded" : true,
   "itemTags" : ["weapon","ranged","sniper"],
-  "level" : 6,
+  "level" : 1,
 
   "inventoryIcon" : "project45-antimateriel-icon.png",
   "acceptsGunMods": true,
@@ -78,7 +78,7 @@
     
     // "DEBUG": true,
 
-    "baseDamage": 10,
+    "baseDamage": 1,
     "inaccuracy": 0.1,
     "manualFeed": true,
     "semi": true,
@@ -110,8 +110,8 @@
     "recoilMult": 0.85,
 
     // make all shots orange
-    "critChance": 1,
-    "critDamageMult": 1.1,
+    "critChance": 0.99,
+    "critDamageMult": 50,
     "screenShakeAmount": [1.5,2.5],
     "screenShakeDelta": [0.1, 0.5],
     "magLoopFrames": 0,

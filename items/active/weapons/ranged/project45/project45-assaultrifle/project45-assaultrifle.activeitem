@@ -1,15 +1,15 @@
 {
   "itemName" : "project45-assaultrifle",
-  "price" : 1,
+  "price" : 3000,
   "maxStack" : 1,
   "rarity" : "Essential",
+  "shortdescription" : "Assault Rifle",
   "description" : "A burst-auto rifle with a transluscent mag.",
-  "shortdescription" : "5.56 Assault Rifle",
   "tooltipKind" : "project45gun",
   "category" : "Rifle",
   "twoHanded" : true,
   "itemTags" : ["weapon","ranged","rifle"],
-  "level" : 5,
+  "level" : 1,
 
   "inventoryIcon" : "project45-assaultrifle-icon.png",
   "acceptsGunMods": true,

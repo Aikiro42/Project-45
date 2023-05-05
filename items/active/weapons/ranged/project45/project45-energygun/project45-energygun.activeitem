@@ -8,10 +8,10 @@ When gun is a windup-type and
 
 {
   "itemName" : "project45-energygun",
-  "price" : 1,
+  "price" : 4000,
   "maxStack" : 1,
   "rarity" : "Essential",
-  "shortdescription" : "Eneregurgitator",
+  "shortdescription" : "Energy Gun",
   "description" : "The person in charge for naming this gun has been fried with this gun. Yes, fried.",
   "tooltipKind" : "project45gun",
   "category" : "Rifle",

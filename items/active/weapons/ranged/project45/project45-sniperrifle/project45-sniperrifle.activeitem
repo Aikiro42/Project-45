@@ -1,9 +1,9 @@
 {
   "itemName" : "project45-sniperrifle",
-  "price" : 1,
+  "price" : 3000,
   "maxStack" : 1,
   "rarity" : "Essential",
-  "shortdescription" : ".308 Bullpup Sniper Rifle",
+  "shortdescription" : "Sniper Rifle",
   "description" : "A novel sniper rifle with an integrated suppressor.",
   "tooltipKind" : "project45gun",
   "category" : "Sniper",

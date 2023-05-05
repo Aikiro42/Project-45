@@ -1,9 +1,9 @@
 {
   "itemName" : "project45-accelerator",
-  "price" : 1,
+  "price" : 3000,
   "maxStack" : 1,
   "rarity" : "Essential",
-  "shortdescription" : "HyperExcel 2700",
+  "shortdescription" : "Accelerator",
   "description" : "A gun that fires faster the more it fires.",
   "tooltipKind" : "project45gun",
   "category" : "Pistol",

@@ -1,9 +1,9 @@
 {
   "itemName" : "project45-garand",
-  "price" : 1,
+  "price" : 3000,
   "maxStack" : 1,
   "rarity" : "Essential",
-  "shortdescription" : "M5K Garand",
+  "shortdescription" : "Garand Service Rifle",
   "description" : "Present-day materials built around a classic firing mechanism.",
   "tooltipKind" : "project45gun",
   "category" : "Rifle",

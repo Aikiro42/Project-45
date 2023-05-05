@@ -1,9 +1,9 @@
 {
   "itemName" : "project45-grenadelauncher",
-  "price" : 1,
+  "price" : 5000,
   "maxStack" : 1,
   "rarity" : "Essential",
-  "shortdescription" : "40mm Grenade Launcher",
+  "shortdescription" : "Grenade Launcher",
   "description" : "When dakka can't solve problems, boom can.",
   "tooltipKind" : "project45gun",
   "category" : "Grenade Launcher",

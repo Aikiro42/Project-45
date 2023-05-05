@@ -1,10 +1,10 @@
 {
   "itemName" : "project45-mosin",
-  "price" : 1,
+  "price" : 4000,
   "maxStack" : 1,
   "rarity" : "Essential",
-  "shortdescription" : "Padayuschaya Zvezda",
-  "description" : "Novakid-make. Reminiscent of the ancient Mosin Nagant.",
+  "shortdescription" : "Hunter's Rifle",
+  "description" : "Novakid-make. Reminiscent of the ancient Mosin-Nagant.",
   "tooltipKind" : "project45gun",
   "category" : "Rifle",
   "twoHanded" : true,

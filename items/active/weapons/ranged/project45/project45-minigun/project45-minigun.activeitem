@@ -1,9 +1,9 @@
 {
   "itemName" : "project45-minigun",
-  "price" : 1,
+  "price" : 6000,
   "maxStack" : 1,
   "rarity" : "Essential",
-  "shortdescription" : "Vulkan Mini",
+  "shortdescription" : "Minigun",
   "description" : "A compact minigun. Requires spooling up before firing.",
   "tooltipKind" : "project45gun",
   "category" : "Rifle",

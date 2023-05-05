@@ -8,10 +8,10 @@ When gun is a windup-type and
 
 {
   "itemName" : "project45-gaussrifle",
-  "price" : 1,
+  "price" : 4000,
   "maxStack" : 1,
   "rarity" : "Essential",
-  "shortdescription" : "Eneregurgitator 2",
+  "shortdescription" : "Gauss Rifle",
   "description" : "The person who named this gun is Pink Mist.",
   "tooltipKind" : "project45gun",
   "category" : "Sniper",

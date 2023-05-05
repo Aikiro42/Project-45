@@ -1,9 +1,9 @@
 {
   "itemName" : "project45-shotgun",
-  "price" : 1,
+  "price" : 2000,
   "maxStack" : 1,
   "rarity" : "Essential",
-  "shortdescription" : "12 Gau Shotgun",
+  "shortdescription" : "Pump-Action Shotgun",
   "description" : "A slam-fireable shotgun which design was inspired from a classic model.",
   "tooltipKind" : "project45gun",
   "category" : "Shotgun",
