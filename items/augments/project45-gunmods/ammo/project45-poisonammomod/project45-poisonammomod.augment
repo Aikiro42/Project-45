@@ -1,0 +1,25 @@
+{
+  "itemName" : "project45-poisonammomod",
+  "price" : 15000,
+  "rarity" : "Legendary",
+  "tooltipKind" : "project45gunmod",
+  "category" : "Universal Ammo Mod",
+  "inventoryIcon" : "/items/augments/project45-gunmods/ammo/project45-poisonammomod/project45-poisonammomod.png",
+  "description" : "Universally compatible standard mercury-tipped bullets.",
+  "shortdescription" : "Mercury-tipped Bullets",
+
+  "augment":{
+    "type": "univAmmo",
+    "modName": "Mercury-tipped Bullets",
+    "slot": "ammotype",
+    "projectileSettings":{
+      "projectileType": "project45stdpoisonbullet",
+      "overrideHitscan": true
+    }
+  },
+
+
+  "radioMessagesOnPickup" : [ "pickupaugment" ],
+
+  "scripts" : [ "/scripts/augments/project45-gunmod.lua" ]
+}

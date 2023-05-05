@@ -113,7 +113,8 @@
       "ammo": [
         "project45-bulletmod",
         "project45-hitscanmod",
-        "project45-incendiaryammomod"
+        "project45-incendiaryammomod",
+        "project45-poisonammomod"
       ]
     }
   }
