@@ -7,7 +7,7 @@
   "shortdescription" : "Modular Gun",
   "tooltipKind" : "project45gun",
   "category" : "Pistol",
-  "twoHanded" : false,
+  "twoHanded" : true,
   "itemTags" : ["weapon","ranged","pistol"],
   "level" : 1,
 
@@ -49,7 +49,7 @@
           // {"particle": "project45muzzlesmoke"}
         ]},
       "magazine" : { "particles" : [
-          {"particle": "project45pistolmag"}
+          {"particle": "project45modulargunmag"}
           // {"particle": "project45muzzlesmoke"}
         ]}
     },
