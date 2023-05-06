@@ -5,6 +5,7 @@ local radioButtonIDs = {
   "mods",
   "stat",
   "ammo",
+  "util",
 }
 
 function init()
@@ -16,6 +17,7 @@ function init()
     mods = {},
     stat = {},
     ammo = {},
+    util = {}
   })
   
   self.mode = "guns"

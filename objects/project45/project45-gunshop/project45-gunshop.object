@@ -87,7 +87,6 @@
         "project45-gaussrifle"
       ],
       "mods": [
-        "project45-gundisassembler",
         "project45-gunscopemod",
         "project45-enemyradarmod",
         "project45-flashlasermod",
@@ -121,6 +120,11 @@
         "project45-dragonsbreathmod",
         "project45-iceammomod",
         "project45-elecammomod"
+      ],
+
+      "util": [
+        "project45-gundisassembler",
+        "project45-gunrepairkit"
       ]
     }
   }
