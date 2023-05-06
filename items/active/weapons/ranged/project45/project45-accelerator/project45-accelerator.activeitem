@@ -60,7 +60,9 @@
     "stock": false
   },
   "rejectsModType":{
-    "ballisticAmmo": true
+    "ballisticAmmo": true,
+    "shotgunAmmo": true,
+    "grenadeAmmo": true
   },
   "baseOffset" : [0.5, 0],
   "muzzleOffset" : [1, 0.25],

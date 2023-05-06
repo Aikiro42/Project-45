@@ -65,7 +65,9 @@ When gun is a windup-type and
     "stock": false
   },
   "rejectsModType": {
-    "ballisticAmmo": true
+    "ballisticAmmo": true,
+    "shotgunAmmo": true,
+    "grenadeAmmo": true
   },
   "baseOffset" : [0.1, -0.1],
   "muzzleOffset" : [2, 0.5],

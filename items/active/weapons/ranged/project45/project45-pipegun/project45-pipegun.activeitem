@@ -61,6 +61,10 @@
     "underbarrel": true,
     "stock": true
   },
+  "rejectsModType":{
+    "energyAmmo": true,
+    "grenadeAmmo": true
+  },
   "baseOffset" : [1, 0.15],
   "muzzleOffset" : [1.6, 0.4],
   "ejectionPortOffset": [0.7, 0.7],

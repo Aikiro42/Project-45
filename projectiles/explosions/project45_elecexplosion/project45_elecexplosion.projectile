@@ -13,7 +13,7 @@
   "bounces" : -1,
   "flippable" : true,
   "power": 45,
-  "damageType" : "IgnoresDef",
+  "damageType" : "default",
   "damageKind" : "electric",
   "pointLight" : true,
   "lightColor": [106, 34, 132]

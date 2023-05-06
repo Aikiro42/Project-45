@@ -20,7 +20,9 @@
     "underbarrel": true,
     "stock": true
   },
-
+  "rejectsModType":{
+    "grenadeAmmo": true
+  },
   // "animation" : "project45-template.animation",
   "animationParts" : {
     "butt" : "",

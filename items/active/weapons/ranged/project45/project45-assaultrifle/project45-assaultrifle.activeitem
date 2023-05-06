@@ -28,7 +28,11 @@
     "grip": ""
 
   },
-
+  "rejectsModType":{
+    "energyAmmo": true,
+    "shotgunAmmo": true,
+    "grenadeAmmo": true
+  },
   "animationCustom":{
 
     "animatedParts" : {

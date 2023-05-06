@@ -113,6 +113,8 @@
       "ammo": [
         "project45-bulletmod",
         "project45-hitscanmod",
+        "project45-flechettemod",
+        "project45-explosiveammomod",
         "project45-incendiaryammomod",
         "project45-poisonammomod",
         "project45-iceammomod",

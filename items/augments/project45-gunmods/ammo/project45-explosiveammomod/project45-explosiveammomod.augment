@@ -1,0 +1,24 @@
+{
+  "itemName" : "project45-explosiveammomod",
+  "price" : 15000,
+  "rarity" : "Legendary",
+  "tooltipKind" : "project45gunmod",
+  "category" : "Ballistic Ammo Mod",
+  "inventoryIcon" : "/items/augments/project45-gunmods/ammo/project45-explosiveammomod/project45-explosiveammomod.png",
+  "description" : "High-explosive bullets. Incompatible with Energy guns.",
+  "shortdescription" : "High-explosive Bullets",
+
+  "augment":{
+    "type": "ballisticAmmo",
+    "modName": "High-explosive Bullets",
+    "slot": "ammotype",
+    "projectileSettings":{
+      "projectileType": "project45explosivebullet",
+      "overrideHitscan": true
+    }
+  },
+
+  "radioMessagesOnPickup" : [ "pickupaugment" ],
+
+  "scripts" : [ "/scripts/augments/project45-gunmod.lua" ]
+}

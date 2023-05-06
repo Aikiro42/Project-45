@@ -1,0 +1,26 @@
+{
+  "itemName" : "project45-flechettemod",
+  "price" : 15000,
+  "rarity" : "Legendary",
+  "tooltipKind" : "project45gunmod",
+  "category" : "Shotgun Ammo Mod",
+  "inventoryIcon" : "/items/augments/project45-gunmods/ammo/project45-flechettemod/project45-flechettemod.png",
+  "description" : "Flechette-filled shells for penetration. Only compatible with shotguns.",
+  "shortdescription" : "Flechette Shells",
+
+  "augment":{
+    "type": "shotgunAmmo",
+    "modName": "Flechette Shells",
+    "slot": "ammotype",
+    "projectileSettings":{
+      "projectileParameters": {
+        "piercing": true,
+        "punchThrough": 3
+      }
+    }
+  },
+
+  "radioMessagesOnPickup" : [ "pickupaugment" ],
+
+  "scripts" : [ "/scripts/augments/project45-gunmod.lua" ]
+}
