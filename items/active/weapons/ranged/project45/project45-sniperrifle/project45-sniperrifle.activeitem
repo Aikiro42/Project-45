@@ -129,7 +129,7 @@
 
   },
 
-  "altAbilityType": "project45gunscope",
+  // "altAbilityType": "project45gunscope",
 
   "builder" : "/items/buildscripts/buildproject45neo.lua"
 }
