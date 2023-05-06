@@ -1154,7 +1154,7 @@ function SynthetikMechanics:fireHitscan(projectileType)
     for i, a in ipairs(self.projectileParameters.actionOnHit) do
       table.insert(hitscanActionsOnReap, a)
     end
-    sb.logInfo(self.projectileParameters.hitregPower)
+    -- sb.logInfo(self.projectileParameters.hitregPower)
     world.spawnProjectile(
       "invisibleprojectile",
       hitReg[2],

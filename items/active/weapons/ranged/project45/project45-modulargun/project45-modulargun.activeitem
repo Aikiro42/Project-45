@@ -8,7 +8,7 @@
   "tooltipKind" : "project45gun",
   "category" : "Pistol",
   "twoHanded" : true,
-  "itemTags" : ["weapon","ranged","pistol"],
+  "itemTags" : ["weapon","ranged"],
   "level" : 1,
 
   "inventoryIcon" : "project45-modulargun-icon.png",
@@ -116,8 +116,6 @@
     }
 
   },
-
-  "altAbilityType": "",
-
+  
   "builder" : "/items/buildscripts/buildproject45neo.lua"
 }

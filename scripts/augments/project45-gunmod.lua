@@ -258,7 +258,7 @@ function apply(input)
     
     output:setInstanceValue("modSlots", modSlots)
     output:setInstanceValue("statList", statList)
-    sb.logInfo(sb.printJson(modSlots))
+    -- sb.logInfo(sb.printJson(modSlots))
     output:setInstanceValue("isModded", true)
     -- print(sb.printJson(output:descriptor()))
     return output:descriptor(), 1

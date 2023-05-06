@@ -13,7 +13,9 @@ function addAbility(config, parameters, abilitySlot, abilitySource)
 
     -- retrieve animation scripts to recover
     local retAnimScripts = {}
-    util.mergeTable(retAnimScripts, abilityConfig.animationScripts)
+    if abilityConfig.animationScripts then
+      util.mergeTable(retAnimScripts, abilityConfig.animationScripts)
+    end
 
     -- Rename "ability" key to primaryAbility or altAbility
     local abilityType = abilityConfig.ability.type

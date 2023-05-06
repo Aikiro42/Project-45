@@ -1,0 +1,48 @@
+{
+  "itemName" : "project45-grenadelaunchermod",
+  "price" : 15000,
+  "rarity" : "Essential",
+  "tooltipKind" : "project45gunmod",
+  "category" : "Ability Mod",
+  "inventoryIcon" : "/items/augments/project45-gunmods/ability/project45-grenadelaunchermod/project45-grenadelaunchermod.png",
+  "description" : "A portable launcher attached under a gun's barrel.",
+  "shortdescription" : "Grenade Launcher",
+
+  "radioMessagesOnPickup" : [ "pickupaugment" ],
+
+  "augment": {
+    "type": "ability",
+    "modName": "ability",
+    "slot": "underbarrel",
+
+    "altAbilityType": "grenadelauncher",
+    "altAbility": {
+      "baseDamage": 100,
+      "fireTime": 0.5,
+      "energyUsage": 100,
+      "projectileType": "project45dragonsbreath"
+    },
+    
+    // animation custom for custom sprites to be applied on the weapon
+    "animationCustom": {
+      "animatedParts" : { "parts" : {
+        "underbarrel" : {
+          "properties" : {
+            "zLevel" : 5,
+            "centered" : true,
+            "transformationGroups" : ["weapon"],
+            "image" : "/items/augments/project45-gunmods/ability/project45-grenadelaunchermod/project45-grenadelaunchermodsprite.png<directives>"
+          }
+        },
+        "grenadelauncher" : {
+          "properties" : {
+            "image" : ""
+          }
+        }
+      }}
+    }
+
+  },
+
+  "scripts" : [ "/scripts/augments/project45-gunmod.lua" ]
+}

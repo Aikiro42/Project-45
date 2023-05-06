@@ -91,7 +91,6 @@ Tooltip todo:
 - <span style="color: green">Flamethrower</span>
     - Added compatibility.
 - <span style="color: green">Flashlight</span>
-    - Note to self: base laser off this thing.
 - <span style="color: green">Fuel Air Trail</span>
 - <span style="color: green">Grenade Launcher</span>
 - <span style="color: green">Guided Rocket</span>

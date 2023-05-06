@@ -90,6 +90,7 @@
         "project45-gunscopemod",
         "project45-enemyradarmod",
         "project45-flashlasermod",
+        "project45-grenadelaunchermod",
 
         "project45-gripmod",
         "project45-muzzlebrakemod",
@@ -97,8 +98,7 @@
         "project45-autofiremod",
         "project45-extendedmagmod",
         "project45-weightmod",
-        "project45-stockmod",
-        "project45-vanitylaunchermod"
+        "project45-stockmod"
       ],
 
       "stat": [
