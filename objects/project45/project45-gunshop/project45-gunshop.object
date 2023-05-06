@@ -64,7 +64,7 @@
     "gui" : {
       "windowtitle" : {
         "title" : "^#FF9000;Gun Shop",
-        "subtitle" : "^#c48636;A new standard for ranged combat."
+        "subtitle" : "^#c48636;A new standard for gunplay."
       }
     },
     "goods":{
@@ -114,9 +114,11 @@
         "project45-bulletmod",
         "project45-hitscanmod",
         "project45-flechettemod",
+        "project45-slugshellsmod",
         "project45-explosiveammomod",
         "project45-incendiaryammomod",
         "project45-poisonammomod",
+        "project45-dragonsbreathmod",
         "project45-iceammomod",
         "project45-elecammomod"
       ]

@@ -1,11 +1,11 @@
 {
   "projectileName" : "project45stdfirebullet",
-  "image" : "project45stdbullet.png?multiply=FFDD00FF",
+  "image" : "project45stdbullet.png",
   "scripts": ["project45stdbullet.lua"],
   "physics" : "sticky",
   "animationCycle" : 0.25,
   "frameNumber" : 1,
-  "damageKind" : "standardbullet",
+  "damageKind" : "fire",
   "pointLight" : true,
   "lightColor": [175, 78, 0],
   "fullbright": true,

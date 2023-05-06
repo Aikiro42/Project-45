@@ -999,11 +999,18 @@ end
 function SynthetikMechanics:fireProjectileNeo(projectileType)
     
   local crit = self:crit()
-  local hitscanDamageParams = --[[ projectileType == "project45stdbullet" and ]] {
-    damageKind = "synthetikmechanics-hitscan" .. (crit > 1 and "crit" or "")
-  } or {}
-  local params = sb.jsonMerge(self.projectileParameters, hitscanDamageParams)
-  params.power = self:damagePerShot() * crit
+  
+  
+  -- local hitscanDamageParams = --[[ projectileType == "project45stdbullet" and ]] {
+  --   damageKind = self.projectileParameters.damageKind or ("synthetikmechanics-hitscan" .. (crit > 1 and "crit" or ""))
+  -- } or {}
+  -- local params = sb.jsonMerge(self.projectileParameters, hitscanDamageParams)
+  -- params.power = self:damagePerShot() * crit
+
+  self.projectileParameters.power = self:damagePerShot() * crit
+  if self.projectileType == "project45stdbullet" then
+    self.projectileParameters.damageKind = "synthetikmechanics-hitscan" .. (crit > 1 and "crit" or "")
+  end
   
   local projectileId = world.spawnProjectile(
     projectileType,
@@ -1011,7 +1018,7 @@ function SynthetikMechanics:fireProjectileNeo(projectileType)
     activeItem.ownerEntityId(),
     self:aimVector(self.spread),
     false,
-    params
+    self.projectileParameters
   )
 
     -- muzzleflash info inserted to projectile stack that's being passed to the animation script
@@ -1047,21 +1054,14 @@ function SynthetikMechanics:fireHitscan(projectileType)
     if #hitReg[3] > 0 then
       for _, hitId in ipairs(hitReg[3]) do
         if world.entityExists(hitId) then
+          
+          world.sendEntityMessage(hitId, "applyStatusEffect", self.projectileParameters.hitscanDamageKind or statusDamage, self:damagePerShot() * crit, entity.id())
 
-          local damageAmount = self:damagePerShot() * crit
-          
-          if self.projectileParameters.hitscanDamageKind then
-            damageAmount = damageAmount / 2
-            world.sendEntityMessage(hitId, "applyStatusEffect", self.projectileParameters.hitscanDamageKind, damageAmount, entity.id())
-          end
-          
-          world.sendEntityMessage(hitId, "applyStatusEffect", statusDamage, damageAmount, entity.id())
-          
-          if self.projectileParameters.hitregPower == 0 then
+          -- if self.projectileParameters.hitregPower == 0 then
             for i, stateffect in ipairs(self.projectileParameters.statusEffects) do
               world.sendEntityMessage(hitId, "applyStatusEffect", stateffect)
             end
-          end
+          -- end
         end
       end
     end

@@ -5,7 +5,7 @@
   "physics" : "sticky",
   "animationCycle" : 0.25,
   "frameNumber" : 1,
-  "damageKind" : "standardbullet",
+  "damageKind" : "poison",
   "pointLight" : true,
   "lightColor": [75, 75, 75],
   "fullbright": true,

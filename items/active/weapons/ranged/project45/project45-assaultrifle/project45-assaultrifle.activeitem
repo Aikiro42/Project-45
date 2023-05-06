@@ -28,11 +28,7 @@
     "grip": ""
 
   },
-  "rejectsModType":{
-    "energyAmmo": true,
-    "shotgunAmmo": true,
-    "grenadeAmmo": true
-  },
+  
   "animationCustom":{
 
     "animatedParts" : {
@@ -75,6 +71,11 @@
     "underbarrel": false,
     "stock": false
   },
+  "rejectsModType":{
+    "energyAmmo": true,
+    "shotgunAmmo": true,
+    "grenadeAmmo": true
+  },
   "baseOffset" : [0.8, 0],
   "muzzleOffset" : [2.4, 0.6],
   "ejectionPortOffset": [-0.325, 0.65],
@@ -82,9 +83,6 @@
   "sightsOffset": [1.25, 1],
   "railOffset": [2, 0.25],
   "scripts" : ["/items/active/weapons/ranged/project45gun.lua"],
-  
-  "elementalType" : "fire",
-
   
   "primaryAbilityType": "synthetikmechanics",
   "primaryAbility": {
@@ -140,11 +138,6 @@
         "weaponRotation": 0
       }
     }
-
-  },
-
-  // "altAbilityType": "project45flashlaser",
-  "altAbility": {
 
   },
 

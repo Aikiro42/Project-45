@@ -1,0 +1,28 @@
+{
+  "itemName" : "project45-slugshellsmod",
+  "price" : 15000,
+  "rarity" : "Legendary",
+  "tooltipKind" : "project45gunmod",
+  "category" : "Shotgun Ammo Mod",
+  "inventoryIcon" : "/items/augments/project45-gunmods/ammo/project45-slugshellsmod/project45-slugshellsmod.png",
+  "description" : "Slug shells. Only compatible with shotguns.",
+  "shortdescription" : "Slug shells",
+
+  "augment":{
+    "type": "shotgunAmmo",
+    "modName": "Slug shells",
+    "slot": "ammotype",
+    "projectileSettings":{
+      "projectileCount": 1,
+      "projectileType": "project45stdbullet",
+      "projectileParameters": {
+        "speed" : 150
+      },
+      "overrideHitscan": true
+    }
+  },
+
+  "radioMessagesOnPickup" : [ "pickupaugment" ],
+
+  "scripts" : [ "/scripts/augments/project45-gunmod.lua" ]
+}
