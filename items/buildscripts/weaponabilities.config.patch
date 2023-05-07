@@ -18,5 +18,10 @@
         "op": "add",
         "path": "/project45enemyradar",
         "value": "/items/active/weapons/ranged/abilities/project45enemyradar/project45enemyradar.weaponability"
+    },
+    {
+        "op": "add",
+        "path": "/project45grenadelauncher",
+        "value": "/items/active/weapons/ranged/abilities/project45grenadelauncher/project45grenadelauncher.weaponability"
     }
 ]

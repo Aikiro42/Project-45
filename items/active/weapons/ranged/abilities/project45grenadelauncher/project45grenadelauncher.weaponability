@@ -1,0 +1,79 @@
+{
+  "animationCustom": {
+    "animatedParts" : {
+      "stateTypes": {
+        "grenadelauncher": {
+          "default": "closed",
+          "states":{
+            "closed": {},
+            "open": {},
+            "loading": {}
+          }
+        }
+      },
+      "parts" : {
+        "underbarrel" : {
+          "properties" : {
+            "zLevel" : 5,
+            "centered" : true,
+            "transformationGroups" : ["weapon"],
+            "image" : "/items/active/weapons/ranged/abilities/project45grenadelauncher/project45grenadelauncher.png:closed<directives>",
+            "firePosition" : [0.75, -0.125]
+          },
+          "partStates": {
+            "grenadelauncher": {
+              "closed": {
+                "properties": {
+                  "image" : "/items/active/weapons/ranged/abilities/project45grenadelauncher/project45grenadelauncher.png:closed<directives>"
+                }
+              },
+              "open": {
+                "properties": {
+                  "image" : "/items/active/weapons/ranged/abilities/project45grenadelauncher/project45grenadelauncher.png:open<directives>"
+                }
+              },
+              "loading": {
+                "properties": {
+                  "image" : "/items/active/weapons/ranged/abilities/project45grenadelauncher/project45grenadelauncher.png:loading<directives>"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "sounds" : {
+      "altFire" : [ "/sfx/gun/grenade1.ogg" ],
+      "open" : [ "/sfx/project45-synthetikmechanics/reloads/boltpull_generic.ogg" ],
+      "load" : [ "/sfx/project45-synthetikmechanics/reloads/boltpush_generic.ogg" ]
+    },
+    "particleEmitters" : {
+      "altMuzzleFlash" : {
+        "active" : false,
+        "emissionRate" : 8,
+        "transformationGroups" : ["muzzle"],
+        "offsetRegion" : [-0.25, -0.5, -0.25, -0.5],
+        "particles" : [
+          { "particle" : "rocketbarrelpuff", "offset" : [0.0, 0.0] },
+          { "particle" : "rocketbarrelpuff", "offset" : [0.0, 0.0] },
+          { "particle" : "rocketbarrelpuff", "offset" : [0.0, 0.0] }
+        ]
+      }
+    }
+  },
+
+  "ability" : {
+      "name" : "Grenade Launcher",
+      "type" : "project45grenadelauncher",
+      "scripts" : ["/items/active/weapons/ranged/abilities/project45grenadelauncher/project45grenadelauncher.lua"],
+      "class" : "Project45GrenadeLauncher",
+      
+      "firePositionPart" : "underbarrel",
+      "projectileType": "impactgrenade",
+      "projectileCount": 1,
+      "inaccuracy": 0.01,
+      "energyUsagePercent": 0.25
+
+  }
+}
+  

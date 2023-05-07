@@ -196,9 +196,9 @@ function SynthetikMechanics:update(dt, fireMode, shiftHeld)
     self.aimProgress = math.min(1, self.aimProgress + self.dt / math.max(self.aimTime[(shiftHeld or mcontroller.crouching()) and 2 or 1], 0.01))
     self.currentCycleTime = self.cycleTime[1] + self.cycleTimeDelta * self.cycleTimeProgress
 
-    -- updating logic
+    -- UPDATING LOGIC
 
-    -- movement
+    -- Modify movement based on whether the player is walking or not
     if shiftHeld then
       mcontroller.controlModifiers({
         speedModifier = self.movementSpeedFactor > 1 and 1 or self.movementSpeedFactor,
@@ -213,12 +213,15 @@ function SynthetikMechanics:update(dt, fireMode, shiftHeld)
       })
     end
 
+    -- If left click is released,
+    -- update flags
     if self.fireMode ~= (self.activatingFireMode or self.abilitySlot) then
       self.triggered = false
       self.isFiring = false
       -- if not self.weapon.currentAbility then self.isFiring = false end
     end
 
+    -- Progressive Charge Animation
     if self.progressiveCharge then
 
       local chargeProgress = 1
