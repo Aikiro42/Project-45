@@ -14,14 +14,32 @@
     "type": "ability",
     "modName": "ability",
     "slot": "underbarrel",
-
+    
     "altAbilityType": "grenadelauncher",
     "altAbility": {
       "baseDamage": 100,
       "fireTime": 0.5,
       "energyUsage": 100,
-      "projectileType": "project45dragonsbreath"
+      "projectileType": "fireplasmaimpactgrenade",
+      "projectileParameters": {
+        "speed": 100
+      },
+      "stances":{
+        "idle": {
+          "armRotation": 0,
+          "weaponRotation": 0
+        },
+        "fire": {
+          "armRotation": 0,
+          "weaponRotation": 0
+        },
+        "cooldown": {
+          "armRotation": 0,
+          "weaponRotation": 0
+        }
+      }
     },
+    
     
     // animation custom for custom sprites to be applied on the weapon
     "animationCustom": {

@@ -92,7 +92,8 @@ Tooltip todo:
     - Added compatibility.
 - <span style="color: green">Flashlight</span>
 - <span style="color: green">Fuel Air Trail</span>
-- <span style="color: green">Grenade Launcher</span>
+- <span style="color: yellow">Grenade Launcher</span>
+    - Knocks off aim by a bit.
 - <span style="color: green">Guided Rocket</span>
     - Perfectly resembles synthetik mechanic.
 - <span style="color: red">Homing Rocket</span>

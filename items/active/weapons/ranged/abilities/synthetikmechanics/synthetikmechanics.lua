@@ -22,9 +22,6 @@ local EMPTY, READY, FILLED = 0, 1, 2
 
 
 function SynthetikMechanics:init()
-    
-    self.debugTime = 0.1
-    self.debugTimer = self.debugTime
 
     -- Initial state of gun
     self.aimProgress = 0
@@ -71,10 +68,13 @@ function SynthetikMechanics:init()
 
     -- VALIDATIONS
 
+    -- make cycle time a range between two numbers
+    -- if the cycle time is constant, it's a range within the same number
     if type(self.cycleTime) ~= "table" then
       self.cycleTime = {self.cycleTime, self.cycleTime}
     end
 
+    -- let inaccuracy be a table
     if type(self.inaccuracy) ~= "table" then
       self.inaccuracy = {
         mobile = self.inaccuracy*2,  -- double inaccuracy while running
@@ -124,11 +124,7 @@ function SynthetikMechanics:init()
     activeItem.setScriptedAnimationParameter("muzzleSmokeTime", self.muzzleSmokeTime)
     activeItem.setScriptedAnimationParameter("laserColor", self.laser.color)
 
-    -- debug
-    -- animator.setParticleEmitterActive("ejectionPort", true)
-    -- animator.setParticleEmitterActive("magazine", true)
-
-    -- initialize visuals
+    -- INITIALIZE VISUALS
 
     -- initialize gun animation state
     if storage.jamAmount > 0 then
@@ -168,8 +164,6 @@ function SynthetikMechanics:update(dt, fireMode, shiftHeld)
 
     WeaponAbility.update(self, dt, fireMode, shiftHeld)
 
-    self:logStuff()  -- DEBUG
-
     -- USED TO MANUALLY APPROXIMATE EJECTION PORT AND MAGAZINE OFFSETS
     if self.DEBUG then
       animator.burstParticleEmitter("ejectionPort")
@@ -179,15 +173,6 @@ function SynthetikMechanics:update(dt, fireMode, shiftHeld)
     -- self:updateStance()  -- Updates stance manually
     self.weapon:updateAim()
     self:aim()
-  
-    -- update debug stuff
-    --[[
-    local scanOrig = self:firePosition()
-    local scanDest = vec2.add(scanOrig, vec2.mul(self:aimVector(isLaser and 0 or self.spread), self.projectileParameters.range or 100))
-    scanDest = not self.projectileParameters.hitscanIgnoresTerrain and world.lineCollision(scanOrig, scanDest, {"Block", "Dynamic"}) or scanDest
-    world.debugLine(scanOrig, scanDest, "red")
-    --]]
-    -- update debug stuff end
 
     self.shiftHeld = shiftHeld
 
@@ -198,10 +183,8 @@ function SynthetikMechanics:update(dt, fireMode, shiftHeld)
     self:updateProjectileStack()
     self:drawLaser()
     self:updateInaccuracy(shiftHeld)
-    -- local laserLine = (self.allowLaser and shiftHeld and storage.ammo > 0) and self:hitscan(true) or {}
     
     -- increments/decrements
-    self.debugTimer = math.max(0, self.debugTimer - self.dt)
     self.muzzleFlashTimer = math.max(0, self.muzzleFlashTimer - self.dt)
     self.muzzleSmokeTimer = math.max(0, self.muzzleSmokeTimer - self.dt)
     self.dashCooldownTimer = math.max(0, self.dashCooldownTimer - self.dt)
@@ -1216,6 +1199,7 @@ function SynthetikMechanics:hitscan(isLaser)
 end
 
 -- Forces the weapon's weaponRotation, armRotation and aimDirection to be that of self.stances.aim
+-- which is self.weapon.stance.aim
 function SynthetikMechanics:aim()
   
   if self.weapon.stance == self.stances.reloading
@@ -1653,12 +1637,6 @@ function SynthetikMechanics:snapStance(stance)
   self.weapon.relativeWeaponRotation = math.rad(stance.weaponRotation)
   self.weapon.relativeArmRotation = math.rad(stance.armRotation)
   self.aimProgress = 0
-end
-
-function SynthetikMechanics:logStuff()
-  if self.debugTimer == 0 then
-    self.debugTimer = self.debugTime
-  end
 end
 
 function SynthetikMechanics:updateInaccuracy(shiftHeld)
