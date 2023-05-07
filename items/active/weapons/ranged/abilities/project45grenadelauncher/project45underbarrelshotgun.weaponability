@@ -17,24 +17,24 @@
             "zLevel" : 5,
             "centered" : true,
             "transformationGroups" : ["weapon"],
-            "image" : "/items/active/weapons/ranged/abilities/project45grenadelauncher/project45grenadelauncher.png:closed<directives>",
+            "image" : "/items/active/weapons/ranged/abilities/project45grenadelauncher/project45underbarrelshotgun.png:closed<directives>",
             "firePosition" : [0.5, 0]
           },
           "partStates": {
             "grenadelauncher": {
               "closed": {
                 "properties": {
-                  "image" : "/items/active/weapons/ranged/abilities/project45grenadelauncher/project45grenadelauncher.png:closed<directives>"
+                  "image" : "/items/active/weapons/ranged/abilities/project45grenadelauncher/project45underbarrelshotgun.png:closed<directives>"
                 }
               },
               "open": {
                 "properties": {
-                  "image" : "/items/active/weapons/ranged/abilities/project45grenadelauncher/project45grenadelauncher.png:open<directives>"
+                  "image" : "/items/active/weapons/ranged/abilities/project45grenadelauncher/project45underbarrelshotgun.png:open<directives>"
                 }
               },
               "loading": {
                 "properties": {
-                  "image" : "/items/active/weapons/ranged/abilities/project45grenadelauncher/project45grenadelauncher.png:loading<directives>"
+                  "image" : "/items/active/weapons/ranged/abilities/project45grenadelauncher/project45underbarrelshotgun.png:loading<directives>"
                 }
               }
             }
@@ -43,9 +43,7 @@
       }
     },
     "sounds" : {
-      "altFire" : [
-        "/sfx/gun/grenade1.ogg"
-      ],
+      "altFire" : [ "/sfx/project45-synthetikmechanics/fires/fire_shotgun.ogg" ],
       "open" : [ "/sfx/project45-synthetikmechanics/reloads/boltpull_shotgun.ogg" ],
       "load" : [ "/sfx/project45-synthetikmechanics/reloads/boltpush_shotgun.ogg" ]
     },
@@ -53,7 +51,7 @@
       "altMuzzle" : {
         "active" : false,
         "position" : [0, 0],
-        "color" : [0, 0, 0]
+        "color" : [255, 255, 200]
       }
     },
     "particleEmitters" : {
@@ -63,9 +61,6 @@
         "transformationGroups" : ["muzzle"],
         "offsetRegion" : [-0.25, -0.5, -0.25, -0.5],
         "particles" : [
-          {"particle": "rocketbarrelpuff"},
-          {"particle": "rocketbarrelpuff"},
-          {"particle": "rocketbarrelpuff"},
           {"particle": "project45muzzle"},
           {"particle": "project45muzzle"},
           {"particle": "project45muzzle"}
@@ -77,27 +72,27 @@
         "transformationGroups" : ["muzzle"],
         "offsetRegion" : [-0.25, -0.5, -0.25, -0.5],
         "particles" : [
-          { "particle" : "project45grenadeshell", "offset" : [-1, 0.0] }
+          { "particle" : "project45shell", "offset" : [-1, 0.0] }
         ]
       }
     }
   },
 
   "ability" : {
-      "name" : "Grenade Launcher",
-      "type" : "project45grenadelauncher",
+      "name" : "Underbarrel Shotgun",
+      "type" : "project45underbarrelshotgun",
       "scripts" : ["/items/active/weapons/ranged/abilities/project45grenadelauncher/project45grenadelauncher.lua"],
       "class" : "Project45GrenadeLauncher",
       
       "firePositionPart" : "underbarrel",
-      "projectileType": "impactgrenade",
-      "projectileParameters":{
-        "power": 100,
-        "speed": 100
+      "projectileType": "project45stdbullet",
+      "projectileParameters": {
+        "power": 5,
+        "damageType": "IgnoresDef"
       },
-      "projectileCount": 1,
-      "inaccuracy": 0.01,
-      "energyUsagePercent": 0.25
+      "projectileCount": 5,
+      "inaccuracy": 0.05,
+      "energyUsagePercent": 0.05
 
   }
 }

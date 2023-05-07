@@ -1,0 +1,22 @@
+{
+  "itemName" : "project45-underbarrelshotgunmod",
+  "price" : 15000,
+  "rarity" : "Essential",
+  "tooltipKind" : "project45gunmod",
+  "category" : "Ability Mod",
+  "inventoryIcon" : "/items/augments/project45-gunmods/ability/project45-underbarrelshotgunmod/project45-underbarrelshotgunmod.png",
+  "description" : "A small shotgun attached under a gun's barrel.",
+  "shortdescription" : "Underbarrel Shotgun",
+
+  "radioMessagesOnPickup" : [ "pickupaugment" ],
+
+  "augment": {
+    "type": "ability",
+    "modName": "ability",
+    "slot": "underbarrel",
+    "altAbilityType": "project45underbarrelshotgun"
+
+  },
+
+  "scripts" : [ "/scripts/augments/project45-gunmod.lua" ]
+}

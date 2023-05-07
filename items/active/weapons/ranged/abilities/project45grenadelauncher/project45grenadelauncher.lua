@@ -10,13 +10,28 @@ local READY, EMPTY, OPEN = 0, 1, 2
 function Project45GrenadeLauncher:init()
     self.aimProgress = 0
     self.firing = false
+    self.debugTimer = 0
+    self.muzzleFlashTimer = 0
     storage.grenadeLauncherState = storage.grenadeLauncherState or EMPTY
 end
 
 function Project45GrenadeLauncher:update(dt, fireMode, shiftHeld)
     
     WeaponAbility.update(self, dt, fireMode, shiftHeld)
-        
+    if self.debugTimer == 0 then
+        -- sb.logInfo(storage.aimProgress)
+        self.debugTimer = 0.5
+    end
+    self:aimVector(0)
+
+    self.debugTimer = math.max(0, self.debugTimer - self.dt)
+
+    if self.muzzleFlashTimer == 0 then
+        animator.setLightActive("altMuzzle", false)
+    else
+        self.muzzleFlashTimer = math.max(0, self.muzzleFlashTimer - self.dt)
+    end
+
     if self.fireMode ~= (self.activatingFireMode or self.abilitySlot) then
         self.firing = false
     end
@@ -47,24 +62,28 @@ function Project45GrenadeLauncher:fire()
     self:fireProjectile()
     storage.grenadeLauncherState = EMPTY
     self:muzzleFlash()
+    self:recoil()
 end
 
 function Project45GrenadeLauncher:eject()
     animator.setAnimationState("grenadelauncher", "open")
     animator.playSound("open")
+    animator.burstParticleEmitter("altEjectionPort", true)
     storage.grenadeLauncherState = OPEN
+    self:recoil(true)
 end
 
 function Project45GrenadeLauncher:load()
     animator.setAnimationState("grenadelauncher", "closed")
     animator.playSound("load")
     storage.grenadeLauncherState = READY
+    self:recoil(true)
 end
 
 function Project45GrenadeLauncher:recoil(down)
     self.weapon.relativeArmRotation = self.weapon.relativeArmRotation + util.toRadians(5) * (down and -1 or 1)
     self.weapon.relativeWeaponRotation = self.weapon.relativeWeaponRotation + util.toRadians(5) * (down and -1 or 1)
-    self.aimProgress = 0
+    storage.aimProgress = 0
 end
 
 function Project45GrenadeLauncher:aim()  
@@ -75,7 +94,7 @@ end
 
 function Project45GrenadeLauncher:fireProjectile(projectileType, projectileParams, inaccuracy, firePosition, projectileCount)
     local params = sb.jsonMerge(self.projectileParameters, projectileParams or {})
-    params.power = 100
+    params.power = self.projectileParameters.power or 1
     params.powerMultiplier = activeItem.ownerPowerMultiplier()
     params.speed = util.randomInRange(params.speed)
   
@@ -106,13 +125,27 @@ end
 
 function Project45GrenadeLauncher:muzzleFlash()
     if self.useParticleEmitter == nil or self.useParticleEmitter then
-      animator.burstParticleEmitter("altMuzzleFlash", true)
+      animator.burstParticleEmitter("altMuzzle", true)
     end
     animator.playSound("altFire")
+    animator.setLightActive("altMuzzle", true)
+    self.muzzleFlashTimer = 0.025
 end
 
 function Project45GrenadeLauncher:firePosition()
     return vec2.add(mcontroller.position(), activeItem.handPosition(animator.partPoint(self.firePositionPart, "firePosition")))
+    -- return activeItem.handPosition(animator.partPoint(self.firePositionPart, "firePosition"))
+end
+
+function Project45GrenadeLauncher:aimVector(spread)
+    local launcherMuzzle = animator.partPoint(self.firePositionPart, "firePosition")
+    local firePos = vec2.add(mcontroller.position(), activeItem.handPosition(launcherMuzzle))
+    local basePos =  vec2.add(mcontroller.position(), activeItem.handPosition({launcherMuzzle[1]-1, launcherMuzzle[2]}))
+    world.debugPoint(basePos, "green")
+    world.debugPoint(firePos, "red")
+    local aimVector = vec2.norm(world.distance(firePos, basePos))
+    aimVector = vec2.rotate(aimVector, sb.nrand((spread or 0), 0))
+    return aimVector
 end
 
 function Project45GrenadeLauncher:uninit()

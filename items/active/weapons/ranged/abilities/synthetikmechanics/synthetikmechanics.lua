@@ -24,7 +24,7 @@ local EMPTY, READY, FILLED = 0, 1, 2
 function SynthetikMechanics:init()
 
     -- Initial state of gun
-    self.aimProgress = 0
+    storage.aimProgress = 0
 
     -- initialize storage
     storage.ammo = storage.ammo or config.getParameter("currentAmmo", -1) -- -1 ammo means we don't have a mag in the gun
@@ -193,7 +193,7 @@ function SynthetikMechanics:update(dt, fireMode, shiftHeld)
     )
     storage.dodgeCooldownTimer = math.max(0, storage.dodgeCooldownTimer - self.dt)
     self.cooldownTimer = math.max(0, self.cooldownTimer - self.dt)
-    self.aimProgress = math.min(1, self.aimProgress + self.dt / math.max(self.aimTime[(shiftHeld or mcontroller.crouching()) and 2 or 1], 0.01))
+    storage.aimProgress = math.min(1, storage.aimProgress + self.dt / math.max(self.aimTime[(shiftHeld or mcontroller.crouching()) and 2 or 1], 0.01))
     self.currentCycleTime = self.cycleTime[1] + self.cycleTimeDelta * self.cycleTimeProgress
 
     -- UPDATING LOGIC
@@ -1210,8 +1210,8 @@ function SynthetikMechanics:aim()
   then return end
 
   self.weapon.aimAngle, self.weapon.aimDirection = activeItem.aimAngleAndDirection(0, activeItem.ownerAimPosition())    
-  self.weapon.relativeWeaponRotation = util.toRadians(interp.sin(self.aimProgress, math.deg(self.weapon.relativeWeaponRotation), self.weapon.stance.weaponRotation))
-  self.weapon.relativeArmRotation = util.toRadians(interp.sin(self.aimProgress, math.deg(self.weapon.relativeArmRotation), self.weapon.stance.armRotation))
+  self.weapon.relativeWeaponRotation = util.toRadians(interp.sin(storage.aimProgress, math.deg(self.weapon.relativeWeaponRotation), self.weapon.stance.weaponRotation))
+  self.weapon.relativeArmRotation = util.toRadians(interp.sin(storage.aimProgress, math.deg(self.weapon.relativeArmRotation), self.weapon.stance.armRotation))
 end
 
 function SynthetikMechanics:muzzleFlash()
@@ -1239,7 +1239,7 @@ function SynthetikMechanics:recoil(screenShake, momentum)
   self:screenShake(screenShake or self.currentScreenShake)
   -- activeItem.setRecoil(true)
 
-  -- self.weapon.relativeWeaponRotation = util.toRadians(interp.sin(self.aimProgress, math.deg(self.weapon.relativeWeaponRotation), stance.weaponRotation))
+  -- self.weapon.relativeWeaponRotation = util.toRadians(interp.sin(storage.aimProgress, math.deg(self.weapon.relativeWeaponRotation), stance.weaponRotation))
   local inaccuracy = math.rad(self.recoilDeg[mcontroller.crouching() and 2 or 1]) * self.recoilMult
 
   if math.deg(self.weapon.relativeArmRotation - math.rad(self.weapon.stance.armRotation)) >= self.recoilThresholdDeg[2] then
@@ -1257,7 +1257,7 @@ function SynthetikMechanics:recoil(screenShake, momentum)
   self.weapon.relativeWeaponRotation = self.weapon.relativeWeaponRotation + inaccuracy
   self.weapon.relativeArmRotation = self.weapon.relativeArmRotation + inaccuracy
 
-  self.aimProgress = 0
+  storage.aimProgress = 0
 
   if momentum or self.recoilMomentum then
     mcontroller.addMomentum(vec2.mul(self:aimVector(), momentum or self.recoilMomentum * -1))
@@ -1620,26 +1620,26 @@ function SynthetikMechanics:setStance(stance, snap)
     self.weapon.relativeArmRotation = util.toRadians(oldStance.armRotation)
     self.weapon.relativeWeaponRotation = util.toRadians(oldStance.weaponRotation)
   end
-  self.aimProgress = 0
+  storage.aimProgress = 0
 end
 
 function SynthetikMechanics:knockOffAim(rotationRad)
   self.weapon.relativeArmRotation = self.weapon.relativeArmRotation + rotationRad
-  self.aimProgress = 0
+  storage.aimProgress = 0
 end
 
 -- Manually set weapon and arm rotation
 function SynthetikMechanics:snap(weaponRotationDeg, armRotationDeg)
   self.weapon.relativeWeaponRotation = math.rad(weaponRotationDeg)
   self.weapon.relativeArmRotation = math.rad(armRotationDeg)
-  self.aimProgress = 0
+  storage.aimProgress = 0
 end
 
 -- Set weapon and arm rotation to stance
 function SynthetikMechanics:snapStance(stance)
   self.weapon.relativeWeaponRotation = math.rad(stance.weaponRotation)
   self.weapon.relativeArmRotation = math.rad(stance.armRotation)
-  self.aimProgress = 0
+  storage.aimProgress = 0
 end
 
 function SynthetikMechanics:updateInaccuracy(shiftHeld)

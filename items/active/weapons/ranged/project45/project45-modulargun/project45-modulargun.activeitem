@@ -116,8 +116,6 @@
     }
 
   },
-
-  "altAbilityType": "project45grenadelauncher",
   
   "builder" : "/items/buildscripts/buildproject45neo.lua"
 }

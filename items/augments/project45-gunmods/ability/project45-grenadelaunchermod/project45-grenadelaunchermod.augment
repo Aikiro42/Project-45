@@ -14,51 +14,7 @@
     "type": "ability",
     "modName": "ability",
     "slot": "underbarrel",
-    
-    "altAbilityType": "grenadelauncher",
-    "altAbility": {
-      "baseDamage": 100,
-      "fireTime": 0.5,
-      "energyUsage": 100,
-      "projectileType": "fireplasmaimpactgrenade",
-      "projectileParameters": {
-        "speed": 100
-      },
-      "stances":{
-        "idle": {
-          "armRotation": 0,
-          "weaponRotation": 0
-        },
-        "fire": {
-          "armRotation": 0,
-          "weaponRotation": 0
-        },
-        "cooldown": {
-          "armRotation": 0,
-          "weaponRotation": 0
-        }
-      }
-    },
-    
-    
-    // animation custom for custom sprites to be applied on the weapon
-    "animationCustom": {
-      "animatedParts" : { "parts" : {
-        "underbarrel" : {
-          "properties" : {
-            "zLevel" : 5,
-            "centered" : true,
-            "transformationGroups" : ["weapon"],
-            "image" : "/items/augments/project45-gunmods/ability/project45-grenadelaunchermod/project45-grenadelaunchermodsprite.png<directives>"
-          }
-        },
-        "grenadelauncher" : {
-          "properties" : {
-            "image" : ""
-          }
-        }
-      }}
-    }
+    "altAbilityType": "project45grenadelauncher"
 
   },
 
