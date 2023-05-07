@@ -195,7 +195,7 @@ function build(directory, config, parameters, level, seed)
       if modList then
         modListDesc = "^#abfc6d;"
         for k, v in pairs(modList) do
-          if k ~= "ability" then
+          if k ~= "ability" and v[1] ~= "ability" then
             modListDesc = modListDesc .. v[1] .. ".\n"
           end
         end
