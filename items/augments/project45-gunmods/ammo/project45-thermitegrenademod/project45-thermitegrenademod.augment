@@ -1,0 +1,27 @@
+{
+  "itemName" : "project45-thermitegrenademod",
+  "price" : 15000,
+  "rarity" : "Legendary",
+  "tooltipKind" : "project45gunmod",
+  "category" : "Grenade Ammo Mod",
+  "inventoryIcon" : "/items/augments/project45-gunmods/ammo/project45-thermitegrenademod/project45-thermitegrenademod.png",
+  "description" : "Grenades that burst into flames on impact.",
+  "shortdescription" : "Thermite Grenades",
+
+  "augment":{
+    "type": "grenadeAmmo",
+    "modName": "Thermite Grenades",
+    "slot": "ammotype",
+    "projectileSettings":{
+      "projectileType": "project45thermitegrenade",
+      "overrideHitscan": true,
+      "projectileParameters": {
+        "bounces": 0
+      }
+    }
+  },
+
+  "radioMessagesOnPickup" : [ "pickupaugment" ],
+
+  "scripts" : [ "/scripts/augments/project45-gunmod.lua" ]
+}

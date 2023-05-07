@@ -108,8 +108,8 @@
 
     "projectileType": "impactgrenade",
     "projectileParameters": {
-      "power": 500,
-      "speed": 100
+      // "power": 500,
+      "speed": 75
     },
 
     "inaccuracy": 0.01,

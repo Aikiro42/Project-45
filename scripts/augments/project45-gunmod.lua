@@ -108,7 +108,6 @@ function apply(input)
       }
 
       for _, v in ipairs(projectileSettingsList) do
-        sb.logInfo(v .. sb.printJson(augment.projectileSettings[v]))
         newPrimaryAbility[v] = augment.projectileSettings[v] -- or oldPrimaryAbility[v]
       end
 

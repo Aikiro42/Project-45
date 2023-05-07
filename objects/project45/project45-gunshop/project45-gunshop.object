@@ -87,12 +87,14 @@
         "project45-gaussrifle"
       ],
       "mods": [
+        // abilities
         "project45-gunscopemod",
         "project45-enemyradarmod",
         "project45-flashlasermod",
         "project45-grenadelaunchermod",
         "project45-underbarrelshotgunmod",
 
+        // misc mods
         "project45-gripmod",
         "project45-muzzlebrakemod",
         "project45-silencermod",
@@ -113,14 +115,26 @@
       "ammo": [
         "project45-bulletmod",
         "project45-hitscanmod",
-        "project45-flechettemod",
-        "project45-slugshellsmod",
+        
+        // ballistic ammo
         "project45-explosiveammomod",
         "project45-incendiaryammomod",
         "project45-poisonammomod",
+
+        // shotgun ammo
+        "project45-flechettemod",
+        "project45-slugshellsmod",
         "project45-dragonsbreathmod",
+        
+        // grenade ammo
+        "project45-clustergrenademod",
+        "project45-gravbombmod",
+        "project45-thermitegrenademod",
+
+        // energy ammo
         "project45-iceammomod",
         "project45-elecammomod"
+        
       ],
 
       "util": [

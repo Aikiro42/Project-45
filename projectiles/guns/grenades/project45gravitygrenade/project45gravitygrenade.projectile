@@ -1,0 +1,43 @@
+{
+    "projectileName" : "project45gravitygrenade",
+    "image" : "project45gravitygrenade.png",
+    "physics" : "gravitybomb",
+    "damageKindImage" : "icon.png",
+    "animationCycle" : 0.5,
+    "frameNumber" : 7,
+    "power" : 50,
+    "speed" : 35,
+    "timeToLive" : 3.5,
+    "piercing": true,
+    "bounces" : -1,
+    "periodicActions":[
+        {
+            "action": "sound",
+            "time": 0,
+            "repeat": false,
+            "options" : [ "/projectiles/guns/grenades/project45gravitygrenade/gravbomb.ogg" ]
+        }
+    ],
+    "actionOnReap" : [
+        {
+            "action": "sound",
+            "options" : [ "/projectiles/explosions/project45_gravexplosion/blackhole.ogg" ]
+        },
+        {
+            "action" : "projectile",
+            "inheritDamageFactor" : 1,
+            "type" : "project45_gravexplosion"
+        },
+        {
+            "action" : "config",
+            "file" : "/projectiles/explosions/project45_elecexplosion/project45_elecexplosion.config"
+        }
+    ],
+    
+    "persistentAudio" : "/sfx/projectiles/zone_energy_loop.ogg",
+
+    "lightColor" : [255, 0, 255],
+    "damageType" : "NoDamage",
+    "damageKind" : "default"
+  }
+  

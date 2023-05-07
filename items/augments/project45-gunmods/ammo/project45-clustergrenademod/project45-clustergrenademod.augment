@@ -1,0 +1,27 @@
+{
+  "itemName" : "project45-clustergrenademod",
+  "price" : 15000,
+  "rarity" : "Legendary",
+  "tooltipKind" : "project45gunmod",
+  "category" : "Grenade Ammo Mod",
+  "inventoryIcon" : "/items/augments/project45-gunmods/ammo/project45-clustergrenademod/project45-clustergrenademod.png",
+  "description" : "Grenades that split into smaller grenades on impact.",
+  "shortdescription" : "Cluster Grenades",
+
+  "augment":{
+    "type": "grenadeAmmo",
+    "modName": "Cluster Grenades",
+    "slot": "ammotype",
+    "projectileSettings":{
+      "projectileType": "clustergrenade",
+      "overrideHitscan": true,
+      "projectileParameters": {
+        "bounces": 0
+      }
+    }
+  },
+
+  "radioMessagesOnPickup" : [ "pickupaugment" ],
+
+  "scripts" : [ "/scripts/augments/project45-gunmod.lua" ]
+}
