@@ -13,6 +13,8 @@
     "modName": "Cryo Beams",
     "slot": "ammotype",
     "projectileSettings":{
+      "projectileType": "project45stdbullet",
+      "overrideHitscan": false,
       "projectileParameters":{
         "hitscanColor": [150,203,231],
         "hitscanDamageKind": "project45hitscanicedamage",

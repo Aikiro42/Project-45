@@ -13,8 +13,8 @@
     "modName": "Hitscan Bullets",
     "slot": "ammotype",
     "projectileSettings":{
-      "projectileType": "hitscan",
-      "overrideHitscan": true
+      "projectileType": "project45stdbullet",
+      "overrideHitscan": false
     }
   },
 
