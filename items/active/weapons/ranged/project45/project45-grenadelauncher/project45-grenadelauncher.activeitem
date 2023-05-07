@@ -106,7 +106,7 @@
     "movementSpeedFactor": 1.15,
     "jumpHeightFactor": 1.15,
 
-    "projectileType": "fireplasmaimpactgrenade",
+    "projectileType": "impactgrenade",
     "projectileParameters": {
       "power": 500,
       "speed": 100
