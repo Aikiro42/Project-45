@@ -25,7 +25,7 @@
         },
         {
             "action" : "projectile",
-            "inheritDamageFactor" : 1,
+            "inheritDamageFactor" : 0.3,
             "type" : "project45_gravexplosion"
         },
         {
