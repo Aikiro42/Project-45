@@ -139,7 +139,8 @@
 
       "util": [
         "project45-gundisassembler",
-        "project45-gunrepairkit"
+        "project45-gunrepairkit",
+        "project45manual-codex"
       ]
     }
   }
