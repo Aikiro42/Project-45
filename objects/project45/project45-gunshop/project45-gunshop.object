@@ -2,7 +2,7 @@
   "objectName" : "project45-gunshop",
   "colonyTags" : ["human","humanbunker","mechanical","commerce"],
   "rarity" : "Essential",
-  "shortdescription" : "^#FF9000;Gun Shop",
+  "shortdescription" : "^#FF9000;WS45 Gun Shop",
   "description" : "A revolutionary standard for weapons of war, brought to you in a nifty vending machine.",
   "race" : "human",
   "category" : "decorative",
@@ -138,9 +138,10 @@
       ],
 
       "util": [
+        "project45manual-codex",
         "project45-gundisassembler",
         "project45-gunrepairkit",
-        "project45manual-codex"
+        "project45-energystim"
       ]
     }
   }

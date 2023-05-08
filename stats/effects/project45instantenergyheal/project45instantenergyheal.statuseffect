@@ -1,0 +1,14 @@
+{
+  "name" : "project45instantenergyheal",
+  "defaultDuration" : 0.1,
+
+  "scripts" : [
+    "project45instantenergyheal.lua"
+  ],
+  "scriptDelta" : 0,
+
+  "animationConfig" : "project45instantenergyheal.animation",
+
+  "label" : "Energy Regeneration",
+  "icon" : "/interface/statuses/energyregen.png"
+}

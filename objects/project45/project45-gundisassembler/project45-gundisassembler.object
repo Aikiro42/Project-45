@@ -1,8 +1,8 @@
 {
   "objectName" : "project45-gundisassembler",
   "rarity" : "Essential",
-  "description" : "Retrieve your modifications using this kit.",
-  "shortdescription" : "^orange;Gun Disassembly Kit^white;",
+  "description" : "Retrieve your weapon modifications using this placeable kit.",
+  "shortdescription" : "^#FF9000;Gun Disassembly Kit^reset;",
   "race" : "generic",
   "category" : "crafting",
   "price" : 1000,

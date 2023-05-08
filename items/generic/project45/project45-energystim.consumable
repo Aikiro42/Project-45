@@ -1,0 +1,19 @@
+{
+  "itemName" : "project45-energystim",
+  "rarity" : "Rare",
+  "price" : 1000,
+  "category" : "medicine",
+  "inventoryIcon" : "project45-energystim.png",
+  "description" : "A fast-acting combat stimulant. Instantly restores all your energy.",
+  "shortdescription" : "Energy Stimulant",
+  "effects" : [ [
+      {
+        "effect" : "project45instantenergyheal"
+      }
+    ] ],
+  "emote" : "",
+  "emitters" : [ ],
+  "blockingEffects" : [
+    "project45instantenergyheal"
+  ]
+}
