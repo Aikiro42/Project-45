@@ -219,11 +219,14 @@
     // ________________________[ ACCURACY SETTINGS ]__________________________________
     "recoilMomentum": 0, // momentum added to character opposite direction of aim vector when firing
     "recoilDeg": [10, 5], // degrees of recoil every time the gun is shot (think spray control)
+    
     // for extremely high fire rate guns, the gun will begin seesaw around this angle range
     // when the amount of recoil you accrue reaches the second value.
     "recoilThresholdDeg": [27, 30],
+    
     "recoilMult": 1, // muzzle brake; multiplied to recoilDeg
-    "aimTime": [3, 1], // time it takes to aim; first index is when you're running, second is when shift is held
+    "aimTime": [3, 1], // time it takes to aim in seconds;
+    // first index is when you're running, second is when shift is held
     
      // Aim Inaccuracy; right before you fire the projectile your arm is rotated;
      // this value dictates how intense the arm rotation is

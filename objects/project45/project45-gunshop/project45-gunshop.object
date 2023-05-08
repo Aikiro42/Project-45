@@ -84,7 +84,8 @@
         "project45-minigun",
         "project45-accelerator",
         "project45-energygun",
-        "project45-gaussrifle"
+        "project45-gaussrifle",
+        "project45-flamethrower"
       ],
       "mods": [
         // abilities

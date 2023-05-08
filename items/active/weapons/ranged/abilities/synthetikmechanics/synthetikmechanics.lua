@@ -106,6 +106,9 @@ function SynthetikMechanics:init()
     self.chargeLoopPlaying = false
     animator.stopAllSounds("chargeWhine")
     animator.stopAllSounds("chargeDrone")
+
+    self.fireLoopPlaying = false
+    animator.stopAllSounds("fireLoop")
     
     -- Just in case the weapon is switched to while holding mouse click
     -- update logic should automatically falsify this otherwise
@@ -243,7 +246,8 @@ function SynthetikMechanics:update(dt, fireMode, shiftHeld)
 
     if self.fireBeforeOvercharge
     and self.overchargeTime > 0
-    and self.chargeTimer >= self.chargeTime then
+    and self.chargeTimer >= self.chargeTime
+    and storage.ammo > 0 then
       if self:triggering() then
         self.chargeTimer = math.min(self.chargeTime + self.overchargeTime, self.chargeTimer + self.dt)
       end
@@ -383,6 +387,8 @@ function SynthetikMechanics:update(dt, fireMode, shiftHeld)
       end
 
       self.cooldownTimer = storage.jamAmount == 0 and self.fireTime or self.unjamTime
+    elseif not self:triggering() then
+      self:stopFireLoop()
     end
 end
 
@@ -461,7 +467,12 @@ function SynthetikMechanics:firing()
   self.isFiring = true
 
   -- don't fire when muzzle collides with terrain
-  if not self.projectileParameters.hitscanIgnoresTerrain and world.lineTileCollision(mcontroller.position(), self:firePosition()) then return end
+  if not self.projectileParameters.hitscanIgnoresTerrain and world.lineTileCollision(mcontroller.position(), self:firePosition()) then
+    self:stopFireLoop()
+    return
+  end
+
+  self:startFireLoop()
   
   --[[
   the following line resets charge time if the gun is semi;
@@ -536,7 +547,7 @@ function SynthetikMechanics:firing()
   end
   
   --[[
-  if the gun is not manual-fed (like a bolt-action rifle)
+  if the gun is not manual-fed like a bolt-action rifle
   or if the gun isn't done bursting,
   transist the state
   --]]
@@ -554,6 +565,7 @@ function SynthetikMechanics:firing()
   moving barrels)
   --]]
   else
+    self:stopFireLoop()
     util.wait(self.currentCycleTime)
     self.isFiring = false
     if not self.keepCasings then self:setAnimationState("gun", "idle") end
@@ -568,7 +580,7 @@ end
 function SynthetikMechanics:ejectingCase()
   
   -- if the gun isn't done bursting,
-  -- or if the gun manual feed and can trigger,
+  -- or if the gun is manual feed and can trigger,
   -- or if the gun is auto-fed,
   if self.burstCounter < self.burstCount
   or (self.manualFeed and self:canTrigger())
@@ -596,6 +608,8 @@ function SynthetikMechanics:ejectingCase()
 
     -- if no ammo left after ejecting,
     if storage.ammo == 0 then
+
+      self:stopFireLoop()
       
       -- if it's a single shot gun, immediately reload on eject
       if self.maxAmmo == self.ammoPerShot then
@@ -669,6 +683,7 @@ function SynthetikMechanics:feeding()
   util.wait(waitTime)
 
   if self.chargeTimer <= 0 then
+    
     self:setAnimationState("gun", "idle")
   else
     if self.progressiveCharge then
@@ -692,7 +707,7 @@ function SynthetikMechanics:feeding()
     return
   end
 
-  -- gives cooldown when either manual feeding a non-slam-fire gun (like a bolt-action rifle)
+  -- gives cooldown when either manual feeding a non-slam-fire gun (e.g. a bolt-action rifle)
   -- or if it's a charged/woundup gun and charge progress is reset every shot (think apex legends charge rifle)
   if (self.manualFeed and not self.slamFire) or (self.resetChargeAfterFire and self.chargeTime > 0) then
     self.isFiring = false
@@ -916,7 +931,7 @@ function SynthetikMechanics:whirring()
   and self.autoFireAfterCharge 
   and not self.resetChargeAfterFire then
     while self:triggering() do
-      self.chargeTimer = math.min(self.chargeTime + self.overchargeTime, self.chargeTimer + self.dt)
+      -- self.chargeTimer = math.min(self.chargeTime + self.overchargeTime, self.chargeTimer + self.dt)
       coroutine.yield()
     end
   end
@@ -1392,6 +1407,7 @@ function SynthetikMechanics:updateSoundProperties()
     animator.stopAllSounds("chargeDrone")
     self.chargeLoopPlaying = false
   end
+
 end
 
 function SynthetikMechanics:updateCursor(shiftHeld)
@@ -1542,6 +1558,8 @@ function SynthetikMechanics:jam()
   if self:diceRoll(self.jamChances[storage.reloadRating]) then
     -- The gun successfully jammed;
 
+    self:stopFireLoop()
+
     self.triggered = true
     
     -- Decrement ammo; imagine that the bullet is a dud/broken
@@ -1660,6 +1678,23 @@ function SynthetikMechanics:snapStance(stance)
   self.weapon.relativeWeaponRotation = math.rad(stance.weaponRotation)
   self.weapon.relativeArmRotation = math.rad(stance.armRotation)
   storage.aimProgress = 0
+end
+
+function SynthetikMechanics:stopFireLoop()
+  if self.fireLoopPlaying then
+    animator.stopAllSounds("fireLoop")
+    animator.stopAllSounds("fireStart")
+    animator.playSound("fireEnd")
+    self.fireLoopPlaying = false
+  end
+end
+
+function SynthetikMechanics:startFireLoop()
+  if not self.fireLoopPlaying then
+    animator.playSound("fireStart")
+    animator.playSound("fireLoop", -1)
+    self.fireLoopPlaying = true
+  end
 end
 
 function SynthetikMechanics:updateInaccuracy(shiftHeld)

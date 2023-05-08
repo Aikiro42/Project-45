@@ -1,0 +1,23 @@
+{  
+  "frameGrid" : {
+    "size" : [37, 17],
+    "dimensions" : [6, 1],
+    "names" : [  
+      [
+          "present.6",
+          "present.5",
+          "present.4",
+          "present.3",
+          "present.2",
+          "present.1"
+      ]
+    ]
+  },
+  
+  "aliases": {
+    // present.loop.<ammo % 2>
+    "present.default": "present.5",
+    "present.loop.0": "present.5",
+    "present.loop.1": "present.4"
+  }
+}
