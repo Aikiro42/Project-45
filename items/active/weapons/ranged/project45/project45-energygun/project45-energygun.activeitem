@@ -53,7 +53,7 @@ When gun is a windup-type and
         ]}
     },
     "sounds": {
-      "fire": ["/sfx/gun/project45_fire_c.ogg"],
+      "fire": ["/sfx/project45-synthetikmechanics/fires/fire_energy_big.ogg"],
       "hollow": ["/asset_missing.ogg"]
     }
   },

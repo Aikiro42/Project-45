@@ -245,6 +245,7 @@
   },
 
   "sounds" : {
+    /*
     "fire" : ["/sfx/gun/project45_fire_ar.ogg"],
     "click" : ["/sfx/gun/project45_click.ogg"],
     "reloadStart" : ["/sfx/gun/project45_reloadStart_ar.ogg"],
@@ -261,5 +262,6 @@
     "charge" : ["/sfx/gun/project45_charge_c.ogg"],
     "chargeWhine" : ["/sfx/gun/project45_chargewhine_c.ogg"],
     "chargeDrone" : ["/sfx/gun/project45_chargedrone_c.ogg"]
+    */
   }
 }
