@@ -389,8 +389,8 @@
     // COMPATIBILITY SOUNDS
 
     // flamethrower
-    "fireStart": ["/assetmissing.ogg"],
-    "fireLoop": ["/assetmissing.ogg"],
-    "fireEnd": ["/assetmissing.ogg"]
+    "fireStart": ["/assetmissing.wav"],
+    "fireLoop": ["/assetmissing.wav"],
+    "fireEnd": ["/assetmissing.wav"]
   }
 }
