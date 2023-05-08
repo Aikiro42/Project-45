@@ -86,7 +86,8 @@
     "bulletsPerReload": 300,
     "magType": "default",
     "chargeTime": 1,
-    "overchargeTime": 0,
+    "overchargeTime": 3,
+    "fireBeforeOvercharge": true,
 
     // "cycleTime": [0.01, 0],
     "cycleTime": 0.01,

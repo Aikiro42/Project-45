@@ -124,7 +124,11 @@
     // whether the gun automatically fires after fully charging
     // set this to true on regular guns
     // if gun is semifire, and this value is false, charge is automatically reset after fire
-    "autoFireAfterCharge": true, 
+    "autoFireAfterCharge": true,
+
+    // whether the gun fires before overcharging
+    // useful for implementing ramping damage
+    "fireBeforeOvercharge": false,
     
     // whether charge is reset when firing
     "resetChargeAfterFire": false, 

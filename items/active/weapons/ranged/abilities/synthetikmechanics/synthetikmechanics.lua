@@ -241,6 +241,14 @@ function SynthetikMechanics:update(dt, fireMode, shiftHeld)
       end
     end
 
+    if self.fireBeforeOvercharge
+    and self.overchargeTime > 0
+    and self.chargeTimer >= self.chargeTime then
+      if self:triggering() then
+        self.chargeTimer = math.min(self.chargeTime + self.overchargeTime, self.chargeTimer + self.dt)
+      end
+    end
+
     -- turn off muzzleflash automatically
     if self.muzzleFlashTimer <= 0 then
       animator.setLightActive("muzzleFlash", false)
@@ -400,8 +408,11 @@ function SynthetikMechanics:charging()
 
     if self:jam() then return end -- attempt to jam
 
-    -- If there's no charge time then don't waste cpu cycles doing a pointless loop
-    if self.chargeTimer >= self.chargeTime + self.overchargeTime then self:setState(self.firing) return end
+    -- If there's no charge time at all then don't waste cpu cycles doing a pointless loop
+    if self.chargeTime + self.overchargeTime <= 0 then
+      self:setState(self.firing)
+      return
+    end
 
     if self.progressiveCharge then
       self:setAnimationState("gun", "chargingprog")
@@ -424,17 +435,12 @@ function SynthetikMechanics:charging()
 
       -- automatically transist to firing state when fully charged/overcharged
       if self.autoFireAfterCharge and
-      self.chargeTimer >= (self.chargeTime + self.overchargeTime)
+      self.chargeTimer >= (self.chargeTime + (self.fireBeforeOvercharge and 0 or self.overchargeTime))
       then
         break
       end
     end
     self.isCharging = false
-
-    -- condition prevents dividing by zero
-    if self.overchargeTime > 0 then
-      self.chargeDamageMult = 1 + (self.chargeTimer - self.chargeTime)/self.overchargeTime
-    end
 
     if self.chargeTimer >= self.chargeTime then
       self:setState(self.firing)
@@ -474,6 +480,12 @@ function SynthetikMechanics:firing()
   -- rotate arm a bit
   self:knockOffAim(math.abs(sb.nrand(self.currentInaccuracy, 0)))
 
+  -- calculate damage bonus from charging
+  -- condition prevents dividing by zero
+  if self.overchargeTime > 0 then
+    self.chargeDamageMult = 1 + (self.chargeTimer - self.chargeTime)/self.overchargeTime
+  end
+
   -- for <projectile count * multishot> times,
   for i = 1, self.projectileCount * self:calculateMultishot() do
 
@@ -499,7 +511,9 @@ function SynthetikMechanics:firing()
   storage.chamberState = FILLED
 
   -- reset charge damage multiplier
-  self.chargeDamageMult = 1
+  if self.chargeTimer < self.chargeTime then
+    self.chargeDamageMult = 1
+  end
 
   -- muzzle flash (screenshake, add recoil, etc.; check the function for what it does)
   self:muzzleFlash()
@@ -902,7 +916,7 @@ function SynthetikMechanics:whirring()
   and self.autoFireAfterCharge 
   and not self.resetChargeAfterFire then
     while self:triggering() do
-      self.chargeTimer = math.min(self.chargeTime, self.chargeTimer + self.dt)
+      self.chargeTimer = math.min(self.chargeTime + self.overchargeTime, self.chargeTimer + self.dt)
       coroutine.yield()
     end
   end
@@ -1358,12 +1372,18 @@ function SynthetikMechanics:updateMagAnimation()
 end
 
 function SynthetikMechanics:updateSoundProperties()
-  local chargeProgress = 1
+  local chargeProgress = 0
+  local totalChargeTime = self.chargeTime + self.overchargeTime
+  if totalChargeTime > 0 then
+    chargeProgress = self.chargeTimer / totalChargeTime
+  end
+  --[[
   if self.chargeTime > 0 then
     chargeProgress = self.chargeTimer / self.chargeTime
   elseif self.overchargeTime > 0 then
     chargeProgress = self.chargeTimer / self.overchargeTime
   end
+  --]]
   animator.setSoundVolume("chargeDrone", 0.25 + 0.7 * math.min(chargeProgress, 2))
   animator.setSoundPitch("chargeWhine", 1 + 0.3 * math.min(chargeProgress, 2))
   animator.setSoundVolume("chargeWhine", 0.25 + 0.75 * math.min(chargeProgress, 2))
