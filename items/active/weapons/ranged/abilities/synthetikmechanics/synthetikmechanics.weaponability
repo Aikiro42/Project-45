@@ -128,6 +128,9 @@
     // if gun is semifire, and this value is false, charge is automatically reset after fire
     "autoFireAfterCharge": true,
 
+    // whether the gun is able to charge while the muzzle collides with terrain
+    "chargeWhenObstructed": true,
+
     // whether the gun fires before overcharging
     // useful for implementing ramping damage
     // if resetChargeAfterFire is true, then this setting is useless
@@ -176,31 +179,6 @@
 
       "toggle": true, // if true, laser is toggled whenever activated
       "toggleTime": 0.5 // time it takes to toggle
-    },
-    
-    // Dodge settings.
-    "dashParams": {
-      "enabled": true,
-
-      // Amount of time to press and release the walk key to initiate a dash.
-      "triggerTime": 0.2,
-
-      // DODGE SETTINGS
-
-      // speed at which the player travels for the duration of the dash
-      "speed": 80,
-      
-      // duration for which the indicated speed is applied on the movement controller
-      "dashTime": 0.1,
-      // duration for which you're invincible
-      "statusTime": 0.2,
-      
-      // number multiplied to your final velocity after the dodge
-      // i.e. if this is 1 then you are essentially given momentum
-      // from the speed of your dash
-      "endXVelMult": 0.3,
-
-      "cooldown": 0.5
     },
 
     "movementSpeedFactor": 1, // Movement speed multiplier

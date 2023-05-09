@@ -40,9 +40,6 @@ function SynthetikMechanics:init()
     -- gun has no magazine on first use, so chamber is empty
     storage.chamberState = storage.chamberState or config.getParameter("currentChamberState", EMPTY)
 
-    -- dodge is off cooldown on first use
-    storage.dodgeCooldownTimer = storage.dodgeCooldownTimer or 0
-
     -- DEBUG - Empirical Critical Statistics, to observe whether crit chance is as indicated.
     storage.critStats = storage.critStats or {
       crits = 0,
@@ -54,8 +51,6 @@ function SynthetikMechanics:init()
     self.chargeTimer = 0
     self.muzzleFlashTimer = 0
     self.muzzleSmokeTimer = 0
-    self.dashCooldownTimer = 0
-    self.dashTriggerTimer = -1
     self.laserToggleTimer = -1
     self.chargeDamageMult = 1
     self.cooldownTimer = self.fireTime
@@ -197,11 +192,9 @@ function SynthetikMechanics:update(dt, fireMode, shiftHeld)
     -- increments/decrements
     self.muzzleFlashTimer = math.max(0, self.muzzleFlashTimer - self.dt)
     self.muzzleSmokeTimer = math.max(0, self.muzzleSmokeTimer - self.dt)
-    self.dashCooldownTimer = math.max(0, self.dashCooldownTimer - self.dt)
     self.currentScreenShake = math.max(self.screenShakeAmount[1],
       self.currentScreenShake - self.dt * self.screenShakeDelta[1] * (self.screenShakeAmount[2] - self.screenShakeAmount[1])
     )
-    storage.dodgeCooldownTimer = math.max(0, storage.dodgeCooldownTimer - self.dt)
     self.cooldownTimer = math.max(0, self.cooldownTimer - self.dt)
     storage.aimProgress = math.min(1, storage.aimProgress + self.dt / math.max(self.aimTime[(shiftHeld or mcontroller.crouching()) and 2 or 1], 0.01))
     self.currentCycleTime = self.cycleTime[1] + self.cycleTimeDelta * self.cycleTimeProgress
@@ -286,22 +279,10 @@ function SynthetikMechanics:update(dt, fireMode, shiftHeld)
     if storage.ammo > 0 or self.reloadTimer > 0 or not status.resourceLocked("energy") then
       status.setResource("energyRegenBlock", 1)
     end
-    if self.weapon.currentAbility then
-      self.dashTriggerTimer = -1
-    end
-
 
     -- Walk I/O logic
     if shiftHeld then
             
-      -- begin Dash Trigger Timer when not in ability
-      -- and can dash
-      if not self.weapon.currentAbility and storage.dodgeCooldownTimer == 0  then
-        if self.dashTriggerTimer < 0 then
-          self.dashTriggerTimer = 0 -- set trigger timer
-        end
-        self.dashTriggerTimer = self.dashTriggerTimer + self.dt
-      end
 
       -- if laser is toggled
       if self.laser.enabled and not self.laser.alwaysActive then
@@ -320,16 +301,6 @@ function SynthetikMechanics:update(dt, fireMode, shiftHeld)
       end
     
     else
-
-      -- if triggered dash, dash when weapon isn't doing an ability
-      -- and can dash
-      if not self.weapon.currentAbility and storage.dodgeCooldownTimer == 0 then
-        if self.dashTriggerTimer <= self.dashParams.triggerTime and self.dashTriggerTimer >= 0 then
-          storage.dodgeCooldownTimer = self.dashParams.cooldown
-          self:setState(self.dash)
-        end
-        self.dashTriggerTimer = -1 -- reset trigger timer
-      end
 
       -- if laser is toggled,
       if self.laser.enabled and not self.laser.alwaysActive then
@@ -449,8 +420,7 @@ function SynthetikMechanics:charging()
       coroutine.yield()
 
       -- automatically transist to firing state when fully charged/overcharged
-      if self.autoFireAfterCharge and
-      self.chargeTimer >= (self.chargeTime + (self.fireBeforeOvercharge and 0 or self.overchargeTime))
+      if self.autoFireAfterCharge and self.chargeTimer >= (self.chargeTime + (self.fireBeforeOvercharge and 0 or self.overchargeTime))
       then
         break
       end
@@ -1309,27 +1279,6 @@ function SynthetikMechanics:recoil(screenShake, momentum)
   if momentum or self.recoilMomentum then
     mcontroller.addMomentum(vec2.mul(self:aimVector(), momentum or self.recoilMomentum * -1))
   end
-
-end
-
-function SynthetikMechanics:dash()
-
-  if not self.dashParams.enabled then return end
-  
-  local dashDirection
-  if mcontroller.xVelocity() ~= 0 then
-    dashDirection = mcontroller.movingDirection()
-  else
-    dashDirection = mcontroller.facingDirection()
-  end
-  animator.playSound("dash")
-  status.addEphemeralEffect("project45dash", self.dashParams.statusTime)
-  util.wait(self.dashParams.dashTime, function(dt)
-    mcontroller.setVelocity({self.dashParams.speed*dashDirection, 0})
-  end)
-  mcontroller.setXVelocity(mcontroller.xVelocity() * self.dashParams.endXVelMult)
-
-  self.dashCooldownTimer = self.dashParams.cooldown
 
 end
 
