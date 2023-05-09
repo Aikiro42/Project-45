@@ -69,8 +69,10 @@
     },
     "goods":{
       "guns": [
+
         "project45-modulargun",
         "project45-pipegun",
+        
         "project45-pistol",
         "project45-revolver",
         "project45-submachinegun",
@@ -79,13 +81,16 @@
         "project45-garand",
         "project45-mosin",
         "project45-sniperrifle",
+        
         "project45-antimateriel",
         "project45-grenadelauncher",
         "project45-minigun",
+        "project45-flamethrower",
+        
         "project45-accelerator",
+        "project45-assaultenergygun",
         "project45-energygun",
-        "project45-gaussrifle",
-        "project45-flamethrower"
+        "project45-gaussrifle"
       ],
       "mods": [
         // abilities

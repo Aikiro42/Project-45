@@ -255,14 +255,35 @@
     /*
     The magazine's sprite sheet should look like this:
     [loop frame 1][loop frame 2] ... [loop frame L][n ammo][n-1 ammo] ... [x+1 ammo][x ammo]
+    where L is the number of loop frames
+    n is the ammo count when the mag will start animating as if it's being depleted
+    x is the smaller ammo count when the mag will stop animating
+      ( and will thus continue to be animated that way
+        as if the remaining bullets are within the gun )
 
     Each frame should be referred to in the .frames file as such:
-    [present.0][present.1] .. [present.<>L-1][]
+    [present.0][present.1] .. [present.<>L-1][]  // what?
+
+    See the provided guns for reference.
+
+    IF THE MAG IS PROGRESSIVE,
+    
+    then the frame numbers should be
+    [present.<a>][present.<a-1>] ... [present.0]
+    where a+1 is the number of frames in the mag animation
+    
+    The magAnimRange should also be initialized as such:
+    [a, 0]
+
+    The rendered frame will end up being `(a + 1) * (current ammo / max ammo)` this way.
+
 
     */
     "magLoopFrames": 0, // L
     "magAnimRange": [0, 0], // [n, x]
     "beltMag": false, // affects visual reload; 
+    "progressiveMag": false, // if the mag shows the percentage of ammo left instead
+
     "flashHidden": false,
     "hollowSoundMult": 0.8, // affects loudness of hollow sound
     "muzzleFlashTime": 0.05, // number of seconds the muzzle light is active when firing

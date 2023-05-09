@@ -247,7 +247,10 @@ function SynthetikMechanics:update(dt, fireMode, shiftHeld)
     if self.fireBeforeOvercharge
     and self.overchargeTime > 0
     and self.chargeTimer >= self.chargeTime
-    and storage.ammo > 0 then
+    and storage.ammo > 0
+    and self.reloadTimer < 0
+    and storage.jamAmount <= 0
+    then
       if self:triggering() then
         self.chargeTimer = math.min(self.chargeTime + self.overchargeTime, self.chargeTimer + self.dt)
       end
@@ -347,7 +350,6 @@ function SynthetikMechanics:update(dt, fireMode, shiftHeld)
     and self.cooldownTimer == 0
     then
 
-      -- if not jammed
       if storage.jamAmount <= 0 then
 
         -- Is the chamber clear? If not, eject the bullet case.
@@ -962,7 +964,6 @@ function SynthetikMechanics:cocking()
   self:setAnimationState("gun", "feeding")
   util.wait(self.cockTime/3)
 
-  self.reloadTimer = -1 -- get rid of reload ui
 
   animator.playSound("boltPush")
   self:setStance(self.stances.boltPush)
@@ -970,6 +971,7 @@ function SynthetikMechanics:cocking()
   storage.chamberState = READY
   self.burstCounter = self.burstCount
   util.wait(self.cockTime/3)
+  self.reloadTimer = -1 -- get rid of reload ui
   self:setStance(self.stances.aim)
 end
 
@@ -1363,7 +1365,13 @@ function SynthetikMechanics:updateMagAnimation()
   -- validation:
   -- self.magAnimRange must be a subset of non-negative integers
   -- the first index of magAnimRange must be strictly greater than the second index
-  if self.magAnimRange[1] >= self.magAnimRange[2] or math.min(self.magAnimRange[1], self.magAnimRange[2]) < 0 or self.magLoopFrames <= 0 then
+  
+  -- if magazine is progressiveCharge
+  if self.progressiveMag then
+    local divisions = self.magAnimRange[1] - self.magAnimRange[2]
+    tag = "" .. math.max(math.floor(divisions * storage.ammo / self.maxAmmo), 0)
+
+  elseif self.magAnimRange[1] >= self.magAnimRange[2] or math.min(self.magAnimRange[1], self.magAnimRange[2]) < 0 or self.magLoopFrames <= 0 then
     tag = "default"
   
   -- if ammo is above range or reloading

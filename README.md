@@ -32,7 +32,6 @@ Project 45 is a weapons system that attempts to replicate the gun mechanics of S
 
 ## Todo
 
-- Add generic bullet hit sounds to the hitscan explosion config
 - Add SFX:
     - Perfect Reload must be a satisfying click
     - More insert mag sounds
@@ -48,32 +47,36 @@ Project 45 is a weapons system that attempts to replicate the gun mechanics of S
         - stone
         - wood
         - robotic (metallic)
-- add hitscan knockback
-- Add no-movement requirement to firing weapons
-- Add weapon abilities:
-    - Drone
-        - lets a drone fly around and target nearby enemies
-        - make projectile modifiable, make it able to fire hitscans
-    - Melee Swipe
-        - projectile that looks like a melee swipe
-        - high-damage melee swipe but short range.
-- Make a codex
-- Use `activeitem.setInstanceValue(<String jsonParam>, <Jsonval val>)` to save the state of the weapon.
 
-Tooltip todo:
-- Fire Mode (Semi/Auto, Charged)
-- Base Damage
-- Ammo Capacity
-- Reload Cost
-- Special
+## Todo - abilities
+- Drone
+    - lets a drone fly around and target nearby enemies
+    - make projectile modifiable, make it able to fire hitscans
+- Melee Swipe
+    - projectile that looks like a melee swipe
+    - high-damage melee swipe but short range.
+- Cover
+    - status effect that impedes movement but renders user invisible
+    - generate shield
 
-- Multishot
-- Critical Chance
-- Critical Multiplier
-- Last Shot Damage Mult
+## Todo - Mods
+- Multithreader
+    - Applicable for energy weapons,
+    - makes gun do autofire
+- Overcharged Battery
+    - Applicable for energy weapons
+    - doubles gun ammo capacity
+- Beam Splitter
+    - Applicable for energy weapons
+    - increases multishot (not projectile count) and spread
 
-- Movement Penalty
-- Jump Penalty
+## Todo - Guns
+- M249 SAW
+- AA12
+- Shotgun energy rifle
+- Assault energy rifle
+- 
+
 ## Vanilla Altfires Compatibility List:
 
 - <span style="color: green">Bouncing Shot</span>
