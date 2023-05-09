@@ -107,6 +107,12 @@ function SynthetikMechanics:init()
     animator.stopAllSounds("chargeWhine")
     animator.stopAllSounds("chargeDrone")
 
+    if self.usedByNPC then
+      self.spread = math.max(self.spread, 0.1)
+      -- self.recoilDeg = {0, 0}
+      -- self.recoilMult = 0
+    end
+
     self.fireLoopPlaying = false
     animator.stopAllSounds("fireLoop")
     
@@ -126,6 +132,7 @@ function SynthetikMechanics:init()
     activeItem.setScriptedAnimationParameter("ammoMax", self.maxAmmo)
     activeItem.setScriptedAnimationParameter("muzzleSmokeTime", self.muzzleSmokeTime)
     activeItem.setScriptedAnimationParameter("laserColor", self.laser.color)
+    activeItem.setScriptedAnimationParameter("usedByNPC", self.usedByNPC)
 
     -- INITIALIZE VISUALS
 
@@ -491,7 +498,7 @@ function SynthetikMechanics:firing()
   end
   
   -- rotate arm a bit
-  self:knockOffAim(math.abs(sb.nrand(self.currentInaccuracy, 0)))
+  if not self.usedByNPC then self:knockOffAim(math.abs(sb.nrand(self.currentInaccuracy, 0))) end
 
   -- calculate damage bonus from charging
   -- condition prevents dividing by zero
@@ -788,7 +795,8 @@ function SynthetikMechanics:reloading()
       end
 
       -- if reload has been attempted,
-      if self:triggering() and not self.triggered and not reloadAttempted then
+      if (self:triggering() and not self.triggered and not reloadAttempted)
+      or (self.usedByNPC and storage.ammo < self.maxAmmo and self.reloadTimer >= self.reloadTime) then
         self.triggered = true  -- trigger
         reloadAttempted = true -- indicate that a reload has been attempted
 
@@ -796,7 +804,7 @@ function SynthetikMechanics:reloading()
         uiUpdateTimer = 0
         
         -- bullet counted reload
-        if self.maxAmmo > self.bulletsPerReload then
+        if self.bulletsPerReload < self.maxAmmo then
           self:setStance(self.stances.loadRound, true)  -- player visually loads round
 
           -- if the magazine is a clip or a strip mag, do clip/strip specific stuff
@@ -817,7 +825,9 @@ function SynthetikMechanics:reloading()
         storage.ammo = storage.ammo < 0 and self.bulletsPerReload or storage.ammo + self.bulletsPerReload
 
         -- consume energy for this cycle
-        status.overConsumeResource("energy", status.resourceMax("energy") * math.min(self.maxAmmo, self.bulletsPerReload) * self.reloadCost / self.maxAmmo)
+        if not self.usedByNPC then
+          status.overConsumeResource("energy", status.resourceMax("energy") * math.min(self.maxAmmo, self.bulletsPerReload) * self.reloadCost / self.maxAmmo)
+        end
       
         -- perfect reload
         if self.reloadTime * self.perfectReloadInterval[1] <= self.reloadTimer and self.reloadTimer <= self.reloadTime * self.perfectReloadInterval[2] then
@@ -834,7 +844,7 @@ function SynthetikMechanics:reloading()
         -- bad reload
         else
           reloadScore = reloadScore - self.bulletsPerReload -- decrease reloadScore on perfect reload
-          animator.playSound("badReload")
+          if not self.usedByNPC then animator.playSound("badReload") end
           activeItem.setScriptedAnimationParameter("reloadRating", "bad")
         end
 
@@ -885,7 +895,7 @@ function SynthetikMechanics:reloading()
     else
       
       -- if reload score is negative and is absolutely more than half the loaded rounds,
-      if reloadScore < 0 and math.abs(reloadScore) > storage.ammo / 2 then
+      if not self.usedByNPC and reloadScore < 0 and math.abs(reloadScore) > storage.ammo / 2 then
         storage.reloadRating = "bad"
       elseif reloadScore == 0 then
         storage.reloadRating = "good"
@@ -1011,6 +1021,11 @@ function SynthetikMechanics:ejectMag()
 
   -- reflect mag absence on ammo count
   storage.ammo = -1
+
+  if self.usedByNPC then
+    self:setState(self.reloading)
+  end
+
 end
 
 function SynthetikMechanics:fireProjectileNeo(projectileType)
@@ -1072,7 +1087,7 @@ function SynthetikMechanics:fireHitscan(projectileType)
       for _, hitId in ipairs(hitReg[3]) do
         if world.entityExists(hitId) then
           
-          world.sendEntityMessage(hitId, "applyStatusEffect", self.projectileParameters.hitscanDamageKind or statusDamage, self:damagePerShot() * crit, entity.id())
+          world.sendEntityMessage(hitId, "applyStatusEffect", self.projectileParameters.hitscanDamageKind or statusDamage, self:damagePerShot() * crit / (self.usedByNPC and 2 or 1), entity.id())
 
           -- if self.projectileParameters.hitregPower == 0 then
             for i, stateffect in ipairs(self.projectileParameters.statusEffects) do
@@ -1247,7 +1262,7 @@ end
 
 function SynthetikMechanics:muzzleFlash()
   -- knock off aim
-  self:recoil()
+  if not self.usedByNPC then self:recoil() end
   
   -- set sfx values; the lower the ammo of a gun, the hollower it sounds
   -- also randomzies values
@@ -1267,6 +1282,7 @@ function SynthetikMechanics:muzzleFlash()
 end
 
 function SynthetikMechanics:recoil(screenShake, momentum)
+  if self.usedByNPC then return end
   self:screenShake(screenShake or self.currentScreenShake)
   -- activeItem.setRecoil(true)
 
@@ -1326,7 +1342,7 @@ function SynthetikMechanics:unjam()
     self:setStance(self.stances.unjam)
     util.wait(self.unjamTime/2)
     self:setStance(self.stances.jammed)
-    storage.jamAmount = math.max(0, storage.jamAmount - self.unjamAmount)
+    storage.jamAmount = self.usedByNPC and 0 or math.max(0, storage.jamAmount - self.unjamAmount)
     if storage.jamAmount > 0 then
       util.wait(self.unjamTime/2)
       self:setAnimationState("gun", "jammed")
@@ -1520,7 +1536,7 @@ function SynthetikMechanics:damagePerShot()
 end
 
 function SynthetikMechanics:screenShake(amount, shakeTime, random)
-  if not self.doScreenShake then return end
+  if not self.doScreenShake or self.usedByNPC then return end
   local source = mcontroller.position()
   local shake_dir = vec2.mul(self:aimVector(0), amount or 0.1)
   if random then vec2.rotate(shake_dir, 3.14 * truerand()) end

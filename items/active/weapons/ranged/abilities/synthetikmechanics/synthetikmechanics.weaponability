@@ -19,6 +19,8 @@
     "scripts" : ["/items/active/weapons/ranged/abilities/synthetikmechanics/synthetikmechanics.lua"],
     "class" : "SynthetikMechanics",
     
+    "usedByNPC": false, // if you want NPCs to use this, set this to true.
+
     // ________________________[ DAMAGE SETTINGS ]__________________________________
     // Base Damage per shot.
     /*

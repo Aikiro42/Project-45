@@ -19,6 +19,8 @@ function update()
     -- sb.logInfo("[PROJECT 45] Obtained alt-ability animation update script.")
   end
 
+  local usedByNPC =  animationConfig.animationParameter("usedByNPC")
+
   local projectileStack = animationConfig.animationParameter("projectileStack")
 
   local aimPosition = animationConfig.animationParameter("aimPosition")
@@ -128,19 +130,19 @@ function update()
   end
 
   -- render reload bar if reloading
-  if reloadTimer >= 0 then
+  if not usedByNPC and reloadTimer >= 0 then
     renderReloadBar(reloadTimer, reloadTime, goodReloadRange, perfectReloadRange, string.upper(reloadRating), aimPosition, offset, reloadBarColor)
     offset = vec2.add(offset, offset)
   end
 
   -- render jam bar if jammed
-  if jamAmount > 0 then
+  if not usedByNPC and jamAmount > 0 then
     renderJamBar(jamAmount, aimPosition, offset)
     offset = vec2.add(offset, offset)
   end
 
   -- render horizontal charge bar if charging
-  if chargeTimer > 0 then
+  if not usedByNPC and chargeTimer > 0 then
     renderChargeBar(chargeTimer, chargeTime, overchargeTime, aimPosition)
   end
 
@@ -161,15 +163,17 @@ function update()
     end
   end
   
-  localAnimator.spawnParticle({
-    type = "text",
-    text= "^shadow;" .. ammoDisplay,
-    color = ammoCounterColor,
-    size = 1,
-    fullbright = true,
-    flippable = false,
-    layer = "front"
-  }, vec2.add(aimPosition, offset))
+  if not usedByNPC then
+    localAnimator.spawnParticle({
+      type = "text",
+      text= "^shadow;" .. ammoDisplay,
+      color = ammoCounterColor,
+      size = 1,
+      fullbright = true,
+      flippable = false,
+      layer = "front"
+    }, vec2.add(aimPosition, offset))
+  end
 
   -- laser
   local laser = {}
