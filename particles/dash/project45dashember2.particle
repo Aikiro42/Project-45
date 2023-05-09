@@ -1,0 +1,21 @@
+{
+  "kind": "project45dashember2",
+  "definition": {
+    "type" : "ember",
+    "size" : 2.0,
+    "color" : [255, 255, 255, 255],
+    "destructionAction" : "fade",
+    "destructionTime" : 0.2,
+    "initialVelocity" : [0, 0],
+    "finalVelocity" : [0, 0],
+    "fullbright": true,
+    "approach" : [10, 10],
+    "timeToLive" : 0.2,
+    "layer" : "back",
+    "variance" : {
+      "position" : [3, 3],
+      "initialVelocity" : [10, 10],
+      "size" : 1
+    }
+  }
+}

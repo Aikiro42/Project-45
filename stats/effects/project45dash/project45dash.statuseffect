@@ -2,7 +2,9 @@
   "name" : "project45dash",
   "blockingStat" : "",
 
-  "effectConfig" : {},
+  "effectConfig" : {
+    "fade": "000000FA"
+  },
   "defaultDuration" : 0.1,
 
   "scripts" : [

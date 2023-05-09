@@ -1,7 +1,8 @@
 {
   "frames" : "project45dashleft.png",
   "variants" : 1,
-  "frameNumber" : 3,
+  "fullbright": true,
+  "frameNumber" : 6,
   "animationCycle" : 0.2,
   "offset" : [0, 0.15]
 }

@@ -3,6 +3,7 @@
   "definition" : {
     "type" : "animated",
     "animation" : "/animations/project45dash/project45dash.animation",
+    "fullbright": true,
     "position" : [0, 0],
     "finalVelocity" : [0, 0],
     "approach" : [0, 0],
@@ -10,6 +11,7 @@
     "size" : 1,
     "layer" : "back",
     "timeToLive" : 0.85,
-    "variance" : {}
+    "variance" : {
+    }
   }
 }

@@ -1,7 +1,7 @@
 {
   "particleEmitters" : {
     "dodgeRight" : {
-      "emissionRate" : 40,
+      "emissionRate" : 1,
       "particles" : [
         {
           "particle" : "project45dash",
@@ -10,13 +10,31 @@
       ]
     },
     "dodgeLeft" : {
-      "emissionRate" : 40,
+      "emissionRate" : 1,
       "particles" : [
         {
           "particle" : "project45dashleft",
           "flip" : true
         }
       ]
+    },
+    "explosion": {
+      "emissionRate": 15,
+      "particles": [
+        {"particle": "project45dashember1"},
+        {"particle": "project45dashember1"},
+        {"particle": "project45dashember1"},
+        {"particle": "project45dashember2"},
+        {"particle": "project45dashember2"},
+        {"particle": "project45dashember2"}
+      ]
+    }
+  },
+  "lights": {
+    "glow" : {
+      "active" : true,
+      "position" : [0, 0],
+      "color" : [100, 0, 100]
     }
   },
   "sounds" : {}
