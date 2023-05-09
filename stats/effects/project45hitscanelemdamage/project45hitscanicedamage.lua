@@ -4,12 +4,14 @@ function init()
     
     if effectConfig == "project45hitscanicedamage" then
     
+      local hType = not status.statPositive("shieldHealth") and world.entityType(entity.id()) == "player" and "Hit" or "ShieldHit"
+
       status.applySelfDamageRequest({
         damageType="IgnoresDef",
         damageSourceKind="ice",
         damage=duration,
         sourceEntityId=sourceEntityId,
-        hitType="ShieldHit"
+        hitType=hType
       })
     
     else
