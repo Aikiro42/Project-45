@@ -117,7 +117,7 @@ function apply(input)
     if augment.altAbilityType and input.parameters.altAbilityType ~= augment.altAbilityType then
     
       output:setInstanceValue("altAbilityType", augment.altAbilityType)
-      output:setInstanceValue("twoHanded", true)  -- make weapon two-handed to allow usage of alt ability
+      output:setInstanceValue("twoHanded", augment.twoHanded or false)
       
       -- merge ability parameters
       if augment.altAbility then
