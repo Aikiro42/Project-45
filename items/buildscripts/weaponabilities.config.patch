@@ -28,5 +28,10 @@
         "op": "add",
         "path": "/project45underbarrelshotgun",
         "value": "/items/active/weapons/ranged/abilities/project45grenadelauncher/project45underbarrelshotgun.weaponability"
+    },
+    {
+        "op": "add",
+        "path": "/project45phaseshift",
+        "value": "/items/active/weapons/ranged/abilities/project45phaseshift/project45phaseshift.weaponability"
     }
 ]

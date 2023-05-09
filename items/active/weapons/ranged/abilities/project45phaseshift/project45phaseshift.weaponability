@@ -1,0 +1,103 @@
+{
+  "animationCustom": {
+    "animatedParts" : {
+      "parts" : {
+        "underbarrel" : {
+          "properties" : {
+            "zLevel" : 5,
+            "centered" : true,
+            "transformationGroups" : ["weapon"],
+            "image" : "/assetmissing.png"
+          }
+        }
+      }
+    },
+    
+    "sounds":{
+      
+      "dodge": ["/sfx/tech/tech_jetpack_thrust2.ogg"],
+      "error": ["/sfx/interface/clickon_error.ogg"],
+      "noEnergy": ["/sfx/tech/mech_powerdown.ogg"],
+
+      "phaseStart": ["/items/active/weapons/ranged/abilities/project45phaseshift/phaseshift_start.ogg"],
+      "phaseLoop": ["/items/active/weapons/ranged/abilities/project45phaseshift/phaseshift_loop.ogg"],
+      "phaseEnd": ["/items/active/weapons/ranged/abilities/project45phaseshift/phaseshift_end.ogg"]
+
+    },
+
+    "lights" : {
+      "altMuzzle" : {
+        "active" : false,
+        "position" : [0, 0],
+        "color" : [0, 0, 0]
+      }
+    },
+    
+    "particleEmitters" : {
+      "altMuzzle" : {
+        "active" : false,
+        "emissionRate" : 8,
+        "transformationGroups" : ["muzzle"],
+        "offsetRegion" : [-0.25, -0.5, -0.25, -0.5],
+        "particles" : [
+          {"particle": "rocketbarrelpuff"},
+          {"particle": "rocketbarrelpuff"},
+          {"particle": "rocketbarrelpuff"},
+          {"particle": "project45muzzle"},
+          {"particle": "project45muzzle"},
+          {"particle": "project45muzzle"}
+        ]
+      }
+    }
+  },
+
+  "ability" : {
+      "name" : "Phase Shifter",
+      "type" : "project45phaseshift",
+      "scripts" : ["/items/active/weapons/ranged/abilities/project45phaseshift/project45phaseshift.lua"],
+      "class" : "Project45PhaseShift",
+      
+      "energyUsageRatePercent": 0.1,
+      "dodgeEnergyCostPercent": 0.1,
+
+      "dodgeCooldownTime": 0.5,
+      "shiftHeldTime": 0.2,
+
+      "dodgeSpeed": 160,
+      "dodgeTime": 0.15,
+      "dodgeStatusTime": 0.2,
+      "dodgeEndVelocityMult": 0.3,
+
+      "movementSpeedFactor": 2,
+      "jumpHeightFactor": 1.5,
+      
+
+      
+    // Dodge settings.
+    "dashParams": {
+      "enabled": true,
+
+      // Amount of time to press and release the walk key to initiate a dash.
+      "triggerTime": 0.2,
+
+      // DODGE SETTINGS
+
+      // speed at which the player travels for the duration of the dash
+      "speed": 80,
+      
+      // duration for which the indicated speed is applied on the movement controller
+      "dashTime": 0.1,
+      // duration for which you're invincible
+      "statusTime": 0.2,
+      
+      // number multiplied to your final velocity after the dodge
+      // i.e. if this is 1 then you are essentially given momentum
+      // from the speed of your dash
+      "endXVelMult": 0.3,
+
+      "cooldown": 0.5
+    }
+
+  }
+}
+  
