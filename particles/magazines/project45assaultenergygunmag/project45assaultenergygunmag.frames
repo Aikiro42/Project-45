@@ -1,7 +1,7 @@
 {
   "image" : "project45assaultenergygunmag.png",
   "frameGrid" : {
-    "size" : [6, 6],
+    "size" : [6, 7],
     "dimensions" : [1, 1]
   }
 }
