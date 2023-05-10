@@ -1,0 +1,40 @@
+{
+  "itemName" : "project45-reflexsightsmod",
+  "price" : 15000,
+  "rarity" : "Legendary",
+  "tooltipKind" : "project45gunmod",
+  "category" : "Grip Mod",
+  "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-reflexsightsmod/project45-reflexsightsmod.png",
+  "description" : "Allows for quicker target acquisition. ",
+  "shortdescription" : "Reflex Sights",
+
+  "augment":{
+    "type": "sights",
+    "modName": "Reflex Sights",
+    "slot": "sights",
+    "recoilMult": 0.1,
+    "primaryAbility": {
+      "laser": {
+        "enabled": true,
+        "color": [255, 255, 255, 64],
+        "width": 0.1
+      }
+    }
+    ,"animationCustom": {
+      "animatedParts" : { "parts" : {
+        "sights" : {
+          "properties" : {
+            "zLevel" : 5,
+            "centered" : true,
+            "transformationGroups" : ["weapon"],
+            "image" : "/items/augments/project45-gunmods/mods/project45-reflexsightsmod/project45-reflexsightsmodsprite.png<directives>"
+          }
+        }}}
+    }
+  },
+
+
+  "radioMessagesOnPickup" : [ "pickupaugment" ],
+
+  "scripts" : [ "/scripts/augments/project45-gunmod.lua" ]
+}

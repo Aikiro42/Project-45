@@ -51,7 +51,6 @@ function SynthetikMechanics:init()
     self.chargeTimer = 0
     self.muzzleFlashTimer = 0
     self.muzzleSmokeTimer = 0
-    self.laserToggleTimer = -1
     self.chargeDamageMult = 1
     self.cooldownTimer = self.fireTime
     self.reloadTimer = -1 -- not reloading
@@ -127,6 +126,7 @@ function SynthetikMechanics:init()
     activeItem.setScriptedAnimationParameter("ammoMax", self.maxAmmo)
     activeItem.setScriptedAnimationParameter("muzzleSmokeTime", self.muzzleSmokeTime)
     activeItem.setScriptedAnimationParameter("laserColor", self.laser.color)
+    activeItem.setScriptedAnimationParameter("laserWidth", self.laser.width)
     activeItem.setScriptedAnimationParameter("usedByNPC", self.usedByNPC)
 
     -- INITIALIZE VISUALS
@@ -279,48 +279,6 @@ function SynthetikMechanics:update(dt, fireMode, shiftHeld)
     if storage.ammo > 0 or self.reloadTimer > 0 or not status.resourceLocked("energy") then
       status.setResource("energyRegenBlock", 1)
     end
-
-    -- Walk I/O logic
-    if shiftHeld then
-            
-
-      -- if laser is toggled
-      if self.laser.enabled and not self.laser.alwaysActive then
-        if self.laser.toggle then
-          -- set and start the toggle timer
-          if self.laserToggleTimer < 0 then
-            self.laserToggleTimer = 0
-          end
-          self.laserToggleTimer = self.laserToggleTimer + self.dt
-        
-        -- if laser is held instead, turn it on
-        else
-          if not storage.isLaserOn then animator.playSound("laser") end
-          storage.isLaserOn = true
-        end
-      end
-    
-    else
-
-      -- if laser is toggled,
-      if self.laser.enabled and not self.laser.alwaysActive then
-        if self.laser.toggle then
-          -- if the toggle timer was set and is below the toggle time, toggle laser
-          if self.laserToggleTimer <= self.laser.toggleTime and self.laserToggleTimer >= 0 then
-            storage.isLaserOn = not storage.isLaserOn
-            if storage.isLaserOn then animator.playSound("laser") end
-          end
-          -- reset the timer
-          self.laserToggleTimer = -1
-        
-        -- if laser is held instead, turn it off
-        else
-          storage.isLaserOn = false
-        end
-      end
-    
-    end
-
 
     -- trigger I/O logic
     if self:triggering()
@@ -1395,7 +1353,6 @@ function SynthetikMechanics:drawLaser()
 
   if self.laser.enabled
   and not world.lineTileCollision(mcontroller.position(), self:firePosition())
-  and (storage.isLaserOn or self.laser.alwaysActive)
   and storage.ammo > 0
   and storage.jamAmount == 0  
   then
@@ -1404,10 +1361,11 @@ function SynthetikMechanics:drawLaser()
     local scanOrig = self:firePosition()
 
     -- laser distance is distance between aim position and muzzle
-    local range = world.magnitude(scanOrig, activeItem.ownerAimPosition())
+    local cursorRange = world.magnitude(scanOrig, activeItem.ownerAimPosition())
+    local laserRange = self.laser.range or self.projectileParameters.range or 100
     
     -- laser destination is aimvector * distance
-    local scanDest = vec2.add(scanOrig, vec2.mul(self:aimVector(0), self.laser.maxRange and self.laser.range or math.min(self.laser.range, range)))
+    local scanDest = vec2.add(scanOrig, vec2.mul(self:aimVector(0), self.laser.renderMaxRange and laserRange or math.min(laserRange, cursorRange)))
     
     -- collide laser with terrain
     scanDest = world.lineCollision(scanOrig, scanDest, {"Block", "Dynamic"}) or scanDest

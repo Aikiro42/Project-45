@@ -45,7 +45,7 @@
     "class" : "Project45FlashLaser",
 
     "laserRange": 100,
-    "laserColor": [0, 255, 0]
-
+    "laserColor": [0, 255, 0],
+    "laserWidth": 0.2
   }
 }

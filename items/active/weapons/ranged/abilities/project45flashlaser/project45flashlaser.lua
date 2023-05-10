@@ -6,7 +6,6 @@ local STATES = 4
 local OFF, FLASHLIGHT, LASER, BOTH = 0, 1, 2, 3
 
 function Project45FlashLaser:init()
-  activeItem.setScriptedAnimationParameter("laserColor", self.laserColor)
   self:reset()
 end
 
@@ -38,7 +37,11 @@ function Project45FlashLaser:update(dt, fireMode, shiftHeld)
     if not (storage.state == BOTH or storage.state == LASER) then
       activeItem.setScriptedAnimationParameter("laserOrigin", nil)
       activeItem.setScriptedAnimationParameter("laserDestination", nil)
+      activeItem.setScriptedAnimationParameter("altLaserColor", nil)
+      activeItem.setScriptedAnimationParameter("altLaserWidth", nil)
     else
+      activeItem.setScriptedAnimationParameter("altLaserColor", self.laserColor)
+      activeItem.setScriptedAnimationParameter("altLaserWidth", self.laserWidth)
       animator.playSound("laser")
     end
 

@@ -8,7 +8,6 @@ Project45GunScope = WeaponAbility:new()
 
 function Project45GunScope:init()
   storage.cameraProjectile = storage.cameraProjectile or nil
-  activeItem.setScriptedAnimationParameter("laserColor", self.laserColor)
   self.lerpProgress = 0
   self.state = 0
 end
@@ -17,6 +16,15 @@ function Project45GunScope:update(dt, fireMode, shiftHeld)
 
   WeaponAbility.update(self, dt, fireMode, shiftHeld)
   local trigger = self.fireMode
+
+  if storage.cameraProjectile then
+    activeItem.setScriptedAnimationParameter("altLaserColor", self.laserColor)
+    activeItem.setScriptedAnimationParameter("altLaserWidth", self.laserWidth)
+  else
+    activeItem.setScriptedAnimationParameter("altLaserColor", nil)
+    activeItem.setScriptedAnimationParameter("altLaserWidth", nil)
+  end
+  
   self:updateCamera(trigger)
   self:drawLaser(trigger)
 

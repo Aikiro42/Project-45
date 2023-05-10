@@ -1,21 +1,23 @@
 require "/scripts/vec2.lua"
 
 function update()
-
+    
     localAnimator.clearDrawables()
     localAnimator.clearLightSources()
     
     local laser = {}
     laser.origin = animationConfig.animationParameter("laserOrigin")
     laser.destination = animationConfig.animationParameter("laserDestination")
+    laser.color = animationConfig.animationParameter("altLaserColor") -- or {144, 0, 255}
+    laser.width = animationConfig.animationParameter("altLaserWidth") or 0.2
 
-    if laser.origin and laser.destination then
+    if laser.origin and laser.destination and laser.color then
         local laserLine = worldify(laser.origin, laser.destination)
         localAnimator.addDrawable({
             line = laserLine,
-            width = 0.3,
+            width = laser.width,
             fullbright = true,
-            color = {144, 0, 255}
+            color = laser.color
         }, "Player-1")  
     end
 end

@@ -171,14 +171,8 @@
     "laser": {
       "enabled": false, // if true, laser is rendered
       "color": [255, 0, 0], // laser color
-      "range": 100, // max distance to which the laser is drawn
-      "maxRange": true, // if false, laser is rendered up to player's aim position only
-
-      // always renders laser if true; otherwise it's rendered if the player is walking
-      "alwaysActive": false, 
-
-      "toggle": true, // if true, laser is toggled whenever activated
-      "toggleTime": 0.5 // time it takes to toggle
+      // "range": 100, // max distance to which the laser is drawn
+      "renderMaxRange": true // if false, laser is rendered up to player's aim position only
     },
 
     "movementSpeedFactor": 1, // Movement speed multiplier

@@ -99,8 +99,10 @@
         "project45-flashlasermod",
         "project45-grenadelaunchermod",
         "project45-underbarrelshotgunmod",
+        "project45-phaseshiftmod",
 
         // misc mods
+        "project45-reflexsightsmod",
         "project45-gripmod",
         "project45-muzzlebrakemod",
         "project45-silencermod",

@@ -179,13 +179,14 @@ function update()
   local laser = {}
   laser.origin = animationConfig.animationParameter("laserOrigin")
   laser.destination = animationConfig.animationParameter("laserDestination")
-  laser.color = animationConfig.animationParameter("laserColor")
+  laser.color = animationConfig.animationParameter("altLaserColor") or animationConfig.animationParameter("laserColor")
+  laser.width = animationConfig.animationParameter("altLaserWidth") or animationConfig.animationParameter("laserWidth") or 0.2
 
   if laser.origin and laser.destination then
     local laserLine = worldify(laser.origin, laser.destination)
     localAnimator.addDrawable({
         line = laserLine,
-        width = 0.2,
+        width = laser.width,
         fullbright = true,
         color = laser.color
     }, "Player+1")

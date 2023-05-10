@@ -32,6 +32,7 @@
 
         "laser": true,
         "laserColor": [175, 80, 255],
+        "laserWidth": 0.2,
 
 
         // How far from the center of the screen you must move your cursor to move the camera
