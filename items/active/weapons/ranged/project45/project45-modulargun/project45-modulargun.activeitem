@@ -57,7 +57,11 @@
     },
     
     "sounds":{
-      "fire" : ["/sfx/project45-synthetikmechanics/fires/fire_rifle.ogg"]
+      "fire" : [
+        "/sfx/project45-synthetikmechanics/fires/fire_ar_1.ogg",
+        "/sfx/project45-synthetikmechanics/fires/fire_ar_2.ogg",
+        "/sfx/project45-synthetikmechanics/fires/fire_ar_3.ogg"
+      ]
     }
   },
 
