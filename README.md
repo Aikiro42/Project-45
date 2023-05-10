@@ -74,7 +74,6 @@ Project 45 is a weapons system that attempts to replicate the gun mechanics of S
 - M249 SAW
 - AA12
 - Shotgun energy rifle
-- Assault energy rifle
 - 
 
 ## Vanilla Altfires Compatibility List:
