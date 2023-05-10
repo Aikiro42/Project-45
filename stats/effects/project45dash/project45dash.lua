@@ -20,10 +20,10 @@ function update(dt)
   effect.setParentDirectives(self.direk)
   
   local speedVector = mcontroller.velocity()
-  local speedThreshold = {0.1, 0.5}
+  local speedThreshold = {10, 10}
 
   -- particles
-  if math.abs(speedVector[1]) > 0.75 or math.abs(speedVector[2]) > 1.3 then
+  if math.abs(speedVector[1]) > speedThreshold[1] or math.abs(speedVector[2]) > speedThreshold[2] then
     if mcontroller.facingDirection() == 1 then
       animator.burstParticleEmitter("dodgeRight", true)
       -- animator.burstParticleEmitter("dodgeLeft", false)

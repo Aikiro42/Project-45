@@ -14,7 +14,9 @@
     "type": "ability",
     "modName": "ability",
     "slot": "underbarrel",
-    "altAbilityType": "project45grenadelauncher"
+    "altAbilityType": "project45grenadelauncher",
+    "overrideTwoHanded": true,
+    "twoHanded": true
 
   },
 

@@ -14,7 +14,9 @@
     "type": "ability",
     "modName": "ability",
     "slot": "underbarrel",
-    "altAbilityType": "project45underbarrelshotgun"
+    "altAbilityType": "project45underbarrelshotgun",
+    "overrideTwoHanded": true,
+    "twoHanded": "true"
 
   },
 

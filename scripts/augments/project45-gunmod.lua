@@ -117,7 +117,9 @@ function apply(input)
     if augment.altAbilityType and input.parameters.altAbilityType ~= augment.altAbilityType then
     
       output:setInstanceValue("altAbilityType", augment.altAbilityType)
-      output:setInstanceValue("twoHanded", (augment.overrideTwoHanded and augment.twoHanded) or output.config.twoHanded)
+      if augment.overrideTwoHanded then
+        output:setInstanceValue("twoHanded", augment.twoHanded)
+      end
       
       -- merge ability parameters
       if augment.altAbility then

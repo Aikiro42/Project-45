@@ -12,7 +12,9 @@
     "type": "ability",
     "modName": "ability",
     "slot": "rail",
-    "altAbilityType" : "project45flashlaser"
+    "altAbilityType" : "project45flashlaser",
+    "overrideTwoHanded": true,
+    "twoHanded": true
   },
 
 

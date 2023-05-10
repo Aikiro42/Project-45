@@ -12,7 +12,9 @@
     "type": "ability",
     "modName": "ability",
     "slot": "sights",
-    "altAbilityType" : "project45gunscope"
+    "altAbilityType" : "project45gunscope",
+    "overrideTwoHanded": true,
+    "twoHanded": true
   },
 
 
