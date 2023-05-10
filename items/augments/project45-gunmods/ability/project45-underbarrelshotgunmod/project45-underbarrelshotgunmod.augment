@@ -5,7 +5,7 @@
   "tooltipKind" : "project45gunmod",
   "category" : "Ability Mod",
   "inventoryIcon" : "/items/augments/project45-gunmods/ability/project45-underbarrelshotgunmod/project45-underbarrelshotgunmod.png",
-  "description" : "A small shotgun attached under a gun's barrel.",
+  "description" : "A small shotgun attached under a gun's barrel.\n^#EA9931;Right-click to cock or fire.",
   "shortdescription" : "Underbarrel Shotgun",
 
   "radioMessagesOnPickup" : [ "pickupaugment" ],
@@ -16,7 +16,7 @@
     "slot": "underbarrel",
     "altAbilityType": "project45underbarrelshotgun",
     "overrideTwoHanded": true,
-    "twoHanded": "true"
+    "twoHanded": true
 
   },
 

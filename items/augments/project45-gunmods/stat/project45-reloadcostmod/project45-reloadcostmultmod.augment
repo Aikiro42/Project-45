@@ -1,0 +1,19 @@
+{
+  "itemName" : "project45-reloadcostmultmod",
+  "price" : 50000,
+  "rarity" : "Legendary",
+  "tooltipKind" : "project45gunmod",
+  "category" : "Stat Mod",
+  "inventoryIcon" : "/items/augments/project45-gunmods/stat/project45-reloadcostmod/project45-reloadcostmultmod.png",
+  "description" : "^#9BBA3D;Reload Cost x80%^reset;",
+  "shortdescription" : "^#9BBA3D;Reload Cost X",
+
+  "augment":{
+    "reloadCost": {
+      "operation": "multiply",
+      "value": 0.8
+    }
+  },
+
+  "scripts" : [ "/scripts/augments/project45-gunmod/statmod.lua" ]
+}

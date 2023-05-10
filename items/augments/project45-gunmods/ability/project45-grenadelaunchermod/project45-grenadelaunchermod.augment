@@ -5,7 +5,7 @@
   "tooltipKind" : "project45gunmod",
   "category" : "Ability Mod",
   "inventoryIcon" : "/items/augments/project45-gunmods/ability/project45-grenadelaunchermod/project45-grenadelaunchermod.png",
-  "description" : "A portable launcher attached under a gun's barrel.",
+  "description" : "A portable launcher attached under a gun's barrel.\n^#EA9931;Right-click to load, fire or eject.",
   "shortdescription" : "Grenade Launcher",
 
   "radioMessagesOnPickup" : [ "pickupaugment" ],

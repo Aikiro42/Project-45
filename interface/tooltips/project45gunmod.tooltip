@@ -1,24 +1,24 @@
 {
   "background" : {
     "type" : "background",
-    "fileHeader" : "/interface/tooltips/header.png",
-    "fileBody" : "/interface/tooltips/bodyobject4.png",
-    "fileFooter" : "/interface/tooltips/footerobject4.png"
+    "fileHeader" : "/interface/tooltips/project45statmod/project45statmod-tooltipheader.png",
+    "fileBody" : "/interface/tooltips/project45statmod/project45statmod-tooltipbody.png",
+    "fileFooter" : "/interface/tooltips/project45statmod/project45statmod-tooltipfooter.png"
   },
   "moneyIcon" : {
     "type" : "image",
-    "position" : [97, 23],
-    "file" : "/interface/money.png"
+    "position" : [130, 25],
+    "file" : "/interface/project45-gunshop/pixels.png"
   },
   "priceLabel" : {
     "type" : "label",
-    "position" : [110, 23],
-    "hAnchor" : "left",
+    "position" : [128, 24],
+    "hAnchor" : "right",
     "value" : "0"
   },
   "descriptionLabel" : {
     "type" : "label",
-    "position" : [12, 90],
+    "position" : [12, 113],
     "hAnchor" : "left",
     "vAnchor" : "top",
     "lineSpacing" : 1.2,
@@ -26,26 +26,26 @@
   },
   "rarityLabel" : {
     "type" : "label",
-    "position" : [7, 23],
+    "position" : [7, 24],
     "hAnchor" : "left",
     "centered" : true,
     "wrapWidth" : 126
   },
   "objectImage" : {
     "type" : "image",
-    "position" : [67, 131],
+    "position" : [69, 154],
     "file" : "",
     "centered" : true,
-    "maxSize" : [38, 38],
-    "minSize" : [38, 38]
+    "maxSize" : [120, 60],
+    "minSize" : [120, 60]
   },
   "instructionLabel" : {
     "type" : "label",
-    "position" : [12, 50],
+    "position" : [12, 41],
     "hAnchor" : "left",
-    "vAnchor" : "top",
+    "vAnchor" : "bottom",
     "wrapWidth" : 127,
-    "value" : "Apply to gun with right-click",
-    "color" : "gray"
+    "value" : "     Install on WS45 guns.\nApply to gun with right-click.",
+    "color" : "#D66E18"
   }
 }

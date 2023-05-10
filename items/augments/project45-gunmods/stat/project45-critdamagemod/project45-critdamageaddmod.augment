@@ -1,0 +1,19 @@
+{
+  "itemName" : "project45-critdamageaddmod",
+  "price" : 10000,
+  "rarity" : "Legendary",
+  "tooltipKind" : "project45gunmod",
+  "category" : "Stat Mod",
+  "inventoryIcon" : "/items/augments/project45-gunmods/stat/project45-critdamagemod/project45-critdamageaddmod.png",
+  "description" : "^#D93A3A;Critical Damage Multiplier +1^reset;",
+  "shortdescription" : "Crit Damage +",
+
+  "augment":{
+    "critDamage": {
+      "operation": "add",
+      "value": 1
+    }
+  },
+
+  "scripts" : [ "/scripts/augments/project45-gunmod/statmod.lua" ]
+}

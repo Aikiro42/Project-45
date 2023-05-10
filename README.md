@@ -124,15 +124,39 @@ Project 45 is a weapons system that attempts to replicate the gun mechanics of S
 
 # Experiments
 
-## DPS Calculation Thought Experiment
 
-We have the following factors that affect the amount of damage a gun can put out over a period of time:
-- Damage per shot (what we want to find out)
+## Mod Tags
+
+### Problem
+We need a way to reliably filter which mods go on which
+
+### Definition of Terms
 - 
 
-We factor out the following:
-- Crit stats (they aren't guaranteed)
-- Overcharge time (if we're gonna 
+### Requirements
+- 
+
+### Possible Solution: Ammo Info System
+
+guns and `ammoType` mods have an `ammoInfo` field:
+
+```jsonc
+// ...
+"modInfo": {
+    "ammoDimensions": [40, 100],
+    // set either dimension to -1 if a gun accepts any length of one dimensino, or if an ammo fits either
+    // the first is the girth of the bullet - for the gun to accept the ammo, both girths must be equal.
+    // the second is the length of the bullet - for the gun to accept the ammo, the bullet's dimension must be less than that of the gun
+    
+    "type": "ballistic",
+    // "ballistic", "energy", "gas"
+
+    "acceptsModSlot": {
+        // ...
+    }
+}
+// ...
+```
 
 ## Retrieving alt ability animation scripts
 

@@ -1,0 +1,19 @@
+{
+  "itemName" : "project45-damageaddmod",
+  "price" : 10000,
+  "rarity" : "Legendary",
+  "tooltipKind" : "project45gunmod",
+  "category" : "Stat Mod",
+  "inventoryIcon" : "/items/augments/project45-gunmods/stat/project45-damagemod/project45-damageaddmod.png",
+  "description" : "^#EA9931;Base Damage +10^reset;",
+  "shortdescription" : "Base Damage +",
+
+  "augment":{
+    "damagePerShot": {
+      "operation": "add",
+      "value": 10
+    }
+  },
+
+  "scripts" : [ "/scripts/augments/project45-gunmod/statmod.lua" ]
+}

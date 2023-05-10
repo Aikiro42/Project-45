@@ -1,0 +1,19 @@
+{
+  "itemName" : "project45-reloadcostaddmod",
+  "price" : 10000,
+  "rarity" : "Legendary",
+  "tooltipKind" : "project45gunmod",
+  "category" : "Stat Mod",
+  "inventoryIcon" : "/items/augments/project45-gunmods/stat/project45-reloadcostmod/project45-reloadcostaddmod.png",
+  "description" : "^#9BBA3D;Reload Cost -2.5%^reset;",
+  "shortdescription" : "Reload Cost +",
+
+  "augment":{
+    "reloadCost": {
+      "operation": "add",
+      "value": -0.025
+    }
+  },
+
+  "scripts" : [ "/scripts/augments/project45-gunmod/statmod.lua" ]
+}

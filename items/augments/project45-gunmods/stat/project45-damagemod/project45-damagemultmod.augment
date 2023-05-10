@@ -1,0 +1,19 @@
+{
+  "itemName" : "project45-damagemultmod",
+  "price" : 50000,
+  "rarity" : "Legendary",
+  "tooltipKind" : "project45gunmod",
+  "category" : "Stat Mod",
+  "inventoryIcon" : "/items/augments/project45-gunmods/stat/project45-damagemod/project45-damagemultmod.png",
+  "description" : "^#EA9931;Base Damage x120%^reset;",
+  "shortdescription" : "^#EA9931;Base Damage X",
+
+  "augment":{
+    "damagePerShot": {
+      "operation": "multiply",
+      "value": 1.2
+    }
+  },
+
+  "scripts" : [ "/scripts/augments/project45-gunmod/statmod.lua" ]
+}

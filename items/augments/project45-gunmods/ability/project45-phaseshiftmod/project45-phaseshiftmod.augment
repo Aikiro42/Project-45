@@ -5,7 +5,7 @@
   "tooltipKind" : "project45gunmod",
   "category" : "Ability Mod",
   "inventoryIcon" : "/items/augments/project45-gunmods/ability/project45-phaseshiftmod/project45-phaseshiftmod.png",
-  "description" : "Allows you to transfer between planes of reality and avoid damage.",
+  "description" : "Allows you to transfer between planes of reality.\n^#EA9931;Tap walk to dash.\nRight-click to phase.",
   "shortdescription" : "Phase Shifter Mod",
   
   "augment":{

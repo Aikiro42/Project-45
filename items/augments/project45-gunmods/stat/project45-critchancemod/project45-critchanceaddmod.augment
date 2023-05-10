@@ -1,0 +1,19 @@
+{
+  "itemName" : "project45-critchanceaddmod",
+  "price" : 10000,
+  "rarity" : "Legendary",
+  "tooltipKind" : "project45gunmod",
+  "category" : "Stat Mod",
+  "inventoryIcon" : "/items/augments/project45-gunmods/stat/project45-critchancemod/project45-critchanceaddmod.png",
+  "description" : "^#D93A3A;Critical Chance +10%^reset;",
+  "shortdescription" : "Crit Chance +",
+
+  "augment":{
+    "critChance": {
+      "operation": "add",
+      "value": 0.1
+    }
+  },
+
+  "scripts" : [ "/scripts/augments/project45-gunmod/statmod.lua" ]
+}
