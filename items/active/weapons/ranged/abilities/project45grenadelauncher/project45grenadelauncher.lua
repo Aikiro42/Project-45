@@ -12,19 +12,24 @@ function Project45GrenadeLauncher:init()
     self.firing = false
     self.debugTimer = 0
     self.muzzleFlashTimer = 0
+    self.cooldownTimer = self.fireTime
     storage.grenadeLauncherState = storage.grenadeLauncherState or EMPTY
+    self:setGrenadeLauncherState(storage.grenadeLauncherState)
+    activeItem.setScriptedAnimationParameter("grenadeIndicatorOffset", self.indicatorOffset)
+    activeItem.setScriptedAnimationParameter("trajectoryIndicatorColor", self.trajectoryIndicatorColor)
 end
 
 function Project45GrenadeLauncher:update(dt, fireMode, shiftHeld)
     
     WeaponAbility.update(self, dt, fireMode, shiftHeld)
-    if self.debugTimer == 0 then
-        -- sb.logInfo(storage.aimProgress)
-        self.debugTimer = 0.5
-    end
-    self:aimVector(0)
 
-    self.debugTimer = math.max(0, self.debugTimer - self.dt)
+    activeItem.setScriptedAnimationParameter("altMuzzlePos", self:firePosition())
+    activeItem.setScriptedAnimationParameter("altProjectileSpeed", self.projectileParameters.speed)
+    activeItem.setScriptedAnimationParameter("altAimAngle", vec2.angle(self:aimVector()))
+
+
+    
+    self.cooldownTimer = math.max(0, self.cooldownTimer - self.dt)
 
     if self.muzzleFlashTimer == 0 then
         animator.setLightActive("altMuzzle", false)
@@ -36,11 +41,14 @@ function Project45GrenadeLauncher:update(dt, fireMode, shiftHeld)
         self.firing = false
     end
     
-    if self.fireMode == "alt" and not self.weapon.currentAbility and not self.firing then
+    if self.fireMode == "alt"
+    and self.cooldownTimer == 0
+    and not self.weapon.currentAbility
+    and not self.firing then
 
         if storage.grenadeLauncherState == READY
         and not world.lineTileCollision(mcontroller.position(), self:firePosition()) then
-            self:setState(self.fire)
+            self:setState(self.charging)
 
         elseif storage.grenadeLauncherState == EMPTY then
             self:setState(self.eject)
@@ -51,16 +59,50 @@ function Project45GrenadeLauncher:update(dt, fireMode, shiftHeld)
             end
 
         end
-
+        
+        self.cooldownTimer = self.fireTime
         self.firing = true
 
     end
 
 end
 
+function Project45GrenadeLauncher:charging()
+    local chargeTimer = self.chargeTime
+    local flashTime = 0.03
+    local flashTimer = 0
+    local flashTimeStep = self.dt
+    animator.playSound("charge", -1)
+    while self.fireMode == "alt" do
+        
+        chargeTimer = math.max(0, chargeTimer - self.dt)
+        flashTimer = flashTimer + flashTimeStep
+
+        if flashTimeStep > 0 and flashTimer >= flashTime then
+            activeItem.setScriptedAnimationParameter("grenadeLauncherChargeWarning", false)
+            flashTimeStep = -self.dt
+        elseif flashTimeStep < 0 and flashTimer <= 0 then
+            activeItem.setScriptedAnimationParameter("grenadeLauncherChargeWarning", true)
+            flashTimeStep = self.dt
+        end
+
+        if chargeTimer <= 0 then
+            animator.stopAllSounds("charge")
+            self:setState(self.fire)
+            break
+        end
+
+        coroutine.yield()
+    end
+    activeItem.setScriptedAnimationParameter("grenadeLauncherChargeWarning", false)
+    animator.stopAllSounds("charge")
+end
+
+
 function Project45GrenadeLauncher:fire()
+    activeItem.setScriptedAnimationParameter("grenadeLauncherChargeWarning", false)
     self:fireProjectile()
-    storage.grenadeLauncherState = EMPTY
+    self:setGrenadeLauncherState(EMPTY)
     self:muzzleFlash()
     self:recoil()
 end
@@ -69,18 +111,19 @@ function Project45GrenadeLauncher:eject()
     animator.setAnimationState("grenadelauncher", "open")
     animator.playSound("open")
     animator.burstParticleEmitter("altEjectionPort", true)
-    storage.grenadeLauncherState = OPEN
+    self:setGrenadeLauncherState(OPEN)
     self:recoil(true)
 end
 
 function Project45GrenadeLauncher:load()
     animator.setAnimationState("grenadelauncher", "closed")
     animator.playSound("load")
-    storage.grenadeLauncherState = READY
+    self:setGrenadeLauncherState(READY)
     self:recoil(true)
 end
 
 function Project45GrenadeLauncher:recoil(down)
+    vec2.add(self.weapon.weaponOffset, {-1, 0})
     self.weapon.relativeArmRotation = self.weapon.relativeArmRotation + util.toRadians(5) * (down and -1 or 1)
     self.weapon.relativeWeaponRotation = self.weapon.relativeWeaponRotation + util.toRadians(5) * (down and -1 or 1)
     storage.aimProgress = 0
@@ -90,6 +133,14 @@ function Project45GrenadeLauncher:aim()
     -- self.weapon.aimAngle, self.weapon.aimDirection = activeItem.aimAngleAndDirection(0, activeItem.ownerAimPosition())    
     self.weapon.relativeWeaponRotation = util.toRadians(interp.sin(self.aimProgress, math.deg(self.weapon.relativeWeaponRotation), self.weapon.stance.weaponRotation))
     self.weapon.relativeArmRotation = util.toRadians(interp.sin(self.aimProgress, math.deg(self.weapon.relativeArmRotation), self.weapon.stance.armRotation))
+end
+
+
+
+function Project45GrenadeLauncher:setGrenadeLauncherState(launcherState)
+    storage.grenadeLauncherState = launcherState
+    activeItem.setScriptedAnimationParameter("grenadeLauncherState", launcherState)
+    -- activeItem.setInstanceValue("currentGrenadeLauncherState", launcherState)
 end
 
 function Project45GrenadeLauncher:fireProjectile(projectileType, projectileParams, inaccuracy, firePosition, projectileCount)

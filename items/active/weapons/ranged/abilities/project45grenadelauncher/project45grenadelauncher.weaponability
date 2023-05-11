@@ -1,4 +1,5 @@
 {
+  "animationScripts": ["/items/active/weapons/ranged/abilities/project45grenadelauncher/project45grenadelauncheranimation.lua"],
   "animationCustom": {
     "animatedParts" : {
       "stateTypes": {
@@ -18,7 +19,7 @@
             "centered" : true,
             "transformationGroups" : ["weapon"],
             "image" : "/items/active/weapons/ranged/abilities/project45grenadelauncher/project45grenadelauncher.png:closed<directives>",
-            "firePosition" : [0.5, 0]
+            "firePosition" : [0.375, 0.125]
           },
           "partStates": {
             "grenadelauncher": {
@@ -47,7 +48,8 @@
         "/sfx/gun/grenade1.ogg"
       ],
       "open" : [ "/sfx/project45-synthetikmechanics/reloads/boltpull_shotgun.ogg" ],
-      "load" : [ "/sfx/project45-synthetikmechanics/reloads/boltpush_shotgun.ogg" ]
+      "load" : [ "/sfx/project45-synthetikmechanics/reloads/boltpush_shotgun.ogg" ],
+      "charge" : [ "/sfx/interface/sniper_mark_pitch1.ogg" ]
     },
     "lights" : {
       "altMuzzle" : {
@@ -59,7 +61,7 @@
     "particleEmitters" : {
       "altMuzzle" : {
         "active" : false,
-        "emissionRate" : 8,
+        "emissionRate" : 40,
         "transformationGroups" : ["muzzle"],
         "offsetRegion" : [-0.25, -0.5, -0.25, -0.5],
         "particles" : [
@@ -92,12 +94,66 @@
       "firePositionPart" : "underbarrel",
       "projectileType": "impactgrenade",
       "projectileParameters":{
-        "power": 100,
-        "speed": 100
+        "power": 500,
+        "speed": 50,
+        "damageType": "IgnoresDef",
+        "periodicActions" : [
+          /*
+          {
+            "time" : 0.01,
+            "repeat" : true,
+            "action" : "particle",
+            "rotate" : true,
+            
+            "specification" : {
+              "type" : "textured",
+              "image" : "/projectiles/guns/bullets/project45stdbullet/project45stdbullettrail.png",
+              "position" : [-2, 0],
+              "layer" : "back",
+              "timeToLive" : 0.0,
+              "destructionTime" : 0.25,
+              "destructionAction" : "fade",
+              "fullbright" : false
+            }
+      
+          }
+          */
+          {
+            "time" : 0.01,
+            "repeat" : true,
+            "action" : "particle",
+            "rotate" : true,
+            
+            "specification" : {
+              "type" : "streak",
+              "layer" : "back",
+              "fullbright" : true,
+              "destructionAction" : "shrink",
+              "size" : 1,
+              "color" : [255, 255, 200, 255],
+              "collidesForeground" : false,
+              "length" : 50,
+              "position" : [0, 0],
+              "timeToLive" : 0.01,
+              "destructionTime" : 0.2,
+              "initialVelocity" : [0.5, 0],
+              "variance" : {"initialVelocity" : [0.5, 0]}
+            }
+      
+          }
+        ]
       },
+      "fireTime": 0.3,
+      "chargeTime": 0.3,
       "projectileCount": 1,
       "inaccuracy": 0.01,
-      "energyUsagePercent": 0.25
+      "energyUsagePercent": 0.3,
+
+      "indicatorOffset": [2, 0],
+      "reloadTime": 0.5,
+
+      "trajectoryIndicatorColor": [253, 209, 77, 128]
+
 
   }
 }

@@ -197,6 +197,7 @@
     // for extremely high fire rate guns, the gun will begin seesaw around this angle range
     // when the amount of recoil you accrue reaches the second value.
     "recoilThresholdDeg": [27, 30],
+    "recoilOffsetAmount": 0.25,
     
     "recoilMult": 1, // muzzle brake; multiplied to recoilDeg
     "aimTime": [3, 1], // time it takes to aim in seconds;

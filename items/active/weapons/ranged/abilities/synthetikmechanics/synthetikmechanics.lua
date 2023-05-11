@@ -336,6 +336,7 @@ function SynthetikMechanics:uninit()
   activeItem.setInstanceValue("currentChamberState", storage.chamberState)
   activeItem.setInstanceValue("currentUnejectedCasings", storage.unejectedCasings)
   activeItem.setInstanceValue("currentAnimationState", storage.animationState)
+  activeItem.setInstanceValue("currentJamAmount", storage.jamAmount)
 end
 
 -- STATES
@@ -1183,9 +1184,16 @@ function SynthetikMechanics:aim()
   or self.weapon.stance == self.stances.loadRound
   then return end
 
+  local to = self.weapon.stance.weaponOffset or {0, 0}
+
+  self.weapon.weaponOffset = {
+    interp.sin(storage.aimProgress, self.weapon.weaponOffset[1], to[1]),
+    interp.sin(storage.aimProgress, self.weapon.weaponOffset[2], to[2])
+  }
   self.weapon.aimAngle, self.weapon.aimDirection = activeItem.aimAngleAndDirection(0, activeItem.ownerAimPosition())    
   self.weapon.relativeWeaponRotation = util.toRadians(interp.sin(storage.aimProgress, math.deg(self.weapon.relativeWeaponRotation), self.weapon.stance.weaponRotation))
   self.weapon.relativeArmRotation = util.toRadians(interp.sin(storage.aimProgress, math.deg(self.weapon.relativeArmRotation), self.weapon.stance.armRotation))
+  
 end
 
 function SynthetikMechanics:muzzleFlash()
@@ -1231,7 +1239,7 @@ function SynthetikMechanics:recoil(screenShake, momentum)
 
   self.weapon.relativeWeaponRotation = self.weapon.relativeWeaponRotation + inaccuracy
   self.weapon.relativeArmRotation = self.weapon.relativeArmRotation + inaccuracy
-
+  self.weapon.weaponOffset = {-self.recoilOffsetAmount, 0}
   storage.aimProgress = 0
 
   if momentum or self.recoilMomentum then

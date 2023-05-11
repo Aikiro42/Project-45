@@ -1,8 +1,11 @@
 {
+  "animationScripts": [
+    "/items/active/weapons/ranged/abilities/project45underbarrelshotgun/project45underbarrelshotgunanimation.lua"
+  ],
   "animationCustom": {
     "animatedParts" : {
       "stateTypes": {
-        "grenadelauncher": {
+        "underbarrelgun": {
           "default": "closed",
           "states":{
             "closed": {},
@@ -17,24 +20,24 @@
             "zLevel" : 5,
             "centered" : true,
             "transformationGroups" : ["weapon"],
-            "image" : "/items/active/weapons/ranged/abilities/project45grenadelauncher/project45underbarrelshotgun.png:closed<directives>",
+            "image" : "/items/active/weapons/ranged/abilities/project45underbarrelshotgun/project45underbarrelshotgun.png:closed<directives>",
             "firePosition" : [0.5, 0]
           },
           "partStates": {
-            "grenadelauncher": {
+            "underbarrelgun": {
               "closed": {
                 "properties": {
-                  "image" : "/items/active/weapons/ranged/abilities/project45grenadelauncher/project45underbarrelshotgun.png:closed<directives>"
+                  "image" : "/items/active/weapons/ranged/abilities/project45underbarrelshotgun/project45underbarrelshotgun.png:closed<directives>"
                 }
               },
               "open": {
                 "properties": {
-                  "image" : "/items/active/weapons/ranged/abilities/project45grenadelauncher/project45underbarrelshotgun.png:open<directives>"
+                  "image" : "/items/active/weapons/ranged/abilities/project45underbarrelshotgun/project45underbarrelshotgun.png:open<directives>"
                 }
               },
               "loading": {
                 "properties": {
-                  "image" : "/items/active/weapons/ranged/abilities/project45grenadelauncher/project45underbarrelshotgun.png:loading<directives>"
+                  "image" : "/items/active/weapons/ranged/abilities/project45underbarrelshotgun/project45underbarrelshotgun.png:loading<directives>"
                 }
               }
             }
@@ -45,7 +48,10 @@
     "sounds" : {
       "altFire" : [ "/sfx/project45-synthetikmechanics/fires/fire_shotgun.ogg" ],
       "open" : [ "/sfx/project45-synthetikmechanics/reloads/boltpull_shotgun.ogg" ],
-      "load" : [ "/sfx/project45-synthetikmechanics/reloads/boltpush_shotgun.ogg" ]
+      "load" : [ "/sfx/project45-synthetikmechanics/reloads/boltpush_shotgun.ogg" ],
+      "altInsertRound" : [
+        "/sfx/project45-synthetikmechanics/reloads/loadround_shotgun_01.ogg",
+        "/sfx/project45-synthetikmechanics/reloads/loadround_shotgun_02.ogg"]
     },
     "lights" : {
       "altMuzzle" : {
@@ -81,18 +87,35 @@
   "ability" : {
       "name" : "Underbarrel Shotgun",
       "type" : "project45underbarrelshotgun",
-      "scripts" : ["/items/active/weapons/ranged/abilities/project45grenadelauncher/project45grenadelauncher.lua"],
-      "class" : "Project45GrenadeLauncher",
+      "scripts" : ["/items/active/weapons/ranged/abilities/project45underbarrelshotgun/project45underbarrelgun.lua"],
+      "class" : "Project45UnderbarrelGun",
       
       "firePositionPart" : "underbarrel",
-      "projectileType": "project45stdbullet",
+      "projectileType":[
+        "project45stdbullet",
+        "project45explosivebullet",
+        "project45stdfirebullet",
+        "project45stdpoisonbullet",
+        "project45dragonsbreath"
+      ],
       "projectileParameters": {
-        "power": 5,
+        "power": 100,
         "damageType": "IgnoresDef"
       },
+      "maxAmmo": 4,
+      "autoLoad": true,
+      "fireTime": 0.15,
       "projectileCount": 5,
       "inaccuracy": 0.05,
-      "energyUsagePercent": 0.05
+      "energyUsagePercent": 0.1,
+
+      "reloadWeaponOffset": [-1, 0],
+      "reloadCostPercent": 0.05,
+      "reloadTime": 0.625,
+      "ammoPerReload": 1,
+
+      "indicatorOffset": [2, 0]
+
 
   }
 }
