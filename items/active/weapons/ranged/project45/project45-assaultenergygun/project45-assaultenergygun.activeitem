@@ -113,7 +113,7 @@
     "progressiveCharge": true,
     "chargeFrames": 6,
 
-    "overrideHitscan": false,
+    "projectileType": "project45hitscan",
     "projectileParameters": {
       "hitscanColor": [153, 218, 255]
     },

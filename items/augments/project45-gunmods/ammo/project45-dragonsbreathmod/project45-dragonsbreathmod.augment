@@ -15,8 +15,7 @@
     "projectileSettings":{
       "spread": 0.05,
       "projectileCount": 5,
-      "projectileType": "project45dragonsbreath",
-      "overrideHitscan": true
+      "projectileType": "project45dragonsbreath"
     }
   },
 

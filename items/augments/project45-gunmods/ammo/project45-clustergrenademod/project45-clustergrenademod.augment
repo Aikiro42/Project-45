@@ -14,7 +14,6 @@
     "slot": "ammotype",
     "projectileSettings":{
       "projectileType": "clustergrenade",
-      "overrideHitscan": true,
       "projectileParameters": {
         "bounces": 0
       }

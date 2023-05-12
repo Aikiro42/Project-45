@@ -96,7 +96,7 @@ When gun is a windup-type and
       "good": 0.00
     },
     
-    "overrideHitscan": false,
+    "projectileType": "project45hitscan",
     "projectileParameters": {
       "hitscanColor": [255,255,255],
       "hitscanWidth": 5

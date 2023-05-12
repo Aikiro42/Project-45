@@ -48,9 +48,7 @@
     // this is to ensure compatibility with vanilla altfires
     // either way, the projectileType field functions as any other projectileType field does
     "projectileType": "project45stdbullet",
-    
-    "overrideHitscan": true, // if true, "project45stdbullet" spawns the actual projectile while "hitscan" spawns hitscans
-    
+        
     // number multiplied to projectile count without affecting the damage.
     // if number is a float, the float is used as a chance to roll for an additional shot
     // values 0 and below can make the gun not shoot anything

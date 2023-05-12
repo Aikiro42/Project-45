@@ -13,8 +13,7 @@
     "modName": "Electro Beams",
     "slot": "ammotype",
     "projectileSettings":{
-      "projectileType": "project45stdbullet",
-      "overrideHitscan": false,
+      "projectileType": "project45hitscan",
       "projectileParameters":{
         "hitscanColor": [210,156,231],
         "hitscanDamageKind": "project45hitscanelecdamage",

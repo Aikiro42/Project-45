@@ -99,7 +99,7 @@ When gun is a windup-type and
     "movementSpeedFactor": 1.08,
     "jumpHeightFactor": 1.08,
     
-    "overrideHitscan": false,
+    "projectileType": "project45hitscan",
     "projectileParameters": {
       "hitscanColor": [255,255,255],
       "hitscanWidth": 5

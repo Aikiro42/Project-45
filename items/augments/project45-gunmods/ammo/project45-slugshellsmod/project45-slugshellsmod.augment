@@ -17,8 +17,7 @@
       "projectileType": "project45stdbullet",
       "projectileParameters": {
         "speed" : 150
-      },
-      "overrideHitscan": true
+      }
     }
   },
 

@@ -448,7 +448,8 @@ function SynthetikMechanics:firing()
     end
 
     -- fire projectile depending on projectile name
-    if (projectileType == "project45stdbullet" and not self.overrideHitscan) or projectileType == "hitscan" then
+    -- if (projectileType == "project45stdbullet" and not self.overrideHitscan) or projectileType == "hitscan" then
+    if projectileType == "project45hitscan" then
       self:fireHitscan()
     else
       self:fireProjectileNeo(projectileType)
