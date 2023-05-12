@@ -149,6 +149,8 @@
     
     // whether charge is reset when firing
     "resetChargeAfterFire": false, 
+
+    "dischargeOnEmpty": false,
     
     // ________________________[ FIRE RATE SETTINGS ]__________________________________
 

@@ -239,7 +239,12 @@ function SynthetikMechanics:update(dt, fireMode, shiftHeld)
       animator.setGlobalTag("chargeProgressFrame", math.min(self.chargeFrames, math.floor(1 + ((self.chargeFrames) * chargeProgress))))
     end
 
-    if not (self.isCharging or self.isFiring or self.weapon.currentAbility) then
+    if not (
+        (self.isCharging or self.isFiring or self.weapon.currentAbility)
+        and (self.chargeWhenObstructed or not world.lineTileCollision(mcontroller.position(), self:firePosition()))
+      )
+      or (self.dischargeOnEmpty and storage.ammo <= 0)
+      then
       self.chargeTimer = math.max(0, self.chargeTimer - self.dt)
       if not self.triggered then
         self.cycleTimeProgress = math.max(0, self.cycleTimeProgress - self.cycleTimeDecayRate * self.dt)
@@ -252,6 +257,7 @@ function SynthetikMechanics:update(dt, fireMode, shiftHeld)
     and storage.ammo > 0
     and self.reloadTimer < 0
     and storage.jamAmount <= 0
+    and (self.chargeWhenObstructed or not world.lineTileCollision(mcontroller.position(), self:firePosition()))
     then
       if self:triggering() then
         self.chargeTimer = math.min(self.chargeTime + self.overchargeTime, self.chargeTimer + self.dt)
@@ -348,11 +354,11 @@ end
 function SynthetikMechanics:charging()
 
   -- self:setStance(self.stances.aim)
+  if not self.chargeWhenObstructed and world.lineTileCollision(mcontroller.position(), self:firePosition()) then return end
 
   -- if it can fire then begin charging
   if self:canTrigger() then
     self.triggered = true
-
     if self:jam() then return end -- attempt to jam
 
     -- If there's no charge time at all then don't waste cpu cycles doing a pointless loop
@@ -883,10 +889,10 @@ function SynthetikMechanics:whirring()
   -- sb.logInfo("[PROJECT 45] Whirring.")
   if self.chargeTimer > 0
   and not self.semi
-  and self.autoFireAfterCharge 
+  and self.autoFireAfterCharge
   and not self.resetChargeAfterFire then
-    while self:triggering() do
-      -- self.chargeTimer = math.min(self.chargeTime + self.overchargeTime, self.chargeTimer + self.dt)
+    while self:triggering() and not self.dischargeOnEmpty do
+      self.chargeTimer = math.min(self.chargeTime + self.overchargeTime, self.chargeTimer + self.dt)
       coroutine.yield()
     end
   end

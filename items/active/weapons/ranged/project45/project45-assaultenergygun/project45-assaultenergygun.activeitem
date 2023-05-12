@@ -111,6 +111,8 @@
     "overchargeTime": 3,
     "fireBeforeOvercharge": true,
     "progressiveCharge": true,
+    "chargeWhenObstructed": false,
+    "dischargeOnEmpty": true,
     "chargeFrames": 6,
 
     "projectileType": "project45hitscan",
