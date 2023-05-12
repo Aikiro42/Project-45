@@ -148,8 +148,32 @@
     "fireBeforeOvercharge": false,
     
     // whether charge is reset when firing
-    "resetChargeAfterFire": false, 
+    "resetChargeAfterFire": false,
 
+    // whether charge is maintained when
+    // they would otherwise be reset
+    // e.g. on jam, on mag eject, on reload
+    // this does not affect jamming
+    "alwaysMaintainCharge": false,
+
+    // whether the charging animation is maintained
+    // when it would otherwise be set to something else
+    // e.g. cocking the gun sets its animation state to
+    // that of ejecting, then feeding
+    // if this condition is true, the animation state of the gun
+    // is immediately returned to charging after setting the state
+    // this does not affect jamming
+    // "maintainChargeAnimation": false,
+
+    // ^ in retrospect, the only time the gun stops its charge animation
+    // is when the gun reloads and is cocked
+    // the only other time is when it's jammed
+    // a condition such as this shouldn't be necessary
+    // since whether the gun is charging or not when it's cocked
+    // depends on alwaysMaintainCharge
+
+    // whether the gun discharges when running
+    // out of ammo
     "dischargeOnEmpty": false,
     
     // ________________________[ FIRE RATE SETTINGS ]__________________________________

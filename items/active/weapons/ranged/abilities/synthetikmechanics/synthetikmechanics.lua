@@ -244,6 +244,7 @@ function SynthetikMechanics:update(dt, fireMode, shiftHeld)
         and (self.chargeWhenObstructed or not world.lineTileCollision(mcontroller.position(), self:firePosition()))
       )
       or (self.dischargeOnEmpty and storage.ammo <= 0)
+      or (self.reloadTimer >= 0)
       then
       self.chargeTimer = math.max(0, self.chargeTimer - self.dt)
       if not self.triggered then
@@ -463,7 +464,7 @@ function SynthetikMechanics:firing()
 
   end
 
-  if self.resetChargeAfterFire then self.chargeTimer = 0 end
+  if self.resetChargeAfterFire and not self.alwaysMaintainCharge then self.chargeTimer = 0 end
 
   -- bullet fired, chamber is now filled with an empty case.
   storage.unejectedCasings = storage.unejectedCasings + math.min(self.ammoPerShot, 1)
@@ -683,7 +684,9 @@ function SynthetikMechanics:reloading()
 
   if not status.resourceLocked("energy") then
     
-    self.chargeTimer = 0
+    if not self.alwaysMaintainCharge then
+      self.chargeTimer = 0
+    end
     self.isCharging = false
 
     if self.magType ~= "default" then
@@ -910,6 +913,13 @@ function SynthetikMechanics:cocking()
       end
     end
     storage.chamberState = EMPTY
+    if self.chargeTimer > 0 then
+      if self.progressiveCharge then
+        self:setAnimationState("gun", "chargingprog")
+      else
+        self:setAnimationState("gun", "charging")
+      end
+    end
     util.wait(self.cockTime/3)
   end
 
@@ -926,12 +936,27 @@ function SynthetikMechanics:cocking()
   -- if single shot, play sound of single round being loaded
   if self.maxAmmo == self.ammoPerShot then animator.playSound("loadRound") end
   self:setAnimationState("gun", "feeding")
+  if self.chargeTimer > 0 then
+    if self.progressiveCharge then
+      self:setAnimationState("gun", "chargingprog")
+    else
+      self:setAnimationState("gun", "charging")
+    end
+  end
   util.wait(self.cockTime/3)
 
 
   animator.playSound("boltPush")
   self:setStance(self.stances.boltPush)
-  self:setAnimationState("gun", "idle")
+  if self.chargeTimer > 0 then
+    if self.progressiveCharge then
+      self:setAnimationState("gun", "chargingprog")
+    else
+      self:setAnimationState("gun", "charging")
+    end
+  else
+    self:setAnimationState("gun", "idle")
+  end
   storage.chamberState = READY
   self.burstCounter = self.burstCount
   util.wait(self.cockTime/3)
@@ -944,8 +969,13 @@ end
 -- triggered by player input
 -- note that the chamber isn't affected by this action
 function SynthetikMechanics:ejectMag()
+
   self.triggered = true
-  self.chargeTimer = 0
+  if not self.alwaysMaintainCharge then
+    self.chargeTimer = 0
+    
+  end
+
   -- if casings are kept, visually eject all stored bullet casings
   if self.keepCasings then
     animator.setParticleEmitterBurstCount("ejectionPort", storage.unejectedCasings)

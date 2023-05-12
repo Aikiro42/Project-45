@@ -49,7 +49,8 @@
     
     "sounds":{
       "fire" : ["/sfx/project45-synthetikmechanics/fires/fire_heavy.ogg"],
-      "getMag": ["/sfx/project45-synthetikmechanics/foleys/getmag_ammobox.ogg"]
+      "getMag": ["/sfx/project45-synthetikmechanics/foleys/getmag_ammobox.ogg"],
+      "ejectMag": ["/sfx/project45-synthetikmechanics/reloads/ejectmag_lmg.ogg"]
     }
   },
   "acceptsModSlot": {
@@ -82,12 +83,13 @@
 
     "baseDamage": 5,
     
-    "maxAmmo": 300,
+    "maxAmmo": 10,
     "bulletsPerReload": 300,
     "magType": "default",
     "chargeTime": 1,
     "overchargeTime": 3,
     "fireBeforeOvercharge": true,
+    "alwaysMaintainCharge": true,
 
     // "cycleTime": [0.01, 0],
     "cycleTime": 0.01,

@@ -86,8 +86,6 @@ When gun is a windup-type and
 
     "maxAmmo": 12,
     "bulletsPerReload": 12,
-    "magLoopFrames": 2,
-    "magAnimRange": [0, 6],
 
     "jamChances": {
       "bad": 0.0,
@@ -111,6 +109,8 @@ When gun is a windup-type and
     "overchargeTime": 0.5,
 
     "progressiveCharge": true,
+    "progressiveMag": true,
+    "magAnimRange": [6, 0],
     "chargeFrames": 6,
 
     "autoFireAfterCharge": true,
