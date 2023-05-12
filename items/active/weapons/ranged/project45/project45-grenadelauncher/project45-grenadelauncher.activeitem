@@ -38,8 +38,17 @@
             }
     }}}},
     "particleEmitters": {
+      "muzzleFlash": { "particles": [
+        {"particle": "rocketbarrelpuff"},
+        {"particle": "rocketbarrelpuff"},
+        {"particle": "rocketbarrelpuff"},
+        {"particle": "project45muzzle"},
+        {"particle": "project45muzzle"},
+        {"particle": "project45muzzle"}
+        ]},
       "ejectionPort" : { "particles" : [ 
-          {"particle": "project45grenadeshell"}
+          {"particle": "project45grenadeshell"},
+          {"particle": "rocketbarrelpuff"}
         ]},
       "magazine" : { "particles" : [
           {"particle": "project45muzzlesmoke"}
@@ -95,10 +104,6 @@
     "goodReloadInterval": [0.5, 0.9], 
     "perfectReloadInterval": [0.6, 0.7], 
     "magType": "default",
-    "laser":{
-      "enabled": false,
-      "alwaysActive": false
-    },
     "flashHidden": true,
     "semi": true,
 

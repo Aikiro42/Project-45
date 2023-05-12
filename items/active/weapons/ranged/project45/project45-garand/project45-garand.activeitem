@@ -105,6 +105,7 @@
     "maxAmmo": 8,
     "magType": "clip",
     "bulletsPerReload": 8,
+    "ejectMagOnEmpty": true,
 
 
     "recoilDeg": [3, 1],

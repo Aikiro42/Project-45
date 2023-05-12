@@ -107,6 +107,18 @@
     // only has any purpose if manualFeed is true
     "slamFire": false,
 
+    // dictates whether you immediately enter the reload state when you eject your mag
+    "reloadOnEject": false,
+    
+    // dictates whether the magazine is ejected along with the spent catridge (if any)
+    // once it hits zero ammo
+    "ejectMagOnEmpty": false,
+
+    // dicatates whether the gun auto-cycling
+    // has an audible bolt pull
+    // doesn't matter if manualFeed is true (i.e. gun is bolt-action)
+    "audibleBoltPull": false,
+
     // ________________________[ CHARGE SETTINGS ]__________________________________
 
     // Determines whether the charge is looped,
@@ -173,6 +185,7 @@
       "color": [255, 0, 0], // laser color
       // "range": 100, // max distance to which the laser is drawn
       "renderMaxRange": true // if false, laser is rendered up to player's aim position only
+      ,"alwaysActive": false
     },
 
     "movementSpeedFactor": 1, // Movement speed multiplier
@@ -188,6 +201,7 @@
     },
     "unjamTime": 0.2, // time it takes to attempt to unjam the weapon
     "unjamAmount": 0.25, // percent of unjam progress
+    "depleteAmmoOnJam": true,
 
 
     // ________________________[ ACCURACY SETTINGS ]__________________________________
@@ -258,7 +272,6 @@
     "magAnimRange": [0, 0], // [n, x]
     "beltMag": false, // affects visual reload; 
     "progressiveMag": false, // if the mag shows the percentage of ammo left instead
-
     "flashHidden": false,
     "hollowSoundMult": 0.8, // affects loudness of hollow sound
     "muzzleFlashTime": 0.05, // number of seconds the muzzle light is active when firing

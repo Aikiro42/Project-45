@@ -1,0 +1,7 @@
+{
+  "image" : "project45rocketshell.png",
+  "frameGrid" : {
+    "size" : [7, 4],
+    "dimensions" : [1, 1]
+  }
+}

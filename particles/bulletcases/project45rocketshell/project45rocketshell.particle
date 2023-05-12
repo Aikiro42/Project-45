@@ -1,0 +1,26 @@
+{
+  "kind" : "project45rocketshell",
+  "definition" : {
+    "type" : "animated",
+    "image" : "/particles/bulletcases/project45rocketshell/project45rocketshell.animation",
+    "fade" : 0.9,
+	"position" : [0, 0],
+	"size" : 1.0,
+  "initialVelocity" : [-6, 10.0],
+  "finalVelocity" : [0, -50.0],
+  "approach" : [5, 50],
+  "timeToLive" : 2,
+    "layer" : "front",
+    "collidesForeground" : true,
+	"variance" : {
+	  "angularVelocity" : 240,
+      "initialVelocity" : [2, 2]
+    },
+    "actionOnReap": [
+      {
+        "action": "sound",
+        "options" : [ "/projectiles/explosions/project45_gravexplosion/blackhole.ogg" ]
+      }
+    ]
+  }
+}

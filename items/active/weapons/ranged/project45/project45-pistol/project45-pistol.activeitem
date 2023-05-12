@@ -90,10 +90,6 @@
     "maxAmmo": 12,
     "magType": "default",
     "bulletsPerReload": 12,
-    "laser":{
-      "enabled": false,
-      "alwaysActive": false
-    },
     "semi": true,
 
     "inaccuracy": 0.01,

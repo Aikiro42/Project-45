@@ -22,8 +22,10 @@ function update()
   local usedByNPC =  animationConfig.animationParameter("usedByNPC")
 
   local projectileStack = animationConfig.animationParameter("projectileStack")
+  local primaryProjectileSpeed = animationConfig.animationParameter("primaryProjectileSpeed")
 
   local aimPosition = animationConfig.animationParameter("aimPosition")
+  local aimAngle = animationConfig.animationParameter("aimAngle")
   local ammo = animationConfig.animationParameter("ammo")
   local ammoMax = animationConfig.animationParameter("ammoMax")
 
@@ -183,13 +185,17 @@ function update()
   laser.width = animationConfig.animationParameter("altLaserWidth") or animationConfig.animationParameter("laserWidth") or 0.2
 
   if laser.origin and laser.destination then
-    local laserLine = worldify(laser.origin, laser.destination)
-    localAnimator.addDrawable({
-        line = laserLine,
-        width = laser.width,
-        fullbright = true,
-        color = laser.color
-    }, "Player+1")
+    if primaryProjectileSpeed and aimAngle then
+      drawTrajectory(laser.origin, aimAngle, primaryProjectileSpeed*1.3)
+    else
+      local laserLine = worldify(laser.origin, laser.destination)
+      localAnimator.addDrawable({
+          line = laserLine,
+          width = laser.width,
+          fullbright = true,
+          color = laser.color
+      }, "Player+1")
+    end
   end
 
 end
@@ -407,4 +413,43 @@ function brighten(color, brightness)
     newColor[i] = math.min(255, rgb * brightness)
   end
   return newColor
+end
+
+
+-- test
+function drawTrajectory(muzzlePos, angle, speed, steps, renderTime, color)
+  local lineColor = color or {255, 255, 255, 128}
+  local gravity = world.gravity(activeItemAnimation.ownerPosition())
+  local renderTime = renderTime or 3
+  local stepTime = renderTime / (steps or 50)
+  local vorig = muzzlePos
+  local vo = muzzlePos
+  local timeElapsed = 0
+  while timeElapsed < renderTime do
+    
+    timeElapsed  = timeElapsed + stepTime
+
+    local vi = {
+      vorig[1] + (speed * math.cos(angle) * timeElapsed),
+      vorig[2] + (speed * math.sin(angle) * timeElapsed) - (gravity * timeElapsed ^ 2) / 2
+    }
+
+    local collision = world.lineTileCollisionPoint(vo, vi)
+    
+    if collision then
+      vi = collision[1]
+    end
+
+    localAnimator.addDrawable({
+      line = {vo, vi},
+      width = 0.2,
+      fullbright = true,
+      color = lineColor
+    }, "ForegroundEntity+1")
+
+    if collision then break end
+
+    vo = vi
+    
+  end
 end

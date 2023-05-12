@@ -128,8 +128,8 @@
         "twoHanded": true
       },
       "loadRound": {
-        "armRotation": -5,
-        "weaponRotation": -5,
+        "armRotation": -1,
+        "weaponRotation": -1,
         "frontArmFrame": "rotation"
       },
       "reloaded": {

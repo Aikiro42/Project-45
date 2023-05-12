@@ -127,6 +127,8 @@ function SynthetikMechanics:init()
     activeItem.setScriptedAnimationParameter("muzzleSmokeTime", self.muzzleSmokeTime)
     activeItem.setScriptedAnimationParameter("laserColor", self.laser.color)
     activeItem.setScriptedAnimationParameter("laserWidth", self.laser.width)
+    activeItem.setScriptedAnimationParameter("primaryProjectileSpeed", self.projectileParameters.speed)
+    -- activeItem.setScriptedAnimationParameter("primaryProjectileSpeed", 10)
     activeItem.setScriptedAnimationParameter("usedByNPC", self.usedByNPC)
 
     -- INITIALIZE VISUALS
@@ -387,6 +389,7 @@ function SynthetikMechanics:charging()
     self.isCharging = false
 
     if self.chargeTimer >= self.chargeTime then
+      sb.logInfo("bingus")
       self:setState(self.firing)
       return
     end
@@ -456,7 +459,7 @@ function SynthetikMechanics:firing()
   if self.resetChargeAfterFire then self.chargeTimer = 0 end
 
   -- bullet fired, chamber is now filled with an empty case.
-  storage.unejectedCasings = storage.unejectedCasings + self.ammoPerShot
+  storage.unejectedCasings = storage.unejectedCasings + math.min(self.ammoPerShot, 1)
   storage.chamberState = FILLED
 
   -- reset charge damage multiplier
@@ -527,11 +530,20 @@ function SynthetikMechanics:ejectingCase()
     
     self.triggered = true
 
-    -- if gun is manually fed and done bursting, audiovisually pull bolt
+    -- if gun is manually fed and done bursting, visually pull bolt
     if self.manualFeed and self.burstCounter >= self.burstCount then
-      self:setStance(self.stances.boltPull, true)
+      -- self:setStance(self.stances.boltPull, true)
+      self:setStance(self.stances.boltPull)
+    end
+
+    -- if bolt pull is audible, audibly pull bolt
+    if
+    (self.manualFeed and self.burstCounter >= self.burstCount)
+    or self.audibleBoltPull
+    then
       animator.playSound("boltPull")
     end
+
     
     -- visually eject projectile if casings are not kept
     if not self.keepCasings then
@@ -550,7 +562,7 @@ function SynthetikMechanics:ejectingCase()
       self:stopFireLoop()
       
       -- if it's a single shot gun, immediately reload on eject
-      if self.maxAmmo == self.ammoPerShot then
+      if self.reloadOnEject then
         self.isFiring = false
         self:setState(self.reloading)
         return
@@ -559,13 +571,12 @@ function SynthetikMechanics:ejectingCase()
       -- if it's manual-fed, wait for a bit then eject the mag
       -- if it's a clip-mag, immediately eject the mag
       -- if it's neither manual-fed nor a clip-mag, do nothing
-
       if self.manualFeed and self.magType ~= "clip" then
         util.wait(self.cockTime/3)
       end
       self.isFiring = false
 
-      if self.magType == "clip" or self.manualFeed then
+      if self.ejectMagOnEmpty or self.manualFeed then
         self:ejectMag()
       end
 
@@ -678,7 +689,8 @@ function SynthetikMechanics:reloading()
 
     -- don't take on stance if using an autofeed single shot
     -- i.e. reloading immediately after firing
-    if not (self.maxAmmo == self.ammoPerShot and not self.manualFeed) then
+    -- if not (self.maxAmmo == self.ammoPerShot and not self.manualFeed) then
+    if not self.reloadOnEject then
       self:setStance(self.stances.reloading, true)
     end
 
@@ -708,7 +720,7 @@ function SynthetikMechanics:reloading()
 
       -- update magazine presence and round loading stance
       if self.weapon.stance ~= self.stances.reloading and loadRoundStanceTimer == 0 then
-        if not (self.maxAmmo == self.ammoPerShot and not self.manualFeed) then
+        if not self.reloadOnEject then
           self:setStance(self.stances.reloading, true)
           if self.magType ~= "default" then
             -- prepare to insert clip/strip
@@ -838,7 +850,8 @@ function SynthetikMechanics:reloading()
     -- update UI to reflect changes
     activeItem.setScriptedAnimationParameter("reloadRating", storage.reloadRating)
     
-    self:setStance(self.stances.reloaded, true)
+    -- self:setStance(self.stances.reloaded, true)
+    self:setStance(self.stances.reloaded, not self.reloadOnEject)
     self.burstCounter = self.burstCount
     self:screenShake(self.currentScreenShake)
 
@@ -894,7 +907,12 @@ function SynthetikMechanics:cocking()
   end
 
   -- exit state when no ammo
-  if storage.ammo <= 0 then return end
+  if storage.ammo <= 0 then
+    if self.ejectMagOnEmpty then
+      self:ejectMag()
+    end
+    return
+  end
 
   -- otherwise, there is ammo, and the gun should be aimed
 
@@ -939,7 +957,7 @@ function SynthetikMechanics:ejectMag()
   self:setAnimationState("mag", "absent")
 
   -- the weapon is now empty; hold it that way
-  self:setStance(self.stances.empty)
+  self:setStance(self.stances.empty, false)
 
   -- if the mag has to be manually ejected, unlike a clip that pings its mag out,
   -- or a strip which doesn't really do anything
@@ -1264,6 +1282,7 @@ function SynthetikMechanics:unjam()
     else
       storage.reloadRating = "ok"
       activeItem.setScriptedAnimationParameter("reloadRating", "ok")
+      sb.logInfo(storage.unejectedCasings)
       animator.setParticleEmitterBurstCount("ejectionPort", storage.unejectedCasings)
       animator.burstParticleEmitter("ejectionPort")
       storage.unejectedCasings = 0
@@ -1363,11 +1382,12 @@ function SynthetikMechanics:drawLaser()
   and not world.lineTileCollision(mcontroller.position(), self:firePosition())
   and storage.ammo > 0
   and storage.jamAmount == 0  
+  or self.laser.alwaysActive
   then
 
     -- laser origin is muzzle
     local scanOrig = self:firePosition()
-
+    
     -- laser distance is distance between aim position and muzzle
     local cursorRange = world.magnitude(scanOrig, activeItem.ownerAimPosition())
     local laserRange = self.laser.range or self.projectileParameters.range or 100
@@ -1380,10 +1400,12 @@ function SynthetikMechanics:drawLaser()
 
     activeItem.setScriptedAnimationParameter("laserOrigin", scanOrig)
     activeItem.setScriptedAnimationParameter("laserDestination", scanDest)
+    activeItem.setScriptedAnimationParameter("aimAngle", vec2.angle(self:aimVector()))
 
   else
     activeItem.setScriptedAnimationParameter("laserOrigin", nil)
     activeItem.setScriptedAnimationParameter("laserDestination", nil)
+    activeItem.setScriptedAnimationParameter("aimAngle", nil)
   end
 end
 
@@ -1502,8 +1524,11 @@ function SynthetikMechanics:jam()
     self.triggered = true
     
     -- Decrement ammo; imagine that the bullet is a dud/broken
-    storage.ammo = storage.ammo - math.min(self.ammoPerShot, storage.ammo)
-    storage.chamberState = FILLED
+    if self.depleteAmmoOnJam then
+      storage.ammo = storage.ammo - math.min(self.ammoPerShot, storage.ammo)
+      storage.unejectedCasings = math.min(self.ammoPerShot, 1)
+      storage.chamberState = FILLED
+    end
 
     -- Reset screenshake
     self.currentScreenShake = self.screenShakeAmount[1]
@@ -1582,7 +1607,9 @@ function SynthetikMechanics:setStance(stance, snap)
 
   local oldStance = nil
   if not snap and self.weapon.stance then
-    oldStance = self.weapon.stance
+    oldStance = sb.jsonMerge(self.weapon.stance, {})
+    oldStance.weaponRotation = util.toDegrees(self.weapon.relativeWeaponRotation)
+    oldStance.armRotation = util.toDegrees(self.weapon.relativeArmRotation)
   end
   
   self.weapon:setStance(stance)

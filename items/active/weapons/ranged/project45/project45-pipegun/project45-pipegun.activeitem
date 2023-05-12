@@ -50,6 +50,7 @@
     
     "sounds":{
       "fire" : ["/sfx/project45-synthetikmechanics/fires/fire_sniper.ogg"],
+      "ejectMag": ["/assetmissing.wav"],
       "boltPull" : ["/sfx/project45-synthetikmechanics/reloads/boltpull_lightbolt.ogg"],
       "boltPush" : ["/sfx/project45-synthetikmechanics/reloads/boltpush_lightbolt.ogg"]
     }
@@ -67,7 +68,7 @@
   },
   "baseOffset" : [1, 0.15],
   "muzzleOffset" : [1.6, 0.4],
-  "ejectionPortOffset": [0.7, 0.7],
+  "ejectionPortOffset": [-0.7, 0.7],
   "magazineOffset": [1, 0],
   "railOffset": [1.5, 0.25],
   "sightsOffset": [1.75, 1],
@@ -92,7 +93,7 @@
     "inaccuracy": 0.1,
     "spread": 0.05,
     "manualFeed": false,
-    "semi": false,
+    "semi": true,
     "slamFire": false,
     "cockTime": 0.5,
     "cycleTime": 0.1,
@@ -102,11 +103,12 @@
       "ok": 0,
       "good": 0
     },
+    "reloadOnEject": true,
 
     "reloadCost": 0.01,
     "maxAmmo": 1,
     "bulletsPerReload": 1,
-    "magType": "strip",
+    "magType": "clip",
     "projectileParameters": {
       "punchThrough": 4
     },
