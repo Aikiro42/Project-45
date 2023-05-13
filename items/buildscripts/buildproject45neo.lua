@@ -119,7 +119,8 @@ function build(directory, config, parameters, level, seed)
 
   -- populate tooltip fields
   if config.tooltipKind ~= "base" then
-    config.tooltipFields = {}
+    config.tooltipFields = config.tooltipFields or {}
+    config.tooltipFields.subtitle = "^#FFFFFF;" .. config.category
     -- config.tooltipFields.title = "^FF0000;FUCK"  -- doesn't work
     -- config.tooltipFields.subTitle = "^#FFFFFF;BASE"  -- works
     -- config.tooltipFields.subTitle.color = {255,255,255} -- doesn't work
