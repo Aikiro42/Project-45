@@ -129,6 +129,7 @@ function SynthetikMechanics:init()
     activeItem.setScriptedAnimationParameter("laserColor", self.laser.color)
     activeItem.setScriptedAnimationParameter("laserWidth", self.laser.width)
     -- activeItem.setScriptedAnimationParameter("beamWidth", self.beamParameters.beamWidth)
+    activeItem.setScriptedAnimationParameter("beamLine", nil)
     activeItem.setScriptedAnimationParameter("beamColor", self.beamParameters.beamColor)
     activeItem.setScriptedAnimationParameter("primaryProjectileSpeed", self.projectileParameters.speed)
     -- activeItem.setScriptedAnimationParameter("primaryProjectileSpeed", 10)
@@ -712,12 +713,7 @@ function SynthetikMechanics:fireBeam()
 
     animator.setAnimationState("gun", "firing")
 
-    if not self.flashHidden then animator.setPartTag("muzzleFlash", "variant", math.random(1, self.muzzleFlashVariants or 3)) end
-    animator.burstParticleEmitter("muzzleFlash")
-    animator.setLightActive("muzzleFlash", not self.flashHidden)
-    activeItem.setScriptedAnimationParameter("muzzleFlash", not self.flashHidden)
-    animator.setAnimationState("flash", "flash")
-
+    self:muzzleFlash(true)
     -- store casings until firing is done
     if storage.ammoConsumeTimer >= 1 then
       if self:jam() then break end
@@ -1439,18 +1435,19 @@ function SynthetikMechanics:aim()
   
 end
 
-function SynthetikMechanics:muzzleFlash()
+function SynthetikMechanics:muzzleFlash(isBeam)
   -- knock off aim
-  if not self.usedByNPC then self:recoil() end
+  if not self.usedByNPC and not isBeam then self:recoil() end
   
-  -- set sfx values; the lower the ammo of a gun, the hollower it sounds
-  -- also randomzies values
-  animator.setSoundPitch("fire", sb.nrand(0.01, 1))
-  animator.setSoundVolume("hollow", (1 - storage.ammo/self.maxAmmo) * self.hollowSoundMult)
-
   -- play sfx values
-  animator.playSound("fire")
-  animator.playSound("hollow")
+  if not isBeam then
+    -- set sfx values; the lower the ammo of a gun, the hollower it sounds
+    -- also randomzies values
+    animator.setSoundPitch("fire", sb.nrand(0.01, 1))
+    animator.setSoundVolume("hollow", (1 - storage.ammo/self.maxAmmo) * self.hollowSoundMult)  
+    animator.playSound("fire")
+    animator.playSound("hollow")
+  end
   if not self.flashHidden then animator.setPartTag("muzzleFlash", "variant", math.random(1, self.muzzleFlashVariants or 3)) end
   animator.burstParticleEmitter("muzzleFlash")
   animator.setLightActive("muzzleFlash", not self.flashHidden)

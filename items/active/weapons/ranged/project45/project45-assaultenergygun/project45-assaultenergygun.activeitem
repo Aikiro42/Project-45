@@ -66,6 +66,9 @@
       "chargeDrone": ["/sfx/project45-synthetikmechanics/charges/flamethrower_hiss_loop.ogg"]
     }
   },
+
+  "muzzleFlashColor": [153, 218, 255],
+
   "acceptsModSlot": {
     "rail": false,
     "sights": true,

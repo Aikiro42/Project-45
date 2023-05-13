@@ -51,6 +51,8 @@
       "hollow": ["/assetmissing.ogg"]
     }
   },
+
+  "muzzleFlashColor": [255,128,255],
   
   "acceptsModSlot": {
     "rail": false,

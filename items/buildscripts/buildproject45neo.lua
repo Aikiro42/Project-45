@@ -66,6 +66,9 @@ function build(directory, config, parameters, level, seed)
     end
   end
 
+  construct(config, "animationCustom", "lights", "muzzleFlash", "color")
+  config.animationCustom.lights.muzzleFlash.color = parameters.muzzleFlashColor or config.muzzleFlashColor or {255, 255, 200}
+
   -- gun offsets
   if config.baseOffset then
 

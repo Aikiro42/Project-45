@@ -1,4 +1,5 @@
 require "/scripts/vec2.lua"
+require "/scripts/util.lua"
 
 local warningTriggered = false
 
@@ -50,10 +51,6 @@ function update()
 
   local muzzleSmokeTimer = animationConfig.animationParameter("muzzleSmokeTimer")
   local muzzleSmokeTime = animationConfig.animationParameter("muzzleSmokeTime")
-
-  local muzzleFlash = animationConfig.animationParameter("muzzleFlash")
-  local muzzleFlashPos = activeItemAnimation.ownerPosition()
-  local muzzleFlashColor = {0, 0, 0}
 
   local reloadBarColors = {
     bad = {255, 30, 0},
@@ -112,7 +109,6 @@ function update()
 
   -- render hitscan trails
   for i, projectile in ipairs(projectileStack) do
-    muzzleFlashColor = projectile.color or {0, 0, 0}
     -- don't calculate the bullet line when the origin is the same as the destination
     -- there is no scanline if projectiles are shot
     if projectile.origin ~= projectile.destination then
@@ -128,31 +124,33 @@ function update()
 
   -- render beam
   if beamLine then
+    -- worldify
     beamLine = worldify(beamLine[1], beamLine[2])
+    
+    -- colored, outer beam
     localAnimator.addDrawable({
       line = beamLine,
       width = beamWidth,
       fullbright = true,
       color = beamColor or {255,255,255}
     }, "Player-1")
+    -- lighter, inner beam
     localAnimator.addDrawable({
       line = beamLine,
       width = beamInnerWidth,
       fullbright = true,
       color = {255,255,255}
     }, "Player-1")
-    localAnimator.addLightSource({
-      position = beamLine[1],
-      color = beamColor,
-      pointLight = true,
-      pointBeam = 0.3,
-    })
+
+    -- collision light
     localAnimator.addLightSource({
       position = beamLine[2],
       color = beamColor,
       pointLight = true,
-      pointBeam = 0.3,
+      pointBeam = 0,
     })
+
+    -- collision impact sparks
     localAnimator.spawnParticle(
       "project45beamendsmoke",
       beamLine[2]
@@ -163,17 +161,6 @@ function update()
         beamLine[2]
       )
     end
-  end
-
-
-  -- render muzzle flash
-  if muzzleFlash then
-    localAnimator.addLightSource({
-      position = muzzlePos,
-      color = muzzleFlashColor,
-      pointLight = true,
-      pointBeam = 0.3,
-    })
   end
 
   -- render reload bar if reloading

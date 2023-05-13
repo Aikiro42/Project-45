@@ -113,6 +113,8 @@ function apply(input)
 
     end
 
+    output:setInstanceValue("muzzleFlashColor", augment.muzzleFlashColor)
+
     -- alter or set ability type if present
     if augment.altAbilityType and input.parameters.altAbilityType ~= augment.altAbilityType then
     
@@ -137,52 +139,6 @@ function apply(input)
     -- replace general primaryability stats
     if augment.primaryAbility then
       newPrimaryAbility = sb.jsonMerge(newPrimaryAbility, augment.primaryAbility)
-    end
-
-    -- multiply base damage directly
-    if augment.baseDamageMult then
-      local newBaseDamage = math.min(oldPrimaryAbility.baseDamage * augment.baseDamageMult, 99)
-      newPrimaryAbility = sb.jsonMerge(newPrimaryAbility, {baseDamage = newBaseDamage})
-    end
-
-    -- multiply general fire rate directly
-    if augment.cycleTimeMult then
-      
-      local oldCycleTime = oldPrimaryAbility.cycleTime
-      
-      if type(oldCycleTime) == "table" then
-        oldCycleTime = vec2.mul(oldCycleTime, augment.cycleTimeMult)
-      else
-        oldCycleTime = oldCycleTime * augment.cycleTimeMult
-      end
-      
-      local newChargeTime = oldPrimaryAbility.chargeTime * augment.cycleTimeMult
-      local newOverchargeTime = oldPrimaryAbility.overchargeTime * augment.cycleTimeMult
-      local newFireTime = math.min(oldPrimaryAbility.fireTime * augment.cycleTimeMult, 0.01)
-
-      newPrimaryAbility = sb.jsonMerge(newPrimaryAbility, {
-        cycleTime = oldCycleTime,
-        chargeTime = newChargeTime,
-        overchargeTime = newOverchargeTime,
-        fireTime = newFireTime
-      })
-
-    end
-
-    -- multiply reloadCostMult
-    if augment.reloadCostMult then
-      local newReloadCost = math.max(oldPrimaryAbility.reloadCost * augment.reloadCostMult, 0.05)
-      newPrimaryAbility = sb.jsonMerge(newPrimaryAbility, {reloadCost = newReloadCost})
-    end
-    
-    if augment.critChanceAdd then
-      local newCritChance = math.min(oldPrimaryAbility.critChance + augment.critChanceAdd, 1)
-      newPrimaryAbility = sb.jsonMerge(newPrimaryAbility, {critChance = newCritChance})
-    end
-
-    if augment.critDamageMult then
-      local newCritDamage = math.min(oldPrimaryAbility.critDamageMult * augment.critDamageMult, 10)
-      newPrimaryAbility = sb.jsonMerge(newPrimaryAbility, {critDamageMult = newCritDamage})
     end
 
     if augment.maxAmmoMult then
@@ -260,7 +216,7 @@ function apply(input)
     output:setInstanceValue("statList", statList)
     -- sb.logInfo(sb.printJson(modSlots))
     output:setInstanceValue("isModded", true)
-    -- print(sb.printJson(output:descriptor()))
+    -- sb.logInfo(sb.printJson(output:descriptor()))
     return output:descriptor(), 1
 
   

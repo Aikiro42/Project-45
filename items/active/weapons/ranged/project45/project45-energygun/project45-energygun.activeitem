@@ -37,6 +37,8 @@ When gun is a windup-type and
 
   },
 
+  "muzzleFlashColor": [0,140,217],
+
   "animationCustom":{
     "animatedParts" : {"stateTypes" : {"gun" : {"states" : {
             "charging": {

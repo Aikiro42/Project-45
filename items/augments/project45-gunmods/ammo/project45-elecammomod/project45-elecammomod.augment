@@ -12,6 +12,7 @@
     "type": "energyAmmo",
     "modName": "Electro Beams",
     "slot": "ammotype",
+    "muzzleFlashColor": [210,156,231],
     "projectileSettings":{
       "projectileType": "project45hitscan",
       "projectileParameters":{
