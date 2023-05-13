@@ -83,7 +83,7 @@
 
     "baseDamage": 5,
     
-    "maxAmmo": 10,
+    "maxAmmo": 300,
     "bulletsPerReload": 300,
     "magType": "default",
     "chargeTime": 1,

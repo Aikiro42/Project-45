@@ -24,6 +24,11 @@ function update()
   local projectileStack = animationConfig.animationParameter("projectileStack")
   local primaryProjectileSpeed = animationConfig.animationParameter("primaryProjectileSpeed")
 
+  local beamLine = animationConfig.animationParameter("beamLine")
+  local beamWidth = animationConfig.animationParameter("beamWidth")
+  local beamInnerWidth = animationConfig.animationParameter("beamInnerWidth")
+  local beamColor = animationConfig.animationParameter("beamColor")
+
   local aimPosition = animationConfig.animationParameter("aimPosition")
   local aimAngle = animationConfig.animationParameter("aimAngle")
   local ammo = animationConfig.animationParameter("ammo")
@@ -120,6 +125,46 @@ function update()
       }, "Player-1")
     end
   end
+
+  -- render beam
+  if beamLine then
+    beamLine = worldify(beamLine[1], beamLine[2])
+    localAnimator.addDrawable({
+      line = beamLine,
+      width = beamWidth,
+      fullbright = true,
+      color = beamColor or {255,255,255}
+    }, "Player-1")
+    localAnimator.addDrawable({
+      line = beamLine,
+      width = beamInnerWidth,
+      fullbright = true,
+      color = {255,255,255}
+    }, "Player-1")
+    localAnimator.addLightSource({
+      position = beamLine[1],
+      color = beamColor,
+      pointLight = true,
+      pointBeam = 0.3,
+    })
+    localAnimator.addLightSource({
+      position = beamLine[2],
+      color = beamColor,
+      pointLight = true,
+      pointBeam = 0.3,
+    })
+    localAnimator.spawnParticle(
+      "project45beamendsmoke",
+      beamLine[2]
+    )
+    for i = 1, 3 do
+      localAnimator.spawnParticle(
+        "project45beamendspark",
+        beamLine[2]
+      )
+    end
+  end
+
 
   -- render muzzle flash
   if muzzleFlash then

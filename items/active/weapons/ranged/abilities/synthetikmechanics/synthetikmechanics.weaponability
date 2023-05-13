@@ -80,6 +80,19 @@
       "hitregPower": 0
     },
 
+    "beamParameters": {
+      "beamLength": 100,
+      "beamWidth": 5,
+      "beamInnerWidth": 3,
+      "beamJitter": 1,
+      "beamColor": [0,140,217], // color of beam
+      "beamDamageConfig": {
+        "statusEffects" : [ ],
+        "damageSourceKind" : "plasma",
+        "knockback" : 2
+      }
+    },
+
     // ________________________[ GUN MECHANIC SETTINGS ]__________________________________
     
     // default, clip, strip; dictates reload visuals

@@ -28,6 +28,7 @@ function SynthetikMechanics:init()
 
     -- initialize storage
     storage.ammo = storage.ammo or config.getParameter("currentAmmo", -1) -- -1 ammo means we don't have a mag in the gun
+    storage.ammoConsumeTimer = storage.ammoConsumeTimer or config.getParameter("currentAmmoConsumeTimer", 1)
     storage.unejectedCasings = storage.unejectedCasings or config.getParameter("currentUnejectedCasings", 0)
     
     storage.reloadRating = storage.reloadRating or config.getParameter("currentReloadRating", "ok")
@@ -127,6 +128,8 @@ function SynthetikMechanics:init()
     activeItem.setScriptedAnimationParameter("muzzleSmokeTime", self.muzzleSmokeTime)
     activeItem.setScriptedAnimationParameter("laserColor", self.laser.color)
     activeItem.setScriptedAnimationParameter("laserWidth", self.laser.width)
+    -- activeItem.setScriptedAnimationParameter("beamWidth", self.beamParameters.beamWidth)
+    activeItem.setScriptedAnimationParameter("beamColor", self.beamParameters.beamColor)
     activeItem.setScriptedAnimationParameter("primaryProjectileSpeed", self.projectileParameters.speed)
     -- activeItem.setScriptedAnimationParameter("primaryProjectileSpeed", 10)
     activeItem.setScriptedAnimationParameter("usedByNPC", self.usedByNPC)
@@ -321,7 +324,11 @@ function SynthetikMechanics:update(dt, fireMode, shiftHeld)
           if self.chargeTimer < self.chargeTime + self.overchargeTime then
             self:setState(self.charging)
           elseif self:canTrigger() and not self:jam() then
-            self:setState(self.firing)
+            if self.projectileType == "project45beam" then
+              self:setState(self.fireBeam)
+            else
+              self:setState(self.firing)
+            end
           end
 
         end
@@ -341,6 +348,7 @@ end
 
 function SynthetikMechanics:uninit()
   activeItem.setInstanceValue("currentAmmo", storage.ammo)
+  activeItem.setInstanceValue("currentAmmoConsumeTimer", storage.ammoConsumeTimer)
   activeItem.setInstanceValue("currentReloadRating", storage.reloadRating)
   activeItem.setInstanceValue("currentChamberState", storage.chamberState)
   activeItem.setInstanceValue("currentUnejectedCasings", storage.unejectedCasings)
@@ -364,7 +372,11 @@ function SynthetikMechanics:charging()
 
     -- If there's no charge time at all then don't waste cpu cycles doing a pointless loop
     if self.chargeTime + self.overchargeTime <= 0 then
-      self:setState(self.firing)
+      if self.projectileType == "project45beam" then
+        self:setState(self.fireBeam)
+      else
+        self:setState(self.firing)
+      end
       return
     end
 
@@ -396,8 +408,11 @@ function SynthetikMechanics:charging()
     self.isCharging = false
 
     if self.chargeTimer >= self.chargeTime then
-      sb.logInfo("bingus")
-      self:setState(self.firing)
+      if self.projectileType == "project45beam" then
+        self:setState(self.fireBeam)
+      else
+        self:setState(self.firing)
+      end
       return
     end
 
@@ -674,6 +689,177 @@ function SynthetikMechanics:feeding()
 
 end
 
+function SynthetikMechanics:fireBeam()
+  
+  self:startFireLoop()
+  if storage.ammo > 0 then
+    self:recoil(self.currentScreenShake, self.recoilMomentum, true)
+    self:screenShake(self.currentScreenShake * 4)
+  end
+
+  local beamDamageConfig = sb.jsonMerge(self.beamParameters.beamDamageConfig, {
+    baseDamage = 1
+  })
+
+  local recoilTimer = 0
+  local fireEndBeamEnd = nil
+
+  while self:triggering()
+  and storage.ammo > 0
+  do
+
+    self.beamFiring = true
+
+    animator.setAnimationState("gun", "firing")
+
+    if not self.flashHidden then animator.setPartTag("muzzleFlash", "variant", math.random(1, self.muzzleFlashVariants or 3)) end
+    animator.burstParticleEmitter("muzzleFlash")
+    animator.setLightActive("muzzleFlash", not self.flashHidden)
+    activeItem.setScriptedAnimationParameter("muzzleFlash", not self.flashHidden)
+    animator.setAnimationState("flash", "flash")
+
+    -- store casings until firing is done
+    if storage.ammoConsumeTimer >= 1 then
+      if self:jam() then break end
+      storage.ammoConsumeTimer = 0
+      storage.ammo = math.max(0, storage.ammo - self.ammoPerShot)
+      storage.unejectedCasings = storage.unejectedCasings + math.min(storage.ammo, self.ammoPerShot)
+      -- sb.logInfo(self.chargeDamageMult)
+    end
+
+    recoilTimer = recoilTimer + self.dt
+
+    if recoilTimer >= self.currentCycleTime then
+      self:screenShake(self.currentScreenShake)
+      recoilTimer = 0
+    end
+
+    self:recoil(self.currentScreenShake, self.recoilMomentum, true)
+
+    local beamStart = self:firePosition()
+    local beamEnd = vec2.add(beamStart, vec2.mul(vec2.norm(self:aimVector(0)), self.beamParameters.beamLength))
+    local beamLength = self.beamParameters.beamLength
+    local collidePoint = world.lineCollision(beamStart, beamEnd)
+
+    if collidePoint then
+      beamEnd = collidePoint
+      beamLength = world.magnitude(beamStart, beamEnd)
+    end
+    fireEndBeamEnd = beamEnd
+
+    -- update charge damage multiplier
+    if self.overchargeTime > 0 then
+      self.chargeDamageMult = 1 + (self.chargeTimer - self.chargeTime)/self.overchargeTime
+    end
+    
+    -- update base damage accordingly
+    beamDamageConfig.baseDamage = self:damagePerShot() * self.dt * self.ammoPerShot
+
+    local actualMuzzlePosition = vec2.rotate(
+        self.weapon.muzzleOffset,
+        self.weapon.relativeWeaponRotation
+      )
+    local actualDamageEnd = vec2.rotate(
+      {self.weapon.muzzleOffset[1] + beamLength, self.weapon.muzzleOffset[2]},
+      self.weapon.relativeWeaponRotation
+    )
+
+    world.debugPoint(vec2.add(mcontroller.position(), actualMuzzlePosition), "red")
+
+    self.weapon:setDamage(
+      beamDamageConfig,
+      --[[
+      {
+        {self.weapon.muzzleOffset[1], self.weapon.muzzleOffset[2] - self.beamParameters.beamWidth / 16},
+        {self.weapon.muzzleOffset[1], self.weapon.muzzleOffset[2] + self.beamParameters.beamWidth / 16},
+        {self.weapon.muzzleOffset[1] + beamLength, self.weapon.muzzleOffset[2] + self.beamParameters.beamWidth / 16},
+        {self.weapon.muzzleOffset[1] + beamLength, self.weapon.muzzleOffset[2] - self.beamParameters.beamWidth / 16}
+      },
+      --]]
+      {
+        {actualMuzzlePosition[1], actualMuzzlePosition[2] - self.beamParameters.beamWidth / 16},
+        {actualMuzzlePosition[1], actualMuzzlePosition[2] + self.beamParameters.beamWidth / 16},
+        {actualDamageEnd[1], actualDamageEnd[2] + self.beamParameters.beamWidth / 16},
+        {actualDamageEnd[1], actualDamageEnd[2] - self.beamParameters.beamWidth / 16}
+      },
+      self.currentCycleTime)
+
+    activeItem.setScriptedAnimationParameter("beamLine", {beamStart, beamEnd})
+    activeItem.setScriptedAnimationParameter("beamWidth", self.beamParameters.beamWidth + sb.nrand(self.beamParameters.beamJitter, 0))
+    activeItem.setScriptedAnimationParameter("beamInnerWidth", self.beamParameters.beamInnerWidth + sb.nrand(self.beamParameters.beamJitter, 0))
+
+    local hitscanActionsOnReap = {
+      {
+        action="loop",
+        count=6,
+        body={
+          {
+            action="particle",
+            specification={
+              type="ember",
+              size=1,
+              color=self.beamParameters.beamColor or {255, 255, 200, 255},
+              light=self.beamParameters.beamColor or {65, 65, 51},
+              fullbright=true,
+              destructionTime=0.2,
+              destructionAction="shrink",
+              fade=0.9,
+              initialVelocity={0, 5},
+              finalVelocity={0, -50},
+              approach={0, 30},
+              timeToLive=0,
+              layer="middle",
+              variance={
+                position={0.25, 0.25},
+                size=0.5,
+                initialVelocity={10, 10},
+                timeToLive=0.2
+              }
+            }
+          }
+        }
+      }
+    }
+
+    world.spawnProjectile(
+      "invisibleprojectile",
+      beamEnd,
+      activeItem.ownerEntityId(),
+      {0, 1},
+      false,
+      {
+        damageType = "NoDamage",
+        power = 0,
+        timeToLive = 0,
+        actionOnReap = hitscanActionsOnReap
+      }
+    )
+
+
+    storage.ammoConsumeTimer = storage.ammoConsumeTimer + self.dt
+
+    coroutine.yield()
+  end
+
+  self.beamFiring = false
+
+  table.insert(self.projectileStack, {
+    width = self.beamParameters.beamWidth,
+    origin = self:firePosition(),
+    destination = fireEndBeamEnd,
+    lifetime = 0.1,
+    maxLifetime = 0.1,
+    color = {255,255,255}
+  })
+
+  activeItem.setScriptedAnimationParameter("beamLine", nil)
+  
+  if not self.alwaysMaintainCharge and self.resetChargeAfterFire then self.chargeTimer = 0 end
+
+  self:setState(self.ejectingCase)
+  
+end
+
 -- done after magazine is absent
 function SynthetikMechanics:reloading()
   -- if self.triggeredReload then util.wait(self.fireTime) end
@@ -826,6 +1012,8 @@ function SynthetikMechanics:reloading()
     -- reload minigame loop end
 
     -- RELOAD MINIGAME POSTMORTEM
+
+    storage.ammoConsumeTimer = 1
     
     -- alter magazine presence accordingly
     if self.magType == "default" then
@@ -1272,9 +1460,9 @@ function SynthetikMechanics:muzzleFlash()
   self.muzzleSmokeTimer = self.muzzleSmokeTime
 end
 
-function SynthetikMechanics:recoil(screenShake, momentum)
+function SynthetikMechanics:recoil(screenShake, momentum, isBeamRecoil)
   if self.usedByNPC then return end
-  self:screenShake(screenShake or self.currentScreenShake)
+  if not isBeamRecoil then self:screenShake(screenShake or self.currentScreenShake) end
   -- activeItem.setRecoil(true)
 
   -- self.weapon.relativeWeaponRotation = util.toRadians(interp.sin(storage.aimProgress, math.deg(self.weapon.relativeWeaponRotation), stance.weaponRotation))
@@ -1292,8 +1480,8 @@ function SynthetikMechanics:recoil(screenShake, momentum)
     inaccuracy = -inaccuracy
   end
 
-  self.weapon.relativeWeaponRotation = self.weapon.relativeWeaponRotation + inaccuracy
-  self.weapon.relativeArmRotation = self.weapon.relativeArmRotation + inaccuracy
+  self.weapon.relativeWeaponRotation = self.weapon.relativeWeaponRotation + (inaccuracy * (isBeamRecoil and self.dt or 1))
+  self.weapon.relativeArmRotation = self.weapon.relativeArmRotation + (inaccuracy * (isBeamRecoil and self.dt or 1))
   self.weapon.weaponOffset = {-self.recoilOffsetAmount, 0}
   storage.aimProgress = 0
 

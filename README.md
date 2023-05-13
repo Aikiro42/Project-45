@@ -68,10 +68,10 @@ Project 45 is a weapons system that attempts to replicate the gun mechanics of S
     - doubles gun ammo capacity
 - Beam Splitter
     - Applicable for energy weapons
-    - increases multishot (not projectile count) and spread
+    - increases projectile count and spread
 
 ## Todo - Guns
-- M249 SAW
+- ~~M249 SAW~~
 - AA12
 - Shotgun energy rifle
 - 

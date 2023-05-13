@@ -3,7 +3,7 @@
   "price" : 3000,
   "maxStack" : 1,
   "rarity" : "Essential",
-  "shortdescription" : "Energy AR",
+  "shortdescription" : "Laser Assault Rifle",
   "description" : "An automatic energy rifle.",
   "tooltipKind" : "project45gun",
   "category" : "Rifle",

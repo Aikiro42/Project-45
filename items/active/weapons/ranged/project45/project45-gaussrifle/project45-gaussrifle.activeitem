@@ -110,14 +110,14 @@ When gun is a windup-type and
     "heavyWeapon": true,
     
     "cycleTime": 0.2,
-    "chargeTime": 0,
+    "chargeTime": 1,
     "overchargeTime": 1,
 
     "progressiveCharge": true,
     "chargeFrames": 6,
     "reloadCost": 0.5,
     
-    "autoFireAfterCharge": false,
+    "autoFireAfterCharge": true,
     "resetChargeAfterFire": true
   },
   
