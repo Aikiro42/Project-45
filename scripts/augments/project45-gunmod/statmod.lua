@@ -87,7 +87,7 @@ function apply(input)
 
         end
 
-        sb.logInfo(newOverchargeTime)
+        -- sb.logInfo(newOverchargeTime)
 
         newPrimaryAbility = sb.jsonMerge(newPrimaryAbility, {
             cycleTime = newCycleTime,

@@ -1504,7 +1504,7 @@ function SynthetikMechanics:unjam()
     else
       storage.reloadRating = "ok"
       activeItem.setScriptedAnimationParameter("reloadRating", "ok")
-      sb.logInfo(storage.unejectedCasings)
+      -- sb.logInfo(storage.unejectedCasings)
       animator.setParticleEmitterBurstCount("ejectionPort", storage.unejectedCasings)
       animator.burstParticleEmitter("ejectionPort")
       storage.unejectedCasings = 0
