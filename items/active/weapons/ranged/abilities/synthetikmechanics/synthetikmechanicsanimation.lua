@@ -3,12 +3,24 @@ require "/scripts/util.lua"
 
 local warningTriggered = false
 
+synthethikmechanics_altInit = init or function()
+  if not warningTriggered then
+    warningTriggered = true
+    -- sb.logInfo("[PROJECT 45] (" .. animationConfig.animationParameter("shortDescription") .. ") Failed to get alt-ability animation script update function. Weapon may be one-handed, not have an alt-ability, or may not have an alt-ability animation script.")
+  end
+end
+
+
 synthethikmechanics_altUpdate = update or function()
     if not warningTriggered then
       warningTriggered = true
       -- sb.logInfo("[PROJECT 45] (" .. animationConfig.animationParameter("shortDescription") .. ") Failed to get alt-ability animation script update function. Weapon may be one-handed, not have an alt-ability, or may not have an alt-ability animation script.")
     end
   end
+
+function init()
+  synthethikmechanics_altInit()
+end
 
 function update()
   localAnimator.clearDrawables()
@@ -29,6 +41,8 @@ function update()
   local beamWidth = animationConfig.animationParameter("beamWidth")
   local beamInnerWidth = animationConfig.animationParameter("beamInnerWidth")
   local beamColor = animationConfig.animationParameter("beamColor")
+
+  local chamberState = animationConfig.animationParameter("chamberState")
 
   local aimPosition = animationConfig.animationParameter("aimPosition")
   local aimAngle = animationConfig.animationParameter("aimAngle")
@@ -198,6 +212,7 @@ function update()
   end
   
   if not usedByNPC then
+
     localAnimator.spawnParticle({
       type = "text",
       text= "^shadow;" .. ammoDisplay,
@@ -207,6 +222,13 @@ function update()
       flippable = false,
       layer = "front"
     }, vec2.add(aimPosition, offset))
+  
+    localAnimator.addDrawable({
+      image = "/items/active/weapons/ranged/abilities/synthetikmechanics/chamberindicator.png:" .. chamberState,
+      position = vec2.add(vec2.add(aimPosition, offset), {0, -1}),
+      color = {255,255,255},
+      fullbright = true,
+    }, "ForegroundEntity+1")
   end
 
   -- laser

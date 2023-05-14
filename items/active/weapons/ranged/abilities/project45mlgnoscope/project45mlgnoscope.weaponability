@@ -1,0 +1,33 @@
+{
+  "animationCustom" : {
+    "animatedParts" : { "parts" : {
+        "sights" : {
+        "properties" : {
+            "zLevel" : 5,
+            "centered" : true,
+            "transformationGroups" : ["weapon"],
+            "image" : "/items/active/weapons/ranged/abilities/project45gunscope/project45gunscope.png<directives>"
+        }
+        }
+    }},
+    "sounds": {
+      "noscopeProgressLoop": ["/sfx/interface/sniper_mark_pitch1.ogg"]
+    }
+},
+
+  "animationScripts": [
+    "/items/active/weapons/ranged/abilities/project45mlgnoscope/project45mlgnoscopeanimation.lua"
+  ],
+
+  "ability" : {
+      "name" : "360 Noscope",
+      "type" : "project45mlgnoscope",
+      "scripts" : ["/items/active/weapons/ranged/abilities/project45mlgnoscope/project45mlgnoscope.lua"],
+      "class" : "Project45MLGNoScope",
+
+      "noscopeTime": 1,
+      "angleDeltaThreshold": 90
+
+  }
+}
+  

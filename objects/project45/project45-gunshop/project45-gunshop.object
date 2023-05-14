@@ -97,6 +97,7 @@
       "mods": [
         // abilities
         "project45-gunscopemod",
+        "project45-mlgscopemod",
         "project45-enemyradarmod",
         "project45-flashlasermod",
         "project45-grenadelaunchermod",

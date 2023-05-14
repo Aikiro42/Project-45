@@ -40,7 +40,7 @@ function SynthetikMechanics:init()
     
     -- gun has no magazine on first use, so chamber is empty
     storage.chamberState = storage.chamberState or config.getParameter("currentChamberState", EMPTY)
-
+    updateChamberState(storage.chamberState)
     -- DEBUG - Empirical Critical Statistics, to observe whether crit chance is as indicated.
     storage.critStats = storage.critStats or {
       crits = 0,
@@ -169,6 +169,11 @@ function SynthetikMechanics:init()
     -- necessary updates
     self:updateScriptedAnimationParameters()
 
+end
+
+function updateChamberState(newState)
+  storage.chamberState = newState
+  activeItem.setScriptedAnimationParameter("chamberState", newState)
 end
 
 function SynthetikMechanics:update(dt, fireMode, shiftHeld)
@@ -484,7 +489,8 @@ function SynthetikMechanics:firing()
 
   -- bullet fired, chamber is now filled with an empty case.
   storage.unejectedCasings = storage.unejectedCasings + math.min(self.ammoPerShot, 1)
-  storage.chamberState = FILLED
+  -- storage.chamberState = FILLED
+  updateChamberState(FILLED)
 
   -- reset charge damage multiplier
   if self.chargeTimer < self.chargeTime then
@@ -578,7 +584,8 @@ function SynthetikMechanics:ejectingCase()
     end
 
     -- set chamber state to empty
-    storage.chamberState = EMPTY
+    -- storage.chamberState = EMPTY
+    updateChamberState(EMPTY)
 
     -- if no ammo left after ejecting,
     if storage.ammo == 0 then
@@ -672,7 +679,8 @@ function SynthetikMechanics:feeding()
     util.wait(self.cockTime/3)
     self:setStance(self.stances.aim)
   end
-  storage.chamberState = READY
+  -- storage.chamberState = READY
+  updateChamberState(READY)
   
   -- if not done bursting, fire immediately
   if self.burstCounter < self.burstCount or (self.manualFeed and self.slamFire and self.triggered) then
@@ -1096,7 +1104,8 @@ function SynthetikMechanics:cocking()
         storage.ammo = math.max(0, storage.ammo - self.ammoPerShot)
       end
     end
-    storage.chamberState = EMPTY
+    -- storage.chamberState = EMPTY
+    updateChamberState(EMPTY)
     if self.chargeTimer > 0 then
       if self.progressiveCharge then
         self:setAnimationState("gun", "chargingprog")
@@ -1141,7 +1150,8 @@ function SynthetikMechanics:cocking()
   else
     self:setAnimationState("gun", "idle")
   end
-  storage.chamberState = READY
+  -- storage.chamberState = READY
+  updateChamberState(READY)
   self.burstCounter = self.burstCount
   util.wait(self.cockTime/3)
   self.reloadTimer = -1 -- get rid of reload ui
@@ -1508,7 +1518,8 @@ function SynthetikMechanics:unjam()
       animator.setParticleEmitterBurstCount("ejectionPort", storage.unejectedCasings)
       animator.burstParticleEmitter("ejectionPort")
       storage.unejectedCasings = 0
-      storage.chamberState = EMPTY
+      -- storage.chamberState = EMPTY
+      updateChamberState(EMPTY)
       self:screenShake(self.screenShakeAmount[2])
       self:setState(self.cocking)
     end
@@ -1749,7 +1760,8 @@ function SynthetikMechanics:jam()
     if self.depleteAmmoOnJam then
       storage.ammo = storage.ammo - math.min(self.ammoPerShot, storage.ammo)
       storage.unejectedCasings = math.min(self.ammoPerShot, 1)
-      storage.chamberState = FILLED
+      -- storage.chamberState = FILLED
+      updateChamberState(FILLED)
     end
 
     -- Reset screenshake

@@ -116,7 +116,7 @@
 
     // make all shots orange
     "critChance": 0.99,
-    "critDamageMult": 50,
+    "critDamageMult": 100,
     "screenShakeAmount": [1.5,2.5],
     "screenShakeDelta": [0.1, 0.5],
     "magLoopFrames": 0,

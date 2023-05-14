@@ -1,0 +1,16 @@
+{
+  "name" : "project45noscopedamagebonus",
+  "effectConfig" : {
+    "powerModifier" : 1.30
+  },
+  "defaultDuration" : 0.5,
+
+  "scripts" : [
+    "project45noscopedamagebonus.lua"
+  ],
+  "animationConfig" : "project45noscopedamagebonus.animation",
+
+
+  "label" : "MLG!",
+  "icon" : "/stats/effects/project45noscopedamagebonus/project45noscopedamagebonus.png"
+}

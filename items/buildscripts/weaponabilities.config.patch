@@ -33,5 +33,10 @@
         "op": "add",
         "path": "/project45phaseshift",
         "value": "/items/active/weapons/ranged/abilities/project45phaseshift/project45phaseshift.weaponability"
+    },
+    {
+        "op": "add",
+        "path": "/project45mlgnoscope",
+        "value": "/items/active/weapons/ranged/abilities/project45mlgnoscope/project45mlgnoscope.weaponability"
     }
 ]

@@ -1,0 +1,15 @@
+{
+  "particleEmitters" : {
+    "mlg" : {
+      "enabled" : true,
+      "emissionRate" : 1.0,
+      "particles" : [
+        { "particle" : "project45mlgweed" },
+        { "particle" : "project45mlgdoritos" },
+        { "particle" : "poisondrip1" },
+        { "particle" : "poisondrip2" },
+        { "particle" : "poisondrip3" }
+      ]
+    }
+  }
+}
