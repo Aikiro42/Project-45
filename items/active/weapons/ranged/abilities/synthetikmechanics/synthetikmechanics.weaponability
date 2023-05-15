@@ -56,7 +56,7 @@
 
     "projectileCount" : 1, // number of projectiles launched per shot
     
-    "spread": 0, // Generic projectile spread
+    "spread": 0, // Generic projectile spread; has no effect on beam weapons
     
     "projectileParameters": {
       // hitscan params
@@ -90,7 +90,9 @@
         "statusEffects" : [ ],
         "damageSourceKind" : "plasma",
         "knockback" : 2
-      }
+      },
+      "beamPunchThrough": 3
+      // "beamIgnoresTerrain": false
     },
 
     // ________________________[ GUN MECHANIC SETTINGS ]__________________________________

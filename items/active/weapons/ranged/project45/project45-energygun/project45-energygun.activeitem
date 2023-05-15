@@ -106,6 +106,8 @@ When gun is a windup-type and
     "recoilMult": 0.1,
 
     "semi": false,
+
+    "spread": 0.1,
     
     "chargeTime": 1.25,
     "overchargeTime": 3,

@@ -699,7 +699,8 @@ function SynthetikMechanics:feeding()
 end
 
 function SynthetikMechanics:fireBeam()
-  
+  if world.lineTileCollision(mcontroller.position(), self:firePosition()) then return end
+
   self:startFireLoop()
   if storage.ammo > 0 then
     self:recoil(self.currentScreenShake, self.recoilMomentum, true)
@@ -715,6 +716,7 @@ function SynthetikMechanics:fireBeam()
 
   while self:triggering()
   and storage.ammo > 0
+  and not world.lineTileCollision(mcontroller.position(), self:firePosition())
   do
 
     self.beamFiring = true
@@ -740,15 +742,22 @@ function SynthetikMechanics:fireBeam()
 
     self:recoil(self.currentScreenShake, self.recoilMomentum, true)
 
-    local beamStart = self:firePosition()
-    local beamEnd = vec2.add(beamStart, vec2.mul(vec2.norm(self:aimVector(0)), self.beamParameters.beamLength))
-    local beamLength = self.beamParameters.beamLength
-    local collidePoint = world.lineCollision(beamStart, beamEnd)
 
+    local hitreg = self:hitscan(true)
+
+    -- local beamStart = self:firePosition()
+    -- local beamEnd = vec2.add(beamStart, vec2.mul(vec2.norm(self:aimVector(0)), self.beamParameters.beamLength))
+    local beamStart = hitreg[1]
+    local beamEnd = hitreg[2]
+    -- local beamLength = self.beamParameters.beamLength
+    local beamLength = world.magnitude(beamStart, beamEnd)
+    --[[
+    local collidePoint = world.lineCollision(beamStart, beamEnd)
     if collidePoint then
       beamEnd = collidePoint
       beamLength = world.magnitude(beamStart, beamEnd)
     end
+    --]]
     fireEndBeamEnd = beamEnd
 
     -- update charge damage multiplier
@@ -843,6 +852,10 @@ function SynthetikMechanics:fireBeam()
     storage.ammoConsumeTimer = storage.ammoConsumeTimer + self.dt
 
     coroutine.yield()
+  end
+
+  if world.lineTileCollision(mcontroller.position(), self:firePosition()) then
+    self:stopFireLoop()
   end
 
   self.beamFiring = false
@@ -1385,9 +1398,13 @@ end
 function SynthetikMechanics:hitscan(isLaser)
 
   local scanOrig = self:firePosition()
+  local hitscanRange = isLaser and self.beamParameters.beamLength or self.projectileParameters.range or 100
+  local ignoresTerrain = isLaser and self.beamParameters.beamIgnoresTerrain or self.projectileParameters.hitscanIgnoresTerrain
+  
+  local scanDest = vec2.add(scanOrig, vec2.mul(self:aimVector(isLaser and 0 or self.spread), hitscanRange))
+  local fullScanDest = not ignoresTerrain and world.lineCollision(scanOrig, scanDest, {"Block", "Dynamic"}) or scanDest
 
-  local scanDest = vec2.add(scanOrig, vec2.mul(self:aimVector(isLaser and 0 or self.spread), self.projectileParameters.range or 100))
-  scanDest = not self.projectileParameters.hitscanIgnoresTerrain and world.lineCollision(scanOrig, scanDest, {"Block", "Dynamic"}) or scanDest
+  local punchThrough = isLaser and self.beamParameters.beamPunchThrough or self.projectileParameters.punchThrough or 0
 
   -- hitreg
   local hitId = world.entityLineQuery(scanOrig, scanDest, {
@@ -1397,13 +1414,16 @@ function SynthetikMechanics:hitscan(isLaser)
   })
 
   local eid = {}
-  local pen = 0
+  local penetrated = 0
+
+  -- if entities are hit,
   if #hitId > 0 then
+    -- for each entity hti
     for i, id in ipairs(hitId) do
       if world.entityCanDamage(entity.id(), id)
       and world.entityDamageTeam(id) ~= "ghostly" -- prevents from hitting those annoying floaty things
       then
-
+        -- let scan destination be location of entity and correct it
         local aimAngle = vec2.angle(world.distance(scanDest, scanOrig))
         local entityAngle = vec2.angle(world.distance(world.entityPosition(id), scanOrig))
         local rotation = aimAngle - entityAngle
@@ -1413,14 +1433,16 @@ function SynthetikMechanics:hitscan(isLaser)
 
         table.insert(eid, id)
 
-        pen = pen + 1
+        penetrated = penetrated + 1
 
-        if pen > (self.projectileParameters.punchThrough or 0) then break end
+        if penetrated > (punchThrough) then break end
       end
     end
   end
+
+  if penetrated <= punchThrough then scanDest = fullScanDest end
   
-  world.debugLine(scanOrig, scanDest, {255,0,255})
+  -- world.debugLine(scanOrig, scanDest, {255,0,255})
 
   return {scanOrig, scanDest, eid}
 end
