@@ -369,7 +369,9 @@ end
 function SynthetikMechanics:charging()
 
   -- self:setStance(self.stances.aim)
-  if not self.chargeWhenObstructed and world.lineTileCollision(mcontroller.position(), self:firePosition()) then return end
+  if not self.chargeWhenObstructed and world.lineTileCollision(mcontroller.position(), self:firePosition()) then
+    self:stopFireLoop()
+    return end
 
   -- if it can fire then begin charging
   if self:canTrigger() then

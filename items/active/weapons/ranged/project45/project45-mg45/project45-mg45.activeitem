@@ -126,7 +126,8 @@
 
     
     "movementSpeedFactor": 1.2,
-    "jumpHeightFactor": 1.2,
+    "jumpHeightFactor": 1,
+    "heavyWeapon": true,
 
 
     "reloadTime": 0.7,

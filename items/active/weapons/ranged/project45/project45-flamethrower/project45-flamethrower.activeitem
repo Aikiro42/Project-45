@@ -49,6 +49,7 @@
     "sounds":{
       "fire" : ["/assetmissing.wav"],
       "hollow" : ["/assetmissing.wav"],
+      "ejectMag": ["/sfx/project45-synthetikmechanics/reloads/ejectmag_tank.ogg"],
       "getMag": ["/sfx/project45-synthetikmechanics/foleys/getmag_ammobox.ogg"],
       "chargeDrone" : ["/sfx/project45-synthetikmechanics/charges/flamethrower_drone.ogg"],
       "chargeWhine" : ["/assetmissing.wav"],
@@ -125,12 +126,14 @@
     },
     "spread": 0.1,
     "stopFiringOnEmpty": true,
+    "chargeWhenObstructed": false,
+    "dischargeOnEmpty": true,
 
     "movementSpeedFactor": 0.75,
     "jumpHeightFactor": 0.75,
     "heavyWeapon": true,
 
-    "recoilMomentum": 7,
+    "recoilMomentum": 1,
     "reloadCost": 1,
     "reloadTime": 0.7,
     "goodReloadInterval": [0.45, 0.75], 
