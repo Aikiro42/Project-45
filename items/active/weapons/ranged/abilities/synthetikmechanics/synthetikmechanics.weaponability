@@ -44,14 +44,19 @@
 
     // ________________________[ PROJECTILE SETTINGS ]__________________________________
   
-    // if explicitly "project45stdbullet", gun damages via hitscan; otherwise, gun fires projectiles
-    // this is to ensure compatibility with vanilla altfires
-    // either way, the projectileType field functions as any other projectileType field does
+
+    // can be "projectile", "hitscan", or "beam";
+    // the parameters that will be used
+    // and whether the weapon will fire projectiles, hitscans or beams
+    // will depend on this field
+    "projectileKind": "projectile",
+
+    // the projectileType field functions as any other projectileType field does
     "projectileType": "project45stdbullet",
         
     // number multiplied to projectile count without affecting the damage.
     // if number is a float, the float is used as a chance to roll for an additional shot
-    // values 0 and below can make the gun not shoot anything
+    // values below 1 can make the gun not shoot anything
     "multishot": 1,
 
     "projectileCount" : 1, // number of projectiles launched per shot
@@ -59,40 +64,46 @@
     "spread": 0, // Generic projectile spread; has no effect on beam weapons
     
     "projectileParameters": {
+        // projectile parameters behave as expected
+    },
+
+    "hitscanParameters": {
       // hitscan params
-      "range": 100,  // range of the hitscan line in blocks
-      "punchThrough": 0,  // number of entities to register before stopping the scan
+      "hitscanRange": 100,  // range of the hitscan line in blocks
+      "hitscanPunchThrough": 0,  // number of entities to register before stopping the scan
       "hitscanIgnoresTerrain": false,  // pierces through terrain if true
-      "fadeTime": 0.1, // how long the hitscan line fades away
+      "hitscanFadeTime": 0.1, // how long the hitscan line fades away
       "hitscanWidth": 1, // visual width of hitscan line in pixels
       "hitscanColor": [255,255,200], // color of hitscan projectile; also dictates muzzle flash color
-      /* additional instance of damage of different damage kind.
-      Possible damage kinds (actually status effects):
-      - project45hitscanicedamage
-      */
-      "hitscanDamageKind": null,
-      
-
-      // regular parameters
-      "actionOnHit": [], // actions to do when hitscan registers hits, whether it be terrain, entities, or hitscan line termination
-      "statusEffects" : [], // status effects to inflict on hitscan hit
-      // path to explosion config on hit
-      "hitregPower": 0
+      // damage configuraiton of hitscan damage line
+      // baseDamage is calculated by self:damagePerShot() * crit / activeItem.ownerPowerMultiplier()
+      // but can be overridden; it's recommended that it shouldn't be overridden
+      "hitscanDamageConfig": {
+        "damageKind": "physical",
+        "statusEffects": []
+      },
+      // actions to be executed at the end of the hitscan line
+      "hitscanActionOnHit": []
     },
 
     "beamParameters": {
-      "beamLength": 100,
-      "beamWidth": 5,
-      "beamInnerWidth": 3,
-      "beamJitter": 1,
+      "beamLength": 100,  // length of beam
+      "beamWidth": 5, // width of beam - beams that are too wide can look weird
+      "beamInnerWidth": 3, // width of inner white beam - just for vfx
+      "beamJitter": 1, // how much the beam width changes as it's shot - just a vfx
       "beamColor": [0,140,217], // color of beam
+      // damage configuration of beam damage poly
       "beamDamageConfig": {
         "statusEffects" : [ ],
         "damageSourceKind" : "plasma",
         "knockback" : 2
       },
-      "beamPunchThrough": 3
-      // "beamIgnoresTerrain": false
+      // number of entities the beam passes through before it terminates
+      // if the beam passes through less entities it keeps going until it hits terrain
+      "beamPunchThrough": 3,
+      
+      // whether the beam fires through terrain or not
+      "beamIgnoresTerrain": false
     },
 
     // ________________________[ GUN MECHANIC SETTINGS ]__________________________________

@@ -60,6 +60,7 @@
       // "fireEnd" : ["/sfx/project45-synthetikmechanics/charges/flamethrower_hiss_stop.ogg"]
     }
   },
+  "muzzleFlashColor": [255,125,0],
   "acceptsModSlot": {
     "rail": false,
     "sights": false,
@@ -120,7 +121,6 @@
     "projectileType": "flamethrower",
     "projectileCount": 3,
     "projectileParameters":{
-      "hitscanColor": [255,125,0],
       "speed": 35,
       "physics": "grenade"
     },

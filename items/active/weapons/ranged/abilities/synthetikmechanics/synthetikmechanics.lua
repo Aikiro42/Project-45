@@ -330,7 +330,7 @@ function SynthetikMechanics:update(dt, fireMode, shiftHeld)
           if self.chargeTimer < self.chargeTime + self.overchargeTime then
             self:setState(self.charging)
           elseif self:canTrigger() and not self:jam() then
-            if self.projectileType == "project45beam" then
+            if self.projectileKind == "beam" then
               self:setState(self.fireBeam)
             else
               self:setState(self.firing)
@@ -380,7 +380,7 @@ function SynthetikMechanics:charging()
 
     -- If there's no charge time at all then don't waste cpu cycles doing a pointless loop
     if self.chargeTime + self.overchargeTime <= 0 then
-      if self.projectileType == "project45beam" then
+      if self.projectileKind == "beam" then
         self:setState(self.fireBeam)
       else
         self:setState(self.firing)
@@ -416,7 +416,7 @@ function SynthetikMechanics:charging()
     self.isCharging = false
 
     if self.chargeTimer >= self.chargeTime then
-      if self.projectileType == "project45beam" then
+      if self.projectileKind == "beam" then
         self:setState(self.fireBeam)
       else
         self:setState(self.firing)
@@ -438,7 +438,8 @@ function SynthetikMechanics:firing()
   self.isFiring = true
 
   -- don't fire when muzzle collides with terrain
-  if not self.projectileParameters.hitscanIgnoresTerrain and world.lineTileCollision(mcontroller.position(), self:firePosition()) then
+  -- if not self.projectileParameters.hitscanIgnoresTerrain and world.lineTileCollision(mcontroller.position(), self:firePosition()) then
+  if world.lineTileCollision(mcontroller.position(), self:firePosition()) then
     self:stopFireLoop()
     return
   end
@@ -472,16 +473,16 @@ function SynthetikMechanics:firing()
   for i = 1, self.projectileCount * self:calculateMultishot() do
 
     -- choose a random projectile if the projectile is a list
-    local projectileType = self.projectileType
-    if type(projectileType) == "table" then
-      projectileType = projectileType[math.random(#projectileType)]
-    end
 
     -- fire projectile depending on projectile name
     -- if (projectileType == "project45stdbullet" and not self.overrideHitscan) or projectileType == "hitscan" then
-    if projectileType == "project45hitscan" then
+    if self.projectileKind == "hitscan" then
       self:fireHitscan()
     else
+      local projectileType = self.projectileType
+      if type(projectileType) == "table" then
+        projectileType = projectileType[math.random(#projectileType)]
+      end
       self:fireProjectileNeo(projectileType)
     end
 
@@ -1233,6 +1234,8 @@ function SynthetikMechanics:fireProjectileNeo(projectileType)
   -- params.power = self:damagePerShot() * crit
 
   self.projectileParameters.power = self:damagePerShot() * crit
+
+  -- custom damage type
   if self.projectileType == "project45stdbullet" then
     self.projectileParameters.damageKind = "synthetikmechanics-hitscan" .. (crit > 1 and "crit" or "")
   end
@@ -1245,20 +1248,7 @@ function SynthetikMechanics:fireProjectileNeo(projectileType)
     false,
     self.projectileParameters
   )
-
-    -- muzzleflash info inserted to projectile stack that's being passed to the animation script
-    -- each bullet trail in the stack is rendered, and the lifetime is updated in this very script too
-    -- the animation script just flashes the thing
-    local life = self.projectileParameters.fadeTime or 0.5
-    table.insert(self.projectileStack, {
-      width = 0,
-      origin = self:firePosition(),
-      destination = self:firePosition(),
-      lifetime = life,
-      maxLifetime = life,
-      color = self.projectileParameters.hitscanColor
-    })
-
+  
 end
 
 function SynthetikMechanics:fireHitscan(projectileType)
@@ -1268,15 +1258,17 @@ function SynthetikMechanics:fireHitscan(projectileType)
     -- hitreg[2] is where the bullet trail terminates
     local hitReg = self:hitscan(false)
     local crit = self:crit()
-    local damage = self:damagePerShot() * crit
+    local finalDamage = self:damagePerShot(true) * crit
 
     local damageConfig = {
       -- we included activeItem.ownerPowerMultiplier() in
       -- self:damagePerShot() so we cancel it
-      baseDamage = damage / activeItem.ownerPowerMultiplier(),
+      baseDamage = finalDamage,
       timeout = self.currentCycleTime,
-      damageSourceKind = self.projectileParameters.damageKind or "synthetikmechanics-hitscan" .. (crit > 1 and "crit" or "")
+      damageSourceKind = "synthetikmechanics-hitscan" .. (crit > 1 and "crit" or "")
     }
+
+    -- damageConfig = sb.jsonMerge(damageConfig, self.hitscanParameters.hitscanDamageConfig or {})
 
     -- coordinates are based off mcontroller position
     self.weapon:setOwnerDamageAreas(damageConfig, {{
@@ -1286,17 +1278,18 @@ function SynthetikMechanics:fireHitscan(projectileType)
 
     -- bullet trail info inserted to projectile stack that's being passed to the animation script
     -- each bullet trail in the stack is rendered, and the lifetime is updated in this very script too
-    local life = self.projectileParameters.fadeTime or 0.5
+    local life = self.hitscanParameters.hitscanFadeTime or 0.5
     table.insert(self.projectileStack, {
-      width = self.projectileParameters.hitscanWidth,
+      width = self.hitscanParameters.hitscanWidth,
       origin = hitReg[1],
       destination = hitReg[2],
       lifetime = life,
       maxLifetime = life,
-      color = self.projectileParameters.hitscanColor
+      color = self.hitscanParameters.hitscanColor
     })
 
     -- hitscan vfx
+    
     local hitscanActionsOnReap = {
       {
         action="loop",
@@ -1307,7 +1300,7 @@ function SynthetikMechanics:fireHitscan(projectileType)
             specification={
               type="ember",
               size=1,
-              color=self.projectileParameters.hitscanColor or {255, 255, 200, 255},
+              color=self.hitscanParameters.hitscanColor or {255, 255, 200, 255},
               light={65, 65, 51},
               fullbright=true,
               destructionTime=0.2,
@@ -1330,9 +1323,10 @@ function SynthetikMechanics:fireHitscan(projectileType)
       }
     }
 
-    for i, a in ipairs(self.projectileParameters.actionOnHit) do
+    for i, a in ipairs(self.hitscanParameters.hitscanActionOnHit) do
       table.insert(hitscanActionsOnReap, a)
     end
+    
     -- sb.logInfo(self.projectileParameters.hitregPower)
     world.spawnProjectile(
       "invisibleprojectile",
@@ -1342,12 +1336,12 @@ function SynthetikMechanics:fireHitscan(projectileType)
       false,
       {
         damageType = "NoDamage",
-        power = damage,
-        statusEffects = self.projectileParameters.statusEffects,
+        power = finalDamage,
         timeToLive = 0,
         actionOnReap = hitscanActionsOnReap
       }
     )
+    --]]
 
 end
 
@@ -1355,13 +1349,12 @@ end
 function SynthetikMechanics:hitscan(isLaser)
 
   local scanOrig = self:firePosition()
-  local hitscanRange = isLaser and self.beamParameters.beamLength or self.projectileParameters.range or 100
-  local ignoresTerrain = isLaser and self.beamParameters.beamIgnoresTerrain or self.projectileParameters.hitscanIgnoresTerrain
-  sb.logInfo(sb.printJson(self.spread))
+  local hitscanRange = isLaser and self.beamParameters.beamLength or self.hitscanParameters.hitscanRange or 100
+  local ignoresTerrain = isLaser and self.beamParameters.beamIgnoresTerrain or self.hitscanParameters.hitscanIgnoresTerrain
   local scanDest = vec2.add(scanOrig, vec2.mul(self:aimVector(isLaser and 0 or self.spread), hitscanRange))
   local fullScanDest = not ignoresTerrain and world.lineCollision(scanOrig, scanDest, {"Block", "Dynamic"}) or scanDest
 
-  local punchThrough = isLaser and self.beamParameters.beamPunchThrough or self.projectileParameters.punchThrough or 0
+  local punchThrough = isLaser and self.beamParameters.beamPunchThrough or self.hitscanParameters.hitscanPunchThrough or 0
 
   -- hitreg
   local hitId = world.entityLineQuery(scanOrig, scanDest, {
@@ -1642,7 +1635,7 @@ end
 
 -- HELPER FUNCTIONS
 
-function SynthetikMechanics:damagePerShot()
+function SynthetikMechanics:damagePerShot(isHitscan)
   --[[
   Damage per shot is calculated by the following factors:
   1. Base Damage as specified in the primaryAbility field of the activeItem
@@ -1679,7 +1672,7 @@ function SynthetikMechanics:damagePerShot()
    * reloadDamageMultiplier
    * lastShotDamageMultiplier
    * config.getParameter("damageLevelMultiplier", 1)
-   * activeItem.ownerPowerMultiplier()
+   * (not isHitscan and activeItem.ownerPowerMultiplier() or 1)
    / (self.projectileCount * self.burstCount)
    --]]
 end

@@ -14,6 +14,7 @@
     "slot": "ammotype",
     "projectileSettings":{
       "projectileCount": 1,
+      "projectileKind": "projectile",
       "projectileType": "project45stdbullet",
       "projectileParameters": {
         "speed" : 150

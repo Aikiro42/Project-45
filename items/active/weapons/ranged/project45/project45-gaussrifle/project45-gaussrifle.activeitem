@@ -37,6 +37,8 @@ When gun is a windup-type and
 
   },
 
+  "muzzleFlashColor": [255,255,255],
+
   "animationCustom":{
     "animatedParts" : {
       "stateTypes" : {"gun" : {"states" : {
@@ -96,8 +98,8 @@ When gun is a windup-type and
       "good": 0.00
     },
     
-    "projectileType": "project45hitscan",
-    "projectileParameters": {
+    "projectileKind": "hitscan",
+    "hitscanParameters": {
       "hitscanColor": [255,255,255],
       "hitscanWidth": 5
     },

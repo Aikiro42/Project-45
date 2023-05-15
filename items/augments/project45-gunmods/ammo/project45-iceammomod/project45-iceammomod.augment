@@ -14,11 +14,13 @@
     "slot": "ammotype",
     "muzzleFlashColor": [150,203,231],
     "projectileSettings":{
-      "projectileType": "project45hitscan",
-      "projectileParameters":{
+      "projectileKind": "hitscan",
+      "hitscanParameters":{
         "hitscanColor": [150,203,231],
-        "damageKind": "ice",
-        "statusEffects":["frostsnare", "frostslow"]
+        "hitscanDamageConfig":{
+          "damageKind": "ice",
+          "statusEffects":["frostsnare", "frostslow"]
+        }
       }
     }
   },

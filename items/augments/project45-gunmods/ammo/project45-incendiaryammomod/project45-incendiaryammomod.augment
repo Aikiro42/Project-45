@@ -13,6 +13,7 @@
     "modName": "Incendiary Bullets",
     "slot": "ammotype",
     "projectileSettings":{
+      "projectileKind": "projectile",
       "projectileType": "project45stdfirebullet"
     }
   },

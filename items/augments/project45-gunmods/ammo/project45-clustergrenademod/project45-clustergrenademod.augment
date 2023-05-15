@@ -13,6 +13,7 @@
     "modName": "Cluster Grenades",
     "slot": "ammotype",
     "projectileSettings":{
+      "projectileKind": "projectile",
       "projectileType": "clustergrenade",
       "projectileParameters": {
         "bounces": 0

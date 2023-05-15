@@ -119,10 +119,10 @@
     "alwaysMaintainCharge": true,
     "chargeFrames": 6,
 
-    "projectileType": "project45hitscan",
-    "projectileParameters": {
+    "projectileKind": "hitscan",
+    "hitscanParameters": {
       "hitscanColor": [153, 218, 255],
-      "punchThrough": 2
+      "hitscanPunchThrough": 2
     },
     "progressiveMag": true,
     "magAnimRange": [3, 0],

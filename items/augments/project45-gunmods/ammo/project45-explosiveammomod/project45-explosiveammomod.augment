@@ -13,6 +13,7 @@
     "modName": "High-explosive Bullets",
     "slot": "ammotype",
     "projectileSettings":{
+      "projectileKind": "projectile",
       "projectileType": "project45explosivebullet"
     }
   },

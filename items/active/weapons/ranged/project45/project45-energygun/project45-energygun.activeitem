@@ -101,7 +101,7 @@ When gun is a windup-type and
     "movementSpeedFactor": 1.08,
     "jumpHeightFactor": 1.08,
     
-    "projectileType": "project45beam",
+    "projectileKind": "beam",
 
     "recoilMult": 0.1,
 

@@ -13,7 +13,7 @@
     "modName": "Hitscan Bullets",
     "slot": "ammotype",
     "projectileSettings":{
-      "projectileType": "project45hitscan"
+      "projectileKind": "hitscan"
     }
   },
 

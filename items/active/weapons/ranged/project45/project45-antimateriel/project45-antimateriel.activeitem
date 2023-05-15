@@ -107,7 +107,7 @@
     "bulletsPerReload": 3,
     "magType": "default",
     "projectileParameters": {
-      "punchThrough": 4
+      "piercing": true
     },
 
     "recoilDeg": [15, 5],

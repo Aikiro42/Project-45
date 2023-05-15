@@ -101,8 +101,8 @@
       "enabled": false,
       "toggle": false
     },
-    "projectileType": "project45hitscan",
-    "projectileParameters": {
+    "projectileKind": "hitscan",
+    "hitscanParameters": {
       "hitscanColor": [255,128,255]
     },
 

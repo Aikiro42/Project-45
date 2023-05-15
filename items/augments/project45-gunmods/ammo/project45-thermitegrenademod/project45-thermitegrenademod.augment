@@ -13,8 +13,10 @@
     "modName": "Thermite Grenades",
     "slot": "ammotype",
     "projectileSettings":{
+      "projectileKind": "projectile",
       "projectileType": "project45thermitegrenade",
       "projectileParameters": {
+        "speed": 50,
         "bounces": 0
       }
     }

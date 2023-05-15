@@ -17,8 +17,10 @@
       "projectileCount": 5,
       "spread": 0.05,
       "projectileParameters": {
-        "piercing": true,
-        "punchThrough": 3
+        "piercing": true
+      },
+      "hitscanParameters": {
+        "hitscanPunchThrough": 3
       }
     }
   },

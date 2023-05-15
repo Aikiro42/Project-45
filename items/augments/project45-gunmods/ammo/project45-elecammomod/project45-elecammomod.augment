@@ -14,18 +14,19 @@
     "slot": "ammotype",
     "muzzleFlashColor": [210,156,231],
     "projectileSettings":{
-      "projectileType": "project45hitscan",
+      "projectileKind": "hitscan",
       "projectileParameters":{
         "hitscanColor": [210,156,231],
-        "damageKind": "electric",
-        "hitregPower": 50,
-        "actionOnHit": [
+        "hitscanDamageConfig": {
+          "damageKind": "electric",
+          "statusEffects":["electrified"]
+        },
+        "hitscanActionOnHit": [
           {
             "action": "config",
             "file": "/projectiles/explosions/project45_elecexplosion/project45_elecexplosion.config"
           }
-        ],
-        "statusEffects":["electrified"]
+        ]
       }
     }
   },
