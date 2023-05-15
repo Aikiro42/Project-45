@@ -11,11 +11,8 @@
   "augment":{
     "type": "univAmmo",
     "modName": "Standard Bullets",
-    "slot": "ammotype",
-    "projectileSettings":{
-      "projectileKind": "projectile",
-      "projectileType": "project45stdbullet"
-    }
+    "projectileKind": "projectile",
+    "projectileType": "project45stdbullet"
   },
 
   "radioMessagesOnPickup" : [ "pickupaugment" ],

@@ -11,16 +11,14 @@
   "augment":{
     "type": "energyAmmo",
     "modName": "Cryo Beams",
-    "slot": "ammotype",
+
     "muzzleFlashColor": [150,203,231],
-    "projectileSettings":{
-      "projectileKind": "hitscan",
-      "hitscanParameters":{
-        "hitscanColor": [150,203,231],
-        "hitscanDamageConfig":{
-          "damageKind": "ice",
-          "statusEffects":["frostsnare", "frostslow"]
-        }
+    "projectileKind": "hitscan",
+    "hitscanParameters":{
+      "hitscanColor": [150,203,231],
+      "hitscanDamageConfig":{
+        "damageKind": "ice",
+        "statusEffects":["frostsnare", "frostslow", "project45freeze"]
       }
     }
   },
@@ -28,5 +26,5 @@
 
   "radioMessagesOnPickup" : [ "pickupaugment" ],
 
-  "scripts" : [ "/scripts/augments/project45-gunmod.lua" ]
+  "scripts" : [ "/scripts/augments/project45-gunmod/ammomod.lua" ]
 }

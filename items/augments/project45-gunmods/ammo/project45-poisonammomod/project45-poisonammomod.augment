@@ -11,11 +11,10 @@
   "augment":{
     "type": "ballisticAmmo",
     "modName": "Mercury-tipped Bullets",
-    "slot": "ammotype",
-    "projectileSettings":{
-      "projectileKind": "projectile",
-      "projectileType": "project45stdpoisonbullet"
-    }
+    
+    "projectileKind": "projectile",
+    "projectileType": "project45stdpoisonbullet"
+    
   },
 
 

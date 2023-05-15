@@ -1,0 +1,20 @@
+{
+  "name" : "project45freeze",
+  "blockingStat" : "project45freeze",
+  "effectConfig" : {},
+  "defaultDuration" : 3,
+
+  "scripts" : [
+    "project45freeze.lua"
+  ],
+
+  "animationConfig" : "project45freeze.animation",
+
+  "label" : "Frozen",
+  "icon" : "/interface/statuses/arrested.png",
+
+  "sounds" : {
+    "timefreeze_start" : [ "/sfx/statuseffects/timefreeze_start.ogg" ],
+    "timefreeze_loop" : [ "/sfx/statuseffects/timefreeze_loop.ogg" ]
+  }
+}

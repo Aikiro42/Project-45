@@ -11,24 +11,23 @@
   "augment":{
     "type": "energyAmmo",
     "modName": "Electro Beams",
-    "slot": "ammotype",
+
     "muzzleFlashColor": [210,156,231],
-    "projectileSettings":{
-      "projectileKind": "hitscan",
-      "projectileParameters":{
-        "hitscanColor": [210,156,231],
-        "hitscanDamageConfig": {
-          "damageKind": "electric",
-          "statusEffects":["electrified"]
-        },
-        "hitscanActionOnHit": [
-          {
-            "action": "config",
-            "file": "/projectiles/explosions/project45_elecexplosion/project45_elecexplosion.config"
-          }
-        ]
-      }
+    "projectileKind": "hitscan",
+    "hitscanParameters":{
+      "hitscanColor": [210,156,231],
+      "hitscanDamageConfig": {
+        "damageKind": "electric",
+        "statusEffects":["electrified"]
+      },
+      "hitscanActionOnHit": [
+        {
+          "action": "config",
+          "file": "/projectiles/explosions/project45_elecexplosion/project45_elecexplosion.config"
+        }
+      ]
     }
+    
   },
 
 

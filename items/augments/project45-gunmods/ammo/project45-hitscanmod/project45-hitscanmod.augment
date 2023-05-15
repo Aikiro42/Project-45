@@ -11,10 +11,8 @@
   "augment":{
     "type": "univAmmo",
     "modName": "Hitscan Bullets",
-    "slot": "ammotype",
-    "projectileSettings":{
-      "projectileKind": "hitscan"
-    }
+    "projectileKind": "hitscan"
+    
   },
 
 

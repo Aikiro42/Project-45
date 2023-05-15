@@ -11,15 +11,13 @@
   "augment":{
     "type": "grenadeAmmo",
     "modName": "Thermite Grenades",
-    "slot": "ammotype",
-    "projectileSettings":{
-      "projectileKind": "projectile",
-      "projectileType": "project45thermitegrenade",
-      "projectileParameters": {
-        "speed": 50,
-        "bounces": 0
-      }
+    "projectileKind": "projectile",
+    "projectileType": "project45thermitegrenade",
+    "projectileParameters": {
+      "speed": 50,
+      "bounces": 0
     }
+  
   },
 
   "radioMessagesOnPickup" : [ "pickupaugment" ],

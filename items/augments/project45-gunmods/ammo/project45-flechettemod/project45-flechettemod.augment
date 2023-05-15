@@ -11,18 +11,17 @@
   "augment":{
     "type": "shotgunAmmo",
     "modName": "Flechette Shells",
-    "slot": "ammotype",
-    "projectileSettings":{
-      "multishot": 1.1,
-      "projectileCount": 5,
-      "spread": 0.05,
-      "projectileParameters": {
+
+    "multishot": 1.1,
+    "projectileCount": 5,
+    "spread": 0.05,
+    "projectileParameters": {
         "piercing": true
-      },
-      "hitscanParameters": {
+    },
+    "hitscanParameters": {
         "hitscanPunchThrough": 3
-      }
     }
+    
   },
 
   "radioMessagesOnPickup" : [ "pickupaugment" ],

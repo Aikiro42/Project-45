@@ -11,15 +11,14 @@
   "augment":{
     "type": "shotgunAmmo",
     "modName": "Slug shells",
-    "slot": "ammotype",
-    "projectileSettings":{
-      "projectileCount": 1,
-      "projectileKind": "projectile",
-      "projectileType": "project45stdbullet",
-      "projectileParameters": {
-        "speed" : 150
-      }
+
+    "projectileCount": 1,
+    "projectileKind": "projectile",
+    "projectileType": "project45stdbullet",
+    "projectileParameters": {
+      "speed" : 150
     }
+  
   },
 
   "radioMessagesOnPickup" : [ "pickupaugment" ],

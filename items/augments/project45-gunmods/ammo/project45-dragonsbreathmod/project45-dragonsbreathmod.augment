@@ -11,13 +11,11 @@
   "augment":{
     "type": "shotgunAmmo",
     "modName": "Dragon's Breath",
-    "slot": "ammotype",
-    "projectileSettings":{
-      "projectileKind": "projectile",
-      "spread": 0.05,
-      "projectileCount": 5,
-      "projectileType": "project45dragonsbreath"
-    }
+    
+    "projectileKind": "projectile",
+    "spread": 0.05,
+    "projectileCount": 5,
+    "projectileType": "project45dragonsbreath"
   },
 
 

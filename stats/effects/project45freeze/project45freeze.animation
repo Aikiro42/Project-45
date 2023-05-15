@@ -1,0 +1,22 @@
+{
+  "particleEmitters" : {
+    "freeze" : {
+      "enabled" : true,
+      "emissionRate" : 1.0,
+      "particles" : [
+        { "particle" : "largeiceswoosh1" },
+        { "particle" : "largeiceswoosh2" },
+        { "particle" : "largeiceswoosh3" },
+        { "particle" : "largeiceswoosh4" }
+      ]
+    }
+  },
+  "sounds" : {
+    "freeze" : [
+      "/sfx/melee/travelingslash_ice1.ogg",
+      "/sfx/melee/travelingslash_ice2.ogg",
+      "/sfx/melee/travelingslash_ice3.ogg",
+      "/sfx/melee/travelingslash_ice4.ogg"
+    ]
+  }
+}

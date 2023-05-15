@@ -11,13 +11,11 @@
   "augment":{
     "type": "grenadeAmmo",
     "modName": "Gravity Grenades",
-    "slot": "ammotype",
-    "projectileSettings":{
-      "projectileKind": "projectile",
-      "projectileType": "project45gravitygrenade",
-      "projectileParameters":{
-        "speed": 25
-      }
+
+    "projectileKind": "projectile",
+    "projectileType": "project45gravitygrenade",
+    "projectileParameters":{
+      "speed": 25
     }
   },
 

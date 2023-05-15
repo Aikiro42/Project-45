@@ -63,9 +63,9 @@
       "dodgeCooldownTime": 0.5,
       "shiftHeldTime": 0.2,
 
-      "dodgeSpeed": 160,
+      "dodgeSpeed": 80,
       "dodgeTime": 0.15,
-      "dodgeStatusTime": 0.2,
+      "dodgeStatusTime": 0.3,
       "dodgeEndVelocityMult": 0.3,
 
       "movementSpeedFactor": 2,

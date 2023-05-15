@@ -102,12 +102,6 @@ function SynthetikMechanics:init()
     animator.stopAllSounds("chargeWhine")
     animator.stopAllSounds("chargeDrone")
 
-    if self.usedByNPC then
-      self.spread = math.max(self.spread, 0.1)
-      -- self.recoilDeg = {0, 0}
-      -- self.recoilMult = 0
-    end
-
     self.fireLoopPlaying = false
     animator.stopAllSounds("fireLoop")
     
@@ -1268,7 +1262,7 @@ function SynthetikMechanics:fireHitscan(projectileType)
       damageSourceKind = "synthetikmechanics-hitscan" .. (crit > 1 and "crit" or "")
     }
 
-    -- damageConfig = sb.jsonMerge(damageConfig, self.hitscanParameters.hitscanDamageConfig or {})
+    damageConfig = sb.jsonMerge(damageConfig, self.hitscanParameters.hitscanDamageConfig or {})
 
     -- coordinates are based off mcontroller position
     self.weapon:setOwnerDamageAreas(damageConfig, {{
@@ -1357,7 +1351,7 @@ function SynthetikMechanics:hitscan(isLaser)
   local punchThrough = isLaser and self.beamParameters.beamPunchThrough or self.hitscanParameters.hitscanPunchThrough or 0
 
   -- hitreg
-  local hitId = world.entityLineQuery(scanOrig, scanDest, {
+  local hitId = world.entityLineQuery(scanOrig, fullScanDest, {
     withoutEntityId = entity.id(),
     includedTypes = {"monster", "npc", "player"},
     order = "nearest"

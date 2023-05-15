@@ -11,11 +11,9 @@
   "augment":{
     "type": "ballisticAmmo",
     "modName": "High-explosive Bullets",
-    "slot": "ammotype",
-    "projectileSettings":{
-      "projectileKind": "projectile",
-      "projectileType": "project45explosivebullet"
-    }
+
+    "projectileKind": "projectile",
+    "projectileType": "project45explosivebullet"
   },
 
   "radioMessagesOnPickup" : [ "pickupaugment" ],
