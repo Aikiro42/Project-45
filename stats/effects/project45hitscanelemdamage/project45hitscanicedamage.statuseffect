@@ -1,7 +1,0 @@
-{
-  "name" : "project45hitscanicedamage",
-  "defaultDuration" : 0,
-  "scripts" : [
-    "project45hitscanicedamage.lua"
-  ]
-}

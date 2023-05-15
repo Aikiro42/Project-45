@@ -122,6 +122,8 @@
       "enabled": false
     },
 
+    "spread": 0.01,
+
     
     "movementSpeedFactor": 1.2,
     "jumpHeightFactor": 1.2,

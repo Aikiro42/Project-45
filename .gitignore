@@ -1,3 +1,4 @@
 
 debug.macros.patch
 scripts/vec2.lua
+npcs/threats/*.*

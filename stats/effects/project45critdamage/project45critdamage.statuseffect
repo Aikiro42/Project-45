@@ -1,7 +1,0 @@
-{
-  "name" : "project45critdamage",
-  "defaultDuration" : 0,
-  "scripts" : [
-    "project45critdamage.lua"
-  ]
-}

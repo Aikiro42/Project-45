@@ -272,3 +272,84 @@ Use more than one animation script on the gun. ACHIEVED!
     ```
 
 4. Patch the animation script of the primary weaponability on the animation script of the alt weaponability.
+
+## Experiment: Alternative Hitscan Method
+```lua
+-- synthetikmechanics.lua
+
+-- Utility function that scans for entities to damage.
+function SynthetikMechanics:hitscan(isLaser)
+
+  local scanOrig = self:firePosition()
+  local hitscanRange = 100 -- block range of hitscan
+  local ignoresTerrain = false
+  
+  local scanDest = vec2.add(scanOrig, vec2.mul(self:aimVector(self.inaccuracy), hitscanRange))
+  local fullScanDest = not ignoresTerrain and world.lineCollision(scanOrig, scanDest, {"Block", "Dynamic"}) or scanDest
+
+  local punchThrough = 0 -- number of entities to penetrate before hitscan line terminates
+
+  -- query hittable entities
+  local hitId = world.entityLineQuery(scanOrig, scanDest, {
+    withoutEntityId = entity.id(),
+    includedTypes = {"monster", "npc", "player"},
+    order = "nearest"
+  })
+
+  local penetrated = 0
+
+  -- if entities are hit,
+  if #hitId > 0 then
+    -- for each entity hit
+    for i, id in ipairs(hitId) do
+      if world.entityCanDamage(entity.id(), id)
+      and world.entityDamageTeam(id) ~= "ghostly" -- prevents from hitting those annoying floaty things
+      then
+        -- let scan destination be location of entity and correct it
+        -- by rotating the resulting vector
+        local aimAngle = vec2.angle(world.distance(scanDest, scanOrig))
+        local entityAngle = vec2.angle(world.distance(world.entityPosition(id), scanOrig))
+        local rotation = aimAngle - entityAngle
+        
+        scanDest = vec2.rotate(world.distance(world.entityPosition(id), scanOrig), rotation)
+        scanDest = vec2.add(scanDest, scanOrig)
+
+        penetrated = penetrated + 1
+
+        if penetrated > (punchThrough) then break end
+      end
+    end
+  end
+
+  if penetrated <= punchThrough then scanDest = fullScanDest end
+  
+  return {scanOrig, scanDest}
+end
+
+function SynthetikMechanics:fireHitscan(projectileType)
+
+    -- scan hit down range
+    -- hitreg[1] is where the bullet trail emanates,
+    -- hitreg[2] is where the bullet trail terminates
+    local hitReg = self:hitscan()
+    local crit = self:crit()
+
+    local damageConfig = {
+      -- we included activeItem.ownerPowerMultiplier() in
+      -- self:damagePerShot() so we cancel it
+      baseDamage = self:damagePerShot() * crit / activeItem.ownerPowerMultiplier(),
+      timeout = 0,
+      damageSourceKind = "synthetikmechanics-hitscan" .. (crit > 1 and "crit" or "")
+    }
+
+    -- coordinates are based off mcontroller position
+    self.weapon:setOwnerDamageAreas(damageConfig, {{
+      vec2.sub(hitReg[1], mcontroller.position()),
+      vec2.sub(hitReg[2], mcontroller.position())
+    }})
+    
+    -- ...vfx...
+
+end
+
+```

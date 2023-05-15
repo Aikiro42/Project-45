@@ -106,7 +106,7 @@
       "ok": 0.05,
       "good": 0.0
     },
-    "inaccuracy": 0.0125,
+    "inaccuracy": 0.01,
     "reloadCost": 0.34,
     "maxAmmo": 30,
     "magType": "default",
@@ -121,11 +121,12 @@
 
     "projectileType": "project45hitscan",
     "projectileParameters": {
-      "hitscanColor": [153, 218, 255]
+      "hitscanColor": [153, 218, 255],
+      "punchThrough": 2
     },
     "progressiveMag": true,
     "magAnimRange": [3, 0],
-
+    "spread": 0.01,
     "movementSpeedFactor": 1.1,
     "jumpHeightFactor": 1.1,
 

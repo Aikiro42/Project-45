@@ -1262,32 +1262,25 @@ end
 function SynthetikMechanics:fireHitscan(projectileType)
 
     -- scan hit down range
-    -- hitreg[2] is where the bullet trail terminates,
-    -- hitreg[3] is the array of hit entityIds
-    local hitReg = self:hitscan()
+    -- hitreg[1] is where the bullet trail emanates,
+    -- hitreg[2] is where the bullet trail terminates
+    local hitReg = self:hitscan(false)
     local crit = self:crit()
-    local statusDamage = "project45damage"
-    storage.critStats.shots = storage.critStats.shots + 1
-    if crit > 1 then
-      storage.critStats.crits = storage.critStats.crits + 1
-      statusDamage = "project45critdamage"
-    end
-    -- if damageable entity has been detected (hitreg[3] is not nil), damage it
+    local damage = self:damagePerShot() * crit
 
-    if #hitReg[3] > 0 then
-      for _, hitId in ipairs(hitReg[3]) do
-        if world.entityExists(hitId) then
-          
-          world.sendEntityMessage(hitId, "applyStatusEffect", self.projectileParameters.hitscanDamageKind or statusDamage, self:damagePerShot() * crit / (self.usedByNPC and 2 or 1), entity.id())
+    local damageConfig = {
+      -- we included activeItem.ownerPowerMultiplier() in
+      -- self:damagePerShot() so we cancel it
+      baseDamage = damage / activeItem.ownerPowerMultiplier(),
+      timeout = self.currentCycleTime,
+      damageSourceKind = self.projectileParameters.damageKind or "synthetikmechanics-hitscan" .. (crit > 1 and "crit" or "")
+    }
 
-          -- if self.projectileParameters.hitregPower == 0 then
-            for i, stateffect in ipairs(self.projectileParameters.statusEffects) do
-              world.sendEntityMessage(hitId, "applyStatusEffect", stateffect)
-            end
-          -- end
-        end
-      end
-    end
+    -- coordinates are based off mcontroller position
+    self.weapon:setOwnerDamageAreas(damageConfig, {{
+      vec2.sub(hitReg[1], mcontroller.position()),
+      vec2.sub(hitReg[2], mcontroller.position())
+    }})
 
     -- bullet trail info inserted to projectile stack that's being passed to the animation script
     -- each bullet trail in the stack is rendered, and the lifetime is updated in this very script too
@@ -1301,46 +1294,7 @@ function SynthetikMechanics:fireHitscan(projectileType)
       color = self.projectileParameters.hitscanColor
     })
 
-    -- hitscan explosion
-    --[[
-    {
-      action="loop",
-      count=6,
-      body={
-        {
-          action="particle",
-          specification={
-            type="ember"
-            size=1,
-            color={255, 255, 200, 255},
-            light={65, 65, 51},
-            fullbright=true,
-            destructionTime=0.2,
-            destructionAction="shrink",
-            fade=0.9,
-            initialVelocity={0, 5},
-            finalVelocity={0, -50},
-            approach={0, 30},
-            timeToLive=0,
-            layer="middle",
-            variance={
-              position={0.25, 0.25},
-              size=0.5,
-              initialVelocity={10, 10},
-              timeToLive=0.2
-            }
-          }
-        }
-      }
-    }  
-
-    local hitscanActionsOnReap = {
-      {
-        action = "config",
-        file = "/projectiles/explosions/project45_hitexplosion/project45_hitscanexplosion.config"
-      }
-    }
-    --]]
+    -- hitscan vfx
     local hitscanActionsOnReap = {
       {
         action="loop",
@@ -1386,12 +1340,13 @@ function SynthetikMechanics:fireHitscan(projectileType)
       false,
       {
         damageType = "NoDamage",
-        power = self.projectileParameters.hitregPower,
+        power = damage,
         statusEffects = self.projectileParameters.statusEffects,
         timeToLive = 0,
         actionOnReap = hitscanActionsOnReap
       }
     )
+
 end
 
 -- Utility function that scans for an entity to damage.
@@ -1400,7 +1355,7 @@ function SynthetikMechanics:hitscan(isLaser)
   local scanOrig = self:firePosition()
   local hitscanRange = isLaser and self.beamParameters.beamLength or self.projectileParameters.range or 100
   local ignoresTerrain = isLaser and self.beamParameters.beamIgnoresTerrain or self.projectileParameters.hitscanIgnoresTerrain
-  
+  sb.logInfo(sb.printJson(self.spread))
   local scanDest = vec2.add(scanOrig, vec2.mul(self:aimVector(isLaser and 0 or self.spread), hitscanRange))
   local fullScanDest = not ignoresTerrain and world.lineCollision(scanOrig, scanDest, {"Block", "Dynamic"}) or scanDest
 
