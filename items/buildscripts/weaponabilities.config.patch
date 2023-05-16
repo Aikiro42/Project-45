@@ -38,5 +38,10 @@
         "op": "add",
         "path": "/project45mlgnoscope",
         "value": "/items/active/weapons/ranged/abilities/project45mlgnoscope/project45mlgnoscope.weaponability"
+    },
+    {
+        "op": "add",
+        "path": "/project45tester",
+        "value": "/items/active/weapons/ranged/abilities/project45tester/project45tester.weaponability"
     }
 ]

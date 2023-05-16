@@ -1,0 +1,14 @@
+{
+
+  "animationScripts" : [
+		"/items/active/weapons/ranged/abilities/project45tester/project45testeranimation.lua"
+	],
+
+
+  "ability" : {
+    "name" : "DISTANCE TEST",
+    "type" : "project45tester",
+    "scripts" : ["/items/active/weapons/ranged/abilities/project45tester/project45tester.lua"],
+    "class" : "Project45Tester"
+  }
+}

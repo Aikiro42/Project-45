@@ -1,26 +1,59 @@
+require "/scripts/util.lua"
 require "/scripts/vec2.lua"
 
+local textSize = 0.5
+
 function update()
-    
+
     localAnimator.clearDrawables()
     localAnimator.clearLightSources()
-    
-    local laser = {}
-    laser.origin = animationConfig.animationParameter("laserOrigin")
-    laser.destination = animationConfig.animationParameter("laserDestination")
-    laser.color = animationConfig.animationParameter("altLaserColor") -- or {144, 0, 255}
-    laser.width = animationConfig.animationParameter("altLaserWidth") or 0.2
 
-    if laser.origin and laser.destination and laser.color then
+    -- laser
+    local laser = {}
+    laser.origin = animationConfig.animationParameter("testLaserOrigin")
+    laser.destination = animationConfig.animationParameter("testLaserDestination")
+    laser.color = {255, 215, 0, 128}
+    laser.width = 2
+
+    if laser.origin and laser.destination then
+
         local laserLine = worldify(laser.origin, laser.destination)
         localAnimator.addDrawable({
             line = laserLine,
             width = laser.width,
             fullbright = true,
             color = laser.color
-        }, "Player-1")  
+        }, "ForegroundEntity+1")
     end
+    
 end
+
+function posText(pos, up, prefix)
+    local offset = 2
+    localAnimator.spawnParticle({
+        type = "text",
+        text= "^shadow;" .. (prefix or "") .. "{" .. util.round(pos[1], 1) .. ", " .. util.round(pos[2], 1) .. "}",
+        color = {255,255,255},
+        size = textSize,
+        fullbright = true,
+        flippable = false,
+        layer = "front"
+    }, vec2.add(pos, {0, up and offset or -offset}))
+end
+
+function drawText(t, pos, prefix)
+    pos = pos or vec2.add(activeItemAnimation.ownerPosition(), {0, -1})
+    localAnimator.spawnParticle({
+        type = "text",
+        text= "^shadow;" .. (prefix or "") .. t,
+        color = {255,255,255},
+        size = textSize,
+        fullbright = true,
+        flippable = false,
+        layer = "front"
+    }, pos)
+end
+
 
 -- Calculates the line from pos1 to pos2
 -- that allows `localAnimator.addDrawable()`
@@ -58,4 +91,4 @@ function worldify(pos1, pos2)
     pos2 = vec2.add(pos1, distance)
 
     return {pos1, pos2}
-end  
+end

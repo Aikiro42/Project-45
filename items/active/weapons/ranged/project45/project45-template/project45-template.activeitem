@@ -25,7 +25,7 @@ When gun is a windup-type and
   // "animation" : "project45-template.animation",
   "animationParts" : {
     "butt" : "",
-    "middle" : "project45-template-gun.png",
+    "middle" : "project45-template.png",
     "middleFullbright" : "",
     "barrel" : "",
     "mag": "project45-template-gun-mag.png",
@@ -71,116 +71,8 @@ When gun is a windup-type and
 
   
   "primaryAbilityType": "synthetikmechanics",
-  "primaryAbility": {
-
-    "baseDamage": 3,
-    "cycleTime": [0.2, 0.1],
-    "fireTime": 0.1,
-    "cockTime": 0.1,
-
-    "movementSpeedFactor": 1.99,
-    "jumpHeightFactor": 1.99,
-
-    "reloadTime": 0.7,
-    "jamChances": {
-      "bad": 0,
-      "ok": 0.00,
-      "good": 0.00
-    },
-    "recoilDeg": [1, 0],
-    
-    "magType": "default",
-    "maxAmmo": 20,
-    "bulletsPerReload": 20,
-    
-    "semi": false,
-    "burstCount": 1,
-    "manualFeed": false,
-    
-    "projectileParameters": {
-      "actionOnHit": [
-        {
-          "action": "config",
-          "file": "/projectiles/explosions/elementimpact/poisonimpact.config"
-        }
-      ],
-      "statusEffects": [
-        "weakpoison",
-        "burning",
-        "l6doomed"
-      ],
-      "hitregPower": 0
-    },
-
-    "flashHidden": false,
-    "suppressed": false,
-
-    "critChance": 0.5,
-    "critDamageMult": 2,
-
-    "magLoopFrames": 2,
-    "magAnimRange": [3, 8]
-
-  },
-  //*/
   
-  /*
-  "animation" : "/items/active/weapons/ranged/abilities/synthetikmechanics/synthetikmechanics.animation",
-  "primaryAbility" : {
-    "scripts" : ["/items/active/weapons/ranged/gunfire.lua"],
-    "class" : "GunFire",
-
-    "fireTime" : 0.1,
-    "cooldownTime": 0.1,
-    "baseDps" : 100,
-    "energyUsage" : 17.5,
-    "projectileCount" : 1,
-    "inaccuracy" : 0.01,
-    "fireType" : "auto",
-
-    "projectileType" : "project45stdbullet",
-    "projectileParameters":{
-      "damageType": "IgnoresDef",
-      "damageKind": "synthetikmechanics-hitscan"
-    },
-    "muzzleFlashVariants" : 1,
-
-    "stances" : {
-      "idle" : {
-        "armRotation" : 0,
-        "weaponRotation" : 0,
-        "twoHanded" : false,
-
-        "allowRotate" : true,
-        "allowFlip" : true
-      },
-      "fire" : {
-        "duration" : 0,
-        "armRotation" : 4,
-        "weaponRotation" : 4,
-        "twoHanded" : false,
-
-        "allowRotate" : false,
-        "allowFlip" : false
-      },
-      "cooldown" : {
-        "duration" : 0.2,
-        "armRotation" : 4,
-        "weaponRotation" : 4,
-        "twoHanded" : false,
-
-        "allowRotate" : false,
-        "allowFlip" : false
-      }
-    }
-  },
-  //*/
-  
-  "altAbilityType": "project45enemyradar",
-  "altAbility": {
-    "fireTime": 0.1,
-    "cooldownTime": 0.1
-  },
+  "altAbilityType": "project45tester",
   //*/
 
   "builder" : "/items/buildscripts/buildproject45neo.lua"

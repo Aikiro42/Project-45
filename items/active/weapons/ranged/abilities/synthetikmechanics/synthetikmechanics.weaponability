@@ -256,7 +256,7 @@
 
     // ________________________[ ACCURACY SETTINGS ]__________________________________
     "recoilMomentum": 0, // momentum added to character opposite direction of aim vector when firing
-    "recoilDeg": [10, 5], // degrees of recoil every time the gun is shot (think spray control)
+    "recoilDeg": [2, 1], // degrees of recoil every time the gun is shot (think spray control)
     
     // for extremely high fire rate guns, the gun will begin seesaw around this angle range
     // when the amount of recoil you accrue reaches the second value.
