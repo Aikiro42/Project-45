@@ -149,7 +149,10 @@
 
         // energy ammo
         "project45-iceammomod",
-        "project45-elecammomod"
+        "project45-elecammomod",
+
+        // flamethrower ammo
+        "project45-gasmod"
         
       ],
 

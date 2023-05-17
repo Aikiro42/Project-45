@@ -1,0 +1,24 @@
+{
+  "itemName" : "project45-gasmod",
+  "price" : 15000,
+  "rarity" : "Legendary",
+  "tooltipKind" : "project45gunmod",
+  "category" : "Gas Tank Mod",
+  "inventoryIcon" : "/items/augments/project45-gunmods/ammo/project45-gasmod/project45-gasmod.png",
+  "description" : "This has been recommended by the Geneva Suggestion.",
+  "shortdescription" : "Thermite Grenades",
+
+  "augment":{
+    "modName": "Thermite Grenades",
+    "type": "matter",
+    "archetype": "gas",
+
+    "projectileKind": "projectile",
+    "projectileType": "largepoisoncloud"
+  
+  },
+
+  "radioMessagesOnPickup" : [ "pickupaugment" ],
+
+  "scripts" : [ "/scripts/augments/project45-gunmod/ammomod.lua" ]
+}
