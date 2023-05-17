@@ -5,28 +5,13 @@ require "/scripts/vec2.lua"
 function apply(input)
 
   -- do not install mod if the thing this mod is applied to isn't a gun
-  if not input.parameters.acceptsGunMods then return end
+  if not input.parameters.project45GunModInfo then return end
 
   local augment = config.getParameter("augment")
   local output = Item.new(input)
   
   -- if augment field exists, do something
   if augment then
-
-    --[[
-
-    "augment": {
-        "damagePerShot": {
-            "operation": "add",
-            "value": 10
-        }
-        "fireRate": {
-            "operation": "multiply",
-            "value": 0.2
-        }
-    }
-
-    --]]
 
     local statList = input.parameters.statList or {nil} -- retrieve stat mods
 

@@ -13,6 +13,23 @@
 
   "inventoryIcon" : "project45-antimateriel-icon.png",
   "acceptsGunMods": true,
+  "project45GunModInfo": {
+    "category": "ballistic",
+    "acceptsAmmoTypes": {
+      "ballistic": true
+    },
+    "acceptsAmmoArchetypes": {
+      "generic": true
+    },
+    "acceptsModSlot": {
+      "sights": true,
+      "receiver": true,
+      "material": true,
+      "barrel": true,
+      "grip": true,
+      "magazine": true
+    }
+  },
 
 
   // "animation" : "project45-template.animation",
@@ -55,18 +72,6 @@
       "boltPull" : ["/sfx/project45-synthetikmechanics/reloads/boltpull_nagant.ogg"],
       "boltPush" : ["/sfx/project45-synthetikmechanics/reloads/boltpush_nagant.ogg"]
     }
-  },
-  "acceptsModSlot": {
-    "rail": false,
-    "sights": true,
-    "muzzle": false,
-    "underbarrel": false,
-    "stock": false
-  },
-  "rejectsModType":{
-    "energyAmmo": true,
-    "shotgunAmmo": false,
-    "grenadeAmmo": true
   },
   "baseOffset" : [1.8, 0.15],
   "muzzleOffset" : [3.4, 0.4],

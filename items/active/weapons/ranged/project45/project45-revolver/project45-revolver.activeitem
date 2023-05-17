@@ -13,6 +13,23 @@
 
   "inventoryIcon" : "project45-revolver-icon.png",
   "acceptsGunMods": true,
+  "project45GunModInfo": {
+    "category": "ballistic",
+    "acceptsAmmoTypes": {
+      "ballistic": true
+    },
+    "acceptsAmmoArchetypes": {
+      "generic": true
+    },
+    "acceptsModSlot": {
+
+      "receiver": true,
+      "material": true,
+      "barrel": true,
+      "grip": true,
+      "magazine": true
+    }
+  },
 
   // "animation" : "project45-template.animation",
   "animationParts" : {
@@ -51,18 +68,6 @@
       "boltPush": ["/sfx/project45-synthetikmechanics/reloads/boltpush_revolver.ogg"],
       "boltPull": ["/sfx/project45-synthetikmechanics/reloads/boltpush_revolver.ogg"]
     }
-  },
-  "acceptsModSlot": {
-    "rail": false,
-    "sights": true,
-    "muzzle": false,
-    "underbarrel": false,
-    "stock": false
-  },
-  "rejectsModType":{
-    "energyAmmo": true,
-    "shotgunAmmo": true,
-    "grenadeAmmo": true
   },
   "baseOffset" : [0.7, 0.07],
   "muzzleOffset" : [1.55, 0.675],

@@ -11,8 +11,7 @@
   "radioMessagesOnPickup" : [ "pickupaugment" ],
 
   "augment": {
-    "type": "ability",
-    "modName": "ability",
+    "category": "universal",
     "slot": "underbarrel",
     "altAbilityType": "project45grenadelauncher",
     "overrideTwoHanded": true,

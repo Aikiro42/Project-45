@@ -13,6 +13,25 @@
 
   "inventoryIcon" : "project45-assaultenergygun-icon.png",
   "acceptsGunMods": true,
+  "project45GunModInfo": {
+    "category": "energy",
+    "acceptsAmmoTypes": {
+      "energy": true
+    },
+    "acceptsAmmoArchetypes": {
+      "all": true
+    },
+    "acceptsModSlot": {
+      "sights": true,
+      "muzzle": true,
+      
+      "receiver": true,
+      "material": true,
+      "barrel": true,
+      "grip": true,
+      "magazine": true
+    }
+  },
 
   // "animation" : "project45-template.animation",
   "animationParts" : {
@@ -69,20 +88,6 @@
 
   "muzzleFlashColor": [153, 218, 255],
 
-  "acceptsModSlot": {
-    "rail": false,
-    "sights": true,
-    "muzzle": true,
-    "underbarrel": true,
-    "stock": false
-  },
-  "rejectsModType":{
-    "energyAmmo": false,
-    "shotgunAmmo": true,
-    "grenadeAmmo": true,
-    "flamethrowerAmmo": true,
-    "ballisticAmmo": true
-  },
   // -171, -60
   "baseOffset" : [0.8, 0],
   "muzzleOffset" : [2.6, 0.4],

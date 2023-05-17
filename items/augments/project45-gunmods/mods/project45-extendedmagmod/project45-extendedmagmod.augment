@@ -9,14 +9,19 @@
   "shortdescription" : "Extended Magazines",
 
   "augment":{
-    "type": "mag",
     "modName": "Extended Magazines",
+    "category": "ballistic",
     "slot": "magazine",
-    "maxAmmoMult": 2
+    "primaryAbility": {
+      "maxAmmo": {
+        "operation": "multiply",
+        "value": 2
+      }
+    }
   },
 
 
   "radioMessagesOnPickup" : [ "pickupaugment" ],
 
-  "scripts" : [ "/scripts/augments/project45-gunmod.lua" ]
+  "scripts" : [ "/scripts/augments/project45-gunmod/gunmod.lua" ]
 }

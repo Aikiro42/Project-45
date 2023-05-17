@@ -11,20 +11,15 @@
   "radioMessagesOnPickup" : [ "pickupaugment" ],
 
   "augment": {
-    /*
-    can either be "stat" or anything else
-    */
-    "type": "mod",
-    
-    /*
-    NON-STAT MODS REQUIRE THIS FIELD
-    */
     "modName": "Padded Stock",
-    
+    "category": "universal",
     "slot": "stock",
-    
-    "screenShakeMult": 0.1,
-    
+    "primaryAbility": {
+      "screenShakeMult": {
+        "operation": "replace",
+        "value": 0.1
+      }
+    },
     "animationCustom": {
       "animatedParts" : { "parts" : {
         "stock" : {
@@ -39,5 +34,5 @@
 
   },
 
-  "scripts" : [ "/scripts/augments/project45-gunmod.lua" ]
+  "scripts" : [ "/scripts/augments/project45-gunmod/gunmod.lua" ]
 }

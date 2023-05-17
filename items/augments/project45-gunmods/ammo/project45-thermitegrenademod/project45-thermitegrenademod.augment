@@ -9,8 +9,10 @@
   "shortdescription" : "Thermite Grenades",
 
   "augment":{
-    "type": "grenadeAmmo",
     "modName": "Thermite Grenades",
+    "type": "ballistic",
+    "archetype": "grenade",
+
     "projectileKind": "projectile",
     "projectileType": "project45thermitegrenade",
     "projectileParameters": {

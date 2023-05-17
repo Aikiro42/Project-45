@@ -9,8 +9,7 @@
   "shortdescription" : "Military Flashlight Mod",
 
   "augment":{
-    "type": "ability",
-    "modName": "ability",
+    "category": "universal",
     "slot": "rail",
     "altAbilityType" : "project45flashlaser",
     "overrideTwoHanded": true,

@@ -9,8 +9,9 @@
   "shortdescription" : "Electro Beam Configuration",
 
   "augment":{
-    "type": "energyAmmo",
     "modName": "Electro Beams",
+    "type": "energy",
+    "archetype": "generic",
 
     "muzzleFlashColor": [210,156,231],
     "projectileKind": "hitscan",

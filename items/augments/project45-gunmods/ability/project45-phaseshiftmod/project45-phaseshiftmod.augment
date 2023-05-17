@@ -9,8 +9,7 @@
   "shortdescription" : "Phase Shifter Mod",
   
   "augment":{
-    "type": "ability",
-    "modName": "ability",
+    "category": "universal",
     "slot": "underbarrel",
     "altAbilityType" : "project45phaseshift",
     "overrideTwoHanded": true,

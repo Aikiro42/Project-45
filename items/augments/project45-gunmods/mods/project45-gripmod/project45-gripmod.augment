@@ -5,14 +5,19 @@
   "tooltipKind" : "project45gunmod",
   "category" : "Grip Mod",
   "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-gripmod/project45-gripmod.png",
-  "description" : "Provides better handling of the gun, reducing recoil by 50%.",
+  "description" : "Provides better handling of the gun, reducing recoil by 25%.",
   "shortdescription" : "Vertical Grip",
 
   "augment":{
-    "type": "grip",
     "modName": "Vertical Grip",
+    "category": "universal",
     "slot": "underbarrel",
-    "recoilMult": 0.1
+    "primaryAbility": {
+      "recoilMult": {
+        "operation": "multiply",
+        "value": 0.75
+      }
+    }
     ,"animationCustom": {
       "animatedParts" : { "parts" : {
         "underbarrel" : {
@@ -29,5 +34,5 @@
 
   "radioMessagesOnPickup" : [ "pickupaugment" ],
 
-  "scripts" : [ "/scripts/augments/project45-gunmod.lua" ]
+  "scripts" : [ "/scripts/augments/project45-gunmod/gunmod.lua" ]
 }

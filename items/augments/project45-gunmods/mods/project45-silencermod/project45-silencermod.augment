@@ -9,14 +9,20 @@
   "shortdescription" : "Silencer",
 
   "augment":{
-    "type": "muzzle",
     "modName": "Silencer",
+    "category": "ballistic",
     "slot": "muzzle",
     "recoilMult": 0.9,
     "muzzleOffsetAdd": [1, 0],
     "primaryAbility": {
-      "flashHidden": true,
-      "hollowSoundMult": 0.3
+      "flashHidden": {
+        "operation": "replace",
+        "value": true
+      },
+      "hollowSoundMult": {
+        "operation": "replace",
+        "value": 0.3
+      }
     }
     ,"animationCustom": {
       "sounds": {
@@ -39,5 +45,5 @@
 
   "radioMessagesOnPickup" : [ "pickupaugment" ],
 
-  "scripts" : [ "/scripts/augments/project45-gunmod.lua" ]
+  "scripts" : [ "/scripts/augments/project45-gunmod/gunmod.lua" ]
 }

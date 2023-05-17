@@ -9,9 +9,9 @@
   "shortdescription" : "Dragon's Breath",
 
   "augment":{
-    "type": "shotgunAmmo",
     "modName": "Dragon's Breath",
-    
+    "type": "ballistic",
+    "archetype": "shotgun",
     "projectileKind": "projectile",
     "spread": 0.05,
     "projectileCount": 5,

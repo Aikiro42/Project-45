@@ -9,8 +9,9 @@
   "shortdescription" : "Cryo Beam Configuration",
 
   "augment":{
-    "type": "energyAmmo",
     "modName": "Cryo Beams",
+    "type": "energy",
+    "archetype": "generic",
 
     "muzzleFlashColor": [150,203,231],
     "projectileKind": "hitscan",

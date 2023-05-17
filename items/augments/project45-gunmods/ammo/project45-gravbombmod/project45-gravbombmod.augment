@@ -9,8 +9,9 @@
   "shortdescription" : "Gravity Grenades",
 
   "augment":{
-    "type": "grenadeAmmo",
     "modName": "Gravity Grenades",
+    "type": "ballistic", // todo: make this either matter or energy and make a gun for this
+    "archetype": "grenade",
 
     "projectileKind": "projectile",
     "projectileType": "project45gravitygrenade",

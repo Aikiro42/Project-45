@@ -21,8 +21,26 @@ When gun is a windup-type and
 
   "inventoryIcon" : "project45-energygun-icon.png",
   "acceptsGunMods": true,
+  "project45GunModInfo": {
+    "category": "energy",
+    "acceptsAmmoTypes": {
+      "energy": true
+    },
+    "acceptsAmmoArchetypes": {
+      "generic": true
+    },
+    "acceptsModSlot": {
+      "sights": true,
+      "muzzle": true,
+      
+      "receiver": true,
+      "material": true,
+      "barrel": true,
+      "grip": true,
+      "magazine": true
+    }
+  },
 
-  // "animation" : "project45-template.animation",
   "animationParts" : {
     "butt" : "",
     "middle" : "project45-energygun.png",
@@ -61,18 +79,6 @@ When gun is a windup-type and
       "fireLoop": ["/sfx/gun/mech_beamdrill_loop.ogg"],
       "fireEnd": ["/sfx/gun/mech_beamdrill_winddown.ogg"]
     }
-  },
-  "acceptsModSlot": {
-    "rail": false,
-    "sights": true,
-    "muzzle": false,
-    "underbarrel": false,
-    "stock": false
-  },
-  "rejectsModType": {
-    "ballisticAmmo": true,
-    "shotgunAmmo": true,
-    "grenadeAmmo": true
   },
   "baseOffset" : [0.1, -0.1],
   "muzzleOffset" : [2, 0.5],

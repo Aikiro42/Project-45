@@ -9,8 +9,7 @@
   "shortdescription" : "Scope Mod",
 
   "augment":{
-    "type": "ability",
-    "modName": "ability",
+    "category": "universal",
     "slot": "sights",
     "altAbilityType" : "project45gunscope",
     "overrideTwoHanded": true,

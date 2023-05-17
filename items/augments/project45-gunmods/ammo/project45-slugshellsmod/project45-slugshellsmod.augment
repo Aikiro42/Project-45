@@ -9,8 +9,9 @@
   "shortdescription" : "Slug shells",
 
   "augment":{
-    "type": "shotgunAmmo",
     "modName": "Slug shells",
+    "type": "ballistic",
+    "archetype": "shotgun",
 
     "projectileCount": 1,
     "projectileKind": "projectile",

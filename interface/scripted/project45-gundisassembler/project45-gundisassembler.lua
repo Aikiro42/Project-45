@@ -17,7 +17,7 @@ function disassemble()
     local input = widget.itemGridItems("itemGrid")[1]
     if not input then return end
     if input.parameters then
-        if input.parameters.acceptsGunMods and input.parameters.isModded then
+        if input.parameters.project45GunModInfo and input.parameters.isModded then
     
             if input.parameters.modSlots then
               for k, v in pairs(input.parameters.modSlots) do

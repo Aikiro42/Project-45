@@ -9,8 +9,7 @@
   "shortdescription" : "MLG Scope",
 
   "augment":{
-    "type": "ability",
-    "modName": "ability",
+    "category": "universal",
     "slot": "sights",
     "altAbilityType" : "project45mlgnoscope",
     "overrideTwoHanded": true,

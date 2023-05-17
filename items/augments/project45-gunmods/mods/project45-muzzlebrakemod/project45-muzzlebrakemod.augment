@@ -5,15 +5,20 @@
   "tooltipKind" : "project45gunmod",
   "category" : "Muzzle Mod",
   "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-muzzlebrakemod/project45-muzzlebrakemod.png",
-  "description" : "Makes exiting gas counteract the muzzle rise, reducing vertical recoil by 50%.",
+  "description" : "Makes exiting gas counteract the muzzle rise, reducing recoil by 10%.",
   "shortdescription" : "Muzzle Brake",
 
   "augment":{
-    "type": "muzzle",
     "modName": "Muzzle Brake",
+    "category": "ballistic",
     "slot": "muzzle",
-    "recoilMult": 0.5
-    
+    "primaryAbility": {
+      "recoilMult": {
+        "operation": "multiply",
+        "value": 0.9
+      }
+    }
+
     ,"animationCustom": {
       "animatedParts" : { "parts" : {
         "muzzle" : {
@@ -32,5 +37,5 @@
 
   "radioMessagesOnPickup" : [ "pickupaugment" ],
 
-  "scripts" : [ "/scripts/augments/project45-gunmod.lua" ]
+  "scripts" : [ "/scripts/augments/project45-gunmod/gunmod.lua" ]
 }

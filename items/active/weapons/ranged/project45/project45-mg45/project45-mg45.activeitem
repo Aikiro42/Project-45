@@ -13,7 +13,27 @@
 
   "inventoryIcon" : "project45-mg45-icon.png",
   "acceptsGunMods": true,
-
+  "project45GunModInfo": {
+    "category": "ballistic",
+    "acceptsAmmoTypes": {
+      "ballistic": true
+    },
+    "acceptsAmmoArchetypes": {
+      "generic": true
+    },
+    "acceptsModSlot": {
+      "sights": true,
+      "muzzle": true,
+      "rail": true,
+      "underbarrel": true,
+      
+      "receiver": true,
+      "material": true,
+      "barrel": true,
+      "grip": true,
+      "magazine": true
+    }
+  },
   
   // "animation" : "project45-template.animation",
   "animationParts" : {
@@ -76,18 +96,6 @@
       "chargeDrone": ["/sfx/project45-synthetikmechanics/charges/flamethrower_hiss_loop.ogg"],
       "chargeWhine": ["/assetmissing.wav"]
     }
-  },
-  "acceptsModSlot": {
-    "rail": false,
-    "sights": true,
-    "muzzle": true,
-    "underbarrel": true,
-    "stock": false
-  },
-  "rejectsModType":{
-    "energyAmmo": true,
-    "shotgunAmmo": true,
-    "grenadeAmmo": true
   },
   "baseOffset" : [1, 0.5],
   "muzzleOffset" : [3.125, 0],

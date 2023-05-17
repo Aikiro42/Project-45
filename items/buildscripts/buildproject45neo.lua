@@ -23,7 +23,7 @@ function build(directory, config, parameters, level, seed)
   end
 
   parameters.shortdescription = config.shortdescription
-  parameters.acceptsGunMods = config.acceptsGunMods
+  parameters.project45GunModInfo = config.project45GunModInfo
 
   -- retrieve ability animation scripts
   local primaryAnimationScripts = setupAbility(config, parameters, "primary")

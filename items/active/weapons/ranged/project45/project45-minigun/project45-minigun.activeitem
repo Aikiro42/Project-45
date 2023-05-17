@@ -13,7 +13,25 @@
 
   "inventoryIcon" : "project45-minigun-icon.png",
   "acceptsGunMods": true,
-
+  "project45GunModInfo": {
+    "category": "ballistic",
+    "acceptsAmmoTypes": {
+      "ballistic": true
+    },
+    "acceptsAmmoArchetypes": {
+      "generic": true
+    },
+    "acceptsModSlot": {
+      "rail": true,
+      "underbarrel": true,
+      
+      "receiver": true,
+      "material": true,
+      "barrel": true,
+      "grip": true,
+      "magazine": true
+    }
+  },
   // "animation" : "project45-template.animation",
   "animationParts" : {
     "butt" : "",
@@ -52,18 +70,6 @@
       "getMag": ["/sfx/project45-synthetikmechanics/foleys/getmag_ammobox.ogg"],
       "ejectMag": ["/sfx/project45-synthetikmechanics/reloads/ejectmag_lmg.ogg"]
     }
-  },
-  "acceptsModSlot": {
-    "rail": true,
-    "sights": false,
-    "muzzle": false,
-    "underbarrel": true,
-    "stock": false
-  },
-  "rejectsModType":{
-    "energyAmmo": true,
-    "shotgunAmmo": true,
-    "grenadeAmmo": true
   },
   "baseOffset" : [0.3, -1],
   "muzzleOffset" : [2.3, 0.4],

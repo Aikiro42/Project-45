@@ -5,23 +5,38 @@
   "tooltipKind" : "project45gunmod",
   "category" : "Receiver Mod",
   "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-autofiremod/project45-autofiremod.png",
-  "description" : "Allows a weapon to have an automatic firemode. ^#FFAAAA; Has no effect on automatic weapons.",
+  "description" : "Allows a weapon to have an automatic firemode.",
   "shortdescription" : "Automatic Receiver",
 
   "radioMessagesOnPickup" : [ "pickupaugment" ],
 
   "augment": {
-    "type": "receiver",
     "modName": "Automatic Receiver",
+    "category": "ballistic",
     "slot": "receiver",
     "primaryAbility": {
-      "semi": false,
-      "manualFeed": false,
-      "autoFireAfterCharge": true,
-      "burstCount": 1,
-      "fireTime": 0.1
+      "semi": {
+        "operation": "replace",
+        "value": false
+      },
+      "manualFeed": {
+        "operation": "replace",
+        "value": false
+      },
+      "autoFireAfterCharge": {
+        "operation": "replace",
+        "value": true
+      },
+      "burstCount": {
+        "operation": "replace",
+        "value": 1
+      },
+      "fireTime": {
+        "operation": "replace",
+        "value": 0.1
+      }
     }
   },
 
-  "scripts" : [ "/scripts/augments/project45-gunmod.lua" ]
+  "scripts" : [ "/scripts/augments/project45-gunmod/gunmod.lua" ]
 }

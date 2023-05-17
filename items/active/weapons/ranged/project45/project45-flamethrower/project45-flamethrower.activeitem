@@ -13,7 +13,23 @@
 
   "inventoryIcon" : "project45-flamethrower-icon.png",
   "acceptsGunMods": true,
-
+  "project45GunModInfo": {
+    "category": "emissive",
+    "acceptsAmmoTypes": {
+      "matter": true
+    },
+    "acceptsAmmoArchetypes": {
+      "liquid": true,
+      "gas": true
+    },
+    "acceptsModSlot": {
+      "receiver": true,
+      "material": true,
+      "barrel": true,
+      "grip": true,
+      "magazine": true
+    }
+  },
   // "animation" : "project45-template.animation",
   "animationParts" : {
     "butt" : "",
@@ -61,19 +77,6 @@
     }
   },
   "muzzleFlashColor": [255,125,0],
-  "acceptsModSlot": {
-    "rail": false,
-    "sights": false,
-    "muzzle": false,
-    "underbarrel": false,
-    "stock": false
-  },
-  "rejectsModType":{
-    "energyAmmo": true,
-    "shotgunAmmo": true,
-    "grenadeAmmo": true,
-    "ballisticAmmo": true
-  },
   "baseOffset" : [0.3, -1],
   "muzzleOffset" : [2.3, 0.4],
   "ejectionPortOffset": [-1.4, -0.5],

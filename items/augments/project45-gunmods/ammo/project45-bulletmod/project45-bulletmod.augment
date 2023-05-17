@@ -5,12 +5,13 @@
   "tooltipKind" : "project45gunmod",
   "category" : "Universal Ammo Mod",
   "inventoryIcon" : "/items/augments/project45-gunmods/ammo/project45-bulletmod/project45-bulletmod.png",
-  "description" : "Universally compatible standard issue bullets.",
+  "description" : "Converts bullets fired to projectile ones.\nIncompatible with guns that normally fire grenades or matter.",
   "shortdescription" : "Standard Bullets",
 
   "augment":{
-    "type": "univAmmo",
     "modName": "Standard Bullets",
+    "type": "universal",
+    "archetype": "bullet",
     "projectileKind": "projectile",
     "projectileType": "project45stdbullet"
   },

@@ -13,7 +13,25 @@
 
   "inventoryIcon" : "project45-grenadelauncher-icon.png",
   "acceptsGunMods": true,
-
+  "project45GunModInfo": {
+    "category": "ballistic",
+    "acceptsAmmoTypes": {
+      "ballistic": true
+    },
+    "acceptsAmmoArchetypes": {
+      "grenade": true
+    },
+    "acceptsModSlot": {
+      "sights": true,
+      "rail": true,
+      
+      "receiver": true,
+      "material": true,
+      "barrel": true,
+      "grip": true,
+      "magazine": true
+    }
+  },
 
   // "animation" : "project45-template.animation",
   "animationParts" : {
@@ -59,18 +77,6 @@
       "fire" : ["/sfx/project45-synthetikmechanics/fires/fire_grenadelauncher.ogg"],
       "loadRound" : ["/sfx/project45-synthetikmechanics/reloads/loadround_grenadelauncher.ogg"]
     }
-  },
-  "acceptsModSlot": {
-    "rail": true,
-    "sights": true,
-    "muzzle": false,
-    "underbarrel": false,
-    "stock": false
-  },
-  "rejectsModType":{
-    "energyAmmo": true,
-    "shotgunAmmo": true,
-    "ballisticAmmo": true
   },
   "baseOffset" : [-0.125, 0],
   "muzzleOffset" : [2, 0.225],

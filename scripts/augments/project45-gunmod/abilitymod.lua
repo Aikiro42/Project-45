@@ -6,7 +6,8 @@ function apply(input)
 
   -- do not install mod if the thing this mod is applied to isn't my gun
   -- todo: make this variable more unique
-  if not input.parameters.acceptsGunMods then return end
+  local modInfo = input.parameters.project45GunModInfo
+  if not modInfo then return end
 
   local augment = config.getParameter("augment")
   local output = Item.new(input)
@@ -18,17 +19,23 @@ function apply(input)
     local modSlots = input.parameters.modSlots or {}
     
     -- get list of accepted mod slots
-    local acceptsModSlot = output:instanceValue("acceptsModSlot", {})
+    local acceptsModSlot = modInfo.acceptsModSlot or {}
+    acceptsModSlot.intrinsic = true
 
     -- MOD INSTALLATION GATES
 
-    -- do not install mod if gun denies installation of such type/slot
+    -- do not install mod if mod is not part of weapon category
+    if augment.category ~= "universal" then
+      if modInfo.category ~= augment.category then return end
+    end
+
+    -- do not install mod if gun denies installation on slot
     if not acceptsModSlot[augment.slot] then return end    
 
     -- do not install mod if slot is occupied
     if modSlots[augment.slot] then return end
-    
-    -- Abilities occupy two modslots - the slot they're assigned to, and the "ability" slot.
+
+    -- do not install mod if ability is already installed
     if modSlots.ability then return end
 
     -- MOD INSTALLATION PROCESS
@@ -57,11 +64,11 @@ function apply(input)
 
     -- add mod info to list of installed mods
     modSlots.ability = {
-        augment.modName,
+        "ability",
         config.getParameter("itemName")
     }
     modSlots[augment.slot] = {
-        augment.modName,
+        "ability",
         config.getParameter("itemName")
     }
     
@@ -71,41 +78,4 @@ function apply(input)
     return output:descriptor(), 1
   
   end
-end
-
--- Returns a modified value given
--- * an operation and
--- * the value to change the old value by.
---
--- If the old value is a table, the operation is applied to all its atomic elements.
-function modify(oldValue, operation, modValue)
-    local newValue
-
-    -- if operation is replacement old value doesn't matter
-    -- this is a base case
-    if operation == "replace" then
-        newValue = modValue
-    
-    -- otherwise
-    -- if old value is a table recursively modify each
-    -- element of the old value table
-    elseif type(oldValue) == "table" then
-        newValue = {}
-        -- for each value in oldValue, modify it
-        for key, val in pairs(oldValue) do
-            newValue[key] = modify(val, operation, modValue)
-        end
-    
-    -- if old value is atomic, modify as such
-    -- this is a base case
-    else
-        if operation == "add" then
-            newValue = oldValue * modValue
-        elseif operation == "mult" then
-            newValue = oldValue * modValue
-        end
-
-    end
-
-    return newValue
 end

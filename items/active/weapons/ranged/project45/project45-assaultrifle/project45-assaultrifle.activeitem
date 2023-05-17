@@ -13,8 +13,28 @@
 
   "inventoryIcon" : "project45-assaultrifle-icon.png",
   "acceptsGunMods": true,
+  "project45GunModInfo": {
+    "category": "ballistic",
+    "acceptsAmmoTypes": {
+      "ballistic": true
+    },
+    "acceptsAmmoArchetypes": {
+      "generic": true
+    },
+    "acceptsModSlot": {
+      "sights": true,
+      "rail": true,
+      "underbarrel": true,
+      "muzzle": true,
+      
+      "receiver": true,
+      "material": true,
+      "barrel": true,
+      "grip": true,
+      "magazine": true
+    }
+  },
 
-  // "animation" : "project45-template.animation",
   "animationParts" : {
     "butt" : "",
     "middle" : "project45-assaultrifle.png",
@@ -67,13 +87,6 @@
         "/sfx/project45-synthetikmechanics/fires/fire_ar_3.ogg"
       ]
     }
-  },
-  "acceptsModSlot": {
-    "rail": true,
-    "sights": true,
-    "muzzle": true,
-    "underbarrel": false,
-    "stock": false
   },
   "rejectsModType":{
     "energyAmmo": true,

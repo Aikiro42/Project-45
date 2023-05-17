@@ -13,6 +13,25 @@
 
   "inventoryIcon" : "project45-shotgun-icon.png",
   "acceptsGunMods": true,
+  "project45GunModInfo": {
+    "category": "ballistic",
+    "acceptsAmmoTypes": {
+      "ballistic": true
+    },
+    "acceptsAmmoArchetypes": {
+      "shotgun": true
+    },
+    "acceptsModSlot": {
+      "sights": true,
+      "muzzle": true,
+  
+      "receiver": true,
+      "material": true,
+      "barrel": true,
+      "grip": true,
+      "magazine": true
+    }
+  },
 
   
   // "animation" : "project45-template.animation",
@@ -67,19 +86,7 @@
       "boltPush": ["/sfx/project45-synthetikmechanics/reloads/boltpush_shotgun.ogg"]
     }
   },
-  "acceptsModSlot": {
-    "rail": false,
-    "sights": true,
-    "muzzle": true,
-    "underbarrel": false,
-    "stock": false
-  },
-  "rejectsModType":{
-    "energyAmmo": true,
-    "ballisticAmmo": true,
-    "grenadeAmmo": true
-  },
-  // "baseOffset" : [1, 0.15],
+
   "baseOffset" : [0, -0.45],
   "muzzleOffset" : [2.5, 0.4],
   "ejectionPortOffset": [-0.7, 0.5],

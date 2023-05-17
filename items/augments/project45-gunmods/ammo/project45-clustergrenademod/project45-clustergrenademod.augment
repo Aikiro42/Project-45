@@ -9,8 +9,9 @@
   "shortdescription" : "Cluster Grenades",
 
   "augment":{
-    "type": "grenadeAmmo",
     "modName": "Cluster Grenades",
+    "type": "ballistic",
+    "archetype": "grenade",
     "projectileKind": "projectile",
     "projectileType": "clustergrenade",
     "projectileParameters": {

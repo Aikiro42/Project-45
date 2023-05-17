@@ -9,15 +9,18 @@
   "shortdescription" : "Reflex Sights",
 
   "augment":{
-    "type": "sights",
     "modName": "Reflex Sights",
+    "category": "universal",
     "slot": "sights",
     "recoilMult": 0.1,
     "primaryAbility": {
       "laser": {
-        "enabled": true,
-        "color": [255, 255, 255, 64],
-        "width": 0.1
+        "operation": "replace",
+        "value": {
+          "enabled": true,
+          "color": [255, 255, 255, 64],
+          "width": 0.1
+        }
       }
     }
     ,"animationCustom": {
@@ -36,5 +39,5 @@
 
   "radioMessagesOnPickup" : [ "pickupaugment" ],
 
-  "scripts" : [ "/scripts/augments/project45-gunmod.lua" ]
+  "scripts" : [ "/scripts/augments/project45-gunmod/gunmod.lua" ]
 }

@@ -5,12 +5,13 @@
   "tooltipKind" : "project45gunmod",
   "category" : "Universal Ammo Mod",
   "inventoryIcon" : "/items/augments/project45-gunmods/ammo/project45-hitscanmod/project45-hitscanmod.png",
-  "description" : "Universally compatible hitscan bullets.",
+  "description" : "Converts bullets fired to hitscan ones.\nIncompatible with guns that normally fire grenades or matter.",
   "shortdescription" : "Hitscan Bullets",
 
   "augment":{
-    "type": "univAmmo",
     "modName": "Hitscan Bullets",
+    "type": "universal",
+    "archetype": "bullet",
     "projectileKind": "hitscan"
     
   },

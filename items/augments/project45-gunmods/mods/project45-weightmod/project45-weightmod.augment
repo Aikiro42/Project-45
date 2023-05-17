@@ -9,17 +9,27 @@
   "shortdescription" : "Aegisalt Alloy Parts",
 
   "augment":{
-    "type": "mod",
     "modName": "Aegisalt Alloy Parts",
+    "category": "universal",
     "slot": "material",
-    "mobilityMult": 1.15,
     "primaryAbility": {
-      "heavyWeapon": false
+      "heavyWeapon": {
+        "operation": "replace",
+        "value": false
+      },
+      "movementSpeedFactor": {
+        "operation": "multiply",
+        "value": 1.15
+      },
+      "jumpHeightFactor": {
+        "operation": "multiply",
+        "value": 1.15
+      }
     }
   },
 
 
   "radioMessagesOnPickup" : [ "pickupaugment" ],
 
-  "scripts" : [ "/scripts/augments/project45-gunmod.lua" ]
+  "scripts" : [ "/scripts/augments/project45-gunmod/gunmod.lua" ]
 }

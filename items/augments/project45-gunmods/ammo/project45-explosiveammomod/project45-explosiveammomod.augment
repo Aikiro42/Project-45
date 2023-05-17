@@ -9,9 +9,9 @@
   "shortdescription" : "High-explosive Bullets",
 
   "augment":{
-    "type": "ballisticAmmo",
     "modName": "High-explosive Bullets",
-
+    "type": "ballistic",
+    "archetype": "generic",
     "projectileKind": "projectile",
     "projectileType": "project45explosivebullet"
   },

@@ -9,9 +9,10 @@
   "shortdescription" : "Mercury-tipped Bullets",
 
   "augment":{
-    "type": "ballisticAmmo",
     "modName": "Mercury-tipped Bullets",
-    
+    "type": "ballistic",
+    "archetype": "generic",
+
     "projectileKind": "projectile",
     "projectileType": "project45stdpoisonbullet"
     

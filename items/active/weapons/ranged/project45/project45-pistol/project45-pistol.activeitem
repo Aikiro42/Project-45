@@ -13,17 +13,24 @@
 
   "inventoryIcon" : "project45-pistol-icon.png",
   "acceptsGunMods": true,
-  "acceptsModSlot": {
-    "rail": true,
-    "sights": false,
-    "muzzle": true,
-    "underbarrel": false,
-    "stock": false
-  },
-  "rejectsModType":{
-    "energyAmmo": true,
-    "shotgunAmmo": true,
-    "grenadeAmmo": true
+  "project45GunModInfo": {
+    "category": "ballistic",
+    "acceptsAmmoTypes": {
+      "ballistic": true
+    },
+    "acceptsAmmoArchetypes": {
+      "generic": true
+    },
+    "acceptsModSlot": {
+      "rail": true,
+      "muzzle": true,
+      
+      "receiver": true,
+      "material": true,
+      "barrel": true,
+      "grip": true,
+      "magazine": true
+    }
   },
   // "animation" : "project45-template.animation",
   "animationParts" : {

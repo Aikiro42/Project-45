@@ -13,6 +13,24 @@
 
   "inventoryIcon" : "project45-rocketlauncher-icon.png",
   "acceptsGunMods": true,
+  "project45GunModInfo": {
+    "category": "ballistic",
+    "acceptsAmmoTypes": {
+      "ballistic": true
+    },
+    "acceptsAmmoArchetypes": {
+      "rocket": true
+    },
+    "acceptsModSlot": {
+      "sights": true,
+
+      "receiver": true,
+      "material": true,
+      "barrel": true,
+      "grip": true,
+      "magazine": true
+    }
+  },
 
   // "animation" : "project45-template.animation",
   "animationParts" : {
@@ -68,17 +86,6 @@
       "chargeDrone": ["/sfx/interface/sniper_mark_pitch1.ogg"],
       "fireEnd": ["/sfx/project45-synthetikmechanics/charges/flamethrower_hiss_stop.ogg"]
     }
-  },
-  "acceptsModSlot": {
-    "rail": true,
-    "sights": false,
-    "muzzle": false,
-    "underbarrel": false,
-    "stock": false
-  },
-  "rejectsModType":{
-    "energyAmmo": true,
-    "grenadeAmmo": true
   },
   "baseOffset" : [-1.375, 0.75],
   "muzzleOffset" : [3.25, 0.5],

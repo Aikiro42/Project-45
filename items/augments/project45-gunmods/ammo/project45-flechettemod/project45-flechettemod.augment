@@ -9,8 +9,9 @@
   "shortdescription" : "Flechette Shells",
 
   "augment":{
-    "type": "shotgunAmmo",
     "modName": "Flechette Shells",
+    "type": "ballistic",
+    "archetype": "shotgun",
 
     "multishot": 1.1,
     "projectileCount": 5,

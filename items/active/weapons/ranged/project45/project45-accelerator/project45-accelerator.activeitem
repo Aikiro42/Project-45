@@ -14,6 +14,24 @@
   "inventoryIcon" : "project45-accelerator-icon.png",
   
   "acceptsGunMods": true,
+  "project45GunModInfo": {
+    "category": "energy",
+    "acceptsAmmoTypes": {
+      "energy": true
+    },
+    "acceptsAmmoArchetypes": {
+      "all": true
+    },
+    "acceptsModSlot": {
+      "muzzle": true,
+
+      "receiver": true,
+      "material": true,
+      "barrel": true,
+      "grip": true,
+      "magazine": true
+    }
+  },
 
   // "animation" : "project45-template.animation",
   "animationParts" : {
@@ -24,7 +42,6 @@
     "mag": "project45-accelerator-mag.png",
     "magFullbright": "",
     "muzzleFlash" : "/items/active/weapons/ranged/muzzleflash.png",
-    
     "muzzle": "",
     "grip": ""
 
@@ -53,19 +70,6 @@
   },
 
   "muzzleFlashColor": [255,128,255],
-  
-  "acceptsModSlot": {
-    "rail": false,
-    "sights": false,
-    "muzzle": false,
-    "underbarrel": false,
-    "stock": false
-  },
-  "rejectsModType":{
-    "ballisticAmmo": true,
-    "shotgunAmmo": true,
-    "grenadeAmmo": true
-  },
   "baseOffset" : [0.5, 0],
   "muzzleOffset" : [1, 0.25],
   "ejectionPortOffset": [-0.1, 0.7],

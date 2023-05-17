@@ -4,16 +4,38 @@ require "/scripts/vec2.lua"
 
 function apply(input)
 
-  -- do not install mod if the thing this mod is applied to isn't a gun
-  if not input.parameters.acceptsGunMods then return end
+  local modInfo = input.parameters.project45GunModInfo
+  if not modInfo then return end
 
   local augment = config.getParameter("augment")
   local output = Item.new(input)
   
-  -- if augment field exists, do something
   if augment then
+
+    -- MOD INSTALLATION GATES
+
+    -- do not install ammo type if ammo isn't universal and
+    -- gun does not affect ammo type
+    if augment.type ~= "universal" then
+      if not modInfo.acceptsAmmoTypes[augment.type] then return end
+    end
+
+    -- do not install ammo type if ammo archetype isn't universal and
+    -- gun does not affect ammo archetype
+
+    if not modInfo.acceptsAmmoArchetypes.all and augment.archetype ~= "universal" then
+      if augment.archetype == "bullet" then
+        local isBullet = modInfo.acceptsAmmoArchetypes.generic or modInfo.acceptsAmmoArchetypes.shotgun
+        if not isBullet then return end
+
+      else
+        if not modInfo.acceptsAmmoArchetypes[augment.archetype] then return end
+      end
+    end
     
-    local modSlots = input.parameters.modSlots or {} -- retrieve occupied slots
+    
+    -- do not install if ammo type is already installed
+    local modSlots = input.parameters.modSlots or {}
     if modSlots.ammoType then
         return
     end
@@ -46,6 +68,13 @@ function apply(input)
       output:setInstanceValue("muzzleFlashColor", augment.muzzleFlashColor)
     end
 
+    -- for audio
+    if augment.customSounds then
+      output:setInstanceValue("animationCustom", sb.jsonMerge(input.parameters.animationCustom or {}, {
+        sounds = augment.customSounds
+      }))
+    end
+
     -- merge changes
     output:setInstanceValue("primaryAbility", sb.jsonMerge(oldPrimaryAbility, newPrimaryAbility))
 
@@ -55,7 +84,7 @@ function apply(input)
       config.getParameter("itemName")
     }
     output:setInstanceValue("modSlots", modSlots)
-
+    -- sb.logInfo(sb.printJson(modSlots))
     output:setInstanceValue("isModded", true)
 
     return output:descriptor(), 1

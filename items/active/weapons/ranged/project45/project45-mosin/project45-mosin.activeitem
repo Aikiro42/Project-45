@@ -13,6 +13,27 @@
 
   "inventoryIcon" : "project45-mosin-icon.png",
   "acceptsGunMods": true,
+  "project45GunModInfo": {
+    "category": "ballistic",
+    "acceptsAmmoTypes": {
+      "ballistic": true
+    },
+    "acceptsAmmoArchetypes": {
+      "generic": true
+    },
+    "acceptsModSlot": {
+      "rail": true,
+      "underbarrel": true,
+      "sights": true,
+      "muzzle": true,
+      
+      "receiver": true,
+      "material": true,
+      "barrel": true,
+      "grip": true,
+      "magazine": true
+    }
+  },
 
   // "animation" : "project45-template.animation",
   "animationParts" : {
@@ -55,18 +76,6 @@
       "boltPull" : ["/sfx/project45-synthetikmechanics/reloads/boltpull_lightbolt.ogg"],
       "boltPush" : ["/sfx/project45-synthetikmechanics/reloads/boltpush_lightbolt.ogg"]
     }
-  },
-  "acceptsModSlot": {
-    "rail": true,
-    "sights": true,
-    "muzzle": true,
-    "underbarrel": true,
-    "stock": false
-  },
-  "rejectsModType":{
-    "energyAmmo": true,
-    "shotgunAmmo": true,
-    "grenadeAmmo": true
   },
   "baseOffset" : [1, 0.15],
   "muzzleOffset" : [2.65, 0.4],

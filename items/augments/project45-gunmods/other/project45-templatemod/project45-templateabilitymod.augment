@@ -1,0 +1,57 @@
+{
+  "itemName" : "project45-templateabilitymod",
+  "price" : 15000,
+  "rarity" : "Legendary",
+  "tooltipKind" : "project45gunmod",
+  "category" : "Template Ability Mod",
+  "inventoryIcon" : "/items/augments/project45-gunmods/other/project45-templatemod/project45-templatemod.png",
+  "description" : "Mod Template.",
+  "shortdescription" : "Mod Template.",
+
+  "radioMessagesOnPickup" : [ "pickupaugment" ],
+
+  /*
+  
+  abilities don't discriminate by gun category
+
+  */
+  "augment": {
+    "modName": "Template Mod",
+
+    /*
+    CATEGORY:
+    
+    universal
+    energy
+    ballistic
+    emissive
+    magic
+    */
+    "category": "universal",
+
+    /*
+    SLOT:
+
+    rail
+    sights
+    muzzle
+    underbarrel
+    stock
+    (pistolStock)
+    receiver
+    magazine
+    barrel
+    material
+    grip
+    intrinsic
+    */
+    "slot": "intrinsic",
+    
+    "altAbilityType": "project45tester",
+    "altAbility": {},
+    "overrideTwoHanded": true,
+    "twoHanded": true
+  },
+
+  "scripts" : [ "/scripts/augments/project45-gunmod.lua" ]
+}

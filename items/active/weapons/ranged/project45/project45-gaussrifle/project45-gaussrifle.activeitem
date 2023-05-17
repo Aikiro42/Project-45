@@ -21,8 +21,29 @@ When gun is a windup-type and
 
   "inventoryIcon" : "project45-gaussrifle-icon.png",
   "acceptsGunMods": true,
+  "project45GunModInfo": {
+    "category": "emissive",
+    "acceptsAmmoTypes": {
+      "energy": true,
+      "ballistic": true,
+      "matter": true
+    },
+    "acceptsAmmoArchetypes": {
+      "generic": true,
+      "solid": true
+    },
+    "acceptsModSlot": {
+      "sights": true,
+      "muzzle": true,
+      
+      "receiver": true,
+      "material": true,
+      "barrel": true,
+      "grip": true,
+      "magazine": true
+    }
+  },
 
-  // "animation" : "project45-template.animation",
   "animationParts" : {
     "butt" : "",
     "middle" : "project45-gaussrifle.png",
@@ -60,17 +81,6 @@ When gun is a windup-type and
       "fire": ["/sfx/project45-synthetikmechanics/fires/fire_energy_big.ogg"],
       "hollow": ["/asset_missing.ogg"]
     }
-  },
-  "acceptsModSlot": {
-    "rail": false,
-    "sights": true,
-    "muzzle": false,
-    "underbarrel": false,
-    "stock": false
-  },
-  "rejectsModType":{
-    "shotgunAmmo": true,
-    "grenadeAmmo": true
   },
   "baseOffset" : [1, 0.3],
   "muzzleOffset" : [2.5, 0.3],

@@ -9,8 +9,9 @@
   "shortdescription" : "Incendiary Bullets",
 
   "augment":{
-    "type": "ballisticAmmo",
     "modName": "Incendiary Bullets",
+    "type": "ballistic",
+    "archetype": "generic",
 
     "projectileKind": "projectile",
     "projectileType": "project45stdfirebullet"
