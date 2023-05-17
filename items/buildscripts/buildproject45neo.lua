@@ -69,6 +69,9 @@ function build(directory, config, parameters, level, seed)
   construct(config, "animationCustom", "lights", "muzzleFlash", "color")
   config.animationCustom.lights.muzzleFlash.color = parameters.muzzleFlashColor or config.muzzleFlashColor or {255, 255, 200}
 
+  construct(config, "animationParts", "muzzleFlash")
+  config.animationParts.muzzleFlash = "/items/active/weapons/ranged/project45-muzzleflash.png"
+
   -- gun offsets
   if config.baseOffset then
 
@@ -221,4 +224,9 @@ function build(directory, config, parameters, level, seed)
   parameters.price = config.price -- needed for gunshop
 
   return config, parameters
+end
+
+function rgbToHex(rgbArray)
+  local hexString = string.format("%02X%02X%02X", rgbArray[1], rgbArray[2], rgbArray[3])
+  return hexString
 end

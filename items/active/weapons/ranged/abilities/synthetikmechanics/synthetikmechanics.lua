@@ -58,6 +58,7 @@ function SynthetikMechanics:init()
     self.isCharging = false
     self.isFiring = false
     self.jamChances.perfect = 0
+    self.muzzleFlashColor = config.getParameter("muzzleFlashColor", {255,255,200})
 
     self.recoilPerShot = 0.1
 
@@ -913,7 +914,7 @@ function SynthetikMechanics:reloading()
     local loadRoundStanceTimer = 0
     storage.reloadRating = "ok"
     activeItem.setScriptedAnimationParameter("reloadRating", "")
-
+    local reloadSound = nil
 
     -- START RELOAD MINIGAME
     self.reloadTimer = 0 -- set timer
@@ -983,13 +984,13 @@ function SynthetikMechanics:reloading()
         -- perfect reload
         if self.reloadTime * self.perfectReloadInterval[1] <= self.reloadTimer and self.reloadTimer <= self.reloadTime * self.perfectReloadInterval[2] then
           reloadScore = reloadScore + self.bulletsPerReload -- increase reload score on perfect reload
-          animator.playSound("perfectReload")
+          -- animator.playSound("perfectReload")
           activeItem.setScriptedAnimationParameter("reloadRating", "perfect")
 
         -- good reload
         elseif self.reloadTime * self.goodReloadInterval[1] <= self.reloadTimer and self.reloadTimer <= self.reloadTime * self.goodReloadInterval[2] then
           -- reload score unaffected on good reload
-          animator.playSound("goodReload")
+          -- animator.playSound("goodReload")
           activeItem.setScriptedAnimationParameter("reloadRating", "good")
         
         -- bad reload
@@ -1050,16 +1051,21 @@ function SynthetikMechanics:reloading()
       -- if reload score is negative and is absolutely more than half the loaded rounds,
       if not self.usedByNPC and reloadScore < 0 and math.abs(reloadScore) > storage.ammo / 2 then
         storage.reloadRating = "bad"
+        reloadSound = "badReload"
       elseif reloadScore == 0 then
         storage.reloadRating = "good"
+        reloadSound = "goodReload"
       else
         storage.reloadRating = "perfect"
+        reloadSound = "perfectReload"
       end
 
     end
     
 
     -- update UI to reflect changes
+    if reloadSound then animator.playSound(reloadSound) end
+    animator.playSound("insertMag")
     activeItem.setScriptedAnimationParameter("reloadRating", storage.reloadRating)
     
     -- self:setStance(self.stances.reloaded, true)
@@ -1424,7 +1430,10 @@ function SynthetikMechanics:muzzleFlash(isBeam)
     animator.playSound("fire")
     animator.playSound("hollow")
   end
-  if not self.flashHidden then animator.setPartTag("muzzleFlash", "variant", math.random(1, self.muzzleFlashVariants or 3)) end
+  if not self.flashHidden then
+    animator.setPartTag("muzzleFlash", "variant", math.random(1, self.muzzleFlashVariants or 3))
+    animator.setPartTag("muzzleFlash", "directives", string.format("?fade=%02X%02X%02X",self.muzzleFlashColor[1], self.muzzleFlashColor[2], self.muzzleFlashColor[3]) .. "=1")
+  end
   animator.burstParticleEmitter("muzzleFlash")
   animator.setLightActive("muzzleFlash", not self.flashHidden)
   activeItem.setScriptedAnimationParameter("muzzleFlash", not self.flashHidden)

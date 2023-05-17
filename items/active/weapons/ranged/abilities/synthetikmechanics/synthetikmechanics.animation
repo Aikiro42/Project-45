@@ -370,7 +370,7 @@
     // sound indicator for good reload
     // "goodReload" : ["/sfx/project45-synthetikmechanics/ping.ogg"],
     "goodReload" : ["/sfx/project45-synthetikmechanics/reloads/goodreload_generic_1.ogg"],
-    "perfectReload" : ["/sfx/project45-synthetikmechanics/reloads/goodreload_generic_1.ogg"],
+    "perfectReload" : ["/sfx/project45-synthetikmechanics/reloads/perfectreload_generic_1.ogg"],
     // sound indicator for bad reload
     "badReload" : [
       "/sfx/project45-synthetikmechanics/reloads/badreload_mag_1.ogg",

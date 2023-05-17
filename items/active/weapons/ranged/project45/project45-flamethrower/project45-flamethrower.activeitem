@@ -50,7 +50,7 @@
       "fire" : ["/assetmissing.wav"],
       "hollow" : ["/assetmissing.wav"],
       "ejectMag": ["/sfx/project45-synthetikmechanics/reloads/ejectmag_tank.ogg"],
-      "getMag": ["/sfx/project45-synthetikmechanics/foleys/getmag_ammobox.ogg"],
+      "getMag": ["/sfx/project45-synthetikmechanics/foleys/ejectmag_tank.ogg"],
       "chargeDrone" : ["/sfx/project45-synthetikmechanics/charges/flamethrower_drone.ogg"],
       "chargeWhine" : ["/assetmissing.wav"],
       "fireStart" : ["/sfx/gun/flamethrower_start.ogg"],
@@ -151,7 +151,7 @@
     "magLoopFrames": 2,
     "magAnimRange": [1, 5],
 
-    "screenShakeAmount": [0, 0],
+    "screenShakeAmount": [0.1, 0.1],
     "screenShakeDelta": [0, 0],
 
     "stances": {

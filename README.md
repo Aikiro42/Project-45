@@ -1,23 +1,24 @@
 # Project-45
-I have a single question:
 
-Do you... enjoy violence?
-
-Of course you do.
-
-It's a... part of you~
-
-And who are you... to deny your own nature?
-
-So come with me
-
-and let me show you
-
-some real. ultra. violence.
-
-And let's dehumanize ourselves together.
-
-Welcome... to Project 45.
+> I have a single question:
+> 
+> Do you... enjoy violence?
+> 
+> Of course you do.
+> 
+> It's a... part of you~
+> 
+> And who are you... to deny your own nature?
+> 
+> So come with me
+> 
+> and let me show you
+> 
+> some real. ultra. violence.
+>
+> And let's dehumanize ourselves together.
+> 
+> Welcome... to Project 45.
 
 ## About
 
@@ -352,4 +353,49 @@ function SynthetikMechanics:fireHitscan(projectileType)
 
 end
 
+```
+
+## Worldify Function
+```lua
+
+-- Calculates the line from pos1 to pos2
+-- that allows `localAnimator.addDrawable()`
+-- to render it correctly
+function worldify(pos1, pos2)
+
+    local playerPos = activeItemAnimation.ownerPosition()
+    local worldLength = world.size()[1]
+    local fucky = {false, true, true, false}
+    
+    -- L is the x-size of the world
+    -- |0|--[1]--|--[2]--|L/2|--[3]--|--[4]--|L|
+    -- there is fucky behavior in quadrants 2 and 3
+    local pos1Quadrant = math.ceil(4*pos1[1]/worldLength)
+    local playerPosQuadrant = math.ceil(4*playerPos[1]/worldLength)
+
+    local ducky = fucky[pos1Quadrant] and fucky[playerPosQuadrant]
+    local distance = world.distance(pos2, pos1)
+
+    local sameWorldSide = (pos1Quadrant > 2) == (playerPosQuadrant > 2)
+        
+    if ducky then
+        if (
+            (sameWorldSide and (pos1Quadrant > 2))
+            or (pos1Quadrant < playerPosQuadrant)
+        ) then
+            pos1[1] =  pos1[1] - worldLength
+        end
+    else
+        if pos1[1] > worldLength/2 then
+            pos1[1] = pos1[1] - worldLength
+        end
+    end
+
+    pos2 = vec2.add(pos1, distance)
+
+    pos1 = vec2floor(pos1)
+    pos2 = vec2floor(pos2)
+
+    return {pos1, pos2}
+end
 ```
