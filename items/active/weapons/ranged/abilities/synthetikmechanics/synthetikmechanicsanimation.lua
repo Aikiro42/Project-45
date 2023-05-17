@@ -512,8 +512,9 @@ function drawTrajectory(muzzlePos, angle, speed, steps, renderTime, color)
       vi = collision[1]
     end
 
+    local arcSegment = worldify(vo, vi)
     localAnimator.addDrawable({
-      line = {vo, vi},
+      line = arcSegment,
       width = 0.2,
       fullbright = true,
       color = lineColor

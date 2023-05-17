@@ -126,6 +126,12 @@ function SynthetikMechanics:init()
     -- activeItem.setScriptedAnimationParameter("beamWidth", self.beamParameters.beamWidth)
     activeItem.setScriptedAnimationParameter("beamLine", nil)
     activeItem.setScriptedAnimationParameter("beamColor", self.beamParameters.beamColor)
+    if not self.projectileParameters.speed and self.projectileKind == "projectile" then
+      local projConfig = root.projectileConfig(self.projectileType)
+      if projConfig.physics == "grenade" then
+        self.projectileParameters.speed = projConfig.speed
+      end
+    end
     activeItem.setScriptedAnimationParameter("primaryProjectileSpeed", self.projectileParameters.speed)
     -- activeItem.setScriptedAnimationParameter("primaryProjectileSpeed", 10)
     activeItem.setScriptedAnimationParameter("usedByNPC", self.usedByNPC)
