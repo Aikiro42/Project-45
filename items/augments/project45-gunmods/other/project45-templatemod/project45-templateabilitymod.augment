@@ -53,5 +53,5 @@
     "twoHanded": true
   },
 
-  "scripts" : [ "/scripts/augments/project45-gunmod.lua" ]
+  "scripts" : [ "/scripts/augments/project45-gunmod/gunmod.lua" ]
 }
