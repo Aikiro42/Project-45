@@ -2,7 +2,7 @@
   "frames" : "project45dash.png",
   "variants" : 1,
   "fullbright": true,
-  "frameNumber" : 6,
+  "frameNumber" : 5,
   "animationCycle" : 0.2,
   "offset" : [0, 0.15]
 }
