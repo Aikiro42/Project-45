@@ -107,7 +107,7 @@ function apply(input)
                     operation="merge",
                     value=laser
                 })
-                sb.logInfo(#augment.primaryAbility.laser)
+                -- sb.logInfo(#augment.primaryAbility.laser)
 
             end
         end

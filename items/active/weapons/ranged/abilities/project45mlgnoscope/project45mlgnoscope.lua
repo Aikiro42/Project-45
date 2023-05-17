@@ -45,10 +45,12 @@ function Project45MLGNoScope:update(dt, fireMode, shiftHeld)
     end
 
 
+    --[[
     if self.logTimer > 0 then
-        sb.logInfo(sb.printJson(self.bonusDamage))
+        -- sb.logInfo(sb.printJson(self.bonusDamage))
         self.logTimer = self.logTimer - self.dt
     end
+    --]]
 
 end
 
@@ -110,7 +112,7 @@ function Project45MLGNoScope:threesixty()
             if rotationDirection < 0 then
                 totalRotation = totalRotation - 360
             end
-            sb.logInfo(rotationDirection)
+            -- sb.logInfo(rotationDirection)
         end
 
         if angleDelta * rotationDirection > self.angleDeltaThreshold then break end

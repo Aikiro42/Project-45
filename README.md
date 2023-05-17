@@ -185,7 +185,7 @@ Use more than one animation script on the gun. ACHIEVED!
         util.mergeTable(retAnimScripts, abilityConfig.animationScripts)
 
         -- Stuff
-        sb.logInfo("[PROJECT 45] (project45abilities.lua)" .. sb.printJson(abilityConfig.animationScripts))
+        -- sb.logInfo("[PROJECT 45] (project45abilities.lua)" .. sb.printJson(abilityConfig.animationScripts))
 
         -- Rename "ability" key to primaryAbility or altAbility
         local abilityType = abilityConfig.ability.type
@@ -243,18 +243,18 @@ Use more than one animation script on the gun. ACHIEVED!
             parameters.level = level
         end
 
-        sb.logInfo("[PROJECT 45] Adding stuff...")
+        -- sb.logInfo("[PROJECT 45] Adding stuff...")
         
         local primaryAnimationScripts = setupAbility(config, parameters, "primary")
         local altAnimationScripts = setupAbility(config, parameters, "alt")
         
-        sb.logInfo("[PROJECT 45] (buildproject45neo.lua) retrieved altAnimationScripts: " .. sb.printJson(altAnimationScripts))
+        -- sb.logInfo("[PROJECT 45] (buildproject45neo.lua) retrieved altAnimationScripts: " .. sb.printJson(altAnimationScripts))
         
         -- TODO: Make sure the altAnimationScripts are passed to the config properly; copy it?
         config.altAnimationScripts = {}
         util.mergeTable(config.altAnimationScripts, altAnimationScripts or {})
         
-        sb.logInfo("[PROJECT 45] (buildproject45neo.lua) config.altAnimationScripts = " .. sb.printJson(config.altAnimationScripts))
+        -- sb.logInfo("[PROJECT 45] (buildproject45neo.lua) config.altAnimationScripts = " .. sb.printJson(config.altAnimationScripts))
         --]]
 
         -- elemental type and config (for alt ability)

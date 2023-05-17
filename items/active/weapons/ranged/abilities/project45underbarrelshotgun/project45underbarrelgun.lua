@@ -55,7 +55,7 @@ function Project45UnderbarrelGun:update(dt, fireMode, shiftHeld)
         elseif storage.underbarrelGunState == READY
         and 0 < storage.underbarrelGunAmmo
         and not world.lineTileCollision(mcontroller.position(), self:firePosition()) then
-            sb.logInfo(sb.printJson(shiftHeld
+            -- sb.logInfo(sb.printJson(shiftHeld
             and storage.underbarrelGunAmmo < self.maxAmmo
             and status.resourceLocked("energy") and status.overConsumeResource("energy", status.resourceMax("energy") * self.energyUsagePercent)))
             self:setState(self.fire)
