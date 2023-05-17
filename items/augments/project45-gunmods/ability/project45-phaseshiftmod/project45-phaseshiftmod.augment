@@ -14,34 +14,12 @@
     "slot": "underbarrel",
     "altAbilityType" : "project45phaseshift",
     "overrideTwoHanded": true,
-    "twoHanded": true,
-
-    "animationCustom": {
-      "animatedParts" : { "parts" : {
-        "underbarrel" : {
-          "properties" : {
-            "zLevel" : 5,
-            "centered" : true,
-            "transformationGroups" : ["weapon"],
-            "image" : "/items/augments/project45-gunmods/ability/project45-phaseshiftmod/project45-phaseshiftmodsprite.png<directives>"
-          }
-        },
-        "underbarrelFullbright" : {
-          "properties" : {
-            "zLevel" : 6,
-            "centered" : true,
-            "transformationGroups" : ["weapon"],
-            "fullbright": true,
-            "image" : "/items/augments/project45-gunmods/ability/project45-phaseshiftmod/project45-phaseshiftmodsprite-fullbright.png<directives>"
-          }
-        }
-      }}
-    }
+    "twoHanded": true
 
   },
 
 
   "radioMessagesOnPickup" : [ "pickupaugment" ],
 
-  "scripts" : [ "/scripts/augments/project45-gunmod.lua" ]
+  "scripts" : [ "/scripts/augments/project45-gunmod/abilitymod.lua" ]
 }

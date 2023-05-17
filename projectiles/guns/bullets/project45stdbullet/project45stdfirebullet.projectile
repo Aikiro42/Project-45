@@ -71,7 +71,7 @@
             "type" : "ember",
             "size" : 2,
             "color" : [255, 170, 0, 255],
-            "light" : [255, 170, 0, 255],
+            "light" : [175, 78, 0],
             "fullbright" : true,
             "destructionTime" : 0.2,
             "destructionAction" : "shrink",
