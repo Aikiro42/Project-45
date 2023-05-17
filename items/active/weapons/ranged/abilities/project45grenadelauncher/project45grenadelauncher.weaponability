@@ -94,54 +94,9 @@
       "firePositionPart" : "underbarrel",
       "projectileType": "impactgrenade",
       "projectileParameters":{
-        "power": 500,
         "speed": 50,
         "damageType": "IgnoresDef",
-        "periodicActions" : [
-          /*
-          {
-            "time" : 0.01,
-            "repeat" : true,
-            "action" : "particle",
-            "rotate" : true,
-            
-            "specification" : {
-              "type" : "textured",
-              "image" : "/projectiles/guns/bullets/project45stdbullet/project45stdbullettrail.png",
-              "position" : [-2, 0],
-              "layer" : "back",
-              "timeToLive" : 0.0,
-              "destructionTime" : 0.25,
-              "destructionAction" : "fade",
-              "fullbright" : false
-            }
-      
-          }
-          */
-          {
-            "time" : 0.01,
-            "repeat" : true,
-            "action" : "particle",
-            "rotate" : true,
-            
-            "specification" : {
-              "type" : "streak",
-              "layer" : "back",
-              "fullbright" : true,
-              "destructionAction" : "shrink",
-              "size" : 1,
-              "color" : [255, 255, 200, 255],
-              "collidesForeground" : false,
-              "length" : 50,
-              "position" : [0, 0],
-              "timeToLive" : 0.01,
-              "destructionTime" : 0.2,
-              "initialVelocity" : [0.5, 0],
-              "variance" : {"initialVelocity" : [0.5, 0]}
-            }
-      
-          }
-        ]
+        "periodicActions" : []
       },
       "fireTime": 0.3,
       "chargeTime": 0.3,
@@ -152,7 +107,7 @@
       "indicatorOffset": [2, 0],
       "reloadTime": 0.5,
 
-      "trajectoryIndicatorColor": [253, 209, 77, 128]
+      "trajectoryIndicatorColor": [253, 209, 77, 255]
 
 
   }

@@ -17,6 +17,8 @@ function Project45GrenadeLauncher:init()
     self:setGrenadeLauncherState(storage.grenadeLauncherState)
     activeItem.setScriptedAnimationParameter("grenadeIndicatorOffset", self.indicatorOffset)
     activeItem.setScriptedAnimationParameter("trajectoryIndicatorColor", self.trajectoryIndicatorColor)
+    self.projectileParameters.speed = self.projectileParameters.speed or root.projectileConfig(self.projectileType).speed or 50
+    activeItem.setScriptedAnimationParameter("altProjectileSpeed", self.projectileParameters.speed)
 end
 
 function Project45GrenadeLauncher:update(dt, fireMode, shiftHeld)
@@ -24,10 +26,7 @@ function Project45GrenadeLauncher:update(dt, fireMode, shiftHeld)
     WeaponAbility.update(self, dt, fireMode, shiftHeld)
 
     activeItem.setScriptedAnimationParameter("altMuzzlePos", self:firePosition())
-    activeItem.setScriptedAnimationParameter("altProjectileSpeed", self.projectileParameters.speed)
     activeItem.setScriptedAnimationParameter("altAimAngle", vec2.angle(self:aimVector()))
-
-
     
     self.cooldownTimer = math.max(0, self.cooldownTimer - self.dt)
 
@@ -145,8 +144,9 @@ end
 
 function Project45GrenadeLauncher:fireProjectile(projectileType, projectileParams, inaccuracy, firePosition, projectileCount)
     local params = sb.jsonMerge(self.projectileParameters, projectileParams or {})
-    params.power = self.projectileParameters.power or 1
-    params.powerMultiplier = activeItem.ownerPowerMultiplier()
+    -- deals the player's power stat as damage times the threat level
+    params.power = 100
+    params.powerMultiplier = activeItem.ownerPowerMultiplier() * world.threatLevel()
     params.speed = util.randomInRange(params.speed)
   
     if not projectileType then
