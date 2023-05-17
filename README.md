@@ -34,7 +34,7 @@ Project 45 is a weapons system that attempts to replicate the gun mechanics of S
 ## Todo
 
 - Add SFX:
-    - Perfect Reload must be a satisfying click
+    - ~~Perfect Reload must be a satisfying click~~
     - More insert mag sounds
     - More insert round sounds 
         - Proper shotgun shell insert sound
@@ -61,21 +61,26 @@ Project 45 is a weapons system that attempts to replicate the gun mechanics of S
     - generate shield
 
 ## Todo - Mods
-- Multithreader
+- Multithreader (receiver)
     - Applicable for energy weapons,
     - makes gun do autofire
-- Overcharged Battery
+- Overcharged Battery (magazine)
     - Applicable for energy weapons
     - doubles gun ammo capacity
-- Beam Splitter
+- Beam Splitter (barrel)
     - Applicable for energy weapons
     - increases projectile count and spread
-
+- Double Slit (muzzle)
+    - increases multishot
+- Pneumatic Mechanism (receiver)
+    - increases projectile time to live and range
 ## Todo - Guns
 - ~~M249 SAW~~
 - AA12
 - Shotgun energy rifle
-- 
+- Break-action shotgun
+- Plasma Launcher
+- Energy Grenade Launcher
 
 ## Vanilla Altfires Compatibility List:
 

@@ -27,7 +27,9 @@ When gun is a windup-type and
       "energy": true
     },
     "acceptsAmmoArchetypes": {
-      "generic": true
+      "generic": true,
+      "shotgun": true,
+      "beam": true
     },
     "acceptsModSlot": {
       "sights": true,

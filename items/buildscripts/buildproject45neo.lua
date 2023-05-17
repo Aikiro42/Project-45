@@ -166,9 +166,14 @@ function build(directory, config, parameters, level, seed)
         1
       ) .. "%"
 
-      config.primaryAbility.reloadTime = parameters.primaryAbility.reloadTime or config.primaryAbility.reloadTime
+      
+      local bulletReloadTime = parameters.primaryAbility.reloadTime or config.primaryAbility.reloadTime
+      local bulletsPerReload = parameters.primaryAbility.bulletsPerReload or config.primaryAbility.bulletsPerReload
+      local maxAmmo = parameters.primaryAbility.maxAmmo or config.primaryAbility.maxAmmo
+      local actualReloadTime = bulletReloadTime * math.max(1, maxAmmo / bulletsPerReload)
+      config.primaryAbility.reloadTime = bulletReloadTime
       config.tooltipFields.reloadTimeLabel = util.round(
-        (config.primaryAbility.reloadTime or 0),
+        (actualReloadTime or 0),
         1
       ) .. "s"
 

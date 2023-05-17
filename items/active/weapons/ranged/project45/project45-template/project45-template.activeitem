@@ -110,6 +110,7 @@ This weapon is a debug template.
     shotgun
     grenade
     rocket
+    beam
     solid
     liquid
     gas
@@ -125,6 +126,9 @@ This weapon is a debug template.
       "shotgun": true,
       "grenade": true,
       "rocket": true,
+
+      // energy
+      "beam": true,
 
       // matter
       "solid": true,
