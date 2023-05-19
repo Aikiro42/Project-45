@@ -1,0 +1,15 @@
+{
+  "name" : "project45tarred",
+  "blockingStat" : "tarStatusImmunity",
+  "effectConfig" : {},
+  "defaultDuration" : 3,
+
+  "scripts" : [
+    "project45tarred.lua"
+  ],
+
+  "animationConfig" : "project45tarred.animation",
+
+  "label" : "Tarred",
+  "icon" : "/interface/statuses/tar.png"
+}
