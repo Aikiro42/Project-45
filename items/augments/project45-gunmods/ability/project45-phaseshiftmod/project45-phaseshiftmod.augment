@@ -10,7 +10,7 @@
   
   "augment":{
     "category": "universal",
-    "slot": "underbarrel",
+    "slot": "rail",
     "altAbilityType" : "project45phaseshift",
     "overrideTwoHanded": true,
     "twoHanded": true
