@@ -33,22 +33,6 @@ Project 45 is a weapons system that attempts to replicate the gun mechanics of S
 
 ## Todo
 
-- Add SFX:
-    - ~~Perfect Reload must be a satisfying click~~
-    - More insert mag sounds
-    - More insert round sounds 
-        - Proper shotgun shell insert sound
-        - Proper bullet insert sounds
-    - More bolt pull/push sounds
-    - More firing sounds
-        - Garand
-        - Semi-auto Pistol
-    - Add bullet sounds to the damage type:
-        - organic (visceral)
-        - stone
-        - wood
-        - robotic (metallic)
-
 ## Todo - abilities
 - Drone
     - lets a drone fly around and target nearby enemies
