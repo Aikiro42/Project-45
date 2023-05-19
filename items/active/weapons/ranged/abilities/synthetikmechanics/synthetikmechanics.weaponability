@@ -74,7 +74,7 @@
       "hitscanIgnoresTerrain": false,  // pierces through terrain if true
       "hitscanFadeTime": 0.1, // how long the hitscan line fades away
       "hitscanWidth": 1, // visual width of hitscan line in pixels
-      "hitscanColor": [255,255,200], // color of hitscan projectile; also dictates muzzle flash color
+      // "hitscanColor": [255,255,200], // color of hitscan projectile; also dictates muzzle flash color
       // damage configuraiton of hitscan damage line
       // baseDamage is calculated by self:damagePerShot() * crit / activeItem.ownerPowerMultiplier()
       // but can be overridden; it's recommended that it shouldn't be overridden
@@ -91,7 +91,7 @@
       "beamWidth": 5, // width of beam - beams that are too wide can look weird
       "beamInnerWidth": 3, // width of inner white beam - just for vfx
       "beamJitter": 1, // how much the beam width changes as it's shot - just a vfx
-      "beamColor": [0,140,217], // color of beam
+      // "beamColor": [0,140,217], // color of beam
       // damage configuration of beam damage poly
       "beamDamageConfig": {
         "statusEffects" : [ ],

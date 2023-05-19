@@ -59,6 +59,9 @@ function SynthetikMechanics:init()
     self.jamChances.perfect = 0
     self.muzzleFlashColor = config.getParameter("muzzleFlashColor", {255,255,200})
 
+    self.hitscanParameters.hitscanColor = self.hitscanParameters.hitscanColor or self.muzzleFlashColor
+    self.beamParameters.beamColor = self.beamParameters.beamColor or self.muzzleFlashColor
+
     self.recoilPerShot = 0.1
 
     -- VALIDATIONS
