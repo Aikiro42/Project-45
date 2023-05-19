@@ -43,35 +43,6 @@ function Project45UnderbarrelGun:update(dt, fireMode, shiftHeld)
     and self.cooldownTimer == 0
     and not self.firing then
 
-        --[[
-
-        if shiftHeld
-        and storage.underbarrelGunAmmo < self.maxAmmo
-        and 0 < storage.underbarrelGunAmmo
-        then
-            self:setState(self.reload)
-        
-
-        elseif storage.underbarrelGunState == READY
-        and 0 < storage.underbarrelGunAmmo
-        and not world.lineTileCollision(mcontroller.position(), self:firePosition()) then
-            -- sb.logInfo(sb.printJson(shiftHeld
-            and storage.underbarrelGunAmmo < self.maxAmmo
-            and status.resourceLocked("energy") and status.overConsumeResource("energy", status.resourceMax("energy") * self.energyUsagePercent)))
-            self:setState(self.fire)
-
-        elseif storage.underbarrelGunState == EMPTY then
-            self:setState(self.eject)            
-
-        elseif storage.underbarrelGunState == OPEN then
-            if not status.resourceLocked("energy") and status.overConsumeResource("energy", status.resourceMax("energy") * self.energyUsagePercent) then
-                self:setState(self.load)
-            end
-
-        end
-
-        --]]
-
         if (shiftHeld and storage.underbarrelGunAmmo < self.maxAmmo)
         or storage.underbarrelGunAmmo == 0 then
             self:setState(self.loadRound)
@@ -120,16 +91,11 @@ function Project45UnderbarrelGun:loadRound()
     local oldRelativeWeaponRotation = self.weapon.relativeWeaponRotation
     local oldRelativeArmRotation = self.weapon.relativeArmRotation
     local oldFrontArmFrame = self.weapon.stance.frontArmFrame
-
     local stepTime = self.reloadTime/4
 
-    -- local oldBackArmFrame = self.weapon.stance.backArmFrame
-    -- 1. move weapon back
-    -- self:recoil()
+    --[[
 
-    -- todo: e
 
-    -- self.weapon.stance.backArmFrame = "swimIdle.1"
 
     local progress = 0
     util.wait(stepTime, function()
@@ -144,29 +110,33 @@ function Project45UnderbarrelGun:loadRound()
         progress = math.min(1.0, progress + (self.dt / stepTime))
     end)
 
+    --]]
+
     while true do
 
+
+        status.overConsumeResource("energy", status.resourceMax("energy") * self.reloadCostPercent)
+        animator.playSound("altInsertRound")
+        self:updateAmmo(self.ammoPerReload or 1)
 
         self.weapon.weaponOffset = self.reloadWeaponOffset
         self.weapon.relativeWeaponRotation = oldRelativeWeaponRotation + util.toRadians(reloadRotation)
         self.weapon.relativeArmRotation = oldRelativeArmRotation - util.toRadians(reloadRotation)
-        self.weapon.stance.frontArmFrame = "idle.1"
-        util.wait(stepTime, function() storage.aimProgress = 0 end)
-
-        status.overConsumeResource("energy", status.resourceMax("energy") * self.reloadCostPercent)
-        animator.playSound("altInsertRound")
         self.weapon.stance.frontArmFrame = "swim.3"
-        self:updateAmmo(self.ammoPerReload or 1)
-
         util.wait(stepTime, function() storage.aimProgress = 0 end)
+
         
         coroutine.yield()
 
-    if
-        not (self.firing or self.fireMode == "alt")
+    if not (self.firing or self.fireMode == "alt")
         or storage.underbarrelGunAmmo == self.maxAmmo
-        or status.resourceLocked("energy")
-    then break end end
+        or status.resourceLocked("energy") then break
+    else
+        self.weapon.stance.frontArmFrame = "idle.1"
+        util.wait(stepTime, function() storage.aimProgress = 0 end)
+    end
+    
+    end
 
     progress = 0
     util.wait(stepTime, function()
