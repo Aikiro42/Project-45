@@ -1,27 +1,27 @@
 {
 
   "animationCustom": {
-    "animatedParts" : {
-      "parts" : {
-        "underbarrel" : {
-          "properties" : {
-            "zLevel" : 5,
-            "centered" : true,
-            "transformationGroups" : ["weapon"],
-            "image" : "/items/active/weapons/ranged/abilities/project45phaseshift/project45phaseshift.png<directives>"
-          }
-        },
-        "underbarrelFullbright" : {
-          "properties" : {
-            "zLevel" : 6,
-            "centered" : true,
-            "transformationGroups" : ["weapon"],
-            "fullbright": true,
-            "image" : "/items/active/weapons/ranged/abilities/project45phaseshift/project45phaseshiftfullbright.png<directives>"
-          }
+    "animatedParts" : { "parts" : {
+      "rail" : {
+        "properties" : {
+          "zLevel" : 5,
+          "centered" : true,
+          "offset" : [0, 0],
+          "transformationGroups" : ["weapon"],
+          "image" : "/items/active/weapons/ranged/abilities/project45phaseshift/project45phaseshift.png<directives>"
+        }
+      },
+      "railFullbright" : {
+        "properties" : {
+          "zLevel" : 5,
+          "centered" : true,
+          "offset" : [0, 0],
+          "transformationGroups" : ["weapon"],
+          "fullbright": true,
+          "image" : "/items/active/weapons/ranged/abilities/project45phaseshift/project45phaseshiftfullbright.png<directives>"
         }
       }
-    },
+    }},
     
     "sounds":{
       
