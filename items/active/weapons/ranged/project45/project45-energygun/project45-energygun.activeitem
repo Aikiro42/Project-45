@@ -75,7 +75,8 @@ When gun is a windup-type and
         ]}
     },
     "sounds": {
-      "fire": ["/sfx/project45-synthetikmechanics/fires/fire_energy_big.ogg"],
+      // "fire": ["/sfx/project45-synthetikmechanics/fires/fire_energy_big.ogg"],
+      "fire": ["/assetmissing.wav"],
       "hollow": ["/asset_missing.ogg"],
       "fireStart": ["/sfx/gun/mech_beamsniper_fire1.ogg"],
       "fireLoop": ["/sfx/gun/mech_beamdrill_loop.ogg"],
@@ -97,8 +98,8 @@ When gun is a windup-type and
     // "DEBUG": true,
     "baseDamage": 25,
 
-    "maxAmmo": 12,
-    "bulletsPerReload": 12,
+    "maxAmmo": 24,
+    "bulletsPerReload": 24,
 
     "jamChances": {
       "bad": 0.0,
