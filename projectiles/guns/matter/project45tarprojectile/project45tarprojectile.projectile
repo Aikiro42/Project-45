@@ -1,0 +1,24 @@
+{
+  "projectileName" : "project45tarprojectile",
+  "image" : "project45tarprojectile.png",
+  "animationCycle" : 0.25,
+  "frameNumber" : 2,
+  "pointLight" : false,
+  "physics": "grenade",
+  "statusEffects": [
+    "project45tarred"
+  ],
+  "actionOnHit" : [
+    {
+      "action" : "config",
+      "file" : "/projectiles/explosions/project45_tarexplosion/project45_tarexplosion.config"
+    }
+  ],
+  "actionOnReap" : [
+    {
+      "action" : "config",
+      "file" : "/projectiles/explosions/project45_tarexplosion/project45_tarexplosion.config"
+    }
+  ],
+  "power" : 5.0
+}
