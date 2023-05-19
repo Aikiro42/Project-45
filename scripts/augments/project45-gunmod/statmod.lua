@@ -116,19 +116,14 @@ function apply(input)
     end
 
     -- modify critDamage
-    if augment.critDamageMult then
-      local newCritDamage = math.min(oldPrimaryAbility.critDamageMult * augment.critDamageMult, 10)
-      newPrimaryAbility = sb.jsonMerge(newPrimaryAbility, {critDamageMult = newCritDamage})
-    end
-
     if augment.critDamage then
         
         local newCritDamage = oldPrimaryAbility.critDamageMult
 
-        if augment.critChance.operation == "add" then
+        if augment.critDamage.operation == "add" then
             newCritDamage = newCritDamage + augment.critDamage.value
 
-        elseif augment.critChance.operation == "multiply" then
+        elseif augment.critDamage.operation == "multiply" then
             newCritDamage = newCritDamage * augment.critDamage.value
 
         end
