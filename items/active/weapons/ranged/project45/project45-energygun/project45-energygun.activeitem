@@ -75,8 +75,7 @@ When gun is a windup-type and
         ]}
     },
     "sounds": {
-      // "fire": ["/sfx/project45-synthetikmechanics/fires/fire_energy_big.ogg"],
-      "fire": ["/assetmissing.wav"],
+      "fire": ["/sfx/gun/plasma_sniper3.ogg"],
       "hollow": ["/asset_missing.ogg"],
       "fireStart": ["/sfx/gun/mech_beamsniper_fire1.ogg"],
       "fireLoop": ["/sfx/gun/mech_beamdrill_loop.ogg"],
