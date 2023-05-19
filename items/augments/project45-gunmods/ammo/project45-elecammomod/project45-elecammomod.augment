@@ -30,11 +30,6 @@
       ]
     },
     "customSounds": {
-      "fire": [
-        "/sfx/gun/plasma_mp1.ogg",
-        "/sfx/gun/plasma_mp2.ogg",
-        "/sfx/gun/plasma_mp3.ogg"
-      ],
       "fireStart": ["/assetmissing.wav"],
       "fireLoop": ["/assetmissing.wav"],
       "fireEnd": ["/assetmissing.wav"]

@@ -15,15 +15,19 @@
     "muzzleFlashColor": [234,153,49],
     "projectileKind": "beam",
     "beamParameters":{
-      "beamColor": [234,153,49],
       "beamDamageConfig":{
         "damageSourceKind" : "fire",
         "statusEffects":["burning"],
         "knockback" : 2
       }
     },
+    "hitscanParameters":{
+      "hitscanDamageConfig": {
+        "damageKind": "fire",
+        "statusEffects":["burning"]
+      }
+    },
     "customSounds": {
-      "fire": ["/sfx/project45-synthetikmechanics/fires/fire_energy_big.ogg"],
       "fireStart": ["/sfx/gun/mech_beamsniper_fire1.ogg"],
       "fireLoop": ["/sfx/gun/mech_beamdrill_loop.ogg"],
       "fireEnd": ["/sfx/gun/mech_beamdrill_winddown.ogg"]
