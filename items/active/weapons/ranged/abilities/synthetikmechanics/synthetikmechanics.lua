@@ -28,7 +28,6 @@ function SynthetikMechanics:init()
 
     -- initialize storage
     storage.ammo = storage.ammo or config.getParameter("currentAmmo", -1) -- -1 ammo means we don't have a mag in the gun
-    storage.ammoConsumeTimer = storage.ammoConsumeTimer or config.getParameter("currentAmmoConsumeTimer", 1)
     storage.unejectedCasings = storage.unejectedCasings or config.getParameter("currentUnejectedCasings", 0)
     
     storage.reloadRating = storage.reloadRating or config.getParameter("currentReloadRating", "ok")
@@ -355,7 +354,6 @@ end
 
 function SynthetikMechanics:uninit()
   activeItem.setInstanceValue("currentAmmo", storage.ammo)
-  activeItem.setInstanceValue("currentAmmoConsumeTimer", storage.ammoConsumeTimer)
   activeItem.setInstanceValue("currentReloadRating", storage.reloadRating)
   activeItem.setInstanceValue("currentChamberState", storage.chamberState)
   activeItem.setInstanceValue("currentUnejectedCasings", storage.unejectedCasings)
@@ -711,11 +709,11 @@ function SynthetikMechanics:fireBeam()
     self:screenShake(self.currentScreenShake * 4)
   end
 
-  local beamDamageConfig = sb.jsonMerge(self.beamParameters.beamDamageConfig, {
-    baseDamage = 1
-  })
+  local beamDamageConfig = sb.jsonMerge(self.beamParameters.beamDamageConfig)
 
   local recoilTimer = 0
+  local beamTimeout = self.currentCycleTime + self.fireTime
+  local ammoConsumeTimer = beamTimeout
   local fireEndBeamEnd = nil
 
   while self:triggering()
@@ -725,81 +723,67 @@ function SynthetikMechanics:fireBeam()
 
     self.beamFiring = true
 
-    animator.setAnimationState("gun", "firing")
+    local hitreg = self:hitscan(true)
+    local beamStart = hitreg[1]
+    local beamEnd = hitreg[2]
 
-    self:muzzleFlash(true)
-    -- store casings until firing is done
-    if storage.ammoConsumeTimer >= 1 then
+    if ammoConsumeTimer >= beamTimeout then
       if self:jam() then break end
-      storage.ammoConsumeTimer = 0
+      ammoConsumeTimer = 0
       storage.ammo = math.max(0, storage.ammo - self.ammoPerShot)
       storage.unejectedCasings = storage.unejectedCasings + math.min(storage.ammo, self.ammoPerShot)
-      -- sb.logInfo(self.chargeDamageMult)
+
+      -- update charge damage multiplier
+      if self.overchargeTime > 0 then
+        self.chargeDamageMult = 1 + (self.chargeTimer - self.chargeTime)/self.overchargeTime
+      end
+
+      -- coors for damage poly
+      local actualMuzzlePosition = vec2.rotate(
+          self.weapon.muzzleOffset,
+          self.weapon.relativeWeaponRotation
+        )
+      local beamLength = world.magnitude(beamStart, beamEnd)
+      local actualDamageEnd = vec2.rotate(
+        {self.weapon.muzzleOffset[1] + beamLength, self.weapon.muzzleOffset[2]},
+        self.weapon.relativeWeaponRotation
+      )
+
+      -- update base damage accordingly
+      local crit = self:crit()
+      beamDamageConfig.baseDamage = self:damagePerShot(true) * crit
+      beamDamageConfig.damageSourceKind = crit > 1 and "project45-critical" or self.beamParameters.beamDamageConfig.damageSourceKind
+      -- beamDamageConfig.damageType = crit > 1 and "IgnoresDef" or nil
+
+      -- draw damage poly
+      self.weapon:setDamage(
+        beamDamageConfig,
+        {
+          {actualMuzzlePosition[1], actualMuzzlePosition[2] - self.beamParameters.beamWidth / 16},
+          {actualMuzzlePosition[1], actualMuzzlePosition[2] + self.beamParameters.beamWidth / 16},
+          {actualDamageEnd[1], actualDamageEnd[2] + self.beamParameters.beamWidth / 16},
+          {actualDamageEnd[1], actualDamageEnd[2] - self.beamParameters.beamWidth / 16}
+        },
+        0)
+
+    else
+      self.weapon:setDamage()
     end
 
+
+    -- VFX
+
+    self:muzzleFlash(true)
+    animator.setAnimationState("gun", "firing")
     recoilTimer = recoilTimer + self.dt
 
-    if recoilTimer >= self.currentCycleTime then
+    if recoilTimer >= 0.05 then
       self:screenShake(self.currentScreenShake)
       recoilTimer = 0
     end
-
     self:recoil(self.currentScreenShake, self.recoilMomentum, true)
 
-
-    local hitreg = self:hitscan(true)
-
-    -- local beamStart = self:firePosition()
-    -- local beamEnd = vec2.add(beamStart, vec2.mul(vec2.norm(self:aimVector(0)), self.beamParameters.beamLength))
-    local beamStart = hitreg[1]
-    local beamEnd = hitreg[2]
-    -- local beamLength = self.beamParameters.beamLength
-    local beamLength = world.magnitude(beamStart, beamEnd)
-    --[[
-    local collidePoint = world.lineCollision(beamStart, beamEnd)
-    if collidePoint then
-      beamEnd = collidePoint
-      beamLength = world.magnitude(beamStart, beamEnd)
-    end
-    --]]
     fireEndBeamEnd = beamEnd
-
-    -- update charge damage multiplier
-    if self.overchargeTime > 0 then
-      self.chargeDamageMult = 1 + (self.chargeTimer - self.chargeTime)/self.overchargeTime
-    end
-    
-    -- update base damage accordingly
-    beamDamageConfig.baseDamage = self:damagePerShot() * self.dt * self.ammoPerShot
-
-    local actualMuzzlePosition = vec2.rotate(
-        self.weapon.muzzleOffset,
-        self.weapon.relativeWeaponRotation
-      )
-    local actualDamageEnd = vec2.rotate(
-      {self.weapon.muzzleOffset[1] + beamLength, self.weapon.muzzleOffset[2]},
-      self.weapon.relativeWeaponRotation
-    )
-
-    world.debugPoint(vec2.add(mcontroller.position(), actualMuzzlePosition), "red")
-
-    self.weapon:setDamage(
-      beamDamageConfig,
-      --[[
-      {
-        {self.weapon.muzzleOffset[1], self.weapon.muzzleOffset[2] - self.beamParameters.beamWidth / 16},
-        {self.weapon.muzzleOffset[1], self.weapon.muzzleOffset[2] + self.beamParameters.beamWidth / 16},
-        {self.weapon.muzzleOffset[1] + beamLength, self.weapon.muzzleOffset[2] + self.beamParameters.beamWidth / 16},
-        {self.weapon.muzzleOffset[1] + beamLength, self.weapon.muzzleOffset[2] - self.beamParameters.beamWidth / 16}
-      },
-      --]]
-      {
-        {actualMuzzlePosition[1], actualMuzzlePosition[2] - self.beamParameters.beamWidth / 16},
-        {actualMuzzlePosition[1], actualMuzzlePosition[2] + self.beamParameters.beamWidth / 16},
-        {actualDamageEnd[1], actualDamageEnd[2] + self.beamParameters.beamWidth / 16},
-        {actualDamageEnd[1], actualDamageEnd[2] - self.beamParameters.beamWidth / 16}
-      },
-      self.currentCycleTime)
 
     activeItem.setScriptedAnimationParameter("beamLine", {beamStart, beamEnd})
     activeItem.setScriptedAnimationParameter("beamWidth", self.beamParameters.beamWidth + sb.nrand(self.beamParameters.beamJitter, 0))
@@ -852,8 +836,7 @@ function SynthetikMechanics:fireBeam()
       }
     )
 
-
-    storage.ammoConsumeTimer = storage.ammoConsumeTimer + self.dt
+    ammoConsumeTimer = ammoConsumeTimer + self.dt
 
     coroutine.yield()
   end
@@ -1033,8 +1016,6 @@ function SynthetikMechanics:reloading()
     -- reload minigame loop end
 
     -- RELOAD MINIGAME POSTMORTEM
-
-    storage.ammoConsumeTimer = 1
     
     -- alter magazine presence accordingly
     if self.magType == "default" then
@@ -1232,19 +1213,7 @@ function SynthetikMechanics:fireProjectileNeo(projectileType)
     
   local crit = self:crit()
   
-  
-  -- local hitscanDamageParams = --[[ projectileType == "project45stdbullet" and ]] {
-  --   damageKind = self.projectileParameters.damageKind or ("synthetikmechanics-hitscan" .. (crit > 1 and "crit" or ""))
-  -- } or {}
-  -- local params = sb.jsonMerge(self.projectileParameters, hitscanDamageParams)
-  -- params.power = self:damagePerShot() * crit
-
   self.projectileParameters.power = self:damagePerShot() * crit
-
-  -- custom damage type
-  if self.projectileType == "project45stdbullet" then
-    self.projectileParameters.damageKind = "synthetikmechanics-hitscan" .. (crit > 1 and "crit" or "")
-  end
   
   local projectileId = world.spawnProjectile(
     projectileType,
@@ -1265,17 +1234,17 @@ function SynthetikMechanics:fireHitscan(projectileType)
     local hitReg = self:hitscan(false)
     local crit = self:crit()
     local finalDamage = self:damagePerShot(true) * crit
-
+    sb.logInfo(sb.printJson(crit > 1 and "project45-critical" or nil))
     local damageConfig = {
       -- we included activeItem.ownerPowerMultiplier() in
       -- self:damagePerShot() so we cancel it
       baseDamage = finalDamage,
       timeout = self.currentCycleTime,
-      damageSourceKind = "synthetikmechanics-hitscan" .. (crit > 1 and "crit" or "")
+      damageSourceKind = crit > 1 and "project45-critical" or nil
     }
 
     damageConfig = sb.jsonMerge(damageConfig, self.hitscanParameters.hitscanDamageConfig or {})
-
+    
     -- coordinates are based off mcontroller position
     self.weapon:setOwnerDamageAreas(damageConfig, {{
       vec2.sub(hitReg[1], mcontroller.position()),
@@ -1680,7 +1649,7 @@ function SynthetikMechanics:damagePerShot(isHitscan)
    * self.chargeDamageMult
    * reloadDamageMultiplier
    * lastShotDamageMultiplier
-   * config.getParameter("damageLevelMultiplier", 1)
+   * (not isHitscan and config.getParameter("damageLevelMultiplier", 1) or 1)
    * (not isHitscan and activeItem.ownerPowerMultiplier() or 1)
    / (self.projectileCount * self.burstCount)
    --]]
@@ -1791,10 +1760,15 @@ end
 
 -- returns a critical multiplier
 function SynthetikMechanics:crit()
-  if self:diceRoll(self.critChance, true) then
-    return self.critDamageMult
+
+  local critDamageTier = math.floor(self.critChance)
+  local actualCritChance = self.critChance - critDamageTier
+
+  if self:diceRoll(actualCritChance, true) then
+    critDamageTier = critDamageTier + 1
   end
-  return 1
+
+  return math.max(1, self.critDamageMult * critDamageTier)
 end
 
 -- Returns true if the diceroll for the given chance is successful

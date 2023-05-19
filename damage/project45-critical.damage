@@ -1,6 +1,6 @@
 {
-  "kind" : "synthetikmechanics-hitscancrit",
-  "elementalType" : "synthetikmechanics-hitscancrit",
+  "kind" : "project45-critical",
+  "elementalType" : "project45-critical",
   "effects" : {
     "organic" : {
       "hit" : {
@@ -26,7 +26,13 @@
     },
     "robotic" : {
       "hit" : {
-        "sounds" : [ "/sfx/melee/sword_hit_metal1.ogg", "/sfx/melee/sword_hit_metal2.ogg", "/sfx/melee/sword_hit_metal3.ogg", "/sfx/melee/sword_hit_metal4.ogg", "/sfx/melee/sword_hit_metal5.ogg", "/sfx/melee/sword_hit_metal6.ogg" ],
+        "sounds" : [
+          "/sfx/gun/impact_robotic1.ogg",
+          "/sfx/gun/impact_robotic2.ogg",
+          "/sfx/gun/impact_robotic3.ogg",
+          "/sfx/gun/impact_robotic4.ogg",
+          "/sfx/gun/impact_robotic5.ogg"
+        ],
         "particles" : [
           [
           ]
@@ -42,7 +48,13 @@
     },
     "wooden" : {
       "hit" : {
-        "sounds" : [ "/sfx/melee/sword_hit_wood1.ogg", "/sfx/melee/sword_hit_wood2.ogg", "/sfx/melee/sword_hit_wood3.ogg" ],
+        "sounds" : [
+          "/sfx/gun/impact_wooden1.ogg",
+          "/sfx/gun/impact_wooden2.ogg",
+          "/sfx/gun/impact_wooden3.ogg",
+          "/sfx/gun/impact_wooden4.ogg",
+          "/sfx/gun/impact_wooden5.ogg"
+        ],
         "particles" : [
           [
           ]
@@ -59,8 +71,14 @@
     "stone" : {
       "hit" : {
         "sounds" : [
-          "/sfx/project45-synthetikmechanics/bulletimpacts/bulletimpact_stone_1.ogg",
-          "/sfx/project45-synthetikmechanics/bulletimpacts/bulletimpact_stone_2.ogg"
+          "/sfx/gun/impact_stone1.ogg",
+          "/sfx/gun/impact_stone2.ogg",
+          "/sfx/gun/impact_stone3.ogg",
+          "/sfx/gun/impact_stone4.ogg",
+          "/sfx/gun/impact_stone5.ogg",
+          "/sfx/gun/impact_stone6.ogg",
+          "/sfx/gun/impact_stone7.ogg",
+          "/sfx/gun/impact_stone8.ogg"
         ],
         "particles" : [
           [
