@@ -1,0 +1,25 @@
+{
+  "itemName" : "project45-homingrocketmod",
+  "price" : 15000,
+  "rarity" : "Legendary",
+  "tooltipKind" : "project45gunmod",
+  "category" : "Rocket Ammo Mod",
+  "inventoryIcon" : "/items/augments/project45-gunmods/ammo/project45-homingrocketmod/project45-homingrocketmod.png",
+  "description" : "Rockets that home in on enemies.",
+  "shortdescription" : "Homing Rockets",
+
+  "augment":{
+    "modName": "Homing Rockets",
+    "type": "ballistic",
+    "archetype": "rocket",
+    "projectileKind": "projectile",
+    "projectileType": "project45homingrocket",
+    "projectileParameters": {
+      "bounces": 0
+    }
+  },
+
+  "radioMessagesOnPickup" : [ "pickupaugment" ],
+
+  "scripts" : [ "/scripts/augments/project45-gunmod/ammomod.lua" ]
+}

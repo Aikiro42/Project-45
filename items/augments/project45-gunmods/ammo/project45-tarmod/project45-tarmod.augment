@@ -1,0 +1,28 @@
+{
+  "itemName" : "project45-tarmod",
+  "price" : 15000,
+  "rarity" : "Legendary",
+  "tooltipKind" : "project45gunmod",
+  "category" : "Ammo Mod",
+  "inventoryIcon" : "/items/augments/project45-gunmods/ammo/project45-tarmod/project45-tarmod.png",
+  "description" : "This has been recommended by the Geneva Suggestion.",
+  "shortdescription" : "Tar Tank",
+
+  "augment":{
+    "modName": "Tar Tank",
+    "type": "matter",
+    "archetype": "liquid",
+
+    "projectileCount": 1,
+    "projectileKind": "projectile",
+    "projectileType": "project45tarprojectile",
+    "projectileParameters": {
+      "physics": "grenade"
+    }
+  
+  },
+
+  "radioMessagesOnPickup" : [ "pickupaugment" ],
+
+  "scripts" : [ "/scripts/augments/project45-gunmod/ammomod.lua" ]
+}

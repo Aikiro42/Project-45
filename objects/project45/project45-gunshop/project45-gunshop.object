@@ -104,12 +104,17 @@
         "project45-underbarrelshotgunmod",
         "project45-phaseshiftmod",
 
-        // misc mods
+        // sights
         "project45-reflexsightsmod",
+
+        // receiver
+        "project45-autofiremod",
+        "project45-multithreadermod",
+
+        // misc mods
         "project45-gripmod",
         "project45-muzzlebrakemod",
         "project45-silencermod",
-        "project45-autofiremod",
         "project45-extendedmagmod",
         "project45-weightmod",
         "project45-stockmod"
@@ -146,14 +151,17 @@
         "project45-clustergrenademod",
         "project45-gravbombmod",
         "project45-thermitegrenademod",
+        "project45-homingrocketmod",
 
         // energy ammo
         "project45-iceammomod",
         "project45-elecammomod",
         "project45-firebeammod",
+        "project45-poisonbeammod",
 
         // flamethrower ammo
-        "project45-gasmod"
+        "project45-gasmod",
+        "project45-tarmod"
         
       ],
 
