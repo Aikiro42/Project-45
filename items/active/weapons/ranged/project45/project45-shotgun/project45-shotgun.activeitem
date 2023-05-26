@@ -22,7 +22,6 @@
       "shotgun": true
     },
     "acceptsModSlot": {
-      "sights": true,
       "muzzle": true,
   
       "receiver": true,

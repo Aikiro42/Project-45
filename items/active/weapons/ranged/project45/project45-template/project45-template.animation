@@ -265,7 +265,7 @@
     "unjam" : ["/sfx/gun/project45_unjam.ogg"],
     "hollow" : ["/sfx/gun/project45_hollow.ogg"],
     // "crit" : ["/sfx/gun/project45_crit.ogg"],
-    "crit" : ["/assetmissing.ogg"],
+    "crit" : ["/assetmissing.wav"],
     "laser" : ["/sfx/gun/project45_laser.ogg"],
     "charge" : ["/sfx/gun/project45_charge_c.ogg"],
     "chargeWhine" : ["/sfx/gun/project45_chargewhine_c.ogg"],

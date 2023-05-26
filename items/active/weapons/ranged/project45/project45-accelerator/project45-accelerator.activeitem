@@ -65,7 +65,7 @@
     
     "sounds":{
       "fire" : ["/sfx/gun/mech_heatrifle_fire1.ogg"],
-      "hollow": ["/assetmissing.ogg"]
+      "hollow": ["/assetmissing.wav"]
     }
   },
 

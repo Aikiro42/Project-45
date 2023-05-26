@@ -1237,7 +1237,6 @@ function SynthetikMechanics:fireHitscan(projectileType)
     local hitReg = self:hitscan(false)
     local crit = self:crit()
     local finalDamage = self:damagePerShot(true) * crit
-    sb.logInfo(sb.printJson(crit > 1 and "project45-critical" or nil))
     local damageConfig = {
       -- we included activeItem.ownerPowerMultiplier() in
       -- self:damagePerShot() so we cancel it
