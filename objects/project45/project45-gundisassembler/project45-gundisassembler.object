@@ -32,8 +32,7 @@
   "orientations" : [
     {
       "imageLayers" : [
-        { "image" : "project45-gundisassembler.png:default.<key>"},
-        { "image" : "project45-gundisassembler.png:default.<key>", "fullbright": true}
+        { "image" : "project45-gundisassembler.png:default.<key>"}
       ],
       "direction" : "left",
       "imagePosition" : [-8, 0],
@@ -42,8 +41,7 @@
     },
     {
       "imageLayers" : [
-        { "image" : "project45-gundisassembler.png:default.<key>"},
-        { "image" : "project45-gundisassembler.png:default.<key>", "fullbright": true}
+        { "image" : "project45-gundisassembler.png:default.<key>"}
       ],
       "direction" : "right",
       "flipImages" : true,
