@@ -1,7 +1,25 @@
 # Gun Mechanics
-## Reloading
-- The core feature of this mod
-- 
+## Ammo System and Reloading (CORE FEATURE)
+- Guns consume ammo, which can be replenished via reloading.
+
+### No ammo, Mag On
+- If the player has enough energy to do a reload, the mag is ejected.
+
+### No magazine
+- If the player has enough energy to do a reload, the reload sequence begins.
+
+### Reload Sequence
+1. A bar appears beside the cursor, and an indicator goes up along that bar.
+    - The bar has three distinct regions: bad (white), good (dark purple) and perfect ()
+    
+
+- When a gun is out of ammo, and the player attempts to fire it, The gun first ejects its mag.
+- When the gun does not have a magazine and the player attempts to fire it, the reload sequence begins.
+- A bar appears beside the cursor that has two distinct regions:
+    - "Bad reload" region
+    - "Good reload" region
+    - "Perfect reload" region
+- An indicator moves up the bar at a speed dependent on the gun's supposed reload time.
 
 # Gun Properties
 ## Damage
