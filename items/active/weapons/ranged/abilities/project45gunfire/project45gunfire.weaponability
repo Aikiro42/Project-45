@@ -1,0 +1,61 @@
+{
+  "animationScripts": [
+    "/items/active/weapons/ranged/abilities/project45gunfire/project45gunfireanimation.lua"
+  ],
+  
+  "animation": "/items/active/weapons/ranged/abilities/project45gunfire/project45gunfire.animation",
+
+  "ability" : {
+    "name" : "Synthetik Mechanics",
+    "type" : "project45gunfire",
+    "scripts" : ["/items/active/weapons/ranged/abilities/project45gunfire/project45gunfire.lua"],
+    "class" : "Project45GunFire",
+
+    // Stat Config
+
+    "baseDamage": 5,
+    "fireRate": 8, // rounds per second
+    "reloadCost": 0.5, // percent of energy
+    "reloadTime": 1,   // 80% actual reload time, 20% cocking time
+    "critChance": 0.1,
+    "critMult": 1.5,
+
+    // Projectile Config
+    
+    "projectileKind": "projectile", // projectile, hitscan, beam
+    "projectileCount": 5,
+    "projectileType": "project45stdbullet",
+    "projectileParameters": {
+      "power": 100,
+      "damageType": "IgnoresDef",
+      "statusEffects": []
+    },
+
+    "hitscanParameters": {
+      "color": [255, 220, 0],
+      "range": 100,
+      "damageConfig": {
+
+      }
+    },
+
+    // Ammo Config
+    
+    "maxAmmo": 12,
+    "ammoPerShot": 1,
+    "quickReloadTimeframe": [0.5, 0.6, 0.7, 0.8],
+    // Accuracy and Recoil Config
+
+    "inaccuracy": 0.05,
+    "recoilAmount": 1, // amount of recoil per shot, in degrees
+    "recoilMult": 2, // multiplies recoilAmount
+    "recoverTime": 3, // time it takes to recover aim completely, in seconds
+
+    // Fire and Charge Config
+
+    "chargeTime": 0,
+    "overchargeTime": 0,
+    "dischargeTimeMult": 2 // how fast the gun discharges
+    
+  }
+}

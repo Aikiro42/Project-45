@@ -1,0 +1,68 @@
+{
+  "globalTagDefaults" : {
+    "paletteSwaps" : ""
+  },
+
+  "animatedParts" : {
+    "stateTypes" : {
+      "gun" : {
+        "default" : "idle",
+        "states" : {
+          "idle": {}
+        }
+      }
+    },
+
+    "parts" : {
+      "middle": {
+        "properties":{
+          "centered" : true,
+          "image" : "<partImage><paletteSwaps><directives>",
+          "offset" : [0, 0], // x offset is set dynamically
+          "transformationGroups" : ["weapon"]
+        },
+        
+        "partStates" : {
+          "gun" : {
+            "idle" : {
+              "properties" : {
+                "image" : "<partImage>"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+
+  "rotationGroups" : {
+    "weapon" : {
+      "angularVelocity" : 0
+    }
+  },
+
+  "transformationGroups" : {
+    "weapon" : {},
+    "muzzle" : {}
+  },
+
+  "particleEmitters" : {
+    "muzzleFlash" : {
+      "transformationGroups" : ["muzzle"],
+      "offsetRegion" : [0, 0, 0, 0],
+      "emissionRate" : 100,
+      "particles" : [ 
+        {"particle": "project45muzzle"},
+        {"particle": "project45muzzle"},
+        {"particle": "project45muzzle"}
+      ]
+    }
+  },
+
+  "sounds" : {
+    "fire": ["/sfx/project45-synthetikmechanics/fires/fire_pistol.ogg"],
+    "eject": ["/sfx/project45-synthetikmechanics/reloads/ejectmag_generic_1.ogg"],
+    "getmag": ["/sfx/project45-synthetikmechanics/foleys/getmag_generic.ogg"],
+    "reload": ["/sfx/project45-synthetikmechanics/reloads/insertmag_generic.ogg"]
+  }
+}

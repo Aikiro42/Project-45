@@ -6,6 +6,11 @@
     },
     {
         "op": "add",
+        "path": "/project45gunfire",
+        "value": "/items/active/weapons/ranged/abilities/project45gunfire/project45gunfire.weaponability"
+    },
+    {
+        "op": "add",
         "path": "/project45gunscope",
         "value": "/items/active/weapons/ranged/abilities/project45gunscope/project45gunscope.weaponability"
     },
