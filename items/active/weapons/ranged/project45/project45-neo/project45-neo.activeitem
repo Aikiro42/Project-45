@@ -18,8 +18,8 @@
     "magazine": ""
   },
 
-  "baseOffset" : [3, 0.05],
-  "muzzleOffset" : [0.875, 0.4],
+  "baseOffset" : [3, 0],
+  "muzzleOffset" : [3, 0],
 
   "scripts" : ["/items/active/weapons/ranged/project45gunneo.lua"],
     

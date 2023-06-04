@@ -40,6 +40,7 @@ function update()
 
 
   if ammo >= 0 then
+    -- TODO: show reload rating color
     localAnimator.spawnParticle({
       type = "text",
       text= "^shadow;" .. ammo,

@@ -72,13 +72,13 @@
     "semi": false, // fires once per left click
     "manualFeed": false, // needs two left clicks to fire
     "slamFire": false, // whether the gun shoots right after feeding
-    "cycleTime": 0.01, // time it takes to cock the gun, cycle rounds, etc.
+    "cycleTime": 0.1, // time it takes to cock the gun, cycle rounds, etc.
     "fireTime": 0.1, // time before another input can be registered
     "cockTime": 0.5, // time it takes to cock weapon
 
     // Charge Config
 
-    "chargeTime": 0.1,
+    "chargeTime": 0,
     "overchargeTime": 0.1, // allows gun to deal up to 100% more damage, multiplicative to other bonuses
     "dischargeTimeMult": 2, // how fast the gun discharges
     
@@ -97,8 +97,8 @@
 
      // resets charge when ejecting magazine
     "resetChargeOnEject": false,
-    // discharges if the ammo count is zero
-    "dischargeOnEmpty": false,
+    // allows charging if the ammo count is zero
+    "maintainChargeOnEmpty": true,
 
      // discharges if the weapon is obstructed by terrain
     "chargeWhenObstructed": true

@@ -3,6 +3,9 @@ require "/scripts/interp.lua"
 require "/scripts/poly.lua"
 require "/items/active/weapons/weapon.lua"
 
+-- TODO: store reload rating instead of reload rating damage
+-- TODO: implement jam mechanic
+
 Project45GunFire = WeaponAbility:new()
 
 function Project45GunFire:init()
@@ -151,6 +154,7 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
     if self.queueFire
     and self.chargeTimer >= self.chargeTime
     and storage.ammo > 0
+    and self.reloadTimer < 0
     then
       self:setState(self.firing)
       self.queueFire = false
@@ -165,6 +169,7 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
   -- activeItem.setCursor("/cursors/project45reticle" .. x .. ".cursor")
 
   -- trigger i/o logic
+  -- TODO: improve my logic
   if self:triggering()
   and not self.weapon.currentAbility
   and self.cooldownTimer == 0
@@ -174,14 +179,15 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
 
       if animator.animationState("chamber") == "ready"
       and not self.triggered then
-        if self.chargeTime + self.overchargeTime == 0
-        or self.autoFireOnFullCharge and (self.chargeTimer >= self.chargeTime + self.overchargeTime)
-        or self.fireBeforeOvercharge and (self.chargeTimer >= self.chargeTime)
-        then
-          self:setState(self.firing)
-        elseif self.chargeTimer >= self.chargeTime
-        then
-          self.queueFire = true
+        if not world.lineTileCollision(mcontroller.position(), self:firePosition()) then
+          if self.chargeTime + self.overchargeTime == 0
+          or self.autoFireOnFullCharge and (self.chargeTimer >= self.chargeTime + (self.fireBeforeOvercharge and 0 or self.overchargeTime))
+          then
+            self:setState(self.firing)
+          elseif self.chargeTimer >= self.chargeTime
+          then
+            self.queueFire = true
+          end
         end
         
       elseif animator.animationState("chamber") == "filled"
@@ -519,17 +525,19 @@ end
 function Project45GunFire:updateCharge()
 
   -- don't bother updating charge stuff if there's no charge in the first place
-  if self.chargeTime + self.overchargeTime <= 0 then return end
+  if self.chargeTime + self.overchargeTime <= 0
+  then return end
 
   -- from here on out, either self.chargeTime or self.overchargeTime is nonzero.
   -- It's safe to divide by their sum.
 
   -- increment/decrement charge timer
+  -- TODO: this charges when it shouldn't, fix it
   if self:triggering()
   and self.reloadTimer < 0
-  and not (self.chargeWhenObstructed and world.lineTileCollision(mcontroller.position(), self:firePosition()))
+  and (self.chargeWhenObstructed or not world.lineTileCollision(mcontroller.position(), self:firePosition()))
   and not (self.semi and self.triggered)
-  and storage.ammo >= (self.dischargeOnEmpty and 1 or 0) then
+  and storage.ammo >= (self.maintainChargeOnEmpty and 0 or 1) then
     -- charge up if triggered
     self.chargeTimer = math.min(self.chargeTime + self.overchargeTime, self.chargeTimer + self.dt)
   else
