@@ -10,7 +10,6 @@ synthethikmechanics_altInit = init or function()
   end
 end
 
-
 synthethikmechanics_altUpdate = update or function()
     if not warningTriggered then
       warningTriggered = true

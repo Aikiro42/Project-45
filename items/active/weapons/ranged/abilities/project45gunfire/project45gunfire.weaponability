@@ -14,11 +14,16 @@
     // Stat Config
 
     "baseDamage": 5,
-    "fireRate": 8, // rounds per second
     "reloadCost": 0.5, // percent of energy
     "reloadTime": 1,   // 80% actual reload time, 20% cocking time
     "critChance": 0.1,
     "critMult": 1.5,
+
+    // Misc Config
+
+    "movementSpeedFactor": 1.25,
+    "jumpHeightFactor": 1.25,
+    "heavyWeapon": false,
 
     // Projectile Config
     
@@ -43,7 +48,7 @@
 
     // Ammo Config
     
-    "maxAmmo": 3,
+    "maxAmmo": 5,
     "ammoPerShot": 1,
     "quickReloadTimeframe": [0.5, 0.6, 0.7, 0.8], // [ good [ perfect ] good ]
 
@@ -51,30 +56,41 @@
 
     "ejectMagOnEmpty": false, // ejects mag when the gun hits 0 ammo
     "reloadOnEjectMag": false, // begins reload sequence upon ejecting
-    "bulletsPerReload": 1,
+    "bulletsPerReload": -1, // bullets reloaded every active reload; set to negative number to reload all bullets
+    // TODO: consider case wherein mag is present when reloading
 
     // Accuracy and Recoil Config
 
     "inaccuracy": 0.05, // affects arm movement as the trigger is pulled
-    "recoilAmount": 3, // amount of recoil per shot, in degrees; arm and weapon will rotate by half of this
+    "recoilAmount": 1, // amount of recoil per shot, in degrees; arm and weapon will rotate by half of this
     "maxRecoilDeg": 15, // the most the arm and weapon will rotate, in degrees.
     "recoilMult": 2, // multiplies recoilAmount
     "recoverTime": 3, // time it takes to recover aim completely, in seconds
 
-    // Fire and Charge Config
+    // Fire Config
 
-    "semi": true,
-    "manualFeed": false,
-    "cycleTime": 0.25,
+    "semi": true, // fires once per left click
+    "manualFeed": true, // needs two left clicks to fire
+    "slamFire": false, // whether the gun shoots right after feeding
+    "cycleTime": 1, // time it takes to cock the gun, cycle rounds, etc.
+    "fireTime": 0.1, // time before another input can be registered
+    "cockTime": 0.5, // time it takes to cock weapon
+
+    // Charge Config
 
     "chargeTime": 0,
-    "overchargeTime": 0,
+    "overchargeTime": 0, // allows gun to deal up to 100% more damage, multiplicative to other bonuses
     "dischargeTimeMult": 2, // how fast the gun discharges
     
     "progressiveCharge": false, // whether the charge animation loops or is dependent on charge progress
     "chargeFrames": 6, // only matters if progressiveCharge is true
 
-    "resetChargeOnFire": true
+    "fireBeforeOvercharge": false, // makes the gun fire once the charge timer hits chargeTime
+    "autoFireAfterCharge": false, // fires gun after charging, given that there's ammo
+    "resetChargeOnFire": false, // resets charge after firing
+    "resetChargeOnEject": false, // resets charge when ejecting magazine
+    "dischargeOnEmpty": false, // discharges if the ammo count is zero
+    "chargeWhenObstructed": true // discharges if the weapon is obstructed by terrain
     
   }
 }

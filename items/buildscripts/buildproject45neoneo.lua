@@ -93,18 +93,25 @@ function build(directory, config, parameters, level, seed)
 
   if config.primaryAbility then
 
-    -- sync animation
+    -- sync cycle animation
     local fireTimeRelatedStates = {
       "firing",
       "ejecting",
       "feeding"
     }
-    stateCycleTime = config.primaryAbility.cycleTime / #fireTimeRelatedStates
+    local stateCycleTime = config.primaryAbility.cycleTime / #fireTimeRelatedStates
     for _, state in ipairs(fireTimeRelatedStates) do
       construct(config, "animationCustom", "animatedParts", "stateTypes", "gun", "states", state)
       config.animationCustom.animatedParts.stateTypes.gun.states[state].cycle = stateCycleTime
       -- sb.logInfo(config.animationCustom.animatedParts.stateTypes.gun.states[state].cycle)
     end
+
+    construct(config, "animationCustom", "animatedParts", "stateTypes", "gun", "states", "boltPulling")
+    config.animationCustom.animatedParts.stateTypes.gun.states.boltPulling.cycle = config.primaryAbility.cockTime/2
+
+    construct(config, "animationCustom", "animatedParts", "stateTypes", "gun", "states", "boltPushing")
+    config.animationCustom.animatedParts.stateTypes.gun.states.boltPushing.cycle = config.primaryAbility.cockTime/2
+
   end
 
   -- set price

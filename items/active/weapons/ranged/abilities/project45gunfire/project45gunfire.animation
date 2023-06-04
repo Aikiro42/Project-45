@@ -32,6 +32,12 @@
             "mode" : "transition",
             "transition": "ejected"
           },
+          "boltPulling": {
+            "frames" : 1,
+            "cycle" : 0.25,
+            "mode" : "transition",
+            "transition": "ejected"
+          },
           "ejected": {
             "frames" : 1,
             "cycle" : 0.25,
@@ -41,6 +47,12 @@
           // feeding -> idle
           // (FORCED) feeding -> jammed
           "feeding": {
+            "frames" : 1,
+            "cycle" : 0.25,
+            "mode" : "transition",
+            "transition": "idle"
+          },
+          "boltPushing": {
             "frames" : 1,
             "cycle" : 0.25,
             "mode" : "transition",
@@ -113,12 +125,22 @@
                 "image" : "<partImage>:ejecting.charge<chargeFrame>.<frame>"
               }
             },
+            "boltPulling" : {
+              "properties" : {
+                "image" : "<partImage>:ejecting.charge<chargeFrame>.<frame>"
+              }
+            },
             "ejected" : {
               "properties" : {
                 "image" : "<partImage>:ejected.charge<chargeFrame>.<frame>"
               }
             },
             "feeding" : {
+              "properties" : {
+                "image" : "<partImage>:feeding.charge<chargeFrame>.<frame>"
+              }
+            },
+            "boltPushing" : {
               "properties" : {
                 "image" : "<partImage>:feeding.charge<chargeFrame>.<frame>"
               }
@@ -199,9 +221,15 @@
 
   "sounds" : {
     "fire": ["/sfx/project45-synthetikmechanics/fires/fire_pistol.ogg"],
+    "hollow": ["/sfx/project45-synthetikmechanics/foleys/hollow.ogg"],
+
     "eject": ["/sfx/project45-synthetikmechanics/reloads/ejectmag_generic_1.ogg"],
+
     "getmag": ["/sfx/project45-synthetikmechanics/foleys/getmag_generic.ogg"],
     "reload": ["/sfx/project45-synthetikmechanics/reloads/insertmag_generic.ogg"],
-    "loadRound": ["/sfx/project45-synthetikmechanics/reloads/loadround_generic.ogg"]
+    "loadRound": ["/sfx/project45-synthetikmechanics/reloads/loadround_generic.ogg"],
+
+    "boltPull": ["/sfx/project45-synthetikmechanics/reloads/boltpull_generic.ogg"],
+    "boltPush": ["/sfx/project45-synthetikmechanics/reloads/boltpush_generic.ogg"]
   }
 }

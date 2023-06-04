@@ -301,7 +301,7 @@ function SynthetikMechanics:update(dt, fireMode, shiftHeld)
       status.setResource("energyRegenBlock", 1)
     end
 
-    -- trigger I/O logic
+    -- TODO: trigger I/O logic
     if self:triggering()
     and not self.weapon.currentAbility
     and self.cooldownTimer == 0
