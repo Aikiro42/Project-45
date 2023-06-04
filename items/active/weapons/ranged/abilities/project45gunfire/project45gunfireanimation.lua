@@ -31,36 +31,39 @@ function update()
     -- sb.logInfo("[PROJECT 45] Obtained alt-ability animation update script.")
   end
 
+  local hand = animationConfig.animationParameter("hand")
   local ammo = animationConfig.animationParameter("ammo") or "?"
   local reloadTimer = animationConfig.animationParameter("reloadTimer")
+  local jamAmount = animationConfig.animationParameter("jamAmount", 0)
+  local offset = reloadTimer < 0 and 0 or 2
+  offset = offset + (jamAmount <= 0 and 0 or 2)
+  offset = hand == "primary" and -offset or offset
 
-  if reloadTimer < 0 then
-    if ammo >= 0 then
-      localAnimator.spawnParticle({
-        type = "text",
-        text= "^shadow;" .. ammo,
-        color = {255, 255, 255},
-        size = 1,
-        fullbright = true,
-        flippable = false,
-        layer = "front"
-      }, vec2.add(activeItemAnimation.ownerAimPosition(), {-2, 0}))
 
-    else  -- TODO: show crossed-out mag instead of "E"
-      localAnimator.spawnParticle({
-        type = "text",
-        text= "^shadow;E",
-        color = {255, 255, 255},
-        size = 1,
-        fullbright = true,
-        flippable = false,
-        layer = "front"
-      }, vec2.add(activeItemAnimation.ownerAimPosition(), {-2, 0}))
-    end
-  else
-    renderReloadBar()
+  if ammo >= 0 then
+    localAnimator.spawnParticle({
+      type = "text",
+      text= "^shadow;" .. ammo,
+      color = {255, 255, 255},
+      size = 1,
+      fullbright = true,
+      flippable = false,
+      layer = "front"
+    }, vec2.add(activeItemAnimation.ownerAimPosition(), {-2 + offset, 0}))
+
+  else  -- TODO: show crossed-out mag instead of "E"
+    localAnimator.spawnParticle({
+      type = "text",
+      text= "^shadow;E",
+      color = {255, 255, 255},
+      size = 1,
+      fullbright = true,
+      flippable = false,
+      layer = "front"
+    }, vec2.add(activeItemAnimation.ownerAimPosition(), {-2 + offset, 0}))
   end
-
+  
+  renderReloadBar()
   renderChargeBar()
 
 end
@@ -68,10 +71,13 @@ end
 function renderReloadBar(offset, barColor, length, width, borderwidth)
   
   local time = animationConfig.animationParameter("reloadTimer")
+  
+  if time < 0 then return end
+
   local timeMax = animationConfig.animationParameter("reloadTime")
-  sb.logInfo(timeMax)
-  local good = animationConfig.animationParameter("goodReload")
-  local perfect = animationConfig.animationParameter("perfectReload")
+  local quickReloadTimeframe = animationConfig.animationParameter("quickReloadTimeframe")
+  local good = {quickReloadTimeframe[1], quickReloadTimeframe[4]}
+  local perfect = {quickReloadTimeframe[2], quickReloadTimeframe[3]}
   local position = activeItemAnimation.ownerAimPosition()
   local offset = {-2, 0}
 
@@ -126,19 +132,19 @@ function renderReloadBar(offset, barColor, length, width, borderwidth)
   }, "ForegroundEntity+1")
 
   -- render good range
-  a = vec2.add(base_a, {0, good[1]*length/timeMax})
-  b = vec2.add(base_a, {0, good[2]*length/timeMax})
-  local perfectRange = {a, b}
+  a = vec2.add(base_a, {0, good[1]*length})
+  b = vec2.add(base_a, {0, good[2]*length})
+  local goodRange = {a, b}
   localAnimator.addDrawable({
-    line = perfectRange,
+    line = goodRange,
     width = barWidth,
     fullbright = true,
     color = {143, 0, 255}
   }, "ForegroundEntity+1")
 
   -- render perfect range
-  a = vec2.add(base_a, {0, perfect[1]*length/timeMax})
-  b = vec2.add(base_a, {0, perfect[2]*length/timeMax})
+  a = vec2.add(base_a, {0, perfect[1]*length})
+  b = vec2.add(base_a, {0, perfect[2]*length})
   local perfectRange = {a, b}
   localAnimator.addDrawable({
     line = perfectRange,
@@ -170,7 +176,7 @@ function renderChargeBar(position, offset, barColor, length, width, borderwidth)
   local chargeTime = animationConfig.animationParameter("chargeTime")
   local overchargeTime = animationConfig.animationParameter("overchargeTime")
 
-  local position = position or {0, -2}
+  local position = activeItemAnimation.ownerAimPosition()
   local offset = offset or {0, -1.25}
   local barColor = barColor or {75,75,75}
   local length = length or 2

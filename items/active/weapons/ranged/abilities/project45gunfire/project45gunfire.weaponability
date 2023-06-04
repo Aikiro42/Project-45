@@ -25,6 +25,8 @@
     "projectileKind": "projectile", // projectile, hitscan, beam
     "projectileCount": 5,
     "projectileType": "project45stdbullet",
+    "multishot": 1,
+    "spread": 0, // affects direction the projectile flies to, from the muzzle
     "projectileParameters": {
       "power": 100,
       "damageType": "IgnoresDef",
@@ -41,21 +43,38 @@
 
     // Ammo Config
     
-    "maxAmmo": 12,
+    "maxAmmo": 3,
     "ammoPerShot": 1,
-    "quickReloadTimeframe": [0.5, 0.6, 0.7, 0.8],
+    "quickReloadTimeframe": [0.5, 0.6, 0.7, 0.8], // [ good [ perfect ] good ]
+
+    // Reload Config
+
+    "ejectMagOnEmpty": false, // ejects mag when the gun hits 0 ammo
+    "reloadOnEjectMag": false, // begins reload sequence upon ejecting
+    "bulletsPerReload": 1,
+
     // Accuracy and Recoil Config
 
-    "inaccuracy": 0.05,
-    "recoilAmount": 1, // amount of recoil per shot, in degrees
+    "inaccuracy": 0.05, // affects arm movement as the trigger is pulled
+    "recoilAmount": 3, // amount of recoil per shot, in degrees; arm and weapon will rotate by half of this
+    "maxRecoilDeg": 15, // the most the arm and weapon will rotate, in degrees.
     "recoilMult": 2, // multiplies recoilAmount
     "recoverTime": 3, // time it takes to recover aim completely, in seconds
 
     // Fire and Charge Config
 
+    "semi": true,
+    "manualFeed": false,
+    "cycleTime": 0.25,
+
     "chargeTime": 0,
     "overchargeTime": 0,
-    "dischargeTimeMult": 2 // how fast the gun discharges
+    "dischargeTimeMult": 2, // how fast the gun discharges
+    
+    "progressiveCharge": false, // whether the charge animation loops or is dependent on charge progress
+    "chargeFrames": 6, // only matters if progressiveCharge is true
+
+    "resetChargeOnFire": true
     
   }
 }

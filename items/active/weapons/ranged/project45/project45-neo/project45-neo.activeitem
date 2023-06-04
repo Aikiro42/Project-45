@@ -11,10 +11,11 @@
   "itemTags" : ["weapon","ranged","pistol"],
   "level" : 1,
 
-  "inventoryIcon" : "project45-neo.png",
+  "inventoryIcon" : "project45-neo-icon.png",
 
   "animationParts" : {
-    "middle" : "project45-neo.png"
+    "middle" : "project45-neo.png",
+    "magazine": ""
   },
 
   "baseOffset" : [0.2, 0.05],

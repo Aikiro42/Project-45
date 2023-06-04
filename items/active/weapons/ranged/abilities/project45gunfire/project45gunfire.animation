@@ -1,6 +1,7 @@
 {
   "globalTagDefaults" : {
-    "paletteSwaps" : ""
+    "paletteSwaps" : "",
+    "chargeFrame": "1"
   },
 
   "animatedParts" : {
@@ -8,7 +9,80 @@
       "gun" : {
         "default" : "idle",
         "states" : {
-          "idle": {}
+          "idle": {
+            "frames" : 1,
+            "cycle" : 0.25,
+            "mode" : "loop"
+          },
+
+          // firing -> idle
+          // (FORCED) firing -> ejecting
+          "firing": {
+            "frames" : 1,
+            "cycle" : 0.25,
+            "mode" : "transition",
+            "transition": "idle"
+          },
+
+          // ejecting -> ejected
+          // (FORCED) ejected -> feeding
+          "ejecting": {
+            "frames" : 1,
+            "cycle" : 0.25,
+            "mode" : "transition",
+            "transition": "ejected"
+          },
+          "ejected": {
+            "frames" : 1,
+            "cycle" : 0.25,
+            "mode" : "loop"
+          },
+
+          // feeding -> idle
+          // (FORCED) feeding -> jammed
+          "feeding": {
+            "frames" : 1,
+            "cycle" : 0.25,
+            "mode" : "transition",
+            "transition": "idle"
+          },
+
+          // unjamming -> jammed
+          // (FORCED) unjamming -> feeding
+          "jammed": {
+            "frames" : 1,
+            "cycle" : 0.25,
+            "mode" : "loop"
+          },
+          "unjamming": {
+            "frames" : 1,
+            "cycle" : 0.25,
+            "mode" : "transition",
+            "transition": "idle"
+          }
+
+        }
+      },
+      "charge": {
+        "default": "idle",
+        "states": {
+          "idle": {},
+          "charging": {}
+        }
+      },
+      "chamber": {
+        "default": "ready",
+        "states": {
+          "empty": {},
+          "ready": {},
+          "filled": {}
+        }
+      },
+      "mag": {
+        "default": "present",
+        "states": {
+          "present": {},
+          "absent": {}
         }
       }
     },
@@ -26,7 +100,61 @@
           "gun" : {
             "idle" : {
               "properties" : {
-                "image" : "<partImage>"
+                "image" : "<partImage>:idle.charge<chargeFrame>.<frame>"
+              }
+            },
+            "firing" : {
+              "properties" : {
+                "image" : "<partImage>:firing.charge<chargeFrame>.<frame>"
+              }
+            },
+            "ejecting" : {
+              "properties" : {
+                "image" : "<partImage>:ejecting.charge<chargeFrame>.<frame>"
+              }
+            },
+            "ejected" : {
+              "properties" : {
+                "image" : "<partImage>:ejected.charge<chargeFrame>.<frame>"
+              }
+            },
+            "feeding" : {
+              "properties" : {
+                "image" : "<partImage>:feeding.charge<chargeFrame>.<frame>"
+              }
+            },
+            "jammed" : {
+              "properties" : {
+                "image" : "<partImage>.jammed.charge<chargeFrame>.<frame>"
+              }
+            },
+            "unjamming" : {
+              "properties" : {
+                "image" : "<partImage>:unjamming.charge<chargeFrame>.<frame>"
+              }
+            }
+            
+          }
+        }
+      },
+
+      "magazine": {
+        "properties":{
+          "centered" : true,
+          "image" : "<partImage><paletteSwaps><directives>",
+          "offset" : [0, 0], // x offset is set dynamically
+          "transformationGroups" : ["weapon"]
+        },
+        "partStates" : {
+          "mag": {
+            "present": {
+              "properties" : {
+                "image" : "<partImage>:<ammo>"
+              }
+            },
+            "absent":{
+              "properties" : {
+                "image" : "<partImage>:absent"
               }
             }
           }
@@ -56,13 +184,24 @@
         {"particle": "project45muzzle"},
         {"particle": "project45muzzle"}
       ]
+    },
+
+    "ejectionPort" : {
+      "transformationGroups" : ["weapon"],
+      "offsetRegion" : [0, 0, 0, 0],
+      "emissionRate" : 1,
+      "particles" : [ 
+        {"particle": "project45bulletcasesmall"}
+      ]
     }
+
   },
 
   "sounds" : {
     "fire": ["/sfx/project45-synthetikmechanics/fires/fire_pistol.ogg"],
     "eject": ["/sfx/project45-synthetikmechanics/reloads/ejectmag_generic_1.ogg"],
     "getmag": ["/sfx/project45-synthetikmechanics/foleys/getmag_generic.ogg"],
-    "reload": ["/sfx/project45-synthetikmechanics/reloads/insertmag_generic.ogg"]
+    "reload": ["/sfx/project45-synthetikmechanics/reloads/insertmag_generic.ogg"],
+    "loadRound": ["/sfx/project45-synthetikmechanics/reloads/loadround_generic.ogg"]
   }
 }

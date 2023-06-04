@@ -19,6 +19,8 @@ function init()
     self.weapon:addAbility(secondaryAbility)
   end
 
+  activeItem.setScriptedAnimationParameter("hand", activeItem.hand())
+
   self.weapon:init()
 end
 

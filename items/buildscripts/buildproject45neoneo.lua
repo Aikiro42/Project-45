@@ -65,8 +65,8 @@ function build(directory, config, parameters, level, seed)
     end
   end
 
-  construct(config, "animationCustom", "lights", "muzzleFlash", "color")
-  config.animationCustom.lights.muzzleFlash.color = parameters.muzzleFlashColor or config.muzzleFlashColor or {255, 255, 200}
+  -- construct(config, "animationCustom", "lights", "muzzleFlash", "color")
+  -- config.animationCustom.lights.muzzleFlash.color = parameters.muzzleFlashColor or config.muzzleFlashColor or {255, 255, 200}
 
   construct(config, "animationParts", "muzzleFlash")
   config.animationParts.muzzleFlash = "/items/active/weapons/ranged/project45-muzzleflash.png"
@@ -75,7 +75,7 @@ function build(directory, config, parameters, level, seed)
   if config.baseOffset then
 
     local parts = {
-      "gun"
+      "middle"
     }
 
     for _, part in ipairs(parts) do
@@ -89,6 +89,22 @@ function build(directory, config, parameters, level, seed)
       config.muzzleOffset = vec2.add(config.muzzleOffset, config.baseOffset)
     end
 
+  end
+
+  if config.primaryAbility then
+
+    -- sync animation
+    local fireTimeRelatedStates = {
+      "firing",
+      "ejecting",
+      "feeding"
+    }
+    stateCycleTime = config.primaryAbility.cycleTime / #fireTimeRelatedStates
+    for _, state in ipairs(fireTimeRelatedStates) do
+      construct(config, "animationCustom", "animatedParts", "stateTypes", "gun", "states", state)
+      config.animationCustom.animatedParts.stateTypes.gun.states[state].cycle = stateCycleTime
+      -- sb.logInfo(config.animationCustom.animatedParts.stateTypes.gun.states[state].cycle)
+    end
   end
 
   -- set price
