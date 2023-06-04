@@ -147,14 +147,13 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
   end
 
   if not self:triggering() then
-    if self.triggered then
-      sb.logInfo("Not triggering anymore.")
-    end
     self.triggered = false
-    if self.readyToFire then
-      self.readyToFire = false
-      sb.logInfo("hi?")
+    if self.queueFire
+    and self.chargeTimer >= self.chargeTime
+    and storage.ammo > 0
+    then
       self:setState(self.firing)
+      self.queueFire = false
     end
   end
   
@@ -175,9 +174,14 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
 
       if animator.animationState("chamber") == "ready"
       and not self.triggered then
-        sb.logInfo(sb.printJson(self.triggered))
-        if self.chargeTimer >= self.chargeTime then
+        if self.chargeTime + self.overchargeTime == 0
+        or self.autoFireOnFullCharge and (self.chargeTimer >= self.chargeTime + self.overchargeTime)
+        or self.fireBeforeOvercharge and (self.chargeTimer >= self.chargeTime)
+        then
           self:setState(self.firing)
+        elseif self.chargeTimer >= self.chargeTime
+        then
+          self.queueFire = true
         end
         
       elseif animator.animationState("chamber") == "filled"
@@ -343,19 +347,21 @@ function Project45GunFire:reloading()
   -- if there hasn't been any input, load round
   if storage.ammo < 0 then
     sumRating = sumRating + 0.5
+    reloads = reloads + 1
     animator.playSound("loadRound")
     self:updateAmmo(self.bulletsPerReload)
   end
 
   -- begin final reload evaluation
   local finalScore = sumRating / reloads
-  if finalScore > 1 then
+
+  if finalScore > reloads then
     finalReloadRating = "PERFECT"
     storage.reloadRatingDamage = 1.5
-  elseif finalScore > 2/3 then
+  elseif finalScore > reloads * 2/3 then
     finalReloadRating = "GOOD"
     storage.reloadRatingDamage = 1.25
-  elseif finalScore > 1/3 then
+  elseif finalScore > reloads * 1/3 then
     finalReloadRating = "OK"
     storage.reloadRatingDamage = 1
   else
@@ -452,7 +458,7 @@ end
 
 -- Nudges arm before shooting
 function Project45GunFire:applyInaccuracy()
-  self.weapon.relativeArmRotation = self.weapon.relativeArmRotation + sb.nrand(self.currentInaccuracy, 0)
+  self.weapon.relativeArmRotation = self.weapon.relativeArmRotation + math.abs(sb.nrand(self.currentInaccuracy, 0))
   storage.stanceProgress = 0
 end
 
@@ -522,6 +528,7 @@ function Project45GunFire:updateCharge()
   if self:triggering()
   and self.reloadTimer < 0
   and not (self.chargeWhenObstructed and world.lineTileCollision(mcontroller.position(), self:firePosition()))
+  and not (self.semi and self.triggered)
   and storage.ammo >= (self.dischargeOnEmpty and 1 or 0) then
     -- charge up if triggered
     self.chargeTimer = math.min(self.chargeTime + self.overchargeTime, self.chargeTimer + self.dt)
@@ -537,6 +544,22 @@ function Project45GunFire:updateCharge()
   if self.overchargeTime > 0 then
     self.chargeDamage = 1 + self.chargeTime - self.chargeTimer / self.overchargeTime
   end
+
+  if self.chargeTimer > 0 and not self.chargeLoopPlaying then
+    animator.playSound("chargeDrone", -1)
+    animator.playSound("chargeWhine", -1)
+    self.chargeLoopPlaying = true
+  elseif self.chargeTimer <= 0 and self.chargeLoopPlaying then
+    animator.stopAllSounds("chargeDrone")    
+    animator.stopAllSounds("chargeWhine")
+    self.chargeLoopPlaying = false 
+  end
+
+  local chargeProgress = self.chargeTimer / self.chargeTime
+  animator.setSoundVolume("chargeDrone", 0.25 + 0.7 * math.min(chargeProgress, 2))
+  animator.setSoundPitch("chargeWhine", 1 + 0.3 * math.min(chargeProgress, 2))
+  animator.setSoundVolume("chargeWhine", 0.25 + 0.75 * math.min(chargeProgress, 2))
+
 
   -- update current charge frame (1 to n)
   if self.progressiveCharge then

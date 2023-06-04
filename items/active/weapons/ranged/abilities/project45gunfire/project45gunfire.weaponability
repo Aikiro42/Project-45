@@ -69,28 +69,39 @@
 
     // Fire Config
 
-    "semi": true, // fires once per left click
-    "manualFeed": true, // needs two left clicks to fire
+    "semi": false, // fires once per left click
+    "manualFeed": false, // needs two left clicks to fire
     "slamFire": false, // whether the gun shoots right after feeding
-    "cycleTime": 1, // time it takes to cock the gun, cycle rounds, etc.
+    "cycleTime": 0.01, // time it takes to cock the gun, cycle rounds, etc.
     "fireTime": 0.1, // time before another input can be registered
     "cockTime": 0.5, // time it takes to cock weapon
 
     // Charge Config
 
-    "chargeTime": 0,
-    "overchargeTime": 0, // allows gun to deal up to 100% more damage, multiplicative to other bonuses
+    "chargeTime": 0.1,
+    "overchargeTime": 0.1, // allows gun to deal up to 100% more damage, multiplicative to other bonuses
     "dischargeTimeMult": 2, // how fast the gun discharges
     
-    "progressiveCharge": false, // whether the charge animation loops or is dependent on charge progress
+    "progressiveCharge": true, // whether the charge animation loops or is dependent on charge progress
     "chargeFrames": 6, // only matters if progressiveCharge is true
 
-    "fireBeforeOvercharge": false, // makes the gun fire once the charge timer hits chargeTime
-    "autoFireAfterCharge": false, // fires gun after charging, given that there's ammo
-    "resetChargeOnFire": false, // resets charge after firing
-    "resetChargeOnEject": false, // resets charge when ejecting magazine
-    "dischargeOnEmpty": false, // discharges if the ammo count is zero
-    "chargeWhenObstructed": true // discharges if the weapon is obstructed by terrain
+     // makes the gun fire once the charge timer hits chargeTime
+     // if resetChargeOnFire is true, this will become false.
+    "fireBeforeOvercharge": false,
+    
+    // fires gun after charging, given that there's ammo
+    "autoFireOnFullCharge": true,
+
+    // resets charge after firing
+    "resetChargeOnFire": true,
+
+     // resets charge when ejecting magazine
+    "resetChargeOnEject": false,
+    // discharges if the ammo count is zero
+    "dischargeOnEmpty": false,
+
+     // discharges if the weapon is obstructed by terrain
+    "chargeWhenObstructed": true
     
   }
 }
