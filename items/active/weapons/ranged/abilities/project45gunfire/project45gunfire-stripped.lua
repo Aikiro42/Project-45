@@ -152,9 +152,6 @@ function Project45GunFire:init()
   end
   activeItem.setScriptedAnimationParameter("primaryProjectileSpeed", self.projectileParameters.speed)
   
-  animator.setLightActive("muzzleFlash", false)
-  animator.setAnimationState("flash", "off")
-
   self.stances = {}
   self.stances.aimStance = {
     weaponRotation = 0,
@@ -184,8 +181,6 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
   
   -- turn off muzzleflash automatically
   if self.muzzleFlashTimer <= 0 then
-    animator.setLightActive("muzzleFlash", false)
-    activeItem.setScriptedAnimationParameter("muzzleFlash", false)
   end
 
 
@@ -302,7 +297,6 @@ function Project45GunFire:firing()
   for i = 1, self.projectileCount * self:rollMultishot() do
     self:fireProjectile()
   end
-  animator.setAnimationState("gun", "firing")
   self:muzzleFlash()
   self:recoil()
 
@@ -313,7 +307,6 @@ function Project45GunFire:firing()
   -- add unejected casings
   self:updateAmmo(-self.ammoPerShot)
   storage.unejectedCasings = storage.unejectedCasings + self.ammoPerShot
-  animator.setAnimationState("chamber", "filled")
 
   if not self.manualFeed
   or self.burstCounter < self.burstCount
