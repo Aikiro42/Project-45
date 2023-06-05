@@ -1,0 +1,309 @@
+{
+  "globalTagDefaults" : {
+    "paletteSwaps" : "",
+    "chargeFrame": "1"
+  },
+
+  "animatedParts" : {
+    "stateTypes" : {
+      "gun" : {
+        "default" : "idle",
+        "states" : {
+          "idle": {
+            "frames" : 1,
+            "cycle" : 0.25,
+            "mode" : "loop"
+          },
+
+          // firing -> idle
+          // (FORCED) firing -> ejecting
+          "firing": {
+            "frames" : 1,
+            "cycle" : 0.25,
+            "mode" : "transition",
+            "transition": "idle"
+          },
+
+          // ejecting -> ejected
+          // (FORCED) ejected -> feeding
+          "ejecting": {
+            "frames" : 1,
+            "cycle" : 0.25,
+            "mode" : "transition",
+            "transition": "ejected"
+          },
+          "boltPulling": {
+            "frames" : 1,
+            "cycle" : 0.25,
+            "mode" : "transition",
+            "transition": "ejected"
+          },
+          "ejected": {
+            "frames" : 1,
+            "cycle" : 0.25,
+            "mode" : "loop"
+          },
+
+          // feeding -> idle
+          // (FORCED) feeding -> jammed
+          "feeding": {
+            "frames" : 1,
+            "cycle" : 0.25,
+            "mode" : "transition",
+            "transition": "idle"
+          },
+          "boltPushing": {
+            "frames" : 1,
+            "cycle" : 0.25,
+            "mode" : "transition",
+            "transition": "idle"
+          },
+
+          // unjamming -> jammed
+          // (FORCED) unjamming -> feeding
+          "jammed": {
+            "frames" : 1,
+            "cycle" : 0.25,
+            "mode" : "loop"
+          },
+          "unjamming": {
+            "frames" : 1,
+            "cycle" : 0.25,
+            "mode" : "transition",
+            "transition": "idle"
+          }
+
+        }
+      },
+      "flash" : {
+        "default": "off",
+        "states":{
+          "off" : {},
+          "flash" : {
+            "frames" : 2,
+            "cycle" : 0.07,
+            "mode" : "transition",
+            "transition" : "off"
+          }
+        }
+      },
+      "charge": {
+        "default": "off",
+        "states": {
+          "off": {},
+          "charging": {}
+        }
+      },
+      "chamber": {
+        "default": "ready",
+        "states": {
+          "empty": {},
+          "ready": {},
+          "filled": {}
+        }
+      },
+      "bolt": {
+        "default": "closed",
+        "states": {
+          "open": {},
+          "closed": {},
+          "jammed": {}
+        }
+      },
+      "magazine": {
+        "default": "present",
+        "states": {
+          "present": {},
+          "absent": {}
+        }
+      }
+    },
+
+    "parts" : {
+      "middle": {
+        "properties":{
+          "centered" : true,
+          "image" : "<partImage><paletteSwaps><directives>",
+          "offset" : [0, 0], // x offset is set dynamically
+          "transformationGroups" : ["weapon"]
+        },
+        
+        "partStates" : {
+          "gun" : {
+            "idle" : {
+              "properties" : {
+                "image" : "<partImage>:idle.charge<chargeFrame>.<frame>"
+              }
+            },
+            "firing" : {
+              "properties" : {
+                "image" : "<partImage>:firing.charge<chargeFrame>.<frame>"
+              }
+            },
+            "ejecting" : {
+              "properties" : {
+                "image" : "<partImage>:ejecting.charge<chargeFrame>.<frame>"
+              }
+            },
+            "boltPulling" : {
+              "properties" : {
+                "image" : "<partImage>:ejecting.charge<chargeFrame>.<frame>"
+              }
+            },
+            "ejected" : {
+              "properties" : {
+                "image" : "<partImage>:ejected.charge<chargeFrame>.<frame>"
+              }
+            },
+            "feeding" : {
+              "properties" : {
+                "image" : "<partImage>:feeding.charge<chargeFrame>.<frame>"
+              }
+            },
+            "boltPushing" : {
+              "properties" : {
+                "image" : "<partImage>:feeding.charge<chargeFrame>.<frame>"
+              }
+            },
+            "jammed" : {
+              "properties" : {
+                "image" : "<partImage>.jammed.charge<chargeFrame>.<frame>"
+              }
+            },
+            "unjamming" : {
+              "properties" : {
+                "image" : "<partImage>:unjamming.charge<chargeFrame>.<frame>"
+              }
+            }
+            
+          }
+        }
+      },
+      "muzzleFlash" : {
+        "properties" : {
+          "zLevel" : -1,
+          "centered" : true,
+          "offset" : [0.75, 0],
+          "fullbright" : true,
+          "transformationGroups" : ["muzzle"]
+        },
+
+        "partStates" : {
+          "flash" : {
+            "flash" : {
+              "properties" : {
+                "image" : "<partImage>:<variant>.<frame><directives>"
+              }
+            }
+          },
+          "firing" : {
+            "fire" : {
+              "properties" : {
+                "image" : "<partImage>:<variant>.<frame><directives>"
+              }
+            }
+          }
+        }
+      },
+      "magazine": {
+        "properties":{
+          "centered" : true,
+          "image" : "<partImage><paletteSwaps><directives>",
+          "offset" : [0, 0], // x offset is set dynamically
+          "transformationGroups" : ["weapon"]
+        },
+        "partStates" : {
+          "mag": {
+            "present": {
+              "properties" : {
+                "image" : "<partImage>:<ammo>"
+              }
+            },
+            "absent":{
+              "properties" : {
+                "image" : "<partImage>:absent"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+
+  "rotationGroups" : {
+    "weapon" : {
+      "angularVelocity" : 0
+    }
+  },
+
+  "transformationGroups" : {
+    "weapon" : {},
+    "muzzle" : {},
+    "ejectionPort": {}
+  },
+
+  "particleEmitters" : {
+    "muzzleFlash" : {
+      "transformationGroups" : ["muzzle"],
+      "offsetRegion" : [0, 0, 0, 0],
+      "emissionRate" : 100,
+      "particles" : [ 
+        {"particle": "project45muzzle"},
+        {"particle": "project45muzzle"},
+        {"particle": "project45muzzle"}
+      ]
+    },
+
+    "ejectionPort" : {
+      "transformationGroups" : ["ejectionPort"],
+      "offsetRegion" : [0, 0, 0, 0],
+      "emissionRate" : 1,
+      "particles" : [ 
+        {"particle": "project45bulletcasesmall"}
+      ]
+    }
+
+  },
+
+  "lights" : {
+    "muzzleFlash" : {
+      "active" : false,
+      "position" : [0, 0],
+      "color" : [0, 0, 0],
+      "pointLight": true,
+      "pointBeam": 0.3
+    }
+  },
+
+  "sounds" : {
+    "fire": ["/sfx/project45-synthetikmechanics/fires/fire_pistol.ogg"],
+    "fireStart": ["/assetmissing.wav"],
+    "fireLoop": ["/assetmissing.wav"],
+    "fireEnd": ["/assetmissing.wav"],
+    "click": ["/sfx/project45-synthetikmechanics/clicks/click_generic.ogg"],
+
+    "jam": ["/sfx/project45-synthetikmechanics/clicks/click_jammed.ogg"],
+    "unjam": ["/sfx/project45-synthetikmechanics/clicks/click_unjam.ogg"],
+    "hollow": ["/sfx/project45-synthetikmechanics/foleys/hollow.ogg"],
+
+    "eject": ["/sfx/project45-synthetikmechanics/reloads/ejectmag_generic_1.ogg"],
+
+    "reloadStart": ["/sfx/project45-synthetikmechanics/foleys/getmag_generic.ogg"],
+    "loadRound": ["/sfx/project45-synthetikmechanics/reloads/loadround_generic.ogg"],
+    "reloadEnd": ["/sfx/project45-synthetikmechanics/reloads/insertmag_generic.ogg"],
+
+    "badReload": [
+      "/sfx/project45-synthetikmechanics/reloads/badreload_mag_1.ogg",
+      "/sfx/project45-synthetikmechanics/reloads/badreload_mag_2.ogg"
+    ],
+    "goodReload": ["/sfx/project45-synthetikmechanics/reloads/goodreload_generic_1.ogg"],
+    "perfectReload": ["/sfx/project45-synthetikmechanics/reloads/perfectreload_generic_1.ogg"],
+
+    "boltPull": ["/sfx/project45-synthetikmechanics/reloads/boltpull_generic.ogg"],
+    "boltPush": ["/sfx/project45-synthetikmechanics/reloads/boltpush_generic.ogg"],
+
+    "chargeWhine" : ["/sfx/project45-synthetikmechanics/charges/chargewhine_generic.ogg"],
+    "chargeDrone" : ["/sfx/project45-synthetikmechanics/charges/chargedrone_generic.ogg"]
+    
+  }
+}

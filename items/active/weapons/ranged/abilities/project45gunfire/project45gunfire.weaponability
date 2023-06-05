@@ -3,12 +3,12 @@
     "/items/active/weapons/ranged/abilities/project45gunfire/project45gunfireanimation.lua"
   ],
   
-  "animation": "/items/active/weapons/ranged/abilities/project45gunfire/project45gunfire.animation",
+  "animation": "/items/active/weapons/ranged/abilities/project45gunfire/project45gunfire-custom.animation",
 
   "ability" : {
     "name" : "Synthetik Mechanics",
     "type" : "project45gunfire",
-    "scripts" : ["/items/active/weapons/ranged/abilities/project45gunfire/project45gunfire-stripped.lua"],
+    "scripts" : ["/items/active/weapons/ranged/abilities/project45gunfire/project45gunfire-custom.lua"],
     "class" : "Project45GunFire",
 
     // Stat Config
