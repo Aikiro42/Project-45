@@ -87,6 +87,13 @@
           }
         }
       },
+      "charge": {
+        "default": "off",
+        "states": {
+          "off": {},
+          "charging": {}
+        }
+      },
       "chamber": {
         "default": "ready",
         "states": {
@@ -95,7 +102,15 @@
           "filled": {}
         }
       },
-      "mag": {
+      "bolt": {
+        "default": "closed",
+        "states": {
+          "open": {},
+          "closed": {},
+          "jammed": {}
+        }
+      },
+      "magazine": {
         "default": "present",
         "states": {
           "present": {},
@@ -265,13 +280,24 @@
     "fireStart": ["/assetmissing.wav"],
     "fireLoop": ["/assetmissing.wav"],
     "fireEnd": ["/assetmissing.wav"],
+    "click": ["/sfx/project45-synthetikmechanics/clicks/click_generic.ogg"],
+
+    "jam": ["/sfx/project45-synthetikmechanics/clicks/click_jammed.ogg"],
+    "unjam": ["/sfx/project45-synthetikmechanics/clicks/click_unjam.ogg"],
     "hollow": ["/sfx/project45-synthetikmechanics/foleys/hollow.ogg"],
 
     "eject": ["/sfx/project45-synthetikmechanics/reloads/ejectmag_generic_1.ogg"],
 
-    "getmag": ["/sfx/project45-synthetikmechanics/foleys/getmag_generic.ogg"],
-    "reload": ["/sfx/project45-synthetikmechanics/reloads/insertmag_generic.ogg"],
+    "reloadStart": ["/sfx/project45-synthetikmechanics/foleys/getmag_generic.ogg"],
     "loadRound": ["/sfx/project45-synthetikmechanics/reloads/loadround_generic.ogg"],
+    "reloadEnd": ["/sfx/project45-synthetikmechanics/reloads/insertmag_generic.ogg"],
+
+    "badReload": [
+      "/sfx/project45-synthetikmechanics/reloads/badreload_mag_1.ogg",
+      "/sfx/project45-synthetikmechanics/reloads/badreload_mag_2.ogg"
+    ],
+    "goodReload": ["/sfx/project45-synthetikmechanics/reloads/goodreload_generic_1.ogg"],
+    "perfectReload": ["/sfx/project45-synthetikmechanics/reloads/perfectreload_generic_1.ogg"],
 
     "boltPull": ["/sfx/project45-synthetikmechanics/reloads/boltpull_generic.ogg"],
     "boltPush": ["/sfx/project45-synthetikmechanics/reloads/boltpush_generic.ogg"],

@@ -48,15 +48,6 @@
   "scripts" : ["/items/active/weapons/ranged/project45gunneo.lua"],
     
   "primaryAbilityType": "project45gunfire",
-  "primaryAbility": {
-    "chargeFrames": 1,
-    "maxAmmo": 3,
-    "projectileCount": 1,
-    "spread": 0,
-    "burstCount": 1,
-    "cycleTime": 0.1,
-    "cockTime": 0.25
-  },
 
   "builder" : "/items/buildscripts/buildproject45neoneo.lua"
 }

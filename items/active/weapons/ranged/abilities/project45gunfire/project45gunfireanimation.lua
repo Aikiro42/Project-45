@@ -64,6 +64,7 @@ function update()
   end
   
   renderReloadBar()
+  renderJamBar()
   renderChargeBar()
   renderHitscanTrails()
   renderBeam()
@@ -164,6 +165,56 @@ function renderReloadBar(offset, barColor, length, width, borderwidth)
     width = 0.75,
     fullbright = true,
     color = {255, 0, 0}
+  }, "ForegroundEntity+1")
+
+end
+
+function renderJamBar(barColor, length, width, borderwidth)
+  local jamScore = animationConfig.animationParameter("jamAmount")
+  if not jamScore or jamScore <= 0 then return end
+  local position = activeItemAnimation.ownerAimPosition()
+  local offset = {-2, 0}
+  
+  local barColor = barColor or {75,75,75}
+  local length = length or 4
+  local barWidth = width or 2
+  local borderwidth = borderwidth or 1
+  
+  -- calculate bar stuff
+  local base = vec2.add(position, offset)
+  local base_a = vec2.add(base, {0, -length/2}) -- start (bottom)
+  local base_b = vec2.add(base, {0, length/2})  -- end   (top)
+  local a, b
+
+  -- render border
+  a = vec2.add(base_a, {0, -borderwidth/8})
+  b = vec2.add(base_b, {0, borderwidth/8})
+  local reloadBarBorder = worldify(a, b)
+  localAnimator.addDrawable({
+    line = reloadBarBorder,
+    width = barWidth + borderwidth*2,
+    fullbright = true,
+    color = {0,0,0}
+  }, "ForegroundEntity+1")
+
+  -- render bar
+  local unjamBar = worldify(base_a, base_b)
+  localAnimator.addDrawable({
+    line = unjamBar,
+    width = barWidth,
+    fullbright = true,
+    color = barColor
+  }, "ForegroundEntity+1")
+
+  -- render jamScore
+  a = base_a
+  b = vec2.add(base_a, {0, jamScore*length})
+  local jamScoreBar = {a, b}
+  localAnimator.addDrawable({
+    line = jamScoreBar,
+    width = barWidth,
+    fullbright = true,
+    color = {255, 128, 0}
   }, "ForegroundEntity+1")
 
 end
