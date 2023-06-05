@@ -65,8 +65,8 @@ function build(directory, config, parameters, level, seed)
     end
   end
 
-  -- construct(config, "animationCustom", "lights", "muzzleFlash", "color")
-  -- config.animationCustom.lights.muzzleFlash.color = parameters.muzzleFlashColor or config.muzzleFlashColor or {255, 255, 200}
+  construct(config, "animationCustom", "lights", "muzzleFlash", "color")
+  config.animationCustom.lights.muzzleFlash.color = parameters.muzzleFlashColor or config.muzzleFlashColor or {255, 255, 200}
 
   construct(config, "animationParts", "muzzleFlash")
   config.animationParts.muzzleFlash = "/items/active/weapons/ranged/project45-muzzleflash.png"

@@ -10,7 +10,7 @@
   "twoHanded" : false,
   "itemTags" : ["weapon","ranged","pistol"],
   "level" : 1,
-
+  "muzzleFlashColor": [255, 0, 255],
   "inventoryIcon" : "project45-neo-icon.png",
 
   "animationParts" : {

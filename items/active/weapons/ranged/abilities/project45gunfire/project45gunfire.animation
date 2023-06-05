@@ -75,11 +75,16 @@
 
         }
       },
-      "charge": {
-        "default": "idle",
-        "states": {
-          "idle": {},
-          "charging": {}
+      "flash" : {
+        "default": "off",
+        "states":{
+          "off" : {},
+          "flash" : {
+            "frames" : 2,
+            "cycle" : 0.07,
+            "mode" : "transition",
+            "transition" : "off"
+          }
         }
       },
       "chamber": {
@@ -159,7 +164,32 @@
           }
         }
       },
+      "muzzleFlash" : {
+        "properties" : {
+          "zLevel" : -1,
+          "centered" : true,
+          "offset" : [0.75, 0],
+          "fullbright" : true,
+          "transformationGroups" : ["muzzle"]
+        },
 
+        "partStates" : {
+          "flash" : {
+            "flash" : {
+              "properties" : {
+                "image" : "<partImage>:<variant>.<frame><directives>"
+              }
+            }
+          },
+          "firing" : {
+            "fire" : {
+              "properties" : {
+                "image" : "<partImage>:<variant>.<frame><directives>"
+              }
+            }
+          }
+        }
+      },
       "magazine": {
         "properties":{
           "centered" : true,
@@ -219,8 +249,21 @@
 
   },
 
+  "lights" : {
+    "muzzleFlash" : {
+      "active" : false,
+      "position" : [0, 0],
+      "color" : [0, 0, 0],
+      "pointLight": true,
+      "pointBeam": 0.3
+    }
+  },
+
   "sounds" : {
     "fire": ["/sfx/project45-synthetikmechanics/fires/fire_pistol.ogg"],
+    "fireStart": ["/assetmissing.wav"],
+    "fireLoop": ["/assetmissing.wav"],
+    "fireEnd": ["/assetmissing.wav"],
     "hollow": ["/sfx/project45-synthetikmechanics/foleys/hollow.ogg"],
 
     "eject": ["/sfx/project45-synthetikmechanics/reloads/ejectmag_generic_1.ogg"],

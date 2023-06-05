@@ -170,6 +170,7 @@ function hitscanLib:fireBeam()
         -- update base damage accordingly
         local crit = self:crit()
         beamDamageConfig.baseDamage = self:damagePerShot(true) * crit
+
         -- beamDamageConfig.damageSourceKind = crit > 1 and "project45-critical" or self.beamParameters.beamDamageConfig.damageSourceKind
         -- beamDamageConfig.damageType = crit > 1 and "IgnoresDef" or nil
   
@@ -183,6 +184,8 @@ function hitscanLib:fireBeam()
             {actualDamageEnd[1], actualDamageEnd[2] - self.beamParameters.beamWidth / 16}
           },
           0)
+      else
+        self.weapon:setDamage()
       end
   
   
@@ -193,7 +196,7 @@ function hitscanLib:fireBeam()
       recoilTimer = recoilTimer + self.dt
   
       if recoilTimer >= 0.05 then
-        self:screenShake(self.currentScreenShake)
+        self:screenShake()
         recoilTimer = 0
       end
       self:recoil(false, 0.1)

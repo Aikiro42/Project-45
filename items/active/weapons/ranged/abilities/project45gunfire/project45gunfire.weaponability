@@ -36,10 +36,11 @@
 
     // Projectile Config
     
-    "projectileKind": "beam", // projectile, hitscan, beam
+    "projectileKind": "hitscan", // projectile, hitscan, beam
     "projectileCount": 5,
+    "burstCount": 3,
     "multishot": 1,
-    "spread": 0, // affects direction the projectile flies to, from the muzzle
+    "spread": 0.05, // affects direction the projectile flies to, from the muzzle
     
     "projectileType": "project45stdbullet",
     "projectileParameters": {
@@ -89,7 +90,7 @@
 
     // Ammo Config
     
-    "maxAmmo": 5,
+    "maxAmmo": 30,
     "ammoPerShot": 1,
     "quickReloadTimeframe": [0.5, 0.6, 0.7, 0.8], // [ good [ perfect ] good ]
 
@@ -107,20 +108,27 @@
     "maxRecoilDeg": 15, // the most the arm and weapon will rotate, in degrees.
     "recoilMult": 2, // multiplies recoilAmount
     "recoverTime": 3, // time it takes to recover aim completely, in seconds
+    "screenShakeAmount": 0.1, // amount of screenshake per shot
+    // time it takes to reach the max cycle time, in seconds
+    // only matters if screenShake is a 2-element array of floats
+    "screenShakeMaxTime": 3,
 
     // Fire Config
 
-    "semi": false, // fires once per left click
+    "semi": true, // fires once per left click
     "manualFeed": false, // needs two left clicks to fire
     "slamFire": false, // whether the gun shoots right after feeding
-    "cycleTime": 0.1, // time it takes to cock the gun, cycle rounds, etc.
+    "cycleTime": 0.01, // time it takes to cock the gun, cycle rounds, etc.
+    // time it takes to reach the max cycle time in seconds
+    // only matters if cycleTime is a 2-element array of floats
+    "cycleTimeMaxTime": 3,
     "fireTime": 0.1, // time before another input can be registered
     "cockTime": 0.5, // time it takes to cock weapon
 
     // Charge Config
 
     "chargeTime": 0,
-    "overchargeTime": 0.5, // allows gun to deal up to 100% more damage, multiplicative to other bonuses
+    "overchargeTime": 0, // allows gun to deal up to 100% more damage, multiplicative to other bonuses
     "dischargeTimeMult": 2, // how fast the gun discharges
     
     "progressiveCharge": true, // whether the charge animation loops or is dependent on charge progress
