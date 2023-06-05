@@ -25,7 +25,6 @@ function Project45GunFire:init()
 
   -- initialize charge frame
   self.chargeFrame = 1
-  animator.setGlobalTag("chargeFrame", self.chargeFrame)
 
   -- initialize charge damage
   self.chargeDamage = 1
@@ -152,9 +151,6 @@ function Project45GunFire:init()
   end
   activeItem.setScriptedAnimationParameter("primaryProjectileSpeed", self.projectileParameters.speed)
   
-  animator.setLightActive("muzzleFlash", false)
-  animator.setAnimationState("flash", "off")
-
   self.stances = {}
   self.stances.aimStance = {
     weaponRotation = 0,
@@ -184,8 +180,6 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
   
   -- turn off muzzleflash automatically
   if self.muzzleFlashTimer <= 0 then
-    animator.setLightActive("muzzleFlash", false)
-    activeItem.setScriptedAnimationParameter("muzzleFlash", false)
   end
 
 
@@ -302,7 +296,6 @@ function Project45GunFire:firing()
   for i = 1, self.projectileCount * self:rollMultishot() do
     self:fireProjectile()
   end
-  animator.setAnimationState("gun", "firing")
   self:muzzleFlash()
   self:recoil()
 
@@ -313,7 +306,6 @@ function Project45GunFire:firing()
   -- add unejected casings
   self:updateAmmo(-self.ammoPerShot)
   storage.unejectedCasings = storage.unejectedCasings + self.ammoPerShot
-  animator.setAnimationState("chamber", "filled")
 
   if not self.manualFeed
   or self.burstCounter < self.burstCount
@@ -330,10 +322,8 @@ function Project45GunFire:ejecting()
   if self.manualFeed
   and self.burstCounter >= self.burstCount
   then
-    animator.setAnimationState("gun", "boltPulling")
     animator.playSound("boltPull")
   else
-    animator.setAnimationState("gun", "ejecting")
   end
   util.wait((self.manualFeed and self.burstCounter >= self.burstCount) and (self.cockTime/2) or (self.currentCycleTime/3))
   self:discardCasings()
@@ -353,10 +343,8 @@ end
 function Project45GunFire:feeding()
   if self.manualFeed
   and self.burstCounter >= self.burstCount then
-    animator.setAnimationState("gun", "boltPushing")
     animator.playSound("boltPush")
   else
-    animator.setAnimationState("gun", "feeding")
   end
   animator.setAnimationState("chamber", "ready")
   if self.slamFire then
@@ -368,7 +356,6 @@ function Project45GunFire:feeding()
     self:setState(self.firing)
   end
   self.triggered = self.semi
-  animator.setAnimationState("gun", "idle")
 end
 
 function Project45GunFire:reloading()
@@ -469,32 +456,17 @@ function Project45GunFire:reloading()
 end
 
 function Project45GunFire:cocking()
-  
-  -- if idle, eject
-  if animator.animationState("gun") == "idle" then
-    animator.playSound("boltPull")
-    animator.setAnimationState("gun", "boltPulling")
-    self:discardCasings()
-    animator.setAnimationState("chamber", "empty")
-    -- self:recoil() -- TODO: make me a stance
+  animator.playSound("boltPull")
+  self:discardCasings()
+  animator.setAnimationState("chamber", "empty")
+  util.wait(self.cockTime/2)
+
+  animator.playSound("boltPush")
+  if storage.ammo > 0 then
+    animator.setAnimationState("chamber", "ready")
   end
   util.wait(self.cockTime/2)
 
-  -- if ejecting/ejected, feed
-  if animator.animationState("gun") == "ejected"
-  or animator.animationState("gun") == "ejecting"
-  or animator.animationState("gun") == "boltPulling"
-  then
-    animator.playSound("boltPush")
-    animator.setAnimationState("gun", "boltPushing")
-    if storage.ammo > 0 then
-      animator.setAnimationState("chamber", "ready")
-    end
-    util.wait(self.cockTime/2)
-    -- self:recoil(true) -- TODO: make me a stance
-  end
-
-  animator.setAnimationState("gun", "idle")
   self.cooldownTimer = self.fireTime
   util.wait(self.fireTime)
   self.reloadTimer = -1  -- mark end of reload
@@ -507,13 +479,11 @@ end
 function Project45GunFire:jam()
   if diceroll(self.jamChance or 0.01) then
     storage.jamAmount = 1
-    animator.setAnimationState("gun", "jammed")
     self:setState(self.jammed)
   end
 end
 
 function Project45GunFire:unjam()
-  animator.setAnimationState("gun", "unjamming")
   storage.jamAmount = math.max(0, storage.jamAmount - 0.2)
 end
 
@@ -524,18 +494,6 @@ function Project45GunFire:muzzleFlash()
     animator.playSound("fire")
     animator.playSound("hollow")
   end
-  if not self.flashHidden then
-    animator.setPartTag("muzzleFlash", "variant", math.random(1, self.muzzleFlashVariants or 3))
-    local muzzleFlashColor = self.projectileKind == "beam" and {255, 255, 255} or config.getParameter("muzzleFlashColor", {255, 200, 200})
-    animator.setPartTag("muzzleFlash", "directives", string.format("?fade=%02X%02X%02X",muzzleFlashColor[1], muzzleFlashColor[2], muzzleFlashColor[3]) .. "=1")
-  end
-  animator.burstParticleEmitter("muzzleFlash")
-  animator.setLightActive("muzzleFlash", not self.flashHidden)
-  -- activeItem.setScriptedAnimationParameter("muzzleFlash", not self.flashHidden)
-  animator.setAnimationState("flash", "flash")
-  self.muzzleFlashTimer = self.muzzleFlashTime or self.fireTime
-  -- self.muzzleSmokeTimer = self.muzzleSmokeTime
-
 end
 
 
@@ -612,7 +570,6 @@ function Project45GunFire:ejectMag()
   end
   if not self.ejectMagOnEmpty then self:recoil(true) end
   animator.playSound("eject")
-  animator.setAnimationState("mag", "absent")
   self:updateAmmo(-1, true)
   if self.resetChargeOnEject then
     self.chargeTimer = 0
@@ -709,7 +666,6 @@ function Project45GunFire:updateCharge()
     end
   end
 
-  animator.setGlobalTag("chargeFrame", self.chargeFrame)
 
 end
 

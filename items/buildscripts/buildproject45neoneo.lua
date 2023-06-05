@@ -89,6 +89,10 @@ function build(directory, config, parameters, level, seed)
       config.muzzleOffset = vec2.add(config.muzzleOffset, config.baseOffset)
     end
 
+    if config.ejectionPortOffset then
+      config.ejectionPortOffset = vec2.add(config.ejectionPortOffset, config.baseOffset)
+    end
+    
   end
 
   if config.primaryAbility then

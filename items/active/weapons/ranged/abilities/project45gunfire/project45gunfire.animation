@@ -223,7 +223,8 @@
 
   "transformationGroups" : {
     "weapon" : {},
-    "muzzle" : {}
+    "muzzle" : {},
+    "ejectionPort": {}
   },
 
   "particleEmitters" : {
@@ -239,7 +240,7 @@
     },
 
     "ejectionPort" : {
-      "transformationGroups" : ["weapon"],
+      "transformationGroups" : ["ejectionPort"],
       "offsetRegion" : [0, 0, 0, 0],
       "emissionRate" : 1,
       "particles" : [ 

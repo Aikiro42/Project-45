@@ -10,6 +10,7 @@ function init()
 
   self.weapon:addTransformationGroup("weapon", {0,0}, 0)
   self.weapon:addTransformationGroup("muzzle", self.weapon.muzzleOffset, 0)
+  self.weapon:addTransformationGroup("ejectionPort", config.getParameter("ejectionPortOffset", {0,0}), 0)
 
   local primaryAbility = getPrimaryAbility()
   self.weapon:addAbility(primaryAbility)
