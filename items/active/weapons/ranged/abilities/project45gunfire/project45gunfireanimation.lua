@@ -65,6 +65,8 @@ function update()
   
   renderReloadBar()
   renderChargeBar()
+  renderHitscanTrails()
+  renderBeam()
 
 end
 
@@ -269,6 +271,71 @@ function worldify(pos1, pos2)
   pos2 = vec2.add(pos1, distance)
 
   return {pos1, pos2}
+end
+
+function renderHitscanTrails()
+  -- render hitscan trails
+  local projectileStack = animationConfig.animationParameter("projectileStack")
+  if not projectileStack then return end
+  for i, projectile in ipairs(projectileStack) do
+    -- don't calculate the bullet line when the origin is the same as the destination
+    -- there is no scanline if projectiles are shot
+    if projectile.origin ~= projectile.destination then
+      local bulletLine = worldify(projectile.origin, projectile.destination)
+      localAnimator.addDrawable({
+        line = bulletLine,
+        width = (projectile.width or 1) * projectile.lifetime/projectile.maxLifetime,
+        fullbright = true,
+        color = projectile.color or {0, 0, 0}
+      }, "Player-1")
+    end
+  end
+end
+
+function renderBeam()
+    -- worldify
+    local beamLine = animationConfig.animationParameter("beamLine")
+    if not beamLine then return end
+    local beamWidth = animationConfig.animationParameter("beamWidth")
+    local beamInnerWidth = animationConfig.animationParameter("beamInnerWidth")
+    local beamColor = animationConfig.animationParameter("beamColor")
+
+    beamLine = worldify(beamLine[1], beamLine[2])
+    
+    -- colored, outer beam
+    localAnimator.addDrawable({
+      line = beamLine,
+      width = beamWidth,
+      fullbright = true,
+      color = beamColor or {255,255,255}
+    }, "Player-1")
+    -- lighter, inner beam
+    localAnimator.addDrawable({
+      line = beamLine,
+      width = beamInnerWidth,
+      fullbright = true,
+      color = {255,255,255}
+    }, "Player-1")
+
+    -- collision light
+    localAnimator.addLightSource({
+      position = beamLine[2],
+      color = beamColor,
+      pointLight = true,
+      pointBeam = 0,
+    })
+
+    -- collision impact sparks
+    localAnimator.spawnParticle(
+      "project45beamendsmoke",
+      beamLine[2]
+    )
+    for i = 1, 3 do
+      localAnimator.spawnParticle(
+        "project45beamendspark",
+        beamLine[2]
+      )
+    end
 end
 
 -- test

@@ -2,15 +2,26 @@ require "/scripts/util.lua"
 require "/scripts/interp.lua"
 require "/scripts/poly.lua"
 require "/items/active/weapons/weapon.lua"
+require "/scripts/project45/hitscanLib.lua"
 
--- TODO: store reload rating instead of reload rating damage
 -- TODO: implement jam mechanic
 
 Project45GunFire = WeaponAbility:new()
 
+-- TODO: fire loop audio shit
+function Project45GunFire:startFireLoop()
+end
+function Project45GunFire:stopFireLoop()
+end
+
 function Project45GunFire:init()
 
+  -- TODO: hitscalLibShit - fix it or remove it
+  self.currentScreenShake = 0.5
+
   -- INITIALIZATIONS
+
+  self.projectileStack = {}
 
   -- evaluate whether the user is an NPC
   self.usedByNPC = world.entityType(activeItem.ownerEntityId())
@@ -25,9 +36,11 @@ function Project45GunFire:init()
     self.chargeAnimationTimer = 0
   end
 
+  -- initialize charge frame
   self.chargeFrame = 1
   animator.setGlobalTag("chargeFrame", self.chargeFrame)
 
+  -- initialize charge damage
   self.chargeDamage = 1
 
   -- VALIDATIONS
@@ -57,6 +70,7 @@ function Project45GunFire:init()
   self.currentRecoverTime = self.recoverTime.mobile
 
   if type(self.cycleTime) ~= "table" then
+    self.currentCycleTime = self.cycleTime
   else
     self.currentCycleTime = self.cycleTime
   end
@@ -75,7 +89,15 @@ function Project45GunFire:init()
   storage.ammo = math.min(self.maxAmmo, storage.ammo or config.getParameter("currentAmmo", self.maxAmmo))
   storage.stanceProgress = 0 -- stance progres is stored in storage so that other weapons may recoil the gun
   storage.unejectedCasings = storage.unejectedCasings or 0
-  storage.reloadRatingDamage = storage.reloadRatingDamage or config.getParameter("currentReloadRatingDamage", 1)
+  storage.reloadRating = storage.reloadRating or config.getParameter("currentReloadRating", "OK")
+
+  self.reloadRatingDamages = self.reloadRatingDamages or {
+    BAD = 0.8,
+    OK = 1,
+    GOOD = 1.25,
+    PERFECT = 1.5
+  }
+  self.reloadRatingDamage = self.reloadRatingDamages[storage.reloadRating]
 
   self.jamAmount = config.getParameter("currentJamAmount", 0)
 
@@ -94,7 +116,36 @@ function Project45GunFire:init()
 
   activeItem.setScriptedAnimationParameter("chargeTime", self.chargeTime)
   activeItem.setScriptedAnimationParameter("overchargeTime", self.overchargeTime)
+  
+  if self.laser or self.projectileKind ~= "projectile" then
+    -- laser uses the hitscan helper function, so assign that
+    self.hitscan = hitscanLib.hitscan
+    if self.laser then
+      activeItem.setScriptedAnimationParameter("laserColor", self.laser.color)
+      activeItem.setScriptedAnimationParameter("laserWidth", self.laser.width)
+    end
+  end
 
+  self.updateProjectileStack = function() end
+  if self.projectileKind == "hitscan" then
+    self.fireProjectile = hitscanLib.fireHitscan
+    self.updateProjectileStack = hitscanLib.updateProjectileStack
+    self.hitscanParameters.hitscanColor = config.getParameter("muzzleFlashColor", {255, 255, 200})
+  elseif self.projectileKind == "beam" then
+    self.firing = hitscanLib.fireBeam
+    self.updateProjectileStack = hitscanLib.updateProjectileStack
+    activeItem.setScriptedAnimationParameter("beamLine", nil)
+    self.beamParameters.beamColor = config.getParameter("muzzleFlashColor", {255, 255, 200})
+    activeItem.setScriptedAnimationParameter("beamColor", self.beamParameters.beamColor)
+  end
+
+  if not self.projectileParameters.speed and self.projectileKind == "projectile" then
+    local projConfig = root.projectileConfig(self.projectileType)
+    if projConfig.physics == "grenade" then
+      self.projectileParameters.speed = projConfig.speed
+    end
+  end
+  activeItem.setScriptedAnimationParameter("primaryProjectileSpeed", self.projectileParameters.speed)
   
   self.stances = {}
   self.stances.aimStance = {
@@ -118,6 +169,8 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
 
   self:updateCharge()
   self:updateStance()
+  self:updateProjectileStack()
+  -- activeItem.setScriptedAnimationParameter("projectileStack", self.projectileStack)
 
   --[[
   
@@ -151,13 +204,9 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
 
   if not self:triggering() then
     self.triggered = false
-    if self.queueFire
-    and self.chargeTimer >= self.chargeTime
-    and storage.ammo > 0
-    and self.reloadTimer < 0
-    then
+    if self.queuedFire then
+      self.queuedFire = false
       self:setState(self.firing)
-      self.queueFire = false
     end
   end
   
@@ -169,24 +218,24 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
   -- activeItem.setCursor("/cursors/project45reticle" .. x .. ".cursor")
 
   -- trigger i/o logic
-  -- TODO: improve my logic
+  -- TODO: check my logic
   if self:triggering()
   and not self.weapon.currentAbility
   and self.cooldownTimer == 0
+  and not self.beamFiring
   then
-
     if storage.ammo > 0 then
 
       if animator.animationState("chamber") == "ready"
       and not self.triggered then
+        -- don't fire when obstructed
         if not world.lineTileCollision(mcontroller.position(), self:firePosition()) then
           if self.chargeTime + self.overchargeTime == 0
-          or self.autoFireOnFullCharge and (self.chargeTimer >= self.chargeTime + (self.fireBeforeOvercharge and 0 or self.overchargeTime))
-          then
+          or self.fireBeforeOvercharge and self.chargeTimer >= self.chargeTime
+          or self.autoFireOnFullCharge and self.chargeTimer >= self.chargeTime + self.overchargeTime then
             self:setState(self.firing)
-          elseif self.chargeTimer >= self.chargeTime
-          then
-            self.queueFire = true
+          elseif self.chargeTimer >= self.chargeTime then
+            self.queuedFire = true
           end
         end
         
@@ -219,18 +268,20 @@ end
 function Project45GunFire:uninit()
   activeItem.setInstanceValue("currentAmmo", storage.ammo)
   activeItem.setInstanceValue("currentJamAmount", storage.jamAmount)
-  activeItem.setInstanceValue("currentReloadRatingDamage", storage.reloadRatingDamage)
+  activeItem.setInstanceValue("currentReloadRating", storage.reloadRating)
 end
 
 -- STATE FUNCTIONS
 
 function Project45GunFire:firing()
 
+  
   self:applyInaccuracy()
   self:fireProjectile()
   animator.setAnimationState("gun", "firing")
   if self.resetChargeOnFire then self.chargeTimer = 0 end
   self:muzzleFlash()
+  self:recoil()
 
   -- add unejected casings
   self:updateAmmo(-self.ammoPerShot)
@@ -238,6 +289,7 @@ function Project45GunFire:firing()
   animator.setAnimationState("chamber", "filled")
   
   self.triggered = self.semi or storage.ammo == 0
+  self.queuedFire = not self.semi and self.queuedFire and storage.ammo > 0
 
   if not self.manualFeed then
     util.wait(self.cycleTime/3)
@@ -360,21 +412,18 @@ function Project45GunFire:reloading()
 
   -- begin final reload evaluation
   local finalScore = sumRating / reloads
-
   if finalScore > reloads then
     finalReloadRating = "PERFECT"
-    storage.reloadRatingDamage = 1.5
   elseif finalScore > reloads * 2/3 then
     finalReloadRating = "GOOD"
-    storage.reloadRatingDamage = 1.25
   elseif finalScore > reloads * 1/3 then
     finalReloadRating = "OK"
-    storage.reloadRatingDamage = 1
   else
     finalReloadRating = "BAD"
-    storage.reloadRatingDamage = 0.8
   end
+  storage.reloadRating = finalReloadRating
   activeItem.setScriptedAnimationParameter("reloadRating", finalReloadRating)
+  self.reloadRatingDamage = self.reloadRatingDamages[storage.reloadRating]
 
   animator.playSound("reload")
   self:setState(self.cocking)
@@ -431,11 +480,12 @@ function Project45GunFire:unjam()
 end
 
 function Project45GunFire:muzzleFlash()
-  self:recoil()
-  animator.setSoundPitch("fire", sb.nrand(0.01, 1))
-  animator.setSoundVolume("hollow", (1 - storage.ammo/self.maxAmmo) * 0.8)  -- TODO: self.hollowSoundMult
-  animator.playSound("fire")
-  animator.playSound("hollow")
+  if not self.beamFiring then
+    animator.setSoundPitch("fire", sb.nrand(0.01, 1))
+    animator.setSoundVolume("hollow", (1 - storage.ammo/self.maxAmmo) * 0.8)  -- TODO: self.hollowSoundMult = 0.8
+    animator.playSound("fire")
+    animator.playSound("hollow")
+  end
 end
 
 function Project45GunFire:fireProjectile(projectileType)
@@ -526,13 +576,14 @@ function Project45GunFire:updateCharge()
 
   -- don't bother updating charge stuff if there's no charge in the first place
   if self.chargeTime + self.overchargeTime <= 0
+  -- don't bother updating charge if there's no ammo and charge timer is zero anyway
+  or self.chargeTimer <= 0 and storage.ammo == 0
   then return end
 
   -- from here on out, either self.chargeTime or self.overchargeTime is nonzero.
   -- It's safe to divide by their sum.
 
   -- increment/decrement charge timer
-  -- TODO: this charges when it shouldn't, fix it
   if self:triggering()
   and self.reloadTimer < 0
   and (self.chargeWhenObstructed or not world.lineTileCollision(mcontroller.position(), self:firePosition()))
@@ -553,6 +604,11 @@ function Project45GunFire:updateCharge()
     self.chargeDamage = 1 + self.chargeTime - self.chargeTimer / self.overchargeTime
   end
 
+  local chargeProgress = self.chargeTimer / (self.chargeTime > 0 and self.chargeTime or self.overchargeTime)
+  animator.setSoundVolume("chargeDrone", 0.25 + 0.7 * math.min(chargeProgress, 2))
+  animator.setSoundPitch("chargeWhine", 1 + 0.3 * math.min(chargeProgress, 2))
+  animator.setSoundVolume("chargeWhine", 0.25 + 0.75 * math.min(chargeProgress, 2))
+
   if self.chargeTimer > 0 and not self.chargeLoopPlaying then
     animator.playSound("chargeDrone", -1)
     animator.playSound("chargeWhine", -1)
@@ -563,10 +619,6 @@ function Project45GunFire:updateCharge()
     self.chargeLoopPlaying = false 
   end
 
-  local chargeProgress = self.chargeTimer / self.chargeTime
-  animator.setSoundVolume("chargeDrone", 0.25 + 0.7 * math.min(chargeProgress, 2))
-  animator.setSoundPitch("chargeWhine", 1 + 0.3 * math.min(chargeProgress, 2))
-  animator.setSoundVolume("chargeWhine", 0.25 + 0.75 * math.min(chargeProgress, 2))
 
 
   -- update current charge frame (1 to n)
@@ -676,7 +728,7 @@ function Project45GunFire:damagePerShot(isHitscan)
   return self.baseDamage
   * activeItem.ownerPowerMultiplier()
   * self.chargeDamage -- up to 2x at full overcharge
-  * storage.reloadRatingDamage -- as low as 0.8 (bad), as high as 1.5 (perfect)
+  * self.reloadRatingDamage -- as low as 0.8 (bad), as high as 1.5 (perfect)
   * self:crit() -- this way, rounds deal crit damage individually
   / self.projectileCount
 end

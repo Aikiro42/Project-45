@@ -21,17 +21,27 @@
 
     // Misc Config
 
+    // Laser settings.
+    "laser": {
+      "enabled": false, // if true, laser is rendered
+      "color": [255, 0, 0], // laser color
+      // "range": 100, // max distance to which the laser is drawn
+      "renderMaxRange": true // if false, laser is rendered up to player's aim position only
+      ,"alwaysActive": false
+    },
+
     "movementSpeedFactor": 1.25,
     "jumpHeightFactor": 1.25,
     "heavyWeapon": false,
 
     // Projectile Config
     
-    "projectileKind": "projectile", // projectile, hitscan, beam
+    "projectileKind": "beam", // projectile, hitscan, beam
     "projectileCount": 5,
-    "projectileType": "project45stdbullet",
     "multishot": 1,
     "spread": 0, // affects direction the projectile flies to, from the muzzle
+    
+    "projectileType": "project45stdbullet",
     "projectileParameters": {
       "power": 100,
       "damageType": "IgnoresDef",
@@ -39,11 +49,42 @@
     },
 
     "hitscanParameters": {
-      "color": [255, 220, 0],
-      "range": 100,
-      "damageConfig": {
+      // hitscan params
+      "hitscanRange": 100,  // range of the hitscan line in blocks
+      "hitscanPunchThrough": 0,  // number of entities to register before stopping the scan
+      "hitscanIgnoresTerrain": false,  // pierces through terrain if true
+      "hitscanFadeTime": 0.1, // how long the hitscan line fades away
+      "hitscanWidth": 1, // visual width of hitscan line in pixels
+      // "hitscanColor": [255,255,200], // color of hitscan projectile; also dictates muzzle flash color
+      // damage configuraiton of hitscan damage line
+      // baseDamage is calculated by self:damagePerShot() * crit / activeItem.ownerPowerMultiplier()
+      // but can be overridden; it's recommended that it shouldn't be overridden
+      "hitscanDamageConfig": {
+        "damageKind": "physical",
+        "statusEffects": []
+      },
+      // actions to be executed at the end of the hitscan line
+      "hitscanActionOnHit": []
+    },
 
-      }
+    "beamParameters": {
+      "beamLength": 100,  // length of beam
+      "beamWidth": 5, // width of beam - beams that are too wide can look weird
+      "beamInnerWidth": 3, // width of inner white beam - just for vfx
+      "beamJitter": 1, // how much the beam width changes as it's shot - just a vfx
+      // "beamColor": [0,140,217], // color of beam
+      // damage configuration of beam damage poly
+      "beamDamageConfig": {
+        "statusEffects" : [ ],
+        "damageSourceKind" : "plasma",
+        "knockback" : 2
+      },
+      // number of entities the beam passes through before it terminates
+      // if the beam passes through less entities it keeps going until it hits terrain
+      "beamPunchThrough": 3,
+      
+      // whether the beam fires through terrain or not
+      "beamIgnoresTerrain": false
     },
 
     // Ammo Config
@@ -62,7 +103,7 @@
     // Accuracy and Recoil Config
 
     "inaccuracy": 0.05, // affects arm movement as the trigger is pulled
-    "recoilAmount": 1, // amount of recoil per shot, in degrees; arm and weapon will rotate by half of this
+    "recoilAmount": 0.1 , // amount of recoil per shot, in degrees; arm and weapon will rotate by half of this
     "maxRecoilDeg": 15, // the most the arm and weapon will rotate, in degrees.
     "recoilMult": 2, // multiplies recoilAmount
     "recoverTime": 3, // time it takes to recover aim completely, in seconds
@@ -79,29 +120,31 @@
     // Charge Config
 
     "chargeTime": 0,
-    "overchargeTime": 0.1, // allows gun to deal up to 100% more damage, multiplicative to other bonuses
+    "overchargeTime": 0.5, // allows gun to deal up to 100% more damage, multiplicative to other bonuses
     "dischargeTimeMult": 2, // how fast the gun discharges
     
     "progressiveCharge": true, // whether the charge animation loops or is dependent on charge progress
     "chargeFrames": 6, // only matters if progressiveCharge is true
 
-     // makes the gun fire once the charge timer hits chargeTime
-     // if resetChargeOnFire is true, this will become false.
-    "fireBeforeOvercharge": false,
+    // makes the gun fire once the charge timer hits/passes chargeTime
+    "fireBeforeOvercharge": true,
     
     // fires gun after charging, given that there's ammo
-    "autoFireOnFullCharge": true,
+    // doesn't really matter if fireBeforeOvercharge is true
+    "autoFireOnFullCharge": false,
 
     // resets charge after firing
-    "resetChargeOnFire": true,
+    // I don't recommend setting this to true if fireBeforeOvercharge is.
+    "resetChargeOnFire": false,
 
-     // resets charge when ejecting magazine
+    // resets charge when ejecting magazine
     "resetChargeOnEject": false,
+
     // allows charging if the ammo count is zero
     "maintainChargeOnEmpty": true,
 
      // discharges if the weapon is obstructed by terrain
-    "chargeWhenObstructed": true
+    "chargeWhenObstructed": false
     
   }
 }
