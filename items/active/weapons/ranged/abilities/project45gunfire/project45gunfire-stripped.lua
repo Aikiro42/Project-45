@@ -4,8 +4,6 @@ require "/scripts/poly.lua"
 require "/items/active/weapons/weapon.lua"
 require "/scripts/project45/hitscanLib.lua"
 
--- TODO: implement jam mechanic
--- TODO: change unejectedCasings to animator.partProperty shit
 -- TODO: find a way to use animator.setGlobalTag and animator.setPartTag
 
 local BAD, OK, GOOD, PERFECT = 1, 2, 3, 4
@@ -563,8 +561,6 @@ function Project45GunFire:unjamming()
     return
   end
 end
-
-
 
 -- ACTION FUNCTIONS
 
