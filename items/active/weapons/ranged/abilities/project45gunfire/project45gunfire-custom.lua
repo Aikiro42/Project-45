@@ -4,8 +4,6 @@ require "/scripts/poly.lua"
 require "/items/active/weapons/weapon.lua"
 require "/scripts/project45/hitscanLib.lua"
 
--- TODO: find a way to use animator.setGlobalTag and animator.setPartTag
-
 local BAD, OK, GOOD, PERFECT = 1, 2, 3, 4
 local reloadRatingList = {"BAD", "OK", "GOOD", "PERFECT"}
 
@@ -262,6 +260,8 @@ function Project45GunFire:firing()
   self.triggered = self.semi or storage.ammo == 0
   self.queuedFire = not self.semi and self.queuedFire and storage.ammo > 0
 
+  animator.setAnimationState("gun", "firing")
+
   -- reset burst count if already max
   self.burstCounter = self.burstCounter >= self.burstCount and 0 or self.burstCounter
 
@@ -316,13 +316,13 @@ function Project45GunFire:ejecting()
   and self.burstCounter >= self.burstCount
   or self.reloadTimer >= 0
   then
-    -- TODO: animator.setAnimationState("gun", "boltPulling")
+    animator.setAnimationState("gun", "boltPulling")
     animator.playSound("boltPull")
 
   -- otherwise, the gun is either semiauto
   -- or not done bursting; we eject (faster animation)
   else
-    -- TODO: animator.setAnimationState("gun", "ejecting")
+    animator.setAnimationState("gun", "ejecting")
   end
 
 
@@ -365,9 +365,9 @@ function Project45GunFire:feeding()
   or self.reloadTimer >= 0                         -- or the gun was just reloaded/is cocking
   then
     animator.playSound("boltPush")                -- then we were cocking back, and we should cock forward
-    -- TODO: animator.setAnimationState("gun", "boltPushing")
+    animator.setAnimationState("gun", "boltPushing")
   else
-    -- TODO: animator.setAnimationState("gun", "feeding")
+    animator.setAnimationState("gun", "feeding")
   end
 
   animator.setAnimationState("bolt", "closed")
@@ -432,7 +432,7 @@ function Project45GunFire:reloading()
     if displayResetTimer <= 0 and storage.ammo < self.maxAmmo then
       activeItem.setScriptedAnimationParameter("reloadRating", "")
       if self.internalMag then
-        -- TODO: animator.setAnimationState("magazine", "absent") -- insert mag, hiding it from view
+        animator.setAnimationState("magazine", "absent") -- insert mag, hiding it from view
       end
       if self.ejectMagOnReload then
         -- TODO: animator.burstParticleEmitter("magazine") -- throw mag strip
@@ -448,7 +448,7 @@ function Project45GunFire:reloading()
       
       -- audiovisual stuff; play load round if the mag isn't loaded in one go
       if self.bulletsPerReload < self.maxAmmo then animator.playSound("loadRound") end
-      -- TODO: animator.setAnimationState("magazine", "present")
+      animator.setAnimationState("magazine", "present")
 
       -- count reload
       reloads = reloads + 1
@@ -532,7 +532,7 @@ function Project45GunFire:cocking()
   end
 
   if animator.animationState("bolt") == "jammed" then
-    -- TODO: animator.setAnimationState("gun", "ejected")
+    animator.setAnimationState("gun", "ejected")
     animator.setAnimationState("bolt", "open")
     util.wait(self.cockTime/2)
   end
@@ -551,7 +551,7 @@ function Project45GunFire:unjamming()
   if self.triggered then return end
   self.triggered = true
   self:recoil(true) -- TODO: make me a stance
-  -- TODO: animator.setAnimationState("gun", "unjamming") -- should transist back to being jammed
+  animator.setAnimationState("gun", "unjamming") -- should transist back to being jammed
   animator.playSound("unjam")
   self:updateJamAmount(math.random() * -1)
   if storage.jamAmount <= 0 then
@@ -717,7 +717,9 @@ function Project45GunFire:updateCharge()
   -- don't bother updating charge if there's no ammo and charge timer is zero anyway
   or self.chargeTimer <= 0 and storage.ammo == 0
   then
-    if animator.animationState("charge") == "charging" then
+    if animator.animationState("charge") == "charging"
+    or animator.animationState("charge") == "chargingProg"
+    then
       animator.setAnimationState("charge", "off")
     end
     return
@@ -762,28 +764,18 @@ function Project45GunFire:updateCharge()
     self.chargeLoopPlaying = false 
   end
 
+
+  if self.chargeTimer > 0 then
+    animator.setAnimationState("charge", self.progressiveCharge and "chargingProg" or "charging")
+  else
+    animator.setAnimationState("charge", "off")
+  end
+
+
   -- update current charge frame (1 to n)
   if self.progressiveCharge then
     self.chargeFrame = math.max(1, math.ceil(self.chargeFrames * (self.chargeTimer / (self.chargeTime + self.overchargeTime))))
-    -- progressive charge; charge frame
-  else
-    --[[
-    -- Old code: manually animate shit
-    if self.chargeTimer > 0 then
-      local advanceFrame = self.chargeAnimationTimer >= self.chargeAnimationTime
-      self.chargeFrame = advanceFrame and 1 + (self.chargeFrame % self.chargeFrames) or self.chargeFrame
-      self.chargeAnimationTimer = advanceFrame and 0 or self.chargeAnimationTimer + self.dt
-    else
-      self.chargeFrame = 1
-    end
-    --]]
-
-    -- New code: use the `charging` layer
-    if self.chargeTimer > 0 then
-      -- TODO: animator.setAnimationState("charge", "charging")
-    else
-      -- TODO: animator.setAnimationState("charge", "off")
-    end
+    animator.setGlobalTag("chargeFrame", self.chargeFrame)
   end
 
 end

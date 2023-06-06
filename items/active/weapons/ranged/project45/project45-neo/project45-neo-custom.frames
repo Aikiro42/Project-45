@@ -1,0 +1,16 @@
+{  
+  "frameGrid" : {
+    "size" : [24, 16],
+    "dimensions" : [4, 8],
+    "names" : [
+      ["idle.1", "idle.2", "idle.3", "idle.4"],
+      ["firing.1", "firing.2", "firing.3", "firing.4"],
+      ["ejecting.1", "ejecting.2", "ejecting.3", "ejecting.4"],
+      ["ejected.1", "ejected.2", "ejected.3", "ejected.4"],
+      ["feeding.1", "feeding.2", "feeding.3", "feeding.4"],
+      ["jammed.1", "jammed.2", "jammed.3", "jammed.4"],
+      ["unjamming.1", "unjamming.2", "unjamming.3", "unjamming.4"],
+      ["charging.1", "charging.2", "charging.3", "charging.4"]
+    ]
+  }
+}

@@ -75,7 +75,8 @@ function build(directory, config, parameters, level, seed)
   if config.baseOffset then
 
     local parts = {
-      "middle"
+      "middle",
+      "charge"
     }
 
     for _, part in ipairs(parts) do

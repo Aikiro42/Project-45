@@ -10,7 +10,7 @@
         "default" : "idle",
         "states" : {
           "idle": {
-            "frames" : 1,
+            "frames" : 4,
             "cycle" : 0.25,
             "mode" : "loop"
           },
@@ -18,7 +18,7 @@
           // firing -> idle
           // (FORCED) firing -> ejecting
           "firing": {
-            "frames" : 1,
+            "frames" : 4,
             "cycle" : 0.25,
             "mode" : "transition",
             "transition": "idle"
@@ -27,19 +27,19 @@
           // ejecting -> ejected
           // (FORCED) ejected -> feeding
           "ejecting": {
-            "frames" : 1,
+            "frames" : 4,
             "cycle" : 0.25,
             "mode" : "transition",
             "transition": "ejected"
           },
           "boltPulling": {
-            "frames" : 1,
+            "frames" : 4,
             "cycle" : 0.25,
             "mode" : "transition",
             "transition": "ejected"
           },
           "ejected": {
-            "frames" : 1,
+            "frames" : 4,
             "cycle" : 0.25,
             "mode" : "loop"
           },
@@ -47,13 +47,13 @@
           // feeding -> idle
           // (FORCED) feeding -> jammed
           "feeding": {
-            "frames" : 1,
+            "frames" : 4,
             "cycle" : 0.25,
             "mode" : "transition",
             "transition": "idle"
           },
           "boltPushing": {
-            "frames" : 1,
+            "frames" : 4,
             "cycle" : 0.25,
             "mode" : "transition",
             "transition": "idle"
@@ -62,15 +62,15 @@
           // unjamming -> jammed
           // (FORCED) unjamming -> feeding
           "jammed": {
-            "frames" : 1,
+            "frames" : 4,
             "cycle" : 0.25,
             "mode" : "loop"
           },
           "unjamming": {
-            "frames" : 1,
+            "frames" : 4,
             "cycle" : 0.25,
             "mode" : "transition",
-            "transition": "idle"
+            "transition": "jammed"
           }
 
         }
@@ -91,7 +91,13 @@
         "default": "off",
         "states": {
           "off": {},
-          "charging": {}
+          "chargingProg": {},
+          "charging": {
+            "frames" : 4,
+            "cycle" : 0.25,
+            "mode" : "transition",
+            "transition" : "off"
+          }
         }
       },
       "chamber": {
@@ -132,50 +138,78 @@
           "gun" : {
             "idle" : {
               "properties" : {
-                "image" : "<partImage>:idle.charge<chargeFrame>.<frame>"
+                "image" : "<partImage>:idle.<frame>"
               }
             },
             "firing" : {
               "properties" : {
-                "image" : "<partImage>:firing.charge<chargeFrame>.<frame>"
+                "image" : "<partImage>:firing.<frame>"
               }
             },
             "ejecting" : {
               "properties" : {
-                "image" : "<partImage>:ejecting.charge<chargeFrame>.<frame>"
+                "image" : "<partImage>:ejecting.<frame>"
               }
             },
             "boltPulling" : {
               "properties" : {
-                "image" : "<partImage>:ejecting.charge<chargeFrame>.<frame>"
+                "image" : "<partImage>:ejecting.<frame>"
               }
             },
             "ejected" : {
               "properties" : {
-                "image" : "<partImage>:ejected.charge<chargeFrame>.<frame>"
+                "image" : "<partImage>:ejected.<frame>"
               }
             },
             "feeding" : {
               "properties" : {
-                "image" : "<partImage>:feeding.charge<chargeFrame>.<frame>"
+                "image" : "<partImage>:feeding.<frame>"
               }
             },
             "boltPushing" : {
               "properties" : {
-                "image" : "<partImage>:feeding.charge<chargeFrame>.<frame>"
+                "image" : "<partImage>:feeding.<frame>"
               }
             },
             "jammed" : {
               "properties" : {
-                "image" : "<partImage>.jammed.charge<chargeFrame>.<frame>"
+                "image" : "<partImage>:jammed.<frame>"
               }
             },
             "unjamming" : {
               "properties" : {
-                "image" : "<partImage>:unjamming.charge<chargeFrame>.<frame>"
+                "image" : "<partImage>:unjamming.<frame>"
               }
             }
             
+          }
+        }
+      },
+      "charge": {
+        "properties":{
+          "centered" : true,
+          "image" : "<partImage><paletteSwaps><directives>",
+          "offset" : [0, 0], // x offset is set dynamically
+          "transformationGroups" : ["weapon"]
+        },
+        
+        "partStates" : {
+          "charge" : {
+            "off": {
+              "properties": {
+                "image": ""
+              }
+            },
+            "charging": {
+              "properties": {
+                "image": "<partImage>:charging.<frame>"
+              }
+            },
+            "chargingProg": {
+              "properties": {
+                "image": "<partImage>:charging.<chargeFrame>"
+              }
+            }
           }
         }
       },
