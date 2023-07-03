@@ -71,6 +71,25 @@ function update()
 
 end
 
+function renderLaser()
+
+  if not animationConfig.animationParameter("primaryLaserEnabled") then return end
+
+  local laserStart = animationConfig.animationParameter("primaryLaserStart") or activeItemAnimation.ownerAimPosition()
+  local laserEnd = animationConfig.animationParameter("primaryLaserEnd") or laserStart
+  local laserColor = animationConfig.animationParameter("primaryLaserColor") or {255, 50, 50, 128}
+  local laserWidth = animationConfig.animationParameter("primaryLaserWidth")
+
+  local laserLine = worldify(laserStart, laserEnd)
+  localAnimator.addDrawable({
+    line = laserLine,
+    width = laserWidth,
+    fullbright = true,
+    color = laserColor
+  }, "Player+1")
+
+end
+
 function renderReloadBar(offset, barColor, length, width, borderwidth)
   
   local time = animationConfig.animationParameter("reloadTimer")

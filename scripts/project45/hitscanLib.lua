@@ -11,14 +11,12 @@ function hitscanLib:fireHitscan(projectileType)
     -- hitreg[1] is where the bullet trail emanates,
     -- hitreg[2] is where the bullet trail terminates
     local hitReg = self:hitscan(false)
-    local crit = self:crit()
-    local finalDamage = self:damagePerShot(true) * crit
+    local finalDamage = self:damagePerShot(true)
     local damageConfig = {
       -- we included activeItem.ownerPowerMultiplier() in
       -- self:damagePerShot() so we cancel it
       baseDamage = finalDamage,
-      timeout = self.currentCycleTime,
-      damageSourceKind = crit > 1 and "project45-critical" or nil
+      timeout = self.currentCycleTime
     }
 
     damageConfig = sb.jsonMerge(damageConfig, self.hitscanParameters.hitscanDamageConfig or {})
@@ -129,7 +127,9 @@ function hitscanLib:fireBeam()
       self:recoil(false, 0.1)
       self:screenShake(self.currentScreenShake * 4)
     end
-  
+
+    animator.setAnimationState("gun", "firingLoop")
+
     local beamDamageConfig = sb.jsonMerge(self.beamParameters.beamDamageConfig)
   
     local recoilTimer = 0
@@ -139,8 +139,13 @@ function hitscanLib:fireBeam()
     local hitreg = self:hitscan(true)
     local beamStart = hitreg[1]
     local beamEnd = nil
-  
-    while self:triggering()
+    
+    while self.chargeTime + self.overchargeTime <= 0 or not self.semi and (
+      self:triggering()
+    ) or (
+      not self:triggering()
+      and self.chargeTimer > 0
+    )
     and storage.ammo > 0
     and not world.lineTileCollision(mcontroller.position(), self:firePosition())
     do
@@ -198,7 +203,6 @@ function hitscanLib:fireBeam()
       -- VFX
   
       self:muzzleFlash(true)
-      animator.setAnimationState("gun", "firing")
       
       recoilTimer = recoilTimer + self.dt
       if recoilTimer >= 0.1 then
@@ -263,10 +267,8 @@ function hitscanLib:fireBeam()
       coroutine.yield()
     end
   
-    if world.lineTileCollision(mcontroller.position(), self:firePosition()) then
-      self:stopFireLoop()
-    end
-  
+    self:stopFireLoop()
+
     self.isFiring = false
 
     hitreg = self:hitscan(true)
@@ -280,13 +282,20 @@ function hitscanLib:fireBeam()
       maxLifetime = 0.1,
       color = {255,255,255}
     })
-    --]]
+    animator.setAnimationState("gun", "firing")
   
     activeItem.setScriptedAnimationParameter("beamLine", nil)
     
     if not self.alwaysMaintainCharge and self.resetChargeAfterFire then self.chargeTimer = 0 end
-  
-    self:setState(self.ejecting)
+    
+    if self.beamParameters.beamEjectOnRelease then
+      self:setState(self.ejecting)
+    else
+      if storage.ammo <= 0 then
+        self.triggered = true
+        animator.setAnimationState("chamber", "filled")
+      end
+    end
     
 end
 
@@ -342,3 +351,9 @@ function hitscanLib:hitscan(isLaser)
   return {scanOrig, scanDest, eid}
 end
 
+function hitscanLib:updateLaser()
+  if not self.laser.enabled then return end
+  local laser = self:hitscan(true)
+  activeItem.setScriptedAnimationParameter("primaryLaserStart", laser[1])
+  activeItem.setScriptedAnimationParameter("primaryLaserEnd", laser[2])
+end

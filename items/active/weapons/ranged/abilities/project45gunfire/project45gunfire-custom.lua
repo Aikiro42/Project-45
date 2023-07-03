@@ -168,6 +168,7 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
 
   -- update relevant stuff
   self:updateDebugTimer()
+  self:updateLaser()
   self:updateCharge()
   self:updateStance()
   self:updateCycleTime()
@@ -185,7 +186,7 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
     status.setResource("energyRegenBlock", 1)
   end
 
-  if not self:triggering() then
+  if not self:triggering() and not self.isFiring then
     self.triggered = false
     self:stopFireLoop()
   end
@@ -376,7 +377,9 @@ function Project45GunFire:ejecting()
     or
       (self.currentCycleTime/3)
   )
-  self:discardCasings()
+  if not self.ejectCasingsWithMag then
+    self:discardCasings()
+  end
   animator.setAnimationState("chamber", "empty")  -- empty chamber
 
   -- if gun has ammo, feed
@@ -607,7 +610,6 @@ end
 -- Returns true if the weapon successfully jammed.
 function Project45GunFire:jam()
   if diceroll(self.jamChances[storage.reloadRating]) then
-    sb.logInfo("[PROJECT 45] JAMMED")
 
     self:stopFireLoop()
     animator.playSound("jam")
@@ -622,7 +624,6 @@ function Project45GunFire:jam()
     self.screenShakeTimer = 0
     self.burstCounter = self.burstCount
     self.chargeTimer = self.resetChargeOnJam and 0 or self.chargeTimer
-    sb.logInfo("[PROJECT 45] self.chargeTimer = " .. (self.resetChargeOnJam and 0 or self.chargeTimer))
     
     self:updateJamAmount(1, true)
     self:setState(self.jammed)
@@ -640,6 +641,9 @@ function Project45GunFire:muzzleFlash()
     animator.playSound("hollow")
   end
   animator.setLightActive("muzzleFlash", true)
+  animator.setPartTag("muzzleFlash", "variant", math.random(1, self.muzzleFlashVariants or 3))
+  animator.setPartTag("muzzleFlash", "directives", string.format("?fade=%02X%02X%02X",self.muzzleFlashColor[1], self.muzzleFlashColor[2], self.muzzleFlashColor[3]) .. "=1")
+  animator.setAnimationState("flash", "flash")
   self.muzzleFlashTimer = self.muzzleFlashTime or 0.05
 end
 
@@ -722,6 +726,13 @@ function Project45GunFire:ejectMag()
     self:recoil(true)
   end
   animator.playSound("eject")
+  -- TODO: visually eject mag
+  if self.ejectCasingsWithMag then
+    -- if the mag is internal,
+    -- discard any undiscarded casings instead
+    self:discardCasings()
+  end
+
   self:updateAmmo(-1, true)
   if self.resetChargeOnEject then
     self.chargeTimer = 0
@@ -959,29 +970,37 @@ function Project45GunFire:evalProjectileKind()
   if self.laser or self.projectileKind ~= "projectile" then
     -- laser uses the hitscan helper function, so assign that
     self.hitscan = hitscanLib.hitscan
-    
+    self.updateLaser = function() end
     -- initialize projectile stack
     -- this stack is used by the hitscan functions and the animator
     -- to animate hitscan trails.
     self.projectileStack = {}
 
-    if self.laser then
-      activeItem.setScriptedAnimationParameter("laserColor", self.laser.color)
-      activeItem.setScriptedAnimationParameter("laserWidth", self.laser.width)
+    
+    if self.laser.enabled then
+      self.updateLaser = hitscanLib.updateLaser
+      activeItem.setScriptedAnimationParameter("primaryLaserEnabled", true)    
+      activeItem.setScriptedAnimationParameter("primaryLaserColor", self.laser.color)
+      activeItem.setScriptedAnimationParameter("primaryLaserWidth", self.laser.width)
+      if self.projectileKind == "projectile" then
+        local projectileConfig = root.projectileConfig()
+        sb.logInfo(sb.printJson(projectileConfig))
+      end
     end
+
   end
 
-  local muzzleFlashColor = config.getParameter("muzzleFlashColor", {255, 255, 200})
+  self.muzzleFlashColor = config.getParameter("muzzleFlashColor", {255, 255, 200})
   self.updateProjectileStack = function() end
   if self.projectileKind == "hitscan" then
     self.fireProjectile = hitscanLib.fireHitscan
     self.updateProjectileStack = hitscanLib.updateProjectileStack
-    self.hitscanParameters.hitscanColor = muzzleFlashColor
+    self.hitscanParameters.hitscanColor = self.muzzleFlashColor
   elseif self.projectileKind == "beam" then
     self.firing = hitscanLib.fireBeam
     self.updateProjectileStack = hitscanLib.updateProjectileStack
-    self.beamParameters.beamColor = muzzleFlashColor
-    activeItem.setScriptedAnimationParameter("beamColor", muzzleFlashColor)
+    self.beamParameters.beamColor = self.muzzleFlashColor
+    activeItem.setScriptedAnimationParameter("beamColor", self.muzzleFlashColor)
   end
 
 end

@@ -24,10 +24,11 @@
     // Laser settings.
     "laser": {
       "enabled": false, // if true, laser is rendered
+      "width": 0.25,
       "color": [255, 0, 0], // laser color
       // "range": 100, // max distance to which the laser is drawn
       "renderMaxRange": true // if false, laser is rendered up to player's aim position only
-      ,"alwaysActive": false
+      // ,"alwaysActive": false
     },
 
     // Movement settings
@@ -71,7 +72,8 @@
       // actions to be executed at the end of the hitscan line
       "hitscanActionOnHit": []
     },
-
+    
+    // Recommendation: set the <ejectCasingsWithMag> setting to true if the gun fires beams
     "beamParameters": {
       "beamLength": 100,  // length of beam
       "beamWidth": 5, // width of beam - beams that are too wide can look weird
@@ -87,6 +89,9 @@
       // number of entities the beam passes through before it terminates
       // if the beam passes through less entities it keeps going until it hits terrain
       "beamPunchThrough": 3,
+
+      // determines if gun transists to ejecting state if trigger is released
+      "beamEjectOnRelease": false,
       
       // whether the beam fires through terrain or not
       "beamIgnoresTerrain": false
@@ -100,6 +105,7 @@
 
     // Reload Config
 
+    "ejectCasingsWithMag": true, // for revolvers, etc.; casings are not ejected until magazine is ejected
     "ejectMagOnEmpty": false, // ejects mag when the gun hits 0 ammo
     "reloadOnEjectMag": false, // begins reload sequence upon ejecting
     "ejectMagOnReload": false, // ejects mag every (active) reload, like loading a strip and discarding the metal
@@ -109,7 +115,7 @@
     
     // [bad, ok, good, perfect] reload damage multiplier
     "reloadRatingDamageMults": [0.8, 1, 1.25, 1.5],
-    "jamChances": [0.0, 0.0, 0, 0],
+    "jamChances": [0.25, 0.1, 0, 0],
 
     // Accuracy and Recoil Config
 
@@ -125,7 +131,17 @@
 
     // Fire Config
 
-    "semi": false, // fires once per left click
+    /*
+    <semi> is a fundamental setting that affects how the gun works,
+    especially when charging is involved:
+    - If the gun is semi and charged, then firing happens on release rather than
+      on press.
+    - If the gun is semi, charged, and fires a beam, you'll essentially be charging the gun
+      to fire continuously until the charge is depleted (i.e. below charge time if there's overcharge
+      or zero otherwise)
+    */
+    "semi": true,
+
     "manualFeed": false, // needs two left clicks to fire
     "slamFire": false, // whether the gun shoots right after feeding
     "cycleTime": 0.1, // time it takes to cock the gun, cycle rounds, etc.
@@ -139,19 +155,19 @@
 
     // Charge Config
 
-    "chargeTime": 0,
-    "overchargeTime": 0, // allows gun to deal up to 100% more damage, multiplicative to other bonuses
+    "chargeTime": 0.5,
+    "overchargeTime": 0.5, // allows gun to deal up to 100% more damage, multiplicative to other bonuses
     "dischargeTimeMult": 1, // how fast the gun discharges
     
-    "progressiveCharge": false, // whether the charge animation loops or is dependent on charge progress
-    "chargeFrames": 4, // only matters if progressiveCharge is true
+    "progressiveCharge": true, // whether the charge animation loops or is dependent on charge progress
+    "chargeFrames": 6, // only matters if progressiveCharge is true
 
     // makes the gun fire once the charge timer hits/passes chargeTime
     "fireBeforeOvercharge": false,
     
     // fires gun after charging, given that there's ammo
     // doesn't really matter if fireBeforeOvercharge is true
-    "autoFireOnFullCharge": true,
+    "autoFireOnFullCharge": false,
 
     // Resets charge after firing.
     // Set to true if the gun is semi-fire.

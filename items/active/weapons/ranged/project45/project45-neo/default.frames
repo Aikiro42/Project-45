@@ -1,15 +1,16 @@
 {  
   "frameGrid" : {
-    "size" : [48, 8],
-    "dimensions" : [6, 7],
+    "size" : [17, 9],
+    "dimensions" : [6, 8],
     "names" : [
-      ["idle.charge1.1", "idle.charge2.1", "idle.charge3.1", "idle.charge4.1", "idle.charge5.1", "idle.charge6.1"],
-      ["firing.charge1.1", "firing.charge2.1", "firing.charge3.1", "firing.charge4.1", "firing.charge5.1", "firing.charge6.1"],
-      ["ejecting.charge1.1", "ejecting.charge2.1", "ejecting.charge3.1", "ejecting.charge4.1", "ejecting.charge5.1", "ejecting.charge6.1"],
-      ["ejected.charge1.1", "ejected.charge2.1", "ejected.charge3.1", "ejected.charge4.1", "ejected.charge5.1", "ejected.charge6.1"],
-      ["feeding.charge1.1", "feeding.charge2.1", "feeding.charge3.1", "feeding.charge4.1", "feeding.charge5.1", "feeding.charge6.1"],
-      ["jammed.charge1.1", "jammed.charge2.1", "jammed.charge3.1", "jammed.charge4.1", "jammed.charge5.1", "jammed.charge6.1"],
-      ["unjamming.charge1.1", "unjamming.charge2.1", "unjamming.charge3.1", "unjamming.charge4.1", "unjamming.charge5.1", "unjamming.charge6.1"]
+      ["idle.1", null, null, null, null, null],
+      ["charging.1", "charging.2", "charging.3", "charging.4", "charging.5", "charging.6"],
+      ["firing.1", null, null, null, null, null],
+      ["ejecting.1", "ejecting.2", "ejecting.3", null, null, null],
+      ["ejected.1", null, null, null, null, null],
+      ["feeding.1", "feeding.2", "feeding.3", null, null, null],
+      ["jammed.1", null, null, null, null, null],
+      ["unjamming.1", "unjamming.2", "unjamming.3", "unjamming.4", null, null]
     ]
   }
 }

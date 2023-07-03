@@ -133,6 +133,7 @@
     "parts" : {
       "middle": {
         "properties":{
+          "zLevel" : 0,
           "centered" : true,
           "image" : "<partImage><paletteSwaps><directives>",
           "offset" : [0, 0], // x offset is set dynamically
@@ -195,12 +196,111 @@
           }
         }
       },
+      
       "charge": {
         "properties":{
+          "zLevel" : 1,
           "centered" : true,
           "image" : "<partImage><paletteSwaps><directives>",
           "offset" : [0, 0], // x offset is set dynamically
           "transformationGroups" : ["weapon"]
+        },
+        
+        "partStates" : {
+          "charge" : {
+            "off": {
+              "properties": {
+                "image": ""
+              }
+            },
+            "charging": {
+              "properties": {
+                "image": "<partImage>:charging.<frame>"
+              }
+            },
+            "chargingProg": {
+              "properties": {
+                "image": "<partImage>:charging.<chargeFrame>"
+              }
+            }
+          }
+        }
+      },
+
+      "middleFullbright": {
+        "properties":{
+          "zLevel" : 2,
+          "centered" : true,
+          "image" : "<partImage><paletteSwaps><directives>",
+          "offset" : [0, 0], // x offset is set dynamically
+          "transformationGroups" : ["weapon"],
+          "fullbright" : true
+        },
+        
+        "partStates" : {
+          "gun" : {
+            "idle" : {
+              "properties" : {
+                "image" : "<partImage>:idle.<frame>"
+              }
+            },
+            "firing" : {
+              "properties" : {
+                "image" : "<partImage>:firing.<frame>"
+              }
+            },
+            "firingLoop" : {
+              "properties" : {
+                "image" : "<partImage>:firing.<frame>"
+              }
+            },
+            "ejecting" : {
+              "properties" : {
+                "image" : "<partImage>:ejecting.<frame>"
+              }
+            },
+            "boltPulling" : {
+              "properties" : {
+                "image" : "<partImage>:ejecting.<frame>"
+              }
+            },
+            "ejected" : {
+              "properties" : {
+                "image" : "<partImage>:ejected.<frame>"
+              }
+            },
+            "feeding" : {
+              "properties" : {
+                "image" : "<partImage>:feeding.<frame>"
+              }
+            },
+            "boltPushing" : {
+              "properties" : {
+                "image" : "<partImage>:feeding.<frame>"
+              }
+            },
+            "jammed" : {
+              "properties" : {
+                "image" : "<partImage>:jammed.<frame>"
+              }
+            },
+            "unjamming" : {
+              "properties" : {
+                "image" : "<partImage>:unjamming.<frame>"
+              }
+            }
+            
+          }
+        }
+      },
+      "chargeFullbright": {
+        "properties":{
+          "zLevel": 3,
+          "centered" : true,
+          "image" : "<partImage><paletteSwaps><directives>",
+          "offset" : [0, 0], // x offset is set dynamically
+          "transformationGroups" : ["weapon"],
+          "fullbright" : true
         },
         
         "partStates" : {
@@ -233,6 +333,13 @@
         },
 
         "partStates" : {
+          "gun": {
+            "firing": {
+              "properties" : {
+                "image" : "<partImage>:<variant>.<frame><directives>"
+              }
+            }
+          },
           "flash" : {
             "flash" : {
               "properties" : {
@@ -251,10 +358,35 @@
       },
       "magazine": {
         "properties":{
+          "zLevel": 0,
           "centered" : true,
           "image" : "<partImage><paletteSwaps><directives>",
           "offset" : [0, 0], // x offset is set dynamically
           "transformationGroups" : ["weapon"]
+        },
+        "partStates" : {
+          "mag": {
+            "present": {
+              "properties" : {
+                "image" : "<partImage>:<ammo>"
+              }
+            },
+            "absent":{
+              "properties" : {
+                "image" : "<partImage>:absent"
+              }
+            }
+          }
+        }
+      },
+      "magazineFullbright": {
+        "properties":{
+          "zLevel": 1,
+          "centered" : true,
+          "image" : "<partImage><paletteSwaps><directives>",
+          "offset" : [0, 0], // x offset is set dynamically
+          "transformationGroups" : ["weapon"],
+          "fullbright": true
         },
         "partStates" : {
           "mag": {
