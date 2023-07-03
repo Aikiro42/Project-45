@@ -40,7 +40,7 @@
 
     // Projectile Config
     
-    "projectileKind": "projectile", // projectile, hitscan, beam
+    "projectileKind": "beam", // projectile, hitscan, beam
     "projectileCount": 1,
     "burstCount": 1,
     "multishot": 1.1,
@@ -94,7 +94,7 @@
 
     // Ammo Config
     
-    "maxAmmo": 30,
+    "maxAmmo": 27,
     "ammoPerShot": 1,
     "quickReloadTimeframe": [0.5, 0.6, 0.7, 0.8], // [ good [ perfect ] good ]
 
@@ -109,7 +109,7 @@
     
     // [bad, ok, good, perfect] reload damage multiplier
     "reloadRatingDamageMults": [0.8, 1, 1.25, 1.5],
-    "jamChances": [0.5, 0.01, 0, 0],
+    "jamChances": [0.0, 0.0, 0, 0],
 
     // Accuracy and Recoil Config
 
@@ -125,33 +125,36 @@
 
     // Fire Config
 
-    "semi": true, // fires once per left click
+    "semi": false, // fires once per left click
     "manualFeed": false, // needs two left clicks to fire
     "slamFire": false, // whether the gun shoots right after feeding
-    "cycleTime": 0.01, // time it takes to cock the gun, cycle rounds, etc.
+    "cycleTime": 0.1, // time it takes to cock the gun, cycle rounds, etc.
+    
     // time it takes to reach the max cycle time in seconds
     // only matters if cycleTime is a 2-element array of floats
     "cycleTimeMaxTime": 3,
-    "fireTime": 0.1, // time before another input can be registered
+    
+    "fireTime": 0.01, // time before another input can be registered
     "cockTime": 0.5, // time it takes to cock weapon
 
     // Charge Config
 
     "chargeTime": 0,
     "overchargeTime": 0, // allows gun to deal up to 100% more damage, multiplicative to other bonuses
-    "dischargeTimeMult": 2, // how fast the gun discharges
+    "dischargeTimeMult": 1, // how fast the gun discharges
     
     "progressiveCharge": false, // whether the charge animation loops or is dependent on charge progress
     "chargeFrames": 4, // only matters if progressiveCharge is true
 
     // makes the gun fire once the charge timer hits/passes chargeTime
-    "fireBeforeOvercharge": true,
+    "fireBeforeOvercharge": false,
     
     // fires gun after charging, given that there's ammo
     // doesn't really matter if fireBeforeOvercharge is true
-    "autoFireOnFullCharge": false,
+    "autoFireOnFullCharge": true,
 
-    // resets charge after firing
+    // Resets charge after firing.
+    // Set to true if the gun is semi-fire.
     // I don't recommend setting this to true if fireBeforeOvercharge is.
     "resetChargeOnFire": false,
 
@@ -160,7 +163,7 @@
     "resetChargeOnJam": false, // resets charge when jamming
 
     // allows charging if the ammo count is zero
-    "maintainChargeOnEmpty": true,
+    "maintainChargeOnEmpty": false,
 
      // discharges if the weapon is obstructed by terrain
     "chargeWhenObstructed": false

@@ -23,6 +23,11 @@
             "mode" : "transition",
             "transition": "idle"
           },
+          "firingLoop": {
+            "frames" : 4,
+            "cycle" : 0.25,
+            "mode" : "loop"
+          },
 
           // ejecting -> ejected
           // (FORCED) ejected -> feeding
@@ -142,6 +147,11 @@
               }
             },
             "firing" : {
+              "properties" : {
+                "image" : "<partImage>:firing.<frame>"
+              }
+            },
+            "firingLoop" : {
               "properties" : {
                 "image" : "<partImage>:firing.<frame>"
               }
@@ -288,6 +298,15 @@
       ]
     },
 
+    "magazine" : {
+      "transformationGroups" : ["weapon"],
+      "offsetRegion" : [0, 0, 0, 0],
+      "emissionRate" : 1,
+      "particles" : [ 
+        {"particle": "project45garandclip"}
+      ]
+    },
+
     "ejectionPort" : {
       "transformationGroups" : ["ejectionPort"],
       "offsetRegion" : [0, 0, 0, 0],
@@ -311,9 +330,9 @@
 
   "sounds" : {
     "fire": ["/sfx/project45-synthetikmechanics/fires/fire_pistol.ogg"],
-    "fireStart": ["/assetmissing.wav"],
-    "fireLoop": ["/assetmissing.wav"],
-    "fireEnd": ["/assetmissing.wav"],
+    "fireStart": ["/sfx/gun/mech_beamsniper_fire1.ogg"],
+    "fireLoop": ["/sfx/gun/mech_beamdrill_loop.ogg"],
+    "fireEnd": ["/sfx/gun/mech_beamdrill_winddown.ogg"],
     "click": ["/sfx/project45-synthetikmechanics/clicks/click_generic.ogg"],
 
     "jam": ["/sfx/project45-synthetikmechanics/clicks/click_jammed.ogg"],

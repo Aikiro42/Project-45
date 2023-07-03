@@ -106,7 +106,10 @@ function hitscanLib:updateProjectileStack()
 
     -- LERPing; the commented lines work, but they kinda don't look good.
     -- Still leaving it here just in case I feel like reincluding it.
-    self.projectileStack[i].origin = vec2.lerp((1 - self.projectileStack[i].lifetime/self.projectileStack[i].maxLifetime)*0.01, self.projectileStack[i].origin, self.projectileStack[i].destination)
+    self.projectileStack[i].origin = vec2.lerp(
+      (1 - self.projectileStack[i].lifetime/self.projectileStack[i].maxLifetime)*0.01,
+      self.projectileStack[i].origin,
+      self.projectileStack[i].destination)
     -- self.projectileStack[i].destination = vec2.lerp((1 - self.projectileStack[i].lifetime/self.projectileStack[i].maxLifetime)*0.05, self.projectileStack[i].destination, self.projectileStack[i].origin)
 
     if self.projectileStack[i].lifetime <= 0 then
@@ -132,18 +135,21 @@ function hitscanLib:fireBeam()
     local recoilTimer = 0
     local beamTimeout = self.currentCycleTime
     local ammoConsumeTimer = beamTimeout
-    local fireEndBeamEnd = nil
+
+    local hitreg = self:hitscan(true)
+    local beamStart = hitreg[1]
+    local beamEnd = nil
   
     while self:triggering()
     and storage.ammo > 0
     and not world.lineTileCollision(mcontroller.position(), self:firePosition())
     do
   
-      self.beamFiring = true
+      self.isFiring = true
   
-      local hitreg = self:hitscan(true)
-      local beamStart = hitreg[1]
-      local beamEnd = hitreg[2]
+      hitreg = self:hitscan(true)
+      beamStart = hitreg[1]
+      beamEnd = hitreg[2]
   
       if ammoConsumeTimer >= beamTimeout then
         -- TODO: if self:jam() then break end
@@ -193,15 +199,13 @@ function hitscanLib:fireBeam()
   
       self:muzzleFlash(true)
       animator.setAnimationState("gun", "firing")
+      
       recoilTimer = recoilTimer + self.dt
-  
-      if recoilTimer >= 0.05 then
-        self:screenShake()
+      if recoilTimer >= 0.1 then
+        self:screenShake(self.currentScreenShake, 0.01)
         recoilTimer = 0
       end
       self:recoil(false, 0.1)
-  
-      fireEndBeamEnd = beamEnd
   
       activeItem.setScriptedAnimationParameter("beamLine", {beamStart, beamEnd})
       activeItem.setScriptedAnimationParameter("beamWidth", self.beamParameters.beamWidth + sb.nrand(self.beamParameters.beamJitter, 0))
@@ -263,16 +267,20 @@ function hitscanLib:fireBeam()
       self:stopFireLoop()
     end
   
-    self.beamFiring = false
-  
+    self.isFiring = false
+
+    hitreg = self:hitscan(true)
+    beamEnd = hitreg[2]
+
     table.insert(self.projectileStack, {
       width = self.beamParameters.beamWidth,
       origin = self:firePosition(),
-      destination = fireEndBeamEnd,
+      destination = beamEnd,
       lifetime = 0.1,
       maxLifetime = 0.1,
       color = {255,255,255}
     })
+    --]]
   
     activeItem.setScriptedAnimationParameter("beamLine", nil)
     

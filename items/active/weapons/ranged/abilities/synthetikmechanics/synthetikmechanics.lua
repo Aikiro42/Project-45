@@ -1692,7 +1692,6 @@ function SynthetikMechanics:aimVector(spread)
 end
 
 function SynthetikMechanics:canTrigger()
-  -- attempt jam; if jammed, set jamAmount to 1 then return false
   return (self.semi and not self.triggered) or not self.semi
 end
 

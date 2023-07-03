@@ -10,7 +10,7 @@
   "twoHanded" : false,
   "itemTags" : ["weapon","ranged","pistol"],
   "level" : 1,
-  "muzzleFlashColor": [255, 0, 255],
+  "muzzleFlashColor": [255, 255, 200],
   "inventoryIcon" : "project45-neo-icon.png",
 
   "animationParts" : {
@@ -26,9 +26,6 @@
     
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
-    "cycleTime": 1,
-    "cockTime": 2,
-    "chargeTime": 1
   },
 
   "builder" : "/items/buildscripts/buildproject45neoneo.lua"
