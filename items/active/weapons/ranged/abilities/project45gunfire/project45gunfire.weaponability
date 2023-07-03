@@ -8,7 +8,7 @@
   "ability" : {
     "name" : "Synthetik Mechanics",
     "type" : "project45gunfire",
-    "scripts" : ["/items/active/weapons/ranged/abilities/project45gunfire/project45gunfire-custom.lua"],
+    "scripts" : ["/items/active/weapons/ranged/abilities/project45gunfire/project45gunfire.lua"],
     "class" : "Project45GunFire",
 
     // Stat Config
