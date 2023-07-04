@@ -360,20 +360,20 @@
         "properties":{
           "zLevel": 0,
           "centered" : true,
-          "image" : "<partImage><paletteSwaps><directives>",
+          "image" : "<partImage>:present.<ammo>",
           "offset" : [0, 0], // x offset is set dynamically
           "transformationGroups" : ["weapon"]
         },
         "partStates" : {
-          "mag": {
+          "magazine": {
             "present": {
               "properties" : {
-                "image" : "<partImage>:<ammo>"
+                "image" : "<partImage>:present.<ammo>"
               }
             },
             "absent":{
               "properties" : {
-                "image" : "<partImage>:absent"
+                "image" : ""
               }
             }
           }
@@ -415,7 +415,8 @@
   "transformationGroups" : {
     "weapon" : {},
     "muzzle" : {},
-    "ejectionPort": {}
+    "ejectionPort": {},
+    "magazine": {}
   },
 
   "particleEmitters" : {
@@ -431,11 +432,11 @@
     },
 
     "magazine" : {
-      "transformationGroups" : ["weapon"],
+      "transformationGroups" : ["magazine"],
       "offsetRegion" : [0, 0, 0, 0],
       "emissionRate" : 1,
       "particles" : [ 
-        {"particle": "project45garandclip"}
+        {"particle": "project45neocustommag"}
       ]
     },
 

@@ -1,0 +1,25 @@
+{  
+  "frameGrid" : {
+    "size" : [17, 9],
+    "dimensions" : [6, 1],
+    "names" : [
+      ["present.7", "present.6", "present.5", "present.4", "present.3"]
+    ]
+  },
+
+  "aliases" : {
+    // Loop frames
+    "present.loop.0": "present.7",
+    "present.loop.1": "present.6",
+
+    // Percentage
+    "present.percent.100": "present.7",
+    "present.percent.75": "present.6",
+    "present.percent.50": "present.5",
+    "present.percent.25": "present.4",
+    "present.percent.0": "present.3",
+
+    // Internal mag
+    "present.default": "present.7"
+  }
+}

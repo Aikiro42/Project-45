@@ -34,9 +34,22 @@ function update()
   local ammo = animationConfig.animationParameter("ammo") or "?"
   local reloadTimer = animationConfig.animationParameter("reloadTimer")
   local jamAmount = animationConfig.animationParameter("jamAmount", 0)
-  local offset = reloadTimer < 0 and 0 or 2
-  offset = offset + (jamAmount <= 0 and 0 or 2)
-  offset = hand == "primary" and -offset or offset
+
+  --[[
+                            crosshair
+                                |
+                                v
+  ammo [jam bar] [reload bar] ( + ) [reload bar] [jam bar] ammo
+  
+  --]]
+
+  local horizontalOffset = reloadTimer < 0 and 0 or 2
+
+  horizontalOffset = horizontalOffset + (jamAmount <= 0 and 0 or 2)
+
+  horizontalOffset = horizontalOffset + 2 -- ammo count, charge bar
+
+  horizontalOffset = hand == "primary" and -horizontalOffset or horizontalOffset
 
 
   if ammo >= 0 then
@@ -49,7 +62,7 @@ function update()
       fullbright = true,
       flippable = false,
       layer = "front"
-    }, vec2.add(activeItemAnimation.ownerAimPosition(), {-2 + offset, 0}))
+    }, vec2.add(activeItemAnimation.ownerAimPosition(), {horizontalOffset, 0}))
 
   else  -- TODO: show crossed-out mag instead of "E"
     localAnimator.spawnParticle({
@@ -60,12 +73,12 @@ function update()
       fullbright = true,
       flippable = false,
       layer = "front"
-    }, vec2.add(activeItemAnimation.ownerAimPosition(), {-2 + offset, 0}))
+    }, vec2.add(activeItemAnimation.ownerAimPosition(), {horizontalOffset, 0}))
   end
-  
-  renderReloadBar()
-  renderJamBar()
-  renderChargeBar()
+
+  renderReloadBar({horizontalOffset, 0})
+  renderJamBar({horizontalOffset, 0})
+  renderChargeBar({horizontalOffset, -1.25})
   renderHitscanTrails()
   renderBeam()
 
@@ -101,12 +114,12 @@ function renderReloadBar(offset, barColor, length, width, borderwidth)
   local good = {quickReloadTimeframe[1], quickReloadTimeframe[4]}
   local perfect = {quickReloadTimeframe[2], quickReloadTimeframe[3]}
   local position = activeItemAnimation.ownerAimPosition()
-  local offset = {-2, 0}
 
   local length = length or 4
   local barWidth = width or 2
   local borderwidth = borderwidth or 1
   local offset = offset or {-4, 0}
+  offset[1] = (offset[1] < 0) and (offset[1] + 2) or (offset[1] - 2)
   local arrowLength = 0.4
   local textSize = 0.5
 
@@ -188,12 +201,13 @@ function renderReloadBar(offset, barColor, length, width, borderwidth)
 
 end
 
-function renderJamBar(barColor, length, width, borderwidth)
+function renderJamBar(offset, barColor, length, width, borderwidth)
   local jamScore = animationConfig.animationParameter("jamAmount")
   if not jamScore or jamScore <= 0 then return end
   local position = activeItemAnimation.ownerAimPosition()
-  local offset = {-2, 0}
-  
+  local offset = offset or {-2, 0}
+  offset[1] = (offset[1] < 0) and (offset[1] + 2) or (offset[1] - 2)
+
   local barColor = barColor or {75,75,75}
   local length = length or 4
   local barWidth = width or 2
@@ -239,7 +253,7 @@ function renderJamBar(barColor, length, width, borderwidth)
 end
 
 
-function renderChargeBar(position, offset, barColor, length, width, borderwidth)
+function renderChargeBar(offset, position, barColor, length, width, borderwidth)
 
   local chargeTimer = animationConfig.animationParameter("chargeTimer")
 
@@ -250,6 +264,7 @@ function renderChargeBar(position, offset, barColor, length, width, borderwidth)
 
   local position = activeItemAnimation.ownerAimPosition()
   local offset = offset or {0, -1.25}
+  offset[1] = offset[1] + (hOffset or 0)
   local barColor = barColor or {75,75,75}
   local length = length or 2
   local barWidth = width or 1

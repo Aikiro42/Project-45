@@ -76,7 +76,8 @@ function build(directory, config, parameters, level, seed)
 
     local parts = {
       "middle",
-      "charge"
+      "charge",
+      "magazine"
     }
 
     for _, part in ipairs(parts) do
@@ -85,13 +86,17 @@ function build(directory, config, parameters, level, seed)
       construct(config, "animationCustom", "animatedParts", "parts", part .. "Fullbright", "properties")
       config.animationCustom.animatedParts.parts[part .. "Fullbright"].properties.offset = config.baseOffset
     end
-    
-    if config.muzzleOffset then
-      config.muzzleOffset = vec2.add(config.muzzleOffset, config.baseOffset)
-    end
 
-    if config.ejectionPortOffset then
-      config.ejectionPortOffset = vec2.add(config.ejectionPortOffset, config.baseOffset)
+    local additionalOffsets = {
+      "muzzleOffset",
+      "ejectionPortOffset",
+      "magazineOffset"
+    }
+
+    for _, part in ipairs(additionalOffsets) do
+      if config[part] then
+        config[part] = vec2.add(config[part], config.baseOffset)
+      end
     end
     
   end
