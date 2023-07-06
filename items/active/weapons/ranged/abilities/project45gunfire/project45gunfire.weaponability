@@ -46,7 +46,8 @@
     "multishot": 1.1,
     "spread": 0.001, // affects direction the projectile flies to, from the muzzle
     
-    "projectileType": "project45stdbullet",
+    // "projectileType": "impactgrenade",
+    "projectileType": "project45dragonsbreath",
     "projectileParameters": {
       "power": 100,
       "damageType": "IgnoresDef",
@@ -161,7 +162,7 @@
     // ____________________________________[ Charge Config ]____________________________________
 
     "chargeTime": 0,
-    "overchargeTime": 0.5, // allows gun to deal up to 100% more damage, multiplicative to other bonuses
+    "overchargeTime": 0, // allows gun to deal up to 100% more damage, multiplicative to other bonuses
     "dischargeTimeMult": 1, // how fast the gun discharges
     
     "progressiveCharge": true, // whether the charge animation loops or is dependent on charge progress

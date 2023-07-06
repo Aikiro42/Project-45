@@ -76,6 +76,7 @@ function update()
     }, vec2.add(activeItemAnimation.ownerAimPosition(), {horizontalOffset, 0}))
   end
 
+  renderLaser()
   renderReloadBar({horizontalOffset, 0})
   renderJamBar({horizontalOffset, 0})
   renderChargeBar({horizontalOffset, -1.25})
@@ -89,9 +90,23 @@ function renderLaser()
   if not animationConfig.animationParameter("primaryLaserEnabled") then return end
 
   local laserStart = animationConfig.animationParameter("primaryLaserStart") or activeItemAnimation.ownerAimPosition()
-  local laserEnd = animationConfig.animationParameter("primaryLaserEnd") or laserStart
+  local laserEnd = animationConfig.animationParameter("primaryLaserEnd") or activeItemAnimation.ownerPosition()
   local laserColor = animationConfig.animationParameter("primaryLaserColor") or {255, 50, 50, 128}
   local laserWidth = animationConfig.animationParameter("primaryLaserWidth")
+
+
+  if animationConfig.animationParameter("primaryLaserIsArc") then
+    drawTrajectory(
+      laserStart,
+      math.atan(laserEnd[2] - laserStart[2], laserEnd[1] - laserStart[1]),
+      animationConfig.animationParameter("primaryLaserArcSpeed") or 10,
+      10,
+      animationConfig.animationParameter("primaryLaserArcRenderTime") or 3,
+      laserColor,
+      animationConfig.animationParameter("primaryLaserArcGravMult") or 1
+    )
+    return
+  end
 
   local laserLine = worldify(laserStart, laserEnd)
   localAnimator.addDrawable({
@@ -424,9 +439,9 @@ function renderBeam()
 end
 
 -- test
-function drawTrajectory(muzzlePos, angle, speed, steps, renderTime, color)
+function drawTrajectory(muzzlePos, angle, speed, steps, renderTime, color, gravMult)
   local lineColor = color or {255, 255, 255, 128}
-  local gravity = world.gravity(activeItemAnimation.ownerPosition())
+  local gravity = world.gravity(activeItemAnimation.ownerPosition()) * (gravMult or 1)
   local renderTime = renderTime or 3
   local stepTime = renderTime / (steps or 50)
   local vorig = muzzlePos

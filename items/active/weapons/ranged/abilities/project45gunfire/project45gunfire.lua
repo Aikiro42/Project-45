@@ -1054,19 +1054,27 @@ function Project45GunFire:evalProjectileKind()
     -- to animate hitscan trails.
     self.projectileStack = {}
 
-    
+    -- laser uses the hitscan function, that's why this logic is in evalProjectileKind()
     if self.laser.enabled then
       self.updateLaser = hitscanLib.updateLaser
       activeItem.setScriptedAnimationParameter("primaryLaserEnabled", true)    
       activeItem.setScriptedAnimationParameter("primaryLaserColor", self.laser.color)
       activeItem.setScriptedAnimationParameter("primaryLaserWidth", self.laser.width)
+
       if self.projectileKind == "projectile" then
-        local projectileConfig = root.projectileConfig(self.projectileType)
-        -- sb.logInfo(sb.printJson(projectileConfig))
-        local projPhysics = projectileConfig.physics
+        
+        local projectileConfig = util.mergeTable(root.projectileConfig(self.projectileType), self.projectileParameters)
+        local projSpeed = projectileConfig.speed
+        
+        if projectileConfig.physics == "grenade" and projectileConfig.speed then
+          activeItem.setScriptedAnimationParameter("primaryLaserIsArc", true)
+          activeItem.setScriptedAnimationParameter("primaryLaserArcSpeed", projectileConfig.speed)
+          activeItem.setScriptedAnimationParameter("primaryLaserArcRenderTime", projectileConfig.timeToLive)
+          activeItem.setScriptedAnimationParameter("primaryLaserArcGravMult", root.projectileGravityMultiplier(self.projectileType))
+        end
+
       end
     end
-
   end
 
   self.muzzleFlashColor = config.getParameter("muzzleFlashColor", {255, 255, 200})
