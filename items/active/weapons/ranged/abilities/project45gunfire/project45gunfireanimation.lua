@@ -31,7 +31,6 @@ function update()
   end
 
   local hand = animationConfig.animationParameter("hand")
-  local ammo = animationConfig.animationParameter("ammo") or "?"
   local reloadTimer = animationConfig.animationParameter("reloadTimer")
   local jamAmount = animationConfig.animationParameter("jamAmount", 0)
 
@@ -51,18 +50,42 @@ function update()
 
   horizontalOffset = hand == "primary" and -horizontalOffset or horizontalOffset
 
+  renderAmmoNumber({horizontalOffset, 0})
+
+  renderChamberIndicator({horizontalOffset, 0})
+
+  renderLaser()
+  renderReloadBar({horizontalOffset, 0})
+  renderJamBar({horizontalOffset, 0})
+  renderChargeBar({horizontalOffset, -1.625})
+  renderHitscanTrails()
+  renderBeam()
+
+end
+
+function renderAmmoNumber(offset)
+  
+  local reloadRatingTextColor = {
+    PERFECT = {255, 241, 191},
+    GOOD = {191, 255, 255},
+    OK = {255,255,255},
+    BAD = {255, 127, 127}
+  }
+  
+  local ammo = animationConfig.animationParameter("ammo") or "?"
+  local rating = animationConfig.animationParameter("reloadRating")
 
   if ammo >= 0 then
     -- TODO: show reload rating color
     localAnimator.spawnParticle({
       type = "text",
       text= "^shadow;" .. ammo,
-      color = {255, 255, 255},
+      color = rating and reloadRatingTextColor[rating] or {255,255,255},
       size = 1,
       fullbright = true,
       flippable = false,
       layer = "front"
-    }, vec2.add(activeItemAnimation.ownerAimPosition(), {horizontalOffset, 0}))
+    }, vec2.add(activeItemAnimation.ownerAimPosition(), offset))
 
   else  -- TODO: show crossed-out mag instead of "E"
     localAnimator.spawnParticle({
@@ -73,17 +96,8 @@ function update()
       fullbright = true,
       flippable = false,
       layer = "front"
-    }, vec2.add(activeItemAnimation.ownerAimPosition(), {horizontalOffset, 0}))
+    }, vec2.add(activeItemAnimation.ownerAimPosition(), offset))
   end
-  renderChamberIndicator({horizontalOffset, 0})
-
-  renderLaser()
-  renderReloadBar({horizontalOffset, 0})
-  renderJamBar({horizontalOffset, 0})
-  renderChargeBar({horizontalOffset, -1.625})
-  renderHitscanTrails()
-  renderBeam()
-
 end
 
 function renderChamberIndicator(offset)
