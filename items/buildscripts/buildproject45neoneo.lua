@@ -170,12 +170,20 @@ function build(directory, config, parameters, level, seed)
 
     if config.primaryAbility then
         
-      -- damage
+      -- damage per shot
       -- FIXME: max damage seems inaccurate
       config.primaryAbility.baseDamage = parameters.primaryAbility.baseDamage or config.primaryAbility.baseDamage
-      local loDamage = (config.primaryAbility.baseDamage or 0) * config.damageLevelMultiplier
-      -- perfect reload * last shot damage mult * overcharge mult
-      local hiDamage = loDamage * 1.3 * config.primaryAbility.lastShotDamageMult * (config.primaryAbility.overchargeTime > 0 and 2 or 1)
+      config.primaryAbility.reloadRatingDamageMults = parameters.primaryAbility.reloadRatingDamageMults or config.primaryAbility.reloadRatingDamageMults
+      local baseDamage = (config.primaryAbility.baseDamage or 0)
+      * config.damageLevelMultiplier
+      -- low damage = base damage * worst reload damage
+      local loDamage = baseDamage
+        * math.min(table.unpack(config.primaryAbility.reloadRatingDamageMults))
+      -- high damage = base damage * best reload damage * last shot damage mult * overcharge mult
+      local hiDamage = baseDamage
+        * math.max(table.unpack(config.primaryAbility.reloadRatingDamageMults))
+        * config.primaryAbility.lastShotDamageMult
+        * (config.primaryAbility.overchargeTime > 0 and 2 or 1)
       config.tooltipFields.damagePerShotLabel = "^#FF9000;" .. util.round(loDamage, 1) .. " - " .. util.round(hiDamage, 1)
 
       -- fire rate

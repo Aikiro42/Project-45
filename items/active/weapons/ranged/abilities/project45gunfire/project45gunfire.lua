@@ -1138,17 +1138,21 @@ end
 -- Returns the critical multiplier.
 -- Typically called when the weapon is about to deal damage.
 function Project45GunFire:crit()
-  return diceroll(self.critChance) and 1 or self.critDamageMult
+  return diceroll(self.critChance, "Crit: ") and self.critDamageMult or 1
 end
 
 -- Calculates the damage per shot of the weapon.
 function Project45GunFire:damagePerShot(isHitscan)
+
+  local critDmg = self:crit()
+  local lastShotDmg = (storage.ammo <= self.ammoPerShot and self.lastShotDamageMult or 1)
+
   return self.baseDamage
   * activeItem.ownerPowerMultiplier()
   * self.chargeDamage -- up to 2x at full overcharge
   * self.reloadRatingDamage -- as low as 0.8 (bad), as high as 1.5 (perfect)
-  * self:crit() -- this way, rounds deal crit damage individually
-  * (storage.ammo <= self.ammoPerShot and self.lastShotDamageMult or 1)
+  * critDmg -- this way, rounds deal crit damage individually
+  * lastShotDmg
   / self.projectileCount
 end
 
