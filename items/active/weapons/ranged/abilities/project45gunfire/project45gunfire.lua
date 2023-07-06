@@ -84,10 +84,12 @@ function Project45GunFire:init()
 
 
   -- initialize animation timer if charge is not progressive i.e. looping
+  --[[
   if not self.progressiveCharge then
     self.chargeAnimationTime = self.currentCycleTime/3
     self.chargeAnimationTimer = 0
   end
+  --]]
 
   -- burst count must be positive
   self.burstCount = math.max(1, self.burstCount)
@@ -319,7 +321,7 @@ function Project45GunFire:firing()
   if self.resetChargeOnFire then self.chargeTimer = 0 end
 
   -- add unejected casings
-  self:updateAmmo(-self.ammoPerShot)
+  self:updateAmmo(diceroll(self.ammoConsumeChance) and -self.ammoPerShot or 0)
   
   -- if storage.ammo == 0 then self.triggered = true end
   self.triggered = storage.ammo == 0 or self.triggered
@@ -944,19 +946,22 @@ end
 
 function Project45GunFire:updateCycleTime()
   -- don't bother updating cycle time if cycleTimeProgress wasn't even instantiated
+  -- or if there's no difference between the cycle times
   -- this means that the cycle time is expected to be constant
-  if not self.cycleTimer then return end
+  if not self.cycleTimer
+  or self.cycleTimeDiff == 0
+  then return end
 
   if self.triggering() and not self.triggered then
-    self.cycleTimer = math.min(self.cycleTimer + self.dt, self.cycleTimeMaxTime)
+    self.cycleTimer = math.min(self.cycleTimer + (self.dt * self.cycleTimeGrowthRate), self.cycleTimeMaxTime)
   else
-    self.cycleTimer = math.max(0, self.cycleTimer - self.dt)
+    self.cycleTimer = math.max(0, self.cycleTimer - (self.dt * self.cycleTimeDecayRate))
   end
   
   local cycleTimeProgress = self.cycleTimer / self.cycleTimeMaxTime
   
   self.currentCycleTime = self.cycleTime[1] + self.cycleTimeDiff * cycleTimeProgress
-  self.chargeAnimationTime = self.currentCycleTime/3
+  -- self.chargeAnimationTime = self.currentCycleTime/3 -- dafuq is this for?
 end
 
 function Project45GunFire:updateScreenShake()
@@ -1066,8 +1071,7 @@ function Project45GunFire:evalProjectileKind()
         local projectileConfig = util.mergeTable(root.projectileConfig(self.projectileType), self.projectileParameters)
         local projSpeed = projectileConfig.speed
         
-        if projectileConfig.physics == "grenade" and projectileConfig.speed then
-          activeItem.setScriptedAnimationParameter("primaryLaserIsArc", true)
+        if root.projectileGravityMultiplier(self.projectileType) ~= 0 and projectileConfig.speed then
           activeItem.setScriptedAnimationParameter("primaryLaserArcSpeed", projectileConfig.speed)
           activeItem.setScriptedAnimationParameter("primaryLaserArcRenderTime", projectileConfig.timeToLive)
           activeItem.setScriptedAnimationParameter("primaryLaserArcGravMult", root.projectileGravityMultiplier(self.projectileType))
@@ -1122,7 +1126,7 @@ end
 -- Returns the critical multiplier.
 -- Typically called when the weapon is about to deal damage.
 function Project45GunFire:crit()
-  return diceroll(self.critChance) and 1 or self.critMult
+  return diceroll(self.critChance) and 1 or self.critDamageMult
 end
 
 -- Calculates the damage per shot of the weapon.
@@ -1132,6 +1136,7 @@ function Project45GunFire:damagePerShot(isHitscan)
   * self.chargeDamage -- up to 2x at full overcharge
   * self.reloadRatingDamage -- as low as 0.8 (bad), as high as 1.5 (perfect)
   * self:crit() -- this way, rounds deal crit damage individually
+  * (storage.ammo <= self.ammoPerShot and self.lastShotDamageMult or 1)
   / self.projectileCount
 end
 

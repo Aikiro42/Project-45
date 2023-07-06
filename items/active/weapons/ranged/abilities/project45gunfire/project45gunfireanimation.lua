@@ -95,7 +95,7 @@ function renderLaser()
   local laserWidth = animationConfig.animationParameter("primaryLaserWidth")
 
 
-  if animationConfig.animationParameter("primaryLaserIsArc") then
+  if animationConfig.animationParameter("primaryLaserArcGravMult") then
     drawTrajectory(
       laserStart,
       math.atan(laserEnd[2] - laserStart[2], laserEnd[1] - laserStart[1]),

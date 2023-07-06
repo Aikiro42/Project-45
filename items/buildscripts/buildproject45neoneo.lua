@@ -77,7 +77,12 @@ function build(directory, config, parameters, level, seed)
     local parts = {
       "middle",
       "charge",
-      "magazine"
+      "magazine",
+
+      "rail",
+      "sights",
+      "underbarrel",
+      "stock"
     }
 
     for _, part in ipairs(parts) do
@@ -87,15 +92,32 @@ function build(directory, config, parameters, level, seed)
       config.animationCustom.animatedParts.parts[part .. "Fullbright"].properties.offset = config.baseOffset
     end
 
-    local additionalOffsets = {
+    -- set offsets for
+    -- muzzle, ejection port, magazine
+    local offsetConfig = {
       "muzzleOffset",
       "ejectionPortOffset",
       "magazineOffset"
     }
-
-    for _, part in ipairs(additionalOffsets) do
+    for _, part in ipairs(offsetConfig) do
       if config[part] then
         config[part] = vec2.add(config[part], config.baseOffset)
+      end
+    end
+
+    -- generate offsets for
+    -- rail, sights, underbarrel, stock
+    offsetConfig = {
+      "rail",
+      "sights",
+      "underbarrel",
+      "stock"
+    }
+    for _, part in ipairs(offsetConfig) do
+      if config[part .. "Offset"] then
+        config.animationCustom.animatedParts.parts[part].properties.offset = config[part .. "Offset"]
+        config.animationCustom.animatedParts.parts[part .. "Fullbright"].properties.offset = config[part .. "Offset"]
+        -- config[part .. "Offset"] = vec2.add(config[part .. "Offset"], config.baseOffset)
       end
     end
     
@@ -121,6 +143,116 @@ function build(directory, config, parameters, level, seed)
 
     construct(config, "animationCustom", "animatedParts", "stateTypes", "gun", "states", "boltPushing")
     config.animationCustom.animatedParts.stateTypes.gun.states.boltPushing.cycle = config.primaryAbility.cockTime/2
+
+  end
+
+  -- tooltip
+  -- populate tooltip fields
+  if config.tooltipKind == "project45gun" then
+    config.tooltipFields = config.tooltipFields or {}
+    config.tooltipFields.subtitle = "^#FFFFFF;" .. config.category
+    -- config.tooltipFields.title = "^FF0000;FUCK"  -- doesn't work
+    -- config.tooltipFields.subTitle = "^#FFFFFF;BASE"  -- works
+    -- config.tooltipFields.subTitle.color = {255,255,255} -- doesn't work
+    config.tooltipFields.levelLabel = util.round(configParameter("level", 1), 1)
+    
+    -- IMPORT PARAMETERS
+    --[[
+    if parameters.primaryAbility then
+        config.primaryAbility = sb.jsonMerge(config.primaryAbility, parameters.primaryAbility)
+    end
+    --]]
+    
+
+    if elementalType ~= "physical" then
+      config.tooltipFields.damageKindImage = "/interface/elements/"..elementalType..".png"
+    end
+
+    if config.primaryAbility then
+        
+      -- damage
+      config.primaryAbility.baseDamage = parameters.primaryAbility.baseDamage or config.primaryAbility.baseDamage
+      local loDamage = (config.primaryAbility.baseDamage or 0) * config.damageLevelMultiplier
+      -- perfect reload * last shot damage mult * overcharge mult
+      local hiDamage = loDamage * 1.3 * config.primaryAbility.lastShotDamageMult * (config.primaryAbility.overchargeTime > 0 and 2 or 1)
+      config.tooltipFields.damagePerShotLabel = "^#FF9000;" .. util.round(loDamage, 1) .. " - " .. util.round(hiDamage, 1)
+
+      -- fire rate
+      config.primaryAbility.manualFeed = parameters.primaryAbility.manualFeed or config.primaryAbility.manualFeed
+      config.primaryAbility.cockTime = parameters.primaryAbility.cockTime or config.primaryAbility.cockTime
+      config.primaryAbility.cycleTime = parameters.primaryAbility.cycleTime or config.primaryAbility.cycleTime
+      local actualCycleTime = config.primaryAbility.manualFeed
+        and config.primaryAbility.cockTime
+        or config.primaryAbility.cycleTime
+      
+      if type(actualCycleTime) ~= "table" then
+        actualCycleTime = {actualCycleTime, actualCycleTime}
+      end
+      local loFireRate = actualCycleTime[1] + config.primaryAbility.fireTime
+      local hiFireRate = actualCycleTime[2] + config.primaryAbility.fireTime
+      config.tooltipFields.fireRateLabel = ("^#FFD400;" .. util.round(loFireRate, 1))
+      .. (loFireRate == hiFireRate and "s" or (" - " .. util.round(hiFireRate, 1) .. "s"))
+
+      config.primaryAbility.reloadCost = parameters.primaryAbility.reloadCost or config.primaryAbility.reloadCost
+      config.tooltipFields.reloadCostLabel = "^#b0ff78;" .. util.round(
+        (config.primaryAbility.reloadCost or 0) * 100,
+        1
+      ) .. "%"
+
+      
+      local bulletReloadTime = parameters.primaryAbility.reloadTime or config.primaryAbility.reloadTime
+      local bulletsPerReload = parameters.primaryAbility.bulletsPerReload or config.primaryAbility.bulletsPerReload
+      local maxAmmo = parameters.primaryAbility.maxAmmo or config.primaryAbility.maxAmmo
+      local actualReloadTime = bulletReloadTime * math.max(1, maxAmmo / bulletsPerReload)
+      config.primaryAbility.reloadTime = bulletReloadTime
+      config.tooltipFields.reloadTimeLabel = util.round(
+        (actualReloadTime or 0),
+        1
+      ) .. "s"
+
+      config.primaryAbility.critChance = parameters.primaryAbility.critChance or config.primaryAbility.critChance
+      config.tooltipFields.critChanceLabel = (config.primaryAbility.critChance > 0 and "^#FF6767;" or "^#777777;") .. util.round(
+        (config.primaryAbility.critChance or 0) * 100,
+        1
+      ) .. "%"
+
+      config.primaryAbility.critDamageMult = parameters.primaryAbility.critDamageMult or config.primaryAbility.critDamageMult
+      config.tooltipFields.critDamageLabel = (config.primaryAbility.critChance > 0 and "^#FF6767;" or "^#777777;") .. util.round(
+        (config.primaryAbility.critDamageMult or 1),
+        1
+      ) .. "x"
+
+      config.primaryAbility.heavyWeapon = parameters.primaryAbility.heavyWeapon or config.primaryAbility.heavyWeapon
+      local heavyDesc = config.primaryAbility.heavyWeapon and "^#FF5050;Heavy.^reset;\n" or ""
+
+      config.primaryAbility.multishot = parameters.primaryAbility.multishot or config.primaryAbility.multishot
+      local multishotDesc = config.primaryAbility.multishot ~= 1 and ("^#9dc6f5;" .. util.round(config.primaryAbility.multishot, 1) .. "x multishot.^reset;\n") or ""
+      
+      config.primaryAbility.chargeTime = parameters.primaryAbility.chargeTime or config.primaryAbility.chargeTime
+      local chargeDesc = config.primaryAbility.chargeTime > 0 and ("^#FF5050;" .. util.round(config.primaryAbility.chargeTime, 1) .. "s charge time.^reset;\n") or ""
+      
+      config.primaryAbility.overchargeTime = parameters.primaryAbility.overchargeTime or config.primaryAbility.overchargeTime
+      local overchargeDesc = config.primaryAbility.overchargeTime > 0 and ("^#9dc6f5;" .. util.round(config.primaryAbility.overchargeTime, 1) .. "s overcharge.^reset;\n") or ""
+      
+
+      local modList = parameters.modSlots or config.modSlots or {}
+      local modListDesc = ""
+      if modList then
+        modListDesc = "^#abfc6d;"
+        for k, v in pairs(modList) do
+          if k ~= "ability" and v[1] ~= "ability" then
+            modListDesc = modListDesc .. v[1] .. ".\n"
+          end
+        end
+        modListDesc = modListDesc .. "^reset;"
+      end
+
+      local finalDescription = heavyDesc .. chargeDesc .. overchargeDesc .. multishotDesc .. modListDesc -- .. config.description
+      config.description = finalDescription == "" and "^#777777;No notable qualities.^reset;" or finalDescription
+
+    end
+    -- sb.logInfo("[ PROJECT 45 ] " .. sb.printJson(parameters.primaryAbility))
+    config.tooltipFields.altAbilityLabel = config.altAbility and ("^#ABD2FF;" .. (config.altAbility.name or "unknown")) or "^#777777;None"
 
   end
 

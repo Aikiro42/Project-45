@@ -5,7 +5,7 @@
   "rarity" : "Essential",
   "description" : "An entry-level firearm.",
   "shortdescription" : "Pistol - New Mechanics",
-  "tooltipKind" : "base",
+  "tooltipKind" : "project45gun",
   "category" : "pistol",
   "twoHanded" : false,
   "itemTags" : ["weapon","ranged","pistol"],

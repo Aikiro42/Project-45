@@ -17,7 +17,9 @@
     "reloadCost": 0.5, // percent of energy
     "reloadTime": 1,   // 80% actual reload time, 20% cocking time
     "critChance": 0.1,
-    "critMult": 1.5,
+    "critDamageMult": 1.5,
+
+    "lastShotDamageMult": 1.05,
 
     // ____________________________________[ Misc Config ]____________________________________
 
@@ -47,7 +49,8 @@
     "spread": 0.001, // affects direction the projectile flies to, from the muzzle
     
     // "projectileType": "impactgrenade",
-    "projectileType": "project45dragonsbreath",
+    // "projectileType": "project45dragonsbreath",
+    "projectileType": "project45stdbullet",
     "projectileParameters": {
       "power": 100,
       "damageType": "IgnoresDef",
@@ -102,6 +105,7 @@
     "maxAmmo": 7,
     "bulletsPerReload": 7, // bullets reloaded every active reload; set to negative number to reload all bullets
     "ammoPerShot": 1,
+    "ammoConsumeChance": 1,
     "quickReloadTimeframe": [0.5, 0.6, 0.7, 0.8], // [ good% [ perfect% ] good% ] of <reloadTime>
 
     // Reload and Magazine Config
@@ -148,13 +152,32 @@
 
     "manualFeed": false, // needs two left clicks to fire
     "slamFire": false, // whether the gun shoots right after feeding
-    "cycleTime": 0.1, // time it takes to cock the gun, cycle rounds, etc.
+
+    // time it takes to cock the gun, cycle rounds, etc.
+    // can also be a 2-element array of floats i.e.
+    // [<initial cycle time>, <final cycle time>]
+    // e.g. if initial cycle time > final cycle time, weapon RoF decreases the longer it's fired
+    // vice versa if initial < final
+    // cycleTime=0.1 is equal to cycleTime=[0.1, 0.1]
+    "cycleTime": 0.1,
     
     "burstCount": 1,
 
-    // time it takes to reach the max cycle time in seconds
+    // time it takes to reach the final cycle time in seconds
     // only matters if cycleTime is a 2-element array of floats
+    // by default, gun reaches final RoF when fired for 3s straight
+    // if gun is fired for 1.5s straight, it will take 1.5s to decay to initial cycle time
     "cycleTimeMaxTime": 3,
+
+    // multipliers for cycle time growth and decay
+    // only matters if cycleTime is a 2-element array of floats
+    /*
+    e.g. if cycleTimeMaxTime=3, cycleTimeGrowthRate=2, cycleTimeDecayRate=1
+    gun reaches final RoF in 1.5s
+    but RoF reaches initial in 3s
+    */
+    "cycleTimeGrowthRate": 1,
+    "cycleTimeDecayRate": 1,
     
     "fireTime": 0.01, // time before another input can be registered
     "cockTime": 0.5, // time it takes to cock weapon
