@@ -75,14 +75,29 @@ function update()
       layer = "front"
     }, vec2.add(activeItemAnimation.ownerAimPosition(), {horizontalOffset, 0}))
   end
+  renderChamberIndicator({horizontalOffset, 0})
 
   renderLaser()
   renderReloadBar({horizontalOffset, 0})
   renderJamBar({horizontalOffset, 0})
-  renderChargeBar({horizontalOffset, -1.25})
+  renderChargeBar({horizontalOffset, -1.625})
   renderHitscanTrails()
   renderBeam()
 
+end
+
+function renderChamberIndicator(offset)
+  local chamberState = animationConfig.animationParameter("primaryChamberState")
+  if not chamberState then return end
+
+  local aimPosition = activeItemAnimation.ownerAimPosition()
+
+  localAnimator.addDrawable({
+    image = "/items/active/weapons/ranged/abilities/project45gunfire/chamberindicator.png:" .. chamberState,
+    position = vec2.add(vec2.add(aimPosition, offset), {0, -1}),
+    color = {255,255,255},
+    fullbright = true,
+  }, "ForegroundEntity+1")
 end
 
 function renderLaser()
@@ -278,10 +293,9 @@ function renderChargeBar(offset, position, barColor, length, width, borderwidth)
   local overchargeTime = animationConfig.animationParameter("overchargeTime")
 
   local position = activeItemAnimation.ownerAimPosition()
-  local offset = offset or {0, -1.25}
-  offset[1] = offset[1] + (hOffset or 0)
+  local offset = offset or {0, -1.5}
   local barColor = barColor or {75,75,75}
-  local length = length or 2
+  local length = length or 1
   local barWidth = width or 1
   local borderwidth = borderwidth or 0.7
   
