@@ -306,22 +306,31 @@ end
 -- Utility function that scans for an entity to damage.
 function hitscanLib:hitscan(isLaser)
 
+  local scanLength, ignoresTerrain, punchThrough
+
+  if self.projectileKind ~= "projectile" then
+    scanLength = self[self.projectileKind .. "Parameters"].range or 100
+    ignoresTerrain = self[self.projectileKind .. "Parameters"].ignoresTerrain
+    
+    punchThrough = self[self.projectileKind .. "Parameters"].punchThrough
+    if self.chargeTime + self.overchargeTime > 0
+    and self.chargeTimer >= self.chargeTime + self.overchargeTime
+    then
+      punchThrough = self[self.projectileKind .. "Parameters"].fullChargePunchThrough
+    end
+
+  else
+    scanLength = self.laser.range or 100
+    ignoresTerrain = false
+    punchThrough = 0
+
+  end
+
   local scanOrig = self:firePosition()
-  local hitscanRange = isLaser and self.beamParameters.beamLength or self.hitscanParameters.hitscanRange or 100
-  local ignoresTerrain = isLaser and self.beamParameters.beamIgnoresTerrain or self.hitscanParameters.hitscanIgnoresTerrain
-  local scanDest = vec2.add(scanOrig, vec2.mul(self:aimVector(isLaser and 0 or self.spread), hitscanRange))
+  local scanDest = vec2.add(scanOrig, vec2.mul(self:aimVector(isLaser and 0 or self.spread), scanLength))
   local fullScanDest = not ignoresTerrain and world.lineCollision(scanOrig, scanDest, {"Block", "Dynamic"}) or scanDest
 
-  local punchThrough = isLaser and self.beamParameters.beamPunchThrough
-    or (
-      (
-        self.chargeTime + self.overchargeTime > 0
-        and self.chargeTimer >= self.chargeTime + self.overchargeTime
-      )
-      and self.hitscanParameters.hitscanFullChargePunchThrough
-      or self.hitscanParameters.hitscanPunchThrough
-    )
-    or 0
+  punchThrough = punchThrough or 0
 
   -- hitreg
   local hitId = world.entityLineQuery(scanOrig, fullScanDest, {

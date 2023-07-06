@@ -19,7 +19,7 @@ function Project45GunFire:init()
   -- INITIALIZATIONS
   self.debugTimer = debugTime
   self.isFiring = false
-
+  
   -- evaluate whether the user is an NPC
   self.usedByNPC = world.entityType(activeItem.ownerEntityId())
   
@@ -115,6 +115,7 @@ function Project45GunFire:init()
 
   -- initialize timers
   self.chargeTimer = 0
+  self.dischargeDelayTimer = 0
   self.cooldownTimer = self.fireTime
   self.muzzleFlashTimer = 0
 
@@ -190,10 +191,10 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
     status.setResource("energyRegenBlock", 1)
   end
 
-  if not self:triggering()
-  and not self.isFiring
-  then
-    self.triggered = false
+  if not self.isFiring then
+    if not self:triggering() then
+      self.triggered = false
+    end
     self:stopFireLoop()
   end
   
@@ -324,23 +325,31 @@ function Project45GunFire:firing()
   if self.resetChargeOnFire then self.chargeTimer = 0 end
 
   -- add unejected casings
-  self:updateAmmo(diceroll(self.ammoConsumeChance) and -self.ammoPerShot or 0)
-  
-  -- if storage.ammo == 0 then self.triggered = true end
-  self.triggered = storage.ammo == 0 or self.triggered
 
   storage.unejectedCasings = math.min(storage.unejectedCasings + self.ammoPerShot, storage.ammo)
+  self:updateAmmo(diceroll(self.ammoConsumeChance) and -self.ammoPerShot or 0)
+  
+  self.triggered = storage.ammo == 0 or self.triggered
+
   
   self:updateChamberState("filled")
   
   -- if not a manual feed gun
   -- or if the gun's not done bursting
   -- then eject immediately
-  if not self.manualFeed
-  or self.burstCounter < self.burstCount
+  if storage.ammo > 0
+  and (not self.manualFeed
+  or self.burstCounter < self.burstCount)
   then
-    util.wait(self.currentCycleTime/3)
-    self:setState(self.ejecting)
+    if self.ejectCasingsAfterBurst
+    and self.burstCounter < self.burstCount
+    then
+      util.wait(self.currentCycleTime)
+      self:setState(self.firing)
+    else
+      util.wait(self.currentCycleTime/3)
+      self:setState(self.ejecting)
+    end
   -- otherwise, stop the cycle process
   else
     self:stopFireLoop()
@@ -383,9 +392,11 @@ function Project45GunFire:ejecting()
   else
     util.wait(self.currentCycleTime/3)
   end
+
   if not self.ejectCasingsWithMag then
     self:discardCasings()
   end
+  
   self:updateChamberState("empty") -- empty chamber
 
   -- if gun has ammo, feed
@@ -414,6 +425,17 @@ function Project45GunFire:feeding()
     animator.setAnimationState("gun", "feeding")
   end
 
+  if self.slamFire
+  and self.manualFeed
+  and storage.ammo > 0
+  and self.reloadTimer < 0
+  and self:triggering() then
+    animator.setAnimationState("bolt", "closed")
+    self:updateChamberState("ready")
+    self:setState(self.firing)
+    return
+  end
+
   -- otherwise, we wait
   if (self.manualFeed and (self.burstCounter >= self.burstCount))
   or (self.reloadTimer >= 0)
@@ -433,19 +455,15 @@ function Project45GunFire:feeding()
   -- we continue firing
   -- if this is a slamfire weapon,
   -- the hammer strikes as we feed the round
-  if (
-    (self.projectileKind ~= "beam" and self.burstCounter < self.burstCount)
-    or self.slamFire
-  )
+  if (self.projectileKind ~= "beam" and self.burstCounter < self.burstCount)
   and self.reloadTimer < 0
   then
     self:setState(self.firing)
-    if self.slamFire then return end -- FIXME: do we need to return if the gun is slam-firing?
   end
 
   -- prevent triggering
   if self.chargeTime + self.overchargeTime > 0 and self:triggering() then
-    self.triggered = self.reloadTimer >= 0
+    self.triggered = self.reloadTimer >= 0 or self.manualFeed
   else
     self.triggered = self.semi or self.reloadTimer >= 0
   end
@@ -727,9 +745,10 @@ function Project45GunFire:discardCasings(debug)
     return
   end
 
+  -- TODO: TEST ME RIGHT NOW
   if storage.unejectedCasings > 0             -- if there are unejected casings
-  and self.burstCounter >= self.burstCount    -- and the gun is done bursting,
-  or not self.manualFeed                      -- or if the gun is semiauto
+  -- and self.burstCounter >= self.burstCount    -- and the gun is done bursting,
+  -- or not self.manualFeed                      -- or if the gun is semiauto
   then                                        -- then we discard casings
     animator.setParticleEmitterBurstCount("ejectionPort", storage.unejectedCasings)
     animator.burstParticleEmitter("ejectionPort")
@@ -829,7 +848,7 @@ function Project45GunFire:updateCharge()
   -- It's safe to divide by their sum.
 
   if self:triggering()
-  -- and not self.triggered
+  and not self.triggered
   and storage.jamAmount <= 0
   and self.reloadTimer < 0
   and (self.maintainChargeOnEmpty or storage.ammo > 0)
@@ -837,8 +856,13 @@ function Project45GunFire:updateCharge()
   and (self.manualFeed and animator.animationState("chamber") == "ready" or not self.manualFeed)
   then
     self.chargeTimer = math.min(self.chargeTime + self.overchargeTime, self.chargeTimer + self.dt)
+    self.dischargeDelayTimer = self.dischargeDelayTime
   else
-    self.chargeTimer = math.max(0, self.chargeTimer - self.dt * self.dischargeTimeMult)
+    if self.dischargeDelayTimer <= 0 then
+      self.chargeTimer = math.max(0, self.chargeTimer - self.dt * self.dischargeTimeMult)
+    else
+      self.dischargeDelayTimer = math.max(0, self.dischargeDelayTimer - self.dt)
+    end
   end
   activeItem.setScriptedAnimationParameter("chargeTimer", self.chargeTimer)
 

@@ -28,8 +28,8 @@
       "enabled": true, // if true, laser is rendered
       "width": 0.25,
       "color": [255, 0, 0], // laser color
-      // "range": 100, // max distance to which the laser is drawn
-      "renderMaxRange": true // if false, laser is rendered up to player's aim position only
+      "range": 100 // max distance to which the laser is drawn
+      // ,"renderMaxRange": true // if false, laser is rendered up to player's aim position only
       // ,"alwaysActive": false
     },
 
@@ -59,9 +59,14 @@
 
     "hitscanParameters": {
       // hitscan params
-      "hitscanRange": 100,  // range of the hitscan line in blocks
-      "hitscanPunchThrough": 0,  // number of entities to register before stopping the scan
-      "hitscanIgnoresTerrain": false,  // pierces through terrain if true
+      "range": 100,  // range of the hitscan line in blocks
+      
+      "punchThrough": 0,  // number of entities to register before stopping the scan
+      "fullChargePunchThrough": 3,
+      
+      "ignoresTerrain": false,  // pierces through terrain if true
+      "ignoreTerrainOnFullCharge": false,
+      
       "hitscanFadeTime": 0.1, // how long the hitscan line fades away
       "hitscanWidth": 1, // visual width of hitscan line in pixels
       // "hitscanColor": [255,255,200], // color of hitscan projectile; also dictates muzzle flash color
@@ -73,16 +78,24 @@
         "statusEffects": []
       },
       // actions to be executed at the end of the hitscan line
-      "hitscanActionOnHit": [],
+      "hitscanActionOnHit": []
       
-      // only matters if the gun can be charged
-      "hitscanFullChargePunchThrough": 3,
-      "hitscanIgnoresTerrainOnFullCharge": true
     },
     
     // Recommendation: set the <ejectCasingsWithMag> setting to true if the gun fires beams
     "beamParameters": {
-      "beamLength": 100,  // length of beam
+      // Common configs
+      "range": 100,  // length of beam in blocks
+
+      // number of entities the beam passes through before it terminates
+      // if the beam passes through less entities it keeps going until it hits terrain
+      "punchThrough": 3,
+      "fullChargePunchThrough": 3,
+      
+      // whether the beam fires through terrain or not
+      "ignoresTerrain": false,
+      "ignoreTerrainOnFullCharge": false,
+      
       "beamWidth": 5, // width of beam - beams that are too wide can look weird
       "beamInnerWidth": 3, // width of inner white beam - just for vfx
       "beamJitter": 1, // how much the beam width changes as it's shot - just a vfx
@@ -93,19 +106,14 @@
         "damageSourceKind" : "plasma",
         "knockback" : 2
       },
-      // number of entities the beam passes through before it terminates
-      // if the beam passes through less entities it keeps going until it hits terrain
-      "beamPunchThrough": 3,
       
-      // whether the beam fires through terrain or not
-      "beamIgnoresTerrain": false,
-
       // if true, consumes ammo over time.
       // Otherwise, will only consume ammo every time the beam starts
       "consumeAmmoOverTime": true,
 
       // determines if gun transists to ejecting state if trigger is released
       "ejectCasingsOnBeamEnd": false
+
 
     },
 
@@ -119,6 +127,7 @@
 
     // Reload and Magazine Config
 
+    "ejectCasingsAfterBurst": false, // ejects casings after burst is finished
     "ejectCasingsWithMag": false, // for revolvers, etc.; casings are not ejected until magazine is ejected
     "ejectMagOnEmpty": false, // ejects mag when the gun hits 0 ammo
     "reloadOnEjectMag": false, // begins reload sequence upon ejecting
@@ -194,7 +203,13 @@
     // ____________________________________[ Charge Config ]____________________________________
 
     "chargeTime": 0,
+
     "overchargeTime": 0, // allows gun to deal up to 100% more damage, multiplicative to other bonuses
+    
+    // time it takes for gun to hold charge before discharging
+    // helps for consistent behavior
+    "dischargeDelayTime": 0.025,
+
     "dischargeTimeMult": 1, // how fast the gun discharges
     
     "progressiveCharge": true, // whether the charge animation loops or is dependent on charge progress
