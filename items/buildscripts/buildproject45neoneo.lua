@@ -171,6 +171,7 @@ function build(directory, config, parameters, level, seed)
     if config.primaryAbility then
         
       -- damage
+      -- FIXME: max damage seems inaccurate
       config.primaryAbility.baseDamage = parameters.primaryAbility.baseDamage or config.primaryAbility.baseDamage
       local loDamage = (config.primaryAbility.baseDamage or 0) * config.damageLevelMultiplier
       -- perfect reload * last shot damage mult * overcharge mult

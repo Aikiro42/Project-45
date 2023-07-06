@@ -19,7 +19,7 @@
     "critChance": 0.1,
     "critDamageMult": 1.5,
 
-    "lastShotDamageMult": 1.05,
+    "lastShotDamageMult": 1,
 
     // ____________________________________[ Misc Config ]____________________________________
 
@@ -45,7 +45,7 @@
     
     "projectileKind": "projectile", // projectile, hitscan, beam
     "projectileCount": 1,
-    "multishot": 1.1,
+    "multishot": 1,
     "spread": 0.001, // affects direction the projectile flies to, from the muzzle
     
     // "projectileType": "impactgrenade",
@@ -73,7 +73,11 @@
         "statusEffects": []
       },
       // actions to be executed at the end of the hitscan line
-      "hitscanActionOnHit": []
+      "hitscanActionOnHit": [],
+      
+      // only matters if the gun can be charged
+      "hitscanFullChargePunchThrough": 3,
+      "hitscanIgnoresTerrainOnFullCharge": true
     },
     
     // Recommendation: set the <ejectCasingsWithMag> setting to true if the gun fires beams
@@ -92,12 +96,17 @@
       // number of entities the beam passes through before it terminates
       // if the beam passes through less entities it keeps going until it hits terrain
       "beamPunchThrough": 3,
-
-      // determines if gun transists to ejecting state if trigger is released
-      "beamEjectOnRelease": false,
       
       // whether the beam fires through terrain or not
-      "beamIgnoresTerrain": false
+      "beamIgnoresTerrain": false,
+
+      // if true, consumes ammo over time.
+      // Otherwise, will only consume ammo every time the beam starts
+      "consumeAmmoOverTime": true,
+
+      // determines if gun transists to ejecting state if trigger is released
+      "ejectCasingsOnBeamEnd": false
+
     },
 
     // ____________________________________[ Ammo Config ]____________________________________

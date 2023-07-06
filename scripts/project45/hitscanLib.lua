@@ -135,6 +135,7 @@ function hitscanLib:fireBeam()
     local recoilTimer = 0
     local beamTimeout = self.currentCycleTime
     local ammoConsumeTimer = beamTimeout
+    local consumedAmmo = false
 
     local hitreg = self:hitscan(true)
     local beamStart = hitreg[1]
@@ -146,7 +147,7 @@ function hitscanLib:fireBeam()
       not self:triggering()
       and self.chargeTimer > 0
     )
-    and storage.ammo > 0
+    and (not self.consumeAmmoOverTime or storage.ammo > 0)
     and not world.lineTileCollision(mcontroller.position(), self:firePosition())
     do
   
@@ -159,8 +160,11 @@ function hitscanLib:fireBeam()
       if ammoConsumeTimer >= beamTimeout then
         -- TODO: if self:jam() then break end
         ammoConsumeTimer = 0
-        self:updateAmmo(-self.ammoPerShot)
-        storage.unejectedCasings = storage.unejectedCasings + math.min(storage.ammo, self.ammoPerShot)
+        if self.consumeAmmoOverTime or not consumedAmmo then
+          self:updateAmmo(-self.ammoPerShot)
+          storage.unejectedCasings = storage.unejectedCasings + math.min(storage.ammo, self.ammoPerShot)
+          consumedAmmo = true
+        end
   
         -- update charge damage multiplier
         if self.overchargeTime > 0 then
@@ -288,7 +292,7 @@ function hitscanLib:fireBeam()
     
     if not self.alwaysMaintainCharge and self.resetChargeAfterFire then self.chargeTimer = 0 end
     
-    if self.beamParameters.beamEjectOnRelease then
+    if self.beamParameters.ejectCasingsOnBeamEnd then
       self:setState(self.ejecting)
     else
       if storage.ammo <= 0 then
@@ -308,7 +312,16 @@ function hitscanLib:hitscan(isLaser)
   local scanDest = vec2.add(scanOrig, vec2.mul(self:aimVector(isLaser and 0 or self.spread), hitscanRange))
   local fullScanDest = not ignoresTerrain and world.lineCollision(scanOrig, scanDest, {"Block", "Dynamic"}) or scanDest
 
-  local punchThrough = isLaser and self.beamParameters.beamPunchThrough or self.hitscanParameters.hitscanPunchThrough or 0
+  local punchThrough = isLaser and self.beamParameters.beamPunchThrough
+    or (
+      (
+        self.chargeTime + self.overchargeTime > 0
+        and self.chargeTimer >= self.chargeTime + self.overchargeTime
+      )
+      and self.hitscanParameters.hitscanFullChargePunchThrough
+      or self.hitscanParameters.hitscanPunchThrough
+    )
+    or 0
 
   -- hitreg
   local hitId = world.entityLineQuery(scanOrig, fullScanDest, {

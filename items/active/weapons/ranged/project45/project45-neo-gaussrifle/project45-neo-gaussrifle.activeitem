@@ -1,0 +1,115 @@
+{
+  "itemName" : "project45-neo-gaussrifle",
+  "price" : 1000,
+  "maxStack" : 1,
+  "rarity" : "Essential",
+  "description" : "A Gauss rifle.",
+  "shortdescription" : "New Gauss Rifle",
+  "tooltipKind" : "project45gun",
+  "category" : "pistol",
+  "twoHanded" : true,
+  "itemTags" : ["weapon","ranged","pistol"],
+  "level" : 1,
+  "muzzleFlashColor": [255, 255, 200],
+  "inventoryIcon" : "project45-neo-gaussrifle-icon.png",
+
+  "animationParts" : {
+    "middle" : "project45-neo-gaussrifle.png",
+    "middleFullbright" : "project45-neo-gaussrifle-fullbright.png",
+    "charge": "project45-neo-gaussrifle.png",
+    "chargeFullbright": "project45-neo-gaussrifle-fullbright.png",
+    "magazine": "",
+    "magazineFullbright": "",
+    "muzzleFlash": "/items/active/weapons/ranged/muzzleflash.png"
+  },
+
+  "animationCustom": {
+    "particleEmitters": {
+      "magazine": {
+        "particles": [
+          {"particle": "project45mosinstrip"}
+        ]
+      }
+    },
+
+    "sounds": {
+      
+    },
+    "animatedParts": {
+      "stateTypes": {
+        "charge":{
+          "states":{
+            "charging":{
+              "frames": 4
+            }
+          }
+        },
+        "gun": {
+          "states":{
+            "idle": {
+              "frames": 1
+            },
+            "firing": {
+              "frames": 1
+            },
+            "firingLoop": {
+              "frames": 1
+            },
+            "ejecting": {
+              "frames": 3
+            },
+            "boltPulling": {
+              "frames": 3
+            },
+            "ejected": {
+              "frames": 1
+            },
+            "feeding": {
+              "frames": 2
+            },
+            "boltPushing": {
+              "frames": 2
+            },
+            "jammed": {
+              "frames": 1
+            },
+            "unjamming": {
+              "frames": 5
+            }
+          }
+        }
+      }
+    }
+  },
+
+  "baseOffset" : [0.75, 0],
+  "muzzleOffset" : [2, 0.375],
+  "ejectionPortOffset": [-0.25, 0.5],
+  "magazineOffset": [0.25, 0],
+
+  "scripts" : ["/items/active/weapons/ranged/project45gunneo.lua"],
+    
+  "primaryAbilityType": "project45gunfire",
+  "primaryAbility": {
+    "chargeFrames": 4,
+    "chargeTime": 0.5,
+    "overchargeTime": 0.5,
+    "resetChargeOnFire": true,
+    "autoFireOnFullCharge": true,
+
+    "cycleTime": 0.125,
+    
+    "projectileKind": "hitscan",
+    "hitscanParameters": {
+      "hitscanWidth": 8
+    }
+    /*
+    "beamParameters": {
+      "consumeAmmoOverTime": false,
+      "ejectCasingsOnBeamEnd": true
+    }
+    */
+  },
+
+  "builder" : "/items/buildscripts/buildproject45neoneo.lua"
+}

@@ -288,6 +288,36 @@
           }
         }
       },
+      "chargeFullbright": {
+        "properties":{
+          "zLevel": 3,
+          "centered" : true,
+          "image" : "<partImage><paletteSwaps><directives>",
+          "offset" : [0, 0], // x offset is set dynamically
+          "transformationGroups" : ["weapon"],
+          "fullbright" : true
+        },
+        
+        "partStates" : {
+          "charge" : {
+            "off": {
+              "properties": {
+                "image": ""
+              }
+            },
+            "charging": {
+              "properties": {
+                "image": "<partImage>:charging.<frame>"
+              }
+            },
+            "chargingProg": {
+              "properties": {
+                "image": "<partImage>:charging.<chargeFrame>"
+              }
+            }
+          }
+        }
+      },
 
       "middleFullbright": {
         "properties":{
@@ -355,37 +385,6 @@
           }
         }
       },
-      "chargeFullbright": {
-        "properties":{
-          "zLevel": 3,
-          "centered" : true,
-          "image" : "<partImage><paletteSwaps><directives>",
-          "offset" : [0, 0], // x offset is set dynamically
-          "transformationGroups" : ["weapon"],
-          "fullbright" : true
-        },
-        
-        "partStates" : {
-          "charge" : {
-            "off": {
-              "properties": {
-                "image": ""
-              }
-            },
-            "charging": {
-              "properties": {
-                "image": "<partImage>:charging.<frame>"
-              }
-            },
-            "chargingProg": {
-              "properties": {
-                "image": "<partImage>:charging.<chargeFrame>"
-              }
-            }
-          }
-        }
-      },
-
       
       "rail": {
         "properties":{

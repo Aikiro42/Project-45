@@ -190,7 +190,9 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
     status.setResource("energyRegenBlock", 1)
   end
 
-  if not self:triggering() and not self.isFiring then
+  if not self:triggering()
+  and not self.isFiring
+  then
     self.triggered = false
     self:stopFireLoop()
   end
@@ -691,9 +693,11 @@ function Project45GunFire:startFireLoop()
 end
 
 function Project45GunFire:stopFireLoop()
+  -- FIXME: Fire loop doesn't stop when autoFireOnFullCharge is true and gun is held down
+  -- A temporary fix is to change the sounds of the gun...
   if self.fireLoopPlaying then
     animator.stopAllSounds("fireLoop")
-    animator.stopAllSounds("fireStart")
+    -- animator.stopAllSounds("fireStart")
     animator.playSound("fireEnd")
     self.fireLoopPlaying = false
   end
@@ -715,7 +719,14 @@ function Project45GunFire:fireProjectile(projectileType)
 end
 
 -- Ejects casings, purely virtual
-function Project45GunFire:discardCasings()
+function Project45GunFire:discardCasings(debug)
+
+  if debug then
+    animator.setParticleEmitterBurstCount("ejectionPort", 1)
+    animator.burstParticleEmitter("ejectionPort")
+    return
+  end
+
   if storage.unejectedCasings > 0             -- if there are unejected casings
   and self.burstCounter >= self.burstCount    -- and the gun is done bursting,
   or not self.manualFeed                      -- or if the gun is semiauto

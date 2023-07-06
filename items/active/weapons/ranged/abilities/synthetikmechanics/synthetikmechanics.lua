@@ -1791,6 +1791,23 @@ function SynthetikMechanics:setAnimationState(part, state)
   storage.animationState[part] = state
 end
 
+
+-- Manually set weapon and arm rotation
+function SynthetikMechanics:snap(weaponRotationDeg, armRotationDeg)
+  self.weapon.relativeWeaponRotation = math.rad(weaponRotationDeg)
+  self.weapon.relativeArmRotation = math.rad(armRotationDeg)
+  storage.aimProgress = 0
+end
+
+-- Set weapon and arm rotation to stance
+function SynthetikMechanics:snapStance(stance)
+  self.weapon.relativeWeaponRotation = math.rad(stance.weaponRotation)
+  self.weapon.relativeArmRotation = math.rad(stance.armRotation)
+  storage.aimProgress = 0
+end
+
+-- sets weapon stance to the specified stance
+-- if snap is true, then weapon instantly takes on that stance
 function SynthetikMechanics:setStance(stance, snap)
 
   if stance.disabled then return end
@@ -1822,19 +1839,6 @@ function SynthetikMechanics:knockOffAim(rotationRad)
   storage.aimProgress = 0
 end
 
--- Manually set weapon and arm rotation
-function SynthetikMechanics:snap(weaponRotationDeg, armRotationDeg)
-  self.weapon.relativeWeaponRotation = math.rad(weaponRotationDeg)
-  self.weapon.relativeArmRotation = math.rad(armRotationDeg)
-  storage.aimProgress = 0
-end
-
--- Set weapon and arm rotation to stance
-function SynthetikMechanics:snapStance(stance)
-  self.weapon.relativeWeaponRotation = math.rad(stance.weaponRotation)
-  self.weapon.relativeArmRotation = math.rad(stance.armRotation)
-  storage.aimProgress = 0
-end
 
 function SynthetikMechanics:stopFireLoop()
   if self.fireLoopPlaying then
