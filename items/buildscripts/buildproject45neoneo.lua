@@ -131,12 +131,19 @@ function build(directory, config, parameters, level, seed)
       "ejecting",
       "feeding"
     }
-    local stateCycleTime = config.primaryAbility.cycleTime / #fireTimeRelatedStates
+    local cycleTime = config.primaryAbility.cycleTime
+    if type(cycleTime) == "table" then
+      cycleTime = cycleTime[1]
+    end
+    local stateCycleTime = cycleTime / #fireTimeRelatedStates
     for _, state in ipairs(fireTimeRelatedStates) do
       construct(config, "animationCustom", "animatedParts", "stateTypes", "gun", "states", state)
       config.animationCustom.animatedParts.stateTypes.gun.states[state].cycle = stateCycleTime
       -- sb.logInfo(config.animationCustom.animatedParts.stateTypes.gun.states[state].cycle)
     end
+
+    construct(config, "animationCustom", "animatedParts", "stateTypes", "charge", "states", "charging")
+    config.animationCustom.animatedParts.stateTypes.charge.states.charging.cycle = math.max(0.05, cycleTime)
 
     construct(config, "animationCustom", "animatedParts", "stateTypes", "gun", "states", "boltPulling")
     config.animationCustom.animatedParts.stateTypes.gun.states.boltPulling.cycle = config.primaryAbility.cockTime/2

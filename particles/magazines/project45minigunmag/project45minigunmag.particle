@@ -10,7 +10,7 @@
     "finalVelocity" : [0, -60.0],
     "approach" : [1, 60],
     "timeToLive" : 2,
-    "layer" : "front",
+    "layer" : "back",
     "collidesForeground" : true,
     "rotation": 0,
 	"variance" : {

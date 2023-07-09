@@ -135,9 +135,13 @@
     "internalMag": false, // whether the "magazine" is a strip or a clip (makes magazine invisible)
 
     "magVisualPercentage": false, // Whether the mag visually indicates the percentage or count of ammo remaining
-    "magFrames": 5, // number of visible frames (for regular, opaque mags, set this to 1)
-    "magLoopFrames": 2, // number of loop frames (for regular, opaque mags, set this to 1)
-    "magAmmoRange": [3, 7], // ammo count interval at which the magazine is animated (think belt ammmo)
+    "magFrames": 1, // number of visible frames (for regular, opaque mags, set this to 1)
+    "magLoopFrames": 1, // number of loop frames (for regular, opaque mags, set this to 1)
+    
+    // ammo count interval at which the magazine is animated (think belt ammmo)
+    // set this to [1, 1] for regular, opaque mags
+    "magAmmoRange": [1, 1],
+
 
     // [bad, ok, good, perfect] reload damage multiplier
     "reloadRatingDamageMults": [0.8, 1, 1.25, 1.5],

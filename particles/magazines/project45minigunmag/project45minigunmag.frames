@@ -1,7 +1,7 @@
 {
   "image" : "project45minigunmag.png",
   "frameGrid" : {
-    "size" : [6, 7],
+    "size" : [7, 6],
     "dimensions" : [1, 1]
   }
 }

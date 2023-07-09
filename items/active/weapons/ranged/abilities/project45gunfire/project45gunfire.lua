@@ -15,10 +15,7 @@ function Project45GunFire:init()
   -- INITIALIZATIONS
   self.debugTimer = debugTime
   self.isFiring = false
-  
-  -- evaluate whether the user is an NPC
-  self.usedByNPC = world.entityType(activeItem.ownerEntityId())
-  
+    
   -- separate cock time and reload time
   self.reloadTime = self.reloadTime * 0.8
   self.reloadTimer = -1
@@ -147,14 +144,16 @@ function Project45GunFire:init()
 
   -- Final touches before use
 
-  self.stances = self.stances or {}
-  self.stances.aimStance = self.stances.aimStance or {
+  local defaultAimStance = {
     weaponRotation = 0,
     armRotation = 0,
     twoHanded = config.getParameter("twoHanded", false),
     allowRotate = true,
     allowFlip = true
   }
+  self.stances = self.stances or {}
+  local finalAimStance = self.stances.aimStance or {}
+  self.stances.aimStance = util.mergeTable(defaultAimStance, finalAimStance)
 
   self.weapon:setStance(self.stances.aimStance)
   self:screenShake()
@@ -282,6 +281,14 @@ end
 function Project45GunFire:jammed()
 end
 
+function Project45GunFire:whirring()
+  self.overrideCharge = true
+  while self:triggering() do
+    coroutine.yield()
+  end
+  self.overrideCharge = false
+end
+
 function Project45GunFire:firing()
   
   self.triggered = self.semi or storage.ammo == 0
@@ -323,7 +330,6 @@ function Project45GunFire:firing()
   self:updateAmmo(diceroll(self.ammoConsumeChance) and -self.ammoPerShot or 0)
   
   self.triggered = storage.ammo == 0 or self.triggered
-
   
   self:updateChamberState("filled")
   
@@ -345,8 +351,12 @@ function Project45GunFire:firing()
     end
   -- otherwise, stop the cycle process
   else
-    self:stopFireLoop()
-    self.cooldownTimer = self.fireTime
+    if self.maintainChargeOnEmpty then
+      self:setState(self.whirring)
+    else
+      self:stopFireLoop()
+      self.cooldownTimer = self.fireTime
+    end
     self.isFiring = false
   end
 end
@@ -645,6 +655,7 @@ function Project45GunFire:unjamming()
   self:updateJamAmount(math.random() * -1)
   if storage.jamAmount <= 0 then
     -- animator.playSound("click")
+    storage.reloadRating = OK
     self.reloadTimer = self.reloadTime
     animator.setAnimationState("bolt", "closed")
     animator.setAnimationState("chamber", "filled")
@@ -855,7 +866,8 @@ function Project45GunFire:updateCharge()
   -- from here on out, either self.chargeTime or self.overchargeTime is nonzero.
   -- It's safe to divide by their sum.
 
-  if self:triggering()
+  if self.overrideCharge
+  or self:triggering()
   and not self.triggered
   and storage.jamAmount <= 0
   and self.reloadTimer < 0
