@@ -34,6 +34,33 @@ function Project45GunFire:init()
 
   -- VALIDATIONS
 
+  -- SETTING VALIDATIONS: These validations serve to reduce firing conditions and allow consistent logic.
+
+  -- self.autoFireOnFullCharge only matters if the gun is semifire
+  -- if an autofire gun is the kind that's charged, the charge is essentially it winding up.
+  self.autoFireOnFullCharge = self.semi and self.autoFireOnFullCharge
+
+  -- self.fireBeforeOvercharge only matters if the gun is auto
+  -- NOTE: Should this be hardcoded? If this setting is false,
+  -- then the gun only autofires at max charge, defeating the purpose of
+  -- the overcharge providing bonus damage...
+  -- Unless the gun continues firing until the gun is undercharged. (Should this be implemented?)
+  -- self.fireBeforeOvercharge = not self.semi and self.fireBeforeOvercharge
+  self.fireBeforeOvercharge = not self.semi
+
+  -- self.resetChargeOnFire only matters if gun doesn't fire before overcharge
+  -- otherwise, the gun will never overcharge
+  -- If this is false and the gun is semifire, then the charge is maintained (while left click is held) and
+  -- the gun can be quickly fired again after self.triggered is false
+  self.resetChargeOnFire = not self.fireBeforeOvercharge and self.resetChargeOnFire
+
+  -- self.manualFeed only matters if the gun is semifire.
+  -- Can you imagine an automatic bolt-action gun?
+  self.manualFeed = self.semi and self.manualFeed
+
+  -- self.slamFire only matters if the gun is manual-fed (bolt-action)
+  self.slamFire = self.manualFeed and self.slamFire
+
   self.bulletsPerReload = math.max(1, self.bulletsPerReload)
 
   -- let inaccuracy be a table
@@ -92,11 +119,8 @@ function Project45GunFire:init()
 
   -- grab stored data
   self:loadGunState()
-  storage.stanceProgress = 0 -- stance progres is stored in storage so that other abilities may recoil the gun
-
+  storage.stanceProgress = storage.stanceProgress or 0 -- stance progres is stored in storage so that other abilities may recoil the gun
   self.reloadRatingDamage = self.reloadRatingDamageMults[storage.reloadRating]
-
-  storage.jamAmount = config.getParameter("currentJamAmount", 0)
 
   -- initialize timers
   self.chargeTimer = 0
@@ -134,6 +158,9 @@ function Project45GunFire:init()
 
   self.weapon:setStance(self.stances.aimStance)
   self:screenShake()
+  if storage.jamAmount > 0 then
+    self:setState(self.jammed)
+  end
   self:recoil(true, 4) -- you're bringing the gun up
 
 end
@@ -235,7 +262,6 @@ end
 -- STATE FUNCTIONS
 
 function Project45GunFire:charging()
-  sb.logInfo("charging was reached")
   while self:triggering() do
 
     if (self.fireBeforeOvercharge and self.chargeTimer >= self.chargeTime)
@@ -258,7 +284,6 @@ end
 
 function Project45GunFire:firing()
   
-  sb.logInfo("firing was reached")
   self.triggered = self.semi or storage.ammo == 0
 
   if self:jam() then return end
@@ -409,7 +434,6 @@ function Project45GunFire:feeding()
     if self.chargeTime + self.overchargeTime > 0 then
       self:setState(self.charging)
     else
-      sb.logInfo("1. feeding -> firing was reached")
       self:setState(self.firing)      
     end
     return
@@ -442,7 +466,6 @@ function Project45GunFire:feeding()
   )
   and self.reloadTimer < 0
   then
-    sb.logInfo("2. feeding -> firing was reached")
     self:setState(self.firing)
   end
 
@@ -623,6 +646,8 @@ function Project45GunFire:unjamming()
   if storage.jamAmount <= 0 then
     -- animator.playSound("click")
     self.reloadTimer = self.reloadTime
+    animator.setAnimationState("bolt", "closed")
+    animator.setAnimationState("chamber", "filled")
     self:setState(self.cocking)
     return
   end
@@ -639,8 +664,8 @@ function Project45GunFire:jam()
     
     animator.setAnimationState("bolt", "jammed")
     self:updateChamberState("filled")
-    self:updateAmmo(-self.ammoPerShot)
     storage.unejectedCasings = math.min(storage.ammo, storage.unejectedCasings + self.ammoPerShot)
+    self:updateAmmo(-self.ammoPerShot)
     
     -- prevent triggering and firing
     self.triggered = true
@@ -703,7 +728,6 @@ function Project45GunFire:stopFireLoop()
   -- A temporary fix is to change the sounds of the gun...
   if self.fireLoopPlaying then
     animator.stopAllSounds("fireLoop")
-    -- animator.stopAllSounds("fireStart")
     animator.playSound("fireEnd")
     self.fireLoopPlaying = false
   end
@@ -733,11 +757,7 @@ function Project45GunFire:discardCasings(debug)
     return
   end
 
-  -- TODO: TEST ME RIGHT NOW
-  if storage.unejectedCasings > 0             -- if there are unejected casings
-  -- and storage.burstCounter >= self.burstCount    -- and the gun is done bursting,
-  -- or not self.manualFeed                      -- or if the gun is semiauto
-  then                                        -- then we discard casings
+  if storage.unejectedCasings > 0 then
     animator.setParticleEmitterBurstCount("ejectionPort", storage.unejectedCasings)
     animator.burstParticleEmitter("ejectionPort")
     storage.unejectedCasings = 0
@@ -1244,13 +1264,19 @@ function Project45GunFire:loadGunState()
     loadSuccess = false
   })
 
+  if not loadedGunState.loadSuccess then
+    sb.logInfo("WARNING: GUN STATE NOT LOADED")
+  end
+
   animator.setAnimationState("chamber", loadedGunState.chamber)
     
   storage.ammo = storage.ammo or loadedGunState.ammo
   storage.reloadRating = storage.reloadRating or loadedGunState.reloadRating
   activeItem.setScriptedAnimationParameter("reloadRating", reloadRatingList[storage.reloadRating])
   storage.unejectedCasings = storage.unejectedCasings or loadedGunState.unejectedCasings
+  
   storage.jamAmount = storage.jamAmount or loadedGunState.jamAmount
+  activeItem.setScriptedAnimationParameter("jamAmount", storage.jamAmount)
 
   if not loadedGunState.loadSuccess then
     animator.setAnimationState("bolt", loadedGunState.bolt)

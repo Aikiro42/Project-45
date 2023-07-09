@@ -141,7 +141,7 @@
 
     // [bad, ok, good, perfect] reload damage multiplier
     "reloadRatingDamageMults": [0.8, 1, 1.25, 1.5],
-    "jamChances": [0.0, 0.0, 0, 0],
+    "jamChances": [0.1, 0.05, 0, 0],
 
     // ____________________________________[ Accuracy and Recoil Config ] ____________________________________
 
@@ -168,8 +168,14 @@
     */
     "semi": true,
 
-    "manualFeed": false, // needs two left clicks to fire
-    "slamFire": false, // whether the gun shoots right after feeding
+    // Makes your gun not automatically eject right after firing,
+    // requiring you to cock the gun to fire again.
+    // if the gun is autofire (<semi = false>) then this will always be false
+    "manualFeed": false,
+    
+    // Allows you to fire your gun immediately if you hold left-click down while cocking the gun.
+    // If the gun isn't manual-feed, this is set to false.
+    "slamFire": false,
 
     // time it takes to cock the gun, cycle rounds, etc.
     // can also be a 2-element array of floats i.e.
@@ -216,15 +222,15 @@
     "chargeFrames": 6, // only matters if progressiveCharge is true
 
     // makes the gun fire once the charge timer hits/passes chargeTime
-    "fireBeforeOvercharge": false,
+    // "fireBeforeOvercharge": false,
     
     // fires gun after charging, given that there's ammo
-    // doesn't really matter if fireBeforeOvercharge is true
+    // if the gun is autofire (<semi = false>) then this will always be false
     "autoFireOnFullCharge": false,
 
     // Resets charge after firing.
-    // Set to true if the gun is semi-fire.
-    // I don't recommend setting this to true if fireBeforeOvercharge is.
+    // Only matters if the gun semi-fire (<semi = true>).
+    // if the gun is autofire (<semi = false>) then this will always be false.
     "resetChargeOnFire": false,
 
     // resets charge when ejecting magazine
