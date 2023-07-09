@@ -91,29 +91,27 @@
     
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
-    "maxAmmo": 16,
-    "bulletsPerReload": 16,
+    "maxAmmo": 5,
+    "bulletsPerReload": 5,
     
     "semi": true,
-    "burstCount": 3,
+    "manualFeed": false,
+    "slamFire": false,
     
-    "cycleTime": 0.125,
-
-    "ejectCasingsAfterBurst": true,
-
-    "chargeFrames": 4,
-    "chargeTime": 0,
-    "overchargeTime": 0,
     "resetChargeOnFire": true,
-    "autoFireOnFullCharge": false,
-    
-    "slamFire": true,
-    "manualFeed": true,
+    "fireBeforeOvercharge": false,
+    "autoFireOnFullCharge": true,
+    "chargeWhenObstructed": true,
 
+    "cycleTime": 0.125,
+    "chargeFrames": 4,
+    "chargeTime": 0.25,
+    "overchargeTime": 0.25,
     
     "projectileKind": "hitscan",
     "hitscanParameters": {
-      "hitscanWidth": 8
+      "hitscanWidth": 8,
+      "ignoresTerrainOnFullCharge": true
     }
     /*
     "beamParameters": {

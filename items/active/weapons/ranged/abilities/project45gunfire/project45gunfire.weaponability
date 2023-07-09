@@ -65,7 +65,7 @@
       "fullChargePunchThrough": 3,
       
       "ignoresTerrain": false,  // pierces through terrain if true
-      "ignoreTerrainOnFullCharge": false,
+      "ignoresTerrainOnFullCharge": false,
       
       "hitscanFadeTime": 0.1, // how long the hitscan line fades away
       "hitscanWidth": 1, // visual width of hitscan line in pixels
@@ -94,7 +94,7 @@
       
       // whether the beam fires through terrain or not
       "ignoresTerrain": false,
-      "ignoreTerrainOnFullCharge": false,
+      "ignoresTerrainOnFullCharge": false,
       
       "beamWidth": 5, // width of beam - beams that are too wide can look weird
       "beamInnerWidth": 3, // width of inner white beam - just for vfx

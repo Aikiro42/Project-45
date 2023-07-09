@@ -313,10 +313,12 @@ function hitscanLib:hitscan(isLaser)
     ignoresTerrain = self[self.projectileKind .. "Parameters"].ignoresTerrain
     
     punchThrough = self[self.projectileKind .. "Parameters"].punchThrough
+    
     if self.chargeTime + self.overchargeTime > 0
     and self.chargeTimer >= self.chargeTime + self.overchargeTime
     then
       punchThrough = self[self.projectileKind .. "Parameters"].fullChargePunchThrough
+      ignoresTerrain = self[self.projectileKind .. "Parameters"].ignoresTerrainOnFullCharge
     end
 
   else
