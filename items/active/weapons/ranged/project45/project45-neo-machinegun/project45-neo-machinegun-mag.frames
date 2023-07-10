@@ -1,0 +1,20 @@
+{  
+  "frameGrid" : {
+    "size" : [49, 20],
+    "dimensions" : [6, 1],
+    "names" : [
+      ["present.5", "present.4", "present.2", "present.1", "present.0", "absent"]
+    ]
+  },
+
+  "aliases" : {
+    // Loop frames
+    "present.3": "present.5",
+
+    "present.loop.0": "present.5",
+    "present.loop.1": "present.4",
+
+    // Internal mag
+    "present.default": "present.5"
+  }
+}

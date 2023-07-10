@@ -9,8 +9,8 @@
 
   "aliases" : {
     // Loop frames
-    "present.loop.0": "present.7",
-    "present.loop.1": "present.6",
+    "present.loop.0": "present.6",
+    "present.loop.1": "present.7",
 
     // Percentage
     "present.percent.100": "present.7",

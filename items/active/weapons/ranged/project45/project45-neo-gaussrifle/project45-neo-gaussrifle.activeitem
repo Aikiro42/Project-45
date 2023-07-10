@@ -16,9 +16,9 @@
   "animationParts" : {
     "middle" : "project45-neo-gaussrifle.png",
     "middleFullbright" : "project45-neo-gaussrifle-fullbright.png",
-    "charge": "project45-neo-gaussrifle.png",
-    "chargeFullbright": "project45-neo-gaussrifle-fullbright.png",
-    "magazine": "",
+    "charge": "",
+    "chargeFullbright": "project45-neo-gaussrifle-charge-fullbright.png",
+    "magazine": "project45-neo-gaussrifle-mag.png",
     "magazineFullbright": "",
     "muzzleFlash": "/items/active/weapons/ranged/muzzleflash.png"
   },
@@ -27,7 +27,7 @@
     "particleEmitters": {
       "magazine": {
         "particles": [
-          {"particle": "project45mosinstrip"}
+          {"particle": "project45gaussriflemag"}
         ]
       }
     },
@@ -56,10 +56,10 @@
               "frames": 1
             },
             "ejecting": {
-              "frames": 3
+              "frames": 1
             },
             "boltPulling": {
-              "frames": 3
+              "frames": 1
             },
             "ejected": {
               "frames": 1
@@ -74,7 +74,7 @@
               "frames": 1
             },
             "unjamming": {
-              "frames": 5
+              "frames": 3
             }
           }
         }
@@ -107,7 +107,15 @@
     "chargeFrames": 4,
     "chargeTime": 0.25,
     "overchargeTime": 0.25,
-    
+
+    "inaccuracy": 0.05, // affects arm movement as the trigger is pulled
+    "recoilAmount": 15, // amount of recoil per shot, in degrees; arm and weapon will rotate by half of this
+    "maxRecoilDeg": 15, // the most the arm and weapon will rotate, in degrees.
+    "recoilMult": 1, // multiplies recoilAmount
+    "recoverTime": 5, // time it takes to recover aim completely, in seconds
+    "screenShakeAmount": 0.5, // amount of screenshake per shot
+
+
     "projectileKind": "hitscan",
     "hitscanParameters": {
       "hitscanWidth": 8,

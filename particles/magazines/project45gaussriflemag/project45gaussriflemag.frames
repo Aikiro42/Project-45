@@ -1,7 +1,7 @@
 {
   "image" : "project45gaussriflemag.png",
   "frameGrid" : {
-    "size" : [3, 3],
+    "size" : [6, 8],
     "dimensions" : [1, 1]
   }
 }

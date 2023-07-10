@@ -1,0 +1,20 @@
+{
+  "frameGrid" : {
+    "size" : [39, 16],
+    "dimensions" : [1, 2],
+    "names" : [
+      ["firing.1"],
+      ["default"]
+    ]
+  },
+
+  "aliases" : {
+    "idle.1": "default",
+    "ejecting.1": "default",
+    "ejected.1": "default",
+    "feeding.1": "default",
+    "feeding.2": "default",
+    "jammed.1": "default",
+    "unjamming.1": "default"
+  }
+}

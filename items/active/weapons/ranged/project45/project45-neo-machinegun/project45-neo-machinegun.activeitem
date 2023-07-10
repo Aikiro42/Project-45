@@ -1,24 +1,24 @@
 {
-  "itemName" : "project45-neo-custom",
+  "itemName" : "project45-neo-machinegun",
   "price" : 1000,
   "maxStack" : 1,
   "rarity" : "Essential",
   "description" : "An entry-level firearm.",
-  "shortdescription" : "Pistol - New Mechanics",
+  "shortdescription" : "New Machine Gun",
   "tooltipKind" : "project45gun",
-  "category" : "pistol",
-  "twoHanded" : false,
-  "itemTags" : ["weapon","ranged","pistol"],
+  "category" : "rifle",
+  "twoHanded" : true,
+  "itemTags" : ["weapon","ranged","rifle"],
   "level" : 1,
   "muzzleFlashColor": [255, 255, 200],
-  "inventoryIcon" : "project45-neo-custom-icon.png",
+  "inventoryIcon" : "project45-neo-machinegun-icon.png",
 
   "animationParts" : {
-    "middle" : "project45-neo-custom.png",
-    "middleFullbright" : "project45-neo-custom-fullbright.png",
-    "charge": "project45-neo-custom.png",
-    "chargeFullbright": "project45-neo-custom-fullbright.png",
-    "magazine": "project45-neo-custom-clip.png",
+    "middle" : "project45-neo-machinegun.png",
+    "middleFullbright" : "",
+    "charge": "",
+    "chargeFullbright": "project45-neo-machinegun-charge-fullbright.png",
+    "magazine": "project45-neo-machinegun-mag.png",
     "magazineFullbright": "",
     "muzzleFlash": "/items/active/weapons/ranged/muzzleflash.png"
   },
@@ -33,13 +33,23 @@
     },
 
     "sounds": {
-      
+      "fire" : ["/sfx/project45-synthetikmechanics/fires/fire_lmg.ogg"],
       "fireStart": ["/assetmissing.wav"],
       "fireLoop": ["/assetmissing.wav"],
-      "fireEnd": ["/assetmissing.wav"]
+      "fireEnd": ["/assetmissing.wav"],
+      "chargeDrone": ["/sfx/project45-synthetikmechanics/charges/flamethrower_hiss_loop.ogg"],
+      "chargeWhine": ["/assetmissing.wav"]
       //*/
     },
+
     "animatedParts": {
+      "parts":{"magazine":{"partStates":{"magazine":{
+        "absent": {
+          "properties" : {
+            "image" : "<partImage>:absent"
+          }
+        }
+      }}}},
       "stateTypes": {
         "charge":{
           "states":{
@@ -60,25 +70,25 @@
               "frames": 1
             },
             "ejecting": {
-              "frames": 3
+              "frames": 1
             },
             "boltPulling": {
-              "frames": 3
+              "frames": 1
             },
             "ejected": {
               "frames": 1
             },
             "feeding": {
-              "frames": 3
+              "frames": 1
             },
             "boltPushing": {
-              "frames": 3
+              "frames": 1
             },
             "jammed": {
               "frames": 1
             },
             "unjamming": {
-              "frames": 4
+              "frames": 1
             }
           }
         }
@@ -87,7 +97,7 @@
   },
 
   "baseOffset" : [0.625, 0.125],
-  "muzzleOffset" : [1, 0.375],
+  "muzzleOffset" : [3.125, 0.125],
   "ejectionPortOffset": [0.25, 0.625],
   "magazineOffset": [0.25, 0],
 
@@ -95,11 +105,25 @@
     
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
-    "maxAmmo": 8,
-    "bulletsPerReload": 8,
+    "cycleTime": 0.05,
+    "semi": false,
+    "chargeFrames": 4,
+    "overchargeTime": 5,
+    "dischargeTimeMult": 0.1,
+    "progressiveCharge": true,
+    "inaccuracy": 1, // affects arm movement as the trigger is pulled
+    "maxAmmo": 50,
+    "bulletsPerReload": 50,
     "magFrames": 5,
     "magLoopFrames": 2,
-    "magAmmoRange": [3, 7]
+    "magAmmoRange": [0, 3],
+
+    "stances":{
+      "aimStance":{
+        "frontArmFrame": "run.3"
+      }
+    }
+    
   },
 
   "builder" : "/items/buildscripts/buildproject45neoneo.lua"

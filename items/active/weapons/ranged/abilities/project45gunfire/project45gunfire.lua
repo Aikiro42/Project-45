@@ -156,7 +156,7 @@ function Project45GunFire:init()
   self.stances.aimStance = util.mergeTable(defaultAimStance, finalAimStance)
 
   self.weapon:setStance(self.stances.aimStance)
-  self:screenShake()
+  -- self:screenShake()
   if storage.jamAmount > 0 then
     self:setState(self.jammed)
   end
@@ -281,14 +281,6 @@ end
 function Project45GunFire:jammed()
 end
 
-function Project45GunFire:whirring()
-  self.overrideCharge = true
-  while self:triggering() do
-    coroutine.yield()
-  end
-  self.overrideCharge = false
-end
-
 function Project45GunFire:firing()
   
   self.triggered = self.semi or storage.ammo == 0
@@ -311,8 +303,6 @@ function Project45GunFire:firing()
 
   self:startFireLoop()
   
-  self:applyInaccuracy()
-
   for i = 1, self.projectileCount * self:rollMultishot() do
     self:fireProjectile()
   end
@@ -336,12 +326,13 @@ function Project45GunFire:firing()
   -- if not a manual feed gun
   -- or if the gun's not done bursting
   -- then eject immediately
-  if storage.ammo > 0
-  and (not self.manualFeed
-  or storage.burstCounter < self.burstCount)
+  -- FIXME: gun doesn't eject when firing last round
+  if not self.manualFeed
+  or storage.burstCounter < self.burstCount
   then
     if self.ejectCasingsAfterBurst
     and storage.burstCounter < self.burstCount
+    and storage.ammo > 0
     then
       util.wait(self.currentCycleTime)
       self:setState(self.firing)
@@ -351,12 +342,8 @@ function Project45GunFire:firing()
     end
   -- otherwise, stop the cycle process
   else
-    if self.maintainChargeOnEmpty then
-      self:setState(self.whirring)
-    else
-      self:stopFireLoop()
-      self.cooldownTimer = self.fireTime
-    end
+    self:stopFireLoop()
+    self.cooldownTimer = self.fireTime
     self.isFiring = false
   end
 end
@@ -656,6 +643,7 @@ function Project45GunFire:unjamming()
   if storage.jamAmount <= 0 then
     -- animator.playSound("click")
     storage.reloadRating = OK
+    activeItem.setScriptedAnimationParameter("reloadRating", reloadRatingList[OK])
     self.reloadTimer = self.reloadTime
     animator.setAnimationState("bolt", "closed")
     animator.setAnimationState("chamber", "filled")
@@ -674,6 +662,7 @@ function Project45GunFire:jam()
     animator.playSound("jam")
     
     animator.setAnimationState("bolt", "jammed")
+    animator.setAnimationState("gun", "jammed")
     self:updateChamberState("filled")
     storage.unejectedCasings = math.min(storage.ammo, storage.unejectedCasings + self.ammoPerShot)
     self:updateAmmo(-self.ammoPerShot)
@@ -775,19 +764,14 @@ function Project45GunFire:discardCasings(debug)
   end
 end
 
--- Nudges arm before shooting
-function Project45GunFire:applyInaccuracy()
-  self.weapon.relativeArmRotation = self.weapon.relativeArmRotation + math.abs(sb.nrand(self.currentInaccuracy, 0))
-  storage.stanceProgress = 0
-end
-
 -- Kicks gun muzzle up and backward, shakes screen
 function Project45GunFire:recoil(down, mult)
   local mult = mult or self.recoilMult
   mult = down and -mult or mult
   self.weapon.relativeWeaponRotation = math.min(self.weapon.relativeWeaponRotation, util.toRadians(self.maxRecoilDeg / 2)) + util.toRadians(self.recoilAmount * mult)
   self.weapon.relativeArmRotation = math.min(self.weapon.relativeArmRotation, util.toRadians(self.maxRecoilDeg / 2)) + util.toRadians(self.recoilAmount * mult)
-  self.weapon.weaponOffset = {-0.1, 0}
+  self.weapon.weaponOffset = {-0.125, 0}
+  self.weapon.relativeArmRotation = self.weapon.relativeArmRotation + util.toRadians(sb.nrand(self.currentInaccuracy, 0) * self.recoilMult)
   storage.stanceProgress = 0
 end
 
@@ -866,8 +850,7 @@ function Project45GunFire:updateCharge()
   -- from here on out, either self.chargeTime or self.overchargeTime is nonzero.
   -- It's safe to divide by their sum.
 
-  if self.overrideCharge
-  or self:triggering()
+  if self:triggering()
   and not self.triggered
   and storage.jamAmount <= 0
   and self.reloadTimer < 0
@@ -965,12 +948,18 @@ function Project45GunFire:updateMagVisuals()
     return
   end
 
+  if self.magFrames == 1 and storage.ammo >= 0 then
+    animator.setPartTag("magazine", "ammo", "default")
+    animator.setAnimationState("magazine", "present")
+    return
+  end
+
   local ammoFrame
   if self.magVisualPercentage then
     local ammoPercent = math.ceil(storage.ammo * 100 / self.maxAmmo)
     ammoFrame = "present." .. math.floor(ammoPercent * self.magFrames)
   else
-    if storage.ammo >= self.magAmmoRange[2] then
+    if storage.ammo > self.magAmmoRange[2] then
       ammoFrame = "loop." .. storage.ammo % self.magLoopFrames
     elseif storage.ammo >= self.magAmmoRange[1] then
       ammoFrame = storage.ammo
