@@ -107,7 +107,7 @@
       "indicatorOffset": [2, 0],
       "reloadTime": 0.5,
 
-      "trajectoryIndicatorColor": [253, 209, 77, 255]
+      "trajectoryIndicatorColor": [255, 128, 0, 255]
 
 
   }

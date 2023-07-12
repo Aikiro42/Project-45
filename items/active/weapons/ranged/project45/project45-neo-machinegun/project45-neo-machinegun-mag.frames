@@ -11,8 +11,8 @@
     // Loop frames
     "present.3": "present.5",
 
-    "present.loop.0": "present.5",
-    "present.loop.1": "present.4",
+    "present.loop.0": "present.4",
+    "present.loop.1": "present.5",
 
     // Internal mag
     "present.default": "present.5"

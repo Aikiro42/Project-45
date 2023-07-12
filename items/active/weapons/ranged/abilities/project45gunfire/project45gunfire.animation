@@ -1,7 +1,8 @@
 {
   "globalTagDefaults" : {
     "paletteSwaps" : "",
-    "chargeFrame": "1"
+    "chargeFrame": "1",
+    "directives": ""
   },
 
   "animatedParts" : {
@@ -131,68 +132,30 @@
     },
 
     "parts" : {
-
-      // TODO: Should the parts anim config for sights, underbarrel, rail and stock exist?
-      "sights": {
-        "properties":{
-          "zLevel" : -1,
+      "butt" : {
+        "properties" : {
           "centered" : true,
           "image" : "<partImage><paletteSwaps><directives>",
           "offset" : [0, 0], // x offset is set dynamically
           "transformationGroups" : ["weapon"]
         }
       },
-      "sightsFullbright": {
-        "properties":{
-          "zLevel" : -1,
-          "centered" : true,
-          "image" : "<partImage><paletteSwaps><directives>",
-          "offset" : [0, 0], // x offset is set dynamically
-          "transformationGroups" : ["weapon"],
-          "fullbright": true
-        }
-      },
-
-      "underbarrel": {
-        "properties":{
-          "zLevel" : -1,
+      "muzzle" : {
+        "properties" : {
           "centered" : true,
           "image" : "<partImage><paletteSwaps><directives>",
           "offset" : [0, 0], // x offset is set dynamically
           "transformationGroups" : ["weapon"]
         }
       },
-      "underbarrelFullbright": {
-        "properties":{
-          "zLevel" : -1,
-          "centered" : true,
-          "image" : "<partImage><paletteSwaps><directives>",
-          "offset" : [0, 0], // x offset is set dynamically
-          "transformationGroups" : ["weapon"],
-          "fullbright": true
-        }
-      },
-
-      "stock": {
-        "properties":{
-          "zLevel" : 0,
+      "barrel" : {
+        "properties" : {
           "centered" : true,
           "image" : "<partImage><paletteSwaps><directives>",
           "offset" : [0, 0], // x offset is set dynamically
           "transformationGroups" : ["weapon"]
         }
       },
-      "stockFullbright": {
-        "properties":{
-          "zLevel" : 0,
-          "centered" : true,
-          "image" : "<partImage><paletteSwaps><directives>",
-          "offset" : [0, 0], // x offset is set dynamically
-          "transformationGroups" : ["weapon"],
-          "fullbright": true
-        }
-      },
-
       "middle": {
         "properties":{
           "zLevel" : 0,
@@ -383,26 +346,6 @@
             }
             
           }
-        }
-      },
-      
-      "rail": {
-        "properties":{
-          "zLevel" : 4,
-          "centered" : true,
-          "image" : "<partImage><paletteSwaps><directives>",
-          "offset" : [0, 0], // x offset is set dynamically
-          "transformationGroups" : ["weapon"],
-          "fullbright" : true
-        }
-      },
-      "railFullbright": {
-        "properties":{
-          "zLevel" : 4,
-          "centered" : true,
-          "image" : "<partImage><paletteSwaps><directives>",
-          "offset" : [0, 0], // x offset is set dynamically
-          "transformationGroups" : ["weapon"]
         }
       },
 

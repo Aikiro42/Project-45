@@ -28,14 +28,14 @@ function Project45GunFire:init()
 
   -- initialize burst counter
   storage.burstCounter = storage.burstCounter or self.burstCount
-
+  storage.primaryChargeTime = self.chargeTime + self.overchargeTime
   -- VALIDATIONS
 
   -- SETTING VALIDATIONS: These validations serve to reduce firing conditions and allow consistent logic.
 
   -- self.autoFireOnFullCharge only matters if the gun is semifire
   -- if an autofire gun is the kind that's charged, the charge is essentially it winding up.
-  self.autoFireOnFullCharge = self.semi and self.autoFireOnFullCharge
+  self.autoFireOnFullCharge = (self.semi and self.projectileKind ~= "beam") and self.autoFireOnFullCharge
 
   -- self.fireBeforeOvercharge only matters if the gun is auto
   -- NOTE: Should this be hardcoded? If this setting is false,
@@ -57,6 +57,9 @@ function Project45GunFire:init()
 
   -- self.slamFire only matters if the gun is manual-fed (bolt-action)
   self.slamFire = self.manualFeed and self.slamFire
+
+  -- Let recoilMult affect maxRecoilDeg
+  self.maxRecoilDeg = self.maxRecoilDeg * self.recoilMult
 
   self.bulletsPerReload = math.max(1, self.bulletsPerReload)
 
@@ -127,6 +130,8 @@ function Project45GunFire:init()
 
   -- initialize animation stuff
   
+  activeItem.setScriptedAnimationParameter("performanceMode", self.performanceMode)
+
   activeItem.setScriptedAnimationParameter("reloadTimer", -1)
   activeItem.setScriptedAnimationParameter("chargeTimer", 0)
   activeItem.setScriptedAnimationParameter("ammo", storage.ammo)
@@ -751,6 +756,11 @@ end
 -- Ejects casings, purely virtual
 function Project45GunFire:discardCasings(debug)
 
+  if self.performanceMode then
+    storage.unejectedCasings = 0
+    return
+  end
+
   if debug then
     animator.setParticleEmitterBurstCount("ejectionPort", 1)
     animator.burstParticleEmitter("ejectionPort")
@@ -768,8 +778,8 @@ end
 function Project45GunFire:recoil(down, mult)
   local mult = mult or self.recoilMult
   mult = down and -mult or mult
-  self.weapon.relativeWeaponRotation = math.min(self.weapon.relativeWeaponRotation, util.toRadians(self.maxRecoilDeg / 2)) + util.toRadians(self.recoilAmount * mult)
-  self.weapon.relativeArmRotation = math.min(self.weapon.relativeArmRotation, util.toRadians(self.maxRecoilDeg / 2)) + util.toRadians(self.recoilAmount * mult)
+  self.weapon.relativeWeaponRotation = math.min(self.weapon.relativeWeaponRotation, util.toRadians(self.maxRecoilDeg / 2)) + util.toRadians(self.recoilAmount * mult/2)
+  self.weapon.relativeArmRotation = math.min(self.weapon.relativeArmRotation, util.toRadians(self.maxRecoilDeg / 2)) + util.toRadians(self.recoilAmount * mult/2)
   self.weapon.weaponOffset = {-0.125, 0}
   self.weapon.relativeArmRotation = self.weapon.relativeArmRotation + util.toRadians(sb.nrand(self.currentInaccuracy, 0) * self.recoilMult)
   storage.stanceProgress = 0
@@ -781,6 +791,7 @@ function Project45GunFire:ejectMag()
 
   if not status.overConsumeResource("energy", status.resourceMax("energy") * self.reloadCost) then
     animator.playSound("click")
+    self.triggered = true
     return
   end
 
@@ -818,7 +829,7 @@ end
 -- It does this by briefly spawning a projectile that has a short time to live,
 -- and setting the cam's focus on that projectile.
 function Project45GunFire:screenShake(amount, shakeTime, random)
-  if self.usedByNPC then return end
+  if self.usedByNPC or self.performanceMode then return end
   local source = mcontroller.position()
   local shake_dir = vec2.mul(self:aimVector(0), amount or self.currentScreenShake or 0.1)
   if random then vec2.rotate(shake_dir, 3.14 * math.random()) end
@@ -948,7 +959,7 @@ function Project45GunFire:updateMagVisuals()
     return
   end
 
-  if self.magFrames == 1 and storage.ammo >= 0 then
+  if self.magFrames == 1 and storage.ammo >= 0 or self.performanceMode then
     animator.setPartTag("magazine", "ammo", "default")
     animator.setAnimationState("magazine", "present")
     return
@@ -997,7 +1008,10 @@ function Project45GunFire:updateCycleTime()
   or self.cycleTimeDiff == 0
   then return end
 
-  if self.triggering() and not self.triggered then
+  if self:triggering()
+  and not self.triggered
+  and self.chargeTimer >= self.chargeTime
+  then
     self.cycleTimer = math.min(self.cycleTimer + (self.dt * self.cycleTimeGrowthRate), self.cycleTimeMaxTime)
   else
     self.cycleTimer = math.max(0, self.cycleTimer - (self.dt * self.cycleTimeDecayRate))
@@ -1107,7 +1121,7 @@ function Project45GunFire:evalProjectileKind()
     -- laser uses the hitscan function, that's why this logic is in evalProjectileKind()
     if self.laser.enabled then
       self.updateLaser = hitscanLib.updateLaser
-      activeItem.setScriptedAnimationParameter("primaryLaserEnabled", true)    
+      activeItem.setScriptedAnimationParameter("primaryLaserEnabled", not self.performanceMode)    
       activeItem.setScriptedAnimationParameter("primaryLaserColor", self.laser.color)
       activeItem.setScriptedAnimationParameter("primaryLaserWidth", self.laser.width)
 

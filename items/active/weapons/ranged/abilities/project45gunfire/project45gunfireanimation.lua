@@ -76,7 +76,6 @@ function renderAmmoNumber(offset)
   local rating = animationConfig.animationParameter("reloadRating")
 
   if ammo >= 0 then
-    -- TODO: show reload rating color
     localAnimator.spawnParticle({
       type = "text",
       text= "^shadow;" .. ammo,
@@ -101,6 +100,7 @@ function renderAmmoNumber(offset)
 end
 
 function renderChamberIndicator(offset)
+  if animationConfig.animationParameter("performanceMode") then return end
   local chamberState = animationConfig.animationParameter("primaryChamberState")
   if not chamberState then return end
 
@@ -116,12 +116,26 @@ end
 
 function renderLaser()
 
-  if not animationConfig.animationParameter("primaryLaserEnabled") then return end
+  if
+  not animationConfig.animationParameter("altLaserEnabled")
+  and not animationConfig.animationParameter("primaryLaserEnabled")
+  then return end
 
-  local laserStart = animationConfig.animationParameter("primaryLaserStart") or activeItemAnimation.ownerAimPosition()
-  local laserEnd = animationConfig.animationParameter("primaryLaserEnd") or activeItemAnimation.ownerPosition()
-  local laserColor = animationConfig.animationParameter("primaryLaserColor") or {255, 50, 50, 128}
-  local laserWidth = animationConfig.animationParameter("primaryLaserWidth")
+  local laserStart = animationConfig.animationParameter("altLaserStart")
+    or animationConfig.animationParameter("primaryLaserStart")
+    or activeItemAnimation.ownerAimPosition()
+  
+  local laserEnd = animationConfig.animationParameter("altLaserEnd")
+    or animationConfig.animationParameter("primaryLaserEnd")
+    or activeItemAnimation.ownerPosition()
+  
+  local laserColor = animationConfig.animationParameter("altLaserColor")
+    or animationConfig.animationParameter("primaryLaserColor")
+    or {255, 50, 50, 128}
+
+  local laserWidth = animationConfig.animationParameter("altLaserWidth")
+    or animationConfig.animationParameter("primaryLaserWidth")
+    or 0.5
 
 
   if animationConfig.animationParameter("primaryLaserArcGravMult") then

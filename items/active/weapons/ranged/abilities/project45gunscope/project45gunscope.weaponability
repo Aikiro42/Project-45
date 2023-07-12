@@ -3,7 +3,7 @@
         "animatedParts" : { "parts" : {
             "sights" : {
             "properties" : {
-                "zLevel" : 5,
+                "zLevel" : 9,
                 "centered" : true,
                 "transformationGroups" : ["weapon"],
                 "image" : "/items/active/weapons/ranged/abilities/project45gunscope/project45gunscope.png<directives>"

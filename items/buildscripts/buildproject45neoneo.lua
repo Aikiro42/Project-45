@@ -23,6 +23,7 @@ function build(directory, config, parameters, level, seed)
   end
 
   parameters.shortdescription = config.shortdescription
+  parameters.project45GunModInfo = config.project45GunModInfo
 
   -- retrieve ability animation scripts
   local primaryAnimationScripts = setupAbility(config, parameters, "primary")
@@ -107,13 +108,13 @@ function build(directory, config, parameters, level, seed)
 
     -- generate offsets for
     -- rail, sights, underbarrel, stock
-    offsetConfig = {
+    local modOffsetconfig = {
       "rail",
       "sights",
       "underbarrel",
       "stock"
     }
-    for _, part in ipairs(offsetConfig) do
+    for _, part in ipairs(modOffsetconfig) do
       if config[part .. "Offset"] then
         config.animationCustom.animatedParts.parts[part].properties.offset = config[part .. "Offset"]
         config.animationCustom.animatedParts.parts[part .. "Fullbright"].properties.offset = config[part .. "Offset"]
@@ -133,7 +134,7 @@ function build(directory, config, parameters, level, seed)
     }
     local cycleTime = config.primaryAbility.cycleTime
     if type(cycleTime) == "table" then
-      cycleTime = cycleTime[1]
+      cycleTime = math.min(cycleTime[1], cycleTime[2])
     end
     local stateCycleTime = cycleTime / #fireTimeRelatedStates
     for _, state in ipairs(fireTimeRelatedStates) do
@@ -157,7 +158,7 @@ function build(directory, config, parameters, level, seed)
   -- populate tooltip fields
   if config.tooltipKind == "project45gun" then
     config.tooltipFields = config.tooltipFields or {}
-    config.tooltipFields.subtitle = "^#FFFFFF;" .. config.category
+    config.tooltipFields.subtitle = "^#FFFFFF;" .. config.gunArchetype or config.category
     -- config.tooltipFields.title = "^FF0000;FUCK"  -- doesn't work
     -- config.tooltipFields.subTitle = "^#FFFFFF;BASE"  -- works
     -- config.tooltipFields.subTitle.color = {255,255,255} -- doesn't work

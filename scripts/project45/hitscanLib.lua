@@ -141,7 +141,7 @@ function hitscanLib:fireBeam()
     local beamStart = hitreg[1]
     local beamEnd = nil
     
-    while self.chargeTime + self.overchargeTime <= 0 or not self.semi and (
+    while (self.chargeTime + self.overchargeTime <= 0 or not self.semi) and (
       self:triggering()
     ) or (
       not self:triggering()

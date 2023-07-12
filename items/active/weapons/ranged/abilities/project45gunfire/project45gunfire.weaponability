@@ -38,6 +38,16 @@
     "jumpHeightFactor": 1.25,
     "heavyWeapon": false,
 
+    /*
+    if true, disables the following:
+    - bullet casings
+    - laser
+    - chamber indicator
+    - magazine animation
+    - screenshake
+    */
+    "performanceMode": false,
+
     // Audio settings
     "hollowSoundMult": 0.8, // affects volume of hollow sound
 
@@ -152,9 +162,11 @@
 
     // ____________________________________[ Accuracy and Recoil Config ] ____________________________________
 
-    "inaccuracy": 0.05, // affects arm movement as the trigger is pulled
-    "recoilAmount": 0.5 , // amount of recoil per shot, in degrees; arm and weapon will rotate by half of this
-    "maxRecoilDeg": 7.5, // the most the arm and weapon will rotate, in degrees.
+    // standard deviation of random arm movement as the gun recoils (in degrees, not radians)
+    // note that this deviation is eliminated if the player crouches
+    "inaccuracy": 1, 
+    "recoilAmount": 3 , // amount of recoil per shot, in degrees; arm and weapon will rotate by half of this
+    "maxRecoilDeg": 15, // the most the arm and weapon will rotate, in degrees.
     "recoilMult": 0.5, // multiplies recoilAmount
     "recoverTime": 3, // time it takes to recover aim completely, in seconds
     "screenShakeAmount": 0.1, // amount of screenshake per shot

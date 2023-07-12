@@ -122,9 +122,13 @@ function Project45GrenadeLauncher:load()
 end
 
 function Project45GrenadeLauncher:recoil(down)
-    vec2.add(self.weapon.weaponOffset, {-1, 0})
-    self.weapon.relativeArmRotation = self.weapon.relativeArmRotation + util.toRadians(5) * (down and -1 or 1)
-    self.weapon.relativeWeaponRotation = self.weapon.relativeWeaponRotation + util.toRadians(5) * (down and -1 or 1)
+
+    local mult = down and -1 or 1
+    self.weapon.relativeWeaponRotation = math.min(self.weapon.relativeWeaponRotation, util.toRadians(15 / 2)) + util.toRadians(7.5 * mult)
+    self.weapon.relativeArmRotation = math.min(self.weapon.relativeArmRotation, util.toRadians(15 / 2)) + util.toRadians(7.5 * mult)
+    self.weapon.weaponOffset = {-0.125, 0}
+    self.weapon.relativeArmRotation = self.weapon.relativeArmRotation + util.toRadians(sb.nrand(1, 0) * 7.5)
+    storage.stanceProgress = 0  
     storage.aimProgress = 0
 end
 

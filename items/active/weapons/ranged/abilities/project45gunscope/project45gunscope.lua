@@ -3,6 +3,7 @@ require "/scripts/util.lua"
 require "/scripts/interp.lua"
 require "/scripts/poly.lua"
 require "/items/active/weapons/ranged/abilities/synthetikmechanics/synthetikmechanics.lua"
+require "/items/active/weapons/ranged/abilities/project45gunfire/project45gunfire.lua"
 
 Project45GunScope = WeaponAbility:new()
 
@@ -51,9 +52,15 @@ function Project45GunScope:drawLaser(trigger)
     scanDest = world.lineCollision(scanOrig, scanDest, {"Block", "Dynamic"}) or scanDest
 
     activeItem.setScriptedAnimationParameter("laserOrigin", scanOrig)
+    activeItem.setScriptedAnimationParameter("altLaserStart", scanOrig)
     activeItem.setScriptedAnimationParameter("laserDestination", scanDest)
+    activeItem.setScriptedAnimationParameter("altLaserEnd", scanDest)
 
-  elseif trigger == "none" or animator.animationState("firing") ~= "off"then
+  else
+    activeItem.setScriptedAnimationParameter("altLaserEnabled", false)
+    activeItem.setScriptedAnimationParameter("altLaserStart", nil)
+    activeItem.setScriptedAnimationParameter("altLaserEnd", nil)
+
   end
 end
 
@@ -164,80 +171,28 @@ function SynthetikMechanics:screenShake(amount, shakeTime, random)
   end
 end
 
---[[
-
-function SynthetikMechanics:aim()
-  if self.reloadTimer < 0 then
-    local stance = storage.targetStance
-    
-    if self.aimProgress == 1 then activeItem.setRecoil(true) end
-    
-    activeItem.setFrontArmFrame(stance.frontArmFrame)
-    activeItem.setBackArmFrame(stance.backArmFrame)
-    
-    if config.getParameter("twoHanded", false) then activeItem.setTwoHandedGrip(stance.twoHanded or false) end
-    
-
-    -- let project45gunscipe make weapon aim at crosshair
-    if not (storage.cameraProjectile and world.entityExists(storage.cameraProjectile)) then
-      self.weapon.aimAngle, self.weapon.aimDirection = activeItem.aimAngleAndDirection(0, activeItem.ownerAimPosition())
-    end
-    
-    self.weapon.relativeWeaponRotation = util.toRadians(interp.sin(self.aimProgress, math.deg(self.weapon.relativeWeaponRotation), stance.weaponRotation))
-    self.weapon.relativeArmRotation = util.toRadians(interp.sin(self.aimProgress, math.deg(self.weapon.relativeArmRotation), stance.armRotation))
-
-
+function Project45GunFire:screenShake(amount, shakeTime, random)
+  if self.usedByNPC or self.performanceMode then return end
+  local amount = amount or self.currentScreenShake or 0.1
+  if storage.cameraProjectile and world.entityExists(storage.cameraProjectile) then
+    world.callScriptedEntity(storage.cameraProjectile, "jerk")
+    activeItem.setCameraFocusEntity(storage.cameraProjectile)
+  else
+    local source = mcontroller.position()
+    local shake_dir = vec2.mul(self:aimVector(0), -1 * (amount))
+    if random then vec2.rotate(shake_dir, 3.14 * math.random()) end
+    local cam = world.spawnProjectile(
+      "invisibleprojectile",
+      vec2.add(source, shake_dir),
+      0,
+      {0, 0},
+      false,
+      {
+        power = 0,
+        timeToLive = shakeTime or 0.01,
+        damageType = "NoDamage"
+      }
+    )
+    activeItem.setCameraFocusEntity(cam)
   end
 end
-
---]]
-
---[[
-function SynthetikMechanics:hitscan(isLaser)
-
-  local scoped = storage.cameraProjectile and world.entityExists(storage.cameraProjectile)
-
-  local scanOrig = self:firePosition()
-
-  local scanDest = vec2.add(scanOrig, vec2.mul(self:aimVector(isLaser and 0 or self.inaccuracy), self.projectileParameters.range or 100))
-  if scoped then
-    scanDest = world.entityPosition(storage.cameraProjectile)
-  end
-  scanDest = world.lineCollision(scanOrig, scanDest, {"Block", "Dynamic"}) or scanDest
-  
-
-  -- hitreg
-  local hitId = world.entityLineQuery(scanOrig, scanDest, {
-    withoutEntityId = entity.id(),
-    includedTypes = {"monster", "npc", "player"},
-    order = "nearest"
-  })
-
-  local eid = {}
-  local pen = 0
-  if #hitId > 0 then
-    for i, id in ipairs(hitId) do
-      if world.entityCanDamage(entity.id(), id) then
-
-        local aimAngle = vec2.angle(world.distance(scanDest, scanOrig))
-        local entityAngle = vec2.angle(world.distance(world.entityPosition(id), scanOrig))
-        local rotation = aimAngle - entityAngle
-        if not scoped then
-          scanDest = vec2.rotate(world.distance(world.entityPosition(id), scanOrig), rotation)
-          scanDest = vec2.add(scanDest, scanOrig)
-        end
-
-        table.insert(eid, id)
-
-        pen = pen + 1
-
-        if not scoped and pen > (self.projectileParameters.punchThrough or 0) then break end
-      end      
-    end
-  end
-  
-  world.debugLine(scanOrig, scanDest, {255,0,255})
-
-  return {scanOrig, scanDest, eid}
-end
---]]

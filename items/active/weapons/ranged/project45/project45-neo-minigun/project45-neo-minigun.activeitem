@@ -6,6 +6,7 @@
   "description" : "A minigun.",
   "shortdescription" : "New Minigun",
   "tooltipKind" : "project45gun",
+  "gunArchetype": "Gatling Gun",
   "category" : "rifle",
   "twoHanded" : true,
   "itemTags" : ["weapon","ranged","heavyweapon"],
@@ -25,6 +26,12 @@
 
   "animationCustom": {
     "particleEmitters": {
+      "ejectionPort": {
+        "particles": [
+          {"particle": "project45bulletcase"},
+          {"particle": "project45bulletlinkfront"}
+        ]
+      },
       "magazine": {
         "particles": [
           {"particle": "project45minigunmag"}
@@ -37,8 +44,8 @@
       "fireLoop": ["/assetmissing.wav"],
       "fireEnd": ["/assetmissing.wav"],
       "fire" : ["/sfx/project45-synthetikmechanics/fires/fire_heavy.ogg"],
-      "getMag": ["/sfx/project45-synthetikmechanics/foleys/getmag_ammobox.ogg"],
-      "ejectMag": ["/sfx/project45-synthetikmechanics/reloads/ejectmag_lmg.ogg"]
+      "reloadStart": ["/sfx/project45-synthetikmechanics/foleys/getmag_ammobox.ogg"],
+      "eject": ["/sfx/project45-synthetikmechanics/reloads/ejectmag_lmg.ogg"]
     },
     "animatedParts": {
       "parts":{
@@ -111,7 +118,7 @@
   "primaryAbility": {
     "maxAmmo": 100,
     "bulletsPerReload": 100,
-    
+    "inaccuracy": 3,
     "semi": false,
     "manualFeed": false,
     "slamFire": false,
@@ -122,7 +129,7 @@
     "maintainChargeOnEmpty": true,
 
     "progressiveCharge": false,
-    "cycleTime": 0.05,
+    "cycleTime": [0.5, 0.001],
     "chargeFrames": 2,
     "chargeTime": 1,
     "overchargeTime": 1,

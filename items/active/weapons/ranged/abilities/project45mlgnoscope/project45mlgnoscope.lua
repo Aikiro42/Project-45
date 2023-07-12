@@ -9,6 +9,7 @@ function Project45MLGNoScope:init()
     self.cooldownTimer = 0
     self.logTimer = 0
     self.fireTime = 0.1
+    self.noscopeTime = (storage.primaryChargeTime or 0) + self.noscopeTime
     self.noscopeTimer = 0
     self.rotating = false
     self.oppositeDirectionDetectionThreshold = self.oppositeDirectionDetectionThreshold or 10

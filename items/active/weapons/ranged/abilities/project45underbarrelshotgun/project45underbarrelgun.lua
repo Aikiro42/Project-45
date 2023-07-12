@@ -2,6 +2,7 @@ require "/scripts/util.lua"
 require "/items/active/weapons/weapon.lua"
 require "/items/active/weapons/ranged/gunfire.lua"
 require "/items/active/weapons/ranged/abilities/synthetikmechanics/synthetikmechanics.lua"
+require "/items/active/weapons/ranged/abilities/project45gunfire/project45gunfire.lua"
 
 Project45UnderbarrelGun = GunFire:new()
 
@@ -15,7 +16,6 @@ function Project45UnderbarrelGun:init()
     self.cooldownTimer = self.fireTime
     storage.underbarrelGunState = storage.underbarrelGunState or config.getParameter("currentUnderbarrelGunState", EMPTY)
     storage.underbarrelGunAmmo = storage.underbarrelGunAmmo or config.getParameter("currentUnderbarrelGunAmmo", 0)
-
     activeItem.setScriptedAnimationParameter("underbarrelGunAmmoIndicatorOffset", self.indicatorOffset)
     activeItem.setScriptedAnimationParameter("underbarrelGunAmmo", storage.underbarrelGunAmmo)
     activeItem.setScriptedAnimationParameter("underbarrelGunState", storage.underbarrelGunState)
@@ -25,7 +25,6 @@ end
 function Project45UnderbarrelGun:update(dt, fireMode, shiftHeld)
     
     WeaponAbility.update(self, dt, fireMode, shiftHeld)
-
     self.cooldownTimer = math.max(0, self.cooldownTimer - self.dt)
 
     if self.muzzleFlashTimer == 0 then
@@ -87,9 +86,11 @@ function Project45UnderbarrelGun:loadRound()
 
     local reloadRotation = 15
 
+    --[[
     local oldWeaponOffset = self.weapon.weaponOffset
     local oldRelativeWeaponRotation = self.weapon.relativeWeaponRotation
     local oldRelativeArmRotation = self.weapon.relativeArmRotation
+    --]]
     local oldFrontArmFrame = self.weapon.stance.frontArmFrame
     local stepTime = self.reloadTime/4
 
@@ -119,9 +120,11 @@ function Project45UnderbarrelGun:loadRound()
         animator.playSound("altInsertRound")
         self:updateAmmo(self.ammoPerReload or 1)
 
+        --[[
         self.weapon.weaponOffset = self.reloadWeaponOffset
         self.weapon.relativeWeaponRotation = oldRelativeWeaponRotation + util.toRadians(reloadRotation)
         self.weapon.relativeArmRotation = oldRelativeArmRotation - util.toRadians(reloadRotation)
+        --]]
         self.weapon.stance.frontArmFrame = "swim.3"
         util.wait(stepTime, function() storage.aimProgress = 0 end)
 
@@ -143,10 +146,10 @@ function Project45UnderbarrelGun:loadRound()
         storage.aimProgress = 0
         local from = self.reloadWeaponOffset
         local to = oldWeaponOffset
-        self.weapon.weaponOffset = {interp.sin(progress, from[1], to[1]), interp.sin(progress, from[2], to[2])}
+        -- self.weapon.weaponOffset = {interp.sin(progress, from[1], to[1]), interp.sin(progress, from[2], to[2])}
         
-        self.weapon.relativeWeaponRotation = interp.sin(progress, oldRelativeWeaponRotation + util.toRadians(15), oldRelativeWeaponRotation)
-        self.weapon.relativeArmRotation = interp.sin(progress, oldRelativeArmRotation - util.toRadians(15), oldRelativeArmRotation)
+        -- self.weapon.relativeWeaponRotation = interp.sin(progress, oldRelativeWeaponRotation + util.toRadians(15), oldRelativeWeaponRotation)
+        -- self.weapon.relativeArmRotation = interp.sin(progress, oldRelativeArmRotation - util.toRadians(15), oldRelativeArmRotation)
         -- self.weapon.relativeArmRotation = self.weapon.relativeArmRotation + util.toRadians(0.1)
         progress = math.min(1.0, progress + (self.dt / stepTime))
     end)
@@ -181,10 +184,11 @@ function Project45UnderbarrelGun:loadRound()
     end)
     --]]
 
-    
+    --[[
     self.weapon.weaponOffset = oldWeaponOffset
     self.weapon.relativeWeaponRotation = oldRelativeWeaponRotation
     self.weapon.relativeArmRotation = oldRelativeWeaponRotation
+    --]]
     self.weapon.stance.frontArmFrame = oldFrontArmFrame
 
     -- 4. move weapon forward
@@ -237,6 +241,7 @@ function Project45UnderbarrelGun:recoil(down)
     self.weapon.relativeArmRotation = self.weapon.relativeArmRotation + util.toRadians(5) * (down and -1 or 1)
     self.weapon.relativeWeaponRotation = self.weapon.relativeWeaponRotation + util.toRadians(5) * (down and -1 or 1)
     storage.aimProgress = 0
+    storage.stanceProgress = 0
 end
 
 function Project45UnderbarrelGun:aim()  
@@ -246,8 +251,7 @@ function Project45UnderbarrelGun:aim()
 end
 
 function Project45UnderbarrelGun:updateAmmo(ammoDelta)
-    
-    storage.underbarrelGunAmmo = clamp(0, self.maxAmmo, storage.underbarrelGunAmmo + ammoDelta)
+    storage.underbarrelGunAmmo = self:clamp(0, self.maxAmmo, storage.underbarrelGunAmmo + ammoDelta)
     activeItem.setScriptedAnimationParameter("underbarrelGunAmmo", storage.underbarrelGunAmmo)
     activeItem.setInstanceValue("currentUnderbarrelGunAmmo", storage.underbarrelGunAmmo)
 
@@ -322,9 +326,10 @@ end
 
 function Project45UnderbarrelGun:screenShake(amount, shakeTime, random)
     SynthetikMechanics.screenShake(self, amount, shakeTime, random)
+    Project45GunFire.screenShake(self, amount, shakeTime, random)
 end
 
-function clamp(lo, hi, val)
+function Project45UnderbarrelGun:clamp(lo, hi, val)
     if val < lo then
         return lo
     elseif val > hi then
