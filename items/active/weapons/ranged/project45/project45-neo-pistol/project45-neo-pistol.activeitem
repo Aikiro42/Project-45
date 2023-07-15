@@ -1,25 +1,25 @@
 {
-  "itemName" : "project45-neo-minigun",
+  "itemName" : "project45-neo-pistol",
   "price" : 1000,
   "maxStack" : 1,
   "rarity" : "Essential",
-  "description" : "A minigun.",
-  "shortdescription" : "New Minigun",
+  "description" : "A pistol.",
+  "shortdescription" : "New Pistol",
   "tooltipKind" : "project45gun",
-  "gunArchetype": "Gatling Gun",
-  "category" : "rifle",
-  "twoHanded" : true,
-  "itemTags" : ["weapon","ranged","heavyweapon"],
+  "gunArchetype": "Handgun",
+  "category" : "pistol",
+  "twoHanded" : false,
+  "itemTags" : ["weapon","ranged","pistol"],
   "level" : 1,
   "muzzleFlashColor": [255, 255, 200],
-  "inventoryIcon" : "project45-neo-minigun-icon.png",
+  "inventoryIcon" : "project45-neo-pistol-icon.png",
 
   "animationParts" : {
-    "middle" : "project45-neo-minigun.png",
+    "middle" : "project45-neo-pistol.png",
     "middleFullbright" : "",
-    "charge": "project45-neo-minigun-charge.png",
+    "charge": "",
     "chargeFullbright": "",
-    "magazine": "project45-neo-minigun-mag.png",
+    "magazine": "project45-neo-pistol-mag.png",
     "magazineFullbright": "",
     "muzzleFlash": "/items/active/weapons/ranged/muzzleflash.png"
   },
@@ -28,13 +28,12 @@
     "particleEmitters": {
       "ejectionPort": {
         "particles": [
-          {"particle": "project45bulletcase"},
-          {"particle": "project45bulletlinkfront"}
+          {"particle": "project45bulletcasesmall"}
         ]
       },
       "magazine": {
         "particles": [
-          {"particle": "project45minigunmag"}
+          {"particle": "project45pistolmag"}
         ]
       }
     },
@@ -43,9 +42,7 @@
       "fireStart": ["/assetmissing.wav"],
       "fireLoop": ["/assetmissing.wav"],
       "fireEnd": ["/assetmissing.wav"],
-      "fire" : ["/sfx/project45-synthetikmechanics/fires/fire_heavy.ogg"],
-      "reloadStart": ["/sfx/project45-synthetikmechanics/foleys/getmag_ammobox.ogg"],
-      "eject": ["/sfx/project45-synthetikmechanics/reloads/ejectmag_lmg.ogg"]
+      "fire" : ["/sfx/project45-synthetikmechanics/fires/fire_pistol.ogg"]
     },
     "animatedParts": {
       "parts":{
@@ -107,41 +104,76 @@
     }
   },
 
-  "baseOffset" : [0.25, -1],
-  "muzzleOffset" : [2.25, 0.125],
+  "baseOffset" : [0.5, 0.25],
+  "muzzleOffset" : [1, 0.25],
   "ejectionPortOffset": [-0.25, 0.5],
-  "magazineOffset": [0.25, 0],
+  "magazineOffset": [0, 0],
 
   "scripts" : ["/items/active/weapons/ranged/project45gunneo.lua"],
     
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
-    "maxAmmo": 100,
-    "bulletsPerReload": 100,
+    "maxAmmo": 16,
+    "bulletsPerReload": 16,
     "inaccuracy": 3,
-    "semi": false,
-    "manualFeed": false,
-    "slamFire": false,
-    "heavyWeapon": true,
-    
-    "resetChargeOnFire": false,
-    "chargeWhenObstructed": true,
-    "maintainChargeOnEmpty": true,
-
-    "progressiveCharge": false,
-    "cycleTime": [0.1, 0.001],
-    "chargeFrames": 2,
-    "chargeTime": 1,
-    "overchargeTime": 1,
-
-    "dischargeTimeMult": 0.5,
-    
+    "semi": true,
+    "cycleTime": 0.1,
     "projectileKind": "projectile",
+
+    // "reloadTime": 10,
+
+    "laser":{
+      "enabled": true
+    },
   
     "stances":{
-      "aimStance":{
-        "frontArmFrame" : "jump.2",
-        "backArmFrame" : "idle.2"
+
+      "idleneo": {
+        "twoHanded": false
+      },
+      "aim": {
+        "twoHanded": false
+      },
+      "empty": {
+        "twoHanded": false
+      },
+      "ejectmag" : {
+        "armRotation" : -45,
+        "weaponRotation" : 45,
+        "twoHanded" : false,
+        "allowRotate" : false,
+        "allowFlip" : false
+      },
+      "reloading" : {
+        "armRotation" : 45,
+        "weaponRotation" : 0,
+        "weaponAngularVelocity": 3600,
+        "twoHanded": false
+        // "weaponOffset" : [0.25, 0.575],
+        // "frontArmFrame" : "run.2",
+        // "backArmFrame" : "jump.3"
+      },
+      "reloaded" : {
+        "armRotation" : -90,
+        "weaponRotation" : 15,
+        "twoHanded" : false,
+        "allowRotate" : false,
+        "allowFlip" : false
+      },
+      "boltPull": {
+        "twoHanded": false
+      },
+      "boltPush": {
+        "twoHanded": false
+      },
+      "jammed": {
+        "twoHanded": false
+      },
+      "unjam": {
+        "armRotation": -45,
+        "weaponRotation": -5,
+        "frontArmFrame": "rotation",
+        "twoHanded": false      
       }
     }
   },

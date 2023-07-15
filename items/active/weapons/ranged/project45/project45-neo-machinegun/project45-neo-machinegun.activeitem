@@ -155,6 +155,25 @@
     "stances":{
       "aimStance":{
         "frontArmFrame": "run.3"
+      },
+      "ejectmag" : {
+        "armRotation" : -45,
+        "weaponRotation" : 45
+      },
+      "reloading" : {
+        "armRotation" : 0,
+        "weaponRotation" : 15,
+        "twoHanded": false
+      },
+      "reloaded" : {
+        "armRotation" : -20,
+        "weaponRotation" : 20,
+        "weaponOffset": [0.25, 0]
+      },
+      "unjam": {
+        "armRotation": -5,
+        "weaponRotation": 5,
+        "frontArmFrame" : "run.2"
       }
     }
     

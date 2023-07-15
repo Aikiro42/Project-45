@@ -128,7 +128,6 @@ function build(directory, config, parameters, level, seed)
 
     -- sync cycle animation
     local fireTimeRelatedStates = {
-      "firing",
       "ejecting",
       "feeding"
     }
@@ -136,18 +135,24 @@ function build(directory, config, parameters, level, seed)
     if type(cycleTime) == "table" then
       cycleTime = math.min(cycleTime[1], cycleTime[2])
     end
-    local stateCycleTime = cycleTime / #fireTimeRelatedStates
+    local stateCycleTime = cycleTime / (#fireTimeRelatedStates + (config.primaryAbility.loopFiringAnimation and 0 or 1))
     for _, state in ipairs(fireTimeRelatedStates) do
       construct(config, "animationCustom", "animatedParts", "stateTypes", "gun", "states", state)
       config.animationCustom.animatedParts.stateTypes.gun.states[state].cycle = stateCycleTime
       -- sb.logInfo(config.animationCustom.animatedParts.stateTypes.gun.states[state].cycle)
     end
 
+    construct(config, "animationCustom", "animatedParts", "stateTypes", "gun", "states", "firing")
+    config.animationCustom.animatedParts.stateTypes.gun.states.firing.cycle = config.primaryAbility.loopFiringAnimation and cycleTime or stateCycleTime
+
     construct(config, "animationCustom", "animatedParts", "stateTypes", "charge", "states", "charging")
     config.animationCustom.animatedParts.stateTypes.charge.states.charging.cycle = math.max(0.05, cycleTime)
 
     construct(config, "animationCustom", "animatedParts", "stateTypes", "gun", "states", "boltPulling")
     config.animationCustom.animatedParts.stateTypes.gun.states.boltPulling.cycle = config.primaryAbility.cockTime/2
+
+    construct(config, "animationCustom", "animatedParts", "stateTypes", "gun", "states", "unjamming")
+    config.animationCustom.animatedParts.stateTypes.gun.states.unjamming.cycle = config.primaryAbility.cockTime/2
 
     construct(config, "animationCustom", "animatedParts", "stateTypes", "gun", "states", "boltPushing")
     config.animationCustom.animatedParts.stateTypes.gun.states.boltPushing.cycle = config.primaryAbility.cockTime/2

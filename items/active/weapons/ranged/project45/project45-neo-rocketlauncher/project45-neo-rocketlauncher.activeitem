@@ -1,0 +1,191 @@
+{
+  "itemName" : "project45-neo-rocketlauncher",
+  "price" : 1000,
+  "maxStack" : 1,
+  "rarity" : "Essential",
+  "description" : "An entry-level firearm.",
+  "shortdescription" : "New Rocket Launcher",
+  "gunArchetype": "Missile Launcher",
+  "tooltipKind" : "project45gun",
+  "category" : "rocketlauncher",
+  "twoHanded" : true,
+  "itemTags" : ["weapon","ranged","rocketlauncher"],
+  "level" : 1,
+  "muzzleFlashColor": [255, 255, 200],
+  "inventoryIcon" : "project45-neo-rocketlauncher-icon.png",
+
+  "project45GunModInfo": {
+    "category": "ballistic",
+    "acceptsAmmoTypes": {
+      "bullet": true
+    },
+    "acceptsAmmoArchetypes": {
+      "generic": true
+    },
+    "acceptsModSlot": {
+      "rail": true,
+      "sights": false,
+      "muzzle": false,
+      "stock": false,
+      "underbarrel": false,
+      
+      "receiver": false,
+      "material": true,
+      "barrel": false,
+      "grip": false,
+      "magazine": false
+    }
+  },
+
+  "animationParts" : {
+    "middle" : "project45-neo-rocketlauncher.png",
+    "middleFullbright" : "",
+    "charge": "",
+    "chargeFullbright": "",
+    "magazine": "",
+    "magazineFullbright": "",
+    "muzzleFlash": "/items/active/weapons/ranged/muzzleflash.png"
+  },
+
+  "animationCustom": {
+    "particleEmitters": {
+      "muzzleFlash": { "particles": [
+        {"particle": "rocketbarrelpuff"},
+        {"particle": "rocketbarrelpuff"},
+        {"particle": "rocketbarrelpuff"},
+        {"particle": "project45muzzle"},
+        {"particle": "project45muzzle"},
+        {"particle": "project45muzzle"}
+      ]},
+      "ejectionPort": {
+        "particles": [
+          {"particle": "project45rocketshell"},
+          {"particle": "rocketbarrelpuff"},
+          {"particle": "rocketbarrelpuff"},
+          {"particle": "rocketbarrelpuff"}  
+        ]
+      },
+      "magazine": {
+        "particles": [
+        ]
+      }
+    },
+
+    "sounds": {
+      "fire" : ["/sfx/project45-synthetikmechanics/fires/fire_rocketlauncher.ogg"],
+      "ejectCasing": ["/sfx/project45-synthetikmechanics/reloads/ejectshell_rocketlauncher.ogg"],
+      "boltPull" : ["/sfx/project45-synthetikmechanics/reloads/boltpull_rocketlauncher.ogg"],
+      "boltPush" : ["/sfx/project45-synthetikmechanics/reloads/boltpush_rocketlauncher.ogg"],
+      "chargeWhine": ["/assetmissing.wav"],
+      "chargeDrone": ["/sfx/interface/sniper_mark_pitch1.ogg"],
+
+      "loadRound" : ["/sfx/project45-synthetikmechanics/reloads/loadround_grenadelauncher.ogg"],
+      "eject": ["/assetmissing.wav"],
+      "fireStart": ["/assetmissing.wav"],
+      "fireLoop": ["/assetmissing.wav"],
+      "fireEnd": ["/assetmissing.wav"]
+
+      //*/
+    },
+
+    "animatedParts": {
+      "parts":{"magazine":{"partStates":{"magazine":{
+        "absent": {
+          "properties" : {
+            "image" : "<partImage>:absent"
+          }
+        }
+      }}}},
+      "stateTypes": {
+        "charge":{
+          "states":{
+            "charging":{
+              "frames": 1
+            }
+          }
+        },
+        "gun": {
+          "states":{
+            "idle": {
+              "frames": 1
+            },
+            "firing": {
+              "frames": 5
+            },
+            "firingLoop": {
+              "frames": 5
+            },
+            "ejecting": {
+              "frames": 2
+            },
+            "boltPulling": {
+              "frames": 2
+            },
+            "ejected": {
+              "frames": 1
+            },
+            "feeding": {
+              "frames": 10
+            },
+            "boltPushing": {
+              "frames": 10
+            },
+            "jammed": {
+              "frames": 1
+            },
+            "unjamming": {
+              "frames": 1
+            }
+          }
+        }
+      }
+    }
+  },
+  
+  "baseOffset" : [-1.375, 0.75],
+  "muzzleOffset" : [3.25, 0.5],
+  "ejectionPortOffset": [0.7, 0.7],
+  "magazineOffset": [0.7, 0.7],
+  "railOffset": [-0.5, 0.875],
+
+  "scripts" : ["/items/active/weapons/ranged/project45gunneo.lua"],
+    
+  "primaryAbilityType": "project45gunfire",
+  "primaryAbility": {
+    "cycleTime": 1,
+    "semi": true,
+    "chargeFrames": 1,
+    "overchargeTime": 0.5,
+    "inaccuracy": 5, // affects arm movement as the trigger is pulled
+    "maxAmmo": 1,
+    "bulletsPerReload": 1,
+    "projectileType": "project45stdrocket",
+    "hideMuzzleFlash": true,
+    "resetChargeAfterFire": true,
+    "audibleEjection": true,
+    "ejectMagOnEmpty": true,
+
+    "stances":{
+      "reloading" : {
+        "armRotation" : -90,
+        "twoHanded" : true,
+        "frontArmFrame": "run.5",
+        "allowRotate" : false,
+        "aimAngle": 0,
+        "allowFlip" : false
+      },
+      "reloaded" : {
+        "armRotation" : -90,
+        "weaponRotation" : -5,
+        "twoHanded" : true,
+        "allowRotate" : false,
+        "aimAngle": 0,
+        "allowFlip" : false,
+        "frontArmFrame": "swim.3"
+      }
+    }
+    
+  },
+
+  "builder" : "/items/buildscripts/buildproject45neoneo.lua"
+}

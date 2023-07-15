@@ -19,6 +19,10 @@
         "operation": "replace",
         "value": true
       },
+      "hideMuzzleFlash": {
+        "operation": "replace",
+        "value": true
+      },
       "hollowSoundMult": {
         "operation": "replace",
         "value": 0.3

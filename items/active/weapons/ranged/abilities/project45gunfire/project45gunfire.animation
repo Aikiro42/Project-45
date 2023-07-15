@@ -499,6 +499,7 @@
     "hollow": ["/sfx/project45-synthetikmechanics/foleys/hollow.ogg"],
 
     "eject": ["/sfx/project45-synthetikmechanics/reloads/ejectmag_generic_1.ogg"],
+    "ejectCasing": ["/assetmissing.wav"], // plays every time casing(s) is/are ejected
 
     "reloadStart": ["/sfx/project45-synthetikmechanics/foleys/getmag_generic.ogg"],
     "loadRound": ["/sfx/project45-synthetikmechanics/reloads/loadround_generic.ogg"],

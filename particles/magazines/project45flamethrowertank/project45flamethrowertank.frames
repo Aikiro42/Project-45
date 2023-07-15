@@ -1,7 +1,7 @@
 {
   "image" : "project45flamethrowertank.png",
   "frameGrid" : {
-    "size" : [12, 9],
+    "size" : [8, 8],
     "dimensions" : [1, 1]
   }
 }
