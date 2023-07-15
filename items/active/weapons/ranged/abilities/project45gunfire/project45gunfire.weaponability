@@ -48,6 +48,8 @@
     */
     "performanceMode": false,
 
+    "hideMuzzleFlash": false,
+
     // Audio settings
     "hollowSoundMult": 0.8, // affects volume of hollow sound
 
@@ -141,6 +143,8 @@
 
     // Reload and Magazine Config
 
+    "audibleEjection": false, // if true, plays bolt pulling sound on eject
+    "ejectBeforeAnimation": true, // ejects casings before animationState is set to "ejecting"
     "ejectCasingsAfterBurst": false, // ejects casings after burst is finished
     "ejectCasingsWithMag": false, // for revolvers, etc.; casings are not ejected until magazine is ejected
     "ejectMagOnEmpty": false, // ejects mag when the gun hits 0 ammo
@@ -158,7 +162,7 @@
 
     // [bad, ok, good, perfect] reload damage multiplier
     "reloadRatingDamageMults": [0.8, 1, 1.25, 1.5],
-    "jamChances": [0.1, 0.05, 0, 0],
+    "jamChances": [0.5, 0.05, 0, 0],
 
     // ____________________________________[ Accuracy and Recoil Config ] ____________________________________
 
@@ -168,7 +172,7 @@
     "recoilAmount": 3 , // amount of recoil per shot, in degrees; arm and weapon will rotate by half of this
     "maxRecoilDeg": 15, // the most the arm and weapon will rotate, in degrees.
     "recoilMult": 0.5, // multiplies recoilAmount
-    "recoverTime": 3, // time it takes to recover aim completely, in seconds
+    "recoverTime": 1.5, // time it takes to recover aim completely, in seconds
     "screenShakeAmount": 0.1, // amount of screenshake per shot
     // time it takes to reach the max cycle time, in seconds
     // only matters if screenShake is a 2-element array of floats
@@ -203,7 +207,7 @@
     // vice versa if initial < final
     // cycleTime=0.1 is equal to cycleTime=[0.1, 0.1]
     "cycleTime": 0.1,
-    
+  
     "burstCount": 1,
 
     // time it takes to reach the final cycle time in seconds
@@ -224,6 +228,12 @@
     
     "fireTime": 0.01, // time before another input can be registered
     "cockTime": 0.5, // time it takes to cock weapon
+
+    // if true, animates firing animation as a loop 
+    // the firing process is thus treated as a burst;
+    // casings are ejected after bursting
+    // if <ejectCasingsAfterBurst = true>
+    "loopFiringAnimation": false,
 
     // ____________________________________[ Charge Config ]____________________________________
 
@@ -262,36 +272,83 @@
 
     // ____________________________________[ Stances ]____________________________________
 
-    "stances": {
-      "ejectmag" : {
+    "stances" : {
+
+      // SUSTAINED STANCES - These stances are constantly interpolated to
+      
+      // initial stance when re-equipping the weapon
+      // OBSOLETE: Weapon is "recoiled" downwards first thing
+      /*
+      "idleneo" : {
         "armRotation" : -45,
-        "weaponRotation" : 45,
-        "twoHanded" : false,
-        "allowRotate" : false,
-        "allowFlip" : false
-      },
-      "reloading" : {
-        "armRotation" : 45,
         "weaponRotation" : 0,
-        "weaponAngularVelocity": 3600,
-        "twoHanded": false
-        // "weaponOffset" : [0.25, 0.575],
-        // "frontArmFrame" : "run.2",
-        // "backArmFrame" : "jump.3"
+        "twoHanded" : true,
+        "allowRotate" : true,
+        "allowFlip" : true
       },
-      "reloaded" : {
-        "armRotation" : -90,
-        "weaponRotation" : 15,
-        "twoHanded" : false,
+      */
+
+      // stance while the gun is aimed
+      "aimStance" : {
+        "armRotation" : 0,
+        "weaponRotation" : 0,
+        // "twoHanded" : true, // twoHanded is set by the script if unspecified
+        "allowRotate" : true,
+        "allowFlip" : true
+        // "frontArmFrame": "run.3"
+        // "weaponOffset": [-1, 0]
+      },
+
+      // stance while the gun is jammed
+      "jammed" : {
+        "armRotation" : 0,
+        "weaponRotation" : -15,
+        "twoHanded" : true,
+        "allowRotate" : false,
+        "aimAngle": 0,
+        "allowFlip" : true
+      },
+
+      // stance while the gun has no mag
+      "empty" : {
+        "armRotation" : -15,
+        "weaponRotation" : 0,
+        "twoHanded" : true,
+        "allowRotate" : false,
+        "aimAngle": 0,
+        "allowFlip" : false
+        // "frontArmFrame": "swimIdle.2",
+        // "weaponOffset": [-1, 0]
+      },
+
+      // stance taken while ejecting the mag
+      // this stance is also snapped to
+      "ejectmag" : {
+        "armRotation" : -30,
+        "weaponRotation" : 5,
+        "twoHanded" : true,
         "allowRotate" : false,
         "allowFlip" : false
       },
+
+      // SNAP STANCES - These stances will be snapped to briefly
+      // only arm and weapon rotations matter
+
+      // stance snaps to this when unjamming
+      "unjam" : {
+        "armRotation" : 5,
+        "weaponRotation" : -20,
+        "twoHanded" : true,
+        "allowRotate" : false,
+        "aimAngle": 0,
+        "allowFlip" : false,
+        "frontArmFrame" : "run.2"
+      },
+
       "boltPull": {
         "armRotation" : 5,
         "weaponRotation" : 5,
-        
         "twoHanded" : true,
-        
         "allowRotate" : false,
         "allowFlip" : false,
         "frontArmFrame" : "run.2"
@@ -301,23 +358,73 @@
       "boltPush": {
         "armRotation" : 5,
         "weaponRotation" : 0,
-        
         "twoHanded" : true,
-
         "allowRotate" : false,
         "allowFlip" : false,
         "frontArmFrame" : "rotation"
         // "weaponOffset": [-1, 0]
       },
-      "jammed": {
-        "twoHanded": false
+
+      "loadRound": {
+        "armRotation" : -45,
+        "weaponRotation" : 45,
+        "twoHanded" : true,
+        "allowRotate" : false,
+        "allowFlip" : false,
+        "duration": 0.25
       },
-      "unjam": {
-        "armRotation": -45,
-        "weaponRotation": -5,
-        "frontArmFrame": "rotation",
-        "twoHanded": false      
+
+      // RELOAD STANCES
+
+      // stance taken while reloading
+      "reloading" : {
+        "armRotation" : -15,
+        "weaponRotation" : 0,
+        "twoHanded" : true,
+        "frontArmFrame": "run.5",
+        "allowRotate" : false,
+        "aimAngle": 0,
+        "allowFlip" : false
+      },
+
+      // stance taken upon finishing reload
+      "reloaded" : {
+        "armRotation" : 5,
+        "weaponRotation" : 5,
+        "twoHanded" : true,
+        "allowRotate" : false,
+        "aimAngle": 0,
+        "allowFlip" : false,
+        "frontArmFrame": "swim.3"
+      },
+
+      // Legacy Stances for altfire compatibility
+      "fire": {
+        "armRotation": 0,
+        "weaponRotation": 0,
+        "twoHanded": false,
+        "allowRotate": true,
+        "allowFlip": true
+      },
+
+      "cooldown": {
+        "armRotation": 0,
+        "weaponRotation": 0,
+        "twoHanded": false,
+        "allowRotate": true,
+        "allowFlip": true
+      },
+
+      "idle" : {
+        "armRotation" : 0,
+        "weaponRotation" : 0,
+        "twoHanded" : false,
+
+        "allowRotate" : true,
+        "allowFlip" : true
       }
+
+
     }
     
   }
