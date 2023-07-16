@@ -6,7 +6,7 @@ require "/scripts/project45/hitscanLib.lua"
 
 local BAD, OK, GOOD, PERFECT = 1, 2, 3, 4
 local reloadRatingList = {"BAD", "OK", "GOOD", "PERFECT"}
-local debugTime = 0.5
+local debugTime = 0.1
 
 Project45GunFire = WeaponAbility:new()
 
@@ -59,6 +59,9 @@ function Project45GunFire:init()
 
   -- Let recoilMult affect maxRecoilDeg
   self.maxRecoilDeg = self.maxRecoilDeg * self.recoilMult
+
+  -- only load rounds through bolt if gun has internal mag
+  self.loadRoundsThroughBolt = self.internalMag and self.loadRoundsThroughBolt
 
   self.bulletsPerReload = math.max(1, self.bulletsPerReload)
 
@@ -159,7 +162,7 @@ function Project45GunFire:init()
   self.stances = self.stances or {}
   local finalAimStance = self.stances.aimStance or {}
   self.stances.aimStance = util.mergeTable(defaultAimStance, finalAimStance)
-
+    
   if storage.jamAmount <= 0
   and storage.ammo >= 0
   then
@@ -194,7 +197,7 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
   self:updateMuzzleFlash()
 
   if self.debugTimer <= 0 then
-    self:debugFunction()
+    self:debugFunction(true)
     self.debugTimer = debugTime
   end
 
@@ -243,11 +246,16 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
             self:setState(self.cocking)
 
           end
+      elseif storage.ammo == 0 and not self.triggered then
+        if self.loadRoundsThroughBolt then
+          self:setState(self.ejecting)
+          self:updateAmmo(-1, true)
+        else
+          self:ejectMag()
+        end
+
       else
-        
-        if storage.ammo == 0 and not self.triggered then
-            self:ejectMag()
-        elseif not self.triggered then
+        if not self.triggered then
           self:setState(self.reloading)
         end
 
@@ -637,7 +645,7 @@ function Project45GunFire:reloading()
   activeItem.setScriptedAnimationParameter("reloadRating", reloadRatingList[finalReloadRating])
   self.reloadRatingDamage = self.reloadRatingDamageMults[storage.reloadRating]
   animator.playSound("reloadEnd")  -- sound of magazine inserted
-  -- util.wait(self.cockTime/4)
+  util.wait(self.cockTime/8)
   self:setState(self.cocking)
   
 end
@@ -1386,8 +1394,9 @@ function Project45GunFire:snapStance(stance)
 end
 --]]
 
-function Project45GunFire:debugFunction()
-
+function Project45GunFire:debugFunction(noDebug)
+  if noDebug then return end
+  self:discardCasings(true)
 end
 
 function diceroll(chance)

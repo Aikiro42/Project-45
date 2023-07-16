@@ -1,0 +1,25 @@
+{  
+  "frameGrid" : {
+    "size" : [42, 12],
+    "dimensions" : [6, 2],
+    "names" : [
+      ["ejecting.1", "ejecting.2", "ejecting.3", "ejecting.4", "ejecting.5", "ejecting.6"],
+      ["jammed.1", null, null, null, null, null]
+    ]
+  },
+
+  "aliases" : {
+    "idle.1": "ejecting.1",
+    "firing.1": "ejecting.1",
+    "ejected.1": "ejecting.6",
+
+    "feeding.1": "ejecting.6",
+    "feeding.2": "ejecting.5",
+    "feeding.3": "ejecting.4",
+    "feeding.4": "ejecting.3",
+    "feeding.5": "ejecting.2",
+    "feeding.6": "ejecting.1",
+
+    "unjamming.1": "ejecting.2"
+  }
+}
