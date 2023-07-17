@@ -41,7 +41,11 @@
       "fireStart": ["/assetmissing.wav"],
       "fireLoop": ["/assetmissing.wav"],
       "fireEnd": ["/assetmissing.wav"],
-      "fire" : ["/sfx/project45-synthetikmechanics/fires/fire_pistol.ogg"]
+      "eject": ["/sfx/project45-synthetikmechanics/reloads/ejectmag_revolver.ogg"],
+      "boltPush": ["/assetmissing.wav"],
+      "boltPull": ["/sfx/project45-synthetikmechanics/reloads/boltpush_revolver.ogg"],
+      "fire" : ["/sfx/project45-synthetikmechanics/fires/fire_revolver.ogg"],
+      "reloadStart" : ["/sfx/project45-synthetikmechanics/foleys/getmag_revolver.ogg"]
     },
     "animatedParts": {
       "parts":{

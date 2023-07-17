@@ -19,6 +19,7 @@ function Project45GunFire:init()
   -- separate cock time and reload time
   self.reloadTime = self.reloadTime * 0.8
   self.reloadTimer = -1
+  activeItem.setScriptedAnimationParameter("reloadTimer", -1)
 
   -- initialize charge frame
   self.chargeFrame = 1
@@ -1312,6 +1313,7 @@ function Project45GunFire:saveGunState()
 
     firing = "idle",
     firingLoop = "idle",
+    fired = "fired",
     
     unjamming = storage.jamAmount > 0 and "jammed" or "idle",
   }
