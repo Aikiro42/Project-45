@@ -376,7 +376,12 @@ function hitscanLib:hitscan(isLaser)
 end
 
 function hitscanLib:updateLaser()
-  if not self.laser.enabled then return end
+  if not self.laser.enabled then return
+  elseif storage.ammo < 0 or self.reloadTimer >= 0 then
+    activeItem.setScriptedAnimationParameter("primaryLaserEnabled", false)
+    return
+  end
+  activeItem.setScriptedAnimationParameter("primaryLaserEnabled", not self.performanceMode)
   local laser = self:hitscan(true)
   activeItem.setScriptedAnimationParameter("primaryLaserStart", laser[1])
   activeItem.setScriptedAnimationParameter("primaryLaserEnd", laser[2])

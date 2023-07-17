@@ -153,6 +153,10 @@
     
     "internalMag": false, // whether the "magazine" is a strip or a clip (makes magazine invisible)
     "loadRoundsThroughBolt": false, // whether the bolt must be opened before doing the reload sequence.
+    
+    // determines whether the gun is break-action, i.e.:
+    // - breaks open when ejecting the mag
+    "breakAction": false,
 
     "magVisualPercentage": false, // Whether the mag visually indicates the percentage or count of ammo remaining
     "magFrames": 1, // number of frames wherein the mag is "present" (for regular, opaque mags, set this to 1)
@@ -192,6 +196,7 @@
       or zero otherwise)
     */
     "semi": true,
+
 
     // Makes your gun not automatically eject right after firing,
     // requiring you to cock the gun to fire again.

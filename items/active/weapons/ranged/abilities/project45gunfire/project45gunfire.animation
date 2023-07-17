@@ -16,6 +16,13 @@
             "mode" : "loop"
           },
 
+          // for break action guns
+          "open": {
+            "frames" : 4,
+            "cycle" : 0.25,
+            "mode" : "loop"
+          },
+
           // firing -> idle
           // (FORCED) firing -> ejecting
           "firing": {
@@ -172,6 +179,11 @@
                 "image" : "<partImage>:idle.<frame>"
               }
             },
+            "open" : {
+              "properties" : {
+                "image" : "<partImage>:open.<frame>"
+              }
+            },
             "firing" : {
               "properties" : {
                 "image" : "<partImage>:firing.<frame>"
@@ -297,6 +309,11 @@
             "idle" : {
               "properties" : {
                 "image" : "<partImage>:idle.<frame>"
+              }
+            },
+            "open" : {
+              "properties" : {
+                "image" : "<partImage>:open.<frame>"
               }
             },
             "firing" : {

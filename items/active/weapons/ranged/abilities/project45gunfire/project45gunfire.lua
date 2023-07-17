@@ -337,7 +337,7 @@ function Project45GunFire:firing()
 
   -- add unejected casings
 
-  storage.unejectedCasings = math.min(storage.unejectedCasings + self.ammoPerShot, storage.ammo)
+  storage.unejectedCasings = storage.unejectedCasings + math.min(self.ammoPerShot, storage.ammo)
   self:updateAmmo(diceroll(self.ammoConsumeChance) and -self.ammoPerShot or 0)
   
   self.triggered = storage.ammo == 0 or self.triggered
@@ -616,6 +616,11 @@ function Project45GunFire:reloading()
   self:setStance(self.stances.reloaded, not self.reloadOnEjectMag)
   animator.setAnimationState("magazine", self.internalMag and "absent" or "present")
   
+  if self.breakAction then
+    animator.setAnimationState("gun", "ejected")
+
+  end
+
   -- if there hasn't been any input, just load round
   if storage.ammo < self.maxAmmo then
     sumRating = sumRating + 0.5 -- OK: 0.5
@@ -855,6 +860,9 @@ function Project45GunFire:ejectMag()
   end
   
   -- audiovisually eject mag if it isn't an internal mag
+  if self.breakAction then
+    animator.setAnimationState("gun", "open")
+  end
   animator.setAnimationState("magazine", "absent")
   animator.playSound("eject")
   animator.burstParticleEmitter("magazine")
@@ -870,7 +878,6 @@ function Project45GunFire:ejectMag()
   if self.resetChargeOnEject then
     self.chargeTimer = 0
   end
-
   
   if self.reloadOnEjectMag then
     self:setState(self.reloading)
@@ -1293,6 +1300,7 @@ function Project45GunFire:saveGunState()
   local newGunAnimState = {
     jammed="jammed",
     idle="idle",
+    open="open",
     ejected="ejected",
 
     ejecting = "ejected",
@@ -1346,11 +1354,8 @@ function Project45GunFire:loadGunState()
   
   storage.jamAmount = storage.jamAmount or loadedGunState.jamAmount
   activeItem.setScriptedAnimationParameter("jamAmount", storage.jamAmount)
-
-  if not loadedGunState.loadSuccess then
-    animator.setAnimationState("bolt", loadedGunState.bolt)
-    animator.setAnimationState("gun", loadedGunState.gunAnimation)
-  end
+  animator.setAnimationState("bolt", loadedGunState.bolt)
+  animator.setAnimationState("gun", loadedGunState.gunAnimation)
 
 end
 
