@@ -249,7 +249,6 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
       elseif storage.ammo == 0 and not self.triggered then
         if self.loadRoundsThroughBolt then
           self:setState(self.ejecting)
-          self:updateAmmo(-1, true)
         else
           self:ejectMag()
         end
@@ -438,7 +437,9 @@ function Project45GunFire:ejecting()
   -- and eject mag if it's supposed to be ejected (like the garand)
   else
     storage.burstCounter = self.burstCount
-    if self.ejectMagOnEmpty then
+    if self.ejectMagOnEmpty
+    or self.loadRoundsThroughBolt
+    then
       self:ejectMag()
     end
     self.isCocking = false

@@ -42,7 +42,10 @@
       "fireStart": ["/assetmissing.wav"],
       "fireLoop": ["/assetmissing.wav"],
       "fireEnd": ["/assetmissing.wav"],
-      "fire" : ["/sfx/project45-synthetikmechanics/fires/fire_pistol.ogg"]
+      "eject": ["/assetmissing.wav"],
+      "boltPull" : ["/sfx/project45-synthetikmechanics/reloads/boltpull_lightbolt.ogg"],
+      "boltPush" : ["/sfx/project45-synthetikmechanics/reloads/boltpush_lightbolt.ogg"],
+      "fire" : ["/sfx/project45-synthetikmechanics/fires/fire_rifle.ogg"]
     },
     "animatedParts": {
       "parts":{
@@ -124,6 +127,7 @@
     "manualFeed": true,
     "internalMag": true,
     "loadRoundsThroughBolt": true,
+    "ejectMagOnReload": true,
 
     // "reloadTime": 10,
 

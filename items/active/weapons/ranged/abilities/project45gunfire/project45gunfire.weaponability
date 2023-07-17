@@ -147,8 +147,14 @@
     "ejectBeforeAnimation": true, // ejects casings before animationState is set to "ejecting"
     "ejectCasingsAfterBurst": false, // ejects casings after burst is finished
     "ejectCasingsWithMag": false, // for revolvers, etc.; casings are not ejected until magazine is ejected
-    "ejectMagOnEmpty": false, // ejects mag when the gun hits 0 ammo
-    "reloadOnEjectMag": false, // begins reload sequence upon ejecting
+    
+    /*
+    if both <ejectMagOnEmpty> and <reloadOnEjectMag> are true, the gun will (almost) immediately begin reloading
+    upon firing the last (set of) bullet(s).
+    */
+    "ejectMagOnEmpty": false, // immediately eject mag when the gun hits 0 ammo
+    "reloadOnEjectMag": false, // immediately begin reload sequence upon ejecting
+    
     "ejectMagOnReload": false, // ejects mag every (active) reload, like loading a strip and discarding the metal
     
     "internalMag": false, // whether the "magazine" is a strip or a clip (makes magazine invisible)

@@ -45,6 +45,17 @@
     },
     "animatedParts": {
       "parts":{
+        "middle":{
+          "partStates":{
+            "gun":{
+              "fired": {
+                "properties": {
+                  "image": "<partImage>:firing.1"
+                }
+              }
+            }
+          }
+        },
         "charge":{
           "partStates":{
             "charge":{
@@ -74,6 +85,10 @@
               "frames": 1
             },
             "firing": {
+              "frames": 1,
+              "transition": "fired"
+            },
+            "fired": {
               "frames": 1
             },
             "firingLoop": {

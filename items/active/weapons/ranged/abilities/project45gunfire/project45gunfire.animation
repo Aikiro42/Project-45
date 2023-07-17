@@ -11,28 +11,38 @@
         "default" : "idle",
         "states" : {
           "idle": {
-            "frames" : 4,
+            "frames" : 1,
             "cycle" : 0.25,
             "mode" : "loop"
           },
 
           // for break action guns
+          // (This animation state can only be accessed if the <breakAction> config in the primaryAbility
+          // is true, and will work given you've configured the middle's frames to include a set
+          // of "open.<frame>" frames)
           "open": {
-            "frames" : 4,
+            "frames" : 1,
             "cycle" : 0.25,
             "mode" : "loop"
           },
 
           // firing -> idle
           // (FORCED) firing -> ejecting
+          // (You can set the transition to "fired" in the weapon's custom animation config,
+          // given you've configured the frames to include a "fired.<frame>" set)
           "firing": {
-            "frames" : 4,
+            "frames" : 1,
             "cycle" : 0.25,
             "mode" : "transition",
             "transition": "idle"
           },
+          "fired": {
+            "frames" : 1,
+            "cycle" : 0.25,
+            "mode" : "loop"
+          },
           "firingLoop": {
-            "frames" : 4,
+            "frames" : 1,
             "cycle" : 0.25,
             "mode" : "loop"
           },
@@ -40,19 +50,19 @@
           // ejecting -> ejected
           // (FORCED) ejected -> feeding
           "ejecting": {
-            "frames" : 4,
+            "frames" : 1,
             "cycle" : 0.25,
             "mode" : "transition",
             "transition": "ejected"
           },
           "boltPulling": {
-            "frames" : 4,
+            "frames" : 1,
             "cycle" : 0.25,
             "mode" : "transition",
             "transition": "ejected"
           },
           "ejected": {
-            "frames" : 4,
+            "frames" : 1,
             "cycle" : 0.25,
             "mode" : "loop"
           },
@@ -60,13 +70,13 @@
           // feeding -> idle
           // (FORCED) feeding -> jammed
           "feeding": {
-            "frames" : 4,
+            "frames" : 1,
             "cycle" : 0.25,
             "mode" : "transition",
             "transition": "idle"
           },
           "boltPushing": {
-            "frames" : 4,
+            "frames" : 1,
             "cycle" : 0.25,
             "mode" : "transition",
             "transition": "idle"
@@ -75,12 +85,12 @@
           // unjamming -> jammed
           // (FORCED) unjamming -> feeding
           "jammed": {
-            "frames" : 4,
+            "frames" : 1,
             "cycle" : 0.25,
             "mode" : "loop"
           },
           "unjamming": {
-            "frames" : 4,
+            "frames" : 1,
             "cycle" : 0.25,
             "mode" : "transition",
             "transition": "jammed"
@@ -187,6 +197,11 @@
             "firing" : {
               "properties" : {
                 "image" : "<partImage>:firing.<frame>"
+              }
+            },
+            "fired" : {
+              "properties" : {
+                "image" : "<partImage>:fired.<frame>"
               }
             },
             "firingLoop" : {
@@ -319,6 +334,11 @@
             "firing" : {
               "properties" : {
                 "image" : "<partImage>:firing.<frame>"
+              }
+            },
+            "fired" : {
+              "properties" : {
+                "image" : "<partImage>:fired.<frame>"
               }
             },
             "firingLoop" : {
