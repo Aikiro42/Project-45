@@ -493,6 +493,23 @@
         {"particle": "project45muzzle"}
       ]
     },
+    "muzzleSmoke" : {
+      "transformationGroups" : ["muzzle"],
+      "offsetRegion" : [0, 0, 0, 0],
+      "emissionRate" : 256,
+      "particles" : [ 
+        {"particle": "project45muzzlesmoke"}
+      ]
+    },
+
+    "chargeSmoke" : {
+      "transformationGroups" : ["weapon"],
+      "offsetRegion" : [0, 0, 0, 0],
+      "emissionRate" : 10,
+      "particles" : [ 
+        {"particle": "rocketbarrelpuff"}
+      ]
+    },
 
     "magazine" : {
       "transformationGroups" : ["magazine"],

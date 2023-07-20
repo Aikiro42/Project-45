@@ -106,6 +106,11 @@ function build(directory, config, parameters, level, seed)
       end
     end
 
+    if config.chargeSmokeOffsetRegion then
+      construct(config, "animationCustom", "particleEmitters", "chargeSmoke", "offsetRegion")
+      config.animationCustom.particleEmitters.chargeSmoke.offsetRegion = config.chargeSmokeOffsetRegion
+    end
+
     -- generate offsets for
     -- rail, sights, underbarrel, stock
     local modOffsetconfig = {

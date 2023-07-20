@@ -71,28 +71,29 @@
       "guns": [
 
         "project45-modulargun",
+        "project45-neo-custom",
         "project45-pipegun",
         
-        "project45-pistol",
-        "project45-revolver",
+        "project45-neo-pistol",
+        "project45-neo-revolver",
         "project45-submachinegun",
         "project45-shotgun",
         "project45-assaultrifle",
         "project45-garand",
-        "project45-mosin",
+        "project45-neo-huntingrifle",
         "project45-sniperrifle",
-        "project45-mg45",
+        "project45-neo-machinegun",
         
         "project45-antimateriel",
         "project45-grenadelauncher",
-        "project45-rocketlauncher",
-        "project45-minigun",
-        "project45-flamethrower",
+        "project45-neo-rocketlauncher",
+        "project45-neo-minigun",
+        "project45-neo-flamethrower",
         
         "project45-accelerator",
         "project45-assaultenergygun",
         "project45-energygun",
-        "project45-gaussrifle"
+        "project45-neo-gaussrifle"
       ],
       "mods": [
         // abilities

@@ -138,8 +138,39 @@
     
     "projectileKind": "projectile",
   
-    "stances":{
-      "aimStance":{
+    "stances": {
+      "aimStance": {
+        "frontArmFrame" : "jump.2",
+        "backArmFrame" : "idle.2"
+      },
+      "empty": {
+        "frontArmFrame" : "jump.2",
+        "backArmFrame" : "idle.2"
+      },
+      "reloading": {
+        "backArmFrame" : "idle.2"
+      },
+      "reloaded": {
+        "frontArmFrame" : "run.3",
+        "backArmFrame" : "idle.2"
+      },
+      "boltPull": {
+        "armRotation": 0,
+        "weaponRotation": 0,
+        "backArmFrame" : "idle.2"
+
+      },
+      "boltPush": {
+        "armRotation": 0,
+        "weaponRotation": 0,
+        "frontArmFrame" : "run.3",
+        "backArmFrame" : "idle.2"
+      },
+      "jammed": {
+        "frontArmFrame" : "jump.2",
+        "backArmFrame" : "idle.2"
+      },
+      "unjam": {
         "frontArmFrame" : "jump.2",
         "backArmFrame" : "idle.2"
       }

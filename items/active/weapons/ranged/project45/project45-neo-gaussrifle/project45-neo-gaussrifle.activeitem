@@ -142,6 +142,9 @@
     "autoFireOnFullCharge": true,
     "chargeWhenObstructed": true,
 
+    "hideMuzzleSmoke": true,
+    "chargeSmoke": false,
+
     "cycleTime": 0.125,
     "chargeFrames": 4,
     "chargeTime": 0.25,

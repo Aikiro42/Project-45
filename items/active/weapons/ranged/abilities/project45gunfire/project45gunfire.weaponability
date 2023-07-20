@@ -45,10 +45,13 @@
     - chamber indicator
     - magazine animation
     - screenshake
+    - charge smoke
+    - muzzle particles
     */
     "performanceMode": false,
 
     "hideMuzzleFlash": false,
+    "hideMuzzleSmoke": false,
 
     // Audio settings
     "hollowSoundMult": 0.8, // affects volume of hollow sound
@@ -185,10 +188,10 @@
     "maxRecoilDeg": 15, // the most the arm and weapon will rotate, in degrees.
     "recoilMult": 0.5, // multiplies recoilAmount
     "recoverTime": 1.5, // time it takes to recover aim completely, in seconds
-    "screenShakeAmount": 0.1, // amount of screenshake per shot
+    "screenShakeAmount": [0.5, 0.1], // amount of screenshake per shot
     // time it takes to reach the max cycle time, in seconds
     // only matters if screenShake is a 2-element array of floats
-    "screenShakeMaxTime": 3,
+    "maxScreenShakeTime": 0.5,
 
     // ____________________________________[ Fire Config ]____________________________________
 
@@ -281,6 +284,10 @@
 
     // discharges if the weapon is obstructed by terrain
     "chargeWhenObstructed": false,
+
+    // Spawns more smoke puffs around specified offset region the higher the charge
+    "chargeSmoke": false,
+    "maxChargeSmokeEmissionRate": 25,
 
 
     // ____________________________________[ Stances ]____________________________________

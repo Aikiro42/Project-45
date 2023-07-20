@@ -65,6 +65,7 @@ function Project45GunFire:init()
   self.loadRoundsThroughBolt = self.internalMag and self.loadRoundsThroughBolt
 
   self.bulletsPerReload = math.max(1, self.bulletsPerReload)
+  self.muzzleSmokeTime = self.muzzleSmokeTime or 1.5
 
   -- let inaccuracy be a table
   if type(self.inaccuracy) ~= "table" then
@@ -131,6 +132,7 @@ function Project45GunFire:init()
   self.dischargeDelayTimer = 0
   self.cooldownTimer = self.fireTime
   self.muzzleFlashTimer = 0
+  self.muzzleSmokeTimer = 0
 
   -- initialize animation stuff
   
@@ -193,6 +195,7 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
   self:updateCharge()
   self:updateStance()
   self:updateCycleTime()
+  self:updateScreenShake()
   self:updateProjectileStack()
   self:updateMovementControlModifiers()
   self:updateMuzzleFlash()
@@ -203,7 +206,9 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
   end
 
   -- Prevent energy regen if there is energy or if currently reloading
-  if storage.ammo > 0 or self.reloadTimer > 0 or not status.resourceLocked("energy") then
+  if storage.ammo > 0
+  or self.reloadTimer > 0
+  or not status.resourceLocked("energy") then
     status.setResource("energyRegenBlock", 1)
   end
 
@@ -592,7 +597,7 @@ function Project45GunFire:reloading()
         animator.playSound("goodReload")
         sumRating = sumRating + 1
       elseif reloadRating == PERFECT then
-        animator.playSound("perfectReload")
+        animator.playSound(self.bulletsPerReload >= self.maxAmmo and "perfectReload" or "goodReload")
         sumRating = sumRating + 2
       end
 
@@ -647,6 +652,9 @@ function Project45GunFire:reloading()
     finalReloadRating = OK
   else
     finalReloadRating = BAD
+  end
+  if self.bulletsPerReload < self.maxAmmo and finalReloadRating == PERFECT then
+    animator.playSound("perfectReload")
   end
   storage.reloadRating = finalReloadRating
   activeItem.setScriptedAnimationParameter("reloadRating", reloadRatingList[finalReloadRating])
@@ -766,7 +774,8 @@ function Project45GunFire:muzzleFlash()
     animator.playSound("fire")
     animator.playSound("hollow")
   end
-  animator.burstParticleEmitter("muzzleFlash")
+  
+  if not self.performanceMode then animator.burstParticleEmitter("muzzleFlash") end
   
   if not self.hideMuzzleFlash then
     animator.setLightActive("muzzleFlash", true)
@@ -775,6 +784,7 @@ function Project45GunFire:muzzleFlash()
     animator.setAnimationState("flash", "flash")
     self.muzzleFlashTimer = self.muzzleFlashTime or 0.05
   end
+  self.muzzleSmokeTimer = self.muzzleSmokeTime + self.currentCycleTime + 0.1
 end
 
 function Project45GunFire:startFireLoop()
@@ -890,9 +900,16 @@ end
 -- It does this by briefly spawning a projectile that has a short time to live,
 -- and setting the cam's focus on that projectile.
 function Project45GunFire:screenShake(amount, shakeTime, random)
-  if self.usedByNPC or self.performanceMode then return end
+  
+  if self.usedByNPC
+  or self.performanceMode
+  then return end
+  
+  local amount = amount or self.currentScreenShake or 0.1
+  if amount == 0 then return end
+
   local source = mcontroller.position()
-  local shake_dir = vec2.mul(self:aimVector(0), amount or self.currentScreenShake or 0.1)
+  local shake_dir = vec2.mul(self:aimVector(0), amount)
   if random then vec2.rotate(shake_dir, 3.14 * math.random()) end
   local cam = world.spawnProjectile(
     "invisibleprojectile",
@@ -947,6 +964,7 @@ function Project45GunFire:updateCharge()
     then
       animator.setAnimationState("charge", "off")
     end
+    animator.setParticleEmitterActive("chargeSmoke", false)
     animator.stopAllSounds("chargeDrone")    
     animator.stopAllSounds("chargeWhine")
     self.chargeLoopPlaying = false
@@ -977,6 +995,12 @@ function Project45GunFire:updateCharge()
     self.chargeLoopPlaying = false 
   end
 
+  -- barrel smoke
+
+  if self.chargeSmoke and not self.performanceMode then
+    animator.setParticleEmitterActive("chargeSmoke", true)
+    animator.setParticleEmitterEmissionRate("chargeSmoke", math.floor((self.maxChargeSmokeEmissionRate or 50) * (self.chargeTimer/(self.chargeTime + self.overchargeTime))))
+  end
 
   if self.chargeTimer > 0 then
     animator.setAnimationState("charge", self.progressiveCharge and "chargingProg" or "charging")
@@ -1089,14 +1113,21 @@ function Project45GunFire:updateScreenShake()
   -- this means that the screen shake is expected to be constant
   if not self.screenShakeTimer then return end
 
-  if self.triggering() and not self.triggered then
-    self.screenShakeTimer = math.min(self.screenShakeTimer + self.dt, self.screenShakeMaxTime)
+  if self:triggering()
+  and not self.triggered
+  and storage.jamAmount <= 0
+  and self.reloadTimer < 0
+  and storage.ammo > 0
+  and not self:muzzleObstructed()
+  and (self.manualFeed and animator.animationState("chamber") == "ready" or not self.manualFeed)
+  and self.chargeTimer > self.chargeTime
+  then
+    self.screenShakeTimer = math.min(self.maxScreenShakeTime, self.screenShakeTimer + self.dt)
   else
     self.screenShakeTimer = math.max(0, self.screenShakeTimer - self.dt)
   end
-  
-  local screenShakeProgress = self.screenShakeTimer / self.screenShakeMaxTime
-  
+
+  local screenShakeProgress = self.screenShakeTimer / self.maxScreenShakeTime
   self.currentScreenShake = self.screenShakeAmount[1] + self.screenShakeDiff * screenShakeProgress
 end
 
@@ -1119,8 +1150,12 @@ end
 
 function Project45GunFire:updateMuzzleFlash()
   self.muzzleFlashTimer = math.max(0, self.muzzleFlashTimer - self.dt)
+  self.muzzleSmokeTimer = math.max(0, self.muzzleSmokeTimer - self.dt)
   if self.muzzleFlashTimer <= 0 then
     animator.setLightActive("muzzleFlash", false)
+  end
+  if not self.hideMuzzleSmoke then
+    animator.setParticleEmitterActive("muzzleSmoke", self.muzzleSmokeTimer > 0 and self.muzzleSmokeTimer < self.muzzleSmokeTime and not self.isFiring)
   end
 end
 
@@ -1405,6 +1440,7 @@ end
 function Project45GunFire:debugFunction(noDebug)
   if noDebug then return end
   self:discardCasings(true)
+  animator.burstParticleEmitter("magazine")
 end
 
 function diceroll(chance)
