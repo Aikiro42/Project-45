@@ -15,29 +15,160 @@
   "inventoryIcon" : "project45-neo-custom-icon.png",
 
   "acceptsGunMods": true,
+  
   "project45GunModInfo": {
-    "category": "energy",
+
+    /*
+    
+    Category > Class > Kind > Type > Archetype
+
+    GUN CATEGORIES - for non-ammo mods
+
+    Energy ("energy")
+    - This category comprises of firearms or weapons that utilize
+    energy-based projectiles. These guns operate on the principles
+    of harnessing and directing various forms of energy.
+
+    Ballistic ("ballistic")
+    - This category comprises of firearms that utilize traditional
+    ballistic projectiles propelled by explosive chemical reactions.
+
+    Emissive ("emissive")
+    - This category comprises of firearms that emit matter (solid, liquid, gas, plasma) to
+    deal damage. Examples include flamethrowers, water guns, gas guns and plasma weapons.
+
+    Magic ("magic")
+    - This category comprises of firearms that utilize magical properties
+    to deal damage to enemies.
+
+    TL:DR;
+    energy
+    ballistic
+    emissive
+    magic
+    universal (if it accepts all kinds of mods)
+
+    */
+    "category": "universal",
+
+    /*
+    
+    AMMO TYPES
+    
+    Universal
+    - This ammo type can be installed on all gun categories.
+
+    Energy
+    - This ammo type can be installed on magic, energy and certain emissive weapons.
+
+    Ballistic
+    - This amo type can be installed on ballistic and certain emissive weapons.
+
+    Matter
+    - This ammo type can be installed on emissive weapons.
+
+    Magic
+    - This ammo type can be installed on magical weapons only.
+
+    TL;DR:
+    universal
+    energy
+    ballistic
+    matter
+    magic
+
+    */
     "acceptsAmmoTypes": {
-      "ballistic": true
+      "universal": true, // always true; added for posterity
+      "energy": true,
+      "ballistic": true,
+      "matter": true,
+      "magic": true
     },
+
+    /*
+    all
+    generic
+    shotgun
+    grenade
+    rocket
+    beam
+    solid
+    liquid
+    gas
+    plasma
+    */
     "acceptsAmmoArchetypes": {
+      "universal": true, // always true; added for posterity
+
+      "all": true, // if this is true, assumes that the gun accepts ALL archetypes
+
+      // ballistic
       "generic": true,
-      "shotgun": true
+      "shotgun": true,
+      "grenade": true,
+      "rocket": true,
+
+      // energy
+      "beam": true,
+
+      // matter
+      "solid": true,
+      "liquid": true,
+      "gas": true,
+      "plasma": true // flamethrowers can't shoot plasma
+      
     },
+    
+    /*
+    rail
+    sights
+    muzzle
+    underbarrel
+    stock
+    (pistolStock)
+    receiver
+    magazine
+    barrel
+    material
+    grip
+    */
     "acceptsModSlot": {
-      "rail": true,
+
+      // modifies appearance - are essentially attachments
+      "rail": true, // side rail only
       "sights": true,
       "muzzle": true,
-      "stock": true,
       "underbarrel": true,
+      "stock": true,
+
+      // does not modify appearance
+
+      "receiver": true, // changes firemode, allows accomodation of certain ammo types, etc.
+      // for energy weapons, you could imagine this to be the "firing protocol"
+      // for magic weapons, you could imagine this to be the "fundamental principle"
+
+      "barrel": true, // reduces spread, increases damage, multishot, etc.
+      // for energy weapons, you could imagine this to be the "emitter tech"
+      // for magic weapons, you could imagine this to be the "casting principle"
+
+      "magazine": true, // reduces reload time, increases ammo capacity, etc.
+      // for energy weapons, you could imagine this to be the "battery"
+      // for magic weapons, you could imagine this to be the "mana"
+
+      "material": true, // lightens weight, reduces jam chance, changes skin, etc.
+
+      "grip": true, // reduces recoil, inaccuracy, etc.
       
-      "receiver": true,
-      "material": true,
-      "barrel": true,
-      "grip": true,
-      "magazine": true
+
+
+      // always assumed to be true; just here for posterity
+      "intrinsic": true, // qualities that cannot be associated with a mod e.g. last shot damage
+      "ability": true,
+      "ammoType": true
     }
   },
+
 
   "animationParts" : {
     "middle" : "project45-neo-custom.png",

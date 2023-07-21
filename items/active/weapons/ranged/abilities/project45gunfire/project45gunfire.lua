@@ -736,7 +736,7 @@ function Project45GunFire:jam()
     -- prevent triggering and firing
     self.triggered = true
     self.isFiring = false
-    self.screenShakeTimer = 0
+    if self.screenShakeTimer then self.screenShakeTimer = 0 end
     storage.burstCounter = self.burstCount
     self.chargeTimer = self.resetChargeOnJam and 0 or self.chargeTimer
     

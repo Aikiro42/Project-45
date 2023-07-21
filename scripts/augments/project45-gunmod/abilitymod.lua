@@ -72,6 +72,17 @@ function apply(input)
         config.getParameter("itemName")
     }
     
+    local needImage = {
+      rail=true,
+      sights=true,
+      underbarrel=true,
+      muzzle=true,
+      stock=true
+    }
+    if needImage[augment.slot] then
+        table.insert(modSlots.ability, config.getParameter("inventoryIcon"))
+        table.insert(modSlots[augment.slot], config.getParameter("inventoryIcon"))
+    end
     output:setInstanceValue("modSlots", modSlots)
     output:setInstanceValue("isModded", true)
 

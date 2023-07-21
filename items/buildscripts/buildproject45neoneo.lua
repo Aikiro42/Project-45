@@ -180,6 +180,24 @@ function build(directory, config, parameters, level, seed)
         config.primaryAbility = sb.jsonMerge(config.primaryAbility, parameters.primaryAbility)
     end
     --]]
+
+    local modList = parameters.modSlots or config.modSlots or {}
+    if config.project45GunModInfo then
+      local mods = {
+        "sights",
+        "rail",
+        "muzzle",
+        "underbarrel",
+        "stock"
+      }
+      for _, modSlot in ipairs(mods) do
+        if config.project45GunModInfo.acceptsModSlot[modSlot] then
+          config.tooltipFields[modSlot .. "Image"] = modList[modSlot] and modList[modSlot][3] or ""
+        end
+      end
+      
+      config.tooltipFields.ammoTypeImage = modList.ammoType and modList.ammoType[3] or ""
+    end
     
 
     if elementalType ~= "physical" then
@@ -262,13 +280,21 @@ function build(directory, config, parameters, level, seed)
       local overchargeDesc = config.primaryAbility.overchargeTime > 0 and ("^#9dc6f5;" .. util.round(config.primaryAbility.overchargeTime, 1) .. "s overcharge.^reset;\n") or ""
       
 
-      local modList = parameters.modSlots or config.modSlots or {}
       local modListDesc = ""
       if modList then
         modListDesc = "^#abfc6d;"
-        for k, v in pairs(modList) do
-          if k ~= "ability" and v[1] ~= "ability" then
-            modListDesc = modListDesc .. v[1] .. ".\n"
+        local exclude = {
+          ability=true,
+          rail=true,
+          sights=true,
+          muzzle=true,
+          underbarrel=true,
+          stock=true,
+          ammoType=true
+        }
+        for modSlot, modKind in pairs(modList) do
+          if not exclude[modSlot] and modKind[1] ~= "ability" then
+            modListDesc = modListDesc .. modKind[1] .. ".\n"
           end
         end
         modListDesc = modListDesc .. "^reset;"

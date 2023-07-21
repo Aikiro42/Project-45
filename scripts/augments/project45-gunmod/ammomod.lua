@@ -81,7 +81,8 @@ function apply(input)
     -- register ammo   
     modSlots.ammoType = {
       augment.modName,
-      config.getParameter("itemName")
+      config.getParameter("itemName"),
+      config.getParameter("inventoryIcon")
     }
     output:setInstanceValue("modSlots", modSlots)
     -- sb.logInfo(sb.printJson(modSlots))

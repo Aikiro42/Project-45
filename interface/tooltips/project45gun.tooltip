@@ -8,11 +8,65 @@
   
   "objectImage" : {
     "type" : "image",
-    "position" : [100, 126],
+    "position" : [80, 128],
     "file" : "",
     "centered" : true,
-    "maxSize" : [170, 40],
-    "minSize" : [170, 40]
+    "maxSize" : [138, 51],
+    "minSize" : [138, 51]
+  },
+
+  "sightsImage": {
+    "type" : "image",
+    "position" : [163, 148],
+    "file" : "/interface/tooltips/project45gun/project45gun-cannotmod.png",
+    "centered" : true,
+    "maxSize" : [15, 15],
+    "minSize" : [15, 15]
+  },
+
+  "railImage": {
+    "type" : "image",
+    "position" : [183, 148],
+    "file" : "/interface/tooltips/project45gun/project45gun-cannotmod.png",
+    "centered" : true,
+    "maxSize" : [15, 15],
+    "minSize" : [15, 15]
+  },
+
+  "muzzleImage": {
+    "type" : "image",
+    "position" : [163, 128],
+    "file" : "/interface/tooltips/project45gun/project45gun-cannotmod.png",
+    "centered" : true,
+    "maxSize" : [15, 15],
+    "minSize" : [15, 15]
+  },
+
+  "underbarrelImage": {
+    "type" : "image",
+    "position" : [183, 128],
+    "file" : "/interface/tooltips/project45gun/project45gun-cannotmod.png",
+    "centered" : true,
+    "maxSize" : [15, 15],
+    "minSize" : [15, 15]
+  },
+
+  "stockImage": {
+    "type" : "image",
+    "position" : [163, 108],
+    "file" : "/interface/tooltips/project45gun/project45gun-cannotmod.png",
+    "centered" : true,
+    "maxSize" : [15, 15],
+    "minSize" : [15, 15]
+  },
+
+  "ammoTypeImage": {
+    "type" : "image",
+    "position" : [183, 108],
+    "file" : "/interface/tooltips/project45gun/project45gun-cannotmod.png",
+    "centered" : true,
+    "maxSize" : [15, 15],
+    "minSize" : [15, 15]
   },
 
   /*

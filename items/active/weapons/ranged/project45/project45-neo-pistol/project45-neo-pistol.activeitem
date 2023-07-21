@@ -104,6 +104,23 @@
     }
   },
 
+  "project45GunModInfo":{
+    "category": "ballistic",
+    "acceptsAmmoTypes":{
+      "ballistic": true
+    },
+    "acceptsAmmoArchetypes":{
+      "generic": true
+    },
+    "acceptsModSlot": {
+      "rail": false,
+      "sights": false,
+      "underbarrel": false,
+      "stock": false,
+      "muzzle": true
+    }
+  },
+
   "baseOffset" : [0.5, 0.25],
   "muzzleOffset" : [1, 0.25],
   "ejectionPortOffset": [-0.25, 0.5],

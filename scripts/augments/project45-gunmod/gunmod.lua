@@ -187,10 +187,22 @@ function apply(input)
     -- MODIFICATION POST-MORTEM
 
     -- add mod info to list of installed mods
+
     modSlots[augment.slot] = {
         augment.modName,
         config.getParameter("itemName")
     }
+    
+    local needImage = {
+        rail=true,
+        sights=true,
+        underbarrel=true,
+        muzzle=true,
+        stock=true
+    }
+    if needImage[augment.slot] then
+        table.insert(modSlots[augment.slot], config.getParameter("inventoryIcon"))
+    end
     
     output:setInstanceValue("modSlots", modSlots)
     output:setInstanceValue("isModded", true)

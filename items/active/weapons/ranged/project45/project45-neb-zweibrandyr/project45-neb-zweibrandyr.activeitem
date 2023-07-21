@@ -151,7 +151,6 @@
     "bulletsPerReload": 50,
     "magFrames": 1,
     "chargeSmoke": true,
-    "screenShakeAmount": 0,
     "projectileCount": 2,
     "spread": 1
   },
