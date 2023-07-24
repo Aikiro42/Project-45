@@ -178,7 +178,7 @@ function Project45GunFire:init()
       self:setStance(self.stances.empty)
     end
   end
-  self:recoil(true, 4) -- you're bringing the gun up
+  self:recoil(true, 1, 45) -- you're bringing the gun up
 
 end
 
@@ -201,7 +201,7 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
   self:updateMuzzleFlash()
 
   if self.debugTimer <= 0 then
-    self:debugFunction(true)
+    self:debugFunction()
     self.debugTimer = debugTime
   end
 
@@ -335,6 +335,10 @@ function Project45GunFire:firing()
   self:muzzleFlash()
   self:screenShake()
   self:recoil()
+
+  if self.recoilMomentum > 0 and not mcontroller.crouching() then
+    mcontroller.addMomentum(vec2.mul(self:aimVector(), self.recoilMomentum * -1))
+  end
 
   storage.burstCounter = storage.burstCounter + 1
 
@@ -821,21 +825,15 @@ function Project45GunFire:fireProjectile(projectileType)
 end
 
 -- Ejects casings, purely virtual
-function Project45GunFire:discardCasings(debug)
+function Project45GunFire:discardCasings(numCasings)
 
   if self.performanceMode then
     storage.unejectedCasings = 0
     return
   end
 
-  if debug then
-    animator.setParticleEmitterBurstCount("ejectionPort", 1)
-    animator.burstParticleEmitter("ejectionPort")
-    return
-  end
-
   if storage.unejectedCasings > 0 then
-    animator.setParticleEmitterBurstCount("ejectionPort", storage.unejectedCasings)
+    animator.setParticleEmitterBurstCount("ejectionPort", numCasings or storage.unejectedCasings)
     animator.burstParticleEmitter("ejectionPort")
     storage.unejectedCasings = 0
     animator.playSound("ejectCasing")
@@ -843,13 +841,17 @@ function Project45GunFire:discardCasings(debug)
 end
 
 -- Kicks gun muzzle up and backward, shakes screen
-function Project45GunFire:recoil(down, mult)
+function Project45GunFire:recoil(down, mult, amount)
   local mult = mult or self.recoilMult
   mult = down and -mult or mult
-  self.weapon.relativeWeaponRotation = math.min(self.weapon.relativeWeaponRotation, util.toRadians(self.maxRecoilDeg / 2)) + util.toRadians(self.recoilAmount * mult/2)
-  self.weapon.relativeArmRotation = math.min(self.weapon.relativeArmRotation, util.toRadians(self.maxRecoilDeg / 2)) + util.toRadians(self.recoilAmount * mult/2)
+  self.weapon.relativeWeaponRotation = math.min(self.weapon.relativeWeaponRotation, util.toRadians(self.maxRecoilDeg / 2)) + util.toRadians((amount or self.recoilAmount) * mult/2)
+  self.weapon.relativeArmRotation = math.min(self.weapon.relativeArmRotation, util.toRadians(self.maxRecoilDeg / 2)) + util.toRadians((amount or self.recoilAmount) * mult/2)
   self.weapon.weaponOffset = {-0.125, 0}
-  self.weapon.relativeArmRotation = self.weapon.relativeArmRotation + util.toRadians(sb.nrand(self.currentInaccuracy, 0) * self.recoilMult)
+  local randRecoil = util.toRadians(sb.nrand(self.currentInaccuracy, 0) * self.recoilMult)
+  if self.recoilUpOnly then
+    randRecoil = math.abs(randRecoil)
+  end
+  self.weapon.relativeWeaponRotation = self.weapon.relativeWeaponRotation + randRecoil/2
   storage.stanceProgress = 0
 end
 
@@ -867,7 +869,7 @@ function Project45GunFire:ejectMag()
   storage.burstCounter = 0
 
   if not self.ejectMagOnEmpty then
-    self:screenShake()
+    self:screenShake(0.5)
     self:recoil(true)
   end
   
@@ -1111,9 +1113,11 @@ end
 function Project45GunFire:updateScreenShake()
   -- don't bother updating cycle time if cycleTimeProgress wasn't even instantiated
   -- this means that the screen shake is expected to be constant
-  if not self.screenShakeTimer then return end
+  if not self.screenShakeTimer then
+    return end
 
   if self:triggering()
+  --[[
   and not self.triggered
   and storage.jamAmount <= 0
   and self.reloadTimer < 0
@@ -1121,6 +1125,7 @@ function Project45GunFire:updateScreenShake()
   and not self:muzzleObstructed()
   and (self.manualFeed and animator.animationState("chamber") == "ready" or not self.manualFeed)
   and self.chargeTimer > self.chargeTime
+  --]]
   then
     self.screenShakeTimer = math.min(self.maxScreenShakeTime, self.screenShakeTimer + self.dt)
   else
@@ -1437,10 +1442,9 @@ function Project45GunFire:snapStance(stance)
 end
 --]]
 
-function Project45GunFire:debugFunction(noDebug)
-  if noDebug then return end
-  self:discardCasings(true)
-  animator.burstParticleEmitter("magazine")
+function Project45GunFire:debugFunction()
+  if not self.debug then return end
+  sb.logInfo("current screen shake: " .. self.currentScreenShake)
 end
 
 function diceroll(chance)

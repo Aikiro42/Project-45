@@ -129,6 +129,8 @@
     "projectileKind": "projectile",
     "projectileType": "flamethrower",
     "multishot": 2.5,
+    "screenShakeAmount": [1, 0.1],
+    "maxScreenShakeTime": 1,
     // "reloadTime": 10,
 
     "laser":{
