@@ -116,7 +116,7 @@
           "off": {},
           "chargingProg": {},
           "charging": {
-            "frames" : 4,
+            "frames" : 1,
             "cycle" : 0.25,
             "mode" : "transition",
             "transition" : "off"

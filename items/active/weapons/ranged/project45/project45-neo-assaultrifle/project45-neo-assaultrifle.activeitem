@@ -1,0 +1,93 @@
+{
+  "itemName" : "project45-neo-assaultrifle",
+  "price" : 1000,
+  "maxStack" : 1,
+  "rarity" : "Essential",
+  "description" : "A burst-fire Assault Rifle.",
+  "shortdescription" : "New Assault Rifle",
+  "tooltipKind" : "project45gun",
+  "gunArchetype": "Assault Rifle",
+  "category" : "rifle",
+  "twoHanded" : true,
+  "itemTags" : ["weapon","ranged","rifle"],
+  "level" : 1,
+  "muzzleFlashColor": [255, 255, 200],
+  "inventoryIcon" : "project45-neo-assaultrifle-icon.png",
+
+  "animationParts" : {
+    "middle" : "project45-neo-assaultrifle.png",
+    "middleFullbright" : "",
+    "charge": "",
+    "chargeFullbright": "",
+    "magazine": "project45-neo-assaultrifle-mag.png",
+    "magazineFullbright": ""
+  },
+
+  "animationCustom": {
+    "particleEmitters": {
+      "ejectionPort": {
+        "particles": [
+          {"particle": "project45bulletcase"}
+        ]
+      },
+      "magazine": {
+        "particles": [
+          {"particle": "project45assaultriflemag"}
+        ]
+      }
+    },
+
+    "sounds": {
+      "fireStart": ["/assetmissing.wav"],
+      "fireLoop": ["/assetmissing.wav"],
+      "fireEnd": ["/assetmissing.wav"],
+      "fire" : [
+        "/sfx/project45-synthetikmechanics/fires/fire_ar_1.ogg",
+        "/sfx/project45-synthetikmechanics/fires/fire_ar_2.ogg",
+        "/sfx/project45-synthetikmechanics/fires/fire_ar_3.ogg"
+      ]
+    }
+  },
+
+  "project45GunModInfo":{
+    "category": "ballistic",
+    "acceptsAmmoTypes":{
+      "ballistic": true
+    },
+    "acceptsAmmoArchetypes":{
+      "generic": true
+    },
+    "acceptsModSlot": {
+      "rail": true,
+      "sights": true,
+      "underbarrel": true,
+      "stock": false,
+      "muzzle": true
+    }
+  },
+
+  "baseOffset" : [1, 0.125],
+  "muzzleOffset" : [2.25, 0.375],
+  "ejectionPortOffset": [-0.25, 0.5],
+  "magazineOffset": [0, 0],
+
+  "scripts" : ["/items/active/weapons/ranged/project45gunneo.lua"],
+    
+  "primaryAbilityType": "project45gunfire",
+  "primaryAbility": {
+    "maxAmmo": 30,
+    "bulletsPerReload": 30,
+    "semi": true,
+    "burstCount": 3,
+    "recoilAmount": 10,
+    "maxRecoilDeg": 30,
+    "cycleTime": 0.05,
+    "fireTime": 0.5,
+    "projectileKind": "projectile",
+    "laser":{
+      "enabled": true
+    }
+  },
+
+  "builder" : "/items/buildscripts/buildproject45neoneo.lua"
+}

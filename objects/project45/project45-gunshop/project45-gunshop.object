@@ -78,7 +78,7 @@
         "project45-neo-revolver",
         "project45-submachinegun",
         "project45-shotgun",
-        "project45-assaultrifle",
+        "project45-neo-assaultrifle",
         "project45-garand",
         "project45-neo-huntingrifle",
         "project45-sniperrifle",
@@ -93,7 +93,8 @@
         "project45-accelerator",
         "project45-assaultenergygun",
         "project45-energygun",
-        "project45-neo-gaussrifle"
+        "project45-neo-gaussrifle",
+        "project45-neb-zweibrandyr"
       ],
       "mods": [
         // abilities

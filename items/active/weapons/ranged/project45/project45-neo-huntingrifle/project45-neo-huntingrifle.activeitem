@@ -14,6 +14,23 @@
   "muzzleFlashColor": [255, 255, 200],
   "inventoryIcon" : "project45-neo-huntingrifle-icon.png",
 
+  "project45GunModInfo":{
+    "category": "ballistic",
+    "acceptsAmmoTypes":{
+      "ballistic": true
+    },
+    "acceptsAmmoArchetypes":{
+      "generic": true
+    },
+    "acceptsModSlot": {
+      "rail": false,
+      "sights": true,
+      "underbarrel": false,
+      "stock": false,
+      "muzzle": true
+    }
+  },
+
   "animationParts" : {
     "middle" : "project45-neo-huntingrifle.png",
     "middleFullbright" : "",
@@ -46,64 +63,6 @@
       "boltPull" : ["/sfx/project45-synthetikmechanics/reloads/boltpull_lightbolt.ogg"],
       "boltPush" : ["/sfx/project45-synthetikmechanics/reloads/boltpush_lightbolt.ogg"],
       "fire" : ["/sfx/project45-synthetikmechanics/fires/fire_rifle.ogg"]
-    },
-    "animatedParts": {
-      "parts":{
-        "charge":{
-          "partStates":{
-            "charge":{
-              "off": {
-                "properties": {
-                  "image": "<partImage>:charging.1"
-                }
-              }
-            }
-          }
-        }
-      },
-      "stateTypes": {
-        "charge":{
-          "states":{
-            "charging":{
-              "frames": 2
-            }
-          }
-        },
-        "gun": {
-          "states":{
-            "idle": {
-              "frames": 1
-            },
-            "firing": {
-              "frames": 1
-            },
-            "firingLoop": {
-              "frames": 1
-            },
-            "ejecting": {
-              "frames": 6
-            },
-            "boltPulling": {
-              "frames": 6
-            },
-            "ejected": {
-              "frames": 1
-            },
-            "feeding": {
-              "frames": 6
-            },
-            "boltPushing": {
-              "frames": 6
-            },
-            "jammed": {
-              "frames": 1
-            },
-            "unjamming": {
-              "frames": 1
-            }
-          }
-        }
-      }
     }
   },
 

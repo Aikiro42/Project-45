@@ -165,7 +165,7 @@ function Project45GunFire:init()
   self.stances = self.stances or {}
   local finalAimStance = self.stances.aimStance or {}
   self.stances.aimStance = util.mergeTable(defaultAimStance, finalAimStance)
-    
+  self.recoverDelayTimer = 0
   if storage.jamAmount <= 0
   and storage.ammo >= 0
   then
@@ -178,7 +178,7 @@ function Project45GunFire:init()
       self:setStance(self.stances.empty)
     end
   end
-  self:recoil(true, 1, 45) -- you're bringing the gun up
+  self:recoil(true, 1, 45, 0) -- you're bringing the gun up
 
 end
 
@@ -841,7 +841,7 @@ function Project45GunFire:discardCasings(numCasings)
 end
 
 -- Kicks gun muzzle up and backward, shakes screen
-function Project45GunFire:recoil(down, mult, amount)
+function Project45GunFire:recoil(down, mult, amount, recoverDelay)
   local mult = mult or self.recoilMult
   mult = down and -mult or mult
   self.weapon.relativeWeaponRotation = math.min(self.weapon.relativeWeaponRotation, util.toRadians(self.maxRecoilDeg / 2)) + util.toRadians((amount or self.recoilAmount) * mult/2)
@@ -853,6 +853,7 @@ function Project45GunFire:recoil(down, mult, amount)
   end
   self.weapon.relativeWeaponRotation = self.weapon.relativeWeaponRotation + randRecoil/2
   storage.stanceProgress = 0
+  self.recoverDelayTimer = recoverDelay or self.recoverDelay
 end
 
 -- Ejects mag
@@ -1171,6 +1172,11 @@ function Project45GunFire:updateStance()
   if self.weapon.stance == self.stances.reloading
   or self.weapon.stance == self.stances.loadRound
   then return end
+
+  if self.recoverDelayTimer > 0 then
+    self.recoverDelayTimer = self.recoverDelayTimer - self.dt
+    return
+  end
 
   local offset_i = self.weapon.weaponOffset
   local offset_o = self.weapon.stance.weaponOffset or {0, 0}
