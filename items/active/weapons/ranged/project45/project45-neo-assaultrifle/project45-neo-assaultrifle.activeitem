@@ -79,10 +79,12 @@
     "bulletsPerReload": 30,
     "semi": true,
     "burstCount": 3,
-    "recoilAmount": 10,
+    "inaccuracy": 3,
+    "recoilAmount": 1,
     "maxRecoilDeg": 30,
+    "recoverDelay": 0.1,
     "cycleTime": 0.05,
-    "fireTime": 0.5,
+    "fireTime": 0.25,
     "projectileKind": "projectile",
     "laser":{
       "enabled": true
