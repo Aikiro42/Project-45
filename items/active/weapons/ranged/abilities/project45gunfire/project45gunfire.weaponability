@@ -124,11 +124,13 @@
       "beamDamageConfig": {
         "statusEffects" : [ ],
         "damageSourceKind" : "plasma",
-        "knockback" : 2
+        "knockback" : 2,
+        "timeout": 0.1
       },
       
       // if true, consumes ammo over time.
       // Otherwise, will only consume ammo every time the beam starts
+      // set to true if gun is not semi
       "consumeAmmoOverTime": true,
 
       // determines if gun transists to ejecting state if trigger is released

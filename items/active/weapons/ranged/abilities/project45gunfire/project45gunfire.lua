@@ -520,13 +520,7 @@ function Project45GunFire:feeding()
 
   -- prevent triggering
   self.triggered = self.semi or self.reloadTimer >= 0
-  --[[
-  if self.chargeTime + self.overchargeTime > 0 and self:triggering() then
-    self.triggered = self.semi or self.reloadTimer >= 0 or self.manualFeed
-  else
-    self.triggered = self.semi or self.reloadTimer >= 0
-  end
-  --]]
+  
   self.reloadTimer = -1  -- mark end of reload
   activeItem.setScriptedAnimationParameter("reloadTimer", self.reloadTimer)
   self.isFiring = false
@@ -750,25 +744,6 @@ function Project45GunFire:jam()
   end
   return false
 end
---[[
-function Project45GunFire:beginAim()
-  -- get previous weapon stance
-  local prevStance = self.weapon.stance
-  if not prevStance then return end
-
-  -- set stance to aiming stance
-  self.weapon:setStance(self.stances.aimStance)
-
-  -- revert weapon stance manually
-  self.weapon.weaponOffset = prevStance.weaponOffset or {0, 0}
-  -- self.weapon.aimAngle, self.weapon.aimDirection = activeItem.aimAngleAndDirection(0, activeItem.ownerAimPosition())
-  self.weapon.relativeWeaponRotation = util.toRadians(prevStance.weaponRotation)
-  self.weapon.relativeArmRotation = util.toRadians(prevStance.armRotation)
-
-  -- restart stance progress
-  storage.stanceProgress = 0
-end
---]]
 
 function Project45GunFire:muzzleFlash()
   if self.projectileKind ~= "beam" then
@@ -844,14 +819,20 @@ end
 function Project45GunFire:recoil(down, mult, amount, recoverDelay)
   local mult = mult or self.recoilMult
   mult = down and -mult or mult
+  
+  -- recoil
   self.weapon.relativeWeaponRotation = math.min(self.weapon.relativeWeaponRotation, util.toRadians(self.maxRecoilDeg / 2)) + util.toRadians((amount or self.recoilAmount) * mult/2)
   self.weapon.relativeArmRotation = math.min(self.weapon.relativeArmRotation, util.toRadians(self.maxRecoilDeg / 2)) + util.toRadians((amount or self.recoilAmount) * mult/2)
   self.weapon.weaponOffset = {-0.125, 0}
-  local randRecoil = util.toRadians(sb.nrand(self.currentInaccuracy, 0) * self.recoilMult)
+
+  -- inaccuracy
+  local inaccuracy = util.toRadians(sb.nrand(self.currentInaccuracy, 0) * self.recoilMult)
   if self.recoilUpOnly then
-    randRecoil = math.abs(randRecoil)
+    inaccuracy = math.abs(inaccuracy)
   end
-  self.weapon.relativeWeaponRotation = self.weapon.relativeWeaponRotation + randRecoil/2
+  self.weapon.relativeWeaponRotation = self.weapon.relativeWeaponRotation + inaccuracy/2
+  
+  -- recover delay
   storage.stanceProgress = 0
   self.recoverDelayTimer = recoverDelay or self.recoverDelay
 end
@@ -1014,7 +995,7 @@ function Project45GunFire:updateCharge()
 
   -- update current charge frame (1 to n)
   if self.progressiveCharge then
-    self.chargeFrame = math.max(1, math.ceil(self.chargeFrames * (self.chargeTimer / (self.chargeTime + self.overchargeTime))))
+    self.chargeFrame = self:clamp(math.ceil(self.chargeFrames * (self.chargeTimer / (self.chargeTime + (self.fireBeforeOvercharge and 0 or self.overchargeTime)))), 1, self.chargeFrames)
     animator.setGlobalTag("chargeFrame", self.chargeFrame)
   end
 
@@ -1026,7 +1007,7 @@ end
 -- If not setting the value, the ammo is clamped
 -- between 0 and max ammo.
 function Project45GunFire:updateAmmo(delta, willReplace)
-  storage.ammo = willReplace and delta or clamp(storage.ammo + delta, 0, self.maxAmmo)
+  storage.ammo = willReplace and delta or self:clamp(storage.ammo + delta, 0, self.maxAmmo)
   -- update visual info
   self:updateMagVisuals()
   activeItem.setScriptedAnimationParameter("ammo", storage.ammo)
@@ -1072,21 +1053,9 @@ end
 -- Updates the gun's jam amount.
 -- Amount is clamped between 0 and 1.
 function Project45GunFire:updateJamAmount(delta, set)
-  storage.jamAmount = set and delta or clamp(storage.jamAmount + delta, 0, 1)
+  storage.jamAmount = set and delta or self:clamp(storage.jamAmount + delta, 0, 1)
   activeItem.setScriptedAnimationParameter("jamAmount", storage.jamAmount)
 end
-
---[[
--- this is honestly unsafe imo.
--- While this function could be used for `updateAmmo()` and `updateJamAmount()`
--- some scripted animation parameters may need to be named differently, depending on whether
--- ammo or jamAmount is used by an alt ability.
--- Unlikely, but I'm not taking any chances.
-function Project45GunFire:updateIndicatedVariable(var, delta, set, clampMin, clampMax):
-  storage[var] = set and delta or clamp(storage[var] + delta, clampMin, clampMax)
-  activeItem.setScriptedAnimationParameter(var, storage[var])
-end
---]]
 
 function Project45GunFire:updateCycleTime()
   -- don't bother updating cycle time if cycleTimeProgress wasn't even instantiated
@@ -1450,14 +1419,9 @@ end
 
 function Project45GunFire:debugFunction()
   if not self.debug then return end
-  sb.logInfo("current screen shake: " .. self.currentScreenShake)
 end
 
-function diceroll(chance)
-  return math.random() <= chance
-end
-
-function clamp(x, min, max)
+function Project45GunFire:clamp(x, min, max)
   if x < min then
     return min
   elseif x > max then
@@ -1465,4 +1429,8 @@ function clamp(x, min, max)
   else
     return x
   end
+end
+
+function diceroll(chance)
+  return math.random() <= chance
 end

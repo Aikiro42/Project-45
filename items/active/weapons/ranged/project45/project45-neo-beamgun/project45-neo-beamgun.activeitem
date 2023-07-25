@@ -1,0 +1,132 @@
+{
+  "itemName" : "project45-neo-beamgun",
+  "price" : 1000,
+  "maxStack" : 1,
+  "rarity" : "Essential",
+  "description" : "A beam gun.",
+  "shortdescription" : "New Beam Gun",
+  "gunArchetype": "Energy Weapon",
+  "tooltipKind" : "project45gun",
+  "category" : "rifle",
+  "twoHanded" : true,
+  "itemTags" : ["weapon","ranged","rifle"],
+  "level" : 1,
+  "muzzleFlashColor": [200, 255, 255],
+  "inventoryIcon" : "project45-neo-beamgun-icon.png",
+
+  "animationParts" : {
+    "middle" : "project45-neo-beamgun.png",
+    "middleFullbright" : "project45-neo-beamgun-fullbright.png",
+    "charge": "",
+    "chargeFullbright": "project45-neo-beamgun-charge-fullbright.png",
+    "magazine": "project45-neo-beamgun-mag.png",
+    "magazineFullbright": "",
+    "muzzleFlash": "/items/active/weapons/ranged/muzzleflash.png"
+  },
+
+  "project45GunModInfo": {
+    "category": "energy",
+    "acceptsAmmoTypes": {
+      "energy": true
+    },
+    "acceptsAmmoArchetypes": {
+      "generic": true,
+      "shotgun": true,
+      "beam": true
+    },
+    "acceptsModSlot": {
+      "rail": false,
+      "sights": true,
+      "muzzle": false,
+      "stock": false,
+      "underbarrel": false,
+      
+      "receiver": true,
+      "material": true,
+      "barrel": true,
+      "grip": true,
+      "magazine": true
+    }
+  },
+
+  "animationCustom": {
+    "particleEmitters": {
+      "magazine": {
+        "particles": [
+          {"particle": "project45gaussriflemag"}
+        ]
+      },
+      "ejectionPort": {
+        "particles": [
+
+        ]
+      }
+    },
+    "animatedParts": {
+      "parts":{
+        "chargeFullbright": {"properties": {
+          "zLevel": 2
+        }},
+        "middleFullbright": {"properties": {
+          "zLevel": 3
+        }}
+      },
+      "stateTypes": {
+        "charge":{
+          "states":{
+            "charging":{
+              "frames": 5
+            }
+          }
+        }
+      }
+    }
+  },
+
+  "baseOffset" : [0.25, 0.125],
+  "muzzleOffset" : [1.5, 0.125],
+  "ejectionPortOffset": [-0.25, 0.5],
+  "magazineOffset": [0.25, 0],
+
+  "sightsOffset": [0.5, 1.125],
+
+  "scripts" : ["/items/active/weapons/ranged/project45gunneo.lua"],
+    
+  "primaryAbilityType": "project45gunfire",
+  "primaryAbility": {
+    "baseDamage": 0.1,
+    "maxAmmo": 100,
+    "bulletsPerReload": 100,
+    
+    "semi": false,
+    "manualFeed": false,
+    "slamFire": false,
+    
+    "resetChargeOnFire": false,
+    "fireBeforeOvercharge": true,
+    "chargeWhenObstructed": true,
+
+    "hideMuzzleSmoke": true,
+    "chargeSmoke": false,
+
+    "cycleTime": 0.01,
+    "chargeFrames": 5,
+    "chargeTime": 0.5,
+    "overchargeTime": 1,
+
+    "inaccuracy": 1, // affects arm movement as the trigger is pulled
+    "recoilDelay": 0.25,
+    "recoilAmount": 3, // amount of recoil per shot, in degrees; arm and weapon will rotate by half of this
+    "maxRecoilDeg": 25, // the most the arm and weapon will rotate, in degrees.
+    "recoverTime": 5, // time it takes to recover aim completely, in seconds
+    "screenShakeAmount": [0.5, 0.1], // amount of screenshake per shot
+
+    "beamParameters": {
+      "consumeAmmoOverTime": true
+    },
+
+    "projectileKind": "beam"
+  },
+
+  "builder" : "/items/buildscripts/buildproject45neoneo.lua"
+}

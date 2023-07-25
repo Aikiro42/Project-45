@@ -157,7 +157,7 @@ function renderLaser()
     width = laserWidth,
     fullbright = true,
     color = laserColor
-  }, "Player+1")
+  }, "Player-2")
 
 end
 

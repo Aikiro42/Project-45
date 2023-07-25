@@ -141,16 +141,18 @@ function hitscanLib:fireBeam()
     local beamStart = hitreg[1]
     local beamEnd = nil
     
-    while (self.chargeTime + self.overchargeTime <= 0 or not self.semi) and (
-      self:triggering()
-    ) or (
+    -- loop to maintain beam fire
+    while ((self.chargeTime + self.overchargeTime <= 0 or not self.semi)
+    and self:triggering()
+    or (
       not self:triggering()
       and self.chargeTimer > 0
-    )
-    and (not self.consumeAmmoOverTime or storage.ammo > 0)
+      and self.semi
+    ))
+    and (not self.beamParameters.consumeAmmoOverTime or storage.ammo > 0)
     and not world.lineTileCollision(mcontroller.position(), self:firePosition())
     do
-  
+
       self.isFiring = true
   
       hitreg = self:hitscan(true)
@@ -160,7 +162,7 @@ function hitscanLib:fireBeam()
       if ammoConsumeTimer >= beamTimeout then
         -- TODO: if self:jam() then break end
         ammoConsumeTimer = 0
-        if self.consumeAmmoOverTime or not consumedAmmo then
+        if self.beamParameters.consumeAmmoOverTime or not consumedAmmo then
           self:updateAmmo(-self.ammoPerShot)
           storage.unejectedCasings = storage.unejectedCasings + math.min(storage.ammo, self.ammoPerShot)
           consumedAmmo = true
@@ -197,8 +199,7 @@ function hitscanLib:fireBeam()
             {actualMuzzlePosition[1], actualMuzzlePosition[2] + self.beamParameters.beamWidth / 16},
             {actualDamageEnd[1], actualDamageEnd[2] + self.beamParameters.beamWidth / 16},
             {actualDamageEnd[1], actualDamageEnd[2] - self.beamParameters.beamWidth / 16}
-          },
-          0)
+          })
       else
         self.weapon:setDamage()
       end
@@ -213,7 +214,7 @@ function hitscanLib:fireBeam()
         self:screenShake(self.currentScreenShake, 0.01)
         recoilTimer = 0
       end
-      self:recoil(false, 0.1)
+      self:recoil(false, self.recoilMult * 0.1)
   
       activeItem.setScriptedAnimationParameter("beamLine", {beamStart, beamEnd})
       activeItem.setScriptedAnimationParameter("beamWidth", self.beamParameters.beamWidth + sb.nrand(self.beamParameters.beamJitter, 0))
