@@ -95,8 +95,8 @@
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
     "baseDamage": 0.1,
-    "maxAmmo": 100,
-    "bulletsPerReload": 100,
+    "maxAmmo": 10,
+    "bulletsPerReload": 10,
     
     "semi": false,
     "manualFeed": false,
@@ -109,10 +109,11 @@
     "hideMuzzleSmoke": true,
     "chargeSmoke": false,
 
-    "cycleTime": 0.01,
+    "cycleTime": 0.1,
     "chargeFrames": 5,
-    "chargeTime": 0.5,
+    "chargeTime": 0,
     "overchargeTime": 1,
+    "animateBeforeOvercharge": true,
 
     "inaccuracy": 1, // affects arm movement as the trigger is pulled
     "recoilDelay": 0.25,

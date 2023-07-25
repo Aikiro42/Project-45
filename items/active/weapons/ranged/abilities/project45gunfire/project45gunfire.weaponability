@@ -68,7 +68,8 @@
     "projectileParameters": {
       "power": 100,
       "damageType": "IgnoresDef",
-      "statusEffects": []
+      "statusEffects": [],
+      "piercing": false
     },
 
     // You can make the muzzle shoot an additional projectile this way.
@@ -294,6 +295,14 @@
     // Spawns more smoke puffs around specified offset region the higher the charge
     "chargeSmoke": false,
     "maxChargeSmokeEmissionRate": 25,
+    
+    /*
+    If true, progressive weapon charge is animated based on initial charge time.
+      If charge time is zero, overcharge time is used instead.
+    Otherwise, progressive weapon charge is animated based on total charge time (charge + overcharge).
+    This setting also affects charge smoke emission rate.
+    */
+    "animateBeforeOvercharge": false,
 
 
     // ____________________________________[ Stances ]____________________________________

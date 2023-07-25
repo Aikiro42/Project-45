@@ -976,14 +976,20 @@ function Project45GunFire:updateCharge()
   elseif self.chargeTimer <= 0 and self.chargeLoopPlaying then
     animator.stopAllSounds("chargeDrone")    
     animator.stopAllSounds("chargeWhine")
-    self.chargeLoopPlaying = false 
+    self.chargeLoopPlaying = false
   end
 
-  -- barrel smoke
+  local timeBasis = self.chargeTime
+  if self.animateBeforeOvercharge and timeBasis <= 0 then
+    timeBasis = self.overchargeTime
+  else
+    timeBasis = timeBasis + self.overchargeTime
+  end
 
+  -- charge smoke
   if self.chargeSmoke and not self.performanceMode then
     animator.setParticleEmitterActive("chargeSmoke", true)
-    animator.setParticleEmitterEmissionRate("chargeSmoke", math.floor((self.maxChargeSmokeEmissionRate or 50) * (self.chargeTimer/(self.chargeTime + self.overchargeTime))))
+    animator.setParticleEmitterEmissionRate("chargeSmoke", math.floor(self.maxChargeSmokeEmissionRate * self.chargeTimer / timeBasis))
   end
 
   if self.chargeTimer > 0 then
@@ -992,10 +998,9 @@ function Project45GunFire:updateCharge()
     animator.setAnimationState("charge", "off")
   end
 
-
   -- update current charge frame (1 to n)
   if self.progressiveCharge then
-    self.chargeFrame = self:clamp(math.ceil(self.chargeFrames * (self.chargeTimer / (self.chargeTime + (self.fireBeforeOvercharge and 0 or self.overchargeTime)))), 1, self.chargeFrames)
+    self.chargeFrame = self:clamp(math.ceil(self.chargeFrames * (self.chargeTimer / timeBasis)), 1, self.chargeFrames)
     animator.setGlobalTag("chargeFrame", self.chargeFrame)
   end
 
