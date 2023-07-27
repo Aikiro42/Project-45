@@ -53,7 +53,7 @@
     "particleEmitters": {
       "magazine": {
         "particles": [
-          {"particle": "project45gaussriflemag"}
+          {"particle": "project45energygunmag3"}
         ]
       },
       "ejectionPort": {
