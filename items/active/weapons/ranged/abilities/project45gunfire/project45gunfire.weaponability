@@ -190,8 +190,9 @@
     "inaccuracy": 5, 
     "recoilUpOnly": false, // forces inaccuracy to cause the weapon to go upwards only
     "recoilAmount": 3 , // amount of recoil per shot, in degrees; arm and weapon will rotate by half of this
-    "maxRecoilDeg": 15, // the most the arm and weapon will rotate, in degrees.
+    "recoilMaxDeg": 15, // the most the arm and weapon will rotate, in degrees.
     "recoilMult": 1, // multiplies recoilAmount
+    "recoilCrouchMult": 0.5, // mulitplies recoil and recoilMaxDeg when crouching
     "recoverTime": 1.5, // time it takes to recover aim completely, in seconds
     "recoverDelay": 0.1, // time before aim is recovered
     "recoilMomentum": 0,  // amount of momentum applied to player when firing the gun; canceled by crouching

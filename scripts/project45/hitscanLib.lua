@@ -10,37 +10,66 @@ function hitscanLib:fireHitscan(projectileType)
     -- scan hit down range
     -- hitreg[1] is where the bullet trail emanates,
     -- hitreg[2] is where the bullet trail terminates
-    local hitReg = self:hitscan(false)
-    local finalDamage = self:damagePerShot(true)
-    local damageConfig = {
-      -- we included activeItem.ownerPowerMultiplier() in
-      -- self:damagePerShot() so we cancel it
-      baseDamage = finalDamage,
-      timeout = self.currentCycleTime
-    }
 
-    damageConfig = sb.jsonMerge(damageConfig, self.hitscanParameters.hitscanDamageConfig or {})
-    
+    local hitscanInfos = {}
+
+    -- get damage source (line) information
+    for i=1, (self.projectileCount * self:rollMultishot()) do
+
+      local hitReg = self:hitscan(false)
+      local damageArea = {
+        vec2.sub(hitReg[1], mcontroller.position()),
+        vec2.sub(hitReg[2], mcontroller.position())
+      }
+      
+      local finalDamage = self:damagePerShot(true)
+      local damageConfig = {
+        -- we included activeItem.ownerPowerMultiplier() in
+        -- self:damagePerShot() so we cancel it
+        baseDamage = finalDamage,
+        timeout = self.currentCycleTime,
+      }
+      damageConfig = sb.jsonMerge(damageConfig, self.hitscanParameters.hitscanDamageConfig or {})
+      damageConfig.timeoutGroup = "project45projectile" .. i
+
+      table.insert(hitscanInfos, {
+          damageConfig,
+          damageArea,
+          hitReg,
+          finalDamage
+        }
+      )
+
+    end
+    --]]
+
+    -- generate damage source lines
     -- coordinates are based off mcontroller position
-    self.weapon:setOwnerDamageAreas(damageConfig, {{
-      vec2.sub(hitReg[1], mcontroller.position()),
-      vec2.sub(hitReg[2], mcontroller.position())
-    }})
-
+    self.weapon.ownerDamageWasSet = true
+    self.weapon.ownerDamageCleared = false
+    local finalDamageSources = {}
+    for _, hitscanInfo in ipairs(hitscanInfos) do
+      table.insert(finalDamageSources, self.weapon:damageSource(hitscanInfo[1], hitscanInfo[2]))
+    end
+    activeItem.setDamageSources(finalDamageSources)
+  
     -- bullet trail info inserted to projectile stack that's being passed to the animation script
     -- each bullet trail in the stack is rendered, and the lifetime is updated in this very script too
     local life = self.hitscanParameters.hitscanFadeTime or 0.5
-    table.insert(self.projectileStack, {
-      width = self.hitscanParameters.hitscanWidth,
-      origin = hitReg[1],
-      destination = hitReg[2],
-      lifetime = life,
-      maxLifetime = life,
-      color = self.hitscanParameters.hitscanColor
-    })
+    for _, hitscanInfo in ipairs(hitscanInfos) do
+      
+      table.insert(self.projectileStack, {
+        width = self.hitscanParameters.hitscanWidth,
+        origin = hitscanInfo[3][1],
+        destination = hitscanInfo[3][2],
+        lifetime = life,
+        maxLifetime = life,
+        color = self.hitscanParameters.hitscanColor
+      })
+      
+    end
 
     -- hitscan vfx
-    
     local hitscanActionsOnReap = {
       {
         action="loop",
@@ -78,21 +107,21 @@ function hitscanLib:fireHitscan(projectileType)
       table.insert(hitscanActionsOnReap, a)
     end
     
-    -- sb.logInfo(self.projectileParameters.hitregPower)
-    world.spawnProjectile(
-      "invisibleprojectile",
-      hitReg[2],
-      activeItem.ownerEntityId(),
-      self:aimVector(3.14),
-      false,
-      {
-        damageType = "NoDamage",
-        power = finalDamage,
-        timeToLive = 0,
-        actionOnReap = hitscanActionsOnReap
-      }
-    )
-    --]]
+    for _, hitscanInfo in ipairs(hitscanInfos) do
+      world.spawnProjectile(
+        "invisibleprojectile",
+        hitscanInfo[3][2],
+        activeItem.ownerEntityId(),
+        self:aimVector(3.14),
+        false,
+        {
+          damageType = "NoDamage",
+          power = hitscanInfo[4],
+          timeToLive = 0,
+          actionOnReap = hitscanActionsOnReap
+        }
+      )
+    end
 
 end
 
@@ -305,7 +334,7 @@ function hitscanLib:fireBeam()
 end
 
 -- Utility function that scans for an entity to damage.
-function hitscanLib:hitscan(isLaser)
+function hitscanLib:hitscan(isLaser, degAdd)
 
   local scanLength, ignoresTerrain, punchThrough
 
@@ -330,7 +359,7 @@ function hitscanLib:hitscan(isLaser)
   end
 
   local scanOrig = self:firePosition()
-  local scanDest = vec2.add(scanOrig, vec2.mul(self:aimVector(isLaser and 0 or self.spread), scanLength))
+  local scanDest = vec2.add(scanOrig, vec2.mul(self:aimVector(isLaser and 0 or self.spread, degAdd or 0), scanLength))
   local fullScanDest = not ignoresTerrain and world.lineCollision(scanOrig, scanDest, {"Block", "Dynamic"}) or scanDest
 
   punchThrough = punchThrough or 0

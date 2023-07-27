@@ -6,7 +6,7 @@ require "/scripts/project45/hitscanLib.lua"
 
 local BAD, OK, GOOD, PERFECT = 1, 2, 3, 4
 local reloadRatingList = {"BAD", "OK", "GOOD", "PERFECT"}
-local debugTime = 0.1
+local debugTime = 1
 
 Project45GunFire = WeaponAbility:new()
 
@@ -58,8 +58,8 @@ function Project45GunFire:init()
   -- self.slamFire only matters if the gun is manual-fed (bolt-action)
   self.slamFire = self.manualFeed and self.slamFire
 
-  -- Let recoilMult affect maxRecoilDeg
-  self.maxRecoilDeg = self.maxRecoilDeg * self.recoilMult
+  -- Let recoilMult affect recoilMaxDeg
+  self.recoilMaxDeg = self.recoilMaxDeg * self.recoilMult
 
   -- only load rounds through bolt if gun has internal mag
   self.loadRoundsThroughBolt = self.internalMag and self.loadRoundsThroughBolt
@@ -73,7 +73,7 @@ function Project45GunFire:init()
       mobile = self.inaccuracy*2,  -- double inaccuracy while running
       walking = self.inaccuracy,  -- standard inaccuracy while walking
       stationary = self.inaccuracy/2, -- halved inaccuracy while standing
-      crouching = 0 -- nil inaccuracy while crouching
+      crouching = self.inaccuracy/4 -- quartered inaccuracy while crouching
     }
   end
   self.currentInaccuracy = self.inaccuracy.mobile
@@ -329,7 +329,8 @@ function Project45GunFire:firing()
 
   self:startFireLoop()
   
-  for i = 1, self.projectileCount * self:rollMultishot() do
+  -- for i = 1, self.projectileCount * self:rollMultishot() do  
+  for i = 1, (self.projectileKind == "projectile" and self.projectileCount * self:rollMultishot() or 1) do
     self:fireProjectile()
   end
   self:muzzleFlash()
@@ -819,10 +820,12 @@ end
 function Project45GunFire:recoil(down, mult, amount, recoverDelay)
   local mult = mult or self.recoilMult
   mult = down and -mult or mult
-  
+  local crouchMult = mcontroller.crouching() and self.recoilCrouchMult or 1
+  mult = mult * crouchMult
+
   -- recoil
-  self.weapon.relativeWeaponRotation = math.min(self.weapon.relativeWeaponRotation, util.toRadians(self.maxRecoilDeg / 2)) + util.toRadians((amount or self.recoilAmount) * mult/2)
-  self.weapon.relativeArmRotation = math.min(self.weapon.relativeArmRotation, util.toRadians(self.maxRecoilDeg / 2)) + util.toRadians((amount or self.recoilAmount) * mult/2)
+  self.weapon.relativeWeaponRotation = math.min(self.weapon.relativeWeaponRotation, util.toRadians(self.recoilMaxDeg * crouchMult / 2)) + util.toRadians((amount or self.recoilAmount) * mult/2)
+  self.weapon.relativeArmRotation = math.min(self.weapon.relativeArmRotation, util.toRadians(self.recoilMaxDeg * crouchMult / 2)) + util.toRadians((amount or self.recoilAmount) * mult/2)
   self.weapon.weaponOffset = {-0.125, 0}
 
   -- inaccuracy
@@ -1262,7 +1265,13 @@ function Project45GunFire:reloadRating()
 end
 
 function Project45GunFire:rollMultishot()
-  return diceroll(self.multishot - math.floor(self.multishot)) and math.floor(self.multishot) or math.ceil(self.multishot)
+  --[[
+    
+function diceroll(chance)
+  return math.random() <= 0.1
+end
+    --]]
+  return diceroll(self.multishot - math.floor(self.multishot)) and math.ceil(self.multishot) or math.floor(self.multishot)
 end
 
 -- Returns the critical multiplier.
@@ -1303,13 +1312,13 @@ end
 -- Returns the angle the gun is pointed
 -- This is different from the vanilla aim vector, which only takes into account the entity's position
 -- and the entity's aim position
-function Project45GunFire:aimVector(spread)
+function Project45GunFire:aimVector(spread, degAdd)
   local firePos = self:firePosition()
   local basePos =  vec2.add(mcontroller.position(), activeItem.handPosition(vec2.rotate(vec2.add({self.weapon.muzzleOffset[1] - 1, self.weapon.muzzleOffset[2]}, self.weapon.weaponOffset), self.weapon.relativeWeaponRotation)))
   -- world.debugPoint(firePos, "cyan")
   -- world.debugPoint(basePos, "cyan")
   local aimVector = vec2.norm(world.distance(firePos, basePos))
-  aimVector = vec2.rotate(aimVector, sb.nrand((util.toRadians(spread or 0)), 0))
+  aimVector = vec2.rotate(aimVector, sb.nrand((util.toRadians(spread or 0)), 0) + util.toRadians(degAdd or 0))
   return aimVector
 end
 
@@ -1378,6 +1387,10 @@ function Project45GunFire:loadGunState()
   storage.jamAmount = storage.jamAmount or loadedGunState.jamAmount
   activeItem.setScriptedAnimationParameter("jamAmount", storage.jamAmount)
   animator.setAnimationState("bolt", loadedGunState.bolt)
+  sb.logInfo(loadedGunState.gunAnimation)
+  if loadedGunState.bolt == "open" then
+    loadedGunState.gunAnimation = "ejected"
+  end
   animator.setAnimationState("gun", loadedGunState.gunAnimation)
 
 end
@@ -1424,6 +1437,7 @@ end
 
 function Project45GunFire:debugFunction()
   if not self.debug then return end
+
 end
 
 function Project45GunFire:clamp(x, min, max)

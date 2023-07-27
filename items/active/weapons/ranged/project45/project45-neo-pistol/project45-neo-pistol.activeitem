@@ -133,6 +133,9 @@
     "maxAmmo": 16,
     "bulletsPerReload": 16,
     "inaccuracy": 3,
+    "recoilAmount": 1,
+    "recoilMaxDeg": 15,
+    "recoverDelay": 0,
     "semi": true,
     "cycleTime": 0.1,
     "projectileKind": "projectile",
@@ -140,7 +143,7 @@
     // "reloadTime": 10,
 
     "laser":{
-      "enabled": true
+      "enabled": false
     },
   
     "stances":{

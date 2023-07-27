@@ -118,7 +118,7 @@
     "inaccuracy": 1, // affects arm movement as the trigger is pulled
     "recoilDelay": 0.25,
     "recoilAmount": 3, // amount of recoil per shot, in degrees; arm and weapon will rotate by half of this
-    "maxRecoilDeg": 25, // the most the arm and weapon will rotate, in degrees.
+    "recoilMaxDeg": 25, // the most the arm and weapon will rotate, in degrees.
     "recoverTime": 5, // time it takes to recover aim completely, in seconds
     "screenShakeAmount": [0.5, 0.1], // amount of screenshake per shot
 

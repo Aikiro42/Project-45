@@ -65,7 +65,7 @@
     "cockTime": 0.6,
     "screenShakeAmount": 2,
     "recoilAmount": 15,
-    "maxRecoilDeg": 45,
+    "recoilMaxDeg": 45,
     "recoverTime": 5,
     "manualFeed": true,
     "heavyWeapon": true,
