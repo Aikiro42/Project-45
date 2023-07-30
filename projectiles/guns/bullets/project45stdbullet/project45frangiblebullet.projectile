@@ -1,10 +1,8 @@
 {
-  "projectileName" : "project45stdbullet",
+  "projectileName" : "project45frangiblebullet",
   "image" : "project45stdbullet.png",
-  // uncomment these lines if u need the streaks to work
-  // "scripts": ["project45stdbullet.lua"],
-  // "physics" : "sticky",
-  "physics" : "laser",
+  "scripts": ["project45stdbullet.lua"],
+  "physics" : "sticky",
   "animationCycle" : 0.25,
   "frameNumber" : 1,
   "damageKind" : "standardbullet",
@@ -29,52 +27,7 @@
   "bounces" : 0,
 
   "periodicActions" : [
-    /*
-    {
-      "time" : 0.01,
-      "repeat" : true,
-      "action" : "particle",
-      "rotate" : true,
-      
-      "specification" : {
-        "type" : "textured",
-        "image" : "/projectiles/guns/bullets/project45stdbullet/project45stdbullettrail.png",
-        "position" : [-2, 0],
-        "layer" : "back",
-        "timeToLive" : 0.0,
-        "destructionTime" : 0.25,
-        "destructionAction" : "fade",
-        "fullbright" : false
-      }
 
-    }
-    */
-    
-    /*
-    {
-      "time" : 0.01,
-      "repeat" : true,
-      "action" : "particle",
-      "rotate" : true,
-      
-      "specification" : {
-        "type" : "streak",
-        "layer" : "back",
-        "fullbright" : true,
-        "destructionAction" : "shrink",
-        "size" : 1,
-        "color" : [255, 255, 200, 255],
-        "collidesForeground" : false,
-        "length" : 45,
-        "position" : [0, 0],
-        "timeToLive" : 0,
-        "destructionTime" : 0.2,
-        "initialVelocity" : [0.001, 0],
-        "variance" : {}
-      }
-
-    }
-    //*/
   ],
   "actionOnReap": [
     { 
@@ -94,8 +47,21 @@
     
     */
     {
+      "action": "loop",
+      "count": 2,
+      "body": [
+        {
+          "action" : "projectile",
+          "type" : "project45bulletfrag",
+          "fuzzAngle" : 15,
+          "inheritDamageFactor" : 0.2,
+          "angleAdjust" : 0
+        }
+      ]
+    },
+    {
       "action" : "loop",
-      "count" : 6,
+      "count" : 3,
       "body" : [
         {
           "action" : "particle",

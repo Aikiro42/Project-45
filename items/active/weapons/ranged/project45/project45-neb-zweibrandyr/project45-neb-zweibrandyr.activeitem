@@ -141,6 +141,7 @@
     
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
+    "projectileType": "project45frangiblebullet",
     "cycleTime": 0.1,
     "semi": false,
     "chargeFrames": 1,
@@ -151,7 +152,7 @@
     "bulletsPerReload": 50,
     "magFrames": 1,
     "chargeSmoke": true,
-    "projectileCount": 2,
+    "projectileCount": 1,
     "spread": 1
   },
 
