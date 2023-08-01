@@ -2,15 +2,17 @@
   "projectileName" : "project45bulletfrag",
   "image" : "project45stdbullet.png",
   "physics" : "laser",
+  "piercing": true,
+  
+  "damageKind" : "standardbullet",
+  "statusEffects" : [ ],
+
   "animationCycle" : 0.25,
   "frameNumber" : 1,
-  "damageKind" : "standardbullet",
   "pointLight" : true,
   "lightColor": [75, 75, 75],
   "fullbright": true,
   "flippable" : true,
-  "piercing": false,
-  "statusEffects" : [ ],
   "power" : 5.0,
   "speed" : 241,
   "knockback" : 0,
@@ -25,9 +27,6 @@
   },
   "bounces" : 1,
 
-  "periodicActions" : [
-
-  ],
   "actionOnReap": [
     { 
       "action" : "sound",

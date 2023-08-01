@@ -38,9 +38,6 @@
     },
 
     "sounds": {
-      "fireStart": ["/assetmissing.wav"],
-      "fireLoop": ["/assetmissing.wav"],
-      "fireEnd": ["/assetmissing.wav"],
       "eject": ["/sfx/project45-synthetikmechanics/reloads/ejectmag_revolver.ogg"],
       "boltPush": ["/assetmissing.wav"],
       "boltPull": ["/sfx/project45-synthetikmechanics/reloads/boltpush_revolver.ogg"],
@@ -157,7 +154,7 @@
     // "reloadTime": 10,
 
     "laser":{
-      "enabled": true
+      "enabled": false
     },
   
     "stances":{

@@ -189,10 +189,6 @@
     },
 
     "sounds": {
-      
-      "fireStart": ["/assetmissing.wav"],
-      "fireLoop": ["/assetmissing.wav"],
-      "fireEnd": ["/assetmissing.wav"]
       //*/
     },
     "animatedParts": {

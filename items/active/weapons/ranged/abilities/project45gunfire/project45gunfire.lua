@@ -3,6 +3,7 @@ require "/scripts/interp.lua"
 require "/scripts/poly.lua"
 require "/items/active/weapons/weapon.lua"
 require "/scripts/project45/hitscanLib.lua"
+require "/items/active/weapons/ranged/gunfire.lua"
 
 local BAD, OK, GOOD, PERFECT = 1, 2, 3, 4
 local reloadRatingList = {"BAD", "OK", "GOOD", "PERFECT"}
@@ -66,6 +67,8 @@ function Project45GunFire:init()
 
   self.bulletsPerReload = math.max(1, self.bulletsPerReload)
   self.muzzleSmokeTime = self.muzzleSmokeTime or 1.5
+
+  self.laser.enabled = self.debug
 
   -- let inaccuracy be a table
   if type(self.inaccuracy) ~= "table" then

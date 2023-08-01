@@ -1,10 +1,8 @@
 {
   "projectileName" : "project45stdbullet",
   "image" : "project45stdbullet.png",
-  // uncomment these lines if u need the streaks to work
-  // "scripts": ["project45stdbullet.lua"],
-  // "physics" : "sticky",
-  "physics" : "laser",
+  "scripts": ["project45stdbullet.lua"],
+  "physics" : "sticky",
   "animationCycle" : 0.25,
   "frameNumber" : 1,
   "damageKind" : "standardbullet",
@@ -29,6 +27,7 @@
   "bounces" : 0,
 
   "periodicActions" : [
+    
     /*
     {
       "time" : 0.01,
@@ -40,17 +39,18 @@
         "type" : "textured",
         "image" : "/projectiles/guns/bullets/project45stdbullet/project45stdbullettrail.png",
         "position" : [-2, 0],
+        "initialVelocity":[16, 0],
         "layer" : "back",
-        "timeToLive" : 0.0,
+        "timeToLive" : 0.01,
         "destructionTime" : 0.25,
-        "destructionAction" : "fade",
-        "fullbright" : false
+        "destructionAction" : "shrink",
+        "fullbright" : true
       }
 
     }
-    */
+    //*/
     
-    /*
+    
     {
       "time" : 0.01,
       "repeat" : true,

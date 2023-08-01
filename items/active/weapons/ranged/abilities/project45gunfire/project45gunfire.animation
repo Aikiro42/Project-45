@@ -7,6 +7,21 @@
 
   "animatedParts" : {
     "stateTypes" : {
+
+      // compatibility
+      "firing" : {
+        "default" : "off",
+        "states" : {
+          "off" : {},
+          "fire" : {
+            "frames" : 2,
+            "cycle" : 0.07,
+            "mode" : "transition",
+            "transition" : "off"
+          }
+        }
+      },
+
       "gun" : {
         "default" : "idle",
         "states" : {
@@ -543,9 +558,15 @@
 
   "sounds" : {
     "fire": ["/sfx/project45-synthetikmechanics/fires/fire_pistol.ogg"],
+    /*
     "fireStart": ["/sfx/gun/mech_beamsniper_fire1.ogg"],
     "fireLoop": ["/sfx/gun/mech_beamdrill_loop.ogg"],
     "fireEnd": ["/sfx/gun/mech_beamdrill_winddown.ogg"],
+    */
+    "fireStart": ["/assetmissing.wav"],
+    "fireLoop": ["/assetmissing.wav"],
+    "fireEnd": ["/assetmissing.wav"],
+
     "click": ["/sfx/project45-synthetikmechanics/clicks/click_generic.ogg"],
 
     "jam": ["/sfx/project45-synthetikmechanics/clicks/click_jammed.ogg"],

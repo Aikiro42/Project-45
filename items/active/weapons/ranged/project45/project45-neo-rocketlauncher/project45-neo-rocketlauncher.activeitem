@@ -80,10 +80,7 @@
       "chargeDrone": ["/sfx/interface/sniper_mark_pitch1.ogg"],
 
       "loadRound" : ["/sfx/project45-synthetikmechanics/reloads/loadround_grenadelauncher.ogg"],
-      "eject": ["/assetmissing.wav"],
-      "fireStart": ["/assetmissing.wav"],
-      "fireLoop": ["/assetmissing.wav"],
-      "fireEnd": ["/assetmissing.wav"]
+      "eject": ["/assetmissing.wav"]
 
       //*/
     },

@@ -59,10 +59,7 @@
     },
 
     "sounds": {
-      "fire" : ["/sfx/project45-synthetikmechanics/fires/fire_gauss.ogg"],
-      "fireStart": ["/assetmissing.wav"],
-      "fireLoop": ["/assetmissing.wav"],
-      "fireEnd": ["/assetmissing.wav"]
+      "fire" : ["/sfx/project45-synthetikmechanics/fires/fire_gauss.ogg"]
     },
     "animatedParts": {
       "parts":{

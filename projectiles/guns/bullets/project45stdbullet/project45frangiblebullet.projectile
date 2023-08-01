@@ -27,7 +27,29 @@
   "bounces" : 0,
 
   "periodicActions" : [
+    {
+      "time" : 0.01,
+      "repeat" : true,
+      "action" : "particle",
+      "rotate" : true,
+      
+      "specification" : {
+        "type" : "streak",
+        "layer" : "back",
+        "fullbright" : true,
+        "destructionAction" : "shrink",
+        "size" : 1,
+        "color" : [255, 255, 200, 255],
+        "collidesForeground" : false,
+        "length" : 45,
+        "position" : [0, 0],
+        "timeToLive" : 0,
+        "destructionTime" : 0.2,
+        "initialVelocity" : [0.001, 0],
+        "variance" : {}
+      }
 
+    }
   ],
   "actionOnReap": [
     { 
@@ -38,14 +60,6 @@
         "/sfx/project45-synthetikmechanics/bulletimpacts/bulletimpact_generic_3.ogg"
       ]
     },
-    /*
-    
-    {
-      "action": "config",
-      "file": "/projectiles/explosions/project45_hitexplosion/project45_hitexplosion.config"
-    },
-    
-    */
     {
       "action": "loop",
       "count": 2,

@@ -38,9 +38,6 @@
     },
 
     "sounds": {
-      "fireStart": ["/assetmissing.wav"],
-      "fireLoop": ["/assetmissing.wav"],
-      "fireEnd": ["/assetmissing.wav"],
       "fire" : [
         "/sfx/project45-synthetikmechanics/fires/fire_ar_1.ogg",
         "/sfx/project45-synthetikmechanics/fires/fire_ar_2.ogg",
@@ -87,7 +84,7 @@
     "fireTime": 0.25,
     "projectileKind": "projectile",
     "laser":{
-      "enabled": true
+      "enabled": false
     }
   },
 

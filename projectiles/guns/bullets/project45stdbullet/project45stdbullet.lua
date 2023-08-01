@@ -5,5 +5,5 @@ function update(dt)
 end
 
 function shouldDie()
-    return mcontroller.isColliding() or world.lineTileCollision(mcontroller.position(), vec2.add(mcontroller.position(), vec2.norm(mcontroller.velocity())))
+    return mcontroller.isColliding() -- or world.lineTileCollision(mcontroller.position(), vec2.add(mcontroller.position(), vec2.norm(mcontroller.velocity())))
 end

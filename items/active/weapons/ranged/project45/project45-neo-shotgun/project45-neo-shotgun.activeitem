@@ -54,9 +54,6 @@
     },
 
     "sounds": {
-      "fireStart": ["/assetmissing.wav"],
-      "fireLoop": ["/assetmissing.wav"],
-      "fireEnd": ["/assetmissing.wav"],
       "eject": ["/assetmissing.wav"],
       "boltPull" : ["/sfx/project45-synthetikmechanics/reloads/boltpull_shotgun.ogg"],
       "boltPush" : ["/sfx/project45-synthetikmechanics/reloads/boltpush_shotgun.ogg"],

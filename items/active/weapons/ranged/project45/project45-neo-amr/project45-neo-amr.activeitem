@@ -39,9 +39,6 @@
     },
 
     "sounds": {
-      "fireStart": ["/assetmissing.wav"],
-      "fireLoop": ["/assetmissing.wav"],
-      "fireEnd": ["/assetmissing.wav"],
       "boltPull" : ["/sfx/project45-synthetikmechanics/reloads/boltpull_heavybolt.ogg"],
       "boltPush" : ["/sfx/project45-synthetikmechanics/reloads/boltpush_heavybolt.ogg"],
       "fire" : ["/sfx/project45-synthetikmechanics/fires/fire_sniper.ogg"]
