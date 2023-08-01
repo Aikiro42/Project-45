@@ -68,7 +68,10 @@ function Project45GunFire:init()
   self.bulletsPerReload = math.max(1, self.bulletsPerReload)
   self.muzzleSmokeTime = self.muzzleSmokeTime or 1.5
 
-  self.laser.enabled = self.debug
+  -- always enable laser if debug is on
+  self.laser.enabled = self.debug or self.laser.enabled
+
+  self.projectileFireSettings.batchFire = type(self.projectileType) == "table" and self.projectileFireSettings.batchFire
 
   -- let inaccuracy be a table
   if type(self.inaccuracy) ~= "table" then
@@ -150,6 +153,9 @@ function Project45GunFire:init()
 
   activeItem.setScriptedAnimationParameter("chargeTime", self.chargeTime)
   activeItem.setScriptedAnimationParameter("overchargeTime", self.overchargeTime)
+
+  -- TESTME: so that shots fire properly
+  GunFire.aimVector = self.aimVector
 
   self:evalProjectileKind()
   self:updateMagVisuals()
@@ -333,9 +339,15 @@ function Project45GunFire:firing()
   self:startFireLoop()
   
   -- for i = 1, self.projectileCount * self:rollMultishot() do  
+
   for i = 1, (self.projectileKind == "projectile" and self.projectileCount * self:rollMultishot() or 1) do
     self:fireProjectile()
   end
+
+  if self.projectileFireSettings.batchFire then
+    self:rerollProjectileIndex()
+  end
+
   self:muzzleFlash()
   self:screenShake()
   self:recoil()
@@ -623,6 +635,9 @@ function Project45GunFire:reloading()
   end
   
   self:setStance(self.stances.reloaded, not self.reloadOnEjectMag)
+  if self.projectileFireSettings.resetProjectileIndexOnReload then
+    storage.savedProjectileIndex = 1
+  end
   animator.setAnimationState("magazine", self.internalMag and "absent" or "present")
   
   if self.breakAction then
@@ -750,6 +765,12 @@ function Project45GunFire:jam()
 end
 
 function Project45GunFire:muzzleFlash()
+
+  -- fire muzzle projectile
+  if self.muzzleProjectileType then
+    self:fireProjectile(self.muzzleProjectileType, self.muzzleProjectileParameters)
+  end
+
   if self.projectileKind ~= "beam" then
     -- play fire and hollow sound if the gun isn't firing a beam
     animator.setSoundPitch("fire", sb.nrand(0.01, 1))
@@ -767,6 +788,7 @@ function Project45GunFire:muzzleFlash()
     animator.setAnimationState("flash", "flash")
     self.muzzleFlashTimer = self.muzzleFlashTime or 0.05
   end
+
   self.muzzleSmokeTimer = self.muzzleSmokeTime + self.currentCycleTime + 0.1
 end
 
@@ -788,17 +810,27 @@ function Project45GunFire:stopFireLoop()
   end
 end
 
-function Project45GunFire:fireProjectile(projectileType)
-      
-  self.projectileParameters.power = self:damagePerShot()
+function Project45GunFire:fireProjectile(projectileType, projectileParameters)
+  
+  local firedProjectile = nil
+
+  if type(self.projectileType) ~= "table" then
+    firedProjectile = self.projectileType
+  else
+    firedProjectile = self.projectileType[storage.savedProjectileIndex]
+    if not self.projectileFireSettings.batchFire then self:rerollProjectileIndex() end
+  end
+
+  local params = projectileParameters or self.projectileParameters
+  params.power = self:damagePerShot()
   
   local projectileId = world.spawnProjectile(
-    projectileType or self.projectileType,
+    projectileType or firedProjectile,
     self:firePosition(),
     activeItem.ownerEntityId(),
     self:aimVector(self.spread),
     false,
-    self.projectileParameters
+    params
   )
   
 end
@@ -1194,6 +1226,12 @@ end
 
 -- EVAL FUNCTIONS
 
+function Project45GunFire:rerollProjectileIndex(projectileTypeListLength)
+  storage.savedProjectileIndex = self.projectileFireSettings.sequential and
+  (storage.savedProjectileIndex % #self.projectileType) + 1
+  or math.random(#self.projectileType)
+end
+
 -- Replaces certain functions and initializes certain parameters and fields
 -- depending on projectileKind.
 function Project45GunFire:evalProjectileKind()
@@ -1358,6 +1396,7 @@ function Project45GunFire:saveGunState()
     reloadRating = storage.reloadRating,
     unejectedCasings = storage.unejectedCasings,
     jamAmount = storage.jamAmount,
+    savedProjectileIndex = storage.savedProjectileIndex,
     loadSuccess = true
   }
   activeItem.setInstanceValue("savedGunState", gunState)
@@ -1373,6 +1412,7 @@ function Project45GunFire:loadGunState()
     reloadRating = OK,
     unejectedCasings = 0,
     jamAmount = 0,
+    savedProjectileIndex = 1,
     loadSuccess = false
   })
 
@@ -1383,6 +1423,7 @@ function Project45GunFire:loadGunState()
   animator.setAnimationState("chamber", loadedGunState.chamber)
     
   storage.ammo = storage.ammo or loadedGunState.ammo
+  storage.savedProjectileIndex = storage.savedProjectileIndex or loadedGunState.savedProjectileIndex
   storage.reloadRating = storage.reloadRating or loadedGunState.reloadRating
   activeItem.setScriptedAnimationParameter("reloadRating", reloadRatingList[storage.reloadRating])
   storage.unejectedCasings = storage.unejectedCasings or loadedGunState.unejectedCasings
@@ -1456,3 +1497,31 @@ end
 function diceroll(chance)
   return math.random() <= chance
 end
+
+--[[
+-- Chooses a random projectile from a weighted list of projectiles.
+-- Weights can either be percentages (represented by a float between 0 and 1 inclusive)
+-- or discrete (represented by an integer)
+function chooseRandomProjectile(projectileList, discreteOdds)
+  local totalWeight = 0
+  if discreteOdds then
+    -- each projectileData is {projectileWeightOrChance, projectileType}
+    for _, projectileData in ipairs(projectileList) do
+        totalWeight = totalWeight + projectileList[1]
+    end
+  end
+
+  -- Generate a random number within the range of totalWeight
+  local randomValue = math.random(discreteOdds and totalWeight or nil)
+
+  -- Find the projectile corresponding to the randomValue
+  -- Return the index number
+  local cumulativeOdds = 0
+  for i, projectileData in ipairs(projectileList) do
+      cumulativeOdds = cumulativeOdds + projectileData[1]
+      if randomValue <= cumulativeOdds then
+          return i
+      end
+  end
+end
+--]]

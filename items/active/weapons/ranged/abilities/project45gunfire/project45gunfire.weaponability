@@ -64,15 +64,34 @@
     "multishot": 1,
     "spread": 0.001, // affects direction the projectile flies to, from the muzzle
     
-    "projectileType": "project45stdbullet",
+     "projectileType": "project45stdbullet", // can also be a list of projectileType strings
+    
+    /*
+    "projectileType": [
+        "project45stdbullet",
+        "project45explosivebullet",
+        "project45stdfirebullet",
+        "project45stdpoisonbullet",
+        "project45dragonsbreath"
+      ],
+    //*/
+
     "projectileParameters": {
       "power": 100,
       "damageType": "IgnoresDef",
       "statusEffects": []
     },
 
+    // settings for firing multiple types of projectiles
+    // only matters if `projectileType` is a list
+    "projectileFireSettings": {
+      "sequential": false,
+      "resetProjectileIndexOnReload": false,
+      "batchFire": true
+    },
+
     // You can make the muzzle shoot an additional projectile this way.
-    "muzzleProjectile": null,
+    "muzzleProjectileType": null,
     "muzzleProjectileParameters": {
 
     },
