@@ -84,8 +84,8 @@ Project 45 is a weapons system that attempts to replicate the gun mechanics of S
 - <span style="color: green">Explosive Burst</span>
     - Requires activeItem "elementalType" field.
 - <span style="color: green">Explosive Shot</span>
-- <span style="color: green">Flamethrower</span>
-    - Added compatibility.
+- <span style="color: yellow">Flamethrower</span>
+    - Breaks gun's recoil system.
 - <span style="color: green">Flashlight</span>
 - <span style="color: green">Fuel Air Trail</span>
 - <span style="color: yellow">Grenade Launcher</span>

@@ -154,12 +154,14 @@ function Project45GunFire:init()
   activeItem.setScriptedAnimationParameter("chargeTime", self.chargeTime)
   activeItem.setScriptedAnimationParameter("overchargeTime", self.overchargeTime)
 
-  -- TESTME: so that shots fire properly
-  GunFire.aimVector = self.aimVector
-
   self:evalProjectileKind()
   self:updateMagVisuals()
   self:updateChamberState()
+
+  -- TESTME: so that shots fire properly
+  GunFire.firePosition = self.firePosition
+  GunFire.aimVector = self.aimVector
+  GunFire.fireProjectile = self.fireProjectile
 
 
   -- Final touches before use
@@ -174,6 +176,9 @@ function Project45GunFire:init()
   self.stances = self.stances or {}
   local finalAimStance = self.stances.aimStance or {}
   self.stances.aimStance = util.mergeTable(defaultAimStance, finalAimStance)
+  self.stances.idle = self.stances.aimStance
+  self.stances.fire = self.stances.aimStance
+  self.stances.cooldown = self.stances.aimStance
   self.recoverDelayTimer = 0
   if storage.jamAmount <= 0
   and storage.ammo >= 0
@@ -810,7 +815,7 @@ function Project45GunFire:stopFireLoop()
   end
 end
 
-function Project45GunFire:fireProjectile(projectileType, projectileParameters)
+function Project45GunFire:fireProjectile(projectileType, projectileParameters, inaccuracy, firePosition, projectileCount)
   
   local firedProjectile = nil
 
@@ -1478,6 +1483,10 @@ function Project45GunFire:snapStance(stance)
   storage.stanceProgress = 0
 end
 --]]
+
+function GunFire:cooldown()
+  Project45GunFire:recoil(false, 1, 1, 0)
+end
 
 function Project45GunFire:debugFunction()
   if not self.debug then return end
