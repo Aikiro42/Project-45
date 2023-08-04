@@ -5,8 +5,8 @@
   "tooltipKind" : "project45gunmod",
   "category" : "Stat Mod",
   "inventoryIcon" : "/items/augments/project45-gunmods/stat/project45-godmod/project45-godmod.png",
-  "description" : "^#FFFFFF;Damage x100, Crit Chance +300%, Crit Damage +50.^reset;",
-  "shortdescription" : "^#FFFFFF;Fire Rate X",
+  "description" : "^#FFFFFF;Damage x100\nCrit Chance +300%\nCrit Damage +50^reset;",
+  "shortdescription" : "^#FFFFFF;The God Mod",
 
   "augment":{
     "damagePerShot": {

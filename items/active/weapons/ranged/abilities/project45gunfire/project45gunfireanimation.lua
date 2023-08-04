@@ -35,11 +35,11 @@ function update()
   local jamAmount = animationConfig.animationParameter("jamAmount", 0)
 
   --[[
-                            crosshair
-                                |
-                                v
-  ammo [jam bar] [reload bar] ( + ) [reload bar] [jam bar] ammo
-  
+                                crosshair
+                                    |
+                                    v
+      ammo [jam bar] [reload bar] ( + ) [reload bar] [jam bar] ammo
+  [charge bar]                                             [charge bar]
   --]]
 
   local horizontalOffset = reloadTimer < 0 and 0 or 2

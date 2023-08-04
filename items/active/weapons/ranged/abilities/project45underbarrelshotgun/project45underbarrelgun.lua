@@ -252,7 +252,7 @@ function Project45UnderbarrelGun:aim()
 end
 
 function Project45UnderbarrelGun:updateAmmo(ammoDelta)
-    storage.underbarrelGunAmmo = project45util.clamp(storage.underbarrelGunAmmo + ammoDelta, 0, self.maxAmmo)
+    storage.underbarrelGunAmmo = util.clamp(storage.underbarrelGunAmmo + ammoDelta, 0, self.maxAmmo)
     activeItem.setScriptedAnimationParameter("underbarrelGunAmmo", storage.underbarrelGunAmmo)
     activeItem.setInstanceValue("currentUnderbarrelGunAmmo", storage.underbarrelGunAmmo)
 end

@@ -809,7 +809,7 @@ function Project45GunFire:muzzleFlash()
   if (self.projectileKind or "projectile") ~= "beam" then
     -- play fire and hollow sound if the gun isn't firing a beam
     animator.setSoundPitch("fire", sb.nrand(0.01, 1))
-    animator.setSoundVolume("hollow", (1 - storage.ammo/self.maxAmmo) * self.hollowSoundMult)
+    animator.setSoundVolume("hollow", math.max((1 - storage.ammo/self.maxAmmo) * self.hollowSoundMult, self.hollowSoundMult))
     animator.playSound("fire")
     animator.playSound("hollow")
   end
@@ -1093,7 +1093,7 @@ function Project45GunFire:updateCharge()
 
   -- update current charge frame (1 to n)
   if self.progressiveCharge then
-    self.chargeFrame = project45util.clamp(math.ceil(self.chargeFrames * (self.chargeTimer / timeBasis)), 1, self.chargeFrames)
+    self.chargeFrame = util.clamp(math.ceil(self.chargeFrames * (self.chargeTimer / timeBasis)), 1, self.chargeFrames)
     animator.setGlobalTag("chargeFrame", self.chargeFrame)
   end
 
@@ -1112,7 +1112,7 @@ function Project45GunFire:updateAmmo(delta, willReplace)
     return
   end
   
-  storage.ammo = willReplace and delta or project45util.clamp(storage.ammo + delta, 0, self.maxAmmo)
+  storage.ammo = willReplace and delta or util.clamp(storage.ammo + delta, 0, self.maxAmmo)
   -- update visual info
   self:updateMagVisuals()
   activeItem.setScriptedAnimationParameter("ammo", storage.ammo)
@@ -1159,7 +1159,7 @@ end
 -- Updates the gun's jam amount.
 -- Amount is clamped between 0 and 1.
 function Project45GunFire:updateJamAmount(delta, set)
-  storage.jamAmount = set and delta or project45util.clamp(storage.jamAmount + delta, 0, 1)
+  storage.jamAmount = set and delta or util.clamp(storage.jamAmount + delta, 0, 1)
   activeItem.setScriptedAnimationParameter("jamAmount", storage.jamAmount)
 end
 

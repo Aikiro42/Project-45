@@ -20,6 +20,8 @@
 
     /*
     
+    FIXME: LUA SETS ARE A FUCKING THING, USE THEM (/scripts/set.lua)
+
     Category > Class > Kind > Type > Archetype
 
     GUN CATEGORIES - for non-ammo mods
