@@ -3,6 +3,7 @@ require "/items/active/weapons/weapon.lua"
 require "/items/active/weapons/ranged/gunfire.lua"
 require "/items/active/weapons/ranged/abilities/synthetikmechanics/synthetikmechanics.lua"
 require "/items/active/weapons/ranged/abilities/project45gunfire/project45gunfire.lua"
+require "/scripts/project45/project45util.lua"
 
 Project45UnderbarrelGun = GunFire:new()
 
@@ -251,10 +252,9 @@ function Project45UnderbarrelGun:aim()
 end
 
 function Project45UnderbarrelGun:updateAmmo(ammoDelta)
-    storage.underbarrelGunAmmo = self:clamp(0, self.maxAmmo, storage.underbarrelGunAmmo + ammoDelta)
+    storage.underbarrelGunAmmo = project45util.clamp(storage.underbarrelGunAmmo + ammoDelta, 0, self.maxAmmo)
     activeItem.setScriptedAnimationParameter("underbarrelGunAmmo", storage.underbarrelGunAmmo)
     activeItem.setInstanceValue("currentUnderbarrelGunAmmo", storage.underbarrelGunAmmo)
-
 end
 
 function Project45UnderbarrelGun:updateGunState(newState)
@@ -327,14 +327,4 @@ end
 function Project45UnderbarrelGun:screenShake(amount, shakeTime, random)
     SynthetikMechanics.screenShake(self, amount, shakeTime, random)
     Project45GunFire.screenShake(self, amount, shakeTime, random)
-end
-
-function Project45UnderbarrelGun:clamp(lo, hi, val)
-    if val < lo then
-        return lo
-    elseif val > hi then
-        return hi
-    else
-        return val
-    end
 end

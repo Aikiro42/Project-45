@@ -67,6 +67,7 @@
   "muzzleOffset" : [2.25, 0.375],
   "ejectionPortOffset": [-0.25, 0.5],
   "magazineOffset": [0, 0],
+  "underbarrelOffset": [2, 0],
 
   "scripts" : ["/items/active/weapons/ranged/project45gunneo.lua"],
     

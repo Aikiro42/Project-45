@@ -518,3 +518,4 @@ function drawTrajectory(muzzlePos, angle, speed, steps, renderTime, color, gravM
     
   end
 end
+

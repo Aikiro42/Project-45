@@ -9,6 +9,7 @@ function init()
   self.weapon = Weapon:new()
 
   self.weapon:addTransformationGroup("weapon", {0,0}, 0)
+  self.weapon:addTransformationGroup("beamEnd", {0,0}, 0)
   self.weapon:addTransformationGroup("muzzle", self.weapon.muzzleOffset, 0)
   self.weapon:addTransformationGroup("ejectionPort", config.getParameter("ejectionPortOffset", {0,0}), 0)
   self.weapon:addTransformationGroup("magazine", config.getParameter("magazineOffset", {0,0}), 0)

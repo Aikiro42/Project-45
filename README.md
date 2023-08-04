@@ -75,25 +75,26 @@ Project 45 is a weapons system that attempts to replicate the gun mechanics of S
 - <span style="color: green">Bouncing Shot</span>
 - <span style="color: green">Burst Shot</span>
 - <span style="color: yellow">Charge Fire</span>
-    - Somewhat; you still need to add in the charge levels for chargefire to work. Haven't tested.
+    - No indicator, otherwise works swellingly.
 - <span style="color: green">Death Bomb</span>
-    - I honestly don't know what this is supposed to do, but it shoots darts and it works somehow.
+    - ~~I honestly don't know what this is supposed to do, but it shoots darts and it works somehow.~~
+    - Shoots a dart that causes an entity to explode on death.
 - <span style="color: red">Erchius Beam</span>
-    - Incompatible; intended to be used on the Erchius Eye.
+    - Incompatible; intended to be used on the Erchius Eye. I tried, though.
 - <span style="color: green">Erchius Launcher</span>
 - <span style="color: green">Explosive Burst</span>
     - Requires activeItem "elementalType" field.
 - <span style="color: green">Explosive Shot</span>
-- <span style="color: yellow">Flamethrower</span>
-    - Breaks gun's recoil system.
+- <span style="color: green">Flamethrower</span>
 - <span style="color: green">Flashlight</span>
 - <span style="color: green">Fuel Air Trail</span>
-- <span style="color: yellow">Grenade Launcher</span>
-    - Knocks off aim by a bit.
+- <span style="color: green">Grenade Launcher</span>
+    - ~~Knocks off aim by a bit.~~ Not anymore!
 - <span style="color: green">Guided Rocket</span>
     - Perfectly resembles synthetik mechanic.
-- <span style="color: red">Homing Rocket</span>
-    - Seemingly dysfunctional; it does shoot a rocket, but there aren't any indicators of it being guided.
+- <span style="color: yellow">Homing Rocket</span>
+    - ~~Seemingly dysfunctional; it does shoot a rocket, but there aren't any indicators of it being guided.~~
+    - It's a homing rocket. It takes a while to prime on default settings but it seeks out a target.
     - Seems to only work with certain rocket launchers.
 - <span style="color: green">Lance</span>
     - Requires activeItem "elementalType" field.
@@ -103,9 +104,9 @@ Project 45 is a weapons system that attempts to replicate the gun mechanics of S
 - <span style="color: green">Rocket Burst</span>
 - <span style="color: green">Shrapnel Bomb</span>
 - <span style="color: green">Sparkles</span>
-    - seems pointless
-- <span style="color: green">Spray</span>
-    - uses custom projectile
+    - ~~seems pointless~~ Fires an ember that deals damage.
+- <span style="color: green">Spray n' Pray</span>
+    - uses ~~custom~~ primary ability projectile.
 - <span style="color: green">Sticky Shot</span>
 
 # Known Issues

@@ -1,0 +1,27 @@
+{
+  "itemName" : "project45-godmod",
+  "price" : 999999,
+  "rarity" : "Essential",
+  "tooltipKind" : "project45gunmod",
+  "category" : "Stat Mod",
+  "inventoryIcon" : "/items/augments/project45-gunmods/stat/project45-godmod/project45-godmod.png",
+  "description" : "^#FFFFFF;Damage x100, Crit Chance +300%, Crit Damage +50.^reset;",
+  "shortdescription" : "^#FFFFFF;Fire Rate X",
+
+  "augment":{
+    "damagePerShot": {
+      "operation": "multiply",
+      "value": 100
+    },
+    "critChance": {
+      "operation": "add",
+      "value": 3
+    },
+    "critDamage": {
+      "operation": "add",
+      "value": 50
+    }
+  },
+
+  "scripts" : [ "/scripts/augments/project45-gunmod/statmod.lua" ]
+}

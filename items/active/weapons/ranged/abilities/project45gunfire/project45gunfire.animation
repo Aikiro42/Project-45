@@ -8,11 +8,13 @@
   "animatedParts" : {
     "stateTypes" : {
 
+
       // compatibility
       "firing" : {
         "default" : "off",
         "states" : {
           "off" : {},
+          "charge" : {},
           "fire" : {
             "frames" : 2,
             "cycle" : 0.07,
@@ -21,6 +23,17 @@
           }
         }
       },
+
+      /*
+      "erchiuseye" : {
+        "default" : "idle",
+        "states" : {
+          "idle" : {},
+          "squirm" : {},
+          "fire" : {}
+        }
+      },
+      */
 
       "gun" : {
         "default" : "idle",
@@ -494,10 +507,12 @@
     "weapon" : {},
     "muzzle" : {},
     "ejectionPort": {},
-    "magazine": {}
+    "magazine": {},
+    "beamEnd": {}
   },
 
   "particleEmitters" : {
+
     "muzzleFlash" : {
       "transformationGroups" : ["muzzle"],
       "offsetRegion" : [0, 0, 0, 0],
@@ -542,6 +557,14 @@
       "particles" : [ 
         {"particle": "project45bulletcasesmall"}
       ]
+    },
+
+    // compatibility
+    "beamCollision" : {
+      "transformationGroups" : ["muzzle", "beamEnd"],
+      "offsetRegion" : [0, 0, 0, 0],
+      "emissionRate" : 0,
+      "particles" : [ ]
     }
 
   },
@@ -591,7 +614,10 @@
     "boltPush": ["/sfx/project45-synthetikmechanics/reloads/boltpush_generic.ogg"],
 
     "chargeWhine" : ["/sfx/project45-synthetikmechanics/charges/chargewhine_generic.ogg"],
-    "chargeDrone" : ["/sfx/project45-synthetikmechanics/charges/chargedrone_generic.ogg"]
+    "chargeDrone" : ["/sfx/project45-synthetikmechanics/charges/chargedrone_generic.ogg"],
+
+    // compatibility
+    "beamImpact": []
     
   }
 }

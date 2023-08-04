@@ -3,7 +3,10 @@ require "/scripts/interp.lua"
 require "/scripts/poly.lua"
 require "/items/active/weapons/weapon.lua"
 require "/scripts/project45/hitscanLib.lua"
+require "/scripts/project45/project45util.lua"
+
 require "/items/active/weapons/ranged/gunfire.lua"
+require "/items/active/weapons/ranged/abilities/altfire.lua"
 
 local BAD, OK, GOOD, PERFECT = 1, 2, 3, 4
 local reloadRatingList = {"BAD", "OK", "GOOD", "PERFECT"}
@@ -158,14 +161,40 @@ function Project45GunFire:init()
   self:updateMagVisuals()
   self:updateChamberState()
 
-  -- TESTME: so that shots fire properly
+  -- Add functions used by this primaryAbility to altAbility
+  -- TESTME:
+  GunFire.recoil = self.recoil
+  GunFire.rollMultishot = self.rollMultishot -- not working??
+  GunFire.updateMagVisuals = self.updateMagVisuals
+  GunFire.updateAmmo = self.updateAmmo
+  -- Override functions used by altAbility
   GunFire.firePosition = self.firePosition
   GunFire.aimVector = self.aimVector
   GunFire.fireProjectile = self.fireProjectile
+  GunFire.cooldown = self.cooldown
+  GunFire.auto = self.auto
+  GunFire.burst = self.burst
+  GunFire.energyPerShot = function() return 0 end
 
+  -- FIXME: Doublecheck all functions that should be replaced
+  -- Heck, should AltFireAttack stuff even be replaced??
+  -- Add functions used by this primaryAbility to altAbility
+  
+  AltFireAttack.recoil = self.recoil
+  AltFireAttack.rollMultishot = self.rollMultishot
+  AltFireAttack.updateMagVisuals = self.updateMagVisuals
+  AltFireAttack.updateAmmo = self.updateAmmo
+  -- Override functions used by altAbility
+  AltFireAttack.firePosition = self.firePosition
+  AltFireAttack.aimVector = self.aimVector
+  AltFireAttack.fireProjectile = self.fireProjectile
+  AltFireAttack.cooldown = self.cooldown
+  AltFireAttack.auto = self.auto
+  AltFireAttack.burst = self.burst
+  AltFireAttack.energyPerShot = function() return 0 end
+  --]]
 
   -- Final touches before use
-
   local defaultAimStance = {
     weaponRotation = 0,
     armRotation = 0,
@@ -176,14 +205,19 @@ function Project45GunFire:init()
   self.stances = self.stances or {}
   local finalAimStance = self.stances.aimStance or {}
   self.stances.aimStance = util.mergeTable(defaultAimStance, finalAimStance)
+  
+  -- compatibility stances
   self.stances.idle = self.stances.aimStance
+  self.stances.charge = self.stances.aimStance
   self.stances.fire = self.stances.aimStance
   self.stances.cooldown = self.stances.aimStance
+
   self.recoverDelayTimer = 0
+
   if storage.jamAmount <= 0
   and storage.ammo >= 0
   then
-  self.weapon:setStance(self.stances.aimStance)
+    self.weapon:setStance(self.stances.aimStance)
   else
     if storage.jamAmount > 0 then
       self:setState(self.jammed)
@@ -297,7 +331,7 @@ function Project45GunFire:uninit()
   self:saveGunState()
 end
 
--- STATE FUNCTIONS
+-- SECTION: STATE FUNCTIONS
 
 function Project45GunFire:charging()
   while self:triggering() do
@@ -342,12 +376,8 @@ function Project45GunFire:firing()
   storage.burstCounter = (storage.burstCounter >= self.burstCount) and 0 or storage.burstCounter
 
   self:startFireLoop()
-  
-  -- for i = 1, self.projectileCount * self:rollMultishot() do  
 
-  for i = 1, (self.projectileKind == "projectile" and self.projectileCount * self:rollMultishot() or 1) do
-    self:fireProjectile()
-  end
+  self:fireProjectile()
 
   if self.projectileFireSettings.batchFire then
     self:rerollProjectileIndex()
@@ -368,7 +398,7 @@ function Project45GunFire:firing()
   -- add unejected casings
 
   storage.unejectedCasings = storage.unejectedCasings + math.min(self.ammoPerShot, storage.ammo)
-  self:updateAmmo(diceroll(self.ammoConsumeChance) and -self.ammoPerShot or 0)
+  self:updateAmmo(project45util.diceroll(self.ammoConsumeChance) and -self.ammoPerShot or 0)
   
   self.triggered = storage.ammo == 0 or self.triggered
   
@@ -740,11 +770,11 @@ function Project45GunFire:unjamming()
   end
 end
 
--- ACTION FUNCTIONS
+-- SECTION: ACTION FUNCTIONS
 
 -- Returns true if the weapon successfully jammed.
 function Project45GunFire:jam()
-  if diceroll(self.jamChances[storage.reloadRating]) then
+  if project45util.diceroll(self.jamChances[storage.reloadRating]) then
 
     self:stopFireLoop()
     animator.playSound("jam")
@@ -776,7 +806,7 @@ function Project45GunFire:muzzleFlash()
     self:fireProjectile(self.muzzleProjectileType, self.muzzleProjectileParameters)
   end
 
-  if self.projectileKind ~= "beam" then
+  if (self.projectileKind or "projectile") ~= "beam" then
     -- play fire and hollow sound if the gun isn't firing a beam
     animator.setSoundPitch("fire", sb.nrand(0.01, 1))
     animator.setSoundVolume("hollow", (1 - storage.ammo/self.maxAmmo) * self.hollowSoundMult)
@@ -794,7 +824,9 @@ function Project45GunFire:muzzleFlash()
     self.muzzleFlashTimer = self.muzzleFlashTime or 0.05
   end
 
-  self.muzzleSmokeTimer = self.muzzleSmokeTime + self.currentCycleTime + 0.1
+  if self.hideMuzzleSmoke ~= nil and not self.hideMuzzleSmoke then
+    self.muzzleSmokeTimer = self.muzzleSmokeTime + self.currentCycleTime + 0.1
+  end
 end
 
 function Project45GunFire:startFireLoop()
@@ -817,26 +849,42 @@ end
 
 function Project45GunFire:fireProjectile(projectileType, projectileParameters, inaccuracy, firePosition, projectileCount)
   
-  local firedProjectile = nil
+  local params = sb.jsonMerge(self.projectileParameters, projectileParameters or {})
+  params.power = self:damagePerShot()
+  params.powerMultiplier = activeItem.ownerPowerMultiplier()
+  params.speed = util.randomInRange(params.speed)
 
-  if type(self.projectileType) ~= "table" then
-    firedProjectile = self.projectileType
-  else
-    firedProjectile = self.projectileType[storage.savedProjectileIndex]
-    if not self.projectileFireSettings.batchFire then self:rerollProjectileIndex() end
+  if not projectileType then
+    projectileType = self.projectileType
+  end
+  
+  if type(projectileType) == "table" then
+    projectileType = projectileType[storage.savedProjectileIndex]
+    if not self.projectileFireSettings or not self.projectileFireSettings.batchFire then
+      self:rerollProjectileIndex(#projectileType)
+    end
+  end
+  
+  local projectileId = 0
+    
+  for i = 1, (projectileCount or (self.projectileCount * self:rollMultishot())) do
+
+    if params.timeToLive then
+      params.timeToLive = util.randomInRange(params.timeToLive)
+    end
+
+    projectileId = world.spawnProjectile(
+      projectileType,
+      firePosition or self:firePosition(),
+      activeItem.ownerEntityId(),
+      self:aimVector(inaccuracy or self.spread),
+      false,
+      params
+    )
+
   end
 
-  local params = projectileParameters or self.projectileParameters
-  params.power = self:damagePerShot()
-  
-  local projectileId = world.spawnProjectile(
-    projectileType or firedProjectile,
-    self:firePosition(),
-    activeItem.ownerEntityId(),
-    self:aimVector(self.spread),
-    false,
-    params
-  )
+  return projectileId
   
 end
 
@@ -858,26 +906,28 @@ end
 
 -- Kicks gun muzzle up and backward, shakes screen
 function Project45GunFire:recoil(down, mult, amount, recoverDelay)
-  local mult = mult or self.recoilMult
+
+  local mult = mult or self.recoilMult or 1
   mult = down and -mult or mult
   local crouchMult = mcontroller.crouching() and self.recoilCrouchMult or 1
   mult = mult * crouchMult
 
-  -- recoil
-  self.weapon.relativeWeaponRotation = math.min(self.weapon.relativeWeaponRotation, util.toRadians(self.recoilMaxDeg * crouchMult / 2)) + util.toRadians((amount or self.recoilAmount) * mult/2)
-  self.weapon.relativeArmRotation = math.min(self.weapon.relativeArmRotation, util.toRadians(self.recoilMaxDeg * crouchMult / 2)) + util.toRadians((amount or self.recoilAmount) * mult/2)
+  -- recoil (max defaults to 7.5 degrees, amount defaults to 1)
+  local recoilMaxDeg = self.recoilMaxDeg or 7.5
+  self.weapon.relativeWeaponRotation = math.min(self.weapon.relativeWeaponRotation, util.toRadians(recoilMaxDeg * crouchMult / 2)) + util.toRadians((amount or self.recoilAmount or 1) * mult/2)
+  self.weapon.relativeArmRotation = math.min(self.weapon.relativeArmRotation, util.toRadians(recoilMaxDeg * crouchMult / 2)) + util.toRadians((amount or self.recoilAmount or 1) * mult/2)
   self.weapon.weaponOffset = {-0.125, 0}
 
-  -- inaccuracy
-  local inaccuracy = util.toRadians(sb.nrand(self.currentInaccuracy, 0) * self.recoilMult)
+  -- inaccuracy (defaults to 3 degrees)
+  local inaccuracy = util.toRadians(sb.nrand(self.currentInaccuracy or 3, 0) * mult) -- TESTME: is factoring in crouching balanced?
   if self.recoilUpOnly then
     inaccuracy = math.abs(inaccuracy)
   end
   self.weapon.relativeWeaponRotation = self.weapon.relativeWeaponRotation + inaccuracy/2
   
-  -- recover delay
+  -- recover delay (no recover delay by default)
   storage.stanceProgress = 0
-  self.recoverDelayTimer = recoverDelay or self.recoverDelay
+  self.recoverDelayTimer = recoverDelay or self.recoverDelay or self.fireTime or 0
 end
 
 -- Ejects mag
@@ -953,7 +1003,7 @@ function Project45GunFire:screenShake(amount, shakeTime, random)
   activeItem.setCameraFocusEntity(cam)
 end
 
--- ___________________________________________________________[ UPDATE FUNCTIONS ] ___________________________________________________________
+-- SECTION:  UPDATE FUNCTIONS
 
 function Project45GunFire:updateDebugTimer()
   self.debugTimer = math.max(0, self.debugTimer - self.dt)
@@ -1043,7 +1093,7 @@ function Project45GunFire:updateCharge()
 
   -- update current charge frame (1 to n)
   if self.progressiveCharge then
-    self.chargeFrame = self:clamp(math.ceil(self.chargeFrames * (self.chargeTimer / timeBasis)), 1, self.chargeFrames)
+    self.chargeFrame = project45util.clamp(math.ceil(self.chargeFrames * (self.chargeTimer / timeBasis)), 1, self.chargeFrames)
     animator.setGlobalTag("chargeFrame", self.chargeFrame)
   end
 
@@ -1055,7 +1105,14 @@ end
 -- If not setting the value, the ammo is clamped
 -- between 0 and max ammo.
 function Project45GunFire:updateAmmo(delta, willReplace)
-  storage.ammo = willReplace and delta or self:clamp(storage.ammo + delta, 0, self.maxAmmo)
+
+  if not self.maxAmmo then
+    storage.ammo = math.max(0, storage.ammo + delta)
+    activeItem.setScriptedAnimationParameter("ammo", storage.ammo)
+    return
+  end
+  
+  storage.ammo = willReplace and delta or project45util.clamp(storage.ammo + delta, 0, self.maxAmmo)
   -- update visual info
   self:updateMagVisuals()
   activeItem.setScriptedAnimationParameter("ammo", storage.ammo)
@@ -1076,7 +1133,8 @@ function Project45GunFire:updateMagVisuals()
     return
   end
 
-  if self.magFrames == 1 and storage.ammo >= 0 or self.performanceMode then
+  if not self.magFrames
+  or (self.magFrames == 1 and storage.ammo >= 0 or self.performanceMode) then
     animator.setPartTag("magazine", "ammo", "default")
     animator.setAnimationState("magazine", "present")
     return
@@ -1101,7 +1159,7 @@ end
 -- Updates the gun's jam amount.
 -- Amount is clamped between 0 and 1.
 function Project45GunFire:updateJamAmount(delta, set)
-  storage.jamAmount = set and delta or self:clamp(storage.jamAmount + delta, 0, 1)
+  storage.jamAmount = set and delta or project45util.clamp(storage.jamAmount + delta, 0, 1)
   activeItem.setScriptedAnimationParameter("jamAmount", storage.jamAmount)
 end
 
@@ -1229,12 +1287,12 @@ function Project45GunFire:updateCursor()
   --]]
 end
 
--- EVAL FUNCTIONS
+-- SECTION: EVAL FUNCTIONS
 
 function Project45GunFire:rerollProjectileIndex(projectileTypeListLength)
-  storage.savedProjectileIndex = self.projectileFireSettings.sequential and
-  (storage.savedProjectileIndex % #self.projectileType) + 1
-  or math.random(#self.projectileType)
+  storage.savedProjectileIndex = self.projectileFireSettings and self.projectileFireSettings.sequential and
+  (storage.savedProjectileIndex % (projectileTypeListLength or #self.projectileType)) + 1
+  or math.random(projectileTypeListLength or #self.projectileType)
 end
 
 -- Replaces certain functions and initializes certain parameters and fields
@@ -1310,30 +1368,26 @@ function Project45GunFire:reloadRating()
   end
 end
 
+-- Rolls whether the gun fires an additional set of projectiles or not
 function Project45GunFire:rollMultishot()
-  --[[
-    
-function diceroll(chance)
-  return math.random() <= 0.1
-end
-    --]]
-  return diceroll(self.multishot - math.floor(self.multishot)) and math.ceil(self.multishot) or math.floor(self.multishot)
+  if not self.multishot then return 1 end
+  return project45util.diceroll(self.multishot - math.floor(self.multishot)) and math.ceil(self.multishot) or math.floor(self.multishot)
 end
 
 -- Returns the critical multiplier.
 -- Typically called when the weapon is about to deal damage.
 function Project45GunFire:crit()
-  return diceroll(self.critChance, "Crit: ") and self.critDamageMult or 1
+  if not self.critChance then return 1 end
+  return project45util.diceroll(self.critChance, "Crit: ") and self.critDamageMult or 1
 end
 
 -- Calculates the damage per shot of the weapon.
 function Project45GunFire:damagePerShot(isHitscan)
 
   local critDmg = self:crit()
-  local lastShotDmg = (storage.ammo <= self.ammoPerShot and self.lastShotDamageMult or 1)
+  local lastShotDmg = (storage.ammo <= (self.ammoPerShot or 1) and self.lastShotDamageMult or 1)
 
   return self.baseDamage
-  * activeItem.ownerPowerMultiplier()
   * self.chargeDamage -- up to 2x at full overcharge
   * self.reloadRatingDamage -- as low as 0.8 (bad), as high as 1.5 (perfect)
   * critDmg -- this way, rounds deal crit damage individually
@@ -1436,7 +1490,6 @@ function Project45GunFire:loadGunState()
   storage.jamAmount = storage.jamAmount or loadedGunState.jamAmount
   activeItem.setScriptedAnimationParameter("jamAmount", storage.jamAmount)
   animator.setAnimationState("bolt", loadedGunState.bolt)
-  sb.logInfo(loadedGunState.gunAnimation)
   if loadedGunState.bolt == "open" then
     loadedGunState.gunAnimation = "ejected"
   end
@@ -1444,7 +1497,7 @@ function Project45GunFire:loadGunState()
 
 end
 
--- HELPER FUNCTIONS
+-- SECTION: HELPER FUNCTIONS
 
 function Project45GunFire:setStance(stance, snap)
 
@@ -1462,11 +1515,13 @@ function Project45GunFire:setStance(stance, snap)
   self.weapon:setStance(stance)
 
   -- flip weapon
+  --[[
   if stance.flipWeapon then
     animator.setGlobalTag("directives", "?flipy")
   else
     animator.setGlobalTag("directives", "")
   end
+  --]]
 
   -- reset weapon's rotations to those of old stance for smooth stance transition
   if not snap and oldStance then
@@ -1482,29 +1537,12 @@ function Project45GunFire:snapStance(stance)
   self.weapon.weaponOffset = stance.weaponOffset or self.weapon.weaponOffset
   storage.stanceProgress = 0
 end
---]]
 
-function GunFire:cooldown()
-  Project45GunFire:recoil(false, 1, 1, 0)
-end
 
 function Project45GunFire:debugFunction()
+
   if not self.debug then return end
 
-end
-
-function Project45GunFire:clamp(x, min, max)
-  if x < min then
-    return min
-  elseif x > max then
-    return max
-  else
-    return x
-  end
-end
-
-function diceroll(chance)
-  return math.random() <= chance
 end
 
 --[[
@@ -1534,3 +1572,55 @@ function chooseRandomProjectile(projectileList, discreteOdds)
   end
 end
 --]]
+
+-- SECTION: Legacy Functions
+
+function GunFire:init()
+  self.cooldownTimer = self.fireTime
+
+  self.weapon.onLeaveAbility = function() end
+end
+
+function Project45GunFire:cooldown()
+  -- disable gunfire cooldown of alt abilities
+end
+
+function Project45GunFire:energyPerShot()
+  return 0
+end
+
+function Project45GunFire:auto()
+  if storage.ammo <= 0 then return end
+  
+  self:fireProjectile()
+  self:muzzleFlash()
+  self:recoil()
+  self:updateAmmo(-(self.ammoPerShot or 1))
+
+  if self.stances.fire.duration then
+    util.wait(self.stances.fire.duration)
+  end
+
+  self.cooldownTimer = self.fireTime
+end
+
+
+function Project45GunFire:burst()
+  
+  if storage.ammo <= 0 then return end
+  local shots = self.burstCount
+  while shots > 0 and status.overConsumeResource("energy", self:energyPerShot()) do
+    
+    self:fireProjectile()
+    self:muzzleFlash()
+    shots = shots - 1
+    self:recoil()
+    
+    self:updateAmmo(-(self.ammoPerShot or 1))
+    if storage.ammo <= 0 then break end
+
+    util.wait(self.burstTime)
+  end
+
+  self.cooldownTimer = (self.fireTime - self.burstTime) * self.burstCount
+end
