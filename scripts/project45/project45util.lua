@@ -10,6 +10,13 @@ function project45util.Set(list)
   return set
 end
 
+function project45util.isItemInList(list, item)
+  for i, _ in ipairs(list) do
+    if item == list[i] then return true end
+  end
+  return false
+end
+
 function project45util.List(set)
   local list = {}
   for i, _ in pairs(set) do table.insert(list, i) end

@@ -9,7 +9,7 @@
   "shortdescription" : "^#FFFFFF;The God Mod",
 
   "augment":{
-    "damagePerShot": {
+    "baseDamage": {
       "operation": "multiply",
       "value": 100
     },

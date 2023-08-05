@@ -9,7 +9,7 @@
   "shortdescription" : "Base Damage +",
 
   "augment":{
-    "damagePerShot": {
+    "baseDamage": {
       "operation": "add",
       "value": 10
     }

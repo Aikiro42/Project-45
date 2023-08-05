@@ -157,10 +157,7 @@ function Project45GunFire:init()
   activeItem.setScriptedAnimationParameter("chargeTime", self.chargeTime)
   activeItem.setScriptedAnimationParameter("overchargeTime", self.overchargeTime)
 
-  self:evalProjectileKind()
-  self:updateMagVisuals()
-  self:updateChamberState()
-
+  
   -- Add functions used by this primaryAbility to altAbility
   -- TESTME:
   GunFire.recoil = self.recoil
@@ -193,6 +190,10 @@ function Project45GunFire:init()
   AltFireAttack.burst = self.burst
   AltFireAttack.energyPerShot = function() return 0 end
   --]]
+
+  self:evalProjectileKind()
+  self:updateMagVisuals()
+  self:updateChamberState()
 
   -- Final touches before use
   local defaultAimStance = {
@@ -1382,7 +1383,7 @@ function Project45GunFire:crit()
 end
 
 -- Calculates the damage per shot of the weapon.
-function Project45GunFire:damagePerShot(isHitscan)
+function Project45GunFire:damagePerShot()
 
   local critDmg = self:crit()
   local lastShotDmg = (storage.ammo <= (self.ammoPerShot or 1) and self.lastShotDamageMult or 1)

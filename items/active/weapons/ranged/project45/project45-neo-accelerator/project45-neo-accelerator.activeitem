@@ -1,0 +1,111 @@
+{
+  "itemName" : "project45-neo-accelerator",
+  "price" : 1000,
+  "maxStack" : 1,
+  "rarity" : "Essential",
+  "description" : "An entry-level firearm.",
+  "shortdescription" : "New Accelerator",
+  "gunArchetype": "Energy Gun",
+  "tooltipKind" : "project45gun",
+  "category" : "rifle",
+  "twoHanded" : true,
+  "itemTags" : ["weapon","ranged","rifle"],
+  "level" : 1,
+  "inventoryIcon" : "project45-neo-accelerator-icon.png",
+
+  "project45GunModInfo": {
+    "category": "energy",
+    "acceptsAmmoTypes": {
+      "bullet": true
+    },
+    "acceptsAmmoArchetypes": {
+      "generic": true
+    },
+    "acceptsModSlot": {
+      "rail": false,
+      "sights": false,
+      "muzzle": false,
+      "stock": false,
+      "underbarrel": false,
+      
+      "receiver": true,
+      "material": true,
+      "barrel": true,
+      "grip": true,
+      "magazine": true
+    }
+  },
+
+  "animationParts" : {
+    "middle" : "project45-neo-accelerator.png",
+    "middleFullbright" : "",
+    "charge": "",
+    "chargeFullbright": "project45-neo-accelerator-charge-fullbright.png",
+    "magazine": "project45-neo-accelerator-mag.png",
+    "magazineFullbright": ""
+  },
+
+  "animationCustom": {
+    "particleEmitters": {
+      "ejectionPort": {
+        "particles": [
+        ]
+      },
+      "magazine": {
+        "particles": [
+          {"particle": "project45energygunmag3"}
+        ]
+      }
+    },
+
+    "sounds": {
+      "fire" : ["/sfx/project45-synthetikmechanics/fires/fire_energyar.ogg"],
+      "chargeDrone": ["/sfx/project45-synthetikmechanics/charges/flamethrower_hiss_loop.ogg"]
+    },
+
+    "animatedParts": {
+      "stateTypes": {
+        "charge":{
+          "states":{
+            "charging":{
+              "frames": 5
+            }
+          }
+        }
+      }
+    }
+  },
+
+  "muzzleFlashColor": [255,128,255],
+  "baseOffset" : [0.5, 0],
+  "muzzleOffset" : [1.875, 0.5],
+  "ejectionPortOffset": [-0.1, 0.7],
+  "magazineOffset": [-0.1, 0.7],
+  "chargeSmokeOffsetRegion": [0, 0.5, 1.875, 0.5],
+
+  "scripts" : ["/items/active/weapons/ranged/project45gunneo.lua"],
+    
+  "primaryAbilityType": "project45gunfire",
+  "primaryAbility": {
+    "baseDamage": 1,
+    "projectileKind": "hitscan",
+    "chargeSmoke": true,
+    "cycleTime": [0.25, 0.01],
+    "semi": false,
+    "chargeFrames": 5,
+    "overchargeTime": 3,
+    "dischargeTimeMult": 0.75,
+    "progressiveCharge": true,
+    "inaccuracy": 2.5, // affects arm movement as the trigger is pulled
+    "spread": 0,
+    "maxAmmo": 100,
+    "bulletsPerReload": 100,
+    "laser": {
+      "enabled": true
+    }
+  },
+
+  "altAbilityType": "markedshot",
+
+  "builder" : "/items/buildscripts/buildproject45neoneo.lua"
+}

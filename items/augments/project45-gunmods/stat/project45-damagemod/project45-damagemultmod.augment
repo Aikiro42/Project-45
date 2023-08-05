@@ -9,7 +9,7 @@
   "shortdescription" : "^#EA9931;Base Damage X",
 
   "augment":{
-    "damagePerShot": {
+    "baseDamage": {
       "operation": "multiply",
       "value": 1.2
     }

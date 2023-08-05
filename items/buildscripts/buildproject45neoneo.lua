@@ -1,6 +1,7 @@
 require "/scripts/util.lua"
 require "/scripts/vec2.lua"
 require "/scripts/set.lua"
+require "/scripts/project45/project45util.lua"
 require "/scripts/versioningutils.lua"
 require "/items/buildscripts/project45abilities.lua"
 
@@ -34,23 +35,20 @@ function build(directory, config, parameters, level, seed)
   -- to altAnimationScripts
   -- (if anything is appended, altAnimationScripts is usually empty)
   for i, animationScript in ipairs(config.animationScripts or {}) do
-    table.insert(altAnimationScripts, animationScript)
+    if not project45util.isItemInList(altAnimationScripts, animationScript) then
+      table.insert(altAnimationScripts, animationScript)
+    end
   end
 
   -- append primary animation scripts
   -- to altAnimationScripts
   for i, animationScript in ipairs(primaryAnimationScripts) do
-    table.insert(altAnimationScripts, animationScript)
+    if not project45util.isItemInList(altAnimationScripts, animationScript) then
+      table.insert(altAnimationScripts, animationScript)
+    end
   end
-
-  -- remove duplicate scripts
-  altAnimationScripts = set.new(altAnimationScripts)
-  altAnimationScripts = util.tableKeys(altAnimationScripts)
-
-  -- let the item's animationScripts be altAnimationScripts
-  -- config.animationScripts = {}
-  -- util.mergeTable(config.animationScripts, altAnimationScripts)
-  config.animationScripts = copy(altAnimationScripts)
+  
+  config.animationScripts = altAnimationScripts
   
   -- elemental type and config (for alt ability)
   local elementalType = configParameter("elementalType", "physical")

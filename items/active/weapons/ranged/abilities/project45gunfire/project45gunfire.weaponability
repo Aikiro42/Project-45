@@ -77,9 +77,7 @@
     //*/
 
     "projectileParameters": {
-      "power": 100,
-      "damageType": "IgnoresDef",
-      "statusEffects": []
+
     },
 
     // settings for firing multiple types of projectiles
@@ -101,7 +99,7 @@
       "range": 100,  // range of the hitscan line in blocks
       
       "punchThrough": 0,  // number of entities to register before stopping the scan
-      "fullChargePunchThrough": 3,
+      "fullChargePunchThrough": 0,
       
       "ignoresTerrain": false,  // pierces through terrain if true
       "ignoresTerrainOnFullCharge": false,

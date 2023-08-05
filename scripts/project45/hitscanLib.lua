@@ -22,7 +22,7 @@ function hitscanLib:fireHitscan(projectileType)
         vec2.sub(hitReg[2], mcontroller.position())
       }
       
-      local finalDamage = self:damagePerShot(true)
+      local finalDamage = self:damagePerShot()
       local damageConfig = {
         -- we included activeItem.ownerPowerMultiplier() in
         -- self:damagePerShot() so we cancel it

@@ -22,15 +22,15 @@ function apply(input)
     local newPrimaryAbility = input.parameters.primaryAbility or {}
 
     -- Alter Damage Per Shot
-    if augment.damagePerShot then
+    if augment.baseDamage then
         
         local newBaseDamage
 
-        if augment.damagePerShot.operation == "add" then
-            newBaseDamage = oldPrimaryAbility.baseDamage + augment.damagePerShot.value
+        if augment.baseDamage.operation == "add" then
+            newBaseDamage = oldPrimaryAbility.baseDamage + augment.baseDamage.value
 
-        elseif augment.damagePerShot.operation == "multiply" then
-            newBaseDamage = oldPrimaryAbility.baseDamage * augment.damagePerShot.value
+        elseif augment.baseDamage.operation == "multiply" then
+            newBaseDamage = oldPrimaryAbility.baseDamage * augment.baseDamage.value
 
         end
         

@@ -1,0 +1,78 @@
+[
+    {
+        "op": "add",
+        "path": "/project45",
+        "value": [
+            "/spawnitem project45-accelerator",
+            "/spawnitem project45-antimateriel",
+            "/spawnitem project45-assaultenergygun",
+            "/spawnitem project45-assaultrifle",
+            "/spawnitem project45-energygun",
+            "/spawnitem project45-flamethrower",
+            "/spawnitem project45-garand",
+            "/spawnitem project45-gaussrifle",
+            "/spawnitem project45-grenadelauncher",
+            "/spawnitem project45-mg45",
+            "/spawnitem project45-minigun",
+            "/spawnitem project45-modulargun",
+            "/spawnitem project45-mosin",
+            "/spawnitem project45-pipegun",
+            "/spawnitem project45-pistol",
+            "/spawnitem project45-revolver",
+            "/spawnitem project45-shotgun",
+            "/spawnitem project45-sniperrifle",
+            "/spawnitem project45-submachinegun"
+        ]
+    },
+    {
+        "op": "add",
+        "path": "/project45neo",
+        "value": [
+            "/spawnitem project45-neb-zweibrandyr",
+            "/spawnitem project45-neo-amr",
+            "/spawnitem project45-neo-assaultrifle",
+            "/spawnitem project45-neo-custom",
+            "/spawnitem project45-neo-flamethrower",
+            "/spawnitem project45-neo-gaussrifle",
+            "/spawnitem project45-neo-huntingrifle",
+            "/spawnitem project45-neo-machinegun",
+            "/spawnitem project45-neo-minigun",
+            "/spawnitem project45-neo-pistol",
+            "/spawnitem project45-neo-revolver",
+            "/spawnitem project45-neo-rocketlauncher"
+        ]
+    },
+    {
+        "op": "add",
+        "path": "/punchy",
+        "value": [
+            "/spawnmonster punchy"
+        ]
+    },
+    {
+        "op": "add",
+        "path": "/npunchy",
+        "value": [
+            "/spawnnpc apex miniknogagent"
+        ]
+    },
+    {
+        "op": "add",
+        "path": "/testgun",
+        "value": [
+            "/spawnitem project45-neo-assaultrifle"
+        ]
+    },
+    {
+        "op": "add",
+        "path": "/project45statupgrades",
+        "value": [
+            "/spawnitem project45-damageaddmod 10",
+            "/spawnitem project45-critchanceaddmod 10",
+            "/spawnitem project45-critdamageaddmod 10",
+            "/spawnitem project45-damagemultmod 10",
+            "/spawnitem project45-critchancemultmod 10",
+            "/spawnitem project45-critdamagemultmod 10"
+        ]
+    }
+]
