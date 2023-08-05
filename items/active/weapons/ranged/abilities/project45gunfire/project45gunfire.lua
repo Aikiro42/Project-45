@@ -809,7 +809,7 @@ function Project45GunFire:muzzleFlash()
   if (self.projectileKind or "projectile") ~= "beam" then
     -- play fire and hollow sound if the gun isn't firing a beam
     animator.setSoundPitch("fire", sb.nrand(0.01, 1))
-    animator.setSoundVolume("hollow", math.max((1 - storage.ammo/self.maxAmmo) * self.hollowSoundMult, self.hollowSoundMult))
+    animator.setSoundVolume("hollow", util.clamp((1 - storage.ammo/self.maxAmmo) * self.hollowSoundMult, 0, self.hollowSoundMult))
     animator.playSound("fire")
     animator.playSound("hollow")
   end
