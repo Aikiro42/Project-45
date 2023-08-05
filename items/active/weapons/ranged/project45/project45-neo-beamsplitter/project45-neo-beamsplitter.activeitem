@@ -1,0 +1,127 @@
+{
+  "itemName" : "project45-neo-beamsplitter",
+  "price" : 1000,
+  "maxStack" : 1,
+  "rarity" : "Essential",
+  "description" : "An energy shotgun.",
+  "shortdescription" : "Beamsplitter",
+  "tooltipKind" : "project45gun",
+  "gunArchetype": "Energy Shotgun",
+  "category" : "shotgun",
+  "twoHanded" : true,
+  "itemTags" : ["weapon","ranged","shotgun"],
+  "level" : 1,
+  "muzzleFlashColor": [255, 0, 0],
+  "inventoryIcon" : "project45-neo-beamsplitter-icon.png",
+
+  "animationParts" : {
+    "middle" : "project45-neo-beamsplitter.png",
+    "middleFullbright" : "",
+    "charge": "",
+    "chargeFullbright": "",
+    "magazine": "project45-neo-beamsplitter-mag.png",
+    "magazineFullbright": ""
+  },
+
+  "animationCustom": {
+    "particleEmitters": {
+      "ejectionPort": {
+        "particles": [
+        ]
+      },
+      "magazine": {
+        "particles": [
+          {"particle": "project45energygunmag"}
+        ]
+      }
+    },
+
+    "sounds": {
+      "fire" : ["/sfx/project45-synthetikmechanics/fires/fire_energyar.ogg"],
+      "hollow": []
+    }
+  },
+
+  "project45GunModInfo":{
+    "category": "energy",
+    "acceptsAmmoTypes":{
+    },
+    "acceptsAmmoArchetypes":{
+    },
+    "acceptsModSlot": {
+      "rail": false,
+      "sights": false,
+      "underbarrel": false,
+      "stock": false,
+      "muzzle": false
+    }
+  },
+
+  "baseOffset" : [0, -0.375],
+  "muzzleOffset" : [1.625, 0.375],
+  "ejectionPortOffset": [-0.25, 0.5],
+  "magazineOffset": [0, 0],
+
+  "scripts" : ["/items/active/weapons/ranged/project45gunneo.lua"],
+    
+  "primaryAbilityType": "project45gunfire",
+  "primaryAbility": {
+    "maxAmmo": 15,
+    "bulletsPerReload": 15,
+    "inaccuracy": 3,
+    "recoilAmount": 1,
+    "recoilMaxDeg": 7.5,
+    "recoverDelay": 0.05,
+    "semi": true,
+    "cycleTime": 0.1,
+    "projectileKind": "hitscan",
+    "projectileCount": 3,
+    "spread": 3,
+
+    // "reloadTime": 10,
+
+    "laser":{
+      "enabled": false
+    },
+  
+    "stances":{
+      "aimStance": {
+        "frontArmFrame": "run.3",
+        "backArmFrame": "fall.1"
+      },
+      "empty": {
+        "frontArmFrame": "run.3",
+        "backArmFrame": "fall.1"
+      },
+      "boltPull": {
+        "frontArmFrame": "run.3",
+        "backArmFrame": "jump.2"
+      },
+      "boltPush": {
+        "frontArmFrame": "run.3",
+        "backArmFrame": "fall.1"
+      },
+      "reloading": {
+        "armRotation": -15,
+        "weaponRotation": 0,
+        "frontArmFrame": "run.2",
+        "backArmFrame": "fall.1",
+        "flipWeapon": true,
+        "allowRotate": false,
+        "weaponOffset": [0, 0.5],
+        "twoHanded": true
+      },
+      "loadRound": {
+        "armRotation": -20,
+        "weaponRotation": 0,
+        "flipWeapon": true,
+        "allowRotate": false,
+        "weaponOffset": [0, 0.5],
+        "frontArmFrame": "rotation",
+        "backArmFrame": "fall.1"
+      }
+    }
+  },
+
+  "builder" : "/items/buildscripts/buildproject45neoneo.lua"
+}
