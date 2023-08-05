@@ -87,9 +87,7 @@
     
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
-    "baseDamage": 1,
     "projectileKind": "hitscan",
-    "chargeSmoke": true,
     "cycleTime": [0.25, 0.01],
     "semi": false,
     "chargeFrames": 5,
@@ -98,11 +96,8 @@
     "progressiveCharge": true,
     "inaccuracy": 2.5, // affects arm movement as the trigger is pulled
     "spread": 0,
-    "maxAmmo": 100,
-    "bulletsPerReload": 100,
-    "laser": {
-      "enabled": true
-    }
+    "maxAmmo": 75,
+    "bulletsPerReload": 75
   },
 
   "altAbilityType": "markedshot",

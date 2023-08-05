@@ -24,6 +24,24 @@
     "muzzleFlash": "/items/active/weapons/ranged/muzzleflash.png"
   },
 
+  "project45GunModInfo": {
+    "category": "ballistic",
+    "acceptsAmmoTypes": {
+      "ballistic": true
+    },
+    "acceptsAmmoArchetypes": {
+      "generic": true
+    },
+    "acceptsModSlot": {
+      "sights": true,
+      "receiver": true,
+      "material": true,
+      "barrel": true,
+      "grip": true,
+      "magazine": true
+    }
+  },
+
   "animationCustom": {
     "particleEmitters": {
       "ejectionPort": {
@@ -49,6 +67,7 @@
   "muzzleOffset" : [2.75, 0.375],
   "ejectionPortOffset": [-0.5, 0.625],
   "magazineOffset": [0, 0],
+  "sightsOffset": [1.5, 1],
 
   "scripts" : ["/items/active/weapons/ranged/project45gunneo.lua"],
     
@@ -68,7 +87,8 @@
     "heavyWeapon": true,
     "recoilUpOnly": true,
     "recoilMomentum": 40,
-    "recoverDelay": 0.5,
+    "recoverDelay": 0.1,
+    "recoilCrouchMult": 0.05,
     // "reloadTime": 10,
   
     "stances":{

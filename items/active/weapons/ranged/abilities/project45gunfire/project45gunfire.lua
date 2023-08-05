@@ -1076,7 +1076,7 @@ function Project45GunFire:updateCharge()
   local timeBasis = self.chargeTime
   if self.animateBeforeOvercharge and timeBasis <= 0 then
     timeBasis = self.overchargeTime
-  else
+  elseif not self.animateBeforeOvercharge then
     timeBasis = timeBasis + self.overchargeTime
   end
 
