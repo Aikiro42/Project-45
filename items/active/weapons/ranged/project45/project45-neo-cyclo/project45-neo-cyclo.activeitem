@@ -1,0 +1,143 @@
+{
+  "itemName" : "project45-neo-cyclo",
+  "price" : 1000,
+  "maxStack" : 1,
+  "rarity" : "Essential",
+  "description" : "A compact hardlight emitter.",
+  "shortdescription" : "Cyclo",
+  "tooltipKind" : "project45gun",
+  "gunArchetype": "Beam Emitter",
+  "category" : "pistol",
+  "twoHanded" : false,
+  "itemTags" : ["weapon","ranged","pistol"],
+  "level" : 1,
+  "muzzleFlashColor": [255, 255, 0],
+  "inventoryIcon" : "project45-neo-cyclo-icon.png",
+
+  "animationParts" : {
+    "middle" : "project45-neo-cyclo.png",
+    "middleFullbright" : "",
+    "charge": "",
+    "chargeFullbright": "",
+    "magazine": "project45-neo-cyclo-mag.png",
+    "magazineFullbright": ""
+  },
+
+  "animationCustom": {
+    "particleEmitters": {
+      "ejectionPort": {
+        "particles": [
+        ]
+      },
+      "magazine": {
+        "particles": [
+          {"particle": "project45energygunmag"}
+        ]
+      }
+    },
+
+    "sounds": {
+      "fireStart": ["/sfx/gun/mech_beamsniper_fire1.ogg"],
+      "fireLoop": ["/sfx/gun/mech_beamdrill_loop.ogg"],
+      "fireEnd": ["/sfx/gun/mech_beamdrill_winddown.ogg"],
+      "hollow": [ ],
+      "chargeDrone": [ ]
+    }
+  },
+
+  "project45GunModInfo":{
+    "category": "energy",
+    "acceptsAmmoTypes":{
+    },
+    "acceptsAmmoArchetypes":{
+    },
+    "acceptsModSlot": {
+      "rail": false,
+      "sights": false,
+      "underbarrel": false,
+      "stock": false,
+      "muzzle": false
+    }
+  },
+
+  "baseOffset" : [0.5, 0.25],
+  "muzzleOffset" : [1, 0.25],
+  "ejectionPortOffset": [-0.25, 0.5],
+  "magazineOffset": [0, 0],
+
+  "scripts" : ["/items/active/weapons/ranged/project45gunneo.lua"],
+    
+  "primaryAbilityType": "project45gunfire",
+  "primaryAbility": {
+    "maxAmmo": 50,
+    "bulletsPerReload": 50,
+    "inaccuracy": 3,
+    "recoilAmount": 0.5,
+    "recoilMaxDeg": 5,
+    "recoverDelay": 0,
+    "semi": true,
+    "cycleTime": 0.1,
+    "chargeTime": 0.5,
+    "overchargeTime": 1,
+    "projectileKind": "beam",
+    "screenShakeAmount": 0.25,
+
+    // "reloadTime": 10,
+
+    "laser":{
+      "enabled": false
+    },
+  
+    "stances":{
+      "idleneo": {
+        "twoHanded": false
+      },
+      "aim": {
+        "twoHanded": false
+      },
+      "empty": {
+        "twoHanded": false
+      },
+      "ejectmag" : {
+        "armRotation" : -45,
+        "weaponRotation" : 45,
+        "twoHanded" : false,
+        "allowRotate" : false,
+        "allowFlip" : false
+      },
+      "reloading" : {
+        "armRotation" : 45,
+        "weaponRotation" : 0,
+        "weaponAngularVelocity": 3600,
+        "twoHanded": false
+        // "weaponOffset" : [0.25, 0.575],
+        // "frontArmFrame" : "run.2",
+        // "backArmFrame" : "jump.3"
+      },
+      "reloaded" : {
+        "armRotation" : -90,
+        "weaponRotation" : 15,
+        "twoHanded" : false,
+        "allowRotate" : false,
+        "allowFlip" : false
+      },
+      "boltPull": {
+        "twoHanded": false
+      },
+      "boltPush": {
+        "twoHanded": false
+      },
+      "jammed": {
+        "twoHanded": false
+      },
+      "unjam": {
+        "armRotation": -45,
+        "weaponRotation": -5,
+        "frontArmFrame": "rotation",
+        "twoHanded": false      
+      }
+    }
+  },
+
+  "builder" : "/items/buildscripts/buildproject45neoneo.lua"
+}
