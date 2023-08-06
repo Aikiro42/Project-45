@@ -1,0 +1,15 @@
+{  
+  "frameGrid" : {
+    "size" : [28, 13],
+    "dimensions" : [4, 1],
+    "names" : [
+      ["idle.1", "ejecting.1", "feeding.1", "jammed.1"]
+    ]
+  },
+
+  "aliases" : {
+    "firing.1": "idle.1",
+    "ejected.1": "ejecting.1",
+    "unjamming.1": "feeding.1"
+  }
+}

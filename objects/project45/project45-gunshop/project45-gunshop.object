@@ -70,7 +70,6 @@
     "goods":{
       "guns": [
 
-        "project45-modulargun",
         "project45-neo-custom",
         "project45-pipegun",
         
@@ -79,6 +78,7 @@
         "project45-submachinegun",
         "project45-neo-shotgun",
         "project45-neo-assaultrifle",
+        "project45-neo-carbine",
         "project45-neo-servicerifle",
         "project45-neo-huntingrifle",
         "project45-sniperrifle",
