@@ -1,0 +1,114 @@
+{
+  "itemName" : "project45-neo-sniper",
+  "price" : 1000,
+  "maxStack" : 1,
+  "rarity" : "Essential",
+  "description" : "A semi-auto bullpup marksman rifle.",
+  "shortdescription" : "New Sniper",
+  "tooltipKind" : "project45gun",
+  "gunArchetype": "Bullpup DMR",
+  "category" : "sniper",
+  "twoHanded" : true,
+  "itemTags" : ["weapon","ranged","sniper"],
+  "level" : 1,
+  "muzzleFlashColor": [255, 255, 200],
+  "inventoryIcon" : "project45-neo-sniper-icon.png",
+
+  "animationParts" : {
+    "middle" : "project45-neo-sniper.png",
+    "middleFullbright" : "",
+    "charge": "",
+    "chargeFullbright": "",
+    "magazine": "project45-neo-sniper-mag.png",
+    "magazineFullbright": ""
+  },
+
+  "animationCustom": {
+    "particleEmitters": {
+      "ejectionPort": {
+        "particles": [
+          {
+            "particle" : {
+              "type" : "animated",
+              "image" : "/particles/bulletcases/project45bulletcase/project45bulletcase.animation",
+              "fade" : 0.9,
+              "position" : [0, 0],
+              "size" : 1.0,
+              "angularVelocity": -360,
+              "initialVelocity" : [6, 0],
+              "finalVelocity" : [0, -50.0],
+              "approach" : [5, 50],
+              "timeToLive" : 2,
+              "layer" : "back",
+              "collidesForeground" : true,
+              "variance" : {
+                // "angularVelocity" : 240,
+                "initialVelocity" : [2, 2]
+              }
+            }
+          }
+        ]
+      },
+      "magazine": {
+        "particles": [
+          {"particle": "project45sniperriflemag"}
+        ]
+      }
+    },
+
+    "sounds": {
+      "fire" : [
+        "/sfx/gun/sniper3.ogg"
+      ]
+    }
+  },
+
+  "project45GunModInfo":{
+    "category": "ballistic",
+    "acceptsAmmoTypes":{
+      "ballistic": true
+    },
+    "acceptsAmmoArchetypes":{
+      "generic": true
+    },
+    "acceptsModSlot": {
+      "rail": true,
+      "sights": true,
+      "underbarrel": true,
+      "stock": false,
+      "muzzle": true
+    }
+  },
+
+  "baseOffset" : [0.75, 0.125],
+  "muzzleOffset" : [2.125, 0.375],
+  "ejectionPortOffset": [1, 0.25],
+  "magazineOffset": [0, 0],
+  "underbarrelOffset": [2, 0],
+
+  "scripts" : ["/items/active/weapons/ranged/project45gunneo.lua"],
+    
+  "primaryAbilityType": "project45gunfire",
+  "primaryAbility": {
+    "maxAmmo": 20,
+    "bulletsPerReload": 20,
+    "semi": false,
+    "inaccuracy": 2,
+    "recoilAmount": 3,
+    "recoilMaxDeg": 15,
+    "recoverDelay": 1,
+    "recoverTime": 1,
+    "cycleTime": 0.2,
+    "projectileKind": "projectile",
+    "laser":{
+      "enabled": false
+    },
+    "stances": {
+      
+    }
+  },
+
+  "altAbilityType": "project45gunfire",
+
+  "builder" : "/items/buildscripts/buildproject45neoneo.lua"
+}

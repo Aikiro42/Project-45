@@ -82,7 +82,7 @@
     "cycleTime": 0.1,
     "projectileKind": "projectile",
     "laser":{
-      "enabled": true
+      "enabled": false
     }
   },
 

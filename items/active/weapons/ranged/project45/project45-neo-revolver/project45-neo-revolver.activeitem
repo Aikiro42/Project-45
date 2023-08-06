@@ -79,9 +79,6 @@
         },
         "gun": {
           "states":{
-            "idle": {
-              "frames": 1
-            },
             "open": {
               "frames": 1
             },
@@ -90,30 +87,6 @@
               "transition": "fired"
             },
             "fired": {
-              "frames": 1
-            },
-            "firingLoop": {
-              "frames": 1
-            },
-            "ejecting": {
-              "frames": 1
-            },
-            "boltPulling": {
-              "frames": 1
-            },
-            "ejected": {
-              "frames": 1
-            },
-            "feeding": {
-              "frames": 1
-            },
-            "boltPushing": {
-              "frames": 1
-            },
-            "jammed": {
-              "frames": 1
-            },
-            "unjamming": {
               "frames": 1
             }
           }
