@@ -1,0 +1,7 @@
+{
+  "image" : "project45grenadelaunchermag.png",
+  "frameGrid" : {
+    "size" : [5, 8],
+    "dimensions" : [1, 1]
+  }
+}

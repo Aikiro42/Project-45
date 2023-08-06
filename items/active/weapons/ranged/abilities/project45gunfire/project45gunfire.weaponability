@@ -28,7 +28,10 @@
       "enabled": false, // if true, laser is rendered
       "width": 0.25,
       "color": [255, 0, 0], // laser color
-      "range": 100 // max distance to which the laser is drawn
+      "range": 100, // max distance to which the laser is drawn
+      "trajectoryConfig": {
+        "renderSteps": 50  // number of lines rendered in the laser arc when using gravity-affected projectiles
+      }
       // ,"renderMaxRange": true // if false, laser is rendered up to player's aim position only
       // ,"alwaysActive": false
     },
@@ -166,7 +169,7 @@
 
     // Reload and Magazine Config
 
-    "audibleEjection": false, // if true, plays bolt pulling sound on eject
+    "audibleEjection": false, // if true, plays bolt pulling sound when ejecting casings
     "ejectBeforeAnimation": true, // ejects casings before animationState is set to "ejecting"
     "ejectCasingsAfterBurst": false, // ejects casings after burst is finished
     "ejectCasingsWithMag": false, // for revolvers, etc.; casings are not ejected until magazine is ejected
@@ -183,8 +186,8 @@
     "internalMag": false, // whether the "magazine" is a strip or a clip (makes magazine invisible)
     "loadRoundsThroughBolt": false, // whether the bolt must be opened before doing the reload sequence.
     
-    // determines whether the gun is break-action, i.e.:
-    // - breaks open when ejecting the mag
+    // determines whether the gun is break-action, i.e. breaks open when ejecting the mag
+    // dictates whether the gun animation accesses the "open" state
     "breakAction": false,
 
     "magVisualPercentage": false, // Whether the mag visually indicates the percentage or count of ammo remaining

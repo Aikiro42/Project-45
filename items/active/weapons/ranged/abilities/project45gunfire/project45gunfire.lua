@@ -1321,10 +1321,11 @@ function Project45GunFire:evalProjectileKind()
       if self.projectileKind == "projectile" then
         
         local projectileConfig = util.mergeTable(root.projectileConfig(self.projectileType), self.projectileParameters)
-        local projSpeed = projectileConfig.speed
+        local projSpeed = projectileConfig.speed or 50
         
-        if root.projectileGravityMultiplier(self.projectileType) ~= 0 and projectileConfig.speed then
-          activeItem.setScriptedAnimationParameter("primaryLaserArcSpeed", projectileConfig.speed)
+        if root.projectileGravityMultiplier(self.projectileType) ~= 0 then
+          activeItem.setScriptedAnimationParameter("primaryLaserArcSteps", self.laser.trajectoryConfig.renderSteps)
+          activeItem.setScriptedAnimationParameter("primaryLaserArcSpeed", projSpeed)
           activeItem.setScriptedAnimationParameter("primaryLaserArcRenderTime", projectileConfig.timeToLive)
           activeItem.setScriptedAnimationParameter("primaryLaserArcGravMult", root.projectileGravityMultiplier(self.projectileType))
         end

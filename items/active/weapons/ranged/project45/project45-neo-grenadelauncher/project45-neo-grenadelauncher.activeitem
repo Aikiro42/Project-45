@@ -1,0 +1,168 @@
+{
+  "itemName" : "project45-neo-grenadelauncher",
+  "price" : 1000,
+  "maxStack" : 1,
+  "rarity" : "Essential",
+  "description" : "A grenade launcher.",
+  "shortdescription" : "New Grenade Launcher",
+  "tooltipKind" : "project45gun",
+  "gunArchetype": "Grenade Launcher",
+  "category" : "grenadelauncher",
+  "twoHanded" : true,
+  "itemTags" : ["weapon","ranged","grenadelauncher"],
+  "level" : 1,
+  "muzzleFlashColor": [255, 255, 200],
+  "inventoryIcon" : "project45-neo-grenadelauncher-icon.png",
+
+  "animationParts" : {
+    "middle" : "project45-neo-grenadelauncher.png",
+    "middleFullbright" : "",
+    "charge": "",
+    "chargeFullbright": "",
+    "magazine": "",
+    "magazineFullbright": "",
+    "muzzleFlash": "/items/active/weapons/ranged/muzzleflash.png"
+  },
+
+  "animationCustom": {
+    "particleEmitters": {
+      "muzzleFlash": { "particles": [
+        {"particle": "rocketbarrelpuff"},
+        {"particle": "rocketbarrelpuff"},
+        {"particle": "rocketbarrelpuff"},
+        {"particle": "project45muzzle"},
+        {"particle": "project45muzzle"},
+        {"particle": "project45muzzle"}
+        ]},
+      "ejectionPort": {
+        "particles": [
+          {"particle": "rocketbarrelpuff"},
+          {"particle": "project45grenadeshell"}
+        ]
+      },
+      "magazine": {
+        "particles": [
+          {"particle": "project45grenadelaunchermag"}
+        ]
+      }
+    },
+
+    "sounds": {
+      "reloadStart" : ["/sfx/project45-synthetikmechanics/foleys/getmag_revolver.ogg"],
+      "fire" : ["/sfx/project45-synthetikmechanics/fires/fire_grenadelauncher.ogg"],
+      "loadRound" : ["/sfx/project45-synthetikmechanics/reloads/loadround_grenadelauncher.ogg"]
+    },
+    "animatedParts": {
+      "parts":{
+        "middle":{
+          "partStates":{
+            "gun":{
+              "fired": {
+                "properties": {
+                  "image": "<partImage>:firing.1"
+                }
+              }
+            }
+          }
+        },
+        "charge":{
+          "partStates":{
+            "charge":{
+              "off": {
+                "properties": {
+                  "image": "<partImage>:charging.1"
+                }
+              }
+            }
+          }
+        }
+      },
+      "stateTypes": {
+        "charge":{
+          "states":{
+            "charging":{
+              "frames": 2
+            }
+          }
+        },
+        "gun": {
+          "states":{
+            "idle": {
+              "frames": 1
+            },
+            "open": {
+              "frames": 1
+            },
+            "feeding": {
+              "frames": 2
+            },
+            "boltPushing": {
+              "frames": 2
+            }
+          }
+        }
+      }
+    }
+  },
+
+  "baseOffset" : [0, 0],
+  "muzzleOffset" : [2, 0.225],
+  "ejectionPortOffset": [0.3, 0.7],
+  "magazineOffset": [0, 0],
+  "railOffset": [1.5, 0.125],
+  "sightsOffset": [0.375, 1],
+
+  "scripts" : ["/items/active/weapons/ranged/project45gunneo.lua"],
+    
+  "primaryAbilityType": "project45gunfire",
+  "primaryAbility": {
+    "maxAmmo": 5,
+    "bulletsPerReload": 5,
+    "semi": true,
+    "cycleTime": 0.25,
+    "cockTime": 0.25,
+    "projectileKind": "projectile",
+    "projectileType": "impactgrenade",
+    "projectileParameters": {},
+    "reloadTime": 1,
+
+    // "internalMag": true,
+    // "loadRoundsThroughBolt": true,
+    "ejectCasingsWithMag": true,
+    "breakAction": true,
+    "slamFire": true,
+
+    "inaccuracy": 0,
+    "recoilAmount": 0,
+    "recoilMaxDeg": 0,
+    "recoverDelay": 0.5,
+    "recoverTime": 1, // time it takes to recover aim completely, in seconds
+
+    // "reloadTime": 10,
+
+    "laser":{
+      "enabled": true
+    },
+  
+    "stances":{
+      "aimStance": {
+        "frontArmFrame": "run.3",
+        "backArmFrame": "jump.4"
+      },
+      "empty": {
+        "frontArmFrame": "run.3",
+        "backArmFrame": "jump.4"
+      },
+      "boltPull": {
+        "frontArmFrame": "run.3",
+        "backArmFrame": "jump.4"
+      },
+      "boltPush": {
+        "frontArmFrame": "run.3",
+        "backArmFrame": "jump.4"
+      }
+    }
+  },
+
+  "builder" : "/items/buildscripts/buildproject45neoneo.lua"
+}

@@ -143,7 +143,7 @@ function renderLaser()
       laserStart,
       math.atan(laserEnd[2] - laserStart[2], laserEnd[1] - laserStart[1]),
       animationConfig.animationParameter("primaryLaserArcSpeed") or 10,
-      10,
+      animationConfig.animationParameter("primaryLaserArcSteps") or 50,
       animationConfig.animationParameter("primaryLaserArcRenderTime") or 3,
       laserColor,
       animationConfig.animationParameter("primaryLaserArcGravMult") or 1
