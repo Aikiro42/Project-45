@@ -330,6 +330,8 @@ end
 
 function Project45GunFire:uninit()
   self:saveGunState()
+  activeItem.setScriptedAnimationParameter("beamLine", nil)
+  activeItem.setScriptedAnimationParameter("projectileStack", nil)
 end
 
 -- SECTION: STATE FUNCTIONS

@@ -69,14 +69,14 @@
     
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
-    "maxAmmo": 50,
-    "bulletsPerReload": 50,
+    "maxAmmo": 100,
+    "bulletsPerReload": 100,
     "inaccuracy": 3,
     "recoilAmount": 0.5,
     "recoilMaxDeg": 5,
     "recoverDelay": 0,
     "semi": true,
-    "cycleTime": 0.1,
+    "cycleTime": 0.01,
     "chargeTime": 0.5,
     "overchargeTime": 1,
     "projectileKind": "beam",
