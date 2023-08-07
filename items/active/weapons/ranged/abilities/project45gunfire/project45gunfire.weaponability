@@ -31,8 +31,8 @@
       "range": 100, // max distance to which the laser is drawn
       "trajectoryConfig": {
         "renderSteps": 50  // number of lines rendered in the laser arc when using gravity-affected projectiles
-      }
-      // ,"renderMaxRange": true // if false, laser is rendered up to player's aim position only
+      },
+      "renderUntilCursor": true // if true, laser is rendered up to player's aim position only
       // ,"alwaysActive": false
     },
 

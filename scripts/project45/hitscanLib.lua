@@ -359,6 +359,10 @@ function hitscanLib:hitscan(isLaser, degAdd)
   end
 
   local scanOrig = self:firePosition()
+  if self.laser.renderUntilCursor then
+    scanLength = math.min(world.magnitude(scanOrig, activeItem.ownerAimPosition()), scanLength)
+  end
+
   local scanDest = vec2.add(scanOrig, vec2.mul(self:aimVector(isLaser and 0 or self.spread, degAdd or 0), scanLength))
   local fullScanDest = not ignoresTerrain and world.lineCollision(scanOrig, scanDest, {"Block", "Dynamic"}) or scanDest
 
