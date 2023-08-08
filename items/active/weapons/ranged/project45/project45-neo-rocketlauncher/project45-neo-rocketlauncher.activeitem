@@ -160,7 +160,7 @@
     "hideMuzzleFlash": true,
     "resetChargeAfterFire": true,
     "audibleEjection": true,
-    "ejectMagOnEmpty": true,
+    "ejectMagOnEmpty": "ejecting",
 
     "stances":{
       "reloading" : {

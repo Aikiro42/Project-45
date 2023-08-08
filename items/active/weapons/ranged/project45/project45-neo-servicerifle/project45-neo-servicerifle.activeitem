@@ -82,7 +82,7 @@
 
     "internalMag": true,
     "loadRoundsThroughBolt": true,
-    "ejectMagOnEmpty": true,
+    "ejectMagOnEmpty": "ejecting",
 
   
     "stances":{

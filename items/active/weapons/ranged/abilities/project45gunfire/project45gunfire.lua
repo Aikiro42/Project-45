@@ -10,7 +10,7 @@ require "/items/active/weapons/ranged/abilities/altfire.lua"
 
 local BAD, OK, GOOD, PERFECT = 1, 2, 3, 4
 local reloadRatingList = {"BAD", "OK", "GOOD", "PERFECT"}
-local debugTime = 1
+local debugTime = 0.1
 
 Project45GunFire = WeaponAbility:new()
 
@@ -206,7 +206,7 @@ function Project45GunFire:init()
   self.stances = self.stances or {}
   local finalAimStance = self.stances.aimStance or {}
   self.stances.aimStance = util.mergeTable(defaultAimStance, finalAimStance)
-  
+
   -- compatibility stances
   self.stances.idle = self.stances.aimStance
   self.stances.charge = self.stances.aimStance
@@ -433,6 +433,9 @@ function Project45GunFire:firing()
     end
   -- otherwise, stop the cycle process
   else
+    if storage.ammo == 0 and self.ejectMagOnEmpty and self.ejectMagOnEmpty == "firing" then
+      self:ejectMag()
+    end
     self:stopFireLoop()
     self.cooldownTimer = self.fireTime
     self.isFiring = false
@@ -481,6 +484,7 @@ function Project45GunFire:ejecting()
   or self.isCocking
   then
     util.wait(self.cockTime/2)
+    self.stanceLocked = false
   else
     util.wait(self.currentCycleTime/3)
   end
@@ -501,7 +505,7 @@ function Project45GunFire:ejecting()
   -- and eject mag if it's supposed to be ejected (like the garand)
   else
     storage.burstCounter = self.burstCount
-    if self.ejectMagOnEmpty
+    if self.ejectMagOnEmpty and self.ejectMagOnEmpty == "ejecting"
     or self.loadRoundsThroughBolt
     then
       self:ejectMag()
@@ -519,7 +523,6 @@ function Project45GunFire:feeding()
   then
     animator.playSound("boltPush")                -- then we were cocking back, and we should cock forward
     animator.setAnimationState("gun", "boltPushing")
-    self:setStance(self.stances.boltPush)
   else
     animator.setAnimationState("gun", "feeding")
   end
@@ -530,15 +533,21 @@ function Project45GunFire:feeding()
   and self.reloadTimer < 0
   and storage.burstCounter >= self.burstCount
   and self:triggering() then
+    -- do this when slamfiring
     animator.setAnimationState("bolt", "closed")
     self:updateChamberState("ready")
     self.isCocking = false
+    self:setStance(self.stances.slamFire or self.stances.boltPush)
+    -- util.wait(self.dt)
+    -- self:setStance(self.stances.boltPush, true, true)
     if self.chargeTime + self.overchargeTime > 0 then
       self:setState(self.charging)
     else
-      self:setState(self.firing)      
+      self:setState(self.firing)
     end
     return
+  else
+    self:setStance(self.stances.boltPush)
   end
 
   -- otherwise, we wait
@@ -899,7 +908,7 @@ function Project45GunFire:discardCasings(numCasings)
     return
   end
 
-  if storage.unejectedCasings > 0 then
+  if storage.unejectedCasings > 0 or numCasings then
     animator.setParticleEmitterBurstCount("ejectionPort", numCasings or storage.unejectedCasings)
     animator.burstParticleEmitter("ejectionPort")
     storage.unejectedCasings = 0
@@ -946,7 +955,7 @@ function Project45GunFire:ejectMag()
   self.triggered = true
   storage.burstCounter = 0
 
-  if not self.ejectMagOnEmpty then
+  if not self.ejectMagOnEmpty or (self.ejectMagOnEmpty ~= "firing" and self.ejectMagOnEmpty ~= "ejecting") then
     self:screenShake(0.5)
     self:recoil(true)
   end
@@ -1249,6 +1258,7 @@ function Project45GunFire:updateStance()
   
   if self.weapon.stance == self.stances.reloading
   or self.weapon.stance == self.stances.loadRound
+  or self.stanceLocked
   then return end
 
   if self.recoverDelayTimer > 0 then
@@ -1390,7 +1400,7 @@ function Project45GunFire:damagePerShot()
 
   local critDmg = self:crit()
   local lastShotDmg = (storage.ammo <= (self.ammoPerShot or 1) and self.lastShotDamageMult or 1)
-
+  
   return self.baseDamage
   * self.chargeDamage -- up to 2x at full overcharge
   * self.reloadRatingDamage -- as low as 0.8 (bad), as high as 1.5 (perfect)
@@ -1507,16 +1517,48 @@ function Project45GunFire:setStance(stance, snap)
 
   if stance.disabled then return end
 
+  if not stance.validated then
+    stance.weaponRotation = stance.weaponRotation or 0
+    stance.armRotation = stance.armRotation or 0
+    stance.twoHanded = stance.twoHanded == nil and true or stance.twoHanded
+    stance.validated = true
+  end
+
+  stance = copy(stance)
+  
+  snap = snap or stance.lock or stance.snap
   -- get old stance, plus rotations, for smooth stance transition
   local oldStance = nil
-  if not snap and self.weapon.stance then
+  if not snap and self.weapon.stance and not stance.lite then
     oldStance = sb.jsonMerge(self.weapon.stance, {})
     oldStance.weaponRotation = util.toDegrees(self.weapon.relativeWeaponRotation)
     oldStance.armRotation = util.toDegrees(self.weapon.relativeArmRotation)
   end
   
   -- set stance
-  self.weapon:setStance(stance)
+  self.stanceLocked = stance.lock
+  activeItem.setTwoHandedGrip(stance.twoHanded or false)
+
+  if not stance.lite then
+    self.weapon:setStance(stance)
+  else
+    self.weapon.stance = copy(self.weapon.stance)
+    for stateType, state in pairs(stance.animationStates or {}) do
+      animator.setAnimationState(stateType, state)
+    end
+  
+    for _, soundName in pairs(stance.playSounds or {}) do
+      animator.playSound(soundName)
+    end
+  
+    for _, particleEmitterName in pairs(stance.burstParticleEmitters or {}) do
+      animator.burstParticleEmitter(particleEmitterName)
+    end
+    self.weapon.stance.frontArmFrame = stance.frontArmFrame
+    self.weapon.stance.backArmFrame = stance.backArmFrame
+    activeItem.setFrontArmFrame(stance.frontArmFrame)
+    activeItem.setBackArmFrame(stance.backArmFrame)
+  end
 
   -- flip weapon
   --[[
@@ -1528,10 +1570,11 @@ function Project45GunFire:setStance(stance, snap)
   --]]
 
   -- reset weapon's rotations to those of old stance for smooth stance transition
-  if not snap and oldStance then
+  if not snap and oldStance and not stance.lite then
     self.weapon.relativeArmRotation = util.toRadians(oldStance.armRotation)
     self.weapon.relativeWeaponRotation = util.toRadians(oldStance.weaponRotation)
   end
+
   storage.stanceProgress = 0
 end
 
@@ -1544,7 +1587,7 @@ end
 
 
 function Project45GunFire:debugFunction()
-
+  
   if not self.debug then return end
 
 end

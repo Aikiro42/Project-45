@@ -4,6 +4,14 @@ function project45util.diceroll(chance)
   return math.random() <= chance
 end
 
+function project45util.boolXor(a, b)
+  -- turn bools into integers
+  local alpha = a and 1 or 0
+  local beta = b and 1 or 0
+  -- use bitwise operator to return output
+  return alpha ~ beta > 0
+end
+
 function project45util.Set(list)
   local set = {}
   for _, l in ipairs(list) do set[l] = true end

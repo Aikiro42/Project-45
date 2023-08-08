@@ -32,7 +32,7 @@
       "trajectoryConfig": {
         "renderSteps": 50  // number of lines rendered in the laser arc when using gravity-affected projectiles
       },
-      "renderUntilCursor": true // if true, laser is rendered up to player's aim position only
+      "renderUntilCursor": false // if true, laser is rendered up to player's aim position only
       // ,"alwaysActive": false
     },
 
@@ -177,6 +177,12 @@
     /*
     if both <ejectMagOnEmpty> and <reloadOnEjectMag> are true, the gun will (almost) immediately begin reloading
     upon firing the last (set of) bullet(s).
+
+    ejectMagOnEmpty can take on two values:
+    - "firing": the gun ejects its mag upon firing the last shot
+    - "ejecting": the gun ejects its mag upon ejecting the casings of the last shot
+    Their difference lies in the animation state of the gun
+    (as well as whether manual feed guns empty on eject)
     */
     "ejectMagOnEmpty": false, // immediately eject mag when the gun hits 0 ammo
     "reloadOnEjectMag": false, // immediately begin reload sequence upon ejecting
@@ -345,6 +351,7 @@
         "twoHanded" : true,
         "allowRotate" : true,
         "allowFlip" : true
+
       },
       */
 
@@ -411,8 +418,50 @@
         "twoHanded" : true,
         "allowRotate" : false,
         "allowFlip" : false,
-        "frontArmFrame" : "run.2"
-        // "weaponOffset": [-1, 0]
+        "frontArmFrame" : "run.2",
+
+        // New Stance Parameters
+
+        "disabled": false,
+        /*
+        if true, stance isn't applied at all.
+        */
+        
+        "lock": false,
+        /*
+        if true, disables weapon/arm rotation updates entirely.
+        In essence, stance functions normally.
+        Certain stances are (technically) always locked: the "reloading" and "loadRound" stances.
+        */
+
+        "snap": false,
+        /*
+        if true, stance snaps immediately and doesn't smoothly transist from previous stance.
+        Certain stances always snap: the "unjam", "reloading" and "loadRound" stances.
+        Certain stances snap depending on certain conditions: "reloaded" snaps if "reloadOnEjectMag" is false.
+        */
+
+        "lite": false
+        /*
+        if true, does not use `self.weapon:setStance()`. Specifically:
+        - * Disallows self.weapon.stance to be set.
+        - Disallows rotations, angular velocities and the rotation center to be set.
+        - Disallows weapon offset to be set.
+        - Allows the front and back arm frames to be set.
+        - Allows sounds to be played
+        - Allows animation states to be set
+        - Allows particle emitters to burst
+        You can still specify animationStates, played sounds and bursted particle emitters.
+
+        * This weapon ability uses the stance saved on the weapon to allow for smooth interpolating
+        transitions between stances, thus necessitating a custom setStance() function. Despite that,
+        self.weapon:updateAim() is still used, so unexpected behavior can arise depending on how the stance
+        is designed.
+        Hence, creating a "lite" stance can allow correct recoil behavior, with some drawbacks:
+        see project45-neo-leveraction.
+        */
+
+        
       },
 
       "boltPush": {
@@ -425,6 +474,19 @@
         // "weaponOffset": [-1, 0]
       },
 
+      // Stance taken right before slam-firing.
+      // If this stance is absent, it uses boltPush instead.
+      /*
+      "slamFire": {
+        "twoHanded" : true,
+        "allowRotate" : false,
+        "allowFlip" : false,
+        "frontArmFrame" : "rotation"
+      },
+      */
+
+      // RELOAD STANCES
+
       "loadRound": {
         "armRotation" : -45,
         "weaponRotation" : 45,
@@ -433,8 +495,6 @@
         "allowFlip" : false,
         "duration": 0.25
       },
-
-      // RELOAD STANCES
 
       // stance taken while reloading
       "reloading" : {
