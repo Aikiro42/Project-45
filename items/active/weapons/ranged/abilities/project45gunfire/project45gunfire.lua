@@ -10,14 +10,13 @@ require "/items/active/weapons/ranged/abilities/altfire.lua"
 
 local BAD, OK, GOOD, PERFECT = 1, 2, 3, 4
 local reloadRatingList = {"BAD", "OK", "GOOD", "PERFECT"}
-local debugTime = 0.1
 
 Project45GunFire = WeaponAbility:new()
 
 function Project45GunFire:init()
 
   -- INITIALIZATIONS
-  self.debugTimer = debugTime
+  self.debugTimer = self.debugTime
   self.isFiring = false
     
   -- separate cock time and reload time
@@ -251,7 +250,7 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
 
   if self.debugTimer <= 0 then
     self:debugFunction()
-    self.debugTimer = debugTime
+    self.debugTimer = self.debugTime
   end
 
   -- Prevent energy regen if there is energy or if currently reloading
@@ -546,7 +545,7 @@ function Project45GunFire:feeding()
       self:setState(self.firing)
     end
     return
-  else
+  elseif self.manualFeed then
     self:setStance(self.stances.boltPush)
   end
 
@@ -1589,6 +1588,8 @@ end
 function Project45GunFire:debugFunction()
   
   if not self.debug then return end
+
+  self:discardCasings(1)
 
 end
 

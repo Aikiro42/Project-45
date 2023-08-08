@@ -1,8 +1,0 @@
-{
-  "frames" : "project45smgmag.png",
-  "variants" : 1,
-  "frameNumber" : 1,
-  "animationCycle" : 0.2,
-  "offset" : [0, 0],
-  "mode" : "LoopForever"
-}

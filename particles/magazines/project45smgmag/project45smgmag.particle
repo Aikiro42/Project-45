@@ -1,18 +1,19 @@
 {
   "kind" : "project45smgmag",
   "definition" : {
-    "type" : "animated",
-    "image" : "/particles/magazines/old/project45smgmag/project45smgmag.animation",
+    "type" : "textured",
+    "image" : "/particles/magazines/project45smgmag/project45smgmag.png",
     "fade" : 0.9,
-	"position" : [0, 0],
-	"size" : 1.0,
+	  "position" : [0, 0],
+	  "size" : 1.0,
     "initialVelocity" : [1, 0],
     "finalVelocity" : [0, -60.0],
     "approach" : [1, 60],
     "timeToLive" : 2,
     "layer" : "back",
     "collidesForeground" : true,
-	"variance" : {
+    "rotation": 0,
+	  "variance" : {
 	  "angularVelocity" : 240,
       "initialVelocity" : [2, 2]
     }

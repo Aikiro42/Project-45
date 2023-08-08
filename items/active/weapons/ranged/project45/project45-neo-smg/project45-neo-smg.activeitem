@@ -1,0 +1,120 @@
+{
+  "itemName" : "project45-neo-smg",
+  "price" : 1000,
+  "maxStack" : 1,
+  "rarity" : "Essential",
+  "description" : "A fast-firing submachine gun.",
+  "shortdescription" : "New SMG",
+  "tooltipKind" : "project45gun",
+  "gunArchetype": "Submachine Gun",
+  "category" : "rifle",
+  "twoHanded" : true,
+  "itemTags" : ["weapon","ranged","rifle"],
+  "level" : 1,
+  "muzzleFlashColor": [255, 255, 200],
+  "inventoryIcon" : "project45-neo-smg-icon.png",
+
+  "animationParts" : {
+    "middle" : "project45-neo-smg.png",
+    "middleFullbright" : "",
+    "charge": "",
+    "chargeFullbright": "",
+    "magazine": "project45-neo-smg-mag.png",
+    "magazineFullbright": ""
+  },
+
+  "animationCustom": {
+    "particleEmitters": {
+      "ejectionPort": {
+        "particles": [
+          {"particle": "project45bulletcase"}
+        ]
+      },
+      "magazine": {
+        "particles": [
+          {"particle": "project45smgmag"}
+        ]
+      }
+    },
+
+    "sounds": {
+      "fire" : [
+        "/sfx/project45-synthetikmechanics/fires/fire_smg.ogg"
+      ]
+    }
+  },
+
+  "project45GunModInfo":{
+    "category": "ballistic",
+    "acceptsAmmoTypes":{
+      "ballistic": true
+    },
+    "acceptsAmmoArchetypes":{
+      "generic": true
+    },
+    "acceptsModSlot": {
+      "rail": true,
+      "sights": true,
+      "underbarrel": true,
+      "stock": false,
+      "muzzle": true
+    }
+  },
+
+  "baseOffset" : [-0.5, -0.5],
+  "muzzleOffset" : [2.5, 0.5],
+  "ejectionPortOffset": [-0.25, 0.75],
+  "magazineOffset": [0, 0],
+  "underbarrelOffset": [2, 0],
+
+  "scripts" : ["/items/active/weapons/ranged/project45gunneo.lua"],
+    
+  "primaryAbilityType": "project45gunfire",
+  "primaryAbility": {
+
+    "maxAmmo": 50,
+    "bulletsPerReload": 50,
+
+    "semi": false,
+    "burstCount": 1,
+    "inaccuracy": 1.5,
+    "recoilAmount": 1,
+    "recoilMaxDeg": 7.5,
+    "recoverDelay": 0.05,
+    "cycleTime": 0.075,
+    "projectileKind": "projectile",
+
+    "stances": {
+      "aimStance": {
+        "frontArmFrame": "run.3",
+        "backArmFrame": "fall.1"
+      },
+      "empty": {
+        "frontArmFrame": "run.3",
+        "backArmFrame": "fall.1"
+      },
+      
+      "reloading": {
+        "frontArmFrame": "run.3",
+        "backArmFrame": "idle.1"
+      },
+      "reloaded": {
+        "frontArmFrame" : "run.3",
+        "backArmFrame" : "idle.2"
+      },
+      "jammed": {
+        "frontArmFrame": "run.3",
+        "backArmFrame": "fall.1",
+        "weaponOffset": [0, -0.25]
+      },
+
+      "unjam": {
+        "frontArmFrame": "run.3",
+        "backArmFrame": "idle.2",
+        "weaponOffset": [0, -0.25]
+      }
+    }
+  },
+
+  "builder" : "/items/buildscripts/buildproject45neoneo.lua"
+}

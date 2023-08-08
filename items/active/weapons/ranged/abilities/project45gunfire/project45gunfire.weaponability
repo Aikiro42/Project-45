@@ -53,6 +53,7 @@
     */
     "performanceMode": false,
     "debug": false,
+    "debugTime": 0.1, // time to wait before running the debug function again
 
     "hideMuzzleFlash": false,
     "hideMuzzleSmoke": false,
