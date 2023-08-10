@@ -17,13 +17,14 @@
         "operation": "multiply",
         "value": 0.75
       }
-    }
-    ,"animationCustom": {
+    },
+    "animationCustom": {
       "animatedParts" : { "parts" : {
         "underbarrel" : {
           "properties" : {
             "zLevel" : 5,
             "centered" : true,
+            "offset": [0, -0.25],
             "transformationGroups" : ["weapon"],
             "image" : "/items/augments/project45-gunmods/mods/project45-gripmod/project45-gripmodsprite.png<directives>"
           }
