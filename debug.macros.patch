@@ -60,7 +60,7 @@
         "op": "add",
         "path": "/testgun",
         "value": [
-            "/spawnitem project45-neo-assaultrifle"
+            "/spawnitem project45-neo-custom-x"
         ]
     },
     {
