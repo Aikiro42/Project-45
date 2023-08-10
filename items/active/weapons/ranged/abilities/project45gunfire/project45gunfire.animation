@@ -480,15 +480,15 @@
           "fullbright": true
         },
         "partStates" : {
-          "mag": {
+          "magazine": {
             "present": {
               "properties" : {
-                "image" : "<partImage>:<ammo>"
+                "image" : "<partImage>:present.<ammo>"
               }
             },
             "absent":{
               "properties" : {
-                "image" : "<partImage>:absent"
+                "image" : ""
               }
             }
           }

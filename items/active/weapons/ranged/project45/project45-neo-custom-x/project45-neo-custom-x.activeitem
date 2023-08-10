@@ -1,0 +1,277 @@
+{
+  "itemName" : "project45-neo-custom-x",
+  "price" : 1000,
+  "maxStack" : 1,
+  "rarity" : "Essential",
+  "description" : "THE ULTIMATE TEST FIREARM",
+  "shortdescription" : "_PROJECT45NEOCUSTOMX_",
+  "tooltipKind" : "project45gun",
+  "gunArchetype": "Test Gun",
+  "category" : "rifle",
+  "twoHanded" : true,
+  "itemTags" : ["weapon","ranged","rifle"],
+  "level" : 1,
+  "muzzleFlashColor": [255, 255, 200],
+  "inventoryIcon" : "project45-neo-custom-x-icon.png",
+
+  "acceptsGunMods": true,
+  
+  "project45GunModInfo": {
+
+    /*
+    
+    FIXME: LUA SETS ARE A FUCKING THING, USE THEM (/scripts/set.lua)
+
+    Category > Class > Kind > Type > Archetype
+
+    GUN CATEGORIES - for non-ammo mods
+
+    Energy ("energy")
+    - This category comprises of firearms or weapons that utilize
+    energy-based projectiles. These guns operate on the principles
+    of harnessing and directing various forms of energy.
+
+    Ballistic ("ballistic")
+    - This category comprises of firearms that utilize traditional
+    ballistic projectiles propelled by explosive chemical reactions.
+
+    Emissive ("emissive")
+    - This category comprises of firearms that emit matter (solid, liquid, gas, plasma) to
+    deal damage. Examples include flamethrowers, water guns, gas guns and plasma weapons.
+
+    Magic ("magic")
+    - This category comprises of firearms that utilize magical properties
+    to deal damage to enemies.
+
+    TL:DR;
+    energy
+    ballistic
+    emissive
+    magic
+    universal (if it accepts all kinds of mods)
+
+    */
+    "category": "universal",
+
+    /*
+    
+    AMMO TYPES
+    
+    Universal
+    - This ammo type can be installed on all gun categories.
+
+    Energy
+    - This ammo type can be installed on magic, energy and certain emissive weapons.
+
+    Ballistic
+    - This amo type can be installed on ballistic and certain emissive weapons.
+
+    Matter
+    - This ammo type can be installed on emissive weapons.
+
+    Magic
+    - This ammo type can be installed on magical weapons only.
+
+    TL;DR:
+    universal
+    energy
+    ballistic
+    matter
+    magic
+
+    */
+    "acceptsAmmoTypes": {
+      "universal": true, // always true; added for posterity
+      "energy": true,
+      "ballistic": true,
+      "matter": true,
+      "magic": true
+    },
+
+    /*
+    all
+    generic
+    shotgun
+    grenade
+    rocket
+    beam
+    solid
+    liquid
+    gas
+    plasma
+    */
+    "acceptsAmmoArchetypes": {
+      "universal": true, // always true; added for posterity
+
+      "all": true, // if this is true, assumes that the gun accepts ALL archetypes
+
+      // ballistic
+      "generic": true,
+      "shotgun": true,
+      "grenade": true,
+      "rocket": true,
+
+      // energy
+      "beam": true,
+
+      // matter
+      "solid": true,
+      "liquid": true,
+      "gas": true,
+      "plasma": true // flamethrowers can't shoot plasma
+      
+    },
+    
+    /*
+    rail
+    sights
+    muzzle
+    underbarrel
+    stock
+    (pistolStock)
+    receiver
+    magazine
+    barrel
+    material
+    grip
+    */
+    "acceptsModSlot": {
+
+      // modifies appearance - are essentially attachments
+      "rail": true, // side rail only
+      "sights": true,
+      "muzzle": true,
+      "underbarrel": true,
+      "stock": true,
+
+      // does not modify appearance
+
+      "receiver": true, // changes firemode, allows accomodation of certain ammo types, etc.
+      // for energy weapons, you could imagine this to be the "firing protocol"
+      // for magic weapons, you could imagine this to be the "fundamental principle"
+
+      "barrel": true, // reduces spread, increases damage, multishot, etc.
+      // for energy weapons, you could imagine this to be the "emitter tech"
+      // for magic weapons, you could imagine this to be the "casting principle"
+
+      "magazine": true, // reduces reload time, increases ammo capacity, etc.
+      // for energy weapons, you could imagine this to be the "battery"
+      // for magic weapons, you could imagine this to be the "mana"
+
+      "material": true, // lightens weight, reduces jam chance, changes skin, etc.
+
+      "grip": true, // reduces recoil, inaccuracy, etc.
+      
+
+
+      // always assumed to be true; just here for posterity
+      "intrinsic": true, // qualities that cannot be associated with a mod e.g. last shot damage
+      "ability": true,
+      "ammoType": true
+    }
+  },
+
+
+  "animationParts" : {
+    "middle" : "",
+    "middleFullbright" : "project45-neo-custom-x.png",
+    "charge": "",
+    "chargeFullbright": "project45-neo-custom-x-charge.png",
+    "magazine": "",
+    "magazineFullbright": "project45-neo-custom-x-mag.png"
+  },
+
+  "animationCustom": {
+    "particleEmitters": {
+      "magazine": {
+        "particles": [
+          {"particle": "project45modulargunmag"}
+        ]
+      }
+    },
+
+    "sounds": {
+      //*/
+    },
+    "animatedParts": {
+      "stateTypes": {
+        "charge":{
+          "states":{
+            "charging":{
+              "frames": 6
+            }
+          }
+        },
+        "gun": {
+          "states":{
+            "idle": {
+              "frames": 1
+            },
+            "firing": {
+              "frames": 9
+            },
+            "firingLoop": {
+              "frames": 9
+            },
+            "fired": {
+              "frames": 1
+            },
+            "open": {
+              "frames": 1
+            },
+            "ejecting": {
+              "frames": 3
+            },
+            "boltPulling": {
+              "frames": 3
+            },
+            "ejected": {
+              "frames": 1
+            },
+            "feeding": {
+              "frames": 2
+            },
+            "boltPushing": {
+              "frames": 2
+            },
+            "jammed": {
+              "frames": 9
+            },
+            "unjamming": {
+              "frames": 5
+            }
+          }
+        }
+      }
+    }
+  },
+
+
+  "baseOffset" : [1.25, 0.125],
+  "muzzleOffset" : [1.75, 0.375],
+  "ejectionPortOffset": [-0.25, 0.75],
+  "magazineOffset": [0, 0],
+
+  "railOffset" : [1, 0.375],
+  "sightsOffset": [1, 1],
+  "stockOffset": [-1, 0.25],
+  "underbarrelOffset": [2, 0],
+
+  "scripts" : ["/items/active/weapons/ranged/project45gunneo.lua"],
+    
+  "primaryAbilityType": "project45gunfire",
+  "primaryAbility": {
+    // SECTION: PRIMARY ABILITY
+    "semi": false,
+    "maxAmmo": 27,
+    "breakAction": true,
+    "bulletsPerReload": 27,
+    "magFrames": 7,
+    "chargeFrames": 8,
+    "overchargeTime": 1,
+    "cycleTime": 0.25,
+    "jamChances": [1, 0, 0, 0]
+  },
+
+  "builder" : "/items/buildscripts/buildproject45neoneo.lua"
+}
