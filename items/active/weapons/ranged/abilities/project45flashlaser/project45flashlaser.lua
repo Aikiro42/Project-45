@@ -2,18 +2,18 @@ require "/scripts/vec2.lua"
 
 Project45FlashLaser = WeaponAbility:new()
 
-local STATES = 4
-local OFF, FLASHLIGHT, LASER, BOTH = 0, 1, 2, 3
+local OFF, FLASH, LASER, FLASHLASER = 1, 2, 3, 4
 
 function Project45FlashLaser:init()
   self:reset()
+  self.flashLaserStates = {"off", "flash", "laser", "flashlaser"}
 end
 
 function Project45FlashLaser:update(dt, fireMode, shiftHeld)
   WeaponAbility.update(self, dt, fireMode, shiftHeld)
 
   -- render laser
-  if (storage.state == BOTH or storage.state == LASER) and not world.lineTileCollision(mcontroller.position(), self:firePosition()) then
+  if (storage.state == FLASHLASER or storage.state == LASER) and not world.lineTileCollision(mcontroller.position(), self:firePosition()) then
     local scanOrig = self:firePosition()
     local range = world.magnitude(scanOrig, activeItem.ownerAimPosition())
     local scanDest = vec2.add(scanOrig, vec2.mul(self:aimVector(), self.laserRange))
@@ -23,8 +23,9 @@ function Project45FlashLaser:update(dt, fireMode, shiftHeld)
   end
 
   if self.fireMode == "alt" and self.lastFireMode ~= "alt" then
-    storage.state = (storage.state + 1) % STATES
-    if storage.state == FLASHLIGHT or storage.state == BOTH then
+    storage.state = (storage.state % 4) + 1
+    animator.setAnimationState("project45flashlaser", self.flashLaserStates[storage.state])
+    if storage.state == FLASH or storage.state == FLASHLASER then
       animator.setLightActive("flashlight", true)
       animator.setLightActive("flashlightSpread", true)
       animator.playSound("flashlight")
@@ -34,7 +35,7 @@ function Project45FlashLaser:update(dt, fireMode, shiftHeld)
     end
     
 
-    if not (storage.state == BOTH or storage.state == LASER) then
+    if not (storage.state == FLASHLASER or storage.state == LASER) then
       activeItem.setScriptedAnimationParameter("laserOrigin", nil)
       activeItem.setScriptedAnimationParameter("laserDestination", nil)
       activeItem.setScriptedAnimationParameter("altLaserColor", nil)
@@ -51,7 +52,7 @@ end
 
 function Project45FlashLaser:reset()
   storage.state = storage.state or OFF
-  if storage.state == FLASHLIGHT or storage.state == BOTH then
+  if storage.state == FLASH or storage.state == FLASHLASER then
     animator.setLightActive("flashlight", true)
     animator.setLightActive("flashlightSpread", true)
     animator.playSound("flashlight")

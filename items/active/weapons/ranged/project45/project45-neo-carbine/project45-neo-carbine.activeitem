@@ -56,7 +56,7 @@
       "rail": true,
       "sights": true,
       "underbarrel": true,
-      "stock": false,
+      "stock": true,
       "muzzle": true
     }
   },
@@ -65,6 +65,10 @@
   "muzzleOffset" : [1.75, 0.375],
   "ejectionPortOffset": [-0.25, 0.75],
   "magazineOffset": [0, 0],
+
+  "railOffset" : [1, 0.375],
+  "sightsOffset": [1, 1],
+  "stockOffset": [-1, 0.25],
   "underbarrelOffset": [2, 0],
 
   "scripts" : ["/items/active/weapons/ranged/project45gunneo.lua"],

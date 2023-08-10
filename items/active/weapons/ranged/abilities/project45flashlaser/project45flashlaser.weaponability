@@ -1,15 +1,60 @@
 {
   "animationCustom" : {
-    "animatedParts" : { "parts" : {
-      "rail" : {
+    "animatedParts" : {
+      "stateTypes": {
+        "project45flashlaser" : {
+          "default" : "off",
+          "states" : {
+            "off" : {},
+            "flash" : {},
+            "laser" : {},
+            "flashlaser" : {}
+          }
+        }
+      },
+      "parts" : {
+        "rail" : {
+          "properties" : {
+            "zLevel" : 5,
+            "centered" : true,
+            "transformationGroups" : ["weapon"],
+            "image" : "/items/active/weapons/ranged/abilities/project45flashlaser/project45flashlaser.png<directives>"
+          }
+        },
+      "railFullbright" : {
         "properties" : {
-          "zLevel" : 5,
+          "zLevel" : 6,
           "centered" : true,
-          "transformationGroups" : ["weapon"],
-          "image" : "/items/active/weapons/ranged/abilities/project45flashlaser/project45flashlaser.png<directives>"
+          "fullbright": true,
+          "transformationGroups" : ["weapon"]
+        },
+        "partStates": {
+          "project45flashlaser": {
+            "off" : {
+              "properties" : {
+                "image" : "/items/active/weapons/ranged/abilities/project45flashlaser/project45flashlaserfullbright.png:off"
+              }
+            },
+            "flash" : {
+              "properties" : {
+                "image" : "/items/active/weapons/ranged/abilities/project45flashlaser/project45flashlaserfullbright.png:flash"
+              }
+            },
+            "laser" : {
+              "properties" : {
+                "image" : "/items/active/weapons/ranged/abilities/project45flashlaser/project45flashlaserfullbright.png:laser"
+              }
+            },
+            "flashlaser" : {
+              "properties" : {
+                "image" : "/items/active/weapons/ranged/abilities/project45flashlaser/project45flashlaserfullbright.png:flashlaser"
+              }
+            }
+          }
         }
       }
-    }},
+      }
+    },
     "lights" : {
       "flashlightSpread" : {
         "active" : false,
