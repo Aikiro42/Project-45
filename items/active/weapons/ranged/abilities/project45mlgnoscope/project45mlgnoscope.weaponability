@@ -5,6 +5,7 @@
         "properties" : {
             "zLevel" : 5,
             "centered" : true,
+            "offset": [0, 0.125],
             "transformationGroups" : ["weapon"],
             "image" : "/items/active/weapons/ranged/abilities/project45gunscope/project45gunscope.png<directives>"
         }

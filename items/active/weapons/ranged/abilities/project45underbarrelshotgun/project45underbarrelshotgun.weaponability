@@ -19,6 +19,7 @@
           "properties" : {
             "zLevel" : 5,
             "centered" : true,
+            "offset": [0, 0],
             "transformationGroups" : ["weapon"],
             "image" : "/items/active/weapons/ranged/abilities/project45underbarrelshotgun/project45underbarrelshotgun.png:closed<directives>",
             "firePosition" : [0.5, 0]

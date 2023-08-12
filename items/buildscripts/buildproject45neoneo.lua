@@ -89,12 +89,7 @@ function build(directory, config, parameters, level, seed)
     local parts = {
       "middle",
       "charge",
-      "magazine",
-
-      "rail",
-      "sights",
-      "underbarrel",
-      "stock"
+      "magazine"
     }
 
     for _, part in ipairs(parts) do
@@ -104,7 +99,7 @@ function build(directory, config, parameters, level, seed)
       config.animationCustom.animatedParts.parts[part .. "Fullbright"].properties.offset = config.baseOffset
     end
 
-    -- set offsets for
+    -- set transformation group offsets
     -- muzzle, ejection port, magazine
     local offsetConfig = {
       "muzzleOffset",
@@ -124,17 +119,20 @@ function build(directory, config, parameters, level, seed)
 
     -- generate offsets for
     -- rail, sights, underbarrel, stock
-    local modOffsetconfig = {
+
+    local modParts = {
       "rail",
       "sights",
       "underbarrel",
       "stock"
     }
-    for _, part in ipairs(modOffsetconfig) do
-      if config[part .. "Offset"] then
-        config.animationCustom.animatedParts.parts[part].properties.offset = config[part .. "Offset"]
-        config.animationCustom.animatedParts.parts[part .. "Fullbright"].properties.offset = config[part .. "Offset"]
-        -- config[part .. "Offset"] = vec2.add(config[part .. "Offset"], config.baseOffset)
+
+    for _, modPart in ipairs(modParts) do
+      if config[modPart .. "Offset"] then
+          construct(config, "animationCustom", "animatedParts", "parts", modPart, "properties")
+          local modPartOffset = config.animationCustom.animatedParts.parts[modPart].properties.offset or {0, 0}
+          local finalModPartOffset = vec2.add(modPartOffset, config[modPart .. "Offset"])
+          config.animationCustom.animatedParts.parts[modPart].properties.offset = finalModPartOffset
       end
     end
     

@@ -149,14 +149,41 @@ function apply(input)
     output:setInstanceValue("primaryAbility", sb.jsonMerge(oldPrimaryAbility, newPrimaryAbility))
 
     -- for visible weapon parts like grips, etc.
+
+    local newAnimationCustom = nil
     if augment.animationCustom then
-      output:setInstanceValue("animationCustom", sb.jsonMerge(input.parameters.animationCustom or {}, augment.animationCustom))
+      newAnimationCustom = augment.animationCustom -- TESTME: pointer issues
+      -- output:setInstanceValue("animationCustom", sb.jsonMerge(input.parameters.animationCustom or {}, augment.animationCustom))
+    end
+
+    if augment.sprite then
+        newAnimationCustom = newAnimationCustom or {}
+        construct(newAnimationCustom, "animatedParts", "parts", augment.slot, "properties")
+        newAnimationCustom.animatedParts.parts[augment.slot].properties.zLevel = augment.sprite.zLevel or 0
+        newAnimationCustom.animatedParts.parts[augment.slot].properties.centered = true
+        newAnimationCustom.animatedParts.parts[augment.slot].properties.transformationGroups = {"weapon"}
+        newAnimationCustom.animatedParts.parts[augment.slot].properties.offset = vec2.add(output.config[augment.slot .. "Offset"] or {0, 0}, augment.sprite.offset or {0, 0})
+        newAnimationCustom.animatedParts.parts[augment.slot].properties.image = augment.sprite.image .. "<directives>"
+
+        if augment.sprite.imageFullbright then
+            construct(newAnimationCustom, "animatedParts", "parts", augment.slot .. "Fullbright", "properties")
+            newAnimationCustom.animatedParts.parts[augment.slot .. "Fullbright"].properties.zLevel = (augment.sprite.zLevel or 0) + 1
+            newAnimationCustom.animatedParts.parts[augment.slot].properties.centered = true
+            newAnimationCustom.animatedParts.parts[augment.slot].properties.transformationGroups = {"weapon"}
+            newAnimationCustom.animatedParts.parts[augment.slot].properties.offset = vec2.add(output.config[augment.slot .. "Offset"] or {0, 0}, augment.sprite.offset or {0, 0})
+            newAnimationCustom.animatedParts.parts[augment.slot .. "Fullbright"].properties.image = augment.sprite.imageFullbright .. "<directives>"
+        end
+    end
+
+    -- if custom animation is set then modify
+    if newAnimationCustom then
+        output:setInstanceValue("animationCustom", sb.jsonMerge(input.parameters.animationCustom or {}, newAnimationCustom))
     end
 
     -- for visual muzzle mods
-    if augment.muzzleOffsetAdd then
+    if augment.muzzleOffset then
         local oldMuzzleOffset = output:instanceValue("muzzleOffset")
-        output:setInstanceValue("muzzleOffset", vec2.add(oldMuzzleOffset, augment.muzzleOffsetAdd))
+        output:setInstanceValue("muzzleOffset", vec2.add(oldMuzzleOffset, augment.muzzleOffset))
     end
 
     -- mods can enable installation of other mods not normally installable on the weapon
@@ -209,7 +236,6 @@ function apply(input)
 
     return output:descriptor(), 1
 
-  
   end
 end
 

@@ -18,6 +18,14 @@
         "value": 0.75
       }
     },
+
+    "sprite": {
+      "image": "/items/augments/project45-gunmods/mods/project45-gripmod/project45-gripmodsprite.png",
+      "offset": [0, -0.25],
+      "zLevel": 5
+    }
+
+    /*
     "animationCustom": {
       "animatedParts" : { "parts" : {
         "underbarrel" : {
@@ -30,6 +38,7 @@
           }
         }}}
     }
+    */
   },
 
 

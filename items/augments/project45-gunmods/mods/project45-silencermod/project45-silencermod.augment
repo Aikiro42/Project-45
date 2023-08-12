@@ -13,7 +13,7 @@
     "category": "ballistic",
     "slot": "muzzle",
     "recoilMult": 0.9,
-    "muzzleOffsetAdd": [1, 0],
+    "muzzleOffset": [1, 0],
     "primaryAbility": {
       "flashHidden": {
         "operation": "replace",
@@ -27,11 +27,20 @@
         "operation": "replace",
         "value": 0.3
       }
+    },
+
+    "sprite": {
+      "image": "/items/augments/project45-gunmods/mods/project45-silencermod/project45-silencermodsprite.png",
+      "zLevel" : 5,
+      "offset" : [0.5, -0.125]
     }
+
     ,"animationCustom": {
       "sounds": {
         "fire" : ["/sfx/project45-synthetikmechanics/fires/fire_silenced_generic.ogg"]
-      },
+      }
+      /*
+      ,
       "animatedParts" : { "parts" : {
         "muzzle" : {
           "properties" : {
@@ -42,6 +51,7 @@
             "image" : "/items/augments/project45-gunmods/mods/project45-silencermod/project45-silencermodsprite.png<directives>"
           }
         }}}
+      */
     }
     
   },

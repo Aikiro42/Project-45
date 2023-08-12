@@ -248,12 +248,12 @@
 
 
   "baseOffset" : [1.25, 0.125],
-  "muzzleOffset" : [1.75, 0.375],
+  "muzzleOffset" : [1.7, 0.375],
   "ejectionPortOffset": [-0.25, 0.75],
   "magazineOffset": [0, 0],
 
-  "railOffset" : [1, 0.375],
-  "sightsOffset": [1, 1],
+  "railOffset" : [2, 0.25],
+  "sightsOffset": [1, 0.90],
   "stockOffset": [-1, 0.25],
   "underbarrelOffset": [2, 0],
 

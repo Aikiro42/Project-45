@@ -17,8 +17,15 @@
         "operation": "multiply",
         "value": 0.9
       }
+    },
+    
+    "sprite": {
+      "zLevel": 5,
+      "image": "/items/augments/project45-gunmods/mods/project45-muzzlebrakemod/project45-muzzlebrakemodsprite.png",
+      "offset": [0.375, -0.125]
     }
 
+    /*
     ,"animationCustom": {
       "animatedParts" : { "parts" : {
         "muzzle" : {
@@ -31,6 +38,7 @@
           }
         }}}
     }
+    */
     
   },
 

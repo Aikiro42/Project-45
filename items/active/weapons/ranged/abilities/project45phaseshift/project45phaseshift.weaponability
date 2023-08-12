@@ -6,7 +6,6 @@
         "properties" : {
           "zLevel" : 5,
           "centered" : true,
-          "offset" : [0, 0],
           "transformationGroups" : ["weapon"],
           "image" : "/items/active/weapons/ranged/abilities/project45phaseshift/project45phaseshift.png<directives>"
         }
@@ -15,7 +14,6 @@
         "properties" : {
           "zLevel" : 5,
           "centered" : true,
-          "offset" : [0, 0],
           "transformationGroups" : ["weapon"],
           "fullbright": true,
           "image" : "/items/active/weapons/ranged/abilities/project45phaseshift/project45phaseshiftfullbright.png<directives>"
