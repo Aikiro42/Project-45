@@ -1590,6 +1590,7 @@ function Project45GunFire:debugFunction()
   if not self.debug then return end
 
   self:discardCasings(1)
+  animator.burstParticleEmitter("magazine")
 
 end
 

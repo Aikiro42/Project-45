@@ -97,7 +97,10 @@
         "project45-neo-beamsplitter",
         "project45-neo-beamgun",
         "project45-neo-gaussrifle",
-        "project45-neb-zweibrandyr"
+        
+        "project45-neb-zweibrandyr",
+        "project45-scz-spacecowboy"
+
       ],
       "mods": [
         // abilities

@@ -1,0 +1,112 @@
+{
+  "itemName" : "project45-scz-spacecowboy",
+  "price" : 1000,
+  "maxStack" : 1,
+  "rarity" : "Essential",
+  "description" : "A railgun designed from blueprints found in a hazardous containment zone.",
+  "shortdescription" : "Space Cowboy",
+  "tooltipKind" : "project45gun",
+  "gunArchetype": "Thermal Railgun",
+  "category" : "sniper",
+  "twoHanded" : true,
+  "itemTags" : ["weapon","ranged","sniper"],
+  "level" : 1,
+  "muzzleFlashColor": [255, 255, 200],
+  "inventoryIcon" : "project45-scz-spacecowboy-icon.png",
+
+  "animationParts" : {
+    "middle" : "project45-scz-spacecowboy.png",
+    "middleFullbright" : "project45-scz-spacecowboy-fullbright.png",
+    "charge": "",
+    "chargeFullbright": "",
+    "magazine": "project45-scz-spacecowboy-mag.png",
+    "magazineFullbright": ""
+  },
+
+  "animationCustom": {
+    "animatedParts": {
+      "parts":{
+        "sights": {
+          "properties": {
+            "image": ""
+          }
+        }
+      }
+    },
+    "particleEmitters": {
+      "ejectionPort": {
+        "particles": [
+          {"particle": "project45bulletcase"}
+        ]
+      },
+      "magazine": {
+        "particles": [
+          {"particle": "project45sniperriflemag"}
+        ]
+      }
+    },
+
+    "sounds": {
+      "eject": ["/sfx/project45-synthetikmechanics/special/spacecowboy/spacecowboy_ejectmag.ogg"],
+      "reloadStart": ["/sfx/project45-synthetikmechanics/special/spacecowboy/spacecowboy_feedmag.ogg"],  
+
+      "perfectReload": ["/sfx/project45-synthetikmechanics/special/spacecowboy/spacecowboy_perfectreload.ogg"],
+
+      "boltPull": ["/sfx/project45-synthetikmechanics/special/spacecowboy/spacecowboy_boltpull.ogg"],
+      "boltPush": ["/sfx/project45-synthetikmechanics/special/spacecowboy/spacecowboy_boltpush.ogg"],
+  
+      "fire" : ["/sfx/project45-synthetikmechanics/special/spacecowboy/spacecowboy_fire.ogg"]
+    }
+  },
+
+  "project45GunModInfo":{
+    "category": "ballistic",
+    "acceptsAmmoTypes":{
+      "ballistic": true
+    },
+    "acceptsAmmoArchetypes":{
+      "generic": true
+    },
+    "acceptsModSlot": {
+      "rail": true,
+      "sights": false,
+      "underbarrel": true,
+      "stock": false,
+      "muzzle": false
+    }
+  },
+
+  "baseOffset" : [2.25, 0.5],
+  "muzzleOffset" : [3.5, 0],
+  "ejectionPortOffset": [-1.25, 0.125],
+  "magazineOffset": [-1.25, -0.25],
+
+  "underbarrelOffset": [2, 0],
+
+  "scripts" : ["/items/active/weapons/ranged/project45gunneo.lua"],
+    
+  "primaryAbilityType": "project45gunfire",
+  "primaryAbility": {
+    "maxAmmo": 5,
+    "bulletsPerReload": 5,
+    "semi": true,
+    "manualFeed": true,
+    "inaccuracy": 2,
+    "recoilAmount": 3,
+    "recoilMaxDeg": 15,
+    "recoverTime": 1,
+    "cockTime": 0.5,
+    "projectileKind": "projectile",
+    "projectileType": "project45stdfirebullet",
+    "laser":{
+      "enabled": false
+    },
+    "stances": {
+      
+    }
+  },
+
+  "altAbilityType": "project45gunscope",
+
+  "builder" : "/items/buildscripts/buildproject45neoneo.lua"
+}

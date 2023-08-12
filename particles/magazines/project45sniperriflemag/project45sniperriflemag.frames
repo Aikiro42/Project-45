@@ -1,7 +1,7 @@
 {
   "image" : "project45sniperriflemag.png",
   "frameGrid" : {
-    "size" : [6, 6],
+    "size" : [4, 6],
     "dimensions" : [1, 1]
   }
 }

@@ -586,9 +586,9 @@
     "fireLoop": ["/sfx/gun/mech_beamdrill_loop.ogg"],
     "fireEnd": ["/sfx/gun/mech_beamdrill_winddown.ogg"],
     */
-    "fireStart": ["/assetmissing.wav"],
-    "fireLoop": ["/assetmissing.wav"],
-    "fireEnd": ["/assetmissing.wav"],
+    "fireStart": [ ],
+    "fireLoop": [ ],
+    "fireEnd": [ ],
 
     "click": ["/sfx/project45-synthetikmechanics/clicks/click_generic.ogg"],
 
@@ -612,10 +612,14 @@
 
     "boltPull": ["/sfx/project45-synthetikmechanics/reloads/boltpull_generic.ogg"],
     "boltPush": ["/sfx/project45-synthetikmechanics/reloads/boltpush_generic.ogg"],
-
+    
+    /*
     "chargeWhine" : ["/sfx/project45-synthetikmechanics/charges/chargewhine_generic.ogg"],
     "chargeDrone" : ["/sfx/project45-synthetikmechanics/charges/chargedrone_generic.ogg"],
-
+    */
+    "chargeWhine": [ ],
+    "chargeDrone": [ ],
+    
     // compatibility
     "beamImpact": []
     
