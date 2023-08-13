@@ -59,29 +59,10 @@
     }
   },
 
-  "project45GunModInfo":{
-    "category": "ballistic",
-    "acceptsAmmoTypes":{
-      "ballistic": true
-    },
-    "acceptsAmmoArchetypes":{
-      "generic": true
-    },
-    "acceptsModSlot": {
-      "rail": true,
-      "sights": false,
-      "underbarrel": true,
-      "stock": false,
-      "muzzle": false
-    }
-  },
-
   "baseOffset" : [2.25, 0.5],
   "muzzleOffset" : [3.5, 0],
   "ejectionPortOffset": [-1.25, 0.125],
   "magazineOffset": [-1.25, -0.25],
-
-  "underbarrelOffset": [2, 0],
 
   "scripts" : ["/items/active/weapons/ranged/project45gunneo.lua"],
     
