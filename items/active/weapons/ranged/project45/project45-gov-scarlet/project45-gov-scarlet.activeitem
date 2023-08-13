@@ -37,13 +37,26 @@
     },
 
     "sounds": {
-      "fire" : ["/sfx/project45-synthetikmechanics/fires/fire_energyar.ogg"],
-      "chargeDrone": ["/sfx/project45-synthetikmechanics/charges/flamethrower_hiss_loop.ogg"]
+      "fire" : [
+        "/sfx/project45-synthetikmechanics/special/scarlet/scarlet_fire1.ogg",
+        "/sfx/project45-synthetikmechanics/special/scarlet/scarlet_fire2.ogg",
+        "/sfx/project45-synthetikmechanics/special/scarlet/scarlet_fire3.ogg"
+      ],
+      "reloadStart": [
+        "/sfx/project45-synthetikmechanics/special/scarlet/scarlet_reloadstart.ogg"
+      ],
+      "reloadEnd": [
+        "/sfx/project45-synthetikmechanics/special/scarlet/scarlet_reloadend.ogg"
+      ],
+      "eject" : [],
+      "boltPull" : [],
+      "boltPush" : [],
+      "click": []
     }
   },
 
   "muzzleFlashColor": [255,128,255],
-  "baseOffset" : [-0.5, -0.25],
+  "baseOffset" : [-1.75, -0.25],
   "muzzleOffset" : [1.875, 0.5],
   "ejectionPortOffset": [-0.1, 0.7],
   "magazineOffset": [-0.1, 0.7],
@@ -52,9 +65,12 @@
     
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
+
+    "baseDamage": 50,
+
     "projectileKind": "summoned",
     "projectileType": "project45_elecexplosion",
-    "cycleTime": 0.05,
+    "cycleTime": 0.075,
     "semi": false,
     "hideMuzzleFlash": true,
     "hideMuzzleSmoke": true,
@@ -64,6 +80,8 @@
     "spread": 0,
     "maxAmmo": 20,
     "bulletsPerReload": 20,
+    "reloadTime": 2.30,
+    "ejectMagOnEmpty": "firing",
 
     "stances": {
       
@@ -78,11 +96,12 @@
       },
       "firing": {
         "frontArmFrame" : "idle.4",
-        "backArmFrame" : "fall.1",
-        "weaponRotation": 15,
+        "backArmFrame" : "swim.3",
+        "weaponRotation": 30,
+        "armRotation": 5,
         "lock": true,
         "allowRotate": false,
-        "weaponOffset": [0, 0]
+        "weaponRotationCenter": [-1.125, 0]
       },
       "boltPulling": {
         "frontArmFrame" : "idle.4",
@@ -104,9 +123,11 @@
         "frontArmFrame" : "idle.4",
         "backArmFrame" : "fall.1",
         "weaponRotation": 15,
+        "armRotation": 0,
         "lock": true,
         "allowRotate": false,
-        "weaponOffset": [0, 0]
+        "weaponOffset": [0, 0],
+        "aimAngle": 0
       },
       "ejectmag": {
         "frontArmFrame" : "idle.4",
@@ -119,7 +140,7 @@
       },
       "reloading": {
         "frontArmFrame" : "idle.4",
-        "backArmFrame" : "fall.1",
+        "backArmFrame" : "swim.3",
         "weaponRotation": 15,
         "armRotation": 15,
         "lock": true,
@@ -129,12 +150,12 @@
       },
       "reloaded": {
         "frontArmFrame" : "idle.4",
-        "backArmFrame" : "fall.1",
+        "backArmFrame" : "jump.4",
         "weaponRotation": 30,
+        "armRotation": 10,
         "allowRotate": false,
         "lock": true,
-        "weaponOffset": [0, 0],
-        "weaponRotationCenter": [-0.5, -0.25]
+        "weaponOffset": [-0.5, 0.5]
       }
 
     }

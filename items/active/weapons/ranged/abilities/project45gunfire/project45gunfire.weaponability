@@ -200,9 +200,10 @@
     if both <ejectMagOnEmpty> and <reloadOnEjectMag> are true, the gun will (almost) immediately begin reloading
     upon firing the last (set of) bullet(s).
 
-    ejectMagOnEmpty can take on two values:
+    ejectMagOnEmpty can take on two (three) values:
     - "firing": the gun ejects its mag upon firing the last shot
     - "ejecting": the gun ejects its mag upon ejecting the casings of the last shot
+    - if false or nil, the gun won't eject its mag on empty
     Their difference lies in the animation state of the gun
     (as well as whether manual feed guns empty on eject)
     */

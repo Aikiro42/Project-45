@@ -433,6 +433,9 @@ function Project45GunFire:firing()
       self:setState(self.firing)
     else
       util.wait(self.currentCycleTime/3)
+      if storage.ammo == 0 and self.ejectMagOnEmpty and self.ejectMagOnEmpty == "firing" then
+        self:ejectMag()
+      end  
       self:setState(self.ejecting)
     end
   -- otherwise, stop the cycle process
@@ -597,6 +600,9 @@ function Project45GunFire:reloading()
   
   self.reloadTimer = 0 -- mark begin of reload
   animator.playSound("reloadStart") -- sound of mag being grabbed
+  if self.breakAction and animator.animationState("gun") ~= "open" then
+    animator.setAnimationState("gun", "open")
+  end
 
   self.triggered = true  -- prevent accidentally reloading instantly
   
@@ -1320,6 +1326,10 @@ end
 -- Replaces certain functions and initializes certain parameters and fields
 -- depending on projectileKind.
 function Project45GunFire:evalProjectileKind()
+
+  if self.projectileKind == "summoned" then
+    self.laser = {enabled = false}
+  end
   
   if self.laser or self.projectileKind ~= "projectile" then
     -- laser uses the hitscan helper function, so assign that
@@ -1367,6 +1377,7 @@ function Project45GunFire:evalProjectileKind()
   elseif self.projectileKind == "summoned" then
     self.firePosition = hitscanLib.summonPosition
     self.aimVector = hitscanLib.summonVector
+    self.muzzleObstructed = function () return false end
   end
 
 end
