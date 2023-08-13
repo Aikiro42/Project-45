@@ -63,12 +63,33 @@
 
     // ____________________________________[ SECTION: Projectile Config ]____________________________________
     
-    "projectileKind": "projectile", // projectile, hitscan, beam
+    /*
+    Can be any of the following: projectile, hitscan, beam, summoned
+
+    Regarding "hitscan" projectiles:
+    - When the weapon fires multiple hitscan projectiles, it generates multiple damage areas dealing their
+      own damage groups. It is thus advised to moderate the number of hitscan projectiles shot.
+    - As mentioned before, hitscan "projectiles" are actually damage areas, so any mechanic designed around
+      regular projectiles won't work against hitscan weapons. (e.g. Project 42 deflection)
+    
+    Regarding "beam" projectiles:
+    - If the weapon is charged and semi, then the beam functions like so:
+      The weapon won't fire until the trigger is released (and the weapon is fully charged), and once it starts
+      firing the weapon will continually fire until it runs out of ammo, all charge is expended, or the trigger
+      is pulled
+    - Beam projectiles are actually damage areas, just like how vanilla beams work.
+
+    Regarding "summoned" projectiles:
+    - "summoned" means the projectile is spawned at the aim position instead of from the muzzle.
+    - Summoned projectiles are not affected by recoil, but they are affected by inaccuracy and spread.
+    - The spread of the projectiles are affected by their distance from the user.
+    */
+    "projectileKind": "projectile",
     "projectileCount": 1,
     "multishot": 1,
     "spread": 0.05, // affects direction the projectile flies to, from the muzzle, in degrees
     
-     "projectileType": "project45stdbullet", // can also be a list of projectileType strings
+    "projectileType": "project45stdbullet", // can also be a list of projectileType strings
     
     /*
     "projectileType": [
@@ -162,8 +183,8 @@
 
     // ____________________________________[ SECTION: Ammo Config ]____________________________________
     
-    "maxAmmo": 7,
-    "bulletsPerReload": 7, // bullets reloaded every active reload; set to negative number to reload all bullets
+    "maxAmmo": 15,
+    "bulletsPerReload": 15, // bullets reloaded every active reload; set to negative number to reload all bullets
     "ammoPerShot": 1,
     "ammoConsumeChance": 1,
     "quickReloadTimeframe": [0.5, 0.6, 0.7, 0.8], // [ good% [ perfect% ] good% ] of <reloadTime>

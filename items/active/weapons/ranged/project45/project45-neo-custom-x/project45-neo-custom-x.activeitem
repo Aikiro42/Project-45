@@ -262,6 +262,8 @@
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
     // SECTION: PRIMARY ABILITY
+    "projectileKind": "summoned",
+    "projectileType": "project45_elecexplosion",
     "semi": false,
     "maxAmmo": 27,
     "breakAction": true,
@@ -269,7 +271,7 @@
     "magFrames": 7,
     "chargeFrames": 8,
     "overchargeTime": 1,
-    "cycleTime": 0.25,
+    "cycleTime": 0.1,
     "jamChances": [1, 0, 0, 0]
   },
 

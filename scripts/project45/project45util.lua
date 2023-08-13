@@ -4,6 +4,16 @@ function project45util.diceroll(chance)
   return math.random() <= chance
 end
 
+function project45util.circle(radius, segments)
+  segments = segments or 15
+  local arc = 2 * math.pi / segments
+  local vecs = {}
+  for i=1, segments do
+    table.insert(vecs, vec2.rotate({radius, 0}, arc * i))
+  end
+  return vecs
+end
+
 function project45util.boolXor(a, b)
   -- turn bools into integers
   local alpha = a and 1 or 0

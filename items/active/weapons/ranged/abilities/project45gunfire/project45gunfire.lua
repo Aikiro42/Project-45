@@ -918,20 +918,25 @@ end
 -- Kicks gun muzzle up and backward, shakes screen
 function Project45GunFire:recoil(down, mult, amount, recoverDelay)
 
+  self.projectileKind = self.projectileKind or "projectile"
+
   local mult = mult or self.recoilMult or 1
   mult = down and -mult or mult
   local crouchMult = mcontroller.crouching() and self.recoilCrouchMult or 1
   mult = mult * crouchMult
 
   -- recoil (max defaults to 7.5 degrees, amount defaults to 1)
-  local recoilMaxDeg = self.recoilMaxDeg or 7.5
-  self.weapon.relativeWeaponRotation = math.min(self.weapon.relativeWeaponRotation, util.toRadians(recoilMaxDeg * crouchMult / 2)) + util.toRadians((amount or self.recoilAmount or 1) * mult/2)
-  self.weapon.relativeArmRotation = math.min(self.weapon.relativeArmRotation, util.toRadians(recoilMaxDeg * crouchMult / 2)) + util.toRadians((amount or self.recoilAmount or 1) * mult/2)
+  if self.projectileKind ~= "summoned" then
+    local recoilMaxDeg = self.recoilMaxDeg or 7.5
+    self.weapon.relativeWeaponRotation = math.min(self.weapon.relativeWeaponRotation, util.toRadians(recoilMaxDeg * crouchMult / 2)) + util.toRadians((amount or self.recoilAmount or 1) * mult/2)
+    self.weapon.relativeArmRotation = math.min(self.weapon.relativeArmRotation, util.toRadians(recoilMaxDeg * crouchMult / 2)) + util.toRadians((amount or self.recoilAmount or 1) * mult/2)
+  end
+  
   self.weapon.weaponOffset = {-0.125, 0}
 
   -- inaccuracy (defaults to 3 degrees)
   local inaccuracy = util.toRadians(sb.nrand(self.currentInaccuracy or 3, 0) * mult) -- TESTME: is factoring in crouching balanced?
-  if self.recoilUpOnly then
+  if self.recoilUpOnly and self.projectileKind ~= "summoned" then
     inaccuracy = math.abs(inaccuracy)
   end
   self.weapon.relativeWeaponRotation = self.weapon.relativeWeaponRotation + inaccuracy/2
@@ -1354,6 +1359,9 @@ function Project45GunFire:evalProjectileKind()
     self.updateProjectileStack = hitscanLib.updateProjectileStack
     self.beamParameters.beamColor = self.muzzleFlashColor
     activeItem.setScriptedAnimationParameter("beamColor", self.muzzleFlashColor)
+  elseif self.projectileKind == "summoned" then
+    self.firePosition = hitscanLib.summonPosition
+    self.aimVector = hitscanLib.summonVector
   end
 
 end
