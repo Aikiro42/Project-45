@@ -217,7 +217,8 @@ function Project45GunFire:init()
   if storage.jamAmount <= 0
   and storage.ammo >= 0
   then
-    self.weapon:setStance(self.stances.aimStance)
+    -- self.weapon:setStance(self.stances.aimStance)
+    self:setStance(self.stances.aimStance)
   else
     if storage.jamAmount > 0 then
       self:setState(self.jammed)
@@ -373,6 +374,10 @@ function Project45GunFire:firing()
 
   self.isFiring = true
   animator.setAnimationState("gun", self.loopFiringAnimation and "firingLoop" or "firing")
+
+  if self.stances.firing then
+    self:setStance(self.stances.firing)
+  end
 
   -- reset burst count if already max
   storage.burstCounter = (storage.burstCounter >= self.burstCount) and 0 or storage.burstCounter
