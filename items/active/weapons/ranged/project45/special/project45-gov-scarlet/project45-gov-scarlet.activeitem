@@ -76,12 +76,18 @@
     "hideMuzzleSmoke": true,
     "breakAction": true,
     "jamChances": [0, 0, 0, 0],
+    "reloadRatingDamageMults": [0.1, 0.5, 1, 1.5],
     "inaccuracy": 2.5,
-    "spread": 0,
+    "spread": 1,
     "maxAmmo": 20,
     "bulletsPerReload": 20,
     "reloadTime": 2.30,
     "ejectMagOnEmpty": "firing",
+
+    "laser": {
+      "enabled": true,
+      "color": [200, 0, 255, 128]
+    },
 
     "stances": {
       

@@ -1327,40 +1327,51 @@ end
 -- depending on projectileKind.
 function Project45GunFire:evalProjectileKind()
 
-  if self.projectileKind == "summoned" then
-    self.laser = {enabled = false}
-  end
   
   if self.laser or self.projectileKind ~= "projectile" then
-    -- laser uses the hitscan helper function, so assign that
-    self.hitscan = hitscanLib.hitscan
-    self.updateLaser = function() end
-    -- initialize projectile stack
-    -- this stack is used by the hitscan functions and the animator
-    -- to animate hitscan trails.
-    self.projectileStack = {}
 
-    -- laser uses the hitscan function, that's why this logic is in evalProjectileKind()
-    if self.laser.enabled then
-      self.updateLaser = hitscanLib.updateLaser
-      activeItem.setScriptedAnimationParameter("primaryLaserEnabled", not self.performanceMode)    
-      activeItem.setScriptedAnimationParameter("primaryLaserColor", self.laser.color)
-      activeItem.setScriptedAnimationParameter("primaryLaserWidth", self.laser.width)
+    if self.projectileKind == "summoned" then
+      activeItem.setScriptedAnimationParameter("isSummonedProjectile", true)
+      if self.laser.enabled then
+        self.updateLaser = hitscanLib.updateSummonAreaIndicator
+        activeItem.setScriptedAnimationParameter("primaryLaserEnabled", not self.performanceMode)
+        activeItem.setScriptedAnimationParameter("primaryLaserColor", self.laser.color)
+        activeItem.setScriptedAnimationParameter("primaryLaserWidth", self.laser.width)
+      end
 
-      if self.projectileKind == "projectile" then
-        
-        local projectileConfig = util.mergeTable(root.projectileConfig(self.projectileType), self.projectileParameters)
-        local projSpeed = projectileConfig.speed or 50
-        
-        if root.projectileGravityMultiplier(self.projectileType) ~= 0 then
-          activeItem.setScriptedAnimationParameter("primaryLaserArcSteps", self.laser.trajectoryConfig.renderSteps)
-          activeItem.setScriptedAnimationParameter("primaryLaserArcSpeed", projSpeed)
-          activeItem.setScriptedAnimationParameter("primaryLaserArcRenderTime", projectileConfig.timeToLive)
-          activeItem.setScriptedAnimationParameter("primaryLaserArcGravMult", root.projectileGravityMultiplier(self.projectileType))
+    else
+      
+      -- laser uses the hitscan helper function, so assign that
+      self.hitscan = hitscanLib.hitscan
+      self.updateLaser = function() end
+      -- initialize projectile stack
+      -- this stack is used by the hitscan functions and the animator
+      -- to animate hitscan trails.
+      self.projectileStack = {}
+
+      -- laser uses the hitscan function, that's why this logic is in evalProjectileKind()
+      if self.laser.enabled then
+        self.updateLaser = hitscanLib.updateLaser
+        activeItem.setScriptedAnimationParameter("primaryLaserEnabled", not self.performanceMode)    
+        activeItem.setScriptedAnimationParameter("primaryLaserColor", self.laser.color)
+        activeItem.setScriptedAnimationParameter("primaryLaserWidth", self.laser.width)
+
+        if self.projectileKind == "projectile" then
+          
+          local projectileConfig = util.mergeTable(root.projectileConfig(self.projectileType), self.projectileParameters)
+          local projSpeed = projectileConfig.speed or 50
+          
+          if root.projectileGravityMultiplier(self.projectileType) ~= 0 then
+            activeItem.setScriptedAnimationParameter("primaryLaserArcSteps", self.laser.trajectoryConfig.renderSteps)
+            activeItem.setScriptedAnimationParameter("primaryLaserArcSpeed", projSpeed)
+            activeItem.setScriptedAnimationParameter("primaryLaserArcRenderTime", projectileConfig.timeToLive)
+            activeItem.setScriptedAnimationParameter("primaryLaserArcGravMult", root.projectileGravityMultiplier(self.projectileType))
+          end
+
         end
-
       end
     end
+  
   end
 
   self.muzzleFlashColor = config.getParameter("muzzleFlashColor", {255, 255, 200})
@@ -1377,7 +1388,13 @@ function Project45GunFire:evalProjectileKind()
   elseif self.projectileKind == "summoned" then
     self.firePosition = hitscanLib.summonPosition
     self.aimVector = hitscanLib.summonVector
-    self.muzzleObstructed = function () return false end
+    self.muzzleObstructed = function()
+      if self.summonParameters.summonInTerrain then return true
+      elseif self.summonParameters.summonAnywhere then
+        return world.pointTileCollision(activeItem.ownerAimPosition())
+      end
+      return world.lineTileCollision(mcontroller.position(), activeItem.ownerAimPosition())      
+    end
   end
 
 end

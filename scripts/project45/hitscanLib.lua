@@ -421,6 +421,19 @@ function hitscanLib:updateLaser()
   activeItem.setScriptedAnimationParameter("primaryLaserEnd", laser[2])
 end
 
+function hitscanLib:updateSummonAreaIndicator()
+  if not self.laser.enabled then return
+  elseif storage.ammo < 0 or self.reloadTimer >= 0 then
+    activeItem.setScriptedAnimationParameter("primaryLaserEnabled", false)
+    return
+  end
+  activeItem.setScriptedAnimationParameter("primaryLaserEnabled", not self.performanceMode)
+  activeItem.setScriptedAnimationParameter("primarySummonArea", project45util.circle(
+    math.tan(util.toRadians((self.currentInaccuracy or 7.5) + (self.spread or 0.01))) * world.magnitude(activeItem.ownerAimPosition(), mcontroller.position())
+  ))
+  activeItem.setScriptedAnimationParameter("muzzleObstructed", self:muzzleObstructed())
+end
+
 function hitscanLib:summonPosition()
   local randRotate = math.random() * math.pi * 2
   local randRadius = math.random() * math.tan(util.toRadians((self.currentInaccuracy or 7.5) + (self.spread or 0.01))) * world.magnitude(activeItem.ownerAimPosition(), mcontroller.position())
@@ -430,5 +443,5 @@ function hitscanLib:summonPosition()
 end
 
 function hitscanLib:summonVector()
-  return world.distance(self:firePosition(), activeItem.ownerAimPosition())
+  return vec2.norm(world.distance(self:firePosition(), activeItem.ownerAimPosition()))
 end

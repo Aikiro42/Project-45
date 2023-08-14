@@ -1,5 +1,6 @@
 require "/scripts/vec2.lua"
 require "/scripts/util.lua"
+require "/scripts/poly.lua"
 
 local warningTriggered = false
 
@@ -117,9 +118,14 @@ end
 function renderLaser()
 
   if
-  not animationConfig.animationParameter("altLaserEnabled")
-  and not animationConfig.animationParameter("primaryLaserEnabled")
+  not (animationConfig.animationParameter("altLaserEnabled")
+  or animationConfig.animationParameter("primaryLaserEnabled"))
   then return end
+
+  if animationConfig.animationParameter("isSummonedProjectile") then
+    drawSummonArea()
+    return
+  end
 
   local laserStart = animationConfig.animationParameter("altLaserStart")
     or animationConfig.animationParameter("primaryLaserStart")
@@ -519,3 +525,25 @@ function drawTrajectory(muzzlePos, angle, speed, steps, renderTime, color, gravM
   end
 end
 
+function drawSummonArea()
+
+  local circlePoly = poly.translate(
+    animationConfig.animationParameter("primarySummonArea") or {{0, 0}},
+    activeItemAnimation.ownerAimPosition()
+  )
+  table.insert(circlePoly, circlePoly[1])
+  local obstructed = animationConfig.animationParameter("muzzleObstructed")
+  local circleColor = obstructed and {128, 128, 128, 128} or animationConfig.animationParameter("primaryLaserColor") or {0, 255, 255, 128}
+  local circleWidth = animationConfig.animationParameter("primaryLaserWidth") or 0.5
+  local i = 1
+  while i < #circlePoly do
+    local segment = {circlePoly[i], circlePoly[i+1]}
+    localAnimator.addDrawable({
+      line = segment,
+      width = circleWidth,
+      fullbright = true,
+      color = circleColor
+    }, "ForegroundEntity+1")
+    i = i + 1
+  end
+end
