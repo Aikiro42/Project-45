@@ -15,7 +15,7 @@
 
   "animationParts" : {
     "middle" : "project45-gov-scarlet.png",
-    "middleFullbright" : "",
+    "middleFullbright" : "project45-gov-scarletfullbright.png",
     "charge": "",
     "chargeFullbright": "",
     "magazine": "",
