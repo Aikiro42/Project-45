@@ -4,7 +4,7 @@
   "maxStack" : 1,
   "rarity" : "Essential",
   "description" : "A katana forged from a material called \"Godesium\". Found in a raptured planet.",
-  "shortdescription" : "Scarlet",
+  "shortdescription" : "Fleetly Fading",
   "gunArchetype": "Assault Rifle..?",
   "tooltipKind" : "project45gun",
   "category" : "rifle",

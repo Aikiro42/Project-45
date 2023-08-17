@@ -31,6 +31,18 @@
             "image": ""
           }
         }
+      },
+      "stateTypes": {
+        "gun": {
+          "states":{
+            "firing": {
+              "frames": 4
+            },
+            "firingLoop": {
+              "frames": 4
+            }
+          }
+        }
       }
     },
     "particleEmitters": {
@@ -60,7 +72,7 @@
   },
 
   "baseOffset" : [2.25, 0.5],
-  "muzzleOffset" : [3.5, 0],
+  "muzzleOffset" : [3.5, 0.25],
   "ejectionPortOffset": [-1.25, 0.125],
   "magazineOffset": [-1.25, -0.25],
 
@@ -77,6 +89,7 @@
     "recoilMaxDeg": 15,
     "recoverTime": 1,
     "cockTime": 0.5,
+    "cycleTime": 1,
     "projectileKind": "projectile",
     "projectileType": "project45stdfirebullet",
     "laser":{

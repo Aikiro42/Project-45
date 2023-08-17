@@ -103,14 +103,11 @@
         },
         "gun": {
           "states":{
-            "idle": {
-              "frames": 1
-            },
             "firing": {
-              "frames": 5
+              "frames": 4
             },
             "firingLoop": {
-              "frames": 5
+              "frames": 4
             },
             "ejecting": {
               "frames": 2
@@ -118,14 +115,11 @@
             "boltPulling": {
               "frames": 2
             },
-            "ejected": {
-              "frames": 1
-            },
             "feeding": {
-              "frames": 10
+              "frames": 4
             },
             "boltPushing": {
-              "frames": 10
+              "frames": 4
             },
             "jammed": {
               "frames": 1
@@ -139,9 +133,9 @@
     }
   },
   
-  "baseOffset" : [-1.375, 0.75],
+  "baseOffset" : [-0.25, 0.625],
   "muzzleOffset" : [3.25, 0.5],
-  "ejectionPortOffset": [0.7, 0.7],
+  "ejectionPortOffset": [0.625, 0.7],
   "magazineOffset": [0.7, 0.7],
   "railOffset": [-0.5, 0.875],
 

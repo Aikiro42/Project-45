@@ -1,17 +1,18 @@
 {  
   "frameGrid" : {
-    "size" : [56,15],
-    "dimensions" : [2, 1],
+    "size" : [57,16],
+    "dimensions" : [4, 5],
     "names" : [
-      ["idle.1", "ejecting.1"]
+      ["idle.1", null, null, null],
+      ["firing.1", "firing.2", "firing.3", "firing.4"],
+      ["ejecting.1", null, null, null],
+      ["jammed.1", null, null, null],
+      ["unjamming.1", null, null, null]
     ]
   },
 
   "aliases" : {
-    "firing.1": "idle.1",
-    "ejected.1": "ejecting.1",
     "feeding.1": "idle.1",
-    "jammed.1": "idle.1",
-    "unjamming.1": "ejecting.1"
+    "ejected.1": "ejecting.1"
   }
 }

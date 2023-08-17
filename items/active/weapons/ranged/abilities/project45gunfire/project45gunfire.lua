@@ -597,6 +597,13 @@ function Project45GunFire:feeding()
 end
 
 function Project45GunFire:reloading()
+
+  if (self.ejectMagOnEmpty == "firing" or self.ejectMagOnEmpty == "ejecting")
+  and not status.overConsumeResource("energy", status.resourceMax("energy") * self.reloadCost) then
+    animator.playSound("click")
+    self.triggered = true
+    return
+  end
   
   self.reloadTimer = 0 -- mark begin of reload
   animator.playSound("reloadStart") -- sound of mag being grabbed
@@ -961,7 +968,8 @@ end
 -- can immediately begin reloading minigame
 function Project45GunFire:ejectMag()
 
-  if not status.overConsumeResource("energy", status.resourceMax("energy") * self.reloadCost) then
+  if self.ejectMagOnEmpty ~= "firing" and self.ejectMagOnEmpty ~= "ejecting"
+  and not status.overConsumeResource("energy", status.resourceMax("energy") * self.reloadCost) then
     animator.playSound("click")
     self.triggered = true
     return
