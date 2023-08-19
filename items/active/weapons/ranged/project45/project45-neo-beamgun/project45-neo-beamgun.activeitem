@@ -85,7 +85,8 @@
       "fireStart": ["/sfx/gun/mech_beamsniper_fire1.ogg"],
       "fireLoop": ["/sfx/gun/mech_beamdrill_loop.ogg"],
       "fireEnd": ["/sfx/gun/mech_beamdrill_winddown.ogg"],
-      "hollow": []
+      "hollow": [],
+      "chargeWhine" : ["/sfx/project45-synthetikmechanics/charges/chargewhine_generic.ogg"]
     }
   },
 

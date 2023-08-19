@@ -59,6 +59,8 @@
     },
 
     "sounds": {
+      "chargeWhine" : ["/sfx/project45-synthetikmechanics/charges/chargewhine_generic.ogg"],
+      "chargeDrone" : ["/sfx/project45-synthetikmechanics/charges/chargedrone_generic.ogg"],  
       "fire" : ["/sfx/project45-synthetikmechanics/fires/fire_gauss.ogg"]
     },
     "animatedParts": {

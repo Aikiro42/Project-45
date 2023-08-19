@@ -424,13 +424,6 @@
         },
 
         "partStates" : {
-          "gun": {
-            "firing": {
-              "properties" : {
-                "image" : "<partImage>:<variant>.<frame><directives>"
-              }
-            }
-          },
           "flash" : {
             "flash" : {
               "properties" : {

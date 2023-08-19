@@ -2,7 +2,7 @@
   "kind" : "project45zweibrandyrmag",
   "definition" : {
     "type" : "animated",
-    "image" : "/particles/magazines/project45zweibrandyrmag/project45zweibrandyrmag.animation",
+    "image" : "/particles/magazines/special/project45zweibrandyrmag/project45zweibrandyrmag.animation",
     "fade" : 0.9,
 	"position" : [0, 0],
 	"size" : 1.0,

@@ -96,11 +96,12 @@
         "project45-neo-accelerator",
         "project45-neo-beamsplitter",
         "project45-neo-beamgun",
+
         "project45-neo-gaussrifle",
-        
         "project45-neb-zweibrandyr",
         "project45-scz-spacecowboy",
-        "project45-gov-scarlet"
+        "project45-gov-scarlet",
+        "project45-tcf-kineticarbiter"
 
       ],
       "mods": [
