@@ -1,0 +1,121 @@
+{
+  "itemName" : "project45-neo-pipegun",
+  "price" : 1000,
+  "maxStack" : 1,
+  "rarity" : "Essential",
+  "description" : "A zip gun. Particularly well-made; WS45 parts are amazing.",
+  "shortdescription" : "New Pipe Gun",
+  "tooltipKind" : "project45gun",
+  "gunArchetype": "Pipe Gun",
+  "category" : "pistol",
+  "twoHanded" : true,
+  "itemTags" : ["weapon","ranged","pistol"],
+  "level" : 1,
+  "muzzleFlashColor": [255, 255, 200],
+  "inventoryIcon" : "project45-neo-pipegun-icon.png",
+
+  "animationParts" : {
+    "middle" : "project45-neo-pipegun.png",
+    "middleFullbright" : "",
+    "charge": "",
+    "chargeFullbright": "",
+    "magazine": "",
+    "magazineFullbright": ""
+  },
+
+  "animationCustom": {
+    "particleEmitters": {
+      "ejectionPort": {
+        "particles": [
+          {"particle": "project45bulletcase"}
+        ]
+      },
+      "magazine": {
+        "particles": [
+        ]
+      }
+    },
+
+    "sounds": {
+      "fire" : ["/sfx/project45-synthetikmechanics/fires/fire_sniper.ogg"],
+      "eject": [ ],
+      "boltPull" : ["/sfx/project45-synthetikmechanics/reloads/boltpull_lightbolt.ogg"],
+      "boltPush" : ["/sfx/project45-synthetikmechanics/reloads/boltpush_lightbolt.ogg"]
+    },
+    "animatedParts": {
+      "parts":{
+        "middle":{
+          "partStates":{
+            "gun":{
+              "fired": {
+                "properties": {
+                  "image": "<partImage>:firing.1"
+                }
+              }
+            }
+          }
+        },
+        "charge":{
+          "partStates":{
+            "charge":{
+              "off": {
+                "properties": {
+                  "image": "<partImage>:charging.1"
+                }
+              }
+            }
+          }
+        }
+      },
+      "stateTypes": {
+        "charge":{
+          "states":{
+            "charging":{
+              "frames": 2
+            }
+          }
+        }
+      }
+    }
+  },
+
+  "baseOffset" : [0.75, 0.25],
+  "muzzleOffset" : [1.75, 0.375],
+  "ejectionPortOffset": [-1, 0.375],
+  "magazineOffset": [0, 0],
+
+  "scripts" : ["/items/active/weapons/ranged/project45gunneo.lua"],
+    
+  "primaryAbilityType": "project45gunfire",
+  "primaryAbility": {
+    "maxAmmo": 1,
+    "bulletsPerReload": 1,
+    "inaccuracy": 3,
+    "semi": true,
+    "cycleTime": 0.1,
+    "cockTime": 0.2,
+    "projectileKind": "projectile",
+    "reloadTime": 1,
+
+    "manualFeed": true,
+    "internalMag": true,
+    "loadRoundsThroughBolt": true,
+    "ejectCasingsWithMag": true,
+    "ejectMagOnEmpty": "ejecting",
+    "reloadOnEjectMag": true,
+    "slamFire": true,
+    "jamChances": [1, 0.5, 0.1, 0],
+
+    "recoilAmount": 15, // amount of recoil per shot, in degrees; arm and weapon will rotate by half of this
+    "recoilMaxDeg": 45, // the most the arm and weapon will rotate, in degrees.
+    "recoverTime": 5, // time it takes to recover aim completely, in seconds
+
+    // "reloadTime": 10,
+
+    "laser":{
+      "enabled": false
+    }
+  },
+
+  "builder" : "/items/buildscripts/buildproject45neoneo.lua"
+}

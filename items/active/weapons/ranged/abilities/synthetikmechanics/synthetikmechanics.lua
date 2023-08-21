@@ -23,6 +23,9 @@ local EMPTY, READY, FILLED = 0, 1, 2
 
 function SynthetikMechanics:init()
 
+
+    sb.logInfo("from syntheticmechanics.lua: " .. sb.printJson(world.npcType(activeItem.ownerEntityId())))
+
     -- Initial state of gun
     storage.aimProgress = 0
 
