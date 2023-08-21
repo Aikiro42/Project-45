@@ -58,9 +58,9 @@
     },
 
     "sounds": {
-      "fire" : ["/sfx/project45-synthetikmechanics/fires/fire_gauss.ogg"],
-      "boltPull" : ["/sfx/project45-synthetikmechanics/reloads/boltpull_lightbolt.ogg"],
-      "boltPush" : ["/sfx/project45-synthetikmechanics/reloads/boltpush_shotgun.ogg"]
+      "fire" : ["/sfx/project45-synthetikmechanics/special/kineticarbiter/kineticarbiter_fire.ogg"],
+      "boltPull" : ["/sfx/project45-synthetikmechanics/special/kineticarbiter/kineticarbiter_boltpull.ogg"],
+      "boltPush" : ["/sfx/project45-synthetikmechanics/special/kineticarbiter/kineticarbiter_boltpush.ogg"]
     },
     "animatedParts": {
       "parts":{
@@ -151,7 +151,7 @@
     "bulletsPerReload": 4,
     "semi": true,
     "cycleTime": 1,
-    "cockTime": 0.5,
+    "cockTime": 1.2,
     "reloadTime": 1,
 
     "manualFeed": true,
