@@ -26,24 +26,6 @@
     },
     {
         "op": "add",
-        "path": "/project45neo",
-        "value": [
-            "/spawnitem project45-neb-zweibrandyr",
-            "/spawnitem project45-neo-amr",
-            "/spawnitem project45-neo-assaultrifle",
-            "/spawnitem project45-neo-custom",
-            "/spawnitem project45-neo-flamethrower",
-            "/spawnitem project45-neo-gaussrifle",
-            "/spawnitem project45-neo-huntingrifle",
-            "/spawnitem project45-neo-machinegun",
-            "/spawnitem project45-neo-minigun",
-            "/spawnitem project45-neo-pistol",
-            "/spawnitem project45-neo-revolver",
-            "/spawnitem project45-neo-rocketlauncher"
-        ]
-    },
-    {
-        "op": "add",
         "path": "/punchy",
         "value": [
             "/spawnmonster punchy"

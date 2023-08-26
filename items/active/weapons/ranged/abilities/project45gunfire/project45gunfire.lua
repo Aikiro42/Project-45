@@ -1303,7 +1303,11 @@ end
 
 function Project45GunFire:updateMuzzleFlash()
   self.muzzleFlashTimer = math.max(0, self.muzzleFlashTimer - self.dt)
-  self.muzzleSmokeTimer = math.max(0, self.muzzleSmokeTimer - self.dt)
+  if animator.animationState("gun") ~= "open" then
+    self.muzzleSmokeTimer = math.max(0, self.muzzleSmokeTimer - self.dt)
+  else
+    self.muzzleSmokeTimer = 0
+  end
   if self.muzzleFlashTimer <= 0 then
     animator.setLightActive("muzzleFlash", false)
   end

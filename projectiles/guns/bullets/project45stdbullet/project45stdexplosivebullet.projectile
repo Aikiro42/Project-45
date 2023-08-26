@@ -1,7 +1,7 @@
 {
   "projectileName" : "project45explosivebullet",
   "image" : "project45stdbullet.png",
-  "scripts": ["project45stdbullet.lua"],
+  "scripts": ["/projectiles/scripts/project45-killprojectileonstick.lua"],
   "physics" : "sticky",
   "animationCycle" : 0.25,
   "frameNumber" : 1,

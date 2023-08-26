@@ -1,6 +1,6 @@
 {
   "projectileName" : "project45dragonsbreath",
-  "scripts": ["project45stdbullet.lua"],
+  "scripts": ["/projectiles/scripts/project45-killprojectileonstick.lua"],
   "image" : "/projectiles/guns/clouds/largecloud/largefirecloud.png",
   "physics" : "grenade",
   "frameNumber" : 13,

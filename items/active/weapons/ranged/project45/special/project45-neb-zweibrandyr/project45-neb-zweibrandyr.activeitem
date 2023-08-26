@@ -5,7 +5,7 @@
   "rarity" : "Essential",
   "description" : "A firearm of Raiizy's and Nebulox's design.",
   "shortdescription" : "Zweibrandyr",
-  "gunArchetype": "SMG",
+  "gunArchetype": "LMG",
   "tooltipKind" : "project45gun",
   "category" : "rifle",
   "twoHanded" : true,
@@ -16,25 +16,14 @@
 
   "project45GunModInfo": {
     "category": "ballistic",
-    "acceptsAmmoTypes": {
-      "bullet": true
-    },
-    "acceptsAmmoArchetypes": {
-      "generic": true
-    },
-    "acceptsModSlot": {
-      "rail": true,
-      "sights": false,
-      "muzzle": true,
-      "stock": false,
-      "underbarrel": true,
-      
-      "receiver": true,
-      "material": true,
-      "barrel": true,
-      "grip": true,
-      "magazine": true
-    }
+    "acceptsAmmoArchetypes": [
+      "bullet"
+    ],
+    "acceptsModSlot": [
+      "rail",
+      "muzzle",
+      "underbarrel"
+    ]
   },
 
   "animationParts" : {

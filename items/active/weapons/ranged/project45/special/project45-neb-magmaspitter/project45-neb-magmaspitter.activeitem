@@ -1,47 +1,64 @@
 {
-  "itemName" : "project45-neo-revolver",
+  "itemName" : "project45-neb-magmaspitter",
   "price" : 1000,
   "maxStack" : 1,
   "rarity" : "Essential",
-  "description" : "A revolver.",
-  "shortdescription" : "New Revolver",
+  "description" : "A revolver that shoots magma.",
+  "shortdescription" : "Magma Spitter",
   "tooltipKind" : "project45gun",
-  "gunArchetype": "Break-action",
+  "gunArchetype": "Revolver",
   "category" : "pistol",
   "twoHanded" : false,
   "itemTags" : ["weapon","ranged","pistol"],
   "level" : 1,
   "muzzleFlashColor": [255, 255, 200],
-  "inventoryIcon" : "project45-neo-revolver-icon.png",
+  "inventoryIcon" : "project45-neb-magmaspitter-icon.png",
+
+  "project45GunModInfo": {
+    "category": "ballistic",
+    "acceptsAmmoArchetype": [
+      "bullet",
+      "shotgun"
+    ],
+    "acceptsModSlot": [
+      "rail",
+      "sights",
+      "muzzle",
+      "underbarrel",
+      "stock"
+    ]
+  },
 
   "animationParts" : {
-    "middle" : "project45-neo-revolver.png",
+    "middle" : "project45-neb-magmaspitter.png",
     "middleFullbright" : "",
     "charge": "",
     "chargeFullbright": "",
     "magazine": "",
-    "magazineFullbright": "",
-    "muzzleFlash": "/items/active/weapons/ranged/muzzleflash.png"
+    "magazineFullbright": ""
   },
 
   "animationCustom": {
+    "globalTagDefaults": {
+      "stockModDirectives": "?flipy"
+    },
     "particleEmitters": {
       "ejectionPort": {
         "particles": [
-          {"particle": "project45bulletcasesmall"}
+          {"particle": "project45bulletcase"}
         ]
       },
       "magazine": {
         "particles": [
+          {"particle": "project45magmaspittermag"}
         ]
       }
     },
 
     "sounds": {
       "eject": ["/sfx/project45-synthetikmechanics/reloads/ejectmag_revolver.ogg"],
-      "boltPush": ["/assetmissing.wav"],
       "boltPull": ["/sfx/project45-synthetikmechanics/reloads/boltpush_revolver.ogg"],
-      "fire" : ["/sfx/project45-synthetikmechanics/fires/fire_revolver.ogg"],
+      "fire" : ["/sfx/project45-synthetikmechanics/special/magmaspitter/magmaspitter_fire.ogg"],
       "reloadStart" : ["/sfx/project45-synthetikmechanics/foleys/getmag_revolver.ogg"]
     },
     "animatedParts": {
@@ -76,53 +93,38 @@
               "frames": 2
             }
           }
-        },
-        "gun": {
-          "states":{
-            "open": {
-              "frames": 1
-            },
-            "firing": {
-              "frames": 1,
-              "transition": "fired"
-            },
-            "fired": {
-              "frames": 1
-            }
-          }
         }
       }
     }
   },
 
   "baseOffset" : [0.75, -0.25],
-  "muzzleOffset" : [1.25, 0.625],
-  "ejectionPortOffset": [-0.25, 0.5],
-  "magazineOffset": [0, 0],
+  "muzzleOffset" : [1.375, 0.75],
+  "ejectionPortOffset": [-0.5, 1],
+  "magazineOffset": [-0.5, 1],
+
+  "sightsOffset": [1, 0.625],
+  "stockOffset": [-1, 0],
 
   "scripts" : ["/items/active/weapons/ranged/project45gunneo.lua"],
     
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
     "maxAmmo": 6,
-    "bulletsPerReload": 1,
+    "bulletsPerReload": 6,
     "inaccuracy": 3,
     "semi": true,
     "cycleTime": 0.1,
     "cockTime": 0.2,
     "projectileKind": "projectile",
-    "reloadTime": 0.5,
+    "projectileType": "project45-starforge-firefluxbolt",
+    "reloadTime": 1,
 
-    "manualFeed": true,
-    // "internalMag": true,
-    // "loadRoundsThroughBolt": true,
-    "ejectCasingsWithMag": true,
     "breakAction": true,
-    "slamFire": true,
+    "ejectCasingsWithMag": true,
 
     "recoilAmount": 5, // amount of recoil per shot, in degrees; arm and weapon will rotate by half of this
     "recoilMaxDeg": 45, // the most the arm and weapon will rotate, in degrees.
-    "recoverDelay": 0.1,
     "recoverTime": 0.5, // time it takes to recover aim completely, in seconds
 
     // "reloadTime": 10,
@@ -130,10 +132,10 @@
     "laser":{
       "enabled": false
     },
-  
+
     "stances":{
 
-      "idleneo": {
+      "aimStance": {
         "twoHanded": false
       },
       "aim": {
