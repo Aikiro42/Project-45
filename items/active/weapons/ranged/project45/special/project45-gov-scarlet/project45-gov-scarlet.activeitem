@@ -168,7 +168,5 @@
 
   },
 
-  "altAbilityType": "markedshot",
-
   "builder" : "/items/buildscripts/buildproject45neoneo.lua"
 }

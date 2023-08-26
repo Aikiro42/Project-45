@@ -5,7 +5,8 @@ require "/scripts/vec2.lua"
 function apply(input)
 
   -- do not install mod if the thing this mod is applied to isn't a gun
-  if not input.parameters.project45GunModInfo then return end
+  local modInfo = input.parameters.project45GunModInfo
+  if not modInfo then return end
 
   local augment = config.getParameter("augment")
   local output = Item.new(input)
@@ -14,6 +15,14 @@ function apply(input)
   if augment then
 
     local statList = input.parameters.statList or {nil} -- retrieve stat mods
+    local statModCount = input.parameters.statModCount
+    local statModCountMax = modInfo.statModCountMax or -1
+    -- MOD INSTALLATION GATES
+
+    -- If the max number of stat mods that can be installed is specified (i.e. non-negative number)
+    -- and the number of mods installed already reached that cap
+    -- do not apply stat mod
+    if statModCountMax > -1 and statModCount >= statModCountMax then return end
 
     -- MOD INSTALLATION PROCESS
 
@@ -136,9 +145,15 @@ function apply(input)
 
     -- count stat
     statList[config.getParameter("itemName")] = (statList[config.getParameter("itemName")] or 0) + 1
+    if not statModCount then
+        statModCount = 0
+    else
+        statModCount = statModCount + 1
+    end
     
     
     output:setInstanceValue("statList", statList)
+    output:setInstanceValue("statModCount", statModCount)
 
     output:setInstanceValue("isModded", true)
 

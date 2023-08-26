@@ -15,8 +15,6 @@ Project45GunFire = WeaponAbility:new()
 
 function Project45GunFire:init()
 
-  sb.logInfo("from project45gunfire.lua: " .. sb.printJson(world.npcType(activeItem.ownerEntityId())))
-
   -- INITIALIZATIONS
   self.debugTimer = self.debugTime
   self.isFiring = false

@@ -171,15 +171,25 @@ function SynthetikMechanics:screenShake(amount, shakeTime, random)
   end
 end
 
+-- Shakes screen opposite direction of aim.
+-- It does this by briefly spawning a projectile that has a short time to live,
+-- and setting the cam's focus on that projectile.
 function Project45GunFire:screenShake(amount, shakeTime, random)
-  if self.usedByNPC or self.performanceMode then return end
+  
+  if self.usedByNPC
+  or self.performanceMode
+  then return end
+  
   local amount = amount or self.currentScreenShake or 0.1
+  if amount == 0 then return end
+
   if storage.cameraProjectile and world.entityExists(storage.cameraProjectile) then
     world.callScriptedEntity(storage.cameraProjectile, "jerk")
     activeItem.setCameraFocusEntity(storage.cameraProjectile)
   else
+
     local source = mcontroller.position()
-    local shake_dir = vec2.mul(self:aimVector(0), -1 * (amount))
+    local shake_dir = vec2.mul(self:aimVector(0), amount)
     if random then vec2.rotate(shake_dir, 3.14 * math.random()) end
     local cam = world.spawnProjectile(
       "invisibleprojectile",
@@ -195,4 +205,5 @@ function Project45GunFire:screenShake(amount, shakeTime, random)
     )
     activeItem.setCameraFocusEntity(cam)
   end
+
 end

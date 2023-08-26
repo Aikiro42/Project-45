@@ -160,7 +160,5 @@
 
   },
 
-  // "altAbilityType": "project45flashlaser",
-
   "builder" : "/items/buildscripts/buildproject45neo.lua"
 }

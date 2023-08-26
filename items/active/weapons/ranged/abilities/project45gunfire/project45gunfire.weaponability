@@ -246,6 +246,7 @@
     "recoilMaxDeg": 7.5, // the most the arm and weapon will rotate, in degrees.
     "recoilMult": 1, // multiplies recoilAmount
     "recoilCrouchMult": 0.5, // mulitplies recoil and recoilMaxDeg when crouching
+    
     "recoverTime": 1.5, // time it takes to recover aim completely, in seconds
     "recoverDelay": 0.1, // time before aim is recovered
     "recoilMomentum": 0,  // amount of momentum applied to player when firing the gun; canceled by crouching

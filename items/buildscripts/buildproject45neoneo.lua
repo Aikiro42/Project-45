@@ -192,6 +192,7 @@ function build(directory, config, parameters, level, seed)
 
     local modList = parameters.modSlots or config.modSlots or {}
     if config.project45GunModInfo then
+      local acceptedModSlots = set.new(config.project45GunModInfo.acceptsModSlot or {})
       local mods = {
         "sights",
         "rail",
@@ -200,7 +201,7 @@ function build(directory, config, parameters, level, seed)
         "stock"
       }
       for _, modSlot in ipairs(mods) do
-        if config.project45GunModInfo.acceptsModSlot[modSlot] then
+        if acceptedModSlots[modSlot] then
           config.tooltipFields[modSlot .. "Image"] = modList[modSlot] and modList[modSlot][3] or ""
         end
       end

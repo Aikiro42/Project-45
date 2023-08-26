@@ -182,7 +182,5 @@
 
   },
 
-  // "altAbilityType": "project45enemyradar",
-
   "builder" : "/items/buildscripts/buildproject45neo.lua"
 }

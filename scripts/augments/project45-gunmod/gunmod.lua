@@ -1,6 +1,7 @@
 require "/scripts/augments/item.lua"
 require "/scripts/util.lua"
 require "/scripts/vec2.lua"
+require "/scripts/set.lua"
 
 -- General mod application script
 
@@ -22,11 +23,14 @@ function apply(input)
 
     -- get list of accepted mod slots
     local acceptsModSlot = modInfo.acceptsModSlot or {}
-    acceptsModSlot.intrinsic = true
+    table.insert(acceptsModSlot, "intrinsic")
+    acceptsModSlot = set.new(acceptsModSlot)
 
     -- MOD INSTALLATION GATES
 
-    -- do not install mod if it does not belong to the weapon category
+    -- do not install mod if augment is not universal
+    -- and gun is not of the universal category
+    -- and it does not belong to the weapon category
     if augment.category ~= "universal"
     and modInfo.category ~= "universal"
     and modInfo.category ~= augment.category then return end

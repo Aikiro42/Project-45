@@ -1,6 +1,7 @@
 require "/scripts/augments/item.lua"
 require "/scripts/util.lua"
 require "/scripts/vec2.lua"
+require "/scripts/set.lua"
 
 function apply(input)
 
@@ -20,23 +21,35 @@ function apply(input)
     
     -- get list of accepted mod slots
     local acceptsModSlot = modInfo.acceptsModSlot or {}
-    acceptsModSlot.intrinsic = true
+    table.insert(acceptsModSlot, "intrinsic")
+    table.insert(acceptsModSlot, "ability")
+    acceptsModSlot = set.new(acceptsModSlot)
 
     -- MOD INSTALLATION GATES
 
     -- do not install mod if mod is not part of weapon category
     if augment.category ~= "universal" then
+      sb.logError("(abilitymod.lua) Ability mod application failed: category mismatch")
       if modInfo.category ~= augment.category then return end
     end
 
     -- do not install mod if gun denies installation on slot
-    if not acceptsModSlot[augment.slot] then return end    
+    if not acceptsModSlot[augment.slot] then
+      sb.logError("(abilitymod.lua) Ability mod application failed: gun disallows mod slot")
+      return
+    end    
 
     -- do not install mod if slot is occupied
-    if modSlots[augment.slot] then return end
+    if modSlots[augment.slot] then
+      sb.logError("(abilitymod.lua) Ability mod application failed: something already installed in slot")
+      return
+    end
 
     -- do not install mod if ability is already installed
-    if modSlots.ability then return end
+    if modSlots.ability then
+      sb.logError("(abilitymod.lua) Ability mod application failed: something already installed in ability")
+      return
+    end
 
     -- MOD INSTALLATION PROCESS
 
@@ -72,13 +85,13 @@ function apply(input)
         config.getParameter("itemName")
     }
     
-    local needImage = {
-      rail=true,
-      sights=true,
-      underbarrel=true,
-      muzzle=true,
-      stock=true
-    }
+    local needImage = set.new({
+      "rail",
+      "sights",
+      "underbarrel",
+      "muzzle",
+      "stock"
+    })
     if needImage[augment.slot] then
         table.insert(modSlots.ability, config.getParameter("inventoryIcon"))
         table.insert(modSlots[augment.slot], config.getParameter("inventoryIcon"))

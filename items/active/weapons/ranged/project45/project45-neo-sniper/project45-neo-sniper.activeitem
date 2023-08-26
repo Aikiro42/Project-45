@@ -71,13 +71,13 @@
     "acceptsAmmoArchetypes":{
       "generic": true
     },
-    "acceptsModSlot": {
-      "rail": true,
-      "sights": true,
-      "underbarrel": true,
-      "stock": false,
-      "muzzle": true
-    }
+    "acceptsModSlot": [
+      "rail",
+      "sights",
+      "underbarrel",
+      "stock",
+      "muzzle"
+    ]
   },
 
   "baseOffset" : [0.75, 0.125],
@@ -85,6 +85,7 @@
   "ejectionPortOffset": [1, 0.25],
   "magazineOffset": [0, 0],
   "underbarrelOffset": [2, 0],
+  "sightsOffset": [0.25, 0.625],
 
   "scripts" : ["/items/active/weapons/ranged/project45gunneo.lua"],
     
@@ -94,10 +95,13 @@
     "bulletsPerReload": 20,
     "semi": false,
     "inaccuracy": 2,
+
     "recoilAmount": 3,
     "recoilMaxDeg": 15,
-    "recoverDelay": 1,
+    
+    "recoverDelay": 0.25,
     "recoverTime": 1,
+    
     "cycleTime": 0.2,
     "projectileKind": "projectile",
     "laser":{
@@ -107,8 +111,6 @@
       
     }
   },
-
-  "altAbilityType": "project45gunfire",
 
   "builder" : "/items/buildscripts/buildproject45neoneo.lua"
 }

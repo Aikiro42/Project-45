@@ -90,7 +90,5 @@
     }
   },
 
-  "altAbilityType": "project45gunfire",
-
   "builder" : "/items/buildscripts/buildproject45neoneo.lua"
 }

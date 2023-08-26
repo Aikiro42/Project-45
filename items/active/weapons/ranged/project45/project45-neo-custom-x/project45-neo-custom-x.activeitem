@@ -130,40 +130,40 @@
     material
     grip
     */
-    "acceptsModSlot": {
+    "acceptsModSlot": [
 
       // modifies appearance - are essentially attachments
-      "rail": true, // side rail only
-      "sights": true,
-      "muzzle": true,
-      "underbarrel": true,
-      "stock": true,
+      "rail", // only one item on side rail only
+      "sights",
+      "muzzle",
+      "underbarrel",
+      "stock",
 
       // does not modify appearance
 
-      "receiver": true, // changes firemode, allows accomodation of certain ammo types, etc.
+      "receiver", // changes firemode, allows accomodation of certain ammo types, etc.
       // for energy weapons, you could imagine this to be the "firing protocol"
       // for magic weapons, you could imagine this to be the "fundamental principle"
 
-      "barrel": true, // reduces spread, increases damage, multishot, etc.
+      "barrel", // reduces spread, increases damage, multishot, etc.
       // for energy weapons, you could imagine this to be the "emitter tech"
       // for magic weapons, you could imagine this to be the "casting principle"
 
-      "magazine": true, // reduces reload time, increases ammo capacity, etc.
+      "magazine", // reduces reload time, increases ammo capacity, etc.
       // for energy weapons, you could imagine this to be the "battery"
       // for magic weapons, you could imagine this to be the "mana"
 
-      "material": true, // lightens weight, reduces jam chance, changes skin, etc.
+      "material", // lightens weight, reduces jam chance, changes skin, etc.
 
-      "grip": true, // reduces recoil, inaccuracy, etc.
+      "grip", // reduces recoil, inaccuracy, etc.
       
 
 
       // always assumed to be true; just here for posterity
-      "intrinsic": true, // qualities that cannot be associated with a mod e.g. last shot damage
-      "ability": true,
-      "ammoType": true
-    }
+      "intrinsic", // qualities that cannot be associated with a mod e.g. last shot damage
+      "ability",
+      "ammoType"
+    ]
   },
 
 

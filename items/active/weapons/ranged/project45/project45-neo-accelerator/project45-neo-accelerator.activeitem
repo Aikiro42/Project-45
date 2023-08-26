@@ -100,7 +100,5 @@
     "bulletsPerReload": 75
   },
 
-  "altAbilityType": "markedshot",
-
   "builder" : "/items/buildscripts/buildproject45neoneo.lua"
 }

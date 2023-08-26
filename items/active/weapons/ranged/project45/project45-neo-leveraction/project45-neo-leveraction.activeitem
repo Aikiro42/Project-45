@@ -61,7 +61,7 @@
   },
 
   "baseOffset" : [0.5, 0.375],
-  "muzzleOffset" : [1.875, 0.5],
+  "muzzleOffset" : [1.875, 0.25],
   "ejectionPortOffset": [0, 0.75],
   "magazineOffset": [0, 0],
 
@@ -82,6 +82,7 @@
 
     "recoilAmount": 5,
     "recoilMaxDeg": 90,
+    "recoverDelay": 1,
     "recoverTime": 1,
     
     "manualFeed": true,
@@ -106,9 +107,14 @@
         "weaponAngularVelocity": 1800,
         "armAngularVelocity": 150
       },
+      
       "slamFire": {
-        "frontArmFrame" : "run.2"
+        "snap": true,
+        "frontArmFrame" : "run.2",
+        "weaponRotation": 0,
+        "armRotation": 0
       },
+      
       "loadRound": {
         "armRotation" : -20,
         "weaponRotation" : -25,
