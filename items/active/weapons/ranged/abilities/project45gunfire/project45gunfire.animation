@@ -2,7 +2,8 @@
   "globalTagDefaults" : {
     "paletteSwaps" : "",
     "chargeFrame": "1",
-    "directives": ""
+    "directives": "",
+    "stockModDirectives": ""
   },
 
   "animatedParts" : {

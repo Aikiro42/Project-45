@@ -1,6 +1,7 @@
 require "/scripts/augments/item.lua"
 require "/scripts/util.lua"
 require "/scripts/vec2.lua"
+require "/scripts/set.lua"
 
 function apply(input)
 
@@ -14,30 +15,35 @@ function apply(input)
 
     -- MOD INSTALLATION GATES
 
-    -- do not install ammo type if ammo isn't universal and
-    -- gun does not affect ammo type
-    if augment.type ~= "universal" then
-      if not modInfo.acceptsAmmoTypes[augment.type] then return end
-    end
-
-    -- do not install ammo type if ammo archetype isn't universal and
-    -- gun does not affect ammo archetype
-
-    if not modInfo.acceptsAmmoArchetypes.all and augment.archetype ~= "universal" then
-      if augment.archetype == "bullet" then
-        local isBullet = modInfo.acceptsAmmoArchetypes.generic or modInfo.acceptsAmmoArchetypes.shotgun
-        if not isBullet then return end
-
-      else
-        if not modInfo.acceptsAmmoArchetypes[augment.archetype] then return end
-      end
-    end
-    
-    
     -- do not install if ammo type is already installed
     local modSlots = input.parameters.modSlots or {}
     if modSlots.ammoType then
         return
+    end
+
+    local ammoExceptions = modInfo.ammoExceptions or {accept={}, deny={}}
+
+    -- check if ammo mod is particularly denied
+    local denied = set.new(ammoExceptions.deny)
+    if denied[config.getParameter("itemName")] then return end
+
+    -- check if ammo mod is particularly accepted
+    local accepted = set.new(ammoExceptions.accept)
+    if not accepted[config.getParameter("itemName")] then 
+
+      -- do not install ammo mod if it does not meet category
+      if augment.category ~= "universal"
+      and modInfo.category ~= "universal"
+      and modInfo.category ~= augment.category
+      then return end
+      
+      -- do not install ammo mod if its archetype is not accepted
+      local acceptedArchetype = set.new(modInfo.acceptsAmmoArchetype)
+      if augment.archetype ~= "universal"
+      and not acceptedArchetype["universal"]
+      and not acceptedArchetype[augment.archetype]
+      then return end
+
     end
 
     -- MOD INSTALLATION PROCESS
@@ -62,6 +68,7 @@ function apply(input)
     newPrimaryAbility.projectileParameters = augment.projectileParameters
     newPrimaryAbility.hitscanParameters = augment.hitscanParameters
     newPrimaryAbility.beamParameters = augment.beamParameters
+    newPrimaryAbility.summonParameters = augment.summonParameters
 
     -- alter muzzle flash color
     if augment.muzzleFlashColor then

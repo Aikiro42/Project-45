@@ -10,8 +10,8 @@
 
   "augment":{
     "modName": "Electro Lasers",
-    "type": "energy",
-    "archetype": "bullet",
+    "category": "energy",
+    "archetype": "beam",
     "spread": 0.01,
     "projectileCount": 1,
     "muzzleFlashColor": [210,156,231],

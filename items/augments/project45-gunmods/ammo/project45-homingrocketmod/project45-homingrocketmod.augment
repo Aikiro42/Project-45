@@ -10,7 +10,7 @@
 
   "augment":{
     "modName": "Homing Rockets",
-    "type": "ballistic",
+    "category": "ballistic",
     "archetype": "rocket",
     "projectileKind": "projectile",
     "projectileType": "project45homingrocket",

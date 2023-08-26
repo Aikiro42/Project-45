@@ -229,6 +229,42 @@ function Project45GunFire:init()
   end
   self:recoil(true, 1, 45, 0) -- you're bringing the gun up
 
+  self.debugModPositions = {}
+  self.debugModPositions.base = config.getParameter("baseOffset", {0, 0})
+  self.debugModPositions.rail = config.getParameter("railOffset", {0, 0})
+  self.debugModPositions.sights = config.getParameter("sightsOffset", {0, 0})
+  self.debugModPositions.underbarrel = config.getParameter("underbarrelOffset", {0, 0})
+  self.debugModPositions.stock = config.getParameter("stockOffset", {0, 0})
+
+end
+
+function Project45GunFire:renderModPositionDebug()
+  if not self.debug then return end
+  
+  local weaponPos = vec2.add(mcontroller.position(), activeItem.handPosition(vec2.rotate(self.weapon.weaponOffset, self.weapon.relativeWeaponRotation)))
+
+  local modPositions = {
+    rail="red",
+    sights="orange",
+    underbarrel="yellow",
+    stock="green",
+  }
+
+  for posName, color in pairs(modPositions) do
+    world.debugPoint(
+      vec2.add(
+        mcontroller.position(),
+        activeItem.handPosition(
+          vec2.rotate(
+            vec2.add(self.weapon.weaponOffset, self.debugModPositions[posName]),
+            self.weapon.relativeWeaponRotation
+          )
+        )
+      ),
+      color
+    )
+  end
+
 end
 
 function Project45GunFire:update(dt, fireMode, shiftHeld)
@@ -239,6 +275,7 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
   self.cooldownTimer = math.max(0, self.cooldownTimer - self.dt)
 
   -- update relevant stuff
+  self:renderModPositionDebug()
   self:updateDebugTimer()
   self:updateLaser()
   self:updateCharge()

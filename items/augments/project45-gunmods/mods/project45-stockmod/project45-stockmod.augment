@@ -20,6 +20,13 @@
         "value": 0.1
       }
     },
+    "sprite": {
+      "zLevel" : -1,
+      "centered" : true,
+      "offset": [-0.625, -0.125],
+      "image" : "/items/augments/project45-gunmods/mods/project45-stockmod/project45-stockmodsprite.png<stockModDirectives>"
+    }
+    /*
     "animationCustom": {
       "animatedParts" : { "parts" : {
         "stock" : {
@@ -31,6 +38,7 @@
           }
         }}}
     }
+    */
 
   },
 

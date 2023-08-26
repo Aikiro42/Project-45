@@ -10,7 +10,7 @@
 
   "augment":{
     "modName": "Radiation Beam",
-    "type": "energy",
+    "category": "energy",
     "archetype": "beam",
     "muzzleFlashColor": [153,234,49],
     "projectileKind": "beam",

@@ -10,7 +10,7 @@
 
   "augment":{
     "modName": "Dragon's Breath",
-    "type": "ballistic",
+    "category": "ballistic",
     "archetype": "shotgun",
     "projectileKind": "projectile",
     "spread": 0.05,

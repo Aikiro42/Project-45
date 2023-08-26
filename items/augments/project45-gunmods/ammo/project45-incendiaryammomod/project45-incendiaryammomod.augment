@@ -10,8 +10,8 @@
 
   "augment":{
     "modName": "Incendiary Bullets",
-    "type": "ballistic",
-    "archetype": "generic",
+    "category": "ballistic",
+    "archetype": "bullet",
 
     "projectileKind": "projectile",
     "projectileType": "project45stdfirebullet"

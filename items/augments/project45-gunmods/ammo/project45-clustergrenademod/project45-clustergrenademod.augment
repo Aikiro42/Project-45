@@ -10,7 +10,7 @@
 
   "augment":{
     "modName": "Cluster Grenades",
-    "type": "ballistic",
+    "category": "ballistic",
     "archetype": "grenade",
     "projectileKind": "projectile",
     "projectileType": "clustergrenade",

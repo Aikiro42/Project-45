@@ -10,7 +10,7 @@
 
   "augment":{
     "modName": "Gas Tank",
-    "type": "matter",
+    "category": "experimental",
     "archetype": "gas",
 
     "projectileCount": 1,

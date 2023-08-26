@@ -10,7 +10,7 @@
 
   "augment":{
     "modName": "Flechette Shells",
-    "type": "ballistic",
+    "category": "ballistic",
     "archetype": "shotgun",
 
     "multishot": 1.1,

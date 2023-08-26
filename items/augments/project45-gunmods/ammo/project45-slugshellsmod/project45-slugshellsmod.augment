@@ -10,7 +10,7 @@
 
   "augment":{
     "modName": "Slug shells",
-    "type": "ballistic",
+    "category": "ballistic",
     "archetype": "shotgun",
 
     "projectileCount": 1,

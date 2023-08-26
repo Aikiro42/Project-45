@@ -38,6 +38,7 @@
     Experimental ("experimental")
     - This category comprises of firearms that utilize unconventional
     projectiles propelled via uncommon means
+    - This category usually comprise of guns that're referenced from other games.
 
     TL:DR;
     energy
@@ -49,87 +50,34 @@
     "category": "universal",
 
     /*
-    
-    AMMO TYPES
-    
-    Universal
-    - This ammo type can be installed on all gun categories.
-
-    Energy
-    - This ammo type can be installed on magic, energy and certain emissive weapons.
-
-    Ballistic
-    - This amo type can be installed on ballistic and certain emissive weapons.
-
-    Matter
-    - This ammo type can be installed on emissive weapons.
-
-    Magic
-    - This ammo type can be installed on magical weapons only.
-
-    TL;DR:
-    universal
-    energy
-    ballistic
-    matter
-    magic
-
+    AMMO INFO
+    - Ammo must match the category, and its archetype must be accepted by the gun.
     */
-    "acceptsAmmoTypes": {
-      "universal": true, // always true; added for posterity
-      "energy": true,
-      "ballistic": true,
-      "matter": true,
-      "magic": true
+
+    "acceptsAmmoArchetype": [
+      "bullet",
+      "shotgun",
+      // "rocket",
+      "grenade",
+      "beam",
+      "magic",
+      "solid",
+      "liquid",
+      "gas",
+      "plasma"
+    ],
+
+    // exceptions for specific ammo mods
+    // denial takes precedence over acceptance
+    "ammoExceptions": {
+      "accept": [
+        "project45-homingrocketmod"
+      ],
+      "deny": [
+        "project45-dragonsbreathmod"
+      ]
     },
 
-    /*
-    all
-    generic
-    shotgun
-    grenade
-    rocket
-    beam
-    solid
-    liquid
-    gas
-    plasma
-    */
-    "acceptsAmmoArchetypes": {
-      "universal": true, // always true; added for posterity
-
-      "all": true, // if this is true, assumes that the gun accepts ALL archetypes
-
-      // ballistic
-      "generic": true,
-      "shotgun": true,
-      "grenade": true,
-      "rocket": true,
-
-      // energy
-      "beam": true,
-
-      // matter
-      "solid": true,
-      "liquid": true,
-      "gas": true,
-      "plasma": true // flamethrowers can't shoot plasma
-      
-    },
-    
-    /*
-    rail
-    sights
-    muzzle
-    underbarrel
-    stock
-    (pistolStock)
-    receiver
-    magazine
-    barrel
-    material
-    grip
-    */
     "acceptsModSlot": [
 
       // modifies appearance - are essentially attachments

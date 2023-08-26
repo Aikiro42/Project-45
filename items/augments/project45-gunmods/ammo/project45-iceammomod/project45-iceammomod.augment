@@ -10,8 +10,8 @@
 
   "augment":{
     "modName": "Cryo Lasers",
-    "type": "energy",
-    "archetype": "bullet",
+    "category": "energy",
+    "archetype": "beam",
     "spread": 0.01,
     "muzzleFlashColor": [150,203,231],
     "projectileKind": "hitscan",

@@ -10,7 +10,7 @@
 
   "augment":{
     "modName": "Tar Tank",
-    "type": "matter",
+    "category": "experimental",
     "archetype": "liquid",
 
     "projectileCount": 1,

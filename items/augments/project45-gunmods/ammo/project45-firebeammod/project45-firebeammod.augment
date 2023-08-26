@@ -10,8 +10,9 @@
 
   "augment":{
     "modName": "Fire Beam",
-    "type": "energy",
+    "category": "energy",
     "archetype": "beam",
+    
     "muzzleFlashColor": [234,153,49],
     "projectileKind": "beam",
     "beamParameters":{
