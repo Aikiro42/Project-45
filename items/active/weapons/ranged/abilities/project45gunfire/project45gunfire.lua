@@ -545,7 +545,7 @@ function Project45GunFire:feeding()
     self:updateChamberState("ready")
     self.isCocking = false
     self:setStance(self.stances.slamFire or self.stances.boltPush)
-    -- util.wait(self.dt)
+    util.wait(self.dt)
     -- self:setStance(self.stances.boltPush, true, true)
     if self.chargeTime + self.overchargeTime > 0 then
       self:setState(self.charging)
@@ -1296,7 +1296,7 @@ function Project45GunFire:updateStance()
     interp.sin(storage.stanceProgress, offset_i[1], offset_o[1]),
     interp.sin(storage.stanceProgress, offset_i[2], offset_o[2])
   }
-  self.weapon.aimAngle, self.weapon.aimDirection = activeItem.aimAngleAndDirection(0, activeItem.ownerAimPosition())    
+  -- self.weapon.aimAngle, self.weapon.aimDirection = activeItem.aimAngleAndDirection(0, activeItem.ownerAimPosition())
   self.weapon.relativeWeaponRotation = util.toRadians(interp.sin(storage.stanceProgress, math.deg(self.weapon.relativeWeaponRotation), self.weapon.stance.weaponRotation))
   self.weapon.relativeArmRotation = util.toRadians(interp.sin(storage.stanceProgress, math.deg(self.weapon.relativeArmRotation), self.weapon.stance.armRotation))
   

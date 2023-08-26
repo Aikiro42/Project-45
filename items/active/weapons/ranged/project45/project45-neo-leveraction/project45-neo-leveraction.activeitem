@@ -109,10 +109,9 @@
       },
       
       "slamFire": {
-        "snap": true,
         "frontArmFrame" : "run.2",
-        "weaponRotation": 0,
-        "armRotation": 0
+        "allowRotate": true,
+        "allowFlip": true
       },
       
       "loadRound": {
