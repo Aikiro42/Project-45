@@ -6,28 +6,13 @@
   "description" : "A revolver that shoots magma.",
   "shortdescription" : "Magma Spitter",
   "tooltipKind" : "project45gun",
-  "gunArchetype": "Revolver",
-  "category" : "pistol",
+  "gunArchetype": "Break-action Shotgun",
+  "category" : "shotgun",
   "twoHanded" : false,
-  "itemTags" : ["weapon","ranged","pistol"],
+  "itemTags" : ["weapon","ranged","shotgun"],
   "level" : 1,
   "muzzleFlashColor": [255, 255, 200],
   "inventoryIcon" : "project45-neb-magmaspitter-icon.png",
-
-  "project45GunModInfo": {
-    "category": "ballistic",
-    "acceptsAmmoArchetype": [
-      "bullet",
-      "shotgun"
-    ],
-    "acceptsModSlot": [
-      "rail",
-      "sights",
-      "muzzle",
-      "underbarrel",
-      "stock"
-    ]
-  },
 
   "animationParts" : {
     "middle" : "project45-neb-magmaspitter.png",
@@ -45,12 +30,25 @@
     "particleEmitters": {
       "ejectionPort": {
         "particles": [
-          {"particle": "project45bulletcase"}
+          {"particle": "project45shell"},
+          {"particle": "rocketbarrelpuff"},
+          {"particle": "rocketbarrelpuff"},
+          {"particle": "rocketbarrelpuff"}  
         ]
       },
       "magazine": {
         "particles": [
           {"particle": "project45magmaspittermag"}
+        ]
+      },
+      "muzzleFlash": {
+        "particles": [
+          {"particle": "rocketbarrelpuff"},
+          {"particle": "rocketbarrelpuff"},
+          {"particle": "rocketbarrelpuff"},
+          {"particle": "project45muzzle"},
+          {"particle": "project45muzzle"},
+          {"particle": "project45muzzle"}  
         ]
       }
     },
@@ -112,13 +110,16 @@
   "primaryAbility": {
     "maxAmmo": 6,
     "bulletsPerReload": 6,
+    "ammoPerShot": 6,
     "inaccuracy": 3,
+    "spread": 5,
     "semi": true,
     "cycleTime": 0.1,
     "cockTime": 0.2,
     "projectileKind": "projectile",
     "projectileType": "project45-starforge-firefluxbolt",
     "reloadTime": 1,
+    "multishot": 6,
 
     "breakAction": true,
     "ejectCasingsWithMag": true,
