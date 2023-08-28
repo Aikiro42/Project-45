@@ -46,7 +46,7 @@ function apply(input)
     end
 
     -- do not install mod if ability is already installed
-    if modSlots.ability then
+    if modSlots.ability or input.parameters.altAbilityType or (output.config.altAbilityType or output.config.altAbility) then
       sb.logError("(abilitymod.lua) Ability mod application failed: something already installed in ability")
       return
     end

@@ -80,8 +80,8 @@ function build(directory, config, parameters, level, seed)
   construct(config, "animationCustom", "lights", "muzzleFlash", "color")
   config.animationCustom.lights.muzzleFlash.color = parameters.muzzleFlashColor or config.muzzleFlashColor or {255, 255, 200}
 
-  construct(config, "animationParts", "muzzleFlash")
-  config.animationParts.muzzleFlash = "/items/active/weapons/ranged/project45-muzzleflash.png"
+  construct(config, "animationParts")
+  config.animationParts.muzzleFlash = config.animationParts.muzzleFlash or "/items/active/weapons/ranged/project45-muzzleflash.png"
 
   -- gun offsets
   if config.baseOffset then
@@ -103,6 +103,7 @@ function build(directory, config, parameters, level, seed)
     -- muzzle, ejection port, magazine
     local offsetConfig = {
       "muzzleOffset",
+      "altMuzzleOffset",
       "ejectionPortOffset",
       "magazineOffset"
     }
@@ -111,6 +112,7 @@ function build(directory, config, parameters, level, seed)
         config[part] = vec2.add(config[part], config.baseOffset)
       end
     end
+
 
     if config.chargeSmokeOffsetRegion then
       construct(config, "animationCustom", "particleEmitters", "chargeSmoke", "offsetRegion")

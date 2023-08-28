@@ -26,27 +26,13 @@
 
   "project45GunModInfo": {
     "category": "energy",
-    "acceptsAmmoTypes": {
-      "energy": true
-    },
-    "acceptsAmmoArchetypes": {
-      "generic": true,
-      "shotgun": true,
-      "beam": true
-    },
-    "acceptsModSlot": {
-      "rail": false,
-      "sights": true,
-      "muzzle": false,
-      "stock": false,
-      "underbarrel": false,
-      
-      "receiver": true,
-      "material": true,
-      "barrel": true,
-      "grip": true,
-      "magazine": true
-    }
+    "acceptsAmmoArchetype": [
+      "beam"
+    ],
+    "acceptsModSlot": [
+      "rail",
+      "sights"
+    ]
   },
 
   "animationCustom": {
@@ -95,7 +81,15 @@
   "ejectionPortOffset": [-0.25, 0.5],
   "magazineOffset": [0.25, 0],
 
-  "sightsOffset": [0.5, 1.125],
+  "railOffset": [0.125, 0.25],
+  "sightsOffset": [0.5, 0.75],
+
+  
+  "debugPointColors": {
+    "rail": "red",
+    "sights": "orange",
+    "underbarrel": "gray"
+  },
 
   "scripts" : ["/items/active/weapons/ranged/project45gunneo.lua"],
     

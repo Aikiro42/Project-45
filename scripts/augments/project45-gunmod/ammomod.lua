@@ -25,7 +25,10 @@ function apply(input)
 
     -- check if ammo mod is particularly denied
     local denied = set.new(ammoExceptions.deny)
-    if denied[config.getParameter("itemName")] then return end
+    if denied[config.getParameter("itemName")] then
+      sb.logError("(ammomod.lua) Ammo mod application failed: gun does not accept this specific ammo mod")
+      return
+    end
 
     -- check if ammo mod is particularly accepted
     local accepted = set.new(ammoExceptions.accept)
@@ -35,14 +38,20 @@ function apply(input)
       if augment.category ~= "universal"
       and modInfo.category ~= "universal"
       and modInfo.category ~= augment.category
-      then return end
+      then
+        sb.logError("(ammomod.lua) Ammo mod application failed: category mismatch")
+        return
+      end
       
       -- do not install ammo mod if its archetype is not accepted
       local acceptedArchetype = set.new(modInfo.acceptsAmmoArchetype)
       if augment.archetype ~= "universal"
       and not acceptedArchetype["universal"]
       and not acceptedArchetype[augment.archetype]
-      then return end
+      then
+        sb.logError("(ammomod.lua) Ammo mod application failed: gun does not accept ammo archetype")
+        return
+      end
 
     end
 

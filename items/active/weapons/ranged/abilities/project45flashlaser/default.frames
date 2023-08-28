@@ -5,5 +5,8 @@
     "names" : [
       ["off", "flash", "laser", "flashlaser"]
     ]
+  },
+  "aliases":{
+    "default": "off"
   }
 }

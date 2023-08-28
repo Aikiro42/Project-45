@@ -50,6 +50,7 @@ function Project45GunScope:drawLaser(trigger)
     local range = world.magnitude(scanOrig, activeItem.ownerAimPosition())
     local scanDest = vec2.add(scanOrig, vec2.mul(self:aimVector(0), math.min(self.range*2, range)))
     scanDest = world.lineCollision(scanOrig, scanDest, {"Block", "Dynamic"}) or scanDest
+    activeItem.setScriptedAnimationParameter("altLaserEnabled", true)
 
     activeItem.setScriptedAnimationParameter("laserOrigin", scanOrig)
     activeItem.setScriptedAnimationParameter("altLaserStart", scanOrig)

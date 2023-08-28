@@ -48,6 +48,7 @@
 
     */
     "category": "universal",
+    "statModCountMax": 99, // maximum number of stat mods allowed to be installed on the gun
 
     /*
     AMMO INFO
@@ -215,7 +216,12 @@
     "chargeFrames": 8,
     "overchargeTime": 1,
     "cycleTime": 0.1,
-    "jamChances": [1, 0, 0, 0]
+    "jamChances": [1, 0, 0, 0],
+
+    "laser": {
+      "enabled": true
+      // ,"color": [255, 0, 0, 128]
+    }
   },
 
   "builder" : "/items/buildscripts/buildproject45neoneo.lua"

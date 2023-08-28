@@ -415,10 +415,16 @@ function hitscanLib:updateLaser()
     activeItem.setScriptedAnimationParameter("primaryLaserEnabled", false)
     return
   end
-  activeItem.setScriptedAnimationParameter("primaryLaserEnabled", not self.performanceMode)
-  local laser = self:hitscan(true)
-  activeItem.setScriptedAnimationParameter("primaryLaserStart", laser[1])
-  activeItem.setScriptedAnimationParameter("primaryLaserEnd", laser[2])
+  if not self:muzzleObstructed() then
+    local laser = self:hitscan(true)
+    activeItem.setScriptedAnimationParameter("primaryLaserEnabled", not self.performanceMode)
+    activeItem.setScriptedAnimationParameter("primaryLaserStart", laser[1])
+    activeItem.setScriptedAnimationParameter("primaryLaserEnd", laser[2])
+  else
+    activeItem.setScriptedAnimationParameter("primaryLaserEnabled", false)
+    activeItem.setScriptedAnimationParameter("primaryLaserStart", nil)
+    activeItem.setScriptedAnimationParameter("primaryLaserEnd", nil)
+  end
 end
 
 function hitscanLib:updateSummonAreaIndicator()

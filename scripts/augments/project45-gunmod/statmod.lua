@@ -22,7 +22,10 @@ function apply(input)
     -- If the max number of stat mods that can be installed is specified (i.e. non-negative number)
     -- and the number of mods installed already reached that cap
     -- do not apply stat mod
-    if statModCountMax > -1 and statModCount >= statModCountMax then return end
+    if statModCountMax > -1 and statModCount >= statModCountMax then
+        sb.logError("(statmod.lua) Stat mod application failed: max number of stat mods have been installed")
+        return
+    end
 
     -- MOD INSTALLATION PROCESS
 

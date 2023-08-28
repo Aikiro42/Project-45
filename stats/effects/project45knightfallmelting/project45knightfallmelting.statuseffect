@@ -1,0 +1,16 @@
+{
+  "name" : "project45knightfallmelting",
+  "blockingStat" : "specialStatusImmunity",
+
+  "effectConfig" : {},
+  "defaultDuration" : 0.5,
+
+  "scripts" : [
+    "project45knightfallmelting.lua"
+  ],
+
+  "animationConfig" : "project45knightfallmelting.animation",
+
+  "label" : "Heatsurge",
+  "icon" : "/interface/statuses/fire.png"
+}

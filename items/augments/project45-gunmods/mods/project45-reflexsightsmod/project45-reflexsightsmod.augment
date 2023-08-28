@@ -28,7 +28,7 @@
       "zLevel" : 5,
       "centered" : true,
       "image" : "/items/augments/project45-gunmods/mods/project45-reflexsightsmod/project45-reflexsightsmodsprite.png<directives>",
-      "offset": [0.25, 0.25]
+      "offset": [0, 0.25]
     }
 
     /*

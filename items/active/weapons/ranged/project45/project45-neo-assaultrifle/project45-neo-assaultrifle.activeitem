@@ -51,23 +51,32 @@
     "acceptsAmmoTypes":{
       "ballistic": true
     },
-    "acceptsAmmoArchetypes":{
-      "generic": true
-    },
-    "acceptsModSlot": {
-      "rail": true,
-      "sights": true,
-      "underbarrel": true,
-      "stock": false,
-      "muzzle": true
-    }
+    "acceptsAmmoArchetype": [
+      "bullet"
+    ],
+    "acceptsModSlot": [
+      "rail",
+      "sights",
+      "underbarrel",
+      "muzzle"
+    ]
   },
 
   "baseOffset" : [1, 0.125],
   "muzzleOffset" : [2.25, 0.375],
+  "altMuzzleOffset": [2.25, 1],
   "ejectionPortOffset": [-0.25, 0.5],
-  "magazineOffset": [0, 0],
-  "underbarrelOffset": [2, 0],
+  "magazineOffset": [-0.25, -0.25],
+  
+  "railOffset": [1.75, 0.5],
+  "sightsOffset": [1, 0.75],
+  "underbarrelOffset": [2, 0.125],
+  
+  "debugPointColors": {
+    "rail": "red",
+    "sights": "orange",
+    "underbarrel": "green"
+  },
 
   "scripts" : ["/items/active/weapons/ranged/project45gunneo.lua"],
     

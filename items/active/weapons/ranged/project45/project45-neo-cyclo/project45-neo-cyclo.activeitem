@@ -47,17 +47,13 @@
 
   "project45GunModInfo":{
     "category": "energy",
-    "acceptsAmmoTypes":{
-    },
-    "acceptsAmmoArchetypes":{
-    },
-    "acceptsModSlot": {
-      "rail": false,
-      "sights": false,
-      "underbarrel": false,
-      "stock": false,
-      "muzzle": false
-    }
+    "acceptsAmmoArchetype": [
+      "beam"
+    ],
+    "acceptsModSlot": [
+      "muzzle",
+      "receiver"
+    ]
   },
 
   "baseOffset" : [0.5, 0.25],

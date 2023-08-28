@@ -24,6 +24,16 @@
     "muzzleFlash": "/items/active/weapons/ranged/muzzleflash.png"
   },
 
+  "project45GunModInfo": {
+    "acceptsModSlot": [
+      "rail",
+      "sights"
+    ],
+    "acceptsAmmoArchetype": [
+
+    ]
+  },
+
   "animationCustom": {
     "particleEmitters": {
       "muzzleFlash": { "particles": [
@@ -110,7 +120,7 @@
   "ejectionPortOffset": [0.3, 0.7],
   "magazineOffset": [0, 0],
   "railOffset": [1.5, 0.125],
-  "sightsOffset": [0.375, 1],
+  "sightsOffset": [0.375, 0.75],
 
   "scripts" : ["/items/active/weapons/ranged/project45gunneo.lua"],
     
@@ -130,19 +140,8 @@
     // "loadRoundsThroughBolt": true,
     "ejectCasingsWithMag": true,
     "breakAction": true,
-    "slamFire": true,
-
-    "inaccuracy": 0,
-    "recoilAmount": 0,
-    "recoilMaxDeg": 0,
-    "recoverDelay": 0.5,
-    "recoverTime": 1, // time it takes to recover aim completely, in seconds
 
     // "reloadTime": 10,
-
-    "laser":{
-      "enabled": true
-    },
   
     "stances":{
       "aimStance": {

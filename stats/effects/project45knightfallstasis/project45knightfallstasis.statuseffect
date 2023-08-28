@@ -1,0 +1,20 @@
+{
+  "name" : "project45knightfallstasis",
+  "blockingStat" : "specialStatusImmunity",
+  "effectConfig" : {},
+  "defaultDuration" : 7.5,
+
+  "scripts" : [
+    "project45knightfallstasis.lua"
+  ],
+
+  "animationConfig" : "project45knightfallstasis.animation",
+
+  "label" : "Stasis",
+  "icon" : "/interface/statuses/timefreeze.png",
+
+  "sounds" : {
+    "stasis_start" : [ "/sfx/interface/energy_out1.ogg" ],
+    "stasis_loop" : [ "/sfx/tech/tech_hoverloop.ogg" ]
+  }
+}

@@ -33,13 +33,22 @@ function apply(input)
     -- and it does not belong to the weapon category
     if augment.category ~= "universal"
     and modInfo.category ~= "universal"
-    and modInfo.category ~= augment.category then return end
+    and modInfo.category ~= augment.category then
+        sb.logError("(gunmod.lua) Gun mod application failed: category mismatch")
+        return
+    end
 
     -- do not install mod if gun denies installation of such type/slot
-    if not acceptsModSlot[augment.slot] then return end
+    if not acceptsModSlot[augment.slot] then
+        sb.logError("(gunmod.lua) Gun mod application failed: gun does not accept mods in slot")
+        return
+    end
 
     -- do not install mod if slot is occupied
-    if modSlots[augment.slot] then return end    
+    if modSlots[augment.slot] then
+        sb.logError("(gunmod.lua) Gun mod application failed: slot already occupied")
+        return
+    end    
     
     -- MOD INSTALLATION PROCESS
 

@@ -187,6 +187,7 @@ function Project45GunFire:init()
   AltFireAttack.cooldown = self.cooldown
   AltFireAttack.auto = self.auto
   AltFireAttack.burst = self.burst
+  AltFireAttack.muzzleFlash = self.altMuzzleFlash
   AltFireAttack.energyPerShot = function() return 0 end
   --]]
 
@@ -243,11 +244,13 @@ function Project45GunFire:renderModPositionDebug()
   
   local weaponPos = vec2.add(mcontroller.position(), activeItem.handPosition(vec2.rotate(self.weapon.weaponOffset, self.weapon.relativeWeaponRotation)))
 
+  local debugPointColors = config.getParameter("debugPointColors", {})
+
   local modPositions = {
-    rail="red",
-    sights="orange",
-    underbarrel="yellow",
-    stock="green",
+    rail=debugPointColors.rail or "gray",
+    sights=debugPointColors.sights or "gray",
+    underbarrel=debugPointColors.underbarrel or "gray",
+    stock=debugPointColors.stock or "gray",
   }
 
   for posName, color in pairs(modPositions) do
@@ -885,7 +888,9 @@ function Project45GunFire:muzzleFlash()
   if not self.hideMuzzleFlash then
     animator.setLightActive("muzzleFlash", true)
     animator.setPartTag("muzzleFlash", "variant", math.random(1, self.muzzleFlashVariants or 3))
-    animator.setPartTag("muzzleFlash", "directives", string.format("?fade=%02X%02X%02X",self.muzzleFlashColor[1], self.muzzleFlashColor[2], self.muzzleFlashColor[3]) .. "=1")
+    if not config.getParameter("overrideMuzzleFlashDirectives") then
+      animator.setPartTag("muzzleFlash", "directives", string.format("?fade=%02X%02X%02X",self.muzzleFlashColor[1], self.muzzleFlashColor[2], self.muzzleFlashColor[3]) .. "=1")
+    end
     animator.setAnimationState("flash", "flash")
     self.muzzleFlashTimer = self.muzzleFlashTime or 0.05
   end
@@ -1404,19 +1409,17 @@ function Project45GunFire:evalProjectileKind()
         activeItem.setScriptedAnimationParameter("primaryLaserEnabled", not self.performanceMode)    
         activeItem.setScriptedAnimationParameter("primaryLaserColor", self.laser.color)
         activeItem.setScriptedAnimationParameter("primaryLaserWidth", self.laser.width)
+      end
 
-        if self.projectileKind == "projectile" then
-          
-          local projectileConfig = util.mergeTable(root.projectileConfig(self.projectileType), self.projectileParameters)
-          local projSpeed = projectileConfig.speed or 50
-          
-          if root.projectileGravityMultiplier(self.projectileType) ~= 0 then
-            activeItem.setScriptedAnimationParameter("primaryLaserArcSteps", self.laser.trajectoryConfig.renderSteps)
-            activeItem.setScriptedAnimationParameter("primaryLaserArcSpeed", projSpeed)
-            activeItem.setScriptedAnimationParameter("primaryLaserArcRenderTime", projectileConfig.timeToLive)
-            activeItem.setScriptedAnimationParameter("primaryLaserArcGravMult", root.projectileGravityMultiplier(self.projectileType))
-          end
-
+      if self.projectileKind == "projectile" then          
+        local projectileType = type(self.projectileType) == "table" and self.projectileType[1] or self.projectileType
+        local projectileConfig = util.mergeTable(root.projectileConfig(projectileType), self.projectileParameters)
+        local projSpeed = projectileConfig.speed or 50
+        if root.projectileGravityMultiplier(projectileType) ~= 0 then
+          activeItem.setScriptedAnimationParameter("primaryLaserArcSteps", self.laser.trajectoryConfig.renderSteps)
+          activeItem.setScriptedAnimationParameter("primaryLaserArcSpeed", projSpeed)
+          activeItem.setScriptedAnimationParameter("primaryLaserArcRenderTime", projectileConfig.timeToLive)
+          activeItem.setScriptedAnimationParameter("primaryLaserArcGravMult", root.projectileGravityMultiplier(projectileType))
         end
       end
     end
@@ -1509,15 +1512,46 @@ end
 
 -- Returns the muzzle of the gun
 function Project45GunFire:firePosition()
-  return vec2.add(mcontroller.position(), activeItem.handPosition(vec2.rotate(vec2.add(self.weapon.muzzleOffset, self.weapon.weaponOffset), self.weapon.relativeWeaponRotation)))
+  local muzzleOffset = self.weapon.muzzleOffset
+  if self.abilitySlot == "alt" then
+    muzzleOffset = config.getParameter("altMuzzleOffset", self.weapon.muzzleOffset)
+  end
+
+  return vec2.add(
+    mcontroller.position(),
+    activeItem.handPosition(
+      vec2.rotate(
+        vec2.add(muzzleOffset, self.weapon.weaponOffset),
+        self.weapon.relativeWeaponRotation
+      )
+    )
+  )
 end
 
 -- Returns the angle the gun is pointed
 -- This is different from the vanilla aim vector, which only takes into account the entity's position
 -- and the entity's aim position
 function Project45GunFire:aimVector(spread, degAdd)
+
+  local muzzleOffset = self.weapon.muzzleOffset
+  if self.abilitySlot == "alt" then
+    muzzleOffset = config.getParameter("altMuzzleOffset", self.weapon.muzzleOffset)
+  end
+
   local firePos = self:firePosition()
-  local basePos =  vec2.add(mcontroller.position(), activeItem.handPosition(vec2.rotate(vec2.add({self.weapon.muzzleOffset[1] - 1, self.weapon.muzzleOffset[2]}, self.weapon.weaponOffset), self.weapon.relativeWeaponRotation)))
+  local basePos =  vec2.add(
+    mcontroller.position(),
+    activeItem.handPosition(
+      vec2.rotate(
+        vec2.add(
+          {muzzleOffset[1] - 1, muzzleOffset[2]},
+          self.weapon.weaponOffset
+        ),
+        self.weapon.relativeWeaponRotation
+      )
+    )
+  )
+  
   -- world.debugPoint(firePos, "cyan")
   -- world.debugPoint(basePos, "cyan")
   local aimVector = vec2.norm(world.distance(firePos, basePos))
@@ -1729,7 +1763,11 @@ function Project45GunFire:energyPerShot()
 end
 
 function Project45GunFire:auto()
-  if storage.ammo <= 0 then return end
+  if storage.ammo <= 0 or storage.jamAmount > 0 then
+    animator.playSound("click")
+    self.cooldownTimer = self.fireTime
+    return
+  end
   
   self:fireProjectile()
   self:muzzleFlash()
@@ -1746,7 +1784,12 @@ end
 
 function Project45GunFire:burst()
   
-  if storage.ammo <= 0 then return end
+  if storage.ammo <= 0 or storage.jamAmount > 0 then
+    animator.playSound("click")
+    self.cooldownTimer = self.fireTime
+    return
+  end
+  
   local shots = self.burstCount
   while shots > 0 and status.overConsumeResource("energy", self:energyPerShot()) do
     
@@ -1762,4 +1805,27 @@ function Project45GunFire:burst()
   end
 
   self.cooldownTimer = (self.fireTime - self.burstTime) * self.burstCount
+end
+
+function Project45GunFire:altMuzzleFlash()
+  if not self.hidePrimaryMuzzleFlash then
+    animator.setPartTag("muzzleFlash", "variant", math.random(1, 3))
+    animator.setAnimationState("firing", "fire")
+    animator.setLightActive("muzzleFlash", true)
+  end
+
+  if self.useAltMuzzleFlash then
+    animator.setPartTag("altMuzzleFlash", "variant", math.random(1, 3))
+    animator.setAnimationState("altfiring", "fire")
+  end
+  
+  if self.useParticleEmitter == nil or self.useParticleEmitter then
+    animator.burstParticleEmitter("altMuzzleFlash", true)
+  end
+
+  if self.usePrimaryFireSound then
+    animator.playSound("fire")
+  else
+    animator.playSound("altFire")
+  end
 end

@@ -1,5 +1,10 @@
 {
   "animationCustom" : {
+
+    "globalTagDefaults" : {
+      "directives": ""
+    },
+
     "animatedParts" : {
       "stateTypes": {
         "project45flashlaser" : {

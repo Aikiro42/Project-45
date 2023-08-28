@@ -7,6 +7,26 @@ local OFF, FLASH, LASER, FLASHLASER = 1, 2, 3, 4
 function Project45FlashLaser:init()
   self:reset()
   self.flashLaserStates = {"off", "flash", "laser", "flashlaser"}
+
+  -- this ability allows straight lasers by default.
+  -- if the primary ability is project45gunfire, and the laser is enabled, then
+  --[[
+  local primaryAbility = config.getParameter("primaryAbility", {})
+  local projectileType = primaryAbility.projectileType
+  if projectileType then
+    projectileType = type(projectileType) == "table" and projectileType[1] or projectileType
+    local projectileConfig = util.mergeTable(root.projectileConfig(projectileType), self.projectileParameters)
+    local projSpeed = projectileConfig.speed or 50
+    
+    if root.projectileGravityMultiplier(projectileType) ~= 0 then
+      activeItem.setScriptedAnimationParameter("primaryLaserArcSteps", self.laser.trajectoryConfig.renderSteps)
+      activeItem.setScriptedAnimationParameter("primaryLaserArcSpeed", projSpeed)
+      activeItem.setScriptedAnimationParameter("primaryLaserArcRenderTime", projectileConfig.timeToLive)
+      activeItem.setScriptedAnimationParameter("primaryLaserArcGravMult", root.projectileGravityMultiplier(projectileType))
+    end
+  end
+  --]]
+
 end
 
 function Project45FlashLaser:update(dt, fireMode, shiftHeld)
@@ -18,8 +38,13 @@ function Project45FlashLaser:update(dt, fireMode, shiftHeld)
     local range = world.magnitude(scanOrig, activeItem.ownerAimPosition())
     local scanDest = vec2.add(scanOrig, vec2.mul(self:aimVector(), self.laserRange))
     scanDest = world.lineCollision(scanOrig, scanDest, {"Block", "Dynamic"}) or scanDest
-    activeItem.setScriptedAnimationParameter("laserOrigin", scanOrig)
-    activeItem.setScriptedAnimationParameter("laserDestination", scanDest)
+    activeItem.setScriptedAnimationParameter("altLaserEnabled", true)
+    activeItem.setScriptedAnimationParameter("altLaserStart", scanOrig)
+    activeItem.setScriptedAnimationParameter("altLaserEnd", scanDest)
+  elseif world.lineTileCollision(mcontroller.position(), self:firePosition()) then
+    activeItem.setScriptedAnimationParameter("altLaserEnabled", false)
+    activeItem.setScriptedAnimationParameter("altLaserStart", nil)
+    activeItem.setScriptedAnimationParameter("altLaserEnd", nil)
   end
 
   if self.fireMode == "alt" and self.lastFireMode ~= "alt" then
@@ -33,11 +58,10 @@ function Project45FlashLaser:update(dt, fireMode, shiftHeld)
       animator.setLightActive("flashlight", false)
       animator.setLightActive("flashlightSpread", false)
     end
-    
-
+        
     if not (storage.state == FLASHLASER or storage.state == LASER) then
-      activeItem.setScriptedAnimationParameter("laserOrigin", nil)
-      activeItem.setScriptedAnimationParameter("laserDestination", nil)
+      activeItem.setScriptedAnimationParameter("altLaserStart", nil)
+      activeItem.setScriptedAnimationParameter("altLaserEnd", nil)
       activeItem.setScriptedAnimationParameter("altLaserColor", nil)
       activeItem.setScriptedAnimationParameter("altLaserWidth", nil)
     else
