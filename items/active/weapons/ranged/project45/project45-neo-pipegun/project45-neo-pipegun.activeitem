@@ -26,6 +26,9 @@
       "muzzle",
       "underbarrel",
       "stock"
+    ],
+    "flipSlot": [
+      "stock"
     ]
   },
 
@@ -39,9 +42,6 @@
   },
 
   "animationCustom": {
-    "globalTagDefaults": {
-      "stockModDirectives": "?flipy"
-    },
     "particleEmitters": {
       "ejectionPort": {
         "particles": [
@@ -102,8 +102,17 @@
   "ejectionPortOffset": [-1, 0.375],
   "magazineOffset": [0, 0],
 
+  "railOffset": [1.75, 0.5],
+  "underbarrelOffset": [1.5, 0.25],
   "sightsOffset": [1, 0.625],
-  "stockOffset": [-1, 0],
+  "stockOffset": [0, -0.125],
+
+  "debugPointColors": {
+    "rail": "red",
+    "sights": "orange",
+    "underbarrel": "green",
+    "stock": "magenta"
+  },
 
   "scripts" : ["/items/active/weapons/ranged/project45gunneo.lua"],
     
@@ -117,6 +126,7 @@
     "cockTime": 0.2,
     "projectileKind": "projectile",
     "reloadTime": 1,
+    "spread": 5,
 
     "manualFeed": true,
     "internalMag": true,

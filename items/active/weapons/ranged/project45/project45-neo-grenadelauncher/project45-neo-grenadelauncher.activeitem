@@ -25,12 +25,14 @@
   },
 
   "project45GunModInfo": {
+    "category": "ballistic",
     "acceptsModSlot": [
       "rail",
-      "sights"
+      "sights",
+      "muzzle"
     ],
     "acceptsAmmoArchetype": [
-
+      "grenade"
     ]
   },
 
@@ -116,9 +118,17 @@
   },
 
   "baseOffset" : [0, 0],
-  "muzzleOffset" : [2, 0.225],
-  "ejectionPortOffset": [0.3, 0.7],
-  "magazineOffset": [0, 0],
+  "muzzleOffset" : [1.75, 0.25],
+  "ejectionPortOffset": [0.3, 0.25],
+  "magazineOffset": [0.25, 0],
+
+  
+  "debugPointColors": {
+    "rail": "red",
+    "sights": "orange",
+    "underbarrel": "green"
+  },
+
   "railOffset": [1.5, 0.125],
   "sightsOffset": [0.375, 0.75],
 

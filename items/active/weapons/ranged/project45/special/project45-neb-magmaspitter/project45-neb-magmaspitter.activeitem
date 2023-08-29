@@ -24,9 +24,6 @@
   },
 
   "animationCustom": {
-    "globalTagDefaults": {
-      "stockModDirectives": "?flipy"
-    },
     "particleEmitters": {
       "ejectionPort": {
         "particles": [

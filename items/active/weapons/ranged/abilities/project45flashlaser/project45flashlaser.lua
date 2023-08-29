@@ -60,6 +60,7 @@ function Project45FlashLaser:update(dt, fireMode, shiftHeld)
     end
         
     if not (storage.state == FLASHLASER or storage.state == LASER) then
+      activeItem.setScriptedAnimationParameter("altLaserEnabled", false)
       activeItem.setScriptedAnimationParameter("altLaserStart", nil)
       activeItem.setScriptedAnimationParameter("altLaserEnd", nil)
       activeItem.setScriptedAnimationParameter("altLaserColor", nil)

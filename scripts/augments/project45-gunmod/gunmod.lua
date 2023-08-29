@@ -55,6 +55,8 @@ function apply(input)
     -- prepare tables to alter primary ability
     local oldPrimaryAbility = output.config.primaryAbility or {} -- retrieve old primary ability
     local newPrimaryAbility = input.parameters.primaryAbility or {} -- retrieve modified primary ability
+    oldPrimaryAbility = sb.jsonMerge(oldPrimaryAbility, newPrimaryAbility) -- TESTME: merge new primary ability on old
+    sb.logInfo("(gunmod.lua) initial parameters: " .. sb.printJson(newPrimaryAbility))
     
     -- replace general primaryability parameters
     -- using json patch-esque operations
@@ -159,13 +161,15 @@ function apply(input)
     end
 
     -- merge changes
-    output:setInstanceValue("primaryAbility", sb.jsonMerge(oldPrimaryAbility, newPrimaryAbility))
+    local finalPrimaryAbility = sb.jsonMerge(oldPrimaryAbility, newPrimaryAbility)
+    sb.logInfo("(gunmod.lua) new parameters: " .. sb.printJson(finalPrimaryAbility))
+    output:setInstanceValue("primaryAbility", finalPrimaryAbility)
 
     -- for visible weapon parts like grips, etc.
 
     local newAnimationCustom = nil
     if augment.animationCustom then
-      newAnimationCustom = augment.animationCustom -- TESTME: pointer issues
+      newAnimationCustom = copy(augment.animationCustom)
       -- output:setInstanceValue("animationCustom", sb.jsonMerge(input.parameters.animationCustom or {}, augment.animationCustom))
     end
 
@@ -175,8 +179,16 @@ function apply(input)
         newAnimationCustom.animatedParts.parts[augment.slot].properties.zLevel = augment.sprite.zLevel or 0
         newAnimationCustom.animatedParts.parts[augment.slot].properties.centered = true
         newAnimationCustom.animatedParts.parts[augment.slot].properties.transformationGroups = {"weapon"}
+
+        local flipSlots = set.new(modInfo.flipSlot or {})
+        local flipDirective = ""
+        if flipSlots[augment.slot] then
+            flipDirective = "?flipy"
+            augment.sprite.offset = augment.sprite.offset and vec2.mul(augment.sprite.offset, {1, -1}) or {0, 0}
+        end
+
         newAnimationCustom.animatedParts.parts[augment.slot].properties.offset = vec2.add(output.config[augment.slot .. "Offset"] or {0, 0}, augment.sprite.offset or {0, 0})
-        newAnimationCustom.animatedParts.parts[augment.slot].properties.image = augment.sprite.image .. "<directives>"
+        newAnimationCustom.animatedParts.parts[augment.slot].properties.image = augment.sprite.image .. flipDirective .. "<directives>"
 
         if augment.sprite.imageFullbright then
             construct(newAnimationCustom, "animatedParts", "parts", augment.slot .. "Fullbright", "properties")
@@ -184,7 +196,7 @@ function apply(input)
             newAnimationCustom.animatedParts.parts[augment.slot].properties.centered = true
             newAnimationCustom.animatedParts.parts[augment.slot].properties.transformationGroups = {"weapon"}
             newAnimationCustom.animatedParts.parts[augment.slot].properties.offset = vec2.add(output.config[augment.slot .. "Offset"] or {0, 0}, augment.sprite.offset or {0, 0})
-            newAnimationCustom.animatedParts.parts[augment.slot .. "Fullbright"].properties.image = augment.sprite.imageFullbright .. "<directives>"
+            newAnimationCustom.animatedParts.parts[augment.slot .. "Fullbright"].properties.image = augment.sprite.imageFullbright .. flipDirective .. "<directives>"
         end
     end
 

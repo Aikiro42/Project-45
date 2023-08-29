@@ -20,32 +20,24 @@
     "charge": "",
     "chargeFullbright": "project45-neo-gaussrifle-charge-fullbright.png",
     "magazine": "project45-neo-gaussrifle-mag.png",
-    "magazineFullbright": "",
-    "muzzleFlash": "/items/active/weapons/ranged/muzzleflash.png"
+    "magazineFullbright": ""
   },
 
   "project45GunModInfo": {
-    "category": "energy",
-    "acceptsAmmoTypes": {
-      "energy": true
-    },
-    "acceptsAmmoArchetypes": {
-      "generic": true,
-      "shotgun": true,
-      "beam": true
-    },
-    "acceptsModSlot": {
-      "rail": false,
-      "sights": true,
-      "muzzle": false,
-      "stock": false,
-      "underbarrel": false,
-      
-      "receiver": true,
-      "material": true,
-      "barrel": true,
-      "grip": true,
-      "magazine": true
+    "category": "ballistic",
+    "acceptsModSlot": [
+      "rail",
+      "sights"
+    ],
+    "acceptsAmmoArchetype": [
+      "bullet",
+      "beam"
+    ],
+    "ammoExceptions": {
+      "accept": [
+        "project45-iceammomod",
+        "project45-elecammomod"
+      ]
     }
   },
 
@@ -102,12 +94,20 @@
   "ejectionPortOffset": [-0.25, 0.5],
   "magazineOffset": [0.25, 0],
 
-  "sightsOffset": [0.5, 1.125],
+  "debugPointColors": {
+    "rail": "red",
+    "sights": "orange",
+    "underbarrel": "green"
+  },
+
+  "sightsOffset": [0.375, 0.875],
+  "railOffset": [1.5, 0.25],
 
   "scripts" : ["/items/active/weapons/ranged/project45gunneo.lua"],
     
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
+
     "maxAmmo": 5,
     "bulletsPerReload": 5,
     

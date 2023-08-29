@@ -15,13 +15,13 @@
 
     "projectileCount": 1,
     "projectileKind": "projectile",
-    "projectileType": "largepoisoncloud",
+    "projectileType": "project45gascloud",
     "projectileParameters": {
-      "timeToLive": 0.75,
-      "light": [64, 128, 0],
-      "pointLight": true,
-      "fullbright": true
-    }
+      "speed": 50,
+      "timeToLive": 0.75
+    },
+
+    "hideMuzzleFlash": true
   
   },
 

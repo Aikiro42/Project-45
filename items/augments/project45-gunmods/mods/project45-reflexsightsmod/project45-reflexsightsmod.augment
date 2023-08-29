@@ -5,7 +5,7 @@
   "tooltipKind" : "project45gunmod",
   "category" : "Grip Mod",
   "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-reflexsightsmod/project45-reflexsightsmod.png",
-  "description" : "Allows for quicker target acquisition. ",
+  "description" : "Allows for quicker target acquisition. Decreases spread by 75%.",
   "shortdescription" : "Reflex Sights",
 
   "augment":{
@@ -18,9 +18,13 @@
         "operation": "replace",
         "value": {
           "enabled": true,
-          "color": [255, 255, 255, 64],
+          "color": [255, 255, 255, 128],
           "width": 0.1
         }
+      },
+      "spread": {
+        "operation": "multiply",
+        "value": 0.25
       }
     },
 

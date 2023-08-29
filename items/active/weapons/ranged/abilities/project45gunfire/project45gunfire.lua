@@ -408,6 +408,10 @@ function Project45GunFire:firing()
   if self:muzzleObstructed() then
     self:stopFireLoop()
     self.isFiring = false
+    if self.loopFiringAnimation then
+      animator.setAnimationState("gun", "firing")
+    end
+    self:postFiringTransitionHandler()
     return
   end
   
@@ -458,35 +462,41 @@ function Project45GunFire:firing()
     self:setState(self.firing)
     return
   end
-  
+
+  self:postFiringTransitionHandler()
+
+end
+
+function Project45GunFire:postFiringTransitionHandler()
+
   -- if not a manual feed gun
   -- or if the gun's not done bursting
   -- then eject immediately
-  if not self.manualFeed
-  or storage.burstCounter < self.burstCount
-  then
-    if self.ejectCasingsAfterBurst
-    and storage.burstCounter < self.burstCount
-    and storage.ammo > 0
+    if not self.manualFeed
+    or storage.burstCounter < self.burstCount
     then
-      util.wait(self.currentCycleTime)
-      self:setState(self.firing)
+      if self.ejectCasingsAfterBurst
+      and storage.burstCounter < self.burstCount
+      and storage.ammo > 0
+      then
+        util.wait(self.currentCycleTime)
+        self:setState(self.firing)
+      else
+        util.wait(self.currentCycleTime/3)
+        if storage.ammo == 0 and self.ejectMagOnEmpty and self.ejectMagOnEmpty == "firing" then
+          self:ejectMag()
+        end  
+        self:setState(self.ejecting)
+      end
+    -- otherwise, stop the cycle process
     else
-      util.wait(self.currentCycleTime/3)
       if storage.ammo == 0 and self.ejectMagOnEmpty and self.ejectMagOnEmpty == "firing" then
         self:ejectMag()
-      end  
-      self:setState(self.ejecting)
+      end
+      self:stopFireLoop()
+      self.cooldownTimer = self.fireTime
+      self.isFiring = false
     end
-  -- otherwise, stop the cycle process
-  else
-    if storage.ammo == 0 and self.ejectMagOnEmpty and self.ejectMagOnEmpty == "firing" then
-      self:ejectMag()
-    end
-    self:stopFireLoop()
-    self.cooldownTimer = self.fireTime
-    self.isFiring = false
-  end
 end
 
 function Project45GunFire:ejecting()
@@ -638,8 +648,8 @@ end
 
 function Project45GunFire:reloading()
 
-  if (self.ejectMagOnEmpty == "firing" or self.ejectMagOnEmpty == "ejecting")
-  and not status.overConsumeResource("energy", status.resourceMax("energy") * self.reloadCost) then
+  -- abort reload and click if energy is locked i.e. regenerating
+  if status.resourceLocked("energy") then
     animator.playSound("click")
     self.triggered = true
     return
@@ -656,6 +666,7 @@ function Project45GunFire:reloading()
   -- general reload rating calculation vars
   local sumRating = 0
   local reloads = 0
+  local energyDepletedFlag = false -- prevents additional reload when energy ran out while reloading
 
   -- visual stuff
   -- dictates appearance of reload ui
@@ -723,12 +734,20 @@ function Project45GunFire:reloading()
       
       -- update ammo
       self:setStance(self.stances.loadRound, true)  -- player visually loads round
+      local reloadedBullets = storage.ammo -- prevents energy overconsumption when reloaded bullets is greater than max ammo
       self:updateAmmo(self.bulletsPerReload)
+      reloadedBullets = storage.ammo - reloadedBullets
+
+      -- proportionally consume energy; break out of loop once out of energy
+      status.overConsumeResource("energy", self.reloadCost * (reloadedBullets / self.maxAmmo))
+      if not status.resourcePositive("energy") then
+        energyDepletedFlag = true
+        break
+      end
 
       -- if mag isn't fully loaded, reset minigame
       if storage.ammo < self.maxAmmo then
-        self.reloadTimer = 0
-      
+        self.reloadTimer = 0      
       -- if reload rating is not bad, prematurely end minigame
       -- otherwise, player has to wait until end of reload time
       elseif reloadRating ~= "BAD" then break end
@@ -750,15 +769,20 @@ function Project45GunFire:reloading()
   end
 
   -- if there hasn't been any input, just load round
-  if storage.ammo < self.maxAmmo then
+  if storage.ammo < self.maxAmmo and not energyDepletedFlag then
     sumRating = sumRating + 0.5 -- OK: 0.5
     reloads = reloads + 1 -- we did a reload
     animator.playSound("loadRound")
     if self.ejectMagOnReload then
       animator.burstParticleEmitter("magazine") -- throw mag strip
     end
+    local reloadedBullets = storage.ammo -- prevents energy overconsumption when reloaded bullets is greater than max ammo
     self:updateAmmo(self.bulletsPerReload)
-  end
+    reloadedBullets = storage.ammo - reloadedBullets
+
+    -- proportionally consume energy; break out of loop once out of energy
+    status.overConsumeResource("energy", self.reloadCost * (reloadedBullets / self.maxAmmo))
+end
   
   -- begin final reload evaluation
   --                     MAX AVERAGE
@@ -1009,13 +1033,6 @@ end
 -- Ejects mag
 -- can immediately begin reloading minigame
 function Project45GunFire:ejectMag()
-
-  if self.ejectMagOnEmpty ~= "firing" and self.ejectMagOnEmpty ~= "ejecting"
-  and not status.overConsumeResource("energy", status.resourceMax("energy") * self.reloadCost) then
-    animator.playSound("click")
-    self.triggered = true
-    return
-  end
 
   self.triggered = true
   storage.burstCounter = 0

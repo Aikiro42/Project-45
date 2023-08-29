@@ -252,11 +252,9 @@ function build(directory, config, parameters, level, seed)
       config.tooltipFields.fireRateLabel = ("^#FFD400;" .. util.round(loFireRate, 1))
       .. (loFireRate == hiFireRate and "s" or (" - " .. util.round(hiFireRate, 1) .. "s"))
 
+      -- set reload cost
       config.primaryAbility.reloadCost = parameters.primaryAbility.reloadCost or config.primaryAbility.reloadCost
-      config.tooltipFields.reloadCostLabel = "^#b0ff78;" .. util.round(
-        (config.primaryAbility.reloadCost or 0) * 100,
-        1
-      ) .. "%"
+      config.tooltipFields.reloadCostLabel = "^#b0ff78;" .. config.primaryAbility.reloadCost or 0
 
       
       local bulletReloadTime = parameters.primaryAbility.reloadTime or config.primaryAbility.reloadTime

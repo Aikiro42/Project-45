@@ -53,9 +53,10 @@ function apply(input)
 
     -- MOD INSTALLATION PROCESS
 
-    -- prepare tables to alter stats and the primary ability in general
+    -- prepare tables to alter primary ability
     local oldPrimaryAbility = output.config.primaryAbility or {} -- retrieve old primary ability
     local newPrimaryAbility = input.parameters.primaryAbility or {} -- retrieve modified primary ability
+    oldPrimaryAbility = sb.jsonMerge(oldPrimaryAbility, newPrimaryAbility) -- TESTME: merge new primary ability on old
     
     -- alter or set ability type if present
     if augment.altAbilityType and input.parameters.altAbilityType ~= augment.altAbilityType then
@@ -72,6 +73,69 @@ function apply(input)
       end
 
     end
+
+    -- sprite visuals
+    local newAnimationCustom = nil
+    if augment.animationCustom then
+      newAnimationCustom = copy(augment.animationCustom)
+      -- output:setInstanceValue("animationCustom", sb.jsonMerge(input.parameters.animationCustom or {}, augment.animationCustom))
+    end
+
+    -- TESTME:
+    -- usually sprites that come with the ability are set up in the weaponability file
+    local flipSlots = set.new(modInfo.flipSlot or {})
+
+    if augment.sprite then
+      newAnimationCustom = newAnimationCustom or {}
+      construct(newAnimationCustom, "animatedParts", "parts", augment.slot, "properties")
+      newAnimationCustom.animatedParts.parts[augment.slot].properties.zLevel = augment.sprite.zLevel or 0
+      newAnimationCustom.animatedParts.parts[augment.slot].properties.centered = true
+      newAnimationCustom.animatedParts.parts[augment.slot].properties.transformationGroups = {"weapon"}
+
+      local flipDirective = ""
+      if flipSlots[augment.slot] then
+          flipDirective = "?flipy"
+          augment.sprite.offset = augment.sprite.offset and vec2.mul(augment.sprite.offset, {1, -1}) or {0, 0}
+      end
+
+      newAnimationCustom.animatedParts.parts[augment.slot].properties.offset = vec2.add(output.config[augment.slot .. "Offset"] or {0, 0}, augment.sprite.offset or {0, 0})
+      newAnimationCustom.animatedParts.parts[augment.slot].properties.image = augment.sprite.image .. flipDirective .. "<directives>"
+
+      if augment.sprite.imageFullbright then
+          construct(newAnimationCustom, "animatedParts", "parts", augment.slot .. "Fullbright", "properties")
+          newAnimationCustom.animatedParts.parts[augment.slot .. "Fullbright"].properties.zLevel = (augment.sprite.zLevel or 0) + 1
+          newAnimationCustom.animatedParts.parts[augment.slot].properties.centered = true
+          newAnimationCustom.animatedParts.parts[augment.slot].properties.transformationGroups = {"weapon"}
+          newAnimationCustom.animatedParts.parts[augment.slot].properties.offset = vec2.add(output.config[augment.slot .. "Offset"] or {0, 0}, augment.sprite.offset or {0, 0})
+          newAnimationCustom.animatedParts.parts[augment.slot .. "Fullbright"].properties.image = augment.sprite.imageFullbright .. flipDirective .. "<directives>"
+      end
+    else
+      -- if the sprite is set up in the weaponability and we need to fiddle with it,
+      -- we need to retrieve the custom animation from the item's config or parameters
+      if flipSlots[augment.slot] then
+
+        newAnimationCustom = newAnimationCustom or {}
+        construct(newAnimationCustom, "animatedParts", "parts", augment.slot, "properties")
+        
+        local newPartImage = newAnimationCustom.animatedParts.parts[augment.slot].properties.image
+        newPartImage = newPartImage and newPartImage .. "?flipy" or newPartImage
+        
+        local newPartOffset = newAnimationCustom.animatedParts.parts[augment.slot].properties.offset
+        newPartOffset = newPartOffset and vec2.mul(newPartOffset, {1, -1}) or newPartOffset
+
+        newAnimationCustom.animatedParts.parts[augment.slot].properties.image = newPartImage
+        newAnimationCustom.animatedParts.parts[augment.slot .. "Fullbright"].properties.image = newPartImage
+        newAnimationCustom.animatedParts.parts[augment.slot].properties.offset = newPartOffset
+        newAnimationCustom.animatedParts.parts[augment.slot .. "Fullbright"].properties.offset = newPartOffset
+
+      end
+    end
+
+    -- if custom animation is set then modify
+    if newAnimationCustom then
+      output:setInstanceValue("animationCustom", sb.jsonMerge(input.parameters.animationCustom or {}, newAnimationCustom))
+    end    
+
 
     -- MODIFICATION POST-MORTEM
 

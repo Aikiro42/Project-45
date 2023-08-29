@@ -18,7 +18,10 @@
     "projectileType": "project45tarprojectile",
     "projectileParameters": {
       "physics": "grenade"
-    }
+    },
+
+    "hideMuzzleFlash": true,
+    "hideMuzzleSmoke": true
   
   },
 

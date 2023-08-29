@@ -101,10 +101,10 @@ function apply(input)
         local newReloadCost = oldPrimaryAbility.reloadCost
         
         if augment.reloadCost.operation == "add" then
-            newReloadCost = newReloadCost + augment.reloadCost.value
+            newReloadCost = math.max(0, newReloadCost + augment.reloadCost.value)
         
         elseif augment.reloadCost.operation == "multiply" then
-            newReloadCost = newReloadCost * augment.reloadCost.value
+            newReloadCost = math.max(0, newReloadCost * augment.reloadCost.value)
         
         end
 

@@ -24,6 +24,19 @@
     "muzzleFlash": "/items/active/weapons/ranged/muzzleflash.png"
   },
 
+  "project45GunModInfo": {
+    "category": "ballistic",
+    "acceptsModSlot": [
+      "stock"
+    ],
+    "acceptsAmmoArchetype": [
+      "bullet"
+    ],
+    "flipSlot": [
+      "stock"
+    ]
+  },
+
   "animationCustom": {
     "particleEmitters": {
       "ejectionPort": {
@@ -100,10 +113,20 @@
   "ejectionPortOffset": [-0.25, 0.5],
   "magazineOffset": [0, 0],
 
+  "stockOffset": [-0.375, -0.375],
+
+  "debugPointColors": {
+    "rail": "red",
+    "sights": "orange",
+    "underbarrel": "green",
+    "stock": "magenta"
+  },
+
   "scripts" : ["/items/active/weapons/ranged/project45gunneo.lua"],
     
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
+
     "maxAmmo": 6,
     "bulletsPerReload": 1,
     "inaccuracy": 3,
@@ -133,10 +156,7 @@
   
     "stances":{
 
-      "idleneo": {
-        "twoHanded": false
-      },
-      "aim": {
+      "aimStance": {
         "twoHanded": false
       },
 

@@ -1,0 +1,35 @@
+{
+  "itemName" : "project45-extendedbarrelmod",
+  "price" : 15000,
+  "rarity" : "Legendary",
+  "tooltipKind" : "project45gunmod",
+  "category" : "Muzzle Mod",
+  "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-extendedbarrelmod/project45-extendedbarrelmod.png",
+  "description" : "Decreases spread by 50%.",
+  "shortdescription" : "Extended Barrel",
+
+  "augment":{
+    "modName": "Extended Barrel",
+    "category": "ballistic",
+    "slot": "muzzle",
+    "muzzleOffset": [1, 0],
+    "primaryAbility": {
+      "spread": {
+        "operation": "multiply",
+        "value": 0.5
+      }
+    },
+
+    "sprite": {
+      "image": "/items/augments/project45-gunmods/mods/project45-extendedbarrelmod/project45-extendedbarrelmodsprite.png",
+      "zLevel" : 5,
+      "offset" : [0.5, -0.125]
+    }
+    
+  },
+
+
+  "radioMessagesOnPickup" : [ "pickupaugment" ],
+
+  "scripts" : [ "/scripts/augments/project45-gunmod/gunmod.lua" ]
+}

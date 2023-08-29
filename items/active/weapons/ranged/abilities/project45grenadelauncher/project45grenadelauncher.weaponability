@@ -17,6 +17,7 @@
           "properties" : {
             "zLevel" : 5,
             "centered" : true,
+            "offset": [0.25, -0.25],
             "transformationGroups" : ["weapon"],
             "image" : "/items/active/weapons/ranged/abilities/project45grenadelauncher/project45grenadelauncher.png:closed<directives>",
             "firePosition" : [0.375, 0.125]

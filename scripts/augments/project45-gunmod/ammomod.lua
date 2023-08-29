@@ -21,7 +21,9 @@ function apply(input)
         return
     end
 
-    local ammoExceptions = modInfo.ammoExceptions or {accept={}, deny={}}
+    local ammoExceptions = modInfo.ammoExceptions or {}
+    ammoExceptions.accept = ammoExceptions.accept or {}
+    ammoExceptions.deny = ammoExceptions.deny or {}
 
     -- check if ammo mod is particularly denied
     local denied = set.new(ammoExceptions.deny)
@@ -78,6 +80,9 @@ function apply(input)
     newPrimaryAbility.hitscanParameters = augment.hitscanParameters
     newPrimaryAbility.beamParameters = augment.beamParameters
     newPrimaryAbility.summonParameters = augment.summonParameters
+    
+    newPrimaryAbility.hideMuzzleFlash = augment.hideMuzzleFlash
+    newPrimaryAbility.hideMuzzleSmoke = augment.hideMuzzleSmoke
 
     -- alter muzzle flash color
     if augment.muzzleFlashColor then

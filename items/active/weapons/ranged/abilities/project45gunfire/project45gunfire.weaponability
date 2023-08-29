@@ -14,7 +14,7 @@
     // ____________________________________[ SECTION: Stat Config ]____________________________________
 
     "baseDamage": 5,
-    "reloadCost": 0.5, // percent of energy
+    "reloadCost": 50,
     "reloadTime": 1,   // 80% actual reload time, 20% cocking time
     "critChance": 0.1,
     "critDamageMult": 1.5,
@@ -188,7 +188,7 @@
 
     // ____________________________________[ SECTION: Ammo Config ]____________________________________
     
-    "maxAmmo": 15,
+    "maxAmmo": 10,
     "bulletsPerReload": 15, // bullets reloaded every active reload; set to negative number to reload all bullets
     "ammoPerShot": 1,
     "ammoConsumeChance": 1,
@@ -412,7 +412,7 @@
         "twoHanded" : true,
         "allowRotate" : false,
         "aimAngle": 0,
-        "allowFlip" : false
+        "allowFlip" : true
         // "frontArmFrame": "swimIdle.2",
         // "weaponOffset": [-1, 0]
       },
@@ -437,7 +437,7 @@
         "twoHanded" : true,
         "allowRotate" : false,
         "aimAngle": 0,
-        "allowFlip" : false,
+        "allowFlip" : true,
         "frontArmFrame" : "run.2"
       },
 
@@ -446,7 +446,7 @@
         "weaponRotation" : 5,
         "twoHanded" : true,
         "allowRotate" : false,
-        "allowFlip" : false,
+        "allowFlip" : true,
         "frontArmFrame" : "run.2",
 
         // New Stance Parameters
@@ -498,7 +498,7 @@
         "weaponRotation" : 0,
         "twoHanded" : true,
         "allowRotate" : false,
-        "allowFlip" : false,
+        "allowFlip" : true,
         "frontArmFrame" : "rotation"
         // "weaponOffset": [-1, 0]
       },
@@ -521,7 +521,7 @@
         "weaponRotation" : 45,
         "twoHanded" : true,
         "allowRotate" : false,
-        "allowFlip" : false,
+        "allowFlip" : true,
         "duration": 0.25
       },
 
@@ -533,7 +533,7 @@
         "frontArmFrame": "run.5",
         "allowRotate" : false,
         "aimAngle": 0,
-        "allowFlip" : false
+        "allowFlip" : true
       },
 
       // stance taken upon finishing reload
