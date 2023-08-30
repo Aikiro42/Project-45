@@ -70,8 +70,6 @@
     "goods":{
       "guns": [
 
-        /*
-
         "project45-neo-custom-x",
         "project45-neo-pipegun",
         
@@ -105,35 +103,8 @@
         "project45-neb-magmaspitter",
         "project45-scz-spacecowboy",
         "project45-gov-scarlet",
-        "project45-tcf-kineticarbiter"
+        "project45-tcf-kineticarbiter",
         "project45-pkf-typhon"
-        
-        */
-
-        "project45-neo-accelerator",
-        "project45-neo-amr",
-        "project45-neo-assaultrifle",
-        "project45-neo-beamgun",
-        "project45-neo-beamsplitter",
-        "project45-neo-carbine",
-        "project45-neo-custom-x",
-        "project45-neo-cyclo",
-        "project45-neo-flamethrower",
-        "project45-neo-gaussrifle",
-        "project45-neo-grenadelauncher",
-        "project45-neo-huntingrifle",
-        "project45-neo-leveraction",
-        "project45-neo-machinegun",
-        "project45-neo-minigun",
-        "project45-neo-pipegun",
-        "project45-neo-pistol",
-        "project45-neo-revolver",
-        "project45-neo-rocketlauncher",
-        "project45-neo-servicerifle",
-        "project45-neo-shindeiru",
-        "project45-neo-shotgun",
-        "project45-neo-smg",
-        "project45-neo-sniper"
 
       ],
       "mods": [
