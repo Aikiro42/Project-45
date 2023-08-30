@@ -644,7 +644,8 @@
 
     "jam": ["/sfx/project45-synthetikmechanics/clicks/click_jammed.ogg"],
     "unjam": ["/sfx/project45-synthetikmechanics/clicks/click_unjam.ogg"],
-    "hollow": ["/sfx/project45-synthetikmechanics/foleys/hollow.ogg"],
+    "hollow": ["/sfx/project45neosfx/foleys/hollow1.ogg"],
+    // "hollow": ["/sfx/project45neosfx/foleys/hollow0.ogg"],
 
     "eject": ["/sfx/project45-synthetikmechanics/reloads/ejectmag_generic_1.ogg"],
     "ejectCasing": ["/assetmissing.wav"], // plays every time casing(s) is/are ejected

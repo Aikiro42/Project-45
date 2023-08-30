@@ -58,13 +58,14 @@
       "rail",
       "sights",
       "underbarrel",
-      "muzzle"
+      "muzzle",
+
+      "receiver"
     ]
   },
 
   "baseOffset" : [1, 0.125],
-  "muzzleOffset" : [2.25, 0.375],
-  "altMuzzleOffset": [2.25, 1],
+  "muzzleOffset" : [2.25, 0.3125],
   "ejectionPortOffset": [-0.25, 0.5],
   "magazineOffset": [-0.25, -0.25],
   

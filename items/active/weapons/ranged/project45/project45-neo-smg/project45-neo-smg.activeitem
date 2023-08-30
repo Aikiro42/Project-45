@@ -39,33 +39,32 @@
 
     "sounds": {
       "fire" : [
-        "/sfx/project45-synthetikmechanics/fires/fire_smg.ogg"
+        "/sfx/project45neosfx/fires/fire_smg.ogg"
       ]
     }
   },
 
   "project45GunModInfo":{
     "category": "ballistic",
-    "acceptsAmmoTypes":{
-      "ballistic": true
-    },
-    "acceptsAmmoArchetypes":{
-      "generic": true
-    },
-    "acceptsModSlot": {
-      "rail": true,
-      "sights": true,
-      "underbarrel": true,
-      "stock": false,
-      "muzzle": true
-    }
+    "acceptsModSlot": [
+      "rail",
+      "sights",
+      "muzzle",
+      "underbarrel"
+    ],
+    "acceptsAmmoArchetype":[
+      "bullet"
+    ]
   },
 
   "baseOffset" : [-0.5, -0.5],
-  "muzzleOffset" : [2.5, 0.5],
+  "muzzleOffset" : [2.5, 0.5625],
   "ejectionPortOffset": [-0.25, 0.75],
-  "magazineOffset": [0, 0],
-  "underbarrelOffset": [2, 0],
+  "magazineOffset": [0.375, 0],
+
+  "railOffset": [0.75, 0],
+  "sightsOffset": [-0.5, 0.25],
+  "underbarrelOffset": [0.75, -0.25],
 
   "scripts" : ["/items/active/weapons/ranged/project45gunneo.lua"],
     
@@ -81,7 +80,7 @@
     "recoilAmount": 1,
     "recoilMaxDeg": 7.5,
     "recoverDelay": 0.05,
-    "cycleTime": 0.075,
+    "cycleTime": 0.025,
     "projectileKind": "projectile",
 
     "stances": {

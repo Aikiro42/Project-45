@@ -20,7 +20,7 @@ function Project45GunFire:init()
   self.isFiring = false
     
   -- separate cock time and reload time
-  self.reloadTime = self.reloadTime * 0.8
+  -- self.reloadTime = self.reloadTime * 0.8
   self.reloadTimer = -1
   activeItem.setScriptedAnimationParameter("reloadTimer", -1)
 
@@ -566,6 +566,8 @@ function Project45GunFire:ejecting()
     or self.loadRoundsThroughBolt
     then
       self:ejectMag()
+    else
+      self:setStance(self.stances.aimStance)
     end
     self.isCocking = false
     self.isFiring = false
@@ -603,7 +605,7 @@ function Project45GunFire:feeding()
       self:setState(self.firing)
     end
     return
-  elseif self.manualFeed then
+  elseif self.manualFeed or self.isCocking then
     self:setStance(self.stances.boltPush)
   end
 
@@ -805,7 +807,13 @@ end
   activeItem.setScriptedAnimationParameter("reloadRating", reloadRatingList[finalReloadRating])
   self.reloadRatingDamage = self.reloadRatingDamageMults[storage.reloadRating]
   animator.playSound("reloadEnd")  -- sound of magazine inserted
-  util.wait(self.cockTime/8)
+
+  if self.postReloadDelay then
+    util.wait(self.postReloadDelay)
+  else
+    util.wait(self.cockTime/8)
+  end
+
   self:setState(self.cocking)
   
 end
@@ -816,6 +824,7 @@ function Project45GunFire:cocking()
   self.isCocking = true
 
   if animator.animationState("bolt") == "closed"
+  or self.forceBoltPullWhenCocking
   then
     self:setState(self.ejecting)
     return
@@ -1039,7 +1048,7 @@ function Project45GunFire:ejectMag()
 
   if not self.ejectMagOnEmpty or (self.ejectMagOnEmpty ~= "firing" and self.ejectMagOnEmpty ~= "ejecting") then
     self:screenShake(0.5)
-    self:recoil(true)
+    -- self:recoil(true) -- Removed; recoil now dictated via the stance's armRecoil and weaponRecoil
   end
   
   -- audiovisually eject mag if it isn't an internal mag
@@ -1713,6 +1722,14 @@ function Project45GunFire:setStance(stance, snap)
   if not snap and oldStance and not stance.lite then
     self.weapon.relativeArmRotation = util.toRadians(oldStance.armRotation)
     self.weapon.relativeWeaponRotation = util.toRadians(oldStance.weaponRotation)
+  end
+
+  -- function Project45GunFire:recoil(down, mult, amount, recoverDelay)
+  if stance.armRecoil then
+    self.weapon.relativeArmRotation = self.weapon.relativeArmRotation + util.toRadians(stance.armRecoil)
+  end
+  if stance.weaponRecoil then
+    self.weapon.relativeWeaponRotation = self.weapon.relativeWeaponRotation + util.toRadians(stance.weaponRecoil)
   end
 
   storage.stanceProgress = 0

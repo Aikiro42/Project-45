@@ -79,20 +79,23 @@
   "primaryAbility": {
     "maxAmmo": 5,
     "bulletsPerReload": 5,
-    "inaccuracy": 45,
+    "inaccuracy": 10,
     "semi": true,
     "cycleTime": 0.1,
     "cockTime": 0.6,
     "screenShakeAmount": 2,
-    "recoilAmount": 15,
-    "recoilMaxDeg": 45,
-    "recoverTime": 5,
     "manualFeed": true,
     "heavyWeapon": true,
     "recoilUpOnly": true,
     "recoilMomentum": 40,
-    "recoverDelay": 0.1,
-    "recoilCrouchMult": 0.05,
+
+    "recoilAmount": 3,
+    "recoilMaxDeg": 15,
+    
+    "recoverDelay": 0.125,
+    "recoverTime": 1,
+
+
     // "reloadTime": 10,
   
     "stances":{

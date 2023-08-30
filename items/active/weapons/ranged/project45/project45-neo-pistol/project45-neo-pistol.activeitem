@@ -39,7 +39,7 @@
     },
 
     "sounds": {
-      "fire" : ["/sfx/project45-synthetikmechanics/fires/fire_pistol.ogg"]
+      "fire" : ["/sfx/project45neosfx/fires/fire_pistol.ogg"]
     },
     "animatedParts": {
       "parts":{

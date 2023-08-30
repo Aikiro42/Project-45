@@ -27,26 +27,7 @@
     "particleEmitters": {
       "ejectionPort": {
         "particles": [
-          {
-            "particle" : {
-              "type" : "animated",
-              "image" : "/particles/bulletcases/project45bulletcase/project45bulletcase.animation",
-              "fade" : 0.9,
-              "position" : [0, 0],
-              "size" : 1.0,
-              "angularVelocity": -360,
-              "initialVelocity" : [6, 0],
-              "finalVelocity" : [0, -50.0],
-              "approach" : [5, 50],
-              "timeToLive" : 2,
-              "layer" : "back",
-              "collidesForeground" : true,
-              "variance" : {
-                // "angularVelocity" : 240,
-                "initialVelocity" : [2, 2]
-              }
-            }
-          }
+          { "particle" : "project45bulletcase" }
         ]
       },
       "magazine": {
@@ -75,40 +56,119 @@
       "rail",
       "sights",
       "underbarrel",
-      "stock",
       "muzzle"
     ]
   },
 
-  "baseOffset" : [0.75, 0.125],
+  "baseOffset" : [0.625, 0.25],
   "muzzleOffset" : [2.125, 0.375],
-  "ejectionPortOffset": [1, 0.25],
-  "magazineOffset": [0, 0],
-  "underbarrelOffset": [2, 0],
-  "sightsOffset": [0.25, 0.625],
+  
+  "ejectionPortOffset": [-1.375, 0.5625],
+  "magazineOffset": [-1.375, -0.125],
+  
+  "railOffset": [0.75, 0.5],
+  "underbarrelOffset": [1.5, 0.1875],
+  "sightsOffset": [1.25, 0.9375],
+
+  "debugPointColors": {
+    "rail": "red",
+    "sights": "orange",
+    "underbarrel": "green",
+    "stock": "magenta"
+  },
 
   "scripts" : ["/items/active/weapons/ranged/project45gunneo.lua"],
     
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
-    "maxAmmo": 20,
-    "bulletsPerReload": 20,
+
+    "maxAmmo": 12,
+    "bulletsPerReload": 12,
     "semi": false,
     "inaccuracy": 2,
+
+    "forceBoltPullWhenCocking": true,
 
     "recoilAmount": 3,
     "recoilMaxDeg": 15,
     
-    "recoverDelay": 0.25,
+    "recoverDelay": 0.125,
     "recoverTime": 1,
+
+    "postReloadDelay": 0.25,
     
     "cycleTime": 0.2,
+    "cockTime": 0.75,
     "projectileKind": "projectile",
     "laser":{
       "enabled": false
     },
     "stances": {
+
+      // stance while the gun has no mag
+
+      "aimStance": {
+        "backArmFrame": "swim.3"
+      },
+
+      "jammed": {
+        "armRotation" : -15,
+        "weaponRotation" : 15,
+        "frontArmFrame": "swim.2",
+        "backArmFrame": "swim.3"
+      },
+
+      "unjam": {
+        "armRotation" : -15,
+        "weaponRotation" : 10,
+        "frontArmFrame": "swim.1",
+        "backArmFrame": "swim.3"
+      },
+
+      "empty": {
+        "armRecoil": 15,
+        "weaponRecoil": 5,
+        "backArmFrame": "swim.3"
+      },
+
+      "reloading" : {
+        "twoHanded" : true,
+        "allowRotate" : false,
+        "aimAngle": 0,
+        "allowFlip" : true,
+        // "frontArmFrame": "run.2",
+        // "backArmFrame": "idle.2"
+
+        "armRotation" : -15,
+        "weaponRotation" : 0,
+        "frontArmFrame": "idle.1",
+        "backArmFrame": "swim.3"
+
+      },
+      "reloaded" : {
+        "armRotation" : -15,
+        "weaponRotation" : 0,
+        "twoHanded" : true,
+        "allowRotate" : false,
+        "aimAngle": 0,
+        "allowFlip" : true,
+        "frontArmFrame": "run.2"
+      },
       
+      "boltPull": {
+        "armRotation" : -15,
+        "weaponRotation" : 10,
+        "frontArmFrame": "swim.1",
+        "backArmFrame": "swim.3"
+      },
+      "boltPush": {
+        "snap": true,
+        "armRotation" : -15,
+        "weaponRotation" : 15,
+        "frontArmFrame": "swim.2",
+        "backArmFrame": "swim.3"
+      }
+
     }
   },
 

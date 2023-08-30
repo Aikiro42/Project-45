@@ -24,8 +24,10 @@
         "value": true
       },
       "hollowSoundMult": {
+        // suppressors are kinda hard on weapons because they keep air in the barrel
+        // and increase internal pressure
         "operation": "replace",
-        "value": 0.3
+        "value": 1.1
       }
     },
 

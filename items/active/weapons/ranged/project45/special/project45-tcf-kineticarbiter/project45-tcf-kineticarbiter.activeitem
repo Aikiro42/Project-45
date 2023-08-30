@@ -101,29 +101,29 @@
               "frames": 1
             },
             "firing": {
-              "frames": 9,
+              "frames": 3,
               "transition": "fired"
             },
             "fired": {
               "frames": 1
             },
             "firingLoop": {
-              "frames": 9
+              "frames": 3
             },
             "ejecting": {
-              "frames": 4
+              "frames": 2
             },
             "boltPulling": {
-              "frames": 4
+              "frames": 2
             },
             "ejected": {
               "frames": 1
             },
             "feeding": {
-              "frames": 3
+              "frames": 2
             },
             "boltPushing": {
-              "frames": 3
+              "frames": 2
             },
             "jammed": {
               "frames": 1
@@ -138,7 +138,7 @@
   },
 
   "baseOffset" : [1.5, 0.25],
-  "muzzleOffset" : [0, 0.375],
+  "muzzleOffset" : [0.25, 0.25],
   "ejectionPortOffset": [-0.25, 0.5],
   "magazineOffset": [-1, 0.25],
 
@@ -151,11 +151,13 @@
     "bulletsPerReload": 4,
     "semi": true,
     "cycleTime": 1,
-    "cockTime": 1.2,
+    "cockTime": 0.5,
     "reloadTime": 1,
 
     "manualFeed": true,
     "breakAction": true,
+
+    "hideMuzzleSmoke": true,
 
     "projectileKind": "hitscan",
     "hitscanParameters": {

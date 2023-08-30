@@ -39,7 +39,7 @@
 
     "sounds": {
       "fire" : [
-        "/sfx/project45-synthetikmechanics/fires/fire_smg.ogg"
+        "/sfx/project45neosfx/fires/fire_smg.ogg"
       ]
     }
   },

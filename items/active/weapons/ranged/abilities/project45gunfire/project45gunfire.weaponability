@@ -59,7 +59,7 @@
     "hideMuzzleSmoke": false,
 
     // Audio settings
-    "hollowSoundMult": 0.8, // affects volume of hollow sound
+    "hollowSoundMult": 1, // affects volume of hollow sound
 
     // ____________________________________[ SECTION: Projectile Config ]____________________________________
     

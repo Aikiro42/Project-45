@@ -14,23 +14,6 @@
   "muzzleFlashColor": [255, 255, 200],
   "inventoryIcon" : "project45-neo-shotgun-icon.png",
 
-  "project45GunModInfo":{
-    "category": "ballistic",
-    "acceptsAmmoTypes":{
-      "ballistic": true
-    },
-    "acceptsAmmoArchetypes":{
-      "generic": true
-    },
-    "acceptsModSlot": {
-      "rail": true,
-      "sights": true,
-      "underbarrel": false,
-      "stock": false,
-      "muzzle": true
-    }
-  },
-
   "animationParts" : {
     "middle" : "project45-neo-shotgun.png",
     "middleFullbright" : "",
@@ -60,16 +43,40 @@
       "fire" : ["/sfx/project45-synthetikmechanics/fires/fire_shotgun.ogg"]
     }
   },
+  
+  "project45GunModInfo":{
+    "category": "ballistic",
+    "acceptsModSlot": [
+      "rail",
+      "sights",
+      "muzzle"
+    ],
+    "acceptsAmmoArchetype": [
+      "shotgun"
+    ]
+  },
 
   "baseOffset" : [0.25, -0.25],
-  "muzzleOffset" : [2, 0.375],
-  "ejectionPortOffset": [-0.5, 0.625],
+  "muzzleOffset" : [2, 0.3125],
+  "ejectionPortOffset": [-0.125, 0.5],
   "magazineOffset": [0, 0],
+
+  "railOffset": [1.5, 0],
+  "sightsOffset": [0, 0.375],
+
+  
+  "debugPointColors": {
+    "rail": "red",
+    "sights": "orange",
+    "underbarrel": "green",
+    "stock": "magenta"
+  },
 
   "scripts" : ["/items/active/weapons/ranged/project45gunneo.lua"],
     
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
+
     "baseDamage": 10,
     "maxAmmo": 6,
     "bulletsPerReload": 1,

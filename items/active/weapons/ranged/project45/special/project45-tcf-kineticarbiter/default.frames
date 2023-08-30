@@ -1,47 +1,20 @@
 {  
   "frameGrid" : {
-    "size" : [42, 14],
-    "dimensions" : [9, 6],
+    "size" : [41, 16],
+    "dimensions" : [3, 6],
     "names" : [
-      ["idle.1", null, null, null, null, null, null, null, null],
-      [
-        "firing.1",
-        "firing.2",
-        "firing.3",
-        "firing.4",
-        "firing.5",
-        "firing.6",
-        "firing.7",
-        "firing.8",
-        "firing.9"
-      ],
-      [
-        "ejecting.1",
-        "ejecting.2",
-        "ejecting.3",
-        "ejecting.4",
-        null, null, null, null, null
-      ],
-      [
-        "ejected.1",
-        null, null, null, null, null, null, null, null
-      ],
-      [
-        "feeding.1",
-        "feeding.2",
-        "feeding.3",
-        null, null, null, null, null, null
-      ],
-      [
-        "open.1",
-        null, null, null, null, null, null, null, null
-      ]
+      ["idle.1", null, null],
+      ["firing.1", "firing.2", "firing.3"],
+      ["fired.1", null, null],
+      ["ejecting.1", "ejecting.2", null],
+      ["feeding.1", "feeding.2", null],
+      ["open.1", null, null]
     ]
   },
 
   "aliases" : {
-    "jammed.1": "idle.1",
-    "unjamming.1": "idle.1",
-    "fired.1": "firing.9"
+    "ejected.1": "ejecting.2",
+    "jammed.1": "fired.1",
+    "unjamming.1": "feeding.1"
   }
 }

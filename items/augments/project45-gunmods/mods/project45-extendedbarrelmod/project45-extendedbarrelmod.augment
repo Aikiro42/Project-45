@@ -23,7 +23,7 @@
     "sprite": {
       "image": "/items/augments/project45-gunmods/mods/project45-extendedbarrelmod/project45-extendedbarrelmodsprite.png",
       "zLevel" : 5,
-      "offset" : [0.5, -0.125]
+      "offset" : [0.5, -0.0625]
     }
     
   },

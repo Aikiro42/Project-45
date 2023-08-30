@@ -16,25 +16,14 @@
 
   "project45GunModInfo": {
     "category": "ballistic",
-    "acceptsAmmoTypes": {
-      "bullet": true
-    },
-    "acceptsAmmoArchetypes": {
-      "generic": true
-    },
-    "acceptsModSlot": {
-      "rail": true,
-      "sights": false,
-      "muzzle": false,
-      "stock": false,
-      "underbarrel": false,
-      
-      "receiver": false,
-      "material": true,
-      "barrel": false,
-      "grip": false,
-      "magazine": false
-    }
+    "acceptsAmmoArchetype": [
+      "rocket",
+      "grenade"
+    ],
+    "acceptsModSlot": [
+      "rail",
+      "sights"
+    ]
   },
 
   "animationParts" : {
@@ -135,14 +124,24 @@
   
   "baseOffset" : [-0.25, 0.625],
   "muzzleOffset" : [3.25, 0.5],
-  "ejectionPortOffset": [0.625, 0.7],
+  "ejectionPortOffset": [0.25, 0.75],
   "magazineOffset": [0.7, 0.7],
-  "railOffset": [-0.5, 0.875],
+  
+  "railOffset": [0, 0.5],
+  "sightsOffset": [1, 0.5],
+
+  "debugPointColors": {
+    "rail": "red",
+    "sights": "orange",
+    "underbarrel": "green",
+    "stock": "magenta"
+  },
 
   "scripts" : ["/items/active/weapons/ranged/project45gunneo.lua"],
     
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
+    
     "cycleTime": 1,
     "semi": true,
     "chargeFrames": 1,
@@ -153,6 +152,7 @@
     "projectileType": "project45stdrocket",
     "hideMuzzleFlash": true,
     "resetChargeAfterFire": true,
+    
     "audibleEjection": true,
     "ejectMagOnEmpty": "ejecting",
 
