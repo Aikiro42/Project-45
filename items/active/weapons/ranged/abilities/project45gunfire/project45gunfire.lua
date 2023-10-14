@@ -1394,15 +1394,6 @@ function Project45GunFire:updateCursor()
         (mcontroller.crouching()      and self.recoverTime.crouching)  or
     (not mcontroller.running()        and self.recoverTime.stationary) or 
                                           self.recoverTime.mobile
-  
-  --[[
-  for x, y in pairs(self.inaccuracy) do
-    if y == self.currentInaccuracy then
-      activeItem.setCursor("/cursors/project45reticle" .. x .. ".cursor")
-      break
-    end
-  end
-  --]]
 end
 
 -- SECTION: EVAL FUNCTIONS
