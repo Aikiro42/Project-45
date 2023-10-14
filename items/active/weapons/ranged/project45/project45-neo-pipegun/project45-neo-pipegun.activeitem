@@ -16,6 +16,7 @@
 
   "project45GunModInfo": {
     "category": "ballistic",
+    "statModCountMax": 20,
     "acceptsAmmoArchetype": [
       "bullet",
       "shotgun"

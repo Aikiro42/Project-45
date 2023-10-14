@@ -14,6 +14,17 @@
   "muzzleFlashColor": [150, 203, 231],
   "inventoryIcon" : "project45-pkf-typhon-icon.png",
 
+  "project45GunModInfo": {
+    "category": "experimental",
+    "statModCountMax": 10,
+    "acceptsAmmoArchetype": [
+    ],
+    "acceptsModSlot": [
+    ],
+    "flipSlot": [
+    ]
+  },
+
   "animationParts" : {
     "middle" : "project45-pkf-typhon.png",
     "middleFullbright" : "project45-pkf-typhon-fullbright.png",
@@ -207,6 +218,7 @@
     
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
+    "baseDamage": 10,
     "projectileType": ["project45knightfallplasmabullet", "project45knightfallpiercingplasmabullet"],
     "cycleTime": 0.01,
     "multishot": 1.5,

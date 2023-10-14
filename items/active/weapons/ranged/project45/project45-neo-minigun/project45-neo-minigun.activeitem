@@ -15,6 +15,8 @@
   "inventoryIcon" : "project45-neo-minigun-icon.png",
 
   "project45GunModInfo": {
+    "category": "ballistic",
+    "statModCountMax": 10,
     "acceptsModSlot": [
       "rail",
       "sights",

@@ -312,6 +312,22 @@ function build(directory, config, parameters, level, seed)
         modListDesc = modListDesc .. "^reset;"
       end
 
+      --[[
+      local maxStatModsDesc = ""
+      
+      if config.project45GunModInfo and config.project45GunModInfo.statModCountMax
+      and parameters.statModCount
+      then
+        if config.project45GunModInfo.statModCountMax > -1 then
+          maxStatModsDesc = config.project45GunModInfo.statModCountMax <= parameters.statModCount and "^#FF5050;Max stat mods.\n^reset;" or "^#abfc6d;".. config.project45GunModInfo.statModCountMax - parameters.statModCount .."free stat upgrades.\n^reset;"
+        else
+          maxStatModsDesc ="^#abfc6d;Unlimited stat upgrades.\n^reset;"
+        end
+      else
+        maxStatModsDesc ="^#FF5050;Unlimited stat upgrades.\n^reset;"
+      end
+      --]]
+
       local finalDescription = heavyDesc .. chargeDesc .. overchargeDesc .. multishotDesc .. modListDesc -- .. config.description
       config.description = finalDescription == "" and "^#777777;No notable qualities.^reset;" or finalDescription
 

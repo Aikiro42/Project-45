@@ -44,6 +44,7 @@
 
   "project45GunModInfo":{
     "category": "energy",
+    "statModCountMax": 10,
     "acceptsAmmoArchetypes":[],
     "acceptsModSlot": [
       "rail",

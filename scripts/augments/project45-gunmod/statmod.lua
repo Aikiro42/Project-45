@@ -15,8 +15,9 @@ function apply(input)
   if augment then
 
     local statList = input.parameters.statList or {nil} -- retrieve stat mods
-    local statModCount = input.parameters.statModCount
+    local statModCount = input.parameters.statModCount or 0
     local statModCountMax = modInfo.statModCountMax or -1
+    sb.logInfo(sb.printJson(statModCountMax))
     -- MOD INSTALLATION GATES
 
     -- If the max number of stat mods that can be installed is specified (i.e. non-negative number)
