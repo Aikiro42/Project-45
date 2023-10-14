@@ -117,12 +117,15 @@
     },
 
     "sounds": {
-			"fire": ["/sfx/gun/plasma_gun9.ogg"],
+			"fire": ["/sfx/project45neosfx/special/typhon/fire-typhon.ogg"],
       "altFire": ["/sfx/gun/plasma_gun10.ogg"],
       "chargeDrone": ["/sfx/projectiles/zone_power_loop.ogg"],
       "chargeWhine": ["/sfx/tech/tech_hoverloop.ogg"],
-      "reloadStart": ["/sfx/project45-synthetikmechanics/foleys/getmag_ammobox.ogg"],
-      "ejectMag": ["/sfx/project45-synthetikmechanics/reloads/ejectmag_lmg.ogg"]
+      "boltPull": [ "/sfx/project45neosfx/boltpull/boltpull-rifle1.ogg" ],
+      "boltPush": [ "/sfx/project45neosfx/boltpush/boltpush-rifle1.ogg" ],
+      "reloadStart": ["/sfx/project45neosfx/getmag/getmag-box1.ogg"],
+      "reloadEnd": [ "/sfx/project45neosfx/loadmag/loadmag-heavy1.ogg" ],
+      "ejectMag": ["/sfx/project45neosfx/ejectmag/ejectmag-heavy1.ogg"]
 
       //*/
     },
