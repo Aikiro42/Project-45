@@ -58,9 +58,9 @@
     },
 
     "sounds": {
-      "fire" : ["/sfx/project45-synthetikmechanics/special/kineticarbiter/kineticarbiter_fire.ogg"],
-      "boltPull" : ["/sfx/project45-synthetikmechanics/special/kineticarbiter/kineticarbiter_boltpull.ogg"],
-      "boltPush" : ["/sfx/project45-synthetikmechanics/special/kineticarbiter/kineticarbiter_boltpush.ogg"]
+      "fire" : ["/sfx/project45neosfx/special/kineticarbiter/kineticarbiter_fire.ogg"],
+      "boltPull" : ["/sfx/project45neosfx/special/kineticarbiter/kineticarbiter_boltpull.ogg"],
+      "boltPush" : ["/sfx/project45neosfx/special/kineticarbiter/kineticarbiter_boltpush.ogg"]
     },
     "animatedParts": {
       "parts":{
