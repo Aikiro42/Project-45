@@ -51,7 +51,6 @@
     },
 
     "sounds": {
-      // "chargeWhine" : ["/sfx/project45-synthetikmechanics/charges/chargewhine_generic.ogg"],
       "chargeWhine" : ["/sfx/project45neosfx/chargewhine/chargewhine-01.ogg"],
       "chargeDrone" : ["/sfx/project45neosfx/chargedrone/chargedrone-01.ogg"],  
       "fire" : ["/sfx/project45neosfx/fire/fire-lmg2.ogg"],
