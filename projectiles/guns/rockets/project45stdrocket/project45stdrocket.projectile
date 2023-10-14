@@ -25,5 +25,5 @@
   "maxSpeed" : 100,
   "controlForce" : 100,
 
-  "persistentAudio" : "/sfx/project45-synthetikmechanics/charges/flamethrower_hiss_loop.ogg"
+  "persistentAudio" : "/sfx/project45neosfx/chargedrone/chargedrone-03.ogg"
 }
