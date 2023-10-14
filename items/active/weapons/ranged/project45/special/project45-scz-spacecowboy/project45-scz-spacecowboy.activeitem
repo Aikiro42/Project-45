@@ -59,15 +59,15 @@
     },
 
     "sounds": {
-      "ejectMag": ["/sfx/project45-synthetikmechanics/special/spacecowboy/spacecowboy_ejectmag.ogg"],
-      "reloadStart": ["/sfx/project45-synthetikmechanics/special/spacecowboy/spacecowboy_feedmag.ogg"],  
+      "ejectMag": ["/sfx/project45neosfx/special/spacecowboy/spacecowboy_ejectmag.ogg"],
+      "reloadStart": ["/sfx/project45neosfx/special/spacecowboy/spacecowboy_feedmag.ogg"],  
 
-      "perfectReload": ["/sfx/project45-synthetikmechanics/special/spacecowboy/spacecowboy_perfectreload.ogg"],
+      "perfectReload": ["/sfx/project45neosfx/special/spacecowboy/spacecowboy_perfectreload.ogg"],
 
-      "boltPull": ["/sfx/project45-synthetikmechanics/special/spacecowboy/spacecowboy_boltpull.ogg"],
-      "boltPush": ["/sfx/project45-synthetikmechanics/special/spacecowboy/spacecowboy_boltpush.ogg"],
+      "boltPull": ["/sfx/project45neosfx/special/spacecowboy/spacecowboy_boltpull.ogg"],
+      "boltPush": ["/sfx/project45neosfx/special/spacecowboy/spacecowboy_boltpush.ogg"],
   
-      "fire" : ["/sfx/project45-synthetikmechanics/special/spacecowboy/spacecowboy_fire.ogg"]
+      "fire" : ["/sfx/project45neosfx/special/spacecowboy/spacecowboy_fire.ogg"]
     }
   },
 
