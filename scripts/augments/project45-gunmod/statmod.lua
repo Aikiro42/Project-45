@@ -31,8 +31,8 @@ function apply(input)
     -- MOD INSTALLATION PROCESS
 
     -- prepare to alter stats and the primary ability in general
-    local oldPrimaryAbility = output.config.primaryAbility or {}
-    local newPrimaryAbility = input.parameters.primaryAbility or {}
+    local oldPrimaryAbility = sb.jsonMerge(output.config.primaryAbility, input.parameters.primaryAbility or {})
+    local newPrimaryAbility = {}
 
     -- Alter Damage Per Shot
     if augment.baseDamage then
@@ -53,11 +53,14 @@ function apply(input)
 
     -- Alter general Fire Rate
     if augment.fireRate then
+
     
         local newCycleTime = oldPrimaryAbility.cycleTime
         local newChargeTime = oldPrimaryAbility.chargeTime
         local newOverchargeTime = oldPrimaryAbility.overchargeTime
         local newFireTime = oldPrimaryAbility.fireTime
+        
+        sb.logInfo(sb.printJson(oldPrimaryAbility))
         
         if augment.fireRate.operation == "add" then
             
