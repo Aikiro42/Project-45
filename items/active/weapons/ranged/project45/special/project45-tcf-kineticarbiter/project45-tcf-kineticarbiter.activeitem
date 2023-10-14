@@ -14,6 +14,17 @@
   "muzzleFlashColor": [200, 255, 255],
   "inventoryIcon" : "project45-tcf-kineticarbiter-icon.png",
 
+  "project45GunModInfo": {
+    "category": "ballistic",
+    "acceptsAmmoArchetype": [
+    ],
+    "acceptsModSlot": [
+      "sights"
+    ],
+    "flipSlot": [
+    ]
+  },
+
   "animationParts" : {
     "middle" : "project45-tcf-kineticarbiter.png",
     "middleFullbright" : "project45-tcf-kineticarbiter-fullbright.png",
@@ -141,6 +152,8 @@
   "muzzleOffset" : [0.25, 0.25],
   "ejectionPortOffset": [-0.25, 0.5],
   "magazineOffset": [-1, 0.25],
+
+  "sightsOffset": [1, 1.375],
 
   "scripts" : ["/items/active/weapons/ranged/project45gunneo.lua"],
     
