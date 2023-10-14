@@ -51,7 +51,7 @@
     },
 
     "sounds": {
-      "eject": ["/sfx/project45-synthetikmechanics/reloads/ejectmag_revolver.ogg"],
+      "ejectMag": ["/sfx/project45-synthetikmechanics/reloads/ejectmag_revolver.ogg"],
       "boltPull": ["/sfx/project45-synthetikmechanics/reloads/boltpush_revolver.ogg"],
       "fire" : ["/sfx/project45-synthetikmechanics/special/magmaspitter/magmaspitter_fire.ogg"],
       "reloadStart" : ["/sfx/project45-synthetikmechanics/foleys/getmag_revolver.ogg"]

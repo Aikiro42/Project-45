@@ -59,7 +59,7 @@
     },
 
     "sounds": {
-      "eject": ["/sfx/project45-synthetikmechanics/special/spacecowboy/spacecowboy_ejectmag.ogg"],
+      "ejectMag": ["/sfx/project45-synthetikmechanics/special/spacecowboy/spacecowboy_ejectmag.ogg"],
       "reloadStart": ["/sfx/project45-synthetikmechanics/special/spacecowboy/spacecowboy_feedmag.ogg"],  
 
       "perfectReload": ["/sfx/project45-synthetikmechanics/special/spacecowboy/spacecowboy_perfectreload.ogg"],

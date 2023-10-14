@@ -37,7 +37,7 @@
     },
 
     "sounds": {
-      "fire" : ["/sfx/project45-synthetikmechanics/fires/fire_energyar.ogg"],
+      "fire" : ["/sfx/project45neosfx/fire/fire-energy1.ogg"],
       "hollow": []
     }
   },

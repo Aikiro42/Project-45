@@ -51,11 +51,20 @@
     },
 
     "sounds": {
-      "eject": ["/sfx/project45-synthetikmechanics/reloads/ejectmag_revolver.ogg"],
-      "boltPush": ["/assetmissing.wav"],
-      "boltPull": ["/sfx/project45-synthetikmechanics/reloads/boltpush_revolver.ogg"],
-      "fire" : ["/sfx/project45-synthetikmechanics/fires/fire_revolver.ogg"],
-      "reloadStart" : ["/sfx/project45-synthetikmechanics/foleys/getmag_revolver.ogg"]
+      "ejectMag": [ "/sfx/project45neosfx/ejectmag/ejectmag-breakaction1.ogg" ],
+      "boltPush": [ ],
+      "boltPull": ["/sfx/project45neosfx/click/click-03.ogg"],
+      "fire" : ["/sfx/project45neosfx/fire/fire-revolver1.ogg"],
+      "reloadEnd" : ["/sfx/project45neosfx/loadmag/loadmag-revolver1.ogg"],
+      "loadRound": ["/sfx/project45neosfx/loadround/loadround-revolver1.ogg"],
+      "goodReload": [ ],
+      "ejectCasing": [
+        "/sfx/project45neosfx/ejectcasing/ejectcasing-brass1.ogg",
+        "/sfx/project45neosfx/ejectcasing/ejectcasing-brass2.ogg",
+        "/sfx/project45neosfx/ejectcasing/ejectcasing-brass3.ogg",
+        "/sfx/project45neosfx/ejectcasing/ejectcasing-brass4.ogg",
+        "/sfx/project45neosfx/ejectcasing/ejectcasing-brass5.ogg"
+      ]
     },
     "animatedParts": {
       "parts":{

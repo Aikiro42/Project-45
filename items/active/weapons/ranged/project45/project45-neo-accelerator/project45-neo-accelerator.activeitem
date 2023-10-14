@@ -4,7 +4,7 @@
   "maxStack" : 1,
   "rarity" : "Essential",
   "description" : "An entry-level firearm.",
-  "shortdescription" : "New Accelerator",
+  "shortdescription" : "Accelerator",
   "gunArchetype": "Energy Gun",
   "tooltipKind" : "project45gun",
   "category" : "rifle",
@@ -49,8 +49,10 @@
     },
 
     "sounds": {
-      "fire" : ["/sfx/project45-synthetikmechanics/fires/fire_energyar.ogg"],
-      "chargeDrone": ["/sfx/project45-synthetikmechanics/charges/flamethrower_hiss_loop.ogg"]
+      "fire" : ["/sfx/project45neosfx/fire/fire-energy2.ogg"],
+      "boltPull": [],
+      "boltPush": ["/sfx/project45neosfx/click/click-03.ogg"],
+      "chargeDrone": ["/sfx/project45neosfx/chargedrone/chargedrone-03.ogg"]
     },
 
     "animatedParts": {

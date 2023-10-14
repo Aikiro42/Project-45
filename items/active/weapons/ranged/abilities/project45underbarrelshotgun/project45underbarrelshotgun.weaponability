@@ -47,12 +47,12 @@
       }
     },
     "sounds" : {
-      "altFire" : [ "/sfx/project45-synthetikmechanics/fires/fire_shotgun.ogg" ],
-      "open" : [ "/sfx/project45-synthetikmechanics/reloads/boltpull_shotgun.ogg" ],
-      "load" : [ "/sfx/project45-synthetikmechanics/reloads/boltpush_shotgun.ogg" ],
+      "altFire" : [ "/sfx/project45neosfx/fire/fire-shotgun1.ogg" ],
+      "open" : [ "/sfx/project45neosfx/boltpull/boltpull-shotgun1.ogg" ],
+      "load" : [ "/sfx/project45neosfx/boltpush/boltpush-shotgun1.ogg" ],
       "altInsertRound" : [
-        "/sfx/project45-synthetikmechanics/reloads/loadround_shotgun_01.ogg",
-        "/sfx/project45-synthetikmechanics/reloads/loadround_shotgun_02.ogg"]
+        "/sfx/project45neosfx/loadround/loadround-shotgun1.ogg",
+        "/sfx/project45neosfx/loadround/loadround-shotgun2.ogg"]
     },
     "lights" : {
       "altMuzzle" : {

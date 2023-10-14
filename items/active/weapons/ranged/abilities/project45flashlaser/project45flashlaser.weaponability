@@ -79,7 +79,7 @@
     },
     "sounds" : {
       "flashlight" : [ "/sfx/tools/flashlight_toggle.ogg" ],
-      "laser" : [ "/sfx/project45-synthetikmechanics/laser.ogg" ]
+      "laser" : [ "/sfx/project45neosfx/laser.ogg" ]
     }
   },
 

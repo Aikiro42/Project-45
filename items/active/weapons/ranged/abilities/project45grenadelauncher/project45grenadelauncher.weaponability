@@ -48,8 +48,8 @@
       "altFire" : [
         "/sfx/gun/grenade1.ogg"
       ],
-      "open" : [ "/sfx/project45-synthetikmechanics/reloads/boltpull_shotgun.ogg" ],
-      "load" : [ "/sfx/project45-synthetikmechanics/reloads/boltpush_shotgun.ogg" ],
+      "open" : [ "/sfx/project45neosfx/boltpull/boltpull-shotgun1.ogg" ],
+      "load" : [ "/sfx/project45neosfx/boltpush/boltpush-shotgun1.ogg" ],
       "charge" : [ "/sfx/interface/sniper_mark_pitch1.ogg" ]
     },
     "lights" : {

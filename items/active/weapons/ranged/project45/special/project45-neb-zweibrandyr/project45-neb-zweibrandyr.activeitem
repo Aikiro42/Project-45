@@ -55,7 +55,7 @@
       "chargeDrone": ["/sfx/project45-synthetikmechanics/charges/flamethrower_hiss_loop.ogg"],
       "chargeWhine": ["/assetmissing.wav"],
       "reloadStart": ["/sfx/project45-synthetikmechanics/foleys/getmag_ammobox.ogg"],
-      "eject": ["/sfx/project45-synthetikmechanics/reloads/ejectmag_lmg.ogg"]
+      "ejectMag": ["/sfx/project45-synthetikmechanics/reloads/ejectmag_lmg.ogg"]
 
       //*/
     },

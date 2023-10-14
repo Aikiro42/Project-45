@@ -219,6 +219,8 @@
     
     "internalMag": false, // whether the "magazine" is a strip or a clip (makes magazine invisible)
     "loadRoundsThroughBolt": false, // whether the bolt must be opened before doing the reload sequence.
+
+    // "postReloadDelay": null, // float; time to wait before cocking in seconds, cockTime/8 by default
     
     // determines whether the gun is break-action, i.e. breaks open when ejecting the mag
     // dictates whether the gun animation accesses the "open" state
@@ -293,6 +295,8 @@
     // by default, gun reaches final RoF when fired for 3s straight
     // if gun is fired for 1.5s straight, it will take 1.5s to decay to initial cycle time
     "cycleTimeMaxTime": 3,
+
+    // midCockDelay: null, // float; time to wait before pushing bolt in seconds
 
     // multipliers for cycle time growth and decay
     // only matters if cycleTime is a 2-element array of floats

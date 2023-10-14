@@ -39,10 +39,9 @@
 
     "sounds": {
       "fire" : [
-        "/sfx/project45-synthetikmechanics/fires/fire_ar_1.ogg",
-        "/sfx/project45-synthetikmechanics/fires/fire_ar_2.ogg",
-        "/sfx/project45-synthetikmechanics/fires/fire_ar_3.ogg"
-      ]
+        "/sfx/project45neosfx/fire/fire-rifle1.ogg"
+      ],
+      "boltPush": ["/sfx/project45neosfx/boltpush/boltpush-rifle1.ogg"]
     }
   },
 

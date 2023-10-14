@@ -12,8 +12,8 @@
             }
         }},
         "sounds" : {
-            "aimFoley" : [ "/sfx/project45-synthetikmechanics/reloads/insertmag_generic.ogg" ],
-            "laser" : [ "/sfx/project45-synthetikmechanics/laser.ogg" ]
+            "aimFoley" : [ "/sfx/project45neosfx/getmag/getmag-generic1.ogg" ],
+            "laser" : [ "/sfx/project45neosfx/laser.ogg" ]
         }
     },
 

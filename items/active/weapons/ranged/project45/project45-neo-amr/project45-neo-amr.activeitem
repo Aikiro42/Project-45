@@ -41,20 +41,33 @@
     "particleEmitters": {
       "ejectionPort": {
         "particles": [
-          {"particle": "project45bulletcase"}
+          {"particle": "project45bulletcase"},
+          {"particle": "rocketbarrelpuff"}
         ]
       },
       "magazine": {
         "particles": [
           {"particle": "project45antimaterielmag"}
         ]
+      },
+      "muzzleFlash" : {
+        "particles" : [ 
+          {"particle": "project45muzzle"},
+          {"particle": "project45muzzle"},
+          {"particle": "project45muzzle"},
+          {"particle": "rocketbarrelpuff"},
+          {"particle": "rocketbarrelpuff"},
+          {"particle": "rocketbarrelpuff"}
+        ]
       }
     },
 
     "sounds": {
-      "boltPull" : ["/sfx/project45-synthetikmechanics/reloads/boltpull_heavybolt.ogg"],
-      "boltPush" : ["/sfx/project45-synthetikmechanics/reloads/boltpush_heavybolt.ogg"],
-      "fire" : ["/sfx/project45-synthetikmechanics/fires/fire_sniper.ogg"]
+      "boltPull" : ["/sfx/project45neosfx/boltpull/boltpull-boltaction2.ogg"],
+      "boltPush" : ["/sfx/project45neosfx/boltpush/boltpush-boltaction2.ogg"],
+      "ejectMag": [ "/sfx/project45neosfx/ejectmag/ejectmag-heavy1.ogg"],
+      "reloadEnd": ["/sfx/project45neosfx/loadmag/loadmag-heavy2.ogg"],
+      "fire" : ["/sfx/project45neosfx/fire/fire-sniper2.ogg"]
     }
   },
 

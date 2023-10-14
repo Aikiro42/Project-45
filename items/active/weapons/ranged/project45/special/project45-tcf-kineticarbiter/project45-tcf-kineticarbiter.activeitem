@@ -151,7 +151,8 @@
     "bulletsPerReload": 4,
     "semi": true,
     "cycleTime": 1,
-    "cockTime": 0.5,
+    "cockTime": 0.25,
+    "midCockDelay": 0.5,
     "reloadTime": 1,
 
     "manualFeed": true,

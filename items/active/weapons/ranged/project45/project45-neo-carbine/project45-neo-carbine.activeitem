@@ -39,7 +39,13 @@
 
     "sounds": {
       "fire" : [
-        "/sfx/project45neosfx/fires/fire_smg.ogg"
+        "/sfx/project45neosfx/fire/fire-smg1.ogg"
+      ],
+      "boltPull": [
+        "/sfx/project45neosfx/boltpull/boltpull-rifle1.ogg"
+      ],
+      "boltPush": [
+        "/sfx/project45neosfx/boltpush/boltpush-rifle1.ogg"
       ]
     }
   },
@@ -93,6 +99,6 @@
       "enabled": false
     }
   },
-
+  
   "builder" : "/items/buildscripts/buildproject45neoneo.lua"
 }

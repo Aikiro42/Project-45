@@ -39,8 +39,11 @@
 
     "sounds": {
       "fire" : [
-        "/sfx/project45neosfx/fires/fire_smg.ogg"
-      ]
+        "/sfx/project45neosfx/fire/fire-smg2.ogg"
+      ],
+      "ejectMag": [ "/sfx/project45neosfx/ejectmag/ejectmag-medium1.ogg" ],
+      "reloadStart": [ "/sfx/project45neosfx/getmag/getmag-generic1.ogg" ],
+      "reloadEnd": [ "/sfx/project45neosfx/loadmag/loadmag-medium1.ogg" ]
     }
   },
 
@@ -80,7 +83,7 @@
     "recoilAmount": 1,
     "recoilMaxDeg": 7.5,
     "recoverDelay": 0.05,
-    "cycleTime": 0.025,
+    "cycleTime": 0.005,
     "projectileKind": "projectile",
 
     "stances": {

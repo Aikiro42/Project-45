@@ -61,15 +61,20 @@
     },
 
     "sounds": {
-      "fire" : ["/sfx/project45-synthetikmechanics/fires/fire_rocketlauncher.ogg"],
-      "ejectCasing": ["/sfx/project45-synthetikmechanics/reloads/ejectshell_rocketlauncher.ogg"],
-      "boltPull" : ["/sfx/project45-synthetikmechanics/reloads/boltpull_rocketlauncher.ogg"],
-      "boltPush" : ["/sfx/project45-synthetikmechanics/reloads/boltpush_rocketlauncher.ogg"],
-      "chargeWhine": ["/assetmissing.wav"],
+      "fire" : ["/sfx/project45neosfx/fire/fire-rocketlauncher1.ogg"],
+      
+      "ejectCasing": ["/sfx/project45neosfx/ejectcasing/ejectcasing-cannon1.ogg"],
+      
+      "boltPull" : ["/sfx/project45neosfx/boltpull/boltpull-cannon1.ogg"],
+      "boltPush" : ["/sfx/project45neosfx/boltpush/boltpush-cannon1.ogg"],
+      
+      "chargeWhine": [ ],
       "chargeDrone": ["/sfx/interface/sniper_mark_pitch1.ogg"],
 
-      "loadRound" : ["/sfx/project45-synthetikmechanics/reloads/loadround_grenadelauncher.ogg"],
-      "eject": ["/assetmissing.wav"]
+      "reloadStart": [ "/sfx/project45neosfx/getmag/getmag-tank1.ogg" ],
+      "reloadEnd" : ["/sfx/project45neosfx/loadround/loadround-grenade1.ogg"],
+      
+      "ejectMag": [ ]
 
       //*/
     },

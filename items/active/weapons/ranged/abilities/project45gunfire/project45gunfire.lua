@@ -143,6 +143,8 @@ function Project45GunFire:init()
   self.muzzleSmokeTimer = 0
 
   -- initialize animation stuff
+
+  -- animator.setSoundVolume("ejectCasing", 0.8)
   
   activeItem.setScriptedAnimationParameter("performanceMode", self.performanceMode)
 
@@ -580,6 +582,11 @@ function Project45GunFire:feeding()
   or self.reloadTimer >= 0)                         -- or the gun was just reloaded/is cocking
   or self.isCocking
   then
+
+    if self.midCockDelay then
+      util.wait(self.midCockDelay)
+    end
+
     animator.playSound("boltPush")                -- then we were cocking back, and we should cock forward
     animator.setAnimationState("gun", "boltPushing")
   else
@@ -1003,8 +1010,11 @@ function Project45GunFire:discardCasings(numCasings)
   if storage.unejectedCasings > 0 or numCasings then
     animator.setParticleEmitterBurstCount("ejectionPort", numCasings or storage.unejectedCasings)
     animator.burstParticleEmitter("ejectionPort")
+    for casing = numCasings or storage.unejectedCasings, 0, -1 do
+      animator.setSoundPitch("ejectCasing", sb.nrand(0.075, 1))
+      animator.playSound("ejectCasing")
+    end
     storage.unejectedCasings = 0
-    animator.playSound("ejectCasing")
   end
 end
 
@@ -1056,7 +1066,7 @@ function Project45GunFire:ejectMag()
     animator.setAnimationState("gun", "open")
   end
   animator.setAnimationState("magazine", "absent")
-  animator.playSound("eject")
+  animator.playSound("ejectMag")
   animator.burstParticleEmitter("magazine")
   self:setStance(self.stances.empty)
 

@@ -58,7 +58,7 @@
 
     "sounds": {
       "fire" : [
-        "/sfx/project45-synthetikmechanics/fires/fire_energyar.ogg"
+        "/sfx/project45neosfx/fire/fire-energy2.ogg"
       ]
     }
   },

@@ -38,17 +38,17 @@
 
     "sounds": {
       "fire" : [
-        "/sfx/project45-synthetikmechanics/special/scarlet/scarlet_fire1.ogg",
-        "/sfx/project45-synthetikmechanics/special/scarlet/scarlet_fire2.ogg",
-        "/sfx/project45-synthetikmechanics/special/scarlet/scarlet_fire3.ogg"
+        "/sfx/project45neosfx/special/scarlet/scarlet_fire1.ogg",
+        "/sfx/project45neosfx/special/scarlet/scarlet_fire2.ogg",
+        "/sfx/project45neosfx/special/scarlet/scarlet_fire3.ogg"
       ],
       "reloadStart": [
-        "/sfx/project45-synthetikmechanics/special/scarlet/scarlet_reloadstart.ogg"
+        "/sfx/project45neosfx/special/scarlet/scarlet_reloadstart.ogg"
       ],
       "reloadEnd": [
-        "/sfx/project45-synthetikmechanics/special/scarlet/scarlet_reloadend.ogg"
+        "/sfx/project45neosfx/special/scarlet/scarlet_reloadend.ogg"
       ],
-      "eject" : [],
+      "ejectMag" : [],
       "boltPull" : [],
       "boltPush" : [],
       "click": []

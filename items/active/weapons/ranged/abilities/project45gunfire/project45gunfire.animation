@@ -630,48 +630,69 @@
   },
 
   "sounds" : {
-    "fire": ["/sfx/project45-synthetikmechanics/fires/fire_pistol.ogg"],
-    /*
-    "fireStart": ["/sfx/gun/mech_beamsniper_fire1.ogg"],
-    "fireLoop": ["/sfx/gun/mech_beamdrill_loop.ogg"],
-    "fireEnd": ["/sfx/gun/mech_beamdrill_winddown.ogg"],
-    */
+    
+    // plays every time the gun fires
+    "fire": ["/sfx/project45neosfx/fire/fire-pistol1.ogg"],
+
+    // functions as expected of vanilla starbound
     "fireStart": [ ],
     "fireLoop": [ ],
     "fireEnd": [ ],
 
-    "click": ["/sfx/project45-synthetikmechanics/clicks/click_generic.ogg"],
+    // plays when the gun isn't jammed and cannot be fired.
+    "click": ["/sfx/project45neosfx/click/click-01.ogg"],
 
-    "jam": ["/sfx/project45-synthetikmechanics/clicks/click_jammed.ogg"],
-    "unjam": ["/sfx/project45-synthetikmechanics/clicks/click_unjam.ogg"],
-    "hollow": ["/sfx/project45neosfx/foleys/hollow1.ogg"],
-    // "hollow": ["/sfx/project45neosfx/foleys/hollow0.ogg"],
-
-    "eject": ["/sfx/project45-synthetikmechanics/reloads/ejectmag_generic_1.ogg"],
-    "ejectCasing": ["/assetmissing.wav"], // plays every time casing(s) is/are ejected
-
-    "reloadStart": ["/sfx/project45-synthetikmechanics/foleys/getmag_generic.ogg"],
-    "loadRound": ["/sfx/project45-synthetikmechanics/reloads/loadround_generic.ogg"],
-    "reloadEnd": ["/sfx/project45-synthetikmechanics/reloads/insertmag_generic.ogg"],
-
-    "badReload": [
-      "/sfx/project45-synthetikmechanics/reloads/badreload_mag_1.ogg",
-      "/sfx/project45-synthetikmechanics/reloads/badreload_mag_2.ogg"
-    ],
-    "goodReload": ["/sfx/project45-synthetikmechanics/reloads/goodreload_generic_1.ogg"],
-    "perfectReload": ["/sfx/project45-synthetikmechanics/reloads/perfectreload_generic_1.ogg"],
-
-    "boltPull": ["/sfx/project45-synthetikmechanics/reloads/boltpull_generic.ogg"],
-    "boltPush": ["/sfx/project45-synthetikmechanics/reloads/boltpush_generic.ogg"],
+    // plays when the gun jams
+    "jam": ["/sfx/project45neosfx/jam.ogg"],
     
-    /*
-    "chargeWhine" : ["/sfx/project45-synthetikmechanics/charges/chargewhine_generic.ogg"],
-    "chargeDrone" : ["/sfx/project45-synthetikmechanics/charges/chargedrone_generic.ogg"],
-    */
+    // plays when the gun is jammed and player attempts to fire, i.e. unjamming
+    "unjam": ["/sfx/project45neosfx/click/click-02.ogg"],
+
+    // plays every time the gun is shot; increases in volume the lower the ammo count
+    "hollow": ["/sfx/project45neosfx/hollow/hollow-01.ogg"],
+
+    // plays when attempting to fire while ammo count is 0
+    "ejectMag": ["/sfx/project45neosfx/ejectmag/ejectmag-medium1.ogg"],
+
+    "ejectCasing": [ ], // plays every time casing(s) is/are ejected
+
+    // plays when reload minigame is started (i.e. attempt to fire while there is no magazine)
+    // usually sounds like someone retrieving a magazine (getmag)
+    "reloadStart": ["/sfx/project45neosfx/getmag/getmag-generic1.ogg"],
+    
+    // plays when reload minigame resets i.e. fraction of max ammo is loaded
+    "loadRound": ["/sfx/project45neosfx/loadround/loadround-rifle1.ogg"],
+    
+    // plays when reload game ends
+    // usually sounds like a magazine inserted (loadmag)
+    "reloadEnd": ["/sfx/project45neosfx/loadmag/loadmag-light1.ogg"],
+
+    // plays when there is an active reload and the red indicator is over the white zone
+    "badReload": [
+      "/sfx/project45neosfx/reloads/badreload1.ogg",
+      "/sfx/project45neosfx/reloads/badreload2.ogg"
+    ],
+
+    // plays when there is an active reload and the red indicator is over the purple zone
+    "goodReload": ["/sfx/project45neosfx/reloads/goodreload1.ogg"],
+
+    // plays when there is an active reload and the red indicator is over the pink zone
+    "perfectReload": ["/sfx/project45neosfx/reloads/perfectreload1.ogg"],
+
+    // plays when the gun ejects; may not play all the time depending on gun's current state
+    // may be audible while gun is cocking regardless of whether it's manual-fed or not
+    "boltPull": ["/sfx/project45neosfx/boltpull/boltpull-generic1.ogg"],
+
+    // plays when the gun feeds; may not play all the time depending on gun's current state
+    // audible while gun is cocking regardless of whether it's manual-fed or not
+    "boltPush": ["/sfx/project45neosfx/boltpush/boltpush-generic1.ogg"],
+    
+    // plays while charging; increases in pitch the closer the charge is to 100%
     "chargeWhine": [ ],
+    // plays while charging; increases in volume the closer the charge is to 100%
     "chargeDrone": [ ],
     
-    // compatibility
+    // properties present for compatibility
     "beamImpact": []
     
   }

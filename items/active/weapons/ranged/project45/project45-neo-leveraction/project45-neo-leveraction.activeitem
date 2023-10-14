@@ -51,9 +51,12 @@
     },
 
     "sounds": {
-      "eject": ["/assetmissing.wav"],
-      "boltPull" : ["/sfx/project45-synthetikmechanics/reloads/boltpull_shotgun.ogg"],
-      "boltPush" : ["/sfx/project45-synthetikmechanics/reloads/boltpush_shotgun.ogg"]
+      "ejectMag": [ ],
+      "boltPull" : ["/sfx/project45neosfx/boltpull/boltpull-generic1.ogg"],
+      "boltPush" : ["/sfx/project45neosfx/boltpush/boltpush-shotgun1.ogg"],
+      "fire": [ "/sfx/project45neosfx/fire/fire-pistol1.ogg"],
+      "loadRound": ["/sfx/project45neosfx/loadround/loadround-revolver1.ogg"],
+      "goodReload": [ ]
     }
   },
 

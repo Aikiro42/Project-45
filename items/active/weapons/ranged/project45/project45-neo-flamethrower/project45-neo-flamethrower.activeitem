@@ -47,17 +47,21 @@
       }
     },
 
+    /*
+    flamethrower doesnt use fire; it uses an audio loop as firing sound
+    */
     "sounds": {
       "fireStart" : ["/sfx/gun/flamethrower_start.ogg"],
       "fireLoop" : ["/sfx/gun/flamethrower_loop.ogg"],
       "fireEnd" : ["/sfx/gun/flamethrower_stop.ogg"],
       "fire" : [ ],
       "hollow" : [ ],
-      "boltPull" : [ ],
-      "boltPush" : [ ],
-      "eject": ["/sfx/project45-synthetikmechanics/reloads/ejectmag_tank.ogg"],
-      "reloadStart": ["/sfx/project45-synthetikmechanics/foleys/ejectmag_tank.ogg"],
-      "reloadEnd": ["/sfx/project45-synthetikmechanics/reloads/insertmag_tank.ogg"]
+      "boltPull" : [ "/sfx/project45neosfx/boltpull/boltpull-flamethrower1.ogg" ],
+      "boltPush" : [ "/sfx/project45neosfx/boltpush/boltpush-flamethrower1.ogg" ],
+
+      "ejectMag": ["/sfx/project45neosfx/ejectmag/ejectmag-tank1.ogg"],
+      "reloadStart": ["/sfx/project45neosfx/getmag/getmag-tank1.ogg"],
+      "reloadEnd": ["/sfx/project45neosfx/loadmag/loadmag-tank1.ogg"]
     },
     "animatedParts": {
       "parts":{

@@ -37,10 +37,15 @@
     },
 
     "sounds": {
-      "eject": ["/assetmissing.wav"],
-      "boltPull" : ["/sfx/project45-synthetikmechanics/reloads/boltpull_shotgun.ogg"],
-      "boltPush" : ["/sfx/project45-synthetikmechanics/reloads/boltpush_shotgun.ogg"],
-      "fire" : ["/sfx/project45-synthetikmechanics/fires/fire_shotgun.ogg"]
+      "ejectMag": [ ],
+      "goodReload": [ ],
+      "boltPull" : ["/sfx/project45neosfx/boltpull/boltpull-shotgun1.ogg"],
+      "boltPush" : ["/sfx/project45neosfx/boltpush/boltpush-shotgun1.ogg"],
+      "fire" : ["/sfx/project45neosfx/fire/fire-shotgun1.ogg"],
+      "loadRound": [
+        "/sfx/project45neosfx/loadround/loadround-shotgun1.ogg",
+        "/sfx/project45neosfx/loadround/loadround-shotgun2.ogg"
+      ]
     }
   },
   

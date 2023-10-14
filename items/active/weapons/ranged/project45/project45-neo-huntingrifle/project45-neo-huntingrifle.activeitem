@@ -52,10 +52,10 @@
     },
 
     "sounds": {
-      "eject": ["/assetmissing.wav"],
-      "boltPull" : ["/sfx/project45-synthetikmechanics/reloads/boltpull_lightbolt.ogg"],
-      "boltPush" : ["/sfx/project45-synthetikmechanics/reloads/boltpush_lightbolt.ogg"],
-      "fire" : ["/sfx/project45-synthetikmechanics/fires/fire_rifle.ogg"]
+      "ejectMag": [ ],
+      "boltPull" : ["/sfx/project45neosfx/boltpull/boltpull-boltaction1.ogg"],
+      "boltPush" : ["/sfx/project45neosfx/boltpush/boltpush-boltaction1.ogg"],
+      "fire" : ["/sfx/project45neosfx/fire/fire-rifle2.ogg"]
     }
   },
 

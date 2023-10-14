@@ -122,7 +122,7 @@
       "chargeDrone": ["/sfx/projectiles/zone_power_loop.ogg"],
       "chargeWhine": ["/sfx/tech/tech_hoverloop.ogg"],
       "reloadStart": ["/sfx/project45-synthetikmechanics/foleys/getmag_ammobox.ogg"],
-      "eject": ["/sfx/project45-synthetikmechanics/reloads/ejectmag_lmg.ogg"]
+      "ejectMag": ["/sfx/project45-synthetikmechanics/reloads/ejectmag_lmg.ogg"]
 
       //*/
     },

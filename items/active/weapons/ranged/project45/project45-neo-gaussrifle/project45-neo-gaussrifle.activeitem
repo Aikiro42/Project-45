@@ -51,9 +51,11 @@
     },
 
     "sounds": {
-      "chargeWhine" : ["/sfx/project45-synthetikmechanics/charges/chargewhine_generic.ogg"],
-      "chargeDrone" : ["/sfx/project45-synthetikmechanics/charges/chargedrone_generic.ogg"],  
-      "fire" : ["/sfx/project45-synthetikmechanics/fires/fire_gauss.ogg"]
+      "chargeWhine" : ["/sfx/project45neosfx/chargewhine/chargewhine-01.ogg"],
+      "chargeDrone" : ["/sfx/project45neosfx/chargedrone/chargedrone-01.ogg"],  
+      "fire" : ["/sfx/project45neosfx/fire/fire-energy3.ogg"],
+      "ejectMag": [ "/sfx/project45neosfx/ejectmag/ejectmag-heavy1.ogg"],
+      "reloadEnd": ["/sfx/project45neosfx/loadmag/loadmag-heavy2.ogg"]
     },
     "animatedParts": {
       "parts":{

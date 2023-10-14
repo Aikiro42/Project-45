@@ -60,9 +60,9 @@
     },
 
     "sounds": {
-      "reloadStart" : ["/sfx/project45-synthetikmechanics/foleys/getmag_revolver.ogg"],
-      "fire" : ["/sfx/project45-synthetikmechanics/fires/fire_grenadelauncher.ogg"],
-      "loadRound" : ["/sfx/project45-synthetikmechanics/reloads/loadround_grenadelauncher.ogg"]
+      "ejectMag": [ "/sfx/project45neosfx/ejectmag/ejectmag-heavy1.ogg" ],
+      "fire" : ["/sfx/project45neosfx/fire/fire-grenadelauncher1.ogg"],
+      "reloadEnd": [ "/sfx/project45neosfx/loadmag/loadmag-heavy2.ogg" ]
     },
     "animatedParts": {
       "parts":{
