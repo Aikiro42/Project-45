@@ -1,7 +1,6 @@
 require "/scripts/util.lua"
 require "/items/active/weapons/weapon.lua"
 -- require "/items/active/weapons/ranged/gunfire.lua"
--- require "/items/active/weapons/ranged/abilities/synthetikmechanics/synthetikmechanics.lua"
 
 Project45PhaseShift = WeaponAbility:new()
 
