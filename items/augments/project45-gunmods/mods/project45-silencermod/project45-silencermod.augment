@@ -39,7 +39,7 @@
 
     ,"animationCustom": {
       "sounds": {
-        "fire" : ["/sfx/project45-synthetikmechanics/fires/fire_silenced_generic.ogg"]
+        "fire" : ["/sfx/project45neosfx/fire/fire-silenced-generic1.ogg"]
       }
       /*
       ,
