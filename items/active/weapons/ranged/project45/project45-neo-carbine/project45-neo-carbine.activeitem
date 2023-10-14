@@ -4,7 +4,7 @@
   "maxStack" : 1,
   "rarity" : "Essential",
   "description" : "An automatic rifle.",
-  "shortdescription" : "New Carbine",
+  "shortdescription" : "Carbine",
   "tooltipKind" : "project45gun",
   "gunArchetype": "Assault Rifle",
   "category" : "rifle",

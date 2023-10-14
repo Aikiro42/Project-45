@@ -4,7 +4,7 @@
   "maxStack" : 1,
   "rarity" : "Essential",
   "description" : "A minigun.",
-  "shortdescription" : "New Minigun",
+  "shortdescription" : "Minigun",
   "tooltipKind" : "project45gun",
   "gunArchetype": "Gatling Gun",
   "category" : "rifle",

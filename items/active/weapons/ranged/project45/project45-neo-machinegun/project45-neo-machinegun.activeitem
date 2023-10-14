@@ -4,7 +4,7 @@
   "maxStack" : 1,
   "rarity" : "Essential",
   "description" : "An entry-level firearm.",
-  "shortdescription" : "New Machine Gun",
+  "shortdescription" : "Machine Gun",
   "gunArchetype": "LMG",
   "tooltipKind" : "project45gun",
   "category" : "rifle",

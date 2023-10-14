@@ -4,7 +4,7 @@
   "maxStack" : 1,
   "rarity" : "Essential",
   "description" : "An anti-materiel rifle.",
-  "shortdescription" : "New AMR",
+  "shortdescription" : "AMR",
   "tooltipKind" : "project45gun",
   "gunArchetype": "Bolt-action",
   "category" : "sniper",

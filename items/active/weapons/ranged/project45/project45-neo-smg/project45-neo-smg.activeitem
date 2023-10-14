@@ -4,7 +4,7 @@
   "maxStack" : 1,
   "rarity" : "Essential",
   "description" : "A fast-firing submachine gun.",
-  "shortdescription" : "New SMG",
+  "shortdescription" : "SMG",
   "tooltipKind" : "project45gun",
   "gunArchetype": "Submachine Gun",
   "category" : "rifle",

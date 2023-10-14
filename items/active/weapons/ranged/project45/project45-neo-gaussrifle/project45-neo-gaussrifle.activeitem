@@ -4,7 +4,7 @@
   "maxStack" : 1,
   "rarity" : "Essential",
   "description" : "A Gauss rifle.",
-  "shortdescription" : "New Gauss Rifle",
+  "shortdescription" : "Gauss Rifle",
   "gunArchetype": "Railgun",
   "tooltipKind" : "project45gun",
   "category" : "pistol",

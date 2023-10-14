@@ -4,7 +4,7 @@
   "maxStack" : 1,
   "rarity" : "Essential",
   "description" : "A zip gun. Particularly well-made; WS45 parts are amazing.",
-  "shortdescription" : "New Pipe Gun",
+  "shortdescription" : "Pipe Gun",
   "tooltipKind" : "project45gun",
   "gunArchetype": "Pipe Gun",
   "category" : "pistol",

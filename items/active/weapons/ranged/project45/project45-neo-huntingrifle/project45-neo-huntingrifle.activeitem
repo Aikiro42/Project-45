@@ -4,7 +4,7 @@
   "maxStack" : 1,
   "rarity" : "Essential",
   "description" : "A hunting rifle.",
-  "shortdescription" : "New Hunting Rifle",
+  "shortdescription" : "Hunting Rifle",
   "tooltipKind" : "project45gun",
   "gunArchetype": "Bolt-action",
   "category" : "sniper",

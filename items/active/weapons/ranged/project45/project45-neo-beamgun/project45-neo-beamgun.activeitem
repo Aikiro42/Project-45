@@ -4,7 +4,7 @@
   "maxStack" : 1,
   "rarity" : "Essential",
   "description" : "A beam gun.",
-  "shortdescription" : "New Beam Gun",
+  "shortdescription" : "Beam Gun",
   "gunArchetype": "Energy Weapon",
   "tooltipKind" : "project45gun",
   "category" : "rifle",

@@ -4,7 +4,7 @@
   "maxStack" : 1,
   "rarity" : "Essential",
   "description" : "An entry-level firearm.",
-  "shortdescription" : "New Rocket Launcher",
+  "shortdescription" : "Rocket Launcher",
   "gunArchetype": "Missile Launcher",
   "tooltipKind" : "project45gun",
   "category" : "rocketlauncher",

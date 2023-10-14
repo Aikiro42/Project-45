@@ -4,7 +4,7 @@
   "maxStack" : 1,
   "rarity" : "Essential",
   "description" : "A grenade launcher.",
-  "shortdescription" : "New Grenade Launcher",
+  "shortdescription" : "Grenade Launcher",
   "tooltipKind" : "project45gun",
   "gunArchetype": "Grenade Launcher",
   "category" : "grenadelauncher",

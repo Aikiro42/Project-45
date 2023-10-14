@@ -4,7 +4,7 @@
   "maxStack" : 1,
   "rarity" : "Essential",
   "description" : "A service rifle.",
-  "shortdescription" : "New Service Rifle",
+  "shortdescription" : "Service Rifle",
   "tooltipKind" : "project45gun",
   "gunArchetype": "Service Rifle",
   "category" : "sniper",

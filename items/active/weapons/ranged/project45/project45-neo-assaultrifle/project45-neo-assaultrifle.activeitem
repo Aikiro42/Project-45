@@ -4,7 +4,7 @@
   "maxStack" : 1,
   "rarity" : "Essential",
   "description" : "A burst-fire Assault Rifle.",
-  "shortdescription" : "New Assault Rifle",
+  "shortdescription" : "Assault Rifle",
   "tooltipKind" : "project45gun",
   "gunArchetype": "Assault Rifle",
   "category" : "rifle",

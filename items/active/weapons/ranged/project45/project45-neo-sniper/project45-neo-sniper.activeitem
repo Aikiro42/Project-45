@@ -4,7 +4,7 @@
   "maxStack" : 1,
   "rarity" : "Essential",
   "description" : "A semi-auto bullpup marksman rifle.",
-  "shortdescription" : "New Sniper",
+  "shortdescription" : "Sniper",
   "tooltipKind" : "project45gun",
   "gunArchetype": "Bullpup DMR",
   "category" : "sniper",
