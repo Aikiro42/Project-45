@@ -1,11 +1,6 @@
 [
     {
         "op": "add",
-        "path": "/synthetikmechanics",
-        "value": "/items/active/weapons/ranged/abilities/synthetikmechanics/synthetikmechanics.weaponability"
-    },
-    {
-        "op": "add",
         "path": "/project45gunfire",
         "value": "/items/active/weapons/ranged/abilities/project45gunfire/project45gunfire.weaponability"
     },
