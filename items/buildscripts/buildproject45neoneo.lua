@@ -219,6 +219,18 @@ function build(directory, config, parameters, level, seed)
     end
 
     if config.primaryAbility then
+      if config.project45GunModInfo and config.project45GunModInfo.statModCountMax
+      then
+        if config.project45GunModInfo.statModCountMax > -1 then
+          parameters.statModCount = parameters.statModCount or 0
+          config.tooltipFields.upgradeCapacityLabel = (parameters.statModCount < config.project45GunModInfo.statModCountMax and "^#96cbe7;" or "^#777777;") .. parameters.statModCount .. "/" .. config.project45GunModInfo.statModCountMax .. "^reset;"
+        else
+          config.tooltipFields.upgradeCapacityLabel = "^#96cbe7;Unlimited^reset;"
+        end
+      else
+        config.tooltipFields.upgradeCapacityLabel = "^#777777;0/0^reset;"
+      end
+
         
       -- damage per shot
       -- FIXME: max damage seems inaccurate
@@ -295,6 +307,7 @@ function build(directory, config, parameters, level, seed)
       local modListDesc = ""
       if modList then
         modListDesc = "^#abfc6d;"
+        -- FIXME: Turn me to a set
         local exclude = {
           ability=true,
           rail=true,
@@ -312,24 +325,9 @@ function build(directory, config, parameters, level, seed)
         modListDesc = modListDesc .. "^reset;"
       end
 
-      --[[
-      local maxStatModsDesc = ""
-      
-      if config.project45GunModInfo and config.project45GunModInfo.statModCountMax
-      and parameters.statModCount
-      then
-        if config.project45GunModInfo.statModCountMax > -1 then
-          maxStatModsDesc = config.project45GunModInfo.statModCountMax <= parameters.statModCount and "^#FF5050;Max stat mods.\n^reset;" or "^#abfc6d;".. config.project45GunModInfo.statModCountMax - parameters.statModCount .."free stat upgrades.\n^reset;"
-        else
-          maxStatModsDesc ="^#abfc6d;Unlimited stat upgrades.\n^reset;"
-        end
-      else
-        maxStatModsDesc ="^#FF5050;Unlimited stat upgrades.\n^reset;"
-      end
-      --]]
-
       local finalDescription = heavyDesc .. chargeDesc .. overchargeDesc .. multishotDesc .. modListDesc -- .. config.description
-      config.description = finalDescription == "" and "^#777777;No notable qualities.^reset;" or finalDescription
+      sb.logInfo(finalDescription)
+      config.description = finalDescription -- == "" and "^#777777;No notable qualities.^reset;" or finalDescription
 
     end
     -- sb.logInfo("[ PROJECT 45 ] " .. sb.printJson(parameters.primaryAbility))

@@ -8,7 +8,7 @@
   
   "objectImage" : {
     "type" : "image",
-    "position" : [80, 128],
+    "position" : [80, 147],
     "file" : "",
     "centered" : true,
     "maxSize" : [138, 51],
@@ -17,7 +17,7 @@
 
   "sightsImage": {
     "type" : "image",
-    "position" : [163, 148],
+    "position" : [163, 167],
     "file" : "/interface/tooltips/project45gun/project45gun-cannotmod.png",
     "centered" : true,
     "maxSize" : [15, 15],
@@ -26,7 +26,7 @@
 
   "railImage": {
     "type" : "image",
-    "position" : [183, 148],
+    "position" : [183, 167],
     "file" : "/interface/tooltips/project45gun/project45gun-cannotmod.png",
     "centered" : true,
     "maxSize" : [15, 15],
@@ -35,7 +35,7 @@
 
   "muzzleImage": {
     "type" : "image",
-    "position" : [163, 128],
+    "position" : [163, 147],
     "file" : "/interface/tooltips/project45gun/project45gun-cannotmod.png",
     "centered" : true,
     "maxSize" : [15, 15],
@@ -44,7 +44,7 @@
 
   "underbarrelImage": {
     "type" : "image",
-    "position" : [183, 128],
+    "position" : [183, 147],
     "file" : "/interface/tooltips/project45gun/project45gun-cannotmod.png",
     "centered" : true,
     "maxSize" : [15, 15],
@@ -53,7 +53,7 @@
 
   "stockImage": {
     "type" : "image",
-    "position" : [163, 108],
+    "position" : [163, 127],
     "file" : "/interface/tooltips/project45gun/project45gun-cannotmod.png",
     "centered" : true,
     "maxSize" : [15, 15],
@@ -62,7 +62,7 @@
 
   "ammoTypeImage": {
     "type" : "image",
-    "position" : [183, 108],
+    "position" : [183, 127],
     "file" : "/interface/tooltips/project45gun/project45gun-cannotmod.png",
     "centered" : true,
     "maxSize" : [15, 15],
@@ -79,7 +79,7 @@
   */
   "altAbilityLabel" : {
     "type" : "label",
-    "position" : [192, 89],
+    "position" : [192, 108],
     "hAnchor" : "right",
     "centered" : true,
     "wrapWidth" : 126
@@ -87,16 +87,33 @@
 
   "descriptionLabel": {
     "type": "label",
-    "position": [102, 87],
+    "position": [102, 106],
     "hAnchor": "left",
     "vAnchor": "top",
     "wrapWidth": 90
   },
   
-  
+  "upgradeCapacityTitleLabel": {
+    "type" : "label",
+    "position" : [9, 108],
+    "hAnchor" : "left",
+    "centered": true,
+    "wrapWidth" : 126,
+    "value": "Upgrade Capacity"
+  },
+
+  "upgradeCapacityLabel": {
+    "type" : "label",
+    "position" : [18, 98],
+    "hAnchor" : "left",
+    "centered": true,
+    "wrapWidth" : 126,
+    "value": "0/99999"
+  },
+
   "damageTitleLabel": {
     "type" : "label",
-    "position" : [9, 89],
+    "position" : [9, 88],
     "hAnchor" : "left",
     "centered": true,
     "wrapWidth" : 126,
@@ -104,14 +121,14 @@
   },
   "damagePerShotLabel" : {
     "type" : "label",
-    "position" : [18, 79],
+    "position" : [18, 78],
     "hAnchor" : "left",
     "wrapWidth" : 126
   },
 
   "fireRateTitleLabel": {
     "type" : "label",
-    "position" : [9, 69],
+    "position" : [9, 68],
     "hAnchor" : "left",
     "centered": true,
     "wrapWidth" : 126,
@@ -119,7 +136,7 @@
   },
   "fireRateLabel": {
     "type" : "label",
-    "position" : [18, 59],
+    "position" : [18, 58],
     "hAnchor" : "left",
     "centered": true,
     "wrapWidth" : 126
@@ -127,41 +144,41 @@
 
   "reloadTitleLabel": {
     "type" : "label",
-    "position" : [9, 49],
+    "position" : [9, 48],
     "hAnchor" : "left",
     "wrapWidth" : 126,
     "value": "Reload Cost & Time"
   },
   "reloadCostLabel" : {
     "type" : "label",
-    "position" : [18, 39],
+    "position" : [18, 38],
     "hAnchor" : "left",
     "wrapWidth" : 126
   },
   "reloadTimeLabel" : {
     "type" : "label",
-    "position" : [65, 39],
+    "position" : [65, 38],
     "hAnchor" : "left",
     "wrapWidth" : 126
   },
 
   "critTitleLabel": {
     "type" : "label",
-    "position" : [9, 29],
+    "position" : [9, 28],
     "hAnchor" : "left",
     "wrapWidth" : 126,
     "value": "Crit Chance & Damage"
   },
   "critChanceLabel" : {
     "type" : "label",
-    "position" : [18, 19],
+    "position" : [18, 18],
     "hAnchor" : "left",
     "centered" : true,
     "wrapWidth" : 126
   },
   "critDamageLabel" : {
     "type" : "label",
-    "position" : [65, 19],
+    "position" : [65, 18],
     "hAnchor" : "left",
     "centered" : true,
     "wrapWidth" : 126,
