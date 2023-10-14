@@ -52,10 +52,13 @@
 
     "sounds": {
       "fire" : ["/sfx/project45neosfx/special/zweibrandyr/starforge-minigunfire.ogg"],
-      "chargeDrone": ["/sfx/project45-synthetikmechanics/charges/flamethrower_hiss_loop.ogg"],
-      "chargeWhine": ["/assetmissing.wav"],
-      "reloadStart": ["/sfx/project45-synthetikmechanics/foleys/getmag_ammobox.ogg"],
-      "ejectMag": ["/sfx/project45-synthetikmechanics/reloads/ejectmag_lmg.ogg"]
+      "chargeDrone": ["/sfx/project45neosfx/chargedrone/chargedrone-03.ogg"],
+      "chargeWhine": [ ],
+      "boltPull": [ "/sfx/project45neosfx/boltpull/boltpull-rifle1.ogg" ],
+      "boltPush": [ "/sfx/project45neosfx/boltpush/boltpush-rifle1.ogg" ],
+      "ejectMag": [ "/sfx/project45neosfx/ejectmag/ejectmag-heavy1.ogg" ],
+      "reloadStart": [ "/sfx/project45neosfx/getmag/getmag-generic1.ogg" ],
+      "reloadEnd": [ "/sfx/project45neosfx/loadmag/loadmag-heavy1.ogg" ]
 
       //*/
     },
