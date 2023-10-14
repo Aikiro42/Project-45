@@ -216,9 +216,6 @@ function hitscanLib:fireBeam()
         -- update base damage accordingly
         local crit = self:crit()
         beamDamageConfig.baseDamage = self:damagePerShot(true) * crit
-
-        -- beamDamageConfig.damageSourceKind = crit > 1 and "project45-critical" or self.beamParameters.beamDamageConfig.damageSourceKind
-        -- beamDamageConfig.damageType = crit > 1 and "IgnoresDef" or nil
   
         -- draw damage poly
         self.weapon:setDamage(
