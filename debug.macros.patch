@@ -1,31 +1,6 @@
 [
     {
         "op": "add",
-        "path": "/project45",
-        "value": [
-            "/spawnitem project45-accelerator",
-            "/spawnitem project45-antimateriel",
-            "/spawnitem project45-assaultenergygun",
-            "/spawnitem project45-assaultrifle",
-            "/spawnitem project45-energygun",
-            "/spawnitem project45-flamethrower",
-            "/spawnitem project45-garand",
-            "/spawnitem project45-gaussrifle",
-            "/spawnitem project45-grenadelauncher",
-            "/spawnitem project45-mg45",
-            "/spawnitem project45-minigun",
-            "/spawnitem project45-modulargun",
-            "/spawnitem project45-mosin",
-            "/spawnitem project45-pipegun",
-            "/spawnitem project45-pistol",
-            "/spawnitem project45-revolver",
-            "/spawnitem project45-shotgun",
-            "/spawnitem project45-sniperrifle",
-            "/spawnitem project45-submachinegun"
-        ]
-    },
-    {
-        "op": "add",
         "path": "/punchy",
         "value": [
             "/spawnmonster punchy"
