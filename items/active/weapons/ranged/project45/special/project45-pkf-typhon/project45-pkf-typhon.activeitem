@@ -241,6 +241,7 @@
 		"inaccuracy": 0,
 		"fireType": "auto",
 
+    "ammoPerShot": 10,
     "screenShakeAmount": 0.5,
     "recoilAmount": 5,
 

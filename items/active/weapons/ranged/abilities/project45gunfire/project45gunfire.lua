@@ -1805,7 +1805,10 @@ function Project45GunFire:energyPerShot()
 end
 
 function Project45GunFire:auto()
-  if storage.ammo <= 0 or storage.jamAmount > 0 then
+  if storage.ammo <= 0
+  or self.ammoPerShot > storage.ammo
+  or storage.jamAmount > 0
+  then
     animator.playSound("click")
     self.cooldownTimer = self.fireTime
     return
@@ -1827,7 +1830,10 @@ end
 
 function Project45GunFire:burst()
   
-  if storage.ammo <= 0 or storage.jamAmount > 0 then
+  if storage.ammo <= 0
+  or self.ammoPerShot > storage.ammo
+  or storage.jamAmount > 0
+  then
     animator.playSound("click")
     self.cooldownTimer = self.fireTime
     return
@@ -1843,7 +1849,9 @@ function Project45GunFire:burst()
     self:recoil(nil, nil, self.recoilAmount)
     
     self:updateAmmo(-(self.ammoPerShot or 1))
-    if storage.ammo <= 0 then break end
+    if storage.ammo <= 0
+    or self.ammoPerShot > storage.ammo
+    then break end
 
     util.wait(self.burstTime)
   end
