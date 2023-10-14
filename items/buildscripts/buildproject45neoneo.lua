@@ -219,6 +219,7 @@ function build(directory, config, parameters, level, seed)
     end
 
     if config.primaryAbility then
+      
       if config.project45GunModInfo and config.project45GunModInfo.statModCountMax
       then
         if config.project45GunModInfo.statModCountMax > -1 then
@@ -327,7 +328,6 @@ function build(directory, config, parameters, level, seed)
       end
 
       local finalDescription = heavyDesc .. chargeDesc .. overchargeDesc .. multishotDesc .. modListDesc -- .. config.description
-      sb.logInfo(finalDescription)
       config.description = finalDescription -- == "" and "^#777777;No notable qualities.^reset;" or finalDescription
 
     end
