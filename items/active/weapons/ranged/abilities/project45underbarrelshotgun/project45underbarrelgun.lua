@@ -1,7 +1,6 @@
 require "/scripts/util.lua"
 require "/items/active/weapons/weapon.lua"
 require "/items/active/weapons/ranged/gunfire.lua"
-require "/items/active/weapons/ranged/abilities/synthetikmechanics/synthetikmechanics.lua"
 require "/items/active/weapons/ranged/abilities/project45gunfire/project45gunfire.lua"
 require "/scripts/project45/project45util.lua"
 
@@ -325,6 +324,5 @@ function Project45UnderbarrelGun:uninit()
 end
 
 function Project45UnderbarrelGun:screenShake(amount, shakeTime, random)
-    SynthetikMechanics.screenShake(self, amount, shakeTime, random)
     Project45GunFire.screenShake(self, amount, shakeTime, random)
 end

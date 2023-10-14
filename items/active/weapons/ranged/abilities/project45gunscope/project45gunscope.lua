@@ -2,7 +2,6 @@ require "/items/active/weapons/weapon.lua"
 require "/scripts/util.lua"
 require "/scripts/interp.lua"
 require "/scripts/poly.lua"
-require "/items/active/weapons/ranged/abilities/synthetikmechanics/synthetikmechanics.lua"
 require "/items/active/weapons/ranged/abilities/project45gunfire/project45gunfire.lua"
 
 Project45GunScope = WeaponAbility:new()
@@ -146,31 +145,6 @@ function Project45GunScope:aimVector(inaccuracy)
 end
 
 -- COMPATIBILITY FUNCTIONS
-
-function SynthetikMechanics:screenShake(amount, shakeTime, random)
-  if not self.doScreenShake then return end
-  if storage.cameraProjectile and world.entityExists(storage.cameraProjectile) then
-    world.callScriptedEntity(storage.cameraProjectile, "jerk")
-    activeItem.setCameraFocusEntity(storage.cameraProjectile)
-  else
-    local source = mcontroller.position()
-    local shake_dir = vec2.mul(self:aimVector(0), -1 * (amount or 0.1))
-    if random then vec2.rotate(shake_dir, 3.14 * truerand()) end
-    local cam = world.spawnProjectile(
-      "invisibleprojectile",
-      vec2.add(source, shake_dir),
-      0,
-      {0, 0},
-      false,
-      {
-        power = 0,
-        timeToLive = shakeTime or 0.01,
-        damageType = "NoDamage"
-      }
-    )
-    activeItem.setCameraFocusEntity(cam)
-  end
-end
 
 -- Shakes screen opposite direction of aim.
 -- It does this by briefly spawning a projectile that has a short time to live,

@@ -1,7 +1,7 @@
 require "/scripts/util.lua"
 require "/items/active/weapons/weapon.lua"
 require "/items/active/weapons/ranged/gunfire.lua"
-require "/items/active/weapons/ranged/abilities/synthetikmechanics/synthetikmechanics.lua"
+require "/items/active/weapons/ranged/abilities/project45gunfire/project45gunfire.lua"
 
 Project45GrenadeLauncher = GunFire:new()
 
@@ -207,5 +207,5 @@ function Project45GrenadeLauncher:uninit()
 end
 
 function Project45GrenadeLauncher:screenShake(amount, shakeTime, random)
-    SynthetikMechanics.screenShake(self, amount, shakeTime, random)
+    Project45Gunfire.screenShake(self, amount, shakeTime, random)
 end

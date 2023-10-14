@@ -1066,8 +1066,10 @@ function Project45GunFire:ejectMag()
     animator.setAnimationState("gun", "open")
   end
   animator.setAnimationState("magazine", "absent")
-  animator.playSound("ejectMag")
-  animator.burstParticleEmitter("magazine")
+  if not self.ejectMagOnReload then
+    animator.playSound("ejectMag")
+    animator.burstParticleEmitter("magazine")
+  end
   self:setStance(self.stances.empty)
 
   if self.ejectCasingsWithMag then
@@ -1629,9 +1631,9 @@ function Project45GunFire:loadGunState()
 
   local loadedGunState = config.getParameter("savedGunState", {
     chamber = "empty",
-    bolt = "closed",
-    gunAnimation = "idle",
-    ammo = 0,
+    bolt = "open",
+    gunAnimation = self.breakAction and "open" or "ejected",
+    ammo = -1,
     reloadRating = OK,
     unejectedCasings = 0,
     jamAmount = 0,
@@ -1654,9 +1656,12 @@ function Project45GunFire:loadGunState()
   storage.jamAmount = storage.jamAmount or loadedGunState.jamAmount
   activeItem.setScriptedAnimationParameter("jamAmount", storage.jamAmount)
   animator.setAnimationState("bolt", loadedGunState.bolt)
+  
+  -- FIXME: Is this code even needed?
   if loadedGunState.bolt == "open" then
-    loadedGunState.gunAnimation = "ejected"
+    loadedGunState.gunAnimation = self.breakAction and "open" or "ejected"
   end
+  
   animator.setAnimationState("gun", loadedGunState.gunAnimation)
 
 end
