@@ -173,6 +173,7 @@ function Project45GunFire:init()
   GunFire.auto = self.auto
   GunFire.burst = self.burst
   GunFire.energyPerShot = function() return 0 end
+  GunFire.screenShake = self.screenShake
 
   -- FIXME: Doublecheck all functions that should be replaced
   -- Heck, should AltFireAttack stuff even be replaced??
@@ -191,6 +192,7 @@ function Project45GunFire:init()
   AltFireAttack.burst = self.burst
   AltFireAttack.muzzleFlash = self.altMuzzleFlash
   AltFireAttack.energyPerShot = function() return 0 end
+  AltFireAttack.screenShake = self.screenShake
   --]]
 
   self:evalProjectileKind()
@@ -1811,7 +1813,8 @@ function Project45GunFire:auto()
   
   self:fireProjectile()
   self:muzzleFlash()
-  self:recoil()
+  self:screenShake(self.screenShakeAmount)
+  self:recoil(nil, nil, self.recoilAmount)
   self:updateAmmo(-(self.ammoPerShot or 1))
 
   if self.stances.fire.duration then
@@ -1836,7 +1839,8 @@ function Project45GunFire:burst()
     self:fireProjectile()
     self:muzzleFlash()
     shots = shots - 1
-    self:recoil()
+    self:screenShake(self.screenShakeAmount)
+    self:recoil(nil, nil, self.recoilAmount)
     
     self:updateAmmo(-(self.ammoPerShot or 1))
     if storage.ammo <= 0 then break end

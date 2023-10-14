@@ -118,7 +118,7 @@
 
     "sounds": {
 			"fire": ["/sfx/project45neosfx/special/typhon/fire-typhon.ogg"],
-      "altFire": ["/sfx/gun/plasma_gun10.ogg"],
+      "altFire": ["/sfx/project45neosfx/special/typhon/altfire-typhon.ogg"],
       "chargeDrone": ["/sfx/projectiles/zone_power_loop.ogg"],
       "chargeWhine": ["/sfx/tech/tech_hoverloop.ogg"],
       "boltPull": [ "/sfx/project45neosfx/boltpull/boltpull-rifle1.ogg" ],
@@ -240,6 +240,9 @@
 		"baseDps": 0,
 		"inaccuracy": 0,
 		"fireType": "auto",
+
+    "screenShakeAmount": 0.5,
+    "recoilAmount": 5,
 
     "useAltMuzzleFlash": true,
 		"hidePrimaryMuzzleFlash" : true,
