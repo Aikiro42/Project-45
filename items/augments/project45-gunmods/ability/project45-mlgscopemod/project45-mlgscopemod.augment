@@ -4,7 +4,10 @@
   "rarity" : "Essential",
   "tooltipKind" : "project45gunmod",
   "category" : "Ability Mod",
-  "inventoryIcon" : "/items/augments/project45-gunmods/ability/project45-mlgscopemod/project45-mlgscopemod.png",
+  "tooltipFields": {
+    "objectImage": "/items/augments/project45-gunmods/ability/project45-mlgscopemod/project45-mlgscopemod.png"
+  },
+  "inventoryIcon" : "/items/augments/project45-gunmods/ability/project45-mlgscopemod/project45-mlgscopemodicon.png",
   "description" : "420 BLAZE IT FTW!\n^#EA9931;Hold Right-click and circle your cursor around your character to get a brief damage bonus.",
   "shortdescription" : "MLG Scope",
 

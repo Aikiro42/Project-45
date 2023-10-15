@@ -4,9 +4,12 @@
   "rarity" : "Essential",
   "tooltipKind" : "project45gunmod",
   "category" : "Ability Mod",
-  "inventoryIcon" : "/items/augments/project45-gunmods/ability/project45-phaseshiftmod/project45-phaseshiftmod.png",
+  "tooltipFields": {
+    "objectImage": "/items/augments/project45-gunmods/ability/project45-phaseshiftmod/project45-phaseshiftmod.png"
+  },
+  "inventoryIcon" : "/items/augments/project45-gunmods/ability/project45-phaseshiftmod/project45-phaseshiftmodicon.png",
   "description" : "Allows you to transfer between planes of reality.\n^#EA9931;Tap walk to dash.\nRight-click to phase.",
-  "shortdescription" : "Phase Shifter Mod",
+  "shortdescription" : "Phase Shifter",
   
   "augment":{
     "category": "universal",

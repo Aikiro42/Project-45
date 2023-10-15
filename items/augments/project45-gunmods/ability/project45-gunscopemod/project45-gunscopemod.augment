@@ -4,7 +4,10 @@
   "rarity" : "Essential",
   "tooltipKind" : "project45gunmod",
   "category" : "Ability Mod",
-  "inventoryIcon" : "/items/augments/project45-gunmods/ability/project45-gunscopemod/project45-gunscopemod.png",
+  "tooltipFields":{
+    "objectImage": "/items/augments/project45-gunmods/ability/project45-gunscopemod/project45-gunscopemod.png"
+  },
+  "inventoryIcon" : "/items/augments/project45-gunmods/ability/project45-gunscopemod/project45-gunscopemodicon.png",
   "description" : "Easily aim at far away targets.\n^#EA9931;Hold Right-click to aim.\nReticle speed depends on distance from cursor.",
   "shortdescription" : "Scope Mod",
 
