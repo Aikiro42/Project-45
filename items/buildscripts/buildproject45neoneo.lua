@@ -263,8 +263,8 @@ function build(directory, config, parameters, level, seed)
       end
       local loFireRate = actualCycleTime[1] + config.primaryAbility.fireTime
       local hiFireRate = actualCycleTime[2] + config.primaryAbility.fireTime
-      config.tooltipFields.fireRateLabel = ("^#FFD400;" .. util.round(loFireRate, 1))
-      .. (loFireRate == hiFireRate and "s" or (" - " .. util.round(hiFireRate, 1) .. "s"))
+      config.tooltipFields.fireRateLabel = ("^#FFD400;" .. util.round(loFireRate*1000, 1))
+      .. (loFireRate == hiFireRate and "ms" or (" - " .. util.round(hiFireRate*1000, 1) .. "ms"))
 
       -- set reload cost
       config.primaryAbility.reloadCost = parameters.primaryAbility.reloadCost or config.primaryAbility.reloadCost
