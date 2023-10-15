@@ -113,7 +113,6 @@ function build(directory, config, parameters, level, seed)
       end
     end
 
-
     if config.chargeSmokeOffsetRegion then
       construct(config, "animationCustom", "particleEmitters", "chargeSmoke", "offsetRegion")
       config.animationCustom.particleEmitters.chargeSmoke.offsetRegion = config.chargeSmokeOffsetRegion
@@ -140,6 +139,30 @@ function build(directory, config, parameters, level, seed)
       end
     end
     
+    -- Underbarrel gun stuff
+    construct(config, "animationCustom", "animatedParts", "parts", "underbarrel", "properties")
+    if config.animationCustom.animatedParts.parts.underbarrel.properties.firePosition then
+
+      -- move transformation group "altmuzzle", which will be based on altMuzzleOffset
+      config.altMuzzleOffset = vec2.add(
+        config.altMuzzleOffset or {0, 0},
+        config.animationCustom.animatedParts.parts.underbarrel.properties.offset
+      )
+
+      config.altMuzzleOffset = vec2.add(
+        config.altMuzzleOffset,
+        config.animationCustom.animatedParts.parts.underbarrel.properties.firePosition
+      )
+
+      -- offset alt muzzle flash
+      construct(config, "animationCustom", "animatedParts", "parts", "altMuzzleFlash", "properties")
+      config.animationCustom.animatedParts.parts.altMuzzleFlash.properties.offset = vec2.add(
+        config.animationCustom.animatedParts.parts.altMuzzleFlash.properties.offset or {0, 0},
+        config.animationCustom.animatedParts.parts.underbarrel.properties.firePosition
+      )
+
+    end
+
   end
 
   if config.primaryAbility then

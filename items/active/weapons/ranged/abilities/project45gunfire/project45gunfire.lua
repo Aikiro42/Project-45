@@ -140,6 +140,7 @@ function Project45GunFire:init()
   self.dischargeDelayTimer = 0
   self.cooldownTimer = self.fireTime
   self.muzzleFlashTimer = 0
+  storage.altMuzzleFlashTimer = 0
   self.muzzleSmokeTimer = 0
 
   -- initialize animation stuff
@@ -171,7 +172,7 @@ function Project45GunFire:init()
   GunFire.cooldown = self.cooldown
   GunFire.auto = self.auto
   GunFire.burst = self.burst
-  GunFire.energyPerShot = function() return 0 end
+  GunFire.energyPerShot = function() return self.ammoPerShot or 0 end
   GunFire.screenShake = self.screenShake
 
   -- Add functions used by this primaryAbility to altAbility
@@ -188,7 +189,7 @@ function Project45GunFire:init()
   AltFireAttack.auto = self.auto
   AltFireAttack.burst = self.burst
   AltFireAttack.muzzleFlash = self.altMuzzleFlash
-  AltFireAttack.energyPerShot = function() return 0 end
+  AltFireAttack.energyPerShot = function() return self.ammoPerShot or 0 end
   AltFireAttack.screenShake = self.screenShake
   --]]
 
@@ -277,6 +278,9 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
 
   -- update timers
   self.cooldownTimer = math.max(0, self.cooldownTimer - self.dt)
+
+
+  -- world.debugPoint(self:firePosition(true), "cyan")
 
   -- update relevant stuff
   self:renderModPositionDebug()
@@ -1345,6 +1349,8 @@ end
 
 function Project45GunFire:updateMuzzleFlash()
   self.muzzleFlashTimer = math.max(0, self.muzzleFlashTimer - self.dt)
+  storage.altMuzzleFlashTimer = math.max(0, storage.altMuzzleFlashTimer - self.dt)
+  
   if animator.animationState("gun") ~= "open" then
     self.muzzleSmokeTimer = math.max(0, self.muzzleSmokeTimer - self.dt)
   else
@@ -1353,6 +1359,11 @@ function Project45GunFire:updateMuzzleFlash()
   if self.muzzleFlashTimer <= 0 then
     animator.setLightActive("muzzleFlash", false)
   end
+
+  if storage.altMuzzleFlashTimer <= 0 then
+    animator.setLightActive("altMuzzleFlash", false)
+  end
+
   if not self.hideMuzzleSmoke then
     animator.setParticleEmitterActive("muzzleSmoke", self.muzzleSmokeTimer > 0 and self.muzzleSmokeTimer < self.muzzleSmokeTime and not self.isFiring)
   end
@@ -1539,9 +1550,9 @@ function Project45GunFire:canTrigger()
 end
 
 -- Returns the muzzle of the gun
-function Project45GunFire:firePosition()
+function Project45GunFire:firePosition(altOverride)
   local muzzleOffset = self.weapon.muzzleOffset
-  if self.abilitySlot == "alt" then
+  if self.abilitySlot == "alt" or altOverride then
     muzzleOffset = config.getParameter("altMuzzleOffset", self.weapon.muzzleOffset)
   end
 
@@ -1560,7 +1571,7 @@ end
 -- This is different from the vanilla aim vector, which only takes into account the entity's position
 -- and the entity's aim position
 function Project45GunFire:aimVector(spread, degAdd)
-
+  
   local muzzleOffset = self.weapon.muzzleOffset
   if self.abilitySlot == "alt" then
     muzzleOffset = config.getParameter("altMuzzleOffset", self.weapon.muzzleOffset)
@@ -1799,7 +1810,7 @@ function Project45GunFire:auto()
   or self.ammoPerShot > storage.ammo
   or storage.jamAmount > 0
   then
-    animator.playSound("click")
+    -- animator.playSound("click")
     self.cooldownTimer = self.fireTime
     return
   end
@@ -1824,7 +1835,7 @@ function Project45GunFire:burst()
   or self.ammoPerShot > storage.ammo
   or storage.jamAmount > 0
   then
-    animator.playSound("click")
+    -- animator.playSound("click")
     self.cooldownTimer = self.fireTime
     return
   end
@@ -1859,6 +1870,8 @@ function Project45GunFire:altMuzzleFlash()
   if self.useAltMuzzleFlash then
     animator.setPartTag("altMuzzleFlash", "variant", math.random(1, 3))
     animator.setAnimationState("altfiring", "fire")
+    animator.setLightActive("altMuzzleFlash", true)
+    storage.altMuzzleFlashTimer = self.muzzleFlashTime or 0.05
   end
   
   if self.useParticleEmitter == nil or self.useParticleEmitter then

@@ -6,6 +6,11 @@
     },
     {
         "op": "add",
+        "path": "/project45underbarrelgun",
+        "value": "/items/active/weapons/ranged/abilities/project45underbarrelgun/project45underbarrelgun.weaponability"
+    },
+    {
+        "op": "add",
         "path": "/project45gunscope",
         "value": "/items/active/weapons/ranged/abilities/project45gunscope/project45gunscope.weaponability"
     },

@@ -1,0 +1,86 @@
+{
+  "animationParts" : {
+    "altMuzzleFlash": "/items/active/weapons/ranged/project45-muzzleflash.png"
+  },
+
+  "animationCustom" : {
+    "animatedParts": {
+      "parts": {
+        "underbarrel" : {
+          "properties" : {
+            "zLevel" : 5,
+            "centered" : true,
+            "offset": [0, -0.25],
+            "transformationGroups" : ["weapon"],
+            "image" : "/items/active/weapons/ranged/abilities/project45underbarrelgun/project45underbarrelgunsprite.png<directives>",
+            "firePosition" : [0.75, 0.125]
+          }
+        }
+        
+        /* */ // how do I do this..?
+        ,"altMuzzleFlash": {
+          "properties": {
+            "offset": [0.125, -0.125]
+          }
+        }
+        //*/
+      }
+    },
+    "particleEmitters" : {
+      "altMuzzleFlash" : {
+        "active" : false,
+        "emissionRate" : 8,
+        "transformationGroups" : ["altmuzzle"],
+        "offsetRegion" : [0, 0, 0, 0],
+        "particles" : [
+          {"particle": "project45muzzle"},
+          {"particle": "project45muzzle"},
+          {"particle": "project45muzzle"}
+        ]
+      }
+    },
+    "lights": {
+      "altMuzzleFlash": {
+        "active" : false,
+        "position" : [0, 0],
+        "color" : [255, 255, 255],
+        "pointLight": true,
+        "pointBeam": 0.3
+      }
+    },
+    "sounds" : {
+      "altFire" : [ "/sfx/project45neosfx/fire/fire-revolver1.ogg" ]
+    }
+  },
+
+  "ability" : {
+    "name" : "Underbarrel Gun",
+    "type" : "project45underbarrelgun",
+    "scripts" : ["/items/active/weapons/ranged/abilities/altfire.lua"],
+    "class" : "AltFireAttack",
+
+    "projectileType" : "project45stdbullet",
+
+    // use baseDps and fireTime from primary fire
+
+    "baseDamageMultiplier" : 5,
+        
+    "firePositionPart": "underbarrel",
+
+    "fireTime": 0.1,
+		"projectileCount": 5,
+		"baseDps": 0,
+		"spread": 5,
+		"fireType": "auto",
+
+    "ammoPerShot": 1,
+
+    "screenShakeAmount": 0.5,
+    "recoilAmount": 5,
+
+    "useAltMuzzleFlash": true,
+		"hidePrimaryMuzzleFlash" : true,
+		"usePrimaryFireSound" : false
+
+  }
+}

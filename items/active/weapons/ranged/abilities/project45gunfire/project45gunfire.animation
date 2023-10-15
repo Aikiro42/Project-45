@@ -626,6 +626,13 @@
       "color" : [0, 0, 0],
       "pointLight": true,
       "pointBeam": 0.3
+    },
+    "altMuzzleFlash" : {
+      "active" : false,
+      "position" : [0, 0],
+      "color" : [0, 0, 0],
+      "pointLight": true,
+      "pointBeam": 0.3
     }
   },
 
