@@ -160,7 +160,6 @@ function Project45GunFire:init()
 
   
   -- Add functions used by this primaryAbility to altAbility
-  -- TESTME:
   GunFire.recoil = self.recoil
   GunFire.rollMultishot = self.rollMultishot -- not working??
   GunFire.updateMagVisuals = self.updateMagVisuals
@@ -175,8 +174,6 @@ function Project45GunFire:init()
   GunFire.energyPerShot = function() return 0 end
   GunFire.screenShake = self.screenShake
 
-  -- FIXME: Doublecheck all functions that should be replaced
-  -- Heck, should AltFireAttack stuff even be replaced??
   -- Add functions used by this primaryAbility to altAbility
   
   AltFireAttack.recoil = self.recoil
@@ -1040,7 +1037,7 @@ function Project45GunFire:recoil(down, mult, amount, recoverDelay)
   self.weapon.weaponOffset = {-0.125, 0}
 
   -- inaccuracy (defaults to 3 degrees)
-  local inaccuracy = util.toRadians(sb.nrand(self.currentInaccuracy or 3, 0) * mult) -- TESTME: is factoring in crouching balanced?
+  local inaccuracy = util.toRadians(sb.nrand(self.currentInaccuracy or 3, 0) * mult)
   if self.recoilUpOnly and self.projectileKind ~= "summoned" then
     inaccuracy = math.abs(inaccuracy)
   end
@@ -1659,9 +1656,8 @@ function Project45GunFire:loadGunState()
   activeItem.setScriptedAnimationParameter("jamAmount", storage.jamAmount)
   animator.setAnimationState("bolt", loadedGunState.bolt)
   
-  -- FIXME: Is this code even needed?
   if loadedGunState.bolt == "open" then
-    loadedGunState.gunAnimation = self.breakAction and "open" or "ejected"
+    loadedGunState.gunAnimation = (self.breakAction and not loadedGunState.loadSuccess) and "open" or "ejected"
   end
   
   animator.setAnimationState("gun", loadedGunState.gunAnimation)
@@ -1696,7 +1692,9 @@ function Project45GunFire:setStance(stance, snap)
   self.stanceLocked = stance.lock
   activeItem.setTwoHandedGrip(stance.twoHanded or false)
 
-  if not stance.lite then
+  if not stance.lite
+  or not self.weapon.stance
+  then
     self.weapon:setStance(stance)
   else
     self.weapon.stance = copy(self.weapon.stance)
@@ -1742,14 +1740,6 @@ function Project45GunFire:setStance(stance, snap)
 
   storage.stanceProgress = 0
 end
-
-function Project45GunFire:snapStance(stance)
-  self.weapon.relativeWeaponRotation = math.rad(stance.weaponRotation)
-  self.weapon.relativeArmRotation = math.rad(stance.armRotation)
-  self.weapon.weaponOffset = stance.weaponOffset or self.weapon.weaponOffset
-  storage.stanceProgress = 0
-end
-
 
 function Project45GunFire:debugFunction()
   
