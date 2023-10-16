@@ -4,8 +4,11 @@
   "rarity" : "Essential",
   "tooltipKind" : "project45gunmod",
   "category" : "Ability Mod",
-  "inventoryIcon" : "/items/augments/project45-gunmods/ability/project45-underbarrelshotgunmod/project45-underbarrelshotgunmod.png",
-  "description" : "A small shotgun attached under a gun's barrel.\n^#EA9931;Right-click to cock or fire.",
+  "tooltipFields": {
+    "objectImage": "/items/augments/project45-gunmods/ability/project45-underbarrelshotgunmod/project45-underbarrelshotgunmod.png"
+  },
+  "inventoryIcon" : "/items/augments/project45-gunmods/ability/project45-underbarrelshotgunmod/project45-underbarrelshotgunmodicon.png",
+  "description" : "A small shotgun that siphons its bullets from the gun's.\n^#EA9931;Right-click to fire.",
   "shortdescription" : "Underbarrel Shotgun",
 
   "radioMessagesOnPickup" : [ "pickupaugment" ],
@@ -13,7 +16,7 @@
   "augment": {
     "category": "universal",
     "slot": "underbarrel",
-    "altAbilityType": "project45underbarrelshotgun",
+    "altAbilityType": "project45underbarrelgun",
     "overrideTwoHanded": true,
     "twoHanded": true
 
