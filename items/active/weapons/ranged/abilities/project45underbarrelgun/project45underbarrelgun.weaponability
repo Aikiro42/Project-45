@@ -8,7 +8,6 @@
       "parts": {
         "underbarrel" : {
           "properties" : {
-            "zLevel" : 5,
             "centered" : true,
             "offset": [0, -0.25],
             "transformationGroups" : ["weapon"],
@@ -49,7 +48,7 @@
       }
     },
     "sounds" : {
-      "altFire" : [ "/sfx/project45neosfx/fire/fire-revolver1.ogg" ]
+      "altFire" : [ "/sfx/project45neosfx/fire/fire-pistol1.ogg" ]
     }
   },
 
@@ -70,13 +69,13 @@
     "fireTime": 0.1,
 		"projectileCount": 5,
 		"baseDps": 0,
-		"spread": 5,
+		"spread": 1,
 		"fireType": "auto",
 
     "ammoPerShot": 1,
 
-    "screenShakeAmount": 0.5,
-    "recoilAmount": 5,
+    "screenShakeAmount": 0.25,
+    "recoilAmount": 3,
 
     "useAltMuzzleFlash": true,
 		"hidePrimaryMuzzleFlash" : true,

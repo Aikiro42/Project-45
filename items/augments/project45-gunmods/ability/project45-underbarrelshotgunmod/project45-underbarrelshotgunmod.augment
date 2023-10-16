@@ -16,7 +16,21 @@
   "augment": {
     "category": "universal",
     "slot": "underbarrel",
+    "animationCustom": {
+      "sounds": {
+        "altFire" : [ "/sfx/project45neosfx/fire/fire-shotgun1.ogg" ]
+      }
+    },
     "altAbilityType": "project45underbarrelgun",
+    "altAbility": {
+      "baseDamageMultiplier" : 5,
+      "ammoPerShot": 5,
+      "fireTime": 0.25,
+      "projectileCount": 5,
+      "spread": 2.5,
+      "screenShakeAmount": 0.5,
+      "recoilAmount": 5
+    },
     "overrideTwoHanded": true,
     "twoHanded": true
 
