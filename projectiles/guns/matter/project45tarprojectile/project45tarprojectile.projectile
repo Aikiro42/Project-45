@@ -2,7 +2,7 @@
   "projectileName" : "project45tarprojectile",
   "image" : "project45tarprojectile.png",
   "animationCycle" : 0.25,
-  "frameNumber" : 2,
+  "frameNumber" : 3,
   "pointLight" : false,
   "physics": "grenade",
   "statusEffects": [

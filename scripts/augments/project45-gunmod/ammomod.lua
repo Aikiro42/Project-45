@@ -91,9 +91,13 @@ function apply(input)
 
     -- for audio
     if augment.customSounds then
-      output:setInstanceValue("animationCustom", sb.jsonMerge(input.parameters.animationCustom or {}, {
-        sounds = augment.customSounds
-      }))
+
+      construct(input, "parameters", "animationCustom", "sounds")
+      for soundName, soundArr in pairs(augment.customSounds) do
+        input.parameters.animationCustom.sounds[soundName] = copy(soundArr)
+      end
+
+      output:setInstanceValue("animationCustom", input.parameters.animationCustom)
     end
 
     -- merge changes
