@@ -57,7 +57,10 @@
       "rail",
       "sights",
       "underbarrel",
-      "muzzle"
+      "muzzle",
+      
+      "magazine",
+      "material"
     ]
   },
 

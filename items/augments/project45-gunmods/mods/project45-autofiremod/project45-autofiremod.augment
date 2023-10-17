@@ -4,8 +4,11 @@
   "rarity" : "Legendary",
   "tooltipKind" : "project45gunmod",
   "category" : "Receiver Mod",
-  "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-autofiremod/project45-autofiremod.png",
-  "description" : "Allows a weapon to have an automatic firemode.",
+  "tooltipFields":{
+    "objectImage": "/items/augments/project45-gunmods/mods/project45-autofiremod/project45-autofiremod.png"
+  },
+  "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-autofiremod/project45-autofiremodicon.png",
+  "description" : "Allows a weapon to fire automatically.",
   "shortdescription" : "Automatic Receiver",
 
   "radioMessagesOnPickup" : [ "pickupaugment" ],

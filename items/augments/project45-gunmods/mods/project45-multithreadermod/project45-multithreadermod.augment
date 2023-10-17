@@ -4,7 +4,10 @@
   "rarity" : "Legendary",
   "tooltipKind" : "project45gunmod",
   "category" : "Receiver Mod",
-  "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-multithreadermod/project45-multithreadermod.png",
+  "tooltipFields": {
+    "objectImage": "/items/augments/project45-gunmods/mods/project45-multithreadermod/project45-multithreadermod.png"
+  },
+  "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-multithreadermod/project45-multithreadermodicon.png",
   "description" : "Allows an energy weapon to have an automatic firemode.",
   "shortdescription" : "Multithreader",
 
@@ -15,10 +18,12 @@
     "category": "energy",
     "slot": "receiver",
     "primaryAbility": {
+      /*
       "projectileKind": {
         "operation": "replace",
         "value": "hitscan"
       },
+      */
       "semi": {
         "operation": "replace",
         "value": false

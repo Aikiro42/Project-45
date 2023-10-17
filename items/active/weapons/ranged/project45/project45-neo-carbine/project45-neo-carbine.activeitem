@@ -53,6 +53,11 @@
   "project45GunModInfo":{
     "category": "ballistic",
     "statModCountMax": 10,
+    "modExceptions": {
+      "deny": [
+        "project45-autofiremod"
+      ]
+    },
     "acceptsAmmoArchetype": [
       "bullet",
       "shotgun"
@@ -62,7 +67,11 @@
       "sights",
       "muzzle",
       "underbarrel",
-      "stock"
+      "stock",
+      
+      "material",
+      "magazine",
+      "receiver"
     ]
   },
 

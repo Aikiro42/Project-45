@@ -17,7 +17,19 @@ function apply(input)
     local statList = input.parameters.statList or {nil} -- retrieve stat mods
     local statModCount = input.parameters.statModCount or 0
     local statModCountMax = modInfo.statModCountMax or -1
+    
     -- MOD INSTALLATION GATES
+
+    local modExceptions = modInfo.modExceptions or {}
+    modExceptions.accept = modExceptions.accept or {}
+    modExceptions.deny = modExceptions.deny or {}
+
+    -- check if stat mod is particularly denied
+    local denied = set.new(modExceptions.deny)
+    if denied[config.getParameter("itemName")] then
+      sb.logError("(statmod.lua) Stat mod application failed: gun does not accept this specific stat mod")
+      return
+    end
 
     -- If the max number of stat mods that can be installed is specified (i.e. non-negative number)
     -- and the number of mods installed already reached that cap

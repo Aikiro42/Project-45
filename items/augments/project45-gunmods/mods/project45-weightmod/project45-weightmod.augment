@@ -4,7 +4,10 @@
   "rarity" : "Legendary",
   "tooltipKind" : "project45gunmod",
   "category" : "Weight Mod",
-  "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-weightmod/project45-weightmod.png",
+  "tooltipFields":{
+    "objectImage": "/items/augments/project45-gunmods/mods/project45-weightmod/project45-weightmod.png"
+  },
+  "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-weightmod/project45-weightmodicon.png",
   "description" : "Replacement parts made from a lightweight alloy. Removes mobility penalties OR increases mobility by 15%.",
   "shortdescription" : "Aegisalt Alloy Parts",
 

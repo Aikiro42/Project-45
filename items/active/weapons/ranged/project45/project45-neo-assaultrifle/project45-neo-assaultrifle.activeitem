@@ -60,7 +60,9 @@
       "underbarrel",
       "muzzle",
 
-      "receiver"
+      "receiver",
+      "magazine",
+      "material"
     ]
   },
 

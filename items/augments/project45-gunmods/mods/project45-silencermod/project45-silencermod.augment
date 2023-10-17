@@ -4,7 +4,10 @@
   "rarity" : "Legendary",
   "tooltipKind" : "project45gunmod",
   "category" : "Muzzle Mod",
-  "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-silencermod/project45-silencermod.png",
+  "tooltipFields":{
+    "objectImage": "/items/augments/project45-gunmods/mods/project45-silencermod/project45-silencermod.png"
+  },
+  "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-silencermod/project45-silencermodicon.png",
   "description" : "Dissipates existing gas, reducing gunshot noise and reducing vertical recoil by 10%.",
   "shortdescription" : "Silencer",
 

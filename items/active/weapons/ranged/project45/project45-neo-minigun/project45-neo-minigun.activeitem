@@ -20,7 +20,10 @@
     "acceptsModSlot": [
       "rail",
       "sights",
-      "stock"
+      "stock",
+      
+      "magazine",
+      "material"
     ],
     "acceptsAmmoArchetype": [
       "bullet"

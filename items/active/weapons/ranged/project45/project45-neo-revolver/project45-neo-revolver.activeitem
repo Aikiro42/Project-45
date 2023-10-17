@@ -28,7 +28,9 @@
     "category": "ballistic",
     "statModCountMax": 10,
     "acceptsModSlot": [
-      "stock"
+      "stock",
+      
+      "material"
     ],
     "acceptsAmmoArchetype": [
       "bullet"

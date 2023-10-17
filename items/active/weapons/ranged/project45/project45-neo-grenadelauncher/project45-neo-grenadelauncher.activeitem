@@ -30,7 +30,8 @@
     "acceptsModSlot": [
       "rail",
       "sights",
-      "muzzle"
+      
+      "material"
     ],
     "acceptsAmmoArchetype": [
       "grenade"

@@ -21,19 +21,19 @@ function apply(input)
         return
     end
 
-    local ammoExceptions = modInfo.ammoExceptions or {}
-    ammoExceptions.accept = ammoExceptions.accept or {}
-    ammoExceptions.deny = ammoExceptions.deny or {}
+    local modExceptions = modInfo.modExceptions or {}
+    modExceptions.accept = modExceptions.accept or {}
+    modExceptions.deny = modExceptions.deny or {}
 
     -- check if ammo mod is particularly denied
-    local denied = set.new(ammoExceptions.deny)
+    local denied = set.new(modExceptions.deny)
     if denied[config.getParameter("itemName")] then
       sb.logError("(ammomod.lua) Ammo mod application failed: gun does not accept this specific ammo mod")
       return
     end
 
     -- check if ammo mod is particularly accepted
-    local accepted = set.new(ammoExceptions.accept)
+    local accepted = set.new(modExceptions.accept)
     if not accepted[config.getParameter("itemName")] then 
 
       -- do not install ammo mod if it does not meet category

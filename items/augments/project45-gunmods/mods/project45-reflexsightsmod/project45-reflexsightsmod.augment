@@ -4,7 +4,10 @@
   "rarity" : "Legendary",
   "tooltipKind" : "project45gunmod",
   "category" : "Grip Mod",
-  "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-reflexsightsmod/project45-reflexsightsmod.png",
+  "tooltipFields":{
+    "objectImage": "/items/augments/project45-gunmods/mods/project45-reflexsightsmod/project45-reflexsightsmod.png"
+  },
+  "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-reflexsightsmod/project45-reflexsightsmodicon.png",
   "description" : "Allows for quicker target acquisition. Decreases spread by 75%.",
   "shortdescription" : "Reflex Sights",
 

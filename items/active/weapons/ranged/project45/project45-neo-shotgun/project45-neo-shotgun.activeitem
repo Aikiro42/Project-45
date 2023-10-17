@@ -55,7 +55,11 @@
     "acceptsModSlot": [
       "rail",
       "sights",
-      "muzzle"
+      "muzzle",
+      
+      "magazine",
+      "material",
+      "receiver"
     ],
     "acceptsAmmoArchetype": [
       "shotgun"
@@ -89,7 +93,7 @@
     "inaccuracy": 4,
     "spread": 1,
     "semi": true,
-    "cycleTime": 0.05,
+    "cycleTime": 0.2,
     "cockTime": 0.4,
     "projectileKind": "projectile",
     "projectileCount": 5,

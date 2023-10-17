@@ -28,20 +28,37 @@ function apply(input)
 
     -- MOD INSTALLATION GATES
 
-    -- do not install mod if augment is not universal
-    -- and gun is not of the universal category
-    -- and it does not belong to the weapon category
-    if augment.category ~= "universal"
-    and modInfo.category ~= "universal"
-    and modInfo.category ~= augment.category then
-        sb.logError("(gunmod.lua) Gun mod application failed: category mismatch")
-        return
+    local modExceptions = modInfo.modExceptions or {}
+    modExceptions.accept = modExceptions.accept or {}
+    modExceptions.deny = modExceptions.deny or {}
+
+    -- check if ammo mod is particularly denied
+    local denied = set.new(modExceptions.deny)
+    if denied[config.getParameter("itemName")] then
+      sb.logError("(gunmod.lua) Mod application failed: gun does not accept this specific mod")
+      return
     end
 
-    -- do not install mod if gun denies installation of such type/slot
-    if not acceptsModSlot[augment.slot] then
-        sb.logError("(gunmod.lua) Gun mod application failed: gun does not accept mods in slot")
-        return
+    -- check if ammo mod is particularly accepted
+    local isAccepted = set.new(modExceptions.accept)[config.getParameter("itemName")]
+    if not isAccepted then
+
+        -- do not install mod if augment is not universal
+        -- and gun is not of the universal category
+        -- and it does not belong to the weapon category
+        if augment.category ~= "universal"
+        and modInfo.category ~= "universal"
+        and modInfo.category ~= augment.category then
+            sb.logError("(gunmod.lua) Gun mod application failed: category mismatch")
+            return
+        end
+
+        -- do not install mod if gun denies installation of such type/slot
+        if not acceptsModSlot[augment.slot] then
+            sb.logError("(gunmod.lua) Gun mod application failed: gun does not accept mods in slot")
+            return
+        end
+    
     end
 
     -- do not install mod if slot is occupied

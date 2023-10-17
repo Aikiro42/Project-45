@@ -23,7 +23,9 @@
     ],
     "acceptsModSlot": [
       "rail",
-      "sights"
+      "sights",
+      
+      "material"
     ]
   },
 
