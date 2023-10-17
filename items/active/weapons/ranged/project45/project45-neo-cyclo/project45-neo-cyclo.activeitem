@@ -53,7 +53,9 @@
     ],
     "acceptsModSlot": [
       "muzzle",
-      "receiver"
+      "receiver",
+      
+      "material"
     ]
   },
 

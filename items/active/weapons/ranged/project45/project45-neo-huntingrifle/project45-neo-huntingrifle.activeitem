@@ -21,7 +21,10 @@
       "rail",
       "muzzle",
       "sights",
-      "underbarrel"
+      "underbarrel",
+      
+      "magazine",
+      "material"
     ],
     "acceptsAmmoArchetype": [
       "bullet"

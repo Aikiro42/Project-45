@@ -4,7 +4,7 @@
   "maxStack" : 1,
   "rarity" : "Essential",
   "description" : "A lever-action coach gun.",
-  "shortdescription" : "New Lever Action",
+  "shortdescription" : "Lever Action",
   "tooltipKind" : "project45gun",
   "gunArchetype": "Lever-Action Rifle",
   "category" : "rifle",
@@ -21,7 +21,10 @@
       "rail",
       "sights",
       "underbarrel",
-      "muzzle"
+      "muzzle",
+      
+      "magazine",
+      "material"
     ],
     "acceptsAmmoArchetype": [
       "bullet",

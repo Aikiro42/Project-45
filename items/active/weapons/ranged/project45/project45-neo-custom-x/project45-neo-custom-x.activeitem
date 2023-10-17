@@ -70,7 +70,7 @@
 
     // exceptions for specific ammo mods
     // denial takes precedence over acceptance
-    "ammoExceptions": {
+    "modExceptions": {
       "accept": [
         "project45-homingrocketmod"
       ],

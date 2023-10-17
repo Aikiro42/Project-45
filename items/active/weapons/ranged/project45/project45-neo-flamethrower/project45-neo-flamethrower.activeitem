@@ -27,7 +27,9 @@
     "category": "experimental",
     "statModCountMax": 10,
     "acceptsModSlot": [
-      "rail"
+      "rail",
+      
+      "material"
     ],
     "acceptsAmmoArchetype": [
       "liquid",

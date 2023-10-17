@@ -69,7 +69,10 @@
     "acceptsModSlot": [
       "rail",
       "sights",
-      "muzzle"
+      "muzzle",
+      
+      "magazine",
+      "material"
     ],
     "acceptsAmmoArchetype": [
       "bullet"

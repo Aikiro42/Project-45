@@ -28,7 +28,10 @@
     "statModCountMax": 10,
     "acceptsModSlot": [
       "rail",
-      "sights"
+      "sights",
+      
+      "magazine",
+      "material"
     ],
     "acceptsAmmoArchetype": [
       "bullet",

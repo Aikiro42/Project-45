@@ -108,7 +108,10 @@
       "rail",
       "sights",
       "muzzle",
-      "stock"
+      "stock",
+      
+      "magazine",
+      "material"
     ],
     "acceptsAmmoArchetype":[
       "bullet"

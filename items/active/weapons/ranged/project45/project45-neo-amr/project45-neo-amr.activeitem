@@ -30,7 +30,11 @@
     "acceptsModSlot": [
       "rail",
       "sights",
-      "underbarrel"
+      "underbarrel",
+      
+      "material",
+      "magazine",
+      "receiver"
     ],
     "acceptsAmmoArchetype": [
       "bullet",
@@ -95,7 +99,9 @@
     "bulletsPerReload": 5,
     "inaccuracy": 10,
     "semi": true,
-    "cycleTime": 0.1,
+    "cycleTime": 0.5,
+    "audibleEjection": true,
+    
     "cockTime": 0.6,
     "screenShakeAmount": 2,
     "manualFeed": true,

@@ -27,18 +27,35 @@ function apply(input)
 
     -- MOD INSTALLATION GATES
 
-    -- do not install mod if mod is not part of weapon category
-    if augment.category ~= "universal" then
-      sb.logError("(abilitymod.lua) Ability mod application failed: category mismatch")
-      if modInfo.category ~= augment.category then return end
+    local modExceptions = modInfo.modExceptions or {}
+    modExceptions.accept = modExceptions.accept or {}
+    modExceptions.deny = modExceptions.deny or {}
+
+    -- check if ammo mod is particularly denied
+    local denied = set.new(modExceptions.deny)
+    if denied[config.getParameter("itemName")] then
+      sb.logError("(abilitymod.lua) Ability mod application failed: gun does not accept this specific ability mod")
+      return
     end
 
-    -- do not install mod if gun denies installation on slot
-    if not acceptsModSlot[augment.slot] then
-      sb.logError("(abilitymod.lua) Ability mod application failed: gun disallows mod slot")
-      return
-    end    
+    -- check if ammo mod is particularly accepted
+    local isAccepted = set.new(modExceptions.accept)[config.getParameter("itemName")]
+    if not isAccepted then
 
+      -- do not install mod if mod is not part of weapon category
+      if augment.category ~= "universal" then
+        sb.logError("(abilitymod.lua) Ability mod application failed: category mismatch")
+        if modInfo.category ~= augment.category then return end
+      end
+
+      -- do not install mod if gun denies installation on slot
+      if not acceptsModSlot[augment.slot] then
+        sb.logError("(abilitymod.lua) Ability mod application failed: gun disallows mod slot")
+        return
+      end
+      
+    end
+  
     -- do not install mod if slot is occupied
     if modSlots[augment.slot] then
       sb.logError("(abilitymod.lua) Ability mod application failed: something already installed in slot")
