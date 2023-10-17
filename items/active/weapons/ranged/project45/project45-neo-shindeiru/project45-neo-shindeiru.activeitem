@@ -30,7 +30,7 @@
           {
             "particle" : {
               "type" : "animated",
-              "image" : "/particles/bulletcases/project45bulletcasesmall/project45bulletcasesmall.animation",
+              "image" : "/particles/project45/bulletcases/project45bulletcasesmall/project45bulletcasesmall.animation",
               "fade" : 0.9,
               "position" : [0, 0],
               "size" : 1.0,
