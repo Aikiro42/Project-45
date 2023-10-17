@@ -278,6 +278,7 @@ function build(directory, config, parameters, level, seed)
       config.primaryAbility.manualFeed = parameters.primaryAbility.manualFeed or config.primaryAbility.manualFeed
       config.primaryAbility.cockTime = parameters.primaryAbility.cockTime or config.primaryAbility.cockTime
       config.primaryAbility.cycleTime = parameters.primaryAbility.cycleTime or config.primaryAbility.cycleTime
+      
       local actualCycleTime = config.primaryAbility.manualFeed
         and config.primaryAbility.cockTime
         or config.primaryAbility.cycleTime
@@ -285,16 +286,16 @@ function build(directory, config, parameters, level, seed)
       if type(actualCycleTime) ~= "table" then
         actualCycleTime = {actualCycleTime, actualCycleTime}
       end
-      local loFireRate = actualCycleTime[1] + config.primaryAbility.fireTime
-      local hiFireRate = actualCycleTime[2] + config.primaryAbility.fireTime
+      
+      local loFireRate = actualCycleTime[1] + (parameters.primaryAbility.cycleTime or config.primaryAbility.fireTime)
+      local hiFireRate = actualCycleTime[2] + (parameters.primaryAbility.cycleTime or config.primaryAbility.fireTime)
       config.tooltipFields.fireRateLabel = ("^#FFD400;" .. util.round(loFireRate*1000, 1))
       .. (loFireRate == hiFireRate and "ms" or (" - " .. util.round(hiFireRate*1000, 1) .. "ms"))
-
+      
       -- set reload cost
       config.primaryAbility.reloadCost = parameters.primaryAbility.reloadCost or config.primaryAbility.reloadCost
       config.tooltipFields.reloadCostLabel = "^#b0ff78;" .. config.primaryAbility.reloadCost or 0
 
-      
       local bulletReloadTime = parameters.primaryAbility.reloadTime or config.primaryAbility.reloadTime
       local bulletsPerReload = parameters.primaryAbility.bulletsPerReload or config.primaryAbility.bulletsPerReload
       local maxAmmo = parameters.primaryAbility.maxAmmo or config.primaryAbility.maxAmmo
