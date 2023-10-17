@@ -49,7 +49,10 @@
     "acceptsModSlot": [
       "rail",
       "underbarrel",
-      "muzzle"
+      "muzzle",
+      
+      "receiver",
+      "material"
     ]
   },
 
@@ -78,7 +81,7 @@
     "recoilMaxDeg": 7.5,
     "recoverDelay": 0.05,
     "semi": true,
-    "cycleTime": 0.1,
+    "cycleTime": 0.25,
     "projectileKind": "hitscan",
     "projectileCount": 3,
     "spread": 3,

@@ -98,6 +98,7 @@
         "project45-neo-accelerator",
         "project45-neo-beamsplitter",
         "project45-neo-beamgun",
+        "project45-neo-gazer",
 
         "project45-neb-zweibrandyr",
         "project45-neb-magmaspitter",
@@ -124,12 +125,16 @@
         "project45-autofiremod",
         "project45-multithreadermod",
 
+        // magazine
+
+        "project45-extendedmagmod",
+        "project45-overampmod",
+
         // misc mods
         "project45-gripmod",
         "project45-muzzlebrakemod",
         "project45-silencermod",
         "project45-extendedbarrelmod",
-        "project45-extendedmagmod",
         "project45-weightmod",
         "project45-stockmod"
       ],
