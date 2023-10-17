@@ -69,7 +69,7 @@
     "baseDamage": 50,
 
     "projectileKind": "summoned",
-    "projectileType": "project45_elecexplosion",
+    "summonedProjectileType": "project45_elecexplosion",
     "cycleTime": 0.075,
     "semi": false,
     "hideMuzzleFlash": true,

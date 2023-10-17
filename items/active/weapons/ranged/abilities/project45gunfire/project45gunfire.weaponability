@@ -119,7 +119,8 @@
 
     },
 
-    "summonParameters": {
+    "summonedProjectileType": "regularexplosion",
+    "summonedProjectileParameters": {
       "summonAnywhere": false, // if true, can summon projectiles anywhere as long as it isn't within terrain
       "summonInTerrain": false // if true, can summon in terrain. Renders summonAnywhere true.
     },

@@ -79,7 +79,7 @@ function apply(input)
     newPrimaryAbility.projectileParameters = augment.projectileParameters
     newPrimaryAbility.hitscanParameters = augment.hitscanParameters
     newPrimaryAbility.beamParameters = augment.beamParameters
-    newPrimaryAbility.summonParameters = augment.summonParameters
+    newPrimaryAbility.summonedProjectileParameters = augment.summonedProjectileParameters
     
     newPrimaryAbility.hideMuzzleFlash = augment.hideMuzzleFlash
     newPrimaryAbility.hideMuzzleSmoke = augment.hideMuzzleSmoke

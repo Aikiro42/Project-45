@@ -155,8 +155,10 @@
       ],
       
       "ammo": [
-        "project45-bulletmod",
-        "project45-hitscanmod",
+        "project45-projectileconverter",
+        "project45-hitscanconverter",
+        "project45-beamconverter",
+        "project45-summonconverter",
         
         // ballistic ammo
         "project45-explosiveammomod",
