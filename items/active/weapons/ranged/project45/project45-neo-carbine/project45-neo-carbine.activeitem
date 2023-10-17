@@ -52,7 +52,7 @@
 
   "project45GunModInfo":{
     "category": "ballistic",
-    "statModCountMax": 10,
+    "statModCountMax": 20,
     "modExceptions": {
       "deny": [
         "project45-autofiremod"
