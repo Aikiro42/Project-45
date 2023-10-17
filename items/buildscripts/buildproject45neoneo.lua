@@ -52,6 +52,7 @@ function build(directory, config, parameters, level, seed)
   
   -- elemental type and config (for alt ability)
   local elementalType = configParameter("elementalType", "physical")
+
   replacePatternInData(config, nil, "<elementalType>", elementalType)
   if config.altAbility and config.altAbility.elementalConfig then
     util.mergeTable(config.altAbility, config.altAbility.elementalConfig[elementalType])
@@ -355,7 +356,13 @@ function build(directory, config, parameters, level, seed)
 
     end
     -- sb.logInfo("[ PROJECT 45 ] " .. sb.printJson(parameters.primaryAbility))
-    config.tooltipFields.altAbilityLabel = config.altAbility and ("^#ABD2FF;" .. (config.altAbility.name or "unknown")) or "^#777777;None"
+    if parameters.altAbility then
+      config.tooltipFields.altAbilityLabel = ("^#ABD2FF;" .. (parameters.altAbility.name or "Unknown"))
+    elseif config.altAbility then
+      config.tooltipFields.altAbilityLabel = ("^#ABD2FF;" .. (config.altAbility.name or "Unknown"))
+    else
+      config.tooltipFields.altAbilityLabel = "^#777777;None"
+    end
 
   end
 
