@@ -122,7 +122,7 @@
 				"offsetRegion" : [3.375, 0.075, 3.375, 0.075],
 				"burstCount" : 4,
 				"particles" : [
-					{ "particle" : "knightfall_chronoparticle"}
+					{ "particle" : "project45_knightfall_chronoparticle"}
 				]
 			}
     },
