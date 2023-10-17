@@ -1,20 +1,20 @@
 {
-  "itemName" : "project45-reflexsightsmod",
+  "itemName" : "project45-lasermod",
   "price" : 15000,
   "rarity" : "Legendary",
   "tooltipKind" : "project45gunmod",
-  "category" : "Grip Mod",
+  "category" : "Rail Mod",
   "tooltipFields":{
-    "objectImage": "/items/augments/project45-gunmods/mods/project45-reflexsightsmod/project45-reflexsightsmod.png"
+    "objectImage": "/items/augments/project45-gunmods/mods/project45-lasermod/project45-lasermod.png"
   },
-  "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-reflexsightsmod/project45-reflexsightsmodicon.png",
-  "description" : "Allows for quicker target acquisition. Decreases spread and recoil mult by 75%.",
-  "shortdescription" : "Reflex Sights",
+  "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-lasermod/project45-lasermodicon.png",
+  "description" : "A perpetually on laser. Decreases spread and recoil by 75%",
+  "shortdescription" : "Laser Beam",
 
   "augment":{
     "modName": "Reflex Sights",
     "category": "universal",
-    "slot": "sights",
+    "slot": "rail",
     "recoilMult": {
       "operation": "multiply",
       "value": 0.25
@@ -24,8 +24,8 @@
         "operation": "replace",
         "value": {
           "enabled": true,
-          "color": [255, 255, 255, 128],
-          "width": 0.1
+          "color": [255, 0, 0, 200],
+          "width": 0.2
         }
       },
       "spread": {
@@ -37,8 +37,8 @@
     "sprite": {
       "zLevel" : 5,
       "centered" : true,
-      "image" : "/items/augments/project45-gunmods/mods/project45-reflexsightsmod/project45-reflexsightsmodsprite.png<directives>",
-      "offset": [0.0625, 0.1875]
+      "image" : "/items/augments/project45-gunmods/mods/project45-lasermod/project45-lasermodsprite.png<directives>",
+      "offset": [0, 0]
     }
 
     /*
