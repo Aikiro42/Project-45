@@ -2,6 +2,7 @@ require "/scripts/augments/item.lua"
 require "/scripts/util.lua"
 require "/scripts/vec2.lua"
 require "/scripts/set.lua"
+require "/scripts/project45/project45util.lua"
 
 -- General mod application script
 
@@ -73,7 +74,7 @@ function apply(input)
     local oldPrimaryAbility = output.config.primaryAbility or {} -- retrieve old primary ability
     local newPrimaryAbility = input.parameters.primaryAbility or {} -- retrieve modified primary ability
     oldPrimaryAbility = sb.jsonMerge(oldPrimaryAbility, newPrimaryAbility) -- TESTME: merge new primary ability on old
-    sb.logInfo("(gunmod.lua) initial parameters: " .. sb.printJson(newPrimaryAbility))
+    -- sb.logInfo("(gunmod.lua) initial parameters: " .. sb.printJson(newPrimaryAbility))
     
     -- replace general primaryability parameters
     -- using json patch-esque operations
@@ -134,7 +135,7 @@ function apply(input)
             if laser and laser.enabled then
                 -- compare more vivid color first
                 if laser.color and augment.primaryAbility.laser.value.color then
-                    laser.color = moreVividColor(laser.color, augment.primaryAbility.laser.value.color)
+                    laser.color = project45util.moreVividColor(laser.color, augment.primaryAbility.laser.value.color)
                 end
 
                 -- compare thicker laser first
@@ -190,7 +191,7 @@ function apply(input)
 
     -- merge changes
     local finalPrimaryAbility = sb.jsonMerge(oldPrimaryAbility, newPrimaryAbility)
-    sb.logInfo("(gunmod.lua) new parameters: " .. sb.printJson(finalPrimaryAbility))
+    -- sb.logInfo("(gunmod.lua) new parameters: " .. sb.printJson(finalPrimaryAbility))
     output:setInstanceValue("primaryAbility", finalPrimaryAbility)
 
     -- for visible weapon parts like grips, etc.
@@ -339,37 +340,4 @@ function modify(oldValue, operation, modValue)
     end
 
     return newValue
-end
-
-function vividness(color)
-    -- vividness is distance from "gray diagonal"
-    --[[
-        Chen, T. (January 2022)
-        A measurement of the overall vividness of a color image based on RGB color model.
-        Electronic Imaging.
-        Society for Imaging Science and Technology.
-        DOI: https://doi.org/10.2352/EI.2022.34.15.COLOR-245
-    --]]
-    return (math.sqrt(6)/3) * math.sqrt(
-        color[1]^2
-        + color[2]^2
-        + color[3]^2
-        - (color[1] * color[2])
-        - (color[1] * color[3])
-        - (color[2] * color[3])
-    )
-end
-
-function moreVividColor(color1, color2)
-    local alpha = 255
-
-    -- compare color transparency; choose less transparent color
-    if #color1 > 3 and #color2 > 3 then
-        alpha = math.max(color1[4], color2[4])
-    end
-    
-    -- choose more vivid color
-    local chosen = vividness(color1) > vividness(color2) and color1 or color2
-    table.insert(chosen, alpha)
-    return chosen
 end

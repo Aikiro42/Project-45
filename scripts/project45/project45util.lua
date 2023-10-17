@@ -58,5 +58,37 @@ function project45util.mergeLists(lista, listb)
     table.remove(lista, 1)
   end
 
+end
 
+function project45util.__vividness(color)
+  -- vividness is distance from "gray diagonal"
+  --[[
+      Chen, T. (January 2022)
+      A measurement of the overall vividness of a color image based on RGB color model.
+      Electronic Imaging.
+      Society for Imaging Science and Technology.
+      DOI: https://doi.org/10.2352/EI.2022.34.15.COLOR-245
+  --]]
+  return (math.sqrt(6)/3) * math.sqrt(
+      color[1]^2
+      + color[2]^2
+      + color[3]^2
+      - (color[1] * color[2])
+      - (color[1] * color[3])
+      - (color[2] * color[3])
+  )
+end
+
+function project45util.moreVividColor(color1, color2)
+  local alpha = 255
+
+  -- compare color transparency; choose less transparent color
+  if #color1 > 3 and #color2 > 3 then
+      alpha = math.max(color1[4], color2[4])
+  end
+  
+  -- choose more vivid color
+  local chosen = self.__vividness(color1) > self.__vividness(color2) and color1 or color2
+  table.insert(chosen, alpha)
+  return chosen
 end
