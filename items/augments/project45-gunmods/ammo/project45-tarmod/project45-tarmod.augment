@@ -23,9 +23,9 @@
     "multishot": 1,
 
     "customSounds": {
-      "fireStart": ["/sfx/melee/mech_energychainsaw_windup1.ogg"],
-      "fireLoop": ["/sfx/tools/chainsaw_idle.ogg"],
-      "fireEnd": ["/sfx/melee/mech_energychainsaw_winddown1.ogg"]
+      "fireStart": [ "/sfx/project45neosfx/fire/start/firestart-switch1.ogg" ],
+      "fireLoop": ["/sfx/project45neosfx/chargedrone/chargedrone-04.ogg"],
+      "fireEnd": [ "/sfx/project45neosfx/fire/start/firestart-switch1.ogg" ]
     },
 
     "hideMuzzleFlash": true,
