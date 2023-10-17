@@ -115,7 +115,10 @@
     "recoverDelay": 0.125,
     "recoverTime": 1,
 
-
+    "muzzleProjectileType": "project45_muzzleexplosion",
+    "muzzleProjectileParameters": {
+      "speed": -5
+    },
     // "reloadTime": 10,
   
     "stances":{
