@@ -9,7 +9,7 @@
   "actionOnReap" : [
     {
       "action" : "config",
-      "file" : "/projectiles/explosions/bulletimpact/unbound/starforge-unboundfirebulletexplosion.config"
+      "file" : "/projectiles/explosions/project45_firebulletimpact/project45_firebulletimpact.config"
     }
   ],
   "periodicActions" : [
