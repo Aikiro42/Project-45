@@ -4,7 +4,10 @@
   "rarity" : "Legendary",
   "tooltipKind" : "project45gunmod",
   "category" : "Muzzle Mod",
-  "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-extendedbarrelmod/project45-extendedbarrelmod.png",
+  "tooltipFields":{
+    "objectImage": "/items/augments/project45-gunmods/mods/project45-extendedbarrelmod/project45-extendedbarrelmod.png"
+  },
+  "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-extendedbarrelmod/project45-extendedbarrelmodicon.png",
   "description" : "Decreases spread by 50%.",
   "shortdescription" : "Extended Barrel",
 

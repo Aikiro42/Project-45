@@ -4,7 +4,10 @@
   "rarity" : "Legendary",
   "tooltipKind" : "project45gunmod",
   "category" : "Stock Mod",
-  "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-stockmod/project45-stockmod.png",
+  "tooltipFields":{
+    "objectImage": "/items/augments/project45-gunmods/mods/project45-stockmod/project45-stockmod.png"
+  },
+  "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-stockmod/project45-stockmodicon.png",
   "shortdescription" : "Padded Stock",
   "description" : "Reduces screen shake.",
 

@@ -4,7 +4,10 @@
   "rarity" : "Legendary",
   "tooltipKind" : "project45gunmod",
   "category" : "Muzzle Mod",
-  "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-muzzlebrakemod/project45-muzzlebrakemod.png",
+  "tooltipFields":{
+    "objectImage": "/items/augments/project45-gunmods/mods/project45-muzzlebrakemod/project45-muzzlebrakemod.png"
+  },
+  "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-muzzlebrakemod/project45-muzzlebrakemodicon.png",
   "description" : "Makes exiting gas counteract the muzzle rise, reducing recoil by 10%.",
   "shortdescription" : "Muzzle Brake",
 
