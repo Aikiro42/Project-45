@@ -301,6 +301,7 @@ function hitscanLib:fireBeam()
     self:stopFireLoop()
 
     self.isFiring = false
+    self.muzzleProjectileFired = false
 
     hitreg = self:hitscan(true)
     beamEnd = hitreg[2]

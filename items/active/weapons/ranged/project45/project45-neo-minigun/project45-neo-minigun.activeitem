@@ -19,7 +19,8 @@
     "statModCountMax": 10,
     "allowsConversion": [
       "hitscan",
-      "summoned"
+      "summoned",
+      "beam"
     ],
     "acceptsModSlot": [
       "rail",

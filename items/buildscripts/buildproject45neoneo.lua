@@ -287,8 +287,8 @@ function build(directory, config, parameters, level, seed)
         actualCycleTime = {actualCycleTime, actualCycleTime}
       end
       
-      local loFireRate = actualCycleTime[1] + (parameters.primaryAbility.cycleTime or config.primaryAbility.fireTime)
-      local hiFireRate = actualCycleTime[2] + (parameters.primaryAbility.cycleTime or config.primaryAbility.fireTime)
+      local loFireRate = actualCycleTime[1] + (parameters.primaryAbility.fireTime or config.primaryAbility.fireTime)
+      local hiFireRate = actualCycleTime[2] + (parameters.primaryAbility.fireTime or config.primaryAbility.fireTime)
       config.tooltipFields.fireRateLabel = ("^#FFD400;" .. util.round(loFireRate*1000, 1))
       .. (loFireRate == hiFireRate and "ms" or (" - " .. util.round(hiFireRate*1000, 1) .. "ms"))
       

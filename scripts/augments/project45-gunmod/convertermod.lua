@@ -9,6 +9,7 @@ function apply(input)
   local output = Item.new(input)
 
   local primaryAbility = sb.jsonMerge(output.config.primaryAbility or {}, input.parameters.primaryAbility or {})
+  local newPrimaryAbility = input.parameters.primaryAbility or {}
   local modSlots = input.parameters.modSlots or {}
 
   -- CONVERSION GATES
@@ -43,9 +44,10 @@ function apply(input)
 
 
   local animationCustom = sb.jsonMerge(output.config.animationCustom or {}, input.parameters.animationCustom or {})
+  local newAnimationCustom = input.parameters.animationCustom or {}
   local oldProjectileKind = primaryAbility.projectileKind
   local gunCategory = output.config.project45GunModInfo.category
-  primaryAbility.projectileKind = conversion  -- conversion must be a valid projectile kind
+  newPrimaryAbility.projectileKind = conversion  -- conversion must be a valid projectile kind
 
   -- Conversion balance changes
   --[[
@@ -69,14 +71,14 @@ function apply(input)
   if conversion == "beam" then
     
     -- multiply by damageConversionFactor if converting to beam
-    primaryAbility.baseDamage = (primaryAbility.baseDamage or 5) * conversionConfig.damageConversionFactor
+    newPrimaryAbility.baseDamage = (primaryAbility.baseDamage or 5) * conversionConfig.damageConversionFactor
     
     -- change sounds reminiscent to that of generic beam
-    construct(animationCustom, "sounds")
+    construct(newAnimationCustom, "sounds")
     local defaultBeamSounds = conversionConfig.defaultBeamSounds
-    animationCustom.sounds.fireStart = defaultBeamSounds.fireStart
-    animationCustom.sounds.fireLoop = defaultBeamSounds.fireLoop
-    animationCustom.sounds.fireEnd = defaultBeamSounds.fireEnd
+    newAnimationCustom.sounds.fireStart = defaultBeamSounds.fireStart
+    newAnimationCustom.sounds.fireLoop = defaultBeamSounds.fireLoop
+    newAnimationCustom.sounds.fireEnd = defaultBeamSounds.fireEnd
 
   else
 
@@ -84,72 +86,72 @@ function apply(input)
     if oldProjectileKind == "projectile"
     and conversion == "hitscan" then
       -- multiply by damageConversionFactor from projectile to hitscan
-      primaryAbility.baseDamage = (primaryAbility.baseDamage or 5) * conversionConfig.damageConversionFactor
+      newPrimaryAbility.baseDamage = (primaryAbility.baseDamage or 5) * conversionConfig.damageConversionFactor
     elseif (oldProjectileKind == "hitscan" or oldProjectileKind == "beam")
     and conversion == "projectile" then
       -- divide by damageConversionFactor from hitscan/beam to projectile
-      primaryAbility.baseDamage = (primaryAbility.baseDamage or 5) / conversionConfig.damageConversionFactor
+      newPrimaryAbility.baseDamage = (primaryAbility.baseDamage or 5) / conversionConfig.damageConversionFactor
     end
 
     -- reduce projectileCount and multishot when converting to hitscan to hitscan projectile limit
     if conversion == "hitscan" then
-      primaryAbility.projectileCount = math.min(conversionConfig.hitscanProjectileLimit, primaryAbility.projectileCount or 1)
-      primaryAbility.multishot = math.min(conversionConfig.hitscanProjectileLimit, primaryAbility.multishot or 1)
+      newPrimaryAbility.projectileCount = math.min(conversionConfig.hitscanProjectileLimit, primaryAbility.projectileCount or 1)
+      newPrimaryAbility.multishot = math.min(conversionConfig.hitscanProjectileLimit, primaryAbility.multishot or 1)
       
       -- if product of multishot and projectile count is beyond limit,
       -- normalize such that max possible number of projectiles spawned is limit
       -- i.e. projectileCount * multishot <= limit
-      if primaryAbility.projectileCount * primaryAbility.multishot > conversionConfig.hitscanProjectileLimit then
+      if newPrimaryAbility.projectileCount * newPrimaryAbility.multishot > conversionConfig.hitscanProjectileLimit then
         local factor = math.sqrt(conversionConfig.hitscanProjectileLimit)/conversionConfig.hitscanProjectileLimit
-        primaryAbility.projectileCount = math.ceil(primaryAbility.projectileCount * factor)
-        primaryAbility.multishot = primaryAbility.multishot * factor
+        newPrimaryAbility.projectileCount = math.ceil(newPrimaryAbility.projectileCount * factor)
+        newPrimaryAbility.multishot = newPrimaryAbility.multishot * factor
       end
     end
 
     if conversion == "summoned" then
-      primaryAbility.baseDamage = (primaryAbility.baseDamage or 5) * conversionConfig.damageConversionFactor * conversionConfig.summonedDamageMultiplier
+      newPrimaryAbility.baseDamage = (primaryAbility.baseDamage or 5) * conversionConfig.damageConversionFactor * conversionConfig.summonedDamageMultiplier
     end
 
     if oldProjectileKind == "summoned" then
-      primaryAbility.baseDamage = (primaryAbility.baseDamage or 5) / (conversionConfig.damageConversionFactor * conversionConfig.summonedDamageMultiplier)
+      newPrimaryAbility.baseDamage = (primaryAbility.baseDamage or 5) / (conversionConfig.damageConversionFactor * conversionConfig.summonedDamageMultiplier)
     end
     
     -- widen spread if converting from beam
     if oldProjectileKind == "beam" then
-      construct(primaryAbility, "beamParameters")
-      primaryAbility.spread = (primaryAbility.beamParameters.beamWidth or 5) / conversionConfig.projectileSpreadDividend
+      construct(newPrimaryAbility, "beamParameters")
+      newPrimaryAbility.spread = (primaryAbility.beamParameters.beamWidth or 5) / conversionConfig.projectileSpreadDividend
     end
 
     -- SOUND CHANGES
-    construct(animationCustom, "sounds")
+    construct(newAnimationCustom, "sounds")
 
     if oldProjectileKind == "beam" and conversionConfig.removeFireLoopSounds then
       -- remove fire start/loop/end sounds if converting from beam
-      animationCustom.sounds.fireStart = {}
-      animationCustom.sounds.fireLoop = {}
-      animationCustom.sounds.fireEnd = {}
+      newAnimationCustom.sounds.fireStart = {}
+      newAnimationCustom.sounds.fireLoop = {}
+      newAnimationCustom.sounds.fireEnd = {}
     end
 
     -- if gun has no "fire" sound,
-    animationCustom.sounds.fire = animationCustom.sounds.fire or {}
-    if #animationCustom.sounds.fire == 0 then
+    newAnimationCustom.sounds.fire = animationCustom.sounds.fire or {}
+    if #newAnimationCustom.sounds.fire == 0 then
       if oldProjectileKind == "beam" or gunCategory == "energy" then
         -- beam projectile guns are usually energy ones... so add energy fire sound
-        animationCustom.sounds.fire = conversionConfig.defaultFireSounds.energy
+        newAnimationCustom.sounds.fire = conversionConfig.defaultFireSounds.energy
       elseif gunCategory == "ballistic" then
         -- otherwise, just add a generic rifle sound
-        animationCustom.sounds.fire = conversionConfig.defaultFireSounds.ballistic
+        newAnimationCustom.sounds.fire = conversionConfig.defaultFireSounds.ballistic
       elseif gunCategory == "experimental" then
-        animationCustom.sounds.fire = conversionConfig.defaultFireSounds.experimental
+        newAnimationCustom.sounds.fire = conversionConfig.defaultFireSounds.experimental
       else
-        animationCustom.sounds.fire = conversionConfig.defaultFireSounds.default
+        newAnimationCustom.sounds.fire = conversionConfig.defaultFireSounds.default
       end
     end
     
   end
 
-  output:setInstanceValue("primaryAbility", primaryAbility)
-  output:setInstanceValue("animationCustom", animationCustom)
+  output:setInstanceValue("primaryAbility", newPrimaryAbility)
+  output:setInstanceValue("animationCustom", newAnimationCustom)
   
   modSlots.ammoType = {
     config.getParameter("shortdescription"),

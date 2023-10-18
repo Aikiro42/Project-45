@@ -918,27 +918,30 @@ end
 function Project45GunFire:muzzleFlash()
 
   -- fire muzzle projectile
-  if self.muzzleProjectileType then
-    if self.projectileKind ~= "projectile" then
-      self:fireMuzzleProjectile(
-        self.muzzleProjectileType,
-        self.muzzleProjectileParameters,
-        nil,
-        self.muzzlePosition and self:muzzlePosition(nil, self.muzzleProjectileOffset),
-        nil,
-        self.muzzleVector and self:muzzleVector(0, nil, self.muzzlePosition and self:muzzlePosition()),
-        self.muzzleProjectileOffset
-      )
-    else
-      self:fireProjectile(
-        self.muzzleProjectileType,
-        self.muzzleProjectileParameters,
-        nil,
-        self.muzzlePosition and self:muzzlePosition(),
-        nil,
-        self.muzzleVector and self:muzzleVector(0, nil, self.muzzlePosition and self:muzzlePosition())
-      )
+  if self.muzzleProjectileFired == false then
+    if self.muzzleProjectileType then
+      if self.projectileKind ~= "projectile" then
+        self:fireMuzzleProjectile(
+          self.muzzleProjectileType,
+          self.muzzleProjectileParameters,
+          nil,
+          self.muzzlePosition and self:muzzlePosition(nil, self.muzzleProjectileOffset),
+          nil,
+          self.muzzleVector and self:muzzleVector(0, nil, self.muzzlePosition and self:muzzlePosition()),
+          self.muzzleProjectileOffset
+        )
+      else
+        self:fireProjectile(
+          self.muzzleProjectileType,
+          self.muzzleProjectileParameters,
+          nil,
+          self.muzzlePosition and self:muzzlePosition(),
+          nil,
+          self.muzzleVector and self:muzzleVector(0, nil, self.muzzlePosition and self:muzzlePosition())
+        )
+      end
     end
+    self.muzzleProjectileFired = true
   end
 
   if (self.projectileKind or "projectile") ~= "beam" then
@@ -1497,6 +1500,7 @@ function Project45GunFire:evalProjectileKind()
     self.updateProjectileStack = hitscanLib.updateProjectileStack
     self.hitscanParameters.hitscanColor = self.muzzleFlashColor
   elseif self.projectileKind == "beam" then
+    self.muzzleProjectileFired = false
     self.firing = hitscanLib.fireBeam
     self.updateProjectileStack = hitscanLib.updateProjectileStack
     self.beamParameters.beamColor = self.muzzleFlashColor
@@ -1581,7 +1585,6 @@ end
 
 -- Returns the muzzle of the gun
 function Project45GunFire:firePosition(altOverride, addOffset)
-  sb.logInfo(sb.printJson(addOffset))
   local muzzleOffset = self.weapon.muzzleOffset
   if self.abilitySlot == "alt" or altOverride then
     muzzleOffset = config.getParameter("altMuzzleOffset", self.weapon.muzzleOffset)
