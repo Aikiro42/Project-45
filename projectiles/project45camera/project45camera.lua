@@ -7,8 +7,12 @@ end
 function update(dt)
 end
 
-function updatePos(position, source, range, deadzone, maxSpeed, maxSpeedDistance)
+function persist()
     projectile.setTimeToLive(10)
+end
+
+function updatePos(position, source, range, deadzone, maxSpeed, maxSpeedDistance)
+    persist()
 
     local newPos = position -- set new position as cursor position
     local oldPos = mcontroller.position()

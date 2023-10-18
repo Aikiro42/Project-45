@@ -126,6 +126,11 @@ function Project45GunScope:updateCamera(shiftHeld)
           self.range,
           self.deadzone, self.maxSpeed, self.maxSpeedDistance
         )
+      else
+        world.callScriptedEntity(
+          storage.cameraProjectile,
+          "persist"
+        )
       end
 
       activeItem.setCameraFocusEntity(storage.cameraProjectile)
