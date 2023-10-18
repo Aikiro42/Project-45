@@ -39,6 +39,7 @@ function Project45GunScope:update(dt, fireMode, shiftHeld)
   else
     activeItem.setScriptedAnimationParameter("altLaserColor", nil)
     activeItem.setScriptedAnimationParameter("altLaserWidth", nil)
+    self.reticleLocked = false
   end
   
   self:updateCamera(trigger)

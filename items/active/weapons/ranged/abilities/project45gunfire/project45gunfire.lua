@@ -15,6 +15,8 @@ Project45GunFire = WeaponAbility:new()
 
 function Project45GunFire:init()
 
+  sb.logInfo("Sanity check: " .. sb.printJson(self.muzzleProjectileFired == nil))
+
   -- INITIALIZATIONS
   self.debugTimer = self.debugTime
   self.isFiring = false
@@ -919,7 +921,7 @@ end
 function Project45GunFire:muzzleFlash()
 
   -- fire muzzle projectile
-  if self.muzzleProjectileFired == false then
+  if not self.muzzleProjectileFired then
     if self.muzzleProjectileType then
       if self.projectileKind ~= "projectile" then
         self:fireMuzzleProjectile(
@@ -942,7 +944,9 @@ function Project45GunFire:muzzleFlash()
         )
       end
     end
-    self.muzzleProjectileFired = true
+    if self.muzzleProjectileFired == false then 
+      self.muzzleProjectileFired = true
+    end
   end
 
   if (self.projectileKind or "projectile") ~= "beam" then
