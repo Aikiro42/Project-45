@@ -105,19 +105,29 @@
 
     },
 
+
     // settings for firing multiple types of projectiles
     // only matters if `projectileType` is a list
+    /*
     "projectileFireSettings": {
-      "sequential": false,
-      "resetProjectileIndexOnReload": false,
+      "sequential": false,  // whether the projectiles are fired sequentially or randomly
+      "resetProjectileIndexOnReload": false, // only matters if "sequential" is true
+      // determines whether multiple projectiles fired are of the same projectileType
+      // or different projectileTypes
       "batchFire": true
     },
+    */
 
     // You can make the muzzle shoot an additional projectile this way.
+    /*
     "muzzleProjectileType": null,
     "muzzleProjectileParameters": {
 
     },
+    // Offset when firing muzzle projectiles; sometimes the firePosition is way back into the barrel
+    // like in project45-neo-gaussrifle, so you'd want to move the muzzle projectile forward
+    "muzzleProjectileOffset": [0, 0]
+    */
 
     "summonedProjectileType": "project45_defaultsummon",
     "summonedProjectileParameters": {

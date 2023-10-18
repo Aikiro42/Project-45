@@ -73,6 +73,7 @@ function Project45GunFire:init()
   -- always enable laser if debug is on
   self.laser.enabled = self.debug or self.laser.enabled
 
+  self.projectileFireSettings = self.projectileFireSettings or {}
   self.projectileFireSettings.batchFire = type(self.projectileType) == "table" and self.projectileFireSettings.batchFire
 
   -- let inaccuracy be a table
