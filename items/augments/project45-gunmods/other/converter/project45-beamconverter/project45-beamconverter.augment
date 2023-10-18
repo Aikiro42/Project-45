@@ -6,7 +6,7 @@
   "category" : "Converter Mod",
   "inventoryIcon" : "/items/augments/project45-gunmods/other/converter/project45-beamconverter/project45-beamconverter.png",
   "description" : "Converts bullets fired to beam ones.",
-  "shortdescription" : "Beam Converter",
+  "shortdescription" : "Beam Conversion",
 
   "conversion": "beam",
 

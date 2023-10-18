@@ -6,7 +6,7 @@
   "category" : "Converter Mod",
   "inventoryIcon" : "/items/augments/project45-gunmods/other/converter/project45-hitscanconverter/project45-hitscanconverter.png",
   "description" : "Converts bullets fired to hitscan ones.",
-  "shortdescription" : "Hitscan Converter",
+  "shortdescription" : "Hitscan Conversion",
 
   "conversion": "hitscan",
 

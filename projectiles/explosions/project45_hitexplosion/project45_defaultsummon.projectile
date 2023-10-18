@@ -1,0 +1,28 @@
+{
+  "projectileName" : "project45_defaultsummon",
+  "image" : "project45_defaultsummon.png",
+  "animationCycle" : 0.1,
+  "timeToLive": 0.1,
+  "fullbright": true,
+  "frameNumber" : 5,
+  "speed" : 0,
+  "renderLayer": "MiddleParticle",
+  "damagePoly" : [
+    /*
+    [0.5, 0.5],
+    [0.5, -0.5],
+    [-0.5, -0.5],
+    [-0.5, 0.5]
+    */
+    [0, 0],
+    [0, -0],
+    [-0, -0],
+    [-0, 0]
+  ],
+  "animationLoops" : false,
+  "piercing" : false,
+  "bounces" : -1,
+  "flippable" : true,
+  "power": 1,
+  "damageKind" : "standardbullet"
+}

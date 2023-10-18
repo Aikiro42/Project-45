@@ -26,6 +26,9 @@
   "project45GunModInfo": {
     "category": "experimental",
     "statModCountMax": 10,
+    "allowsConversion": [
+      "beam"
+    ],
     "acceptsModSlot": [
       "rail",
       

@@ -51,6 +51,20 @@
     "statModCountMax": 99, // maximum number of stat mods allowed to be installed on the gun
 
     /*
+    Used by converter mods; list of allowed changes to the kind of of projectile fired
+    - projectile
+    - hitscan
+    - beam
+    - summoned
+    */
+    "allowsConversion": [
+      "projectile",
+      "hitscan",
+      "beam",
+      "summoned"
+    ],
+
+    /*
     AMMO INFO
     - Ammo must match the category, and its archetype must be accepted by the gun.
     */

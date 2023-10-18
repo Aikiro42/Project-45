@@ -16,6 +16,11 @@
   "project45GunModInfo": {
     "category": "energy",
     "statModCountMax": 10,
+    "allowsConversion": [
+      "projectile",
+      "beam",
+      "summoned"
+    ],
     "acceptsAmmoArchetype": [
       "bullet",
       "beam"

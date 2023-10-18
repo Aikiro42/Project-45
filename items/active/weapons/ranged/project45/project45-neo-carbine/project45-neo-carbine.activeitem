@@ -58,6 +58,11 @@
         "project45-autofiremod"
       ]
     },
+    "allowsConversion": [
+      "hitscan",
+      "beam",
+      "summoned"
+    ],
     "acceptsAmmoArchetype": [
       "bullet",
       "shotgun"

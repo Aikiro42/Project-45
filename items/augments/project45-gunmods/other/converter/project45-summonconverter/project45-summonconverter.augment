@@ -6,7 +6,7 @@
   "category" : "Converter Mod",
   "inventoryIcon" : "/items/augments/project45-gunmods/other/converter/project45-summonconverter/project45-summonconverter.png",
   "description" : "Converts bullets fired to summoned ones.",
-  "shortdescription" : "Summon Converter",
+  "shortdescription" : "Summon Conversion",
 
   "conversion": "summoned",
 
