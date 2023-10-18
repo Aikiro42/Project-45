@@ -6,13 +6,12 @@ require "/scripts/project45/project45util.lua"
 
 -- General mod application script
 
-function apply(input)
-
+function apply(input, override, augment)
   -- do not install mod if gun has no mod information
   local modInfo = input.parameters.project45GunModInfo
   if not modInfo then return end
 
-  local augment = config.getParameter("augment")
+  augment = augment or config.getParameter("augment")
   local output = Item.new(input)
 
   
@@ -28,6 +27,8 @@ function apply(input)
     acceptsModSlot = set.new(acceptsModSlot)
 
     -- MOD INSTALLATION GATES
+
+    if not override then
 
     local modExceptions = modInfo.modExceptions or {}
     modExceptions.accept = modExceptions.accept or {}
@@ -66,7 +67,9 @@ function apply(input)
     if modSlots[augment.slot] then
         sb.logError("(gunmod.lua) Gun mod application failed: slot already occupied")
         return
-    end    
+    end
+
+    end
     
     -- MOD INSTALLATION PROCESS
 
@@ -269,24 +272,28 @@ function apply(input)
 
     -- add mod info to list of installed mods
 
-    modSlots[augment.slot] = {
-        augment.modName,
-        config.getParameter("itemName")
-    }
-    
-    local needImage = {
-        rail=true,
-        sights=true,
-        underbarrel=true,
-        muzzle=true,
-        stock=true
-    }
-    if needImage[augment.slot] then
-        table.insert(modSlots[augment.slot], config.getParameter("inventoryIcon"))
+    if not override then
+
+        modSlots[augment.slot] = {
+            augment.modName,
+            config.getParameter("itemName")
+        }
+                
+        local needImage = {
+            rail=true,
+            sights=true,
+            underbarrel=true,
+            muzzle=true,
+            stock=true
+        }
+        if needImage[augment.slot] then
+            table.insert(modSlots[augment.slot], config.getParameter("inventoryIcon"))
+        end
+        
+        output:setInstanceValue("modSlots", modSlots)
+        output:setInstanceValue("isModded", true)
+
     end
-    
-    output:setInstanceValue("modSlots", modSlots)
-    output:setInstanceValue("isModded", true)
 
     return output:descriptor(), 1
 

@@ -101,7 +101,7 @@ function Project45GunScope:updateCamera(shiftHeld)
 
     -- generate projectile if nonexistent
     storage.cameraProjectile = storage.cameraProjectile or world.spawnProjectile(
-      "project45camera",
+      self.reticleProjectile or "project45camera",
       source,
       activeItem.ownerEntityId(),
       {0, 0},

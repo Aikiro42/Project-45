@@ -2,6 +2,9 @@ require "/scripts/augments/item.lua"
 require "/scripts/util.lua"
 require "/scripts/vec2.lua"
 require "/scripts/set.lua"
+require "/scripts/augments/project45-gunmod/gunmod.lua"
+
+local gunmod_apply = apply
 
 function apply(input)
 
@@ -180,7 +183,8 @@ function apply(input)
     output:setInstanceValue("modSlots", modSlots)
     output:setInstanceValue("isModded", true)
 
-    return output:descriptor(), 1
+    -- return output:descriptor(), 1
+    return gunmod_apply(output, true, augment)
   
   end
 end

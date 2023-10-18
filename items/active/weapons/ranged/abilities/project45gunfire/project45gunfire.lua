@@ -15,8 +15,6 @@ Project45GunFire = WeaponAbility:new()
 
 function Project45GunFire:init()
 
-  sb.logInfo("Sanity check: " .. sb.printJson(self.muzzleProjectileFired == nil))
-
   -- INITIALIZATIONS
   self.debugTimer = self.debugTime
   self.isFiring = false
