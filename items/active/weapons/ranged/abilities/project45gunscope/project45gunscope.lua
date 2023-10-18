@@ -10,6 +10,8 @@ function Project45GunScope:init()
   storage.cameraProjectile = storage.cameraProjectile or nil
   self.lerpProgress = 0
   self.state = 0
+  self.shiftHeldTimer = -1
+  self.lockReticleTime = self.lockReticleTime or 0.2
 end
 
 function Project45GunScope:update(dt, fireMode, shiftHeld)
@@ -20,6 +22,20 @@ function Project45GunScope:update(dt, fireMode, shiftHeld)
   if storage.cameraProjectile then
     activeItem.setScriptedAnimationParameter("altLaserColor", self.laserColor)
     activeItem.setScriptedAnimationParameter("altLaserWidth", self.laserWidth)
+    
+    if shiftHeld then
+      if self.shiftHeldTimer < 0 then
+        self.shiftHeldTimer = 0
+      end
+      self.shiftHeldTimer = self.shiftHeldTimer + self.dt
+    else
+      if self.shiftHeldTimer >= 0 and self.shiftHeldTimer < self.lockReticleTime then
+        animator.playSound("lock")
+        self.reticleLocked = not self.reticleLocked
+      end
+      self.shiftHeldTimer = -1
+    end
+
   else
     activeItem.setScriptedAnimationParameter("altLaserColor", nil)
     activeItem.setScriptedAnimationParameter("altLaserWidth", nil)
@@ -99,14 +115,17 @@ function Project45GunScope:updateCamera(shiftHeld)
       local scanDest = vec2.add(scanOrig, vec2.mul(self:aimVector(0), self.range))
       scanDest = world.lineCollision(scanOrig, scanDest, {"Block", "Dynamic"}) or scanDest
       --]]
-      world.callScriptedEntity(
-        storage.cameraProjectile,
-        "updatePos",
-        activeItem.ownerAimPosition(),
-        source,
-        -- world.magnitude(mcontroller.position(), scanDest),
-        self.range,
-        self.deadzone, self.maxSpeed, self.maxSpeedDistance)
+      if not self.reticleLocked then
+        world.callScriptedEntity(
+          storage.cameraProjectile,
+          "updatePos",
+          activeItem.ownerAimPosition(),
+          source,
+          -- world.magnitude(mcontroller.position(), scanDest),
+          self.range,
+          self.deadzone, self.maxSpeed, self.maxSpeedDistance
+        )
+      end
 
       activeItem.setCameraFocusEntity(storage.cameraProjectile)
     end

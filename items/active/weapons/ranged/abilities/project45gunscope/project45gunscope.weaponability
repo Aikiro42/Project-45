@@ -13,7 +13,8 @@
         }},
         "sounds" : {
             "aimFoley" : [ "/sfx/project45neosfx/getmag/getmag-generic1.ogg" ],
-            "laser" : [ "/sfx/project45neosfx/laser.ogg" ]
+            "laser" : [ "/sfx/project45neosfx/laser.ogg" ],
+            "lock": [ "/sfx/interface/scan.ogg" ]
         }
     },
 
