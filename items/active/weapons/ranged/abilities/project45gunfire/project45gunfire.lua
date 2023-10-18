@@ -443,7 +443,9 @@ function Project45GunFire:firing()
   self:screenShake()
   self:recoil()
 
-  if self.recoilMomentum > 0 and not mcontroller.crouching() then
+  if self.projectileKind ~= "summoned"
+  and self.recoilMomentum > 0
+  and not mcontroller.crouching() then
     mcontroller.addMomentum(vec2.mul(self:aimVector(), self.recoilMomentum * -1))
   end
 
@@ -915,7 +917,13 @@ function Project45GunFire:muzzleFlash()
 
   -- fire muzzle projectile
   if self.muzzleProjectileType then
-    self:fireProjectile(self.muzzleProjectileType, self.muzzleProjectileParameters)
+    self:fireProjectile(
+      self.muzzleProjectileType,
+      self.muzzleProjectileParameters,
+      nil,
+      self.muzzlePosition and self:muzzlePosition(),
+      nil,
+      self.muzzleVector and self:muzzleVector(0, nil, self.muzzlePosition and self:muzzlePosition()))
   end
 
   if (self.projectileKind or "projectile") ~= "beam" then
@@ -961,15 +969,15 @@ function Project45GunFire:stopFireLoop()
   end
 end
 
-function Project45GunFire:fireProjectile(projectileType, projectileParameters, inaccuracy, firePosition, projectileCount)
+function Project45GunFire:fireProjectile(projectileType, projectileParameters, inaccuracy, firePosition, projectileCount, aimVector)
   
-  local params = sb.jsonMerge(self.projectileParameters, projectileParameters or {})
+  local params = sb.jsonMerge(self.projectileKind == "summoned" and self.summonedProjectileParameters or self.projectileParameters, projectileParameters or {})
   params.power = self:damagePerShot()
   params.powerMultiplier = activeItem.ownerPowerMultiplier()
   params.speed = util.randomInRange(params.speed)
 
   if not projectileType then
-    projectileType = self.projectileType
+    projectileType = self.projectileKind == "summoned" and self.summonedProjectileType or self.projectileType
   end
   
   if type(projectileType) == "table" then
@@ -991,7 +999,7 @@ function Project45GunFire:fireProjectile(projectileType, projectileParameters, i
       projectileType,
       firePosition or self:firePosition(),
       activeItem.ownerEntityId(),
-      self:aimVector(inaccuracy or self.spread),
+      aimVector or self:aimVector(inaccuracy or self.spread),
       false,
       params
     )
@@ -1420,13 +1428,15 @@ end
 -- depending on projectileKind.
 function Project45GunFire:evalProjectileKind()
 
-  
+  self.updateLaser = function() end
+
   if self.laser or self.projectileKind ~= "projectile" then
 
     if self.projectileKind == "summoned" then
+      self.updateLaser = hitscanLib.updateSummonAreaIndicator
+
       activeItem.setScriptedAnimationParameter("isSummonedProjectile", true)
       if self.laser.enabled then
-        self.updateLaser = hitscanLib.updateSummonAreaIndicator
         activeItem.setScriptedAnimationParameter("primaryLaserEnabled", not self.performanceMode)
         activeItem.setScriptedAnimationParameter("primaryLaserColor", self.laser.color)
         activeItem.setScriptedAnimationParameter("primaryLaserWidth", self.laser.width)
@@ -1436,7 +1446,6 @@ function Project45GunFire:evalProjectileKind()
       
       -- laser uses the hitscan helper function, so assign that
       self.hitscan = hitscanLib.hitscan
-      self.updateLaser = function() end
       -- initialize projectile stack
       -- this stack is used by the hitscan functions and the animator
       -- to animate hitscan trails.
@@ -1477,11 +1486,16 @@ function Project45GunFire:evalProjectileKind()
     self.beamParameters.beamColor = self.muzzleFlashColor
     activeItem.setScriptedAnimationParameter("beamColor", self.muzzleFlashColor)
   elseif self.projectileKind == "summoned" then
+    
+    self.muzzlePosition = self.firePosition
     self.firePosition = hitscanLib.summonPosition
+
+    self.muzzleVector = self.aimVector
     self.aimVector = hitscanLib.summonVector
+    
     self.muzzleObstructed = function()
-      if self.summonParameters.summonInTerrain then return true
-      elseif self.summonParameters.summonAnywhere then
+      if self.summonedProjectileParameters.summonInTerrain then return true
+      elseif self.summonedProjectileParameters.summonAnywhere then
         return world.pointTileCollision(activeItem.ownerAimPosition())
       end
       return world.lineTileCollision(mcontroller.position(), activeItem.ownerAimPosition())      
@@ -1570,14 +1584,14 @@ end
 -- Returns the angle the gun is pointed
 -- This is different from the vanilla aim vector, which only takes into account the entity's position
 -- and the entity's aim position
-function Project45GunFire:aimVector(spread, degAdd)
+function Project45GunFire:aimVector(spread, degAdd, firePosition)
   
   local muzzleOffset = self.weapon.muzzleOffset
   if self.abilitySlot == "alt" then
     muzzleOffset = config.getParameter("altMuzzleOffset", self.weapon.muzzleOffset)
   end
 
-  local firePos = self:firePosition()
+  local firePos = firePosition or self:firePosition()
   local basePos =  vec2.add(
     mcontroller.position(),
     activeItem.handPosition(

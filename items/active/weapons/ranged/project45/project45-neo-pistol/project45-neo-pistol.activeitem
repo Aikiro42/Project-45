@@ -104,6 +104,11 @@
   "project45GunModInfo":{
     "category": "ballistic",
     "statModCountMax": 10,
+    "allowsConversion": [
+      "hitscan",
+      "beam",
+      "summoned"
+    ],
     "acceptsModSlot": [
       "rail",
       "sights",
@@ -127,7 +132,7 @@
   "magazineOffset": [-0.5, -0.25],
 
   "railOffset": [1, 0.125],
-  "sightsOffset": [0.625, 0.75],
+  "sightsOffset": [0.5, 0.625],
   "stockOffset": [-0.25, 0],
 
   "debugPointColors": {

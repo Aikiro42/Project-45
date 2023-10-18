@@ -27,6 +27,11 @@
   "project45GunModInfo": {
     "category": "ballistic",
     "statModCountMax": 10,
+    "allowsConversion": [
+      "hitscan",
+      "beam",
+      "summoned"
+    ],
     "acceptsModSlot": [
       "stock",
       

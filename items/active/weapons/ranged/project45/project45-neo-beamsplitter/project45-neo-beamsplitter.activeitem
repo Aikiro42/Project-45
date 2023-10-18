@@ -45,6 +45,10 @@
   "project45GunModInfo":{
     "category": "energy",
     "statModCountMax": 10,
+    "allowsConversion": [
+      "projectile",
+      "summoned"
+    ],
     "acceptsAmmoArchetypes":[],
     "acceptsModSlot": [
       "rail",

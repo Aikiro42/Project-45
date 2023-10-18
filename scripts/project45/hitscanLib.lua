@@ -425,9 +425,12 @@ function hitscanLib:updateLaser()
 end
 
 function hitscanLib:updateSummonAreaIndicator()
-  if not self.laser.enabled then return
+  if not (self.laser.enabled or storage.altLaserEnabled) then
+    activeItem.setScriptedAnimationParameter("primarySummonArea", nil)
+    return
   elseif storage.ammo < 0 or self.reloadTimer >= 0 then
     activeItem.setScriptedAnimationParameter("primaryLaserEnabled", false)
+    activeItem.setScriptedAnimationParameter("primarySummonArea", nil)
     return
   end
   activeItem.setScriptedAnimationParameter("primaryLaserEnabled", not self.performanceMode)
