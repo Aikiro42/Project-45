@@ -38,10 +38,12 @@ function Project45FlashLaser:update(dt, fireMode, shiftHeld)
     local range = world.magnitude(scanOrig, activeItem.ownerAimPosition())
     local scanDest = vec2.add(scanOrig, vec2.mul(self:aimVector(), self.laserRange))
     scanDest = world.lineCollision(scanOrig, scanDest, {"Block", "Dynamic"}) or scanDest
+    storage.altLaserEnabled = true
     activeItem.setScriptedAnimationParameter("altLaserEnabled", true)
     activeItem.setScriptedAnimationParameter("altLaserStart", scanOrig)
     activeItem.setScriptedAnimationParameter("altLaserEnd", scanDest)
   elseif world.lineTileCollision(mcontroller.position(), self:firePosition()) then
+    storage.altLaserEnabled = false
     activeItem.setScriptedAnimationParameter("altLaserEnabled", false)
     activeItem.setScriptedAnimationParameter("altLaserStart", nil)
     activeItem.setScriptedAnimationParameter("altLaserEnd", nil)
@@ -60,6 +62,7 @@ function Project45FlashLaser:update(dt, fireMode, shiftHeld)
     end
         
     if not (storage.state == FLASHLASER or storage.state == LASER) then
+      storage.altLaserEnabled = false
       activeItem.setScriptedAnimationParameter("altLaserEnabled", false)
       activeItem.setScriptedAnimationParameter("altLaserStart", nil)
       activeItem.setScriptedAnimationParameter("altLaserEnd", nil)

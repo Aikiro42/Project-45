@@ -1433,10 +1433,10 @@ function Project45GunFire:evalProjectileKind()
   if self.laser or self.projectileKind ~= "projectile" then
 
     if self.projectileKind == "summoned" then
+      self.updateLaser = hitscanLib.updateSummonAreaIndicator
 
       activeItem.setScriptedAnimationParameter("isSummonedProjectile", true)
       if self.laser.enabled then
-        self.updateLaser = hitscanLib.updateSummonAreaIndicator
         activeItem.setScriptedAnimationParameter("primaryLaserEnabled", not self.performanceMode)
         activeItem.setScriptedAnimationParameter("primaryLaserColor", self.laser.color)
         activeItem.setScriptedAnimationParameter("primaryLaserWidth", self.laser.width)
