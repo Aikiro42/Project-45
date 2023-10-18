@@ -124,6 +124,12 @@
     "manualFeed": false,
     "slamFire": false,
     
+    "muzzleProjectileType": "project45_muzzleexplosion",
+    "muzzleProjectileOffset": [5, 0],
+    "muzzleProjectileParameters": {
+      "speed": -5
+    },
+
     "resetChargeOnFire": true,
     "fireBeforeOvercharge": false,
     "autoFireOnFullCharge": true,

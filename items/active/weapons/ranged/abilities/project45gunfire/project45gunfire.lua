@@ -919,13 +919,26 @@ function Project45GunFire:muzzleFlash()
 
   -- fire muzzle projectile
   if self.muzzleProjectileType then
-    self:fireProjectile(
-      self.muzzleProjectileType,
-      self.muzzleProjectileParameters,
-      nil,
-      self.muzzlePosition and self:muzzlePosition(),
-      nil,
-      self.muzzleVector and self:muzzleVector(0, nil, self.muzzlePosition and self:muzzlePosition()))
+    if self.projectileKind ~= "projectile" then
+      self:fireMuzzleProjectile(
+        self.muzzleProjectileType,
+        self.muzzleProjectileParameters,
+        nil,
+        self.muzzlePosition and self:muzzlePosition(nil, self.muzzleProjectileOffset),
+        nil,
+        self.muzzleVector and self:muzzleVector(0, nil, self.muzzlePosition and self:muzzlePosition()),
+        self.muzzleProjectileOffset
+      )
+    else
+      self:fireProjectile(
+        self.muzzleProjectileType,
+        self.muzzleProjectileParameters,
+        nil,
+        self.muzzlePosition and self:muzzlePosition(),
+        nil,
+        self.muzzleVector and self:muzzleVector(0, nil, self.muzzlePosition and self:muzzlePosition())
+      )
+    end
   end
 
   if (self.projectileKind or "projectile") ~= "beam" then
@@ -971,8 +984,7 @@ function Project45GunFire:stopFireLoop()
   end
 end
 
-function Project45GunFire:fireProjectile(projectileType, projectileParameters, inaccuracy, firePosition, projectileCount, aimVector)
-  
+function Project45GunFire:fireProjectile(projectileType, projectileParameters, inaccuracy, firePosition, projectileCount, aimVector, addOffset)
   local params = sb.jsonMerge(self.projectileKind == "summoned" and self.summonedProjectileParameters or self.projectileParameters, projectileParameters or {})
   params.power = self:damagePerShot()
   params.powerMultiplier = activeItem.ownerPowerMultiplier()
@@ -999,7 +1011,7 @@ function Project45GunFire:fireProjectile(projectileType, projectileParameters, i
 
     projectileId = world.spawnProjectile(
       projectileType,
-      firePosition or self:firePosition(),
+      firePosition or self:firePosition(nil, addOffset),
       activeItem.ownerEntityId(),
       aimVector or self:aimVector(inaccuracy or self.spread),
       false,
@@ -1434,6 +1446,8 @@ function Project45GunFire:evalProjectileKind()
 
   if self.laser or self.projectileKind ~= "projectile" then
 
+    self.fireMuzzleProjectile = self.fireProjectile
+
     if self.projectileKind == "summoned" then
       self.updateLaser = hitscanLib.updateSummonAreaIndicator
 
@@ -1566,10 +1580,15 @@ function Project45GunFire:canTrigger()
 end
 
 -- Returns the muzzle of the gun
-function Project45GunFire:firePosition(altOverride)
+function Project45GunFire:firePosition(altOverride, addOffset)
+  sb.logInfo(sb.printJson(addOffset))
   local muzzleOffset = self.weapon.muzzleOffset
   if self.abilitySlot == "alt" or altOverride then
     muzzleOffset = config.getParameter("altMuzzleOffset", self.weapon.muzzleOffset)
+  end
+
+  if addOffset then
+    muzzleOffset = vec2.add(muzzleOffset, addOffset)
   end
 
   return vec2.add(
