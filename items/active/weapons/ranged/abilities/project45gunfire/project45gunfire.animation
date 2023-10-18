@@ -667,6 +667,9 @@
     // usually sounds like someone retrieving a magazine (getmag)
     "reloadStart": ["/sfx/project45neosfx/getmag/getmag-generic1.ogg"],
     
+    // plays during duration of reload
+    "reloadLoop": [],
+    
     // plays when reload minigame resets i.e. fraction of max ammo is loaded
     "loadRound": ["/sfx/project45neosfx/loadround/loadround-rifle1.ogg"],
     

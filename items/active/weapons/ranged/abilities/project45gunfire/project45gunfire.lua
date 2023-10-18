@@ -696,6 +696,7 @@ function Project45GunFire:reloading()
 
   -- begin minigame
   -- self.weapon:setStance(self.stances.reloading)
+  animator.playSound("reloadLoop", -1)
   while self.reloadTimer <= self.reloadTime do
     activeItem.setScriptedAnimationParameter("reloadTimer", self.reloadTimer)
 
@@ -770,7 +771,8 @@ function Project45GunFire:reloading()
     self.reloadTimer = self.reloadTimer + self.dt
     coroutine.yield()
   end
-  
+  animator.stopAllSounds("reloadLoop")
+
   self:setStance(self.stances.reloaded, not self.reloadOnEjectMag)
   if self.projectileFireSettings.resetProjectileIndexOnReload then
     storage.savedProjectileIndex = 1

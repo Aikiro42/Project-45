@@ -1,0 +1,188 @@
+{
+  "itemName" : "project45-neo-powerstave",
+  "price" : 1000,
+  "maxStack" : 1,
+  "rarity" : "Essential",
+  "description" : "A stave that summons projectiles at your desired location.",
+  "shortdescription" : "Powerstave",
+  "tooltipKind" : "project45gun",
+  "gunArchetype": "Magitek Stave",
+  "category" : "staff",
+  "twoHanded" : false,
+  "itemTags" : ["weapon","ranged","staff"],
+  "level" : 1,
+  "muzzleFlashColor": [100, 255, 255],
+  "inventoryIcon" : "project45-neo-powerstave.png:firing.3",
+
+  "animationParts" : {
+    "middle" : "project45-neo-powerstave.png",
+    "middleFullbright" : "project45-neo-powerstave-fullbright.png",
+    "charge": "",
+    "chargeFullbright": "",
+    "magazine": "",
+    "magazineFullbright": ""
+  },
+
+  "animationCustom": {
+    "particleEmitters": {
+      "ejectionPort": {
+        "particles": [
+        ]
+      },
+      "magazine": {
+        "particles": [
+        ]
+      }
+    },
+
+    "sounds": {
+      "fire" : [
+        "/sfx/gun/magnorbs_fire1.ogg",
+        "/sfx/gun/magnorbs_fire2.ogg",
+        "/sfx/gun/magnorbs_fire3.ogg"
+      ],
+      "click": [],
+      "jam": [ "/sfx/tech/vehicle_disappear1.ogg" ],
+      "unjam": [ "/sfx/blocks/footstep_rooftile.ogg" ],
+      "hollow": [],
+      "ejectMag": [],
+      "reloadStart": [],
+      "loadRound": [],
+      "reloadLoop": ["/sfx/melee/sword_superspinslash.ogg"],
+      "reloadEnd": [],
+
+      "goodReload": ["/sfx/melee/sword_parry.ogg"],
+      "perfectReload": ["/sfx/melee/sword_parry_big.ogg"],
+      "boltPull": ["/sfx/melee/charge_up15.ogg"],
+      "boltPush": ["/sfx/melee/charge_up13.ogg"]
+    },
+    "animatedParts": {
+      "stateTypes": {
+        "gun": {
+          "states":{
+            "firing": {
+              "frames": 3
+            },
+            "firingLoop": {
+              "frames": 3
+            }
+          }
+        }
+      }
+    }
+  },
+
+  "project45GunModInfo":{
+    "category": "ballistic",
+    "statModCountMax": 10,
+    "allowsConversion": [
+      "hitscan",
+      "beam",
+      "projectile"
+    ],
+    "acceptsModSlot": [
+      "rail",
+      "stock",
+      
+      "material"
+    ],
+    "acceptsAmmoArchetype":[],
+    "flipSlot": []
+  },
+
+  "baseOffset" : [1, 0],
+  "muzzleOffset" : [2.125, 0],
+  "ejectionPortOffset": [0, 0],
+  "magazineOffset": [0, 0],
+
+  "railOffset": [1, 0],
+  "stockOffset": [-1, 0],
+
+  "debugPointColors": {
+    "rail": "red",
+    "sights": "orange",
+    "underbarrel": "green",
+    "stock": "magenta"
+  },
+
+  "scripts" : ["/items/active/weapons/ranged/project45gunneo.lua"],
+    
+  "primaryAbilityType": "project45gunfire",
+  "primaryAbility": {
+
+    "maxAmmo": 10,
+    "bulletsPerReload": 10,
+    "inaccuracy": 3,
+    "recoilAmount": 5,
+    "recoilMaxDeg": 30,
+    "recoverDelay": 0.05,
+    "recoverTime": 0.5,
+    "semi": false,
+    "cycleTime": 0.1,
+    "projectileKind": "summoned",
+
+    // "reloadTime": 10,
+
+    "laser":{
+      "enabled": false
+    },
+  
+    "stances":{
+
+      "idleneo": {
+        "twoHanded": false
+      },
+      "aim": {
+        "twoHanded": false
+      },
+      "empty": {
+        "twoHanded": false,
+        "weaponRotation": 45,
+        "armRotation": -15
+      },
+      "ejectmag" : {
+        "armRotation" : 0,
+        "weaponRotation" : 0,
+        "twoHanded" : false,
+        "allowRotate" : false,
+        "allowFlip" : false
+      },
+      "reloading" : {
+        "armRotation" : 45,
+        "weaponRotation" : 0,
+        "weaponAngularVelocity": 3600,
+        "twoHanded": false,
+        "lock": true
+        // "weaponOffset" : [0.25, 0.575],
+        // "frontArmFrame" : "run.2",
+        // "backArmFrame" : "jump.3"
+      },
+      "reloaded" : {
+        "armRotation" : 45,
+        "weaponRotation" : 15,
+        "twoHanded" : false,
+        "allowRotate" : false,
+        "allowFlip" : false
+      },
+      "boltPull": {
+        "twoHanded": false
+      },
+      "boltPush": {
+        "twoHanded": false
+      },
+      "jammed": {
+        "twoHanded": false,
+        "weaponRotation": 45,
+        "armRotation": -15
+      },
+      "unjam": {
+        "armRotation": 30,
+        "weaponRotation": 15,
+        "frontArmFrame": "rotation",
+        "twoHanded": false      
+      }
+    }
+  },
+
+  "builder" : "/items/buildscripts/buildproject45neoneo.lua"
+}
