@@ -106,6 +106,9 @@
   },
 
   "altAbilityType": "project45gunscope",
+  "altAbility": {
+    "reticleProjectile": "project45hightechcamera"
+  },
 
   "builder" : "/items/buildscripts/buildproject45neoneo.lua"
 }
