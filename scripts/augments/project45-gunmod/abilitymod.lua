@@ -24,9 +24,9 @@ function apply(input)
     
     -- get list of accepted mod slots
     local acceptsModSlot = modInfo.acceptsModSlot or {}
-    table.insert(acceptsModSlot, "intrinsic")
-    table.insert(acceptsModSlot, "ability")
     acceptsModSlot = set.new(acceptsModSlot)
+    set.insert(acceptsModSlot, "intrinsic")
+    set.insert(acceptsModSlot, "ability")
 
     -- MOD INSTALLATION GATES
 
@@ -41,16 +41,20 @@ function apply(input)
       return
     end
 
-    -- check if ammo mod is particularly accepted
+    -- check if gun mod is particularly accepted
     local isAccepted = set.new(modExceptions.accept)[config.getParameter("itemName")]
     if not isAccepted then
 
-      -- do not install mod if mod is not part of weapon category
-      if augment.category ~= "universal" then
+      -- do not install mod if augment is not universal
+      -- and gun is not of the universal category
+      -- and it does not belong to the weapon category
+      if augment.category ~= "universal"
+      and modInfo.category ~= "universal"
+      and modInfo.category ~= augment.category then
         sb.logError("(abilitymod.lua) Ability mod application failed: category mismatch")
-        if modInfo.category ~= augment.category then return end
+        return
       end
-
+      
       -- do not install mod if gun denies installation on slot
       if not acceptsModSlot[augment.slot] then
         sb.logError("(abilitymod.lua) Ability mod application failed: gun disallows mod slot")
@@ -94,69 +98,6 @@ function apply(input)
 
     end
 
-    -- sprite visuals
-    local newAnimationCustom = nil
-    if augment.animationCustom then
-      newAnimationCustom = copy(augment.animationCustom)
-      -- output:setInstanceValue("animationCustom", sb.jsonMerge(input.parameters.animationCustom or {}, augment.animationCustom))
-    end
-
-    -- TESTME:
-    -- usually sprites that come with the ability are set up in the weaponability file
-    local flipSlots = set.new(modInfo.flipSlot or {})
-
-    if augment.sprite then
-      newAnimationCustom = newAnimationCustom or {}
-      construct(newAnimationCustom, "animatedParts", "parts", augment.slot, "properties")
-      newAnimationCustom.animatedParts.parts[augment.slot].properties.zLevel = augment.sprite.zLevel or 0
-      newAnimationCustom.animatedParts.parts[augment.slot].properties.centered = true
-      newAnimationCustom.animatedParts.parts[augment.slot].properties.transformationGroups = {"weapon"}
-
-      local flipDirective = ""
-      if flipSlots[augment.slot] then
-          flipDirective = "?flipy"
-          augment.sprite.offset = augment.sprite.offset and vec2.mul(augment.sprite.offset, {1, -1}) or {0, 0}
-      end
-
-      newAnimationCustom.animatedParts.parts[augment.slot].properties.offset = vec2.add(output.config[augment.slot .. "Offset"] or {0, 0}, augment.sprite.offset or {0, 0})
-      newAnimationCustom.animatedParts.parts[augment.slot].properties.image = augment.sprite.image .. flipDirective .. "<directives>"
-
-      if augment.sprite.imageFullbright then
-          construct(newAnimationCustom, "animatedParts", "parts", augment.slot .. "Fullbright", "properties")
-          newAnimationCustom.animatedParts.parts[augment.slot .. "Fullbright"].properties.zLevel = (augment.sprite.zLevel or 0) + 1
-          newAnimationCustom.animatedParts.parts[augment.slot].properties.centered = true
-          newAnimationCustom.animatedParts.parts[augment.slot].properties.transformationGroups = {"weapon"}
-          newAnimationCustom.animatedParts.parts[augment.slot].properties.offset = vec2.add(output.config[augment.slot .. "Offset"] or {0, 0}, augment.sprite.offset or {0, 0})
-          newAnimationCustom.animatedParts.parts[augment.slot .. "Fullbright"].properties.image = augment.sprite.imageFullbright .. flipDirective .. "<directives>"
-      end
-    else
-      -- if the sprite is set up in the weaponability and we need to fiddle with it,
-      -- we need to retrieve the custom animation from the item's config or parameters
-      if flipSlots[augment.slot] then
-
-        newAnimationCustom = newAnimationCustom or {}
-        construct(newAnimationCustom, "animatedParts", "parts", augment.slot, "properties")
-        
-        local newPartImage = newAnimationCustom.animatedParts.parts[augment.slot].properties.image
-        newPartImage = newPartImage and newPartImage .. "?flipy" or newPartImage
-        
-        local newPartOffset = newAnimationCustom.animatedParts.parts[augment.slot].properties.offset
-        newPartOffset = newPartOffset and vec2.mul(newPartOffset, {1, -1}) or newPartOffset
-
-        newAnimationCustom.animatedParts.parts[augment.slot].properties.image = newPartImage
-        newAnimationCustom.animatedParts.parts[augment.slot .. "Fullbright"].properties.image = newPartImage
-        newAnimationCustom.animatedParts.parts[augment.slot].properties.offset = newPartOffset
-        newAnimationCustom.animatedParts.parts[augment.slot .. "Fullbright"].properties.offset = newPartOffset
-
-      end
-    end
-
-    -- if custom animation is set then modify
-    if newAnimationCustom then
-      output:setInstanceValue("animationCustom", sb.jsonMerge(input.parameters.animationCustom or {}, newAnimationCustom))
-    end    
-
-
     -- MODIFICATION POST-MORTEM
 
     -- add mod info to list of installed mods
@@ -178,10 +119,8 @@ function apply(input)
     })
     if needImage[augment.slot] then
         table.insert(modSlots.ability, config.getParameter("inventoryIcon"))
-        table.insert(modSlots[augment.slot], config.getParameter("inventoryIcon"))
     end
     output:setInstanceValue("modSlots", modSlots)
-    output:setInstanceValue("isModded", true)
 
     -- return output:descriptor(), 1
     return gunmod_apply(output, true, augment)
