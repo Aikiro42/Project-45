@@ -1,6 +1,6 @@
 {
-  "projectileName" : "project45_muzzleexplosion",
-  "image" : "project45_muzzleexplosion.png",
+  "projectileName" : "project45_muzzleshockwave",
+  "image" : "project45_muzzleshockwave.png",
   "animationCycle" : 0.25,
   "timeToLive": 0.25,
   "fullbright": true,

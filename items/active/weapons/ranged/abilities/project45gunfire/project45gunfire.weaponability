@@ -126,7 +126,20 @@
     },
     // Offset when firing muzzle projectiles; sometimes the firePosition is way back into the barrel
     // like in project45-neo-gaussrifle, so you'd want to move the muzzle projectile forward
-    "muzzleProjectileOffset": [0, 0]
+    "muzzleProjectileOffset": [0, 0],
+
+    // List of Projectile VFX that will be spawned from the projectile tip
+    "muzzleProjectiles": [{
+        "type": "project45_muzzleshockwave",
+        "offset": [5, 0],
+        "parameters": {
+          "speed": -5
+        },
+        "count": 1,
+        "spread": 1,
+        "firePerShot": true
+      }
+    ],
     */
 
     "summonedProjectileType": "project45_defaultsummon",
