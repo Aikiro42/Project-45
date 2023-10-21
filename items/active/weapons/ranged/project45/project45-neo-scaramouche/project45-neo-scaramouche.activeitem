@@ -1,10 +1,10 @@
 {
-  "itemName" : "project45-neo-carbine",
+  "itemName" : "project45-neo-scaramouche",
   "price" : 1000,
   "maxStack" : 1,
   "rarity" : "Essential",
-  "description" : "A very customizable rifle platform.",
-  "shortdescription" : "Carbine",
+  "description" : "A high-power, automatic assault rifle.",
+  "shortdescription" : "Scaramouche",
   "tooltipKind" : "project45gun",
   "gunArchetype": "Assault Rifle",
   "category" : "rifle",
@@ -12,14 +12,14 @@
   "itemTags" : ["weapon","ranged","rifle"],
   "level" : 1,
   "muzzleFlashColor": [255, 255, 200],
-  "inventoryIcon" : "project45-neo-carbine-icon.png",
+  "inventoryIcon" : "project45-neo-scaramouche-icon.png",
 
   "animationParts" : {
-    "middle" : "project45-neo-carbine.png",
+    "middle" : "project45-neo-scaramouche.png",
     "middleFullbright" : "",
     "charge": "",
     "chargeFullbright": "",
-    "magazine": "project45-neo-carbine-mag.png",
+    "magazine": "project45-neo-scaramouche-mag.png",
     "magazineFullbright": ""
   },
 
@@ -32,27 +32,22 @@
       },
       "magazine": {
         "particles": [
-          {"particle": "project45carbinemag"}
+          {"particle": "project45scaramouchemag"}
         ]
       }
     },
 
     "sounds": {
       "fire" : [
-        "/sfx/project45neosfx/fire/fire-smg1.ogg"
+        "/sfx/project45neosfx/fire/fire-rifle1.ogg"
       ],
-      "boltPull": [
-        "/sfx/project45neosfx/boltpull/boltpull-rifle1.ogg"
-      ],
-      "boltPush": [
-        "/sfx/project45neosfx/boltpush/boltpush-rifle1.ogg"
-      ]
+      "boltPush": ["/sfx/project45neosfx/boltpush/boltpush-rifle1.ogg"]
     }
   },
 
   "project45GunModInfo":{
     "category": "ballistic",
-    "statModCountMax": 20,
+    "statModCountMax": 10,
     "modExceptions": {
       "deny": [
         "project45-autofiremod"
@@ -60,7 +55,6 @@
     },
     "allowsConversion": [
       "hitscan",
-      "beam",
       "summoned"
     ],
     "acceptsAmmoArchetype": [
@@ -72,7 +66,6 @@
       "sights",
       "muzzle",
       "underbarrel",
-      "stock",
       
       "material",
       "magazine",
@@ -80,15 +73,14 @@
     ]
   },
 
-  "baseOffset" : [1.25, 0.125],
-  "muzzleOffset" : [1.75, 0.375],
-  "ejectionPortOffset": [-0.25, 0.75],
-  "magazineOffset": [0, 0],
+  "baseOffset" : [0.75, 0.25],
+  "muzzleOffset" : [2.125, 0.25],
+  "ejectionPortOffset": [-0.25, 0.375],
+  "magazineOffset": [-0.25, -0.375],
 
-  "railOffset" : [1.5, 0.375],
-  "sightsOffset": [0.625, 0.75],
-  "stockOffset": [-0.5, 0.375],
-  "underbarrelOffset": [1.5, 0.125],
+  "railOffset" : [1.875, 0.375],
+  "sightsOffset": [1, 0.7],
+  "underbarrelOffset": [1.5, 0.25],
 
   "debugPointColors": {
     "rail": "red",
@@ -100,15 +92,15 @@
     
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
-    "maxAmmo": 27,
-    "bulletsPerReload": 27,
+    "maxAmmo": 20,
+    "bulletsPerReload": 20,
     "semi": false,
     "burstCount": 1,
-    "inaccuracy": 1.5,
-    "recoilAmount": 1,
-    "recoilMaxDeg": 7.5,
-    "recoverDelay": 0.05,
-    "cycleTime": 0.1,
+    "inaccuracy": 1.625,
+    "recoilAmount": 3,
+    "recoilMaxDeg": 15,
+    "recoverDelay": 0.1,
+    "cycleTime": 0.1125,
     "projectileKind": "projectile",
     "laser":{
       "enabled": false
