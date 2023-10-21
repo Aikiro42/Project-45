@@ -194,7 +194,10 @@
         "project45manual-codex",
         "project45-gundisassembler",
         "project45-gunrepairkit",
-        "project45-energystim"
+        "project45-energystim",
+
+        "nanowrap",
+        "dubloon"
       ]
     }
   }
