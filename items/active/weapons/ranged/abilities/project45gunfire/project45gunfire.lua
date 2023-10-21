@@ -780,11 +780,6 @@ function Project45GunFire:reloading()
   end
   animator.setAnimationState("magazine", self.internalMag and "absent" or "present")
   
-  if self.breakAction then
-    animator.setAnimationState("gun", "ejected")
-
-  end
-
   -- if there hasn't been any input, just load round
   if storage.ammo < self.maxAmmo and not energyDepletedFlag then
     sumRating = sumRating + 0.5 -- OK: 0.5
@@ -799,7 +794,7 @@ function Project45GunFire:reloading()
 
     -- proportionally consume energy; break out of loop once out of energy
     status.overConsumeResource("energy", self.reloadCost * (reloadedBullets / self.maxAmmo))
-end
+  end
   
   -- begin final reload evaluation
   --                     MAX AVERAGE
@@ -827,6 +822,10 @@ end
     util.wait(self.postReloadDelay)
   else
     util.wait(self.cockTime/8)
+  end
+  
+  if self.breakAction then
+    animator.setAnimationState("gun", "ejected")
   end
 
   self:setState(self.cocking)
