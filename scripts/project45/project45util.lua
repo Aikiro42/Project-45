@@ -88,7 +88,7 @@ function project45util.moreVividColor(color1, color2)
   end
   
   -- choose more vivid color
-  local chosen = self.__vividness(color1) > self.__vividness(color2) and color1 or color2
+  local chosen = project45util.__vividness(color1) > project45util.__vividness(color2) and color1 or color2
   table.insert(chosen, alpha)
   return chosen
 end
