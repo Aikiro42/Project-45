@@ -167,6 +167,16 @@
 
     // "reloadTime": 10,
 
+    "muzzleProjectiles": [
+      {
+        "type": "project45_muzzleshockwavesmall",
+        "parameters": {
+          "speed": -2.5
+        },
+        "firePerShot": true
+      }
+    ],
+
     "laser":{
       "enabled": false
     },

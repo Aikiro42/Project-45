@@ -915,34 +915,30 @@ function Project45GunFire:jam()
   return false
 end
 
-function Project45GunFire:muzzleProjectile(projectile, parameters, addOffset, spread, count, firePerShot)
+function Project45GunFire:muzzleProjectile(projectile, parameters, addOffset, spread, count, firePerShot, fireChance)  
   if firePerShot and self.muzzleProjectileFired then return end
+  if not project45util.diceroll(fireChance or 1) then return end
 
-  count = count or 1
-
-  while count > 0 do
-    if self.projectileKind ~= "projectile" then
-      self:fireMuzzleProjectile(
-        projectile or self.muzzleProjectileType,
-        parameters or self.muzzleProjectileParameters,
-        nil,
-        self.muzzlePosition and self:muzzlePosition(nil, addOffset or self.muzzleProjectileOffset),
-        nil,
-        self.muzzleVector and self:muzzleVector(spread or 0, nil, self.muzzlePosition and self:muzzlePosition()),
-        not self.muzzlePosition and (addOffset or self.muzzleProjectileOffset) or nil
-      )
-    else
-      self:fireProjectile(
-        projectile or self.muzzleProjectileType,
-        parameters or self.muzzleProjectileParameters,
-        nil,
-        self.muzzlePosition and self:muzzlePosition(),
-        nil,
-        self.muzzleVector and self:muzzleVector(spread or 0, nil, self.muzzlePosition and self:muzzlePosition()),
-        addOffset or self.muzzleProjectileOffset
-      )
-    end
-    count = count - 1
+  if self.projectileKind ~= "projectile" then
+    self:fireMuzzleProjectile(
+      projectile or self.muzzleProjectileType,
+      parameters or self.muzzleProjectileParameters,
+      nil,
+      self.muzzlePosition and self:muzzlePosition(nil, addOffset or self.muzzleProjectileOffset),
+      count or 1,
+      self.muzzleVector and self:muzzleVector(spread or 0, nil, self.muzzlePosition and self:muzzlePosition()),
+      not self.muzzlePosition and (addOffset or self.muzzleProjectileOffset) or nil
+    )
+  else
+    self:fireProjectile(
+      projectile or self.muzzleProjectileType,
+      parameters or self.muzzleProjectileParameters,
+      nil,
+      self.muzzlePosition and self:muzzlePosition(),
+      count or 1,
+      self.muzzleVector and self:muzzleVector(spread or 0, nil, self.muzzlePosition and self:muzzlePosition()),
+      addOffset or self.muzzleProjectileOffset
+    )
   end
 
   if firePerShot and self.muzzleProjectileFired == false then 
@@ -985,7 +981,8 @@ function Project45GunFire:muzzleFlash()
         muzzProj.offset,
         muzzProj.spread,
         muzzProj.count,
-        muzzProj.firePerShot
+        muzzProj.firePerShot,
+        muzzProj.fireChance
       )
     end
   end
