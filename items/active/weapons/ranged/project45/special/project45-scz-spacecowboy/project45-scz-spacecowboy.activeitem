@@ -107,7 +107,8 @@
 
   "altAbilityType": "project45gunscope",
   "altAbility": {
-    "reticleProjectile": "project45hightechcamera"
+    "reticleProjectile": "project45hightechcamera",
+    "laserColor": [252, 119, 3]
   },
 
   "builder" : "/items/buildscripts/buildproject45neoneo.lua"
