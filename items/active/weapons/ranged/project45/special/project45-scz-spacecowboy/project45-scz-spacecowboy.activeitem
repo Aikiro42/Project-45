@@ -95,8 +95,20 @@
     "recoverTime": 1,
     "cockTime": 0.5,
     "cycleTime": 1,
+    "screenShakeAmount": 1,
     "projectileKind": "projectile",
     "projectileType": "project45stdfirebullet",
+
+    "muzzleProjectiles": [
+      {
+        "type": "project45_muzzleshockwave",
+        "parameters": {
+          "speed": -5
+        },
+        "firePerShot": true
+      }
+    ],
+
     "laser":{
       "enabled": false
     },

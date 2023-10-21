@@ -915,36 +915,39 @@ function Project45GunFire:jam()
   return false
 end
 
-function Project45GunFire:muzzleFlash()
+function Project45GunFire:muzzleProjectile(projectile, parameters, addOffset, spread, count, firePerShot, fireChance)  
+  if firePerShot and self.muzzleProjectileFired then return end
+  if not project45util.diceroll(fireChance or 1) then return end
 
-  -- fire muzzle projectile
-  if not self.muzzleProjectileFired then
-    if self.muzzleProjectileType then
-      if self.projectileKind ~= "projectile" then
-        self:fireMuzzleProjectile(
-          self.muzzleProjectileType,
-          self.muzzleProjectileParameters,
-          nil,
-          self.muzzlePosition and self:muzzlePosition(nil, self.muzzleProjectileOffset),
-          nil,
-          self.muzzleVector and self:muzzleVector(0, nil, self.muzzlePosition and self:muzzlePosition()),
-          self.muzzleProjectileOffset
-        )
-      else
-        self:fireProjectile(
-          self.muzzleProjectileType,
-          self.muzzleProjectileParameters,
-          nil,
-          self.muzzlePosition and self:muzzlePosition(),
-          nil,
-          self.muzzleVector and self:muzzleVector(0, nil, self.muzzlePosition and self:muzzlePosition())
-        )
-      end
-    end
-    if self.muzzleProjectileFired == false then 
-      self.muzzleProjectileFired = true
-    end
+  if self.projectileKind ~= "projectile" then
+    self:fireMuzzleProjectile(
+      projectile or self.muzzleProjectileType,
+      parameters or self.muzzleProjectileParameters,
+      nil,
+      self.muzzlePosition and self:muzzlePosition(nil, addOffset or self.muzzleProjectileOffset),
+      count or 1,
+      self.muzzleVector and self:muzzleVector(spread or 0, nil, self.muzzlePosition and self:muzzlePosition()),
+      not self.muzzlePosition and (addOffset or self.muzzleProjectileOffset) or nil
+    )
+  else
+    self:fireProjectile(
+      projectile or self.muzzleProjectileType,
+      parameters or self.muzzleProjectileParameters,
+      nil,
+      self.muzzlePosition and self:muzzlePosition(),
+      count or 1,
+      self.muzzleVector and self:muzzleVector(spread or 0, nil, self.muzzlePosition and self:muzzlePosition()),
+      addOffset or self.muzzleProjectileOffset
+    )
   end
+
+  if firePerShot and self.muzzleProjectileFired == false then 
+    self.muzzleProjectileFired = true
+  end
+  
+end
+
+function Project45GunFire:muzzleFlash()
 
   if (self.projectileKind or "projectile") ~= "beam" then
     -- play fire and hollow sound if the gun isn't firing a beam
@@ -969,6 +972,21 @@ function Project45GunFire:muzzleFlash()
   if self.hideMuzzleSmoke ~= nil and not self.hideMuzzleSmoke then
     self.muzzleSmokeTimer = self.muzzleSmokeTime + self.currentCycleTime + 0.1
   end
+
+  if self.muzzleProjectiles then
+    for _, muzzProj in ipairs(self.muzzleProjectiles) do
+      self:muzzleProjectile(
+        type(muzzProj.type) == "table" and muzzProj.type[math.random(#muzzProj.type)] or muzzProj.type,
+        muzzProj.parameters,
+        muzzProj.offset,
+        muzzProj.spread,
+        muzzProj.count,
+        muzzProj.firePerShot,
+        muzzProj.fireChance
+      )
+    end
+  end
+
 end
 
 function Project45GunFire:startFireLoop()

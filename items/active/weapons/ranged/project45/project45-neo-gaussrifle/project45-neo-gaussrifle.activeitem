@@ -123,12 +123,17 @@
     "semi": true,
     "manualFeed": false,
     "slamFire": false,
-    
-    "muzzleProjectileType": "project45_muzzleexplosion",
-    "muzzleProjectileOffset": [5, 0],
-    "muzzleProjectileParameters": {
-      "speed": -5
-    },
+
+    "muzzleProjectiles": [
+      {
+        "type": "project45_muzzleshockwave",
+        "offset": [5, 0],
+        "parameters": {
+          "speed": -5
+        },
+        "firePerShot": true
+      }
+    ],
 
     "resetChargeOnFire": true,
     "fireBeforeOvercharge": false,

@@ -134,7 +134,21 @@
     "recoilMaxDeg": 45, // the most the arm and weapon will rotate, in degrees.
     "recoverTime": 0.5, // time it takes to recover aim completely, in seconds
 
-    // "reloadTime": 10,
+    "muzzleProjectiles": [
+      {
+        "type": "project45_muzzleshockwavesmall",
+        "parameters": {
+          "speed": -2.5
+        },
+        "firePerShot": true
+      },
+      {
+        "type": "project45stdfirebullet",
+        "fireChance": 0.5,
+        "count": 3,
+        "firePerShot": true
+      }
+    ],
 
     "laser":{
       "enabled": false

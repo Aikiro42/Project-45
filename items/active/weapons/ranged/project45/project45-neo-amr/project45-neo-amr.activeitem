@@ -119,11 +119,15 @@
     "recoverDelay": 0.125,
     "recoverTime": 1,
 
-    "muzzleProjectileType": "project45_muzzleexplosion",
-    "muzzleProjectileParameters": {
-      "speed": -5
-    },
-    // "reloadTime": 10,
+    "muzzleProjectiles": [
+      {
+        "type": "project45_muzzleshockwave",
+        "parameters": {
+          "speed": -5
+        },
+        "firePerShot": true
+      }
+    ],
   
     "stances":{
       "reloading": {
