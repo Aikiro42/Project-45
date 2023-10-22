@@ -3,20 +3,20 @@
   "price" : 15000,
   "rarity" : "Legendary",
   "tooltipKind" : "project45gunmod",
-  "category" : "Grenade Ammo Mod",
+  "category" : "Summoned Ammo Mod",
   "inventoryIcon" : "/items/augments/project45-gunmods/ammo/project45-gravbombmod/project45-gravbombmod.png",
-  "description" : "Temporal Grenades that float in mid-air, detonating after a short time.",
-  "shortdescription" : "Gravity Grenades",
+  "description" : "Summons temporal singularities that float in mid-air, detonating after a short time.",
+  "shortdescription" : "Singularity Essence",
 
   "augment":{
-    "modName": "Gravity Grenades",
-    "category": "ballistic", // todo: make this either matter or energy and make a gun for this
-    "archetype": "grenade",
+    "modName": "Singularity Essence",
+    "category": "experimental", // todo: make this either matter or energy and make a gun for this
+    "archetype": "summoned",
 
-    "projectileKind": "projectile",
-    "projectileType": "project45gravitygrenade",
-    "projectileParameters":{
-      "speed": 25
+    "projectileKind": "summoned",
+    "summonedProjectileType": "project45gravitygrenade",
+    "summonedProjectileParameters":{
+      "speed": 0
     }
   },
 
