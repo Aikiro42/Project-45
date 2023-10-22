@@ -1,0 +1,24 @@
+{
+  "kind" : "project45critdamage",
+  "definition" : {
+    "type" : "text",
+    "text" : "^shadow;CRITICAL!",
+    "color" : [255, 98, 0, 180],
+    "light" : [69, 26, 0],
+    "fullbright" : true,
+    "initialVelocity" : [0.0, 20.0],
+    "finalVelocity" : [0.0, 0.0],
+    "size" : 0.5,
+    "approach" : [40, 40],
+    "angularVelocity" : 0,
+    "timeToLive" : 0,
+    "layer" : "front",
+    "destructionAction" : "fade",
+    "destructionTime" : 1,
+    "variance" : {
+      "initialVelocity" : [20.0, 0],
+      "approach" : [40, 0]
+    },
+    "flippable" : false
+  }
+}
