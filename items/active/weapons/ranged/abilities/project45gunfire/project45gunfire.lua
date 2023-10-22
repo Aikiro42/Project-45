@@ -1728,7 +1728,9 @@ function Project45GunFire:loadGunState()
   if loadedGunState.bolt == "open" then
     loadedGunState.gunAnimation = (self.breakAction and not loadedGunState.loadSuccess) and "open" or "ejected"
   end
-  
+  if storage.ammo < 0 and self.breakAction then
+    loadedGunState.gunAnimation = "open"
+  end
   animator.setAnimationState("gun", loadedGunState.gunAnimation)
 
 end
