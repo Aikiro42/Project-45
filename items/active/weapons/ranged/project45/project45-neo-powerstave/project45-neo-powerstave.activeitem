@@ -8,11 +8,11 @@
   "tooltipKind" : "project45gun",
   "gunArchetype": "Magitek Stave",
   "category" : "staff",
-  "twoHanded" : true,
+  "twoHanded" : false,
   "itemTags" : ["weapon","ranged","staff"],
   "level" : 1,
   "muzzleFlashColor": [255, 128, 128],
-  "inventoryIcon" : "project45-neo-powerstave.png:firing.3",
+  "inventoryIcon" : "project45-neo-powerstave.png:idle.1",
 
   "animationParts" : {
     "middle" : "project45-neo-powerstave.png",
@@ -61,24 +61,48 @@
       "stateTypes": {
         "gun": {
           "states":{
-            "firing": {
-              "frames": 4
-            },
             "firingLoop": {
               "frames": 4
+            },
+            "ejecting": {
+              "frames" : 2
+            },
+            "boltPulling": {
+              "frames" : 2
+            },
+            "feeding": {
+              "frames" : 2
+            },
+            "boltPushing": {
+              "frames" : 2
+            },
+            "jammed": {
+              "frames" : 4
             }
-          },
-          "ejecting": {
-            "frames" : 3
-          },
-          "boltPulling": {
-            "frames" : 3
-          },
-          "feeding": {
-            "frames" : 3
-          },
-          "boltPushing": {
-            "frames" : 3
+          }
+        }
+      },
+      "parts": {
+        "middle": {
+          "partStates": {
+            "gun": {
+              "firingLoop": {
+                "properties": {
+                  "image" : "<partImage>:firingloop.<frame>"
+                }
+              }
+            }
+          }
+        },
+        "middleFullbright": {
+          "partStates": {
+            "gun": {
+              "firingLoop": {
+                "properties": {
+                  "image" : "<partImage>:firingloop.<frame>"
+                }
+              }
+            }
           }
         }
       }
@@ -86,7 +110,7 @@
   },
 
   "project45GunModInfo":{
-    "category": "ballistic",
+    "category": "experimental",
     "statModCountMax": 10,
     "allowsConversion": [
       "hitscan",
@@ -99,17 +123,19 @@
       
       "material"
     ],
-    "acceptsAmmoArchetype":[],
+    "acceptsAmmoArchetype":[
+      "summoned"
+    ],
     "flipSlot": []
   },
 
   "baseOffset" : [1, 0],
-  "muzzleOffset" : [2.125, 0],
+  "muzzleOffset" : [2.5, 0.125],
   "ejectionPortOffset": [0, 0],
   "magazineOffset": [0, 0],
 
-  "railOffset": [1, 0],
-  "stockOffset": [-1, 0],
+  "railOffset": [1.5, 0.125],
+  "stockOffset": [-1.5, 0.125],
 
   "debugPointColors": {
     "rail": "red",
@@ -122,7 +148,7 @@
     
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
-
+    "debug": true,
     "maxAmmo": 10,
     "bulletsPerReload": 10,
     "inaccuracy": 3,
@@ -131,7 +157,7 @@
     "recoverDelay": 0.05,
     "recoverTime": 0.5,
     "semi": false,
-    "cycleTime": 0.5,
+    "cycleTime": 0.1,
     "projectileKind": "summoned",
 
     // "reloadTime": 10,
