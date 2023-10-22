@@ -198,6 +198,7 @@
         "twoHanded": false
       },
       
+      // DELETEME:
       "manualFeed": {
         "armRotation" : 0,
         "weaponRotation" : 1,
