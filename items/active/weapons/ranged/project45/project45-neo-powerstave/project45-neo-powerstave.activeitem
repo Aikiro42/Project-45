@@ -8,10 +8,10 @@
   "tooltipKind" : "project45gun",
   "gunArchetype": "Magitek Stave",
   "category" : "staff",
-  "twoHanded" : false,
+  "twoHanded" : true,
   "itemTags" : ["weapon","ranged","staff"],
   "level" : 1,
-  "muzzleFlashColor": [100, 255, 255],
+  "muzzleFlashColor": [255, 128, 128],
   "inventoryIcon" : "project45-neo-powerstave.png:firing.3",
 
   "animationParts" : {
@@ -24,6 +24,7 @@
   },
 
   "animationCustom": {
+
     "particleEmitters": {
       "ejectionPort": {
         "particles": [
@@ -61,11 +62,23 @@
         "gun": {
           "states":{
             "firing": {
-              "frames": 3
+              "frames": 4
             },
             "firingLoop": {
-              "frames": 3
+              "frames": 4
             }
+          },
+          "ejecting": {
+            "frames" : 3
+          },
+          "boltPulling": {
+            "frames" : 3
+          },
+          "feeding": {
+            "frames" : 3
+          },
+          "boltPushing": {
+            "frames" : 3
           }
         }
       }
@@ -118,7 +131,7 @@
     "recoverDelay": 0.05,
     "recoverTime": 0.5,
     "semi": false,
-    "cycleTime": 0.1,
+    "cycleTime": 0.5,
     "projectileKind": "summoned",
 
     // "reloadTime": 10,
