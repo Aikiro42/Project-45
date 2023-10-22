@@ -64,6 +64,7 @@
         "animation" : "/animations/mediumflame/mediumflame.animation",
         "approach" : [0.5, 0.5],
         "timeToLive" : 0.6,
+        "fullbright": true,
         "variance" : {
           "position" : [1.5, 1.5],
           "initialVelocity" : [1, 1],
@@ -81,6 +82,7 @@
         "type" : "animated",
         "animation" : "/animations/smallflame/smallflame.animation",
         "approach" : [0.5, 0.5],
+        "fullbright": true,
         "timeToLive" : 0.6,
         "variance" : {
           "position" : [1.5, 1.5],
@@ -104,7 +106,7 @@
             "type" : "ember",
             "size" : 2,
             "color" : [255, 170, 0, 255],
-            "light" : [65, 65, 51],
+            "light" : [175, 78, 0],
             "fullbright" : true,
             "destructionTime" : 0.2,
             "destructionAction" : "shrink",
@@ -137,6 +139,7 @@
                 "type" : "animated",
                 "animation" : "/animations/smoke/smoke.animation",
                 "approach" : [0.5, 0.5],
+                "fullbright": true,
                 "timeToLive" : 0.6,
                 "variance" : {
                   "position" : [1.5, 1.5],
@@ -166,6 +169,7 @@
                 "type" : "animated",
                 "animation" : "/animations/mediumflame/mediumflame.animation",
                 "approach" : [0.5, 0.5],
+                "fullbright": true,
                 "timeToLive" : 0.6,
                 "variance" : {
                   "position" : [1.5, 1.5],
@@ -191,6 +195,7 @@
               "specification" : {
                 "type" : "animated",
                 "animation" : "/animations/smallflame/smallflame.animation",
+                "fullbright": true,
                 "approach" : [0.5, 0.5],
                 "timeToLive" : 0.6,
                 "variance" : {
