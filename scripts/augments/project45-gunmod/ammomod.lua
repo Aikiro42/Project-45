@@ -76,6 +76,7 @@ function apply(input)
     -- alter specific projectile settings
     newPrimaryAbility.projectileKind = augment.projectileKind or oldPrimaryAbility.projectileKind
     newPrimaryAbility.projectileType = augment.projectileType or oldPrimaryAbility.projectileType
+    newPrimaryAbility.summonedProjectileType = augment.summonedProjectileType or oldPrimaryAbility.summonedProjectileType
     newPrimaryAbility.projectileParameters = augment.projectileParameters
     newPrimaryAbility.hitscanParameters = augment.hitscanParameters
     newPrimaryAbility.beamParameters = augment.beamParameters

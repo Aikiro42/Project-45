@@ -1038,10 +1038,12 @@ function Project45GunFire:fireProjectile(projectileType, projectileParameters, i
       activeItem.ownerEntityId(),
       aimVector or self:aimVector(inaccuracy or self.spread),
       false,
-      params
+      self.critFlag and sb.jsonMerge(params, {statusEffects = {"project45critdamaged"}}) or params
     )
 
   end
+
+  self.critFlag = false
 
   return projectileId
   
@@ -1577,7 +1579,12 @@ end
 -- Typically called when the weapon is about to deal damage.
 function Project45GunFire:crit()
   if not self.critChance then return 1 end
-  return project45util.diceroll(self.critChance, "Crit: ") and self.critDamageMult or 1
+  if project45util.diceroll(self.critChance, "Crit: ") then
+    self.critFlag = true
+    return self.critDamageMult
+  else
+    return 1
+  end
 end
 
 -- Calculates the damage per shot of the weapon.

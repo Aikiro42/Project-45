@@ -30,6 +30,10 @@ function hitscanLib:fireHitscan(projectileType)
         timeout = self.currentCycleTime,
       }
       damageConfig = sb.jsonMerge(damageConfig, self.hitscanParameters.hitscanDamageConfig or {})
+      if self.critFlag then 
+        damageConfig.statusEffects = sb.jsonMerge(damageConfig.statusEffects, {"project45critdamaged"})
+        self.critFlag = false
+      end
       damageConfig.timeoutGroup = "project45projectile" .. i
 
       table.insert(hitscanInfos, {
@@ -166,6 +170,8 @@ function hitscanLib:fireBeam()
     local ammoConsumeTimer = beamTimeout
     local consumedAmmo = false
 
+    local originalStatusEffects = sb.jsonMerge(beamDamageConfig.statusEffects)
+
     local hitreg = self:hitscan(true)
     local beamStart = hitreg[1]
     local beamEnd = nil
@@ -216,7 +222,13 @@ function hitscanLib:fireBeam()
         -- update base damage accordingly
         local crit = self:crit()
         beamDamageConfig.baseDamage = self:damagePerShot(true) * crit
-  
+
+        if crit > 1 then
+          beamDamageConfig.statusEffects = sb.jsonMerge(beamDamageConfig.statusEffects, { "project45critdamaged" })
+        else
+          beamDamageConfig.statusEffects = sb.jsonMerge(originalStatusEffects)
+        end
+
         -- draw damage poly
         self.weapon:setDamage(
           beamDamageConfig,

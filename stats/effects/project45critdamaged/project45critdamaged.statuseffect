@@ -1,0 +1,15 @@
+{
+  "name" : "project45critdamaged",
+  "effectConfig" : {},
+  "defaultDuration" : 0.1,
+
+  "scripts" : [
+    "project45critdamaged.lua"
+  ],
+
+  "animationConfig" : "project45critdamaged.animation",
+
+  "label" : "Critically damaged!",
+  "icon" : "/stats/effects/project45noscopedamagebonus/project45noscopedamagebonus.png"
+  
+}
