@@ -1,5 +1,12 @@
 function init()
+
   self.critvfxtime = 0.1
+  
+  -- guarantee that this status effect always lasts 0.1s
+  if effect.duration() > self.critvfxtime then
+    effect.modifyDuration(-effect.duration() + self.critvfxtime)
+  end
+
   animator.setParticleEmitterOffsetRegion("damagedParticle", mcontroller.boundBox())
   animator.burstParticleEmitter("damagedParticle")
   animator.burstParticleEmitter("criticalParticle")

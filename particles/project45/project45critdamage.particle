@@ -2,7 +2,7 @@
   "kind" : "project45critdamage",
   "definition" : {
     "type" : "text",
-    "text" : "^shadow;CRITICAL!",
+    "text" : "^shadow;CRIT!",
     "color" : [255, 98, 0, 180],
     "light" : [69, 26, 0],
     "fullbright" : true,
@@ -16,8 +16,7 @@
     "destructionAction" : "fade",
     "destructionTime" : 1,
     "variance" : {
-      "initialVelocity" : [20.0, 0],
-      "approach" : [40, 0]
+      "initialVelocity" : [20, 5]
     },
     "flippable" : false
   }
