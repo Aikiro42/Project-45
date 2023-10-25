@@ -1025,7 +1025,8 @@ function Project45GunFire:fireProjectile(projectileType, projectileParameters, i
   end
   
   local projectileId = 0
-    
+  
+  -- if crit was rolled, all projectiles fired inflict a crit hit
   for i = 1, (projectileCount or (self.projectileCount * self:rollMultishot())) do
 
     if params.timeToLive then
