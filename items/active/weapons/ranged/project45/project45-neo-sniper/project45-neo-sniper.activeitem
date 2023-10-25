@@ -54,7 +54,7 @@
     "acceptsAmmoTypes":{
       "ballistic": true
     },
-    "acceptsAmmoArchetypes":{
+    "acceptsAmmoArchetype":{
       "generic": true
     },
     "acceptsModSlot": [

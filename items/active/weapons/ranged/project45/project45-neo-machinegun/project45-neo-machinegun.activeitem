@@ -21,7 +21,7 @@
       "hitscan",
       "summoned"
     ],
-    "acceptsAmmoArchetypes": [
+    "acceptsAmmoArchetype": [
       "bullet"
     ],
     "acceptsModSlot": [

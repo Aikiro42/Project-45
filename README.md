@@ -393,3 +393,23 @@ function worldify(pos1, pos2)
     return {pos1, pos2}
 end
 ```
+
+---
+
+to use
+
+```lua
+function init()
+  message.setHandler("test123", function(_, isLocal, ...)
+    sb.logInfo(...)
+    return "bla"
+  end)
+end
+
+function update()
+  local promise = world.sendEntityMessage(entity.id(), "test123", "test: %s", 123)
+  -- promise:result() = "bla"
+  -- promise explained:
+  -- https://github.com/Silverfeelin/Starbound-MessageHandling-Demo/wiki/RpcPromise
+end
+```
