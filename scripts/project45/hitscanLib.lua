@@ -4,6 +4,8 @@ require "/scripts/poly.lua"
 
 hitscanLib = {}
 
+local modConfig = root.assetJson("/configs/project45/project45_generalconfig.config")
+
 -- replaces fireProjectile
 function hitscanLib:fireHitscan(projectileType)
 
@@ -14,7 +16,7 @@ function hitscanLib:fireHitscan(projectileType)
     local hitscanInfos = {}
 
     -- get damage source (line) information
-    for i=1, (self.projectileCount * self:rollMultishot()) do
+    for i=1, math.min(modConfig.hitscanProjectileLimit, (self.projectileCount * self:rollMultishot())) do
 
       local hitReg = self:hitscan(false)
       local damageArea = {
