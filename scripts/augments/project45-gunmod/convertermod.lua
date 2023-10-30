@@ -93,21 +93,6 @@ function apply(input)
       newPrimaryAbility.baseDamage = (primaryAbility.baseDamage or 5) / conversionConfig.damageConversionFactor
     end
 
-    -- reduce projectileCount and multishot when converting to hitscan to hitscan projectile limit
-    if conversion == "hitscan" then
-      newPrimaryAbility.projectileCount = math.min(conversionConfig.hitscanProjectileLimit, primaryAbility.projectileCount or 1)
-      newPrimaryAbility.multishot = math.min(conversionConfig.hitscanProjectileLimit, primaryAbility.multishot or 1)
-      
-      -- if product of multishot and projectile count is beyond limit,
-      -- normalize such that max possible number of projectiles spawned is limit
-      -- i.e. projectileCount * multishot <= limit
-      if newPrimaryAbility.projectileCount * newPrimaryAbility.multishot > conversionConfig.hitscanProjectileLimit then
-        local factor = math.sqrt(conversionConfig.hitscanProjectileLimit)/conversionConfig.hitscanProjectileLimit
-        newPrimaryAbility.projectileCount = math.ceil(newPrimaryAbility.projectileCount * factor)
-        newPrimaryAbility.multishot = newPrimaryAbility.multishot * factor
-      end
-    end
-
     if conversion == "summoned" then
       newPrimaryAbility.baseDamage = (primaryAbility.baseDamage or 5) * conversionConfig.damageConversionFactor * conversionConfig.summonedDamageMultiplier
     end
