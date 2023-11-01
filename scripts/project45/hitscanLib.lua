@@ -14,6 +14,7 @@ function hitscanLib:fireHitscan(projectileType)
     -- hitreg[2] is where the bullet trail terminates
 
     local hitscanInfos = {}
+    local finalDamage = self:damagePerShot()
 
     -- get damage source (line) information
     for i=1, math.min(modConfig.hitscanProjectileLimit, (self.projectileCount * self:rollMultishot())) do
@@ -24,7 +25,6 @@ function hitscanLib:fireHitscan(projectileType)
         vec2.sub(hitReg[2], mcontroller.position())
       }
       
-      local finalDamage = self:damagePerShot()
       local damageConfig = {
         -- we included activeItem.ownerPowerMultiplier() in
         -- self:damagePerShot() so we cancel it

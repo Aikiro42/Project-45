@@ -14,7 +14,7 @@
     "timeToLive" : 0,
     "layer" : "front",
     "destructionAction" : "fade",
-    "destructionTime" : 1,
+    "destructionTime" : 0.75,
     "variance" : {
       "initialVelocity" : [20, 5]
     },

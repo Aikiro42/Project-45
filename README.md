@@ -396,6 +396,8 @@ end
 
 ---
 
+<!--
+
 to use
 
 ```lua
@@ -413,3 +415,69 @@ function update()
   -- https://github.com/Silverfeelin/Starbound-MessageHandling-Demo/wiki/RpcPromise
 end
 ```
+
+```lua
+function init()
+	_, lokDamageTakenUpdate = status.damageTakenSince()
+end
+ 
+function update(dt)
+  local dmgNotifications = nil
+  local effectSourceId = effect.sourceEntity()
+  dmgNotifications, lokDamageTakenUpdate = status.damageTakenSince(lokDamageTakenUpdate)
+  if #dmgNotifications > 0 then
+    for i,notification in pairs(dmgNotifications) do
+      if notification.sourceEntityId ~= notification.targetEntityId and notification.sourceEntityId == effectSourceId then
+          if notification.healthLost > 0 and world.entityExists(notification.targetEntityId) then
+            SpawnCritText(notification.targetEntityId,notification.damageDealt)
+          end
+      end
+    end
+  end
+end
+ 
+function SpawnCritText(targetEntityId, damageDealt)
+ 
+  if string.find(tostring(damageDealt),"%.0")~= nil then
+    damageDealt = math.floor(damageDealt)
+  else
+    damageDealt = math.ceil(damageDealt)
+  end
+  critAction = {
+      timeToLive = 0
+      ,damageType = "NoDamage"
+      , actionOnReap = {
+        {
+          action = "particle",
+          specification = {
+            type = "text",
+            text =  "* Critical Hit! *\n"..tostring(damageDealt),
+            color = {255, 214, 31, 255},
+            destructionAction = "fade",
+            destructionTime =  0.5,
+            layer = "front",
+            position = {0,4},
+            size = 0.5,
+            approach = {0,0},
+            initialVelocity = {0,2},
+            angularVelocity = 0,
+            flippable = false,
+            timeToLive = 0.3,
+            fullbright = true,
+            rotation = 0,
+            variance = {
+              position = {1, 1}
+            }
+          }
+        }
+      }
+    }
+  world.spawnProjectile("invisibleprojectile", world.entityPosition(targetEntityId), targetEntityId, {0,0}, true,critAction)
+end
+ 
+function uninit()
+end
+ 
+```
+
+-->
