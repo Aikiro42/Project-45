@@ -22,7 +22,7 @@ end
 
 function onExpire()
   -- Code from Chofranc
-  critAction = {
+  local critAction = {
       timeToLive = 0,
       damageType = "NoDamage",
       actionOnReap = {
@@ -61,5 +61,5 @@ function onExpire()
         }
       }
     }
-  world.spawnProjectile("invisibleprojectile", world.entityPosition(targetEntityId), targetEntityId, {0,0}, true,critAction)
+  world.spawnProjectile("invisibleprojectile", mcontroller.position(), entity.id(), {0,0}, true,critAction)
 end
