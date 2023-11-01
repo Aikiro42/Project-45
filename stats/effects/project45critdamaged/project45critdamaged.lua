@@ -15,13 +15,12 @@ function init()
 end
 
 function update(dt)
-  self.damageListener:update()
 end
 
 function uninit()
 end
 
-function spawnCritVFX(targetEntityId)
+function onExpire()
   -- Code from Chofranc
   critAction = {
       timeToLive = 0,
