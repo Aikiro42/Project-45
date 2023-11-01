@@ -1012,13 +1012,16 @@ function Project45GunFire:fireProjectile(projectileType, projectileParameters, i
   params.power = self:damagePerShot()
   params.powerMultiplier = activeItem.ownerPowerMultiplier()
   params.speed = util.randomInRange(params.speed)
+  local selectedProjectileType = nil
 
   if not projectileType then
     projectileType = self.projectileKind == "summoned" and self.summonedProjectileType or self.projectileType
   end
+
+  selectedProjectileType = projectileType
   
   if type(projectileType) == "table" then
-    projectileType = projectileType[storage.savedProjectileIndex]
+    selectedProjectileType = projectileType[storage.savedProjectileIndex]
     if not self.projectileFireSettings or not self.projectileFireSettings.batchFire then
       self:rerollProjectileIndex(#projectileType)
     end
@@ -1034,7 +1037,7 @@ function Project45GunFire:fireProjectile(projectileType, projectileParameters, i
     end
 
     projectileId = world.spawnProjectile(
-      projectileType,
+      selectedProjectileType,
       firePosition or self:firePosition(nil, addOffset),
       activeItem.ownerEntityId(),
       aimVector or self:aimVector(inaccuracy or self.spread),
@@ -1725,6 +1728,13 @@ function Project45GunFire:loadGunState()
     
   storage.ammo = storage.ammo or loadedGunState.ammo
   storage.savedProjectileIndex = storage.savedProjectileIndex or loadedGunState.savedProjectileIndex
+
+  -- saved projectile index validation
+  local projectiles = self.projectileKind == "summoned" and self.summonedProjectileType or self.projectileType
+  if type(projectiles) == "table" and storage.savedProjectileIndex > #projectiles then
+    storage.savedProjectileIndex = #projectiles
+  end
+
   storage.reloadRating = storage.reloadRating or loadedGunState.reloadRating
   activeItem.setScriptedAnimationParameter("reloadRating", reloadRatingList[storage.reloadRating])
   storage.unejectedCasings = storage.unejectedCasings or loadedGunState.unejectedCasings
