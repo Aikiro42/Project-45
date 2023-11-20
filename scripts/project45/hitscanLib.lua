@@ -225,7 +225,8 @@ function hitscanLib:fireBeam()
   
         -- update base damage accordingly
         local crit = self:crit()
-        beamDamageConfig.baseDamage = self:damagePerShot(true) * crit
+        local multishot = self.projectileCount * self:rollMultishot()
+        beamDamageConfig.baseDamage = self:damagePerShot(true) * crit * multishot
 
         if crit > 1 then
           beamDamageConfig.statusEffects = sb.jsonMerge(beamDamageConfig.statusEffects, { "project45critdamaged" })
