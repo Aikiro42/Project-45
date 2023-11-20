@@ -1583,11 +1583,16 @@ end
 -- Typically called when the weapon is about to deal damage.
 function Project45GunFire:crit()
   if not self.critChance then return 1 end
-  if project45util.diceroll(self.critChance, "Crit: ") then
+
+  local critTier = math.floor(self.critChance);
+  local baseCritDamageMult = self.critDamageMult * critTier
+
+  if project45util.diceroll(self.critChance - critTier, "Crit: ") then
     self.critFlag = true
-    return self.critDamageMult
+    return baseCritDamageMult + self.critDamageMult
   else
-    return 1
+    self.critFlag = baseCritDamageMult > 1
+    return math.max(1, baseCritDamageMult)
   end
 end
 
