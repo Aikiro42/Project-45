@@ -15,9 +15,10 @@ function hitscanLib:fireHitscan(projectileType)
 
     local hitscanInfos = {}
     local finalDamage = self:damagePerShot()
-
+    local nProjs = self.projectileCount * self:rollMultishot()
+    local nProjsOverflowMult = math.max(1, nProjs/modConfig.hitscanProjectileLimit)
     -- get damage source (line) information
-    for i=1, math.min(modConfig.hitscanProjectileLimit, (self.projectileCount * self:rollMultishot())) do
+    for i=1, math.min(modConfig.hitscanProjectileLimit, nProjs) do
 
       local hitReg = self:hitscan(false)
       local damageArea = {
@@ -28,7 +29,8 @@ function hitscanLib:fireHitscan(projectileType)
       local damageConfig = {
         -- we included activeItem.ownerPowerMultiplier() in
         -- self:damagePerShot() so we cancel it
-        baseDamage = finalDamage,
+        -- multiply nProjsOverflowMult to final damage to compensate for lost multishot
+        baseDamage = finalDamage*nProjsOverflowMult,
         timeout = self.currentCycleTime,
       }
       damageConfig = sb.jsonMerge(damageConfig, self.hitscanParameters.hitscanDamageConfig or {})
