@@ -3,7 +3,7 @@
   "price" : 1000,
   "maxStack" : 1,
   "rarity" : "Essential",
-  "description" : "An entry-level firearm.",
+  "description" : "Energy AR with ramping fire rate.",
   "shortdescription" : "Accelerator",
   "gunArchetype": "Energy Gun",
   "tooltipKind" : "project45gun",

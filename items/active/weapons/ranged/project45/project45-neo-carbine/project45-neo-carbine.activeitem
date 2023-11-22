@@ -3,7 +3,7 @@
   "price" : 1000,
   "maxStack" : 1,
   "rarity" : "Essential",
-  "description" : "An automatic rifle.",
+  "description" : "An highly modifiable automatic short rifle.",
   "shortdescription" : "Carbine",
   "tooltipKind" : "project45gun",
   "gunArchetype": "Assault Rifle",

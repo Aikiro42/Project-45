@@ -3,7 +3,7 @@
   "price" : 1000,
   "maxStack" : 1,
   "rarity" : "Essential",
-  "description" : "A beam gun.",
+  "description" : "A weapon that shines irradiating light at the enemy.",
   "shortdescription" : "Beam Gun",
   "gunArchetype": "Energy Weapon",
   "tooltipKind" : "project45gun",
