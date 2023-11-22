@@ -3,7 +3,7 @@
   "price" : 1000,
   "maxStack" : 1,
   "rarity" : "Essential",
-  "description" : "A Gauss rifle.",
+  "description" : "Launches projectiles near lightspeed. Oddly, this doesn't destroy its immediate surroundings what with the magnitude of acceleration it gives.",
   "shortdescription" : "Gauss Rifle",
   "gunArchetype": "Railgun",
   "tooltipKind" : "project45gun",

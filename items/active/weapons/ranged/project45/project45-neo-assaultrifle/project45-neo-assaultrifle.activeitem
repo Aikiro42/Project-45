@@ -3,7 +3,7 @@
   "price" : 1000,
   "maxStack" : 1,
   "rarity" : "Essential",
-  "description" : "A burst-fire Assault Rifle.",
+  "description" : "A burst-fire assault rifle. Great for fast-paced combat.",
   "shortdescription" : "Assault Rifle",
   "tooltipKind" : "project45gun",
   "gunArchetype": "Assault Rifle",

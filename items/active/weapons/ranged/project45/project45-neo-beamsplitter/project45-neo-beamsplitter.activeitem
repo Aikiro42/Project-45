@@ -3,7 +3,7 @@
   "price" : 1000,
   "maxStack" : 1,
   "rarity" : "Essential",
-  "description" : "An energy shotgun.",
+  "description" : "An energy gun that splits high-amplitude low-frequency waves with a specially-cut crystal.",
   "shortdescription" : "Beamsplitter",
   "tooltipKind" : "project45gun",
   "gunArchetype": "Energy Shotgun",
