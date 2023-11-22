@@ -1,9 +1,22 @@
 <style>
   body {
-    width: 1000px;
+    background: #1c1c1c;
+    color: #cccccc;
+    width: 800px;
     margin: auto;
+    margin-bottom: 100px;
   }
 </style>
+
+# Table of Contents
+- Introduction
+- Background & Motivations
+  - Synthetik: Legion Risig
+  - Warframe
+- Project 45: User Features
+  - Quickstart Guide
+  - Mechanics
+- Project 45: Developer Features
 
 # Introduction
 
@@ -67,6 +80,11 @@ The Project 45 Gun Shop can be crafted with the Inventor's table. Guns, Mods, Am
 
 ### Weapon Shop Items
 #### Guns
+|Gun|Archetype|Description|
+|-|-|-|
+|Pipe Gun|Makeshift Gun|Zip gun that's automatically loaded after every shot.|
+|Pistol|Handgun|A zip gun. Particularly well-made; WS45 parts are amazing.|
+
 #### Mods
 #### Stat
 #### Ammo
@@ -227,6 +245,8 @@ Regarding `"summoned"` projectiles:
 |`projectileFireSettings.sequential`|`boolean`|If `true`, fires each projectile type in sequence. Only applies if `projectileType` is an array.|
 |`projectileFireSettings.resetProjectileIndexOnReload`|`boolean`|If `true`, fires the first projectile in the `projectileType` list. Only applies if `projectileType` is an array and `projectileFireSettings.sequential` is true.|
 |`projectileFireSettings.batchFire`|`boolean`|If `true`, all projectile types at once. Only applies if `projectileType` is an array. TODO: Clarify and verify me|
+
+<!--
 
 ```json
 {
@@ -721,3 +741,4 @@ Regarding `"summoned"` projectiles:
 }
 ```
 #### 
+-->
