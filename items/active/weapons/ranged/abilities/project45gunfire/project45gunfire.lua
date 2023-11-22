@@ -18,6 +18,7 @@ function Project45GunFire:init()
   -- INITIALIZATIONS
   self.debugTimer = self.debugTime
   self.isFiring = false
+  self.projectileCount = math.floor(self.projectileCount)
     
   -- separate cock time and reload time
   -- self.reloadTime = self.reloadTime * 0.8
