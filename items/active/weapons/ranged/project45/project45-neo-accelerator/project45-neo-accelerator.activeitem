@@ -81,9 +81,9 @@
   "magazineOffset": [-0.1, 0],
   "chargeSmokeOffsetRegion": [0, 0.5, 1.875, 0.5],
 
-  "railOffset": [1, 0],
-  "sightsOffset": [0.875, 0.625],
-  "underbarrelOffset": [1.5, -0.125],
+  "railOffset": [0.5, 0.125],
+  "sightsOffset": [0.5, 0.625],
+  "underbarrelOffset": [0.5, -0.125],
 
   "scripts" : ["/items/active/weapons/ranged/project45gunneo.lua"],
     

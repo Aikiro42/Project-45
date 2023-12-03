@@ -131,6 +131,7 @@ function build(directory, config, parameters, level, seed)
 
     for _, modPart in ipairs(modParts) do
       if config[modPart .. "Offset"] then
+          config[modPart .. "Offset"] = vec2.add(config.baseOffset, config[modPart .. "Offset"])
           construct(config, "animationCustom", "animatedParts", "parts", modPart, "properties")
           construct(config, "animationCustom", "animatedParts", "parts", modPart .. "Fullbright", "properties")
           local modPartOffset = config.animationCustom.animatedParts.parts[modPart].properties.offset or {0, 0}

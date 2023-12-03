@@ -112,14 +112,14 @@
   },
 
   "baseOffset" : [0.75, 0.25],
-  "muzzleOffset" : [1.75, 0.375],
+  "muzzleOffset" : [1.75, 0.325],
   "ejectionPortOffset": [-1, 0.375],
   "magazineOffset": [0, 0],
 
-  "railOffset": [1.75, 0.5],
-  "underbarrelOffset": [1.5, 0.25],
-  "sightsOffset": [1, 0.625],
-  "stockOffset": [0, -0.125],
+  "railOffset": [1, 0.25],
+  "underbarrelOffset": [0.75, 0],
+  "sightsOffset": [0.25, 0.5],
+  "stockOffset": [-0.75, -0.5625],
 
   "debugPointColors": {
     "rail": "red",

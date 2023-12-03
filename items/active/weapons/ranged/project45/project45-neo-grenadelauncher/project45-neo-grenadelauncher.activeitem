@@ -29,7 +29,7 @@
     "statModCountMax": 10,
     "acceptsModSlot": [
       "rail",
-      "sights",
+      // "sights",
       
       "material"
     ],
@@ -131,8 +131,8 @@
     "underbarrel": "green"
   },
 
-  "railOffset": [1.5, 0.125],
-  "sightsOffset": [0.375, 0.75],
+  "railOffset": [1, 0.125],
+  // "sightsOffset": [0.25, 0.8],
 
   "scripts" : ["/items/active/weapons/ranged/project45gunneo.lua"],
     
