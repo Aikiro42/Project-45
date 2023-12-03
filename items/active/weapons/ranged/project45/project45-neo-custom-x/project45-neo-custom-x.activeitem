@@ -141,9 +141,13 @@
 
   "animationCustom": {
     "particleEmitters": {
+      "ejectionPort": {
+        "particles": [
+        ]
+      },
       "magazine": {
         "particles": [
-          {"particle": "project45modulargunmag"}
+          // {"particle": "project45modulargunmag"}
         ]
       }
     },
