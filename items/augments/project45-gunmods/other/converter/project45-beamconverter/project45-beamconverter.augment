@@ -1,7 +1,7 @@
 {
   "itemName" : "project45-beamconverter",
   "price" : 7500,
-  "rarity" : "Legendary",
+  "rarity" : "Essential",
   "tooltipKind" : "project45gunmod",
   "category" : "Converter Mod",
   "inventoryIcon" : "/items/augments/project45-gunmods/other/converter/project45-beamconverter/project45-beamconverter.png",
