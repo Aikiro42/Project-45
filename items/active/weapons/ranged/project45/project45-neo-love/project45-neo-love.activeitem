@@ -87,13 +87,13 @@
     }
   },
 
-  "baseOffset" : [0.75, 0],
+  "baseOffset" : [1, 0],
   "muzzleOffset" : [1.125, 0.3],
   "ejectionPortOffset": [-0.25, 0.625],
   "magazineOffset": [0, 0],
 
-  "sightsOffset": [0.25, 0.5],
-  "stockOffset": [-0.75, -0.25],
+  "sightsOffset": [-0.5, 0.625],
+  "stockOffset": [-1.5, -0.375],
 
   "debugPointColors": {
     "rail": "red",
