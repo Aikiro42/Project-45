@@ -146,6 +146,7 @@
     
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
+    "baseDamage": 7,
     "cycleTime": 0.05,
     "semi": false,
     "chargeFrames": 4,
@@ -159,7 +160,7 @@
     "magLoopFrames": 2,
     "magAmmoRange": [0, 5],
     "chargeSmoke": true,
-
+    "postReloadDelay": 0.125,
     "stances":{
       "aimStance":{
         "frontArmFrame": "run.3"

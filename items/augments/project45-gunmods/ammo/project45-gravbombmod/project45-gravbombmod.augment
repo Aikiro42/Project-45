@@ -10,7 +10,7 @@
 
   "augment":{
     "modName": "Singularity Essence",
-    "category": "experimental", // todo: make this either matter or energy and make a gun for this
+    "category": "experimental", // TODO: make this either matter or energy and make a gun for this
     "archetype": "summoned",
 
     "projectileKind": "summoned",

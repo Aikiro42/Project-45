@@ -1079,6 +1079,10 @@ function Project45GunFire:recoil(down, mult, amount, recoverDelay)
   self.projectileKind = self.projectileKind or "projectile"
 
   local mult = mult or self.recoilMult or 1
+  
+  -- makes it easier to aim directly downwards/upwards
+  mult = mult * math.abs(math.cos(activeItem.aimAngle(0, activeItem.ownerAimPosition())))
+  
   mult = down and -mult or mult
   local crouchMult = mcontroller.crouching() and self.recoilCrouchMult or 1
   mult = mult * crouchMult

@@ -148,6 +148,7 @@
     
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
+    "baseDamage": 20,
     "debug": true,
     "maxAmmo": 10,
     "bulletsPerReload": 10,

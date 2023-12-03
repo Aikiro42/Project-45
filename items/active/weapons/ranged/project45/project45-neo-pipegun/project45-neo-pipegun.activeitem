@@ -147,9 +147,9 @@
     "loadRoundsThroughBolt": true,
     "ejectCasingsWithMag": true,
     "ejectMagOnEmpty": "ejecting",
-    "reloadOnEjectMag": true,
-    "slamFire": true,
-    "jamChances": [1, 0.5, 0.1, 0],
+    "reloadOnEjectMag": false,
+    "slamFire": false,
+    "jamChances": [0.5, 0.1, 0.05, 0],
 
     "recoilAmount": 15, // amount of recoil per shot, in degrees; arm and weapon will rotate by half of this
     "recoilMaxDeg": 45, // the most the arm and weapon will rotate, in degrees.

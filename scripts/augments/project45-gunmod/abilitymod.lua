@@ -9,7 +9,7 @@ local gunmod_apply = apply
 function apply(input)
 
   -- do not install mod if the thing this mod is applied to isn't my gun
-  -- todo: make this variable more unique
+  -- TODO: make this variable more unique
   local modInfo = input.parameters.project45GunModInfo
   if not modInfo then return end
 
