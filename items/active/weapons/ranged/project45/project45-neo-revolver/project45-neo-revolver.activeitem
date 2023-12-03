@@ -130,7 +130,7 @@
   "ejectionPortOffset": [-0.25, 0.5],
   "magazineOffset": [0, 0],
 
-  "stockOffset": [-0.375, -0.375],
+  "stockOffset": [-1.25, 0],
 
   "debugPointColors": {
     "rail": "red",

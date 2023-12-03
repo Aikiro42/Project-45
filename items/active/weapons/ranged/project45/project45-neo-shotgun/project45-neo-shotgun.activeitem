@@ -76,7 +76,7 @@
   "magazineOffset": [0, 0],
 
   "railOffset": [1.5, 0],
-  "sightsOffset": [0, 0.375],
+  "sightsOffset": [0, 0.6],
 
   
   "debugPointColors": {
