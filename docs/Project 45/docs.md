@@ -1,4 +1,19 @@
 <style>
+
+  img { 
+    image-rendering: optimizeSpeed;             /* STOP SMOOTHING, GIVE ME SPEED  */
+    image-rendering: -moz-crisp-edges;          /* Firefox                        */
+    image-rendering: -o-crisp-edges;            /* Opera                          */
+    image-rendering: -webkit-optimize-contrast; /* Chrome (and eventually Safari) */
+    image-rendering: pixelated;                 /* Universal support since 2021   */
+    image-rendering: optimize-contrast;         /* CSS3 Proposed                  */
+    -ms-interpolation-mode: nearest-neighbor;   /* IE8+                           */
+
+    margin: 10px;
+    padding: 10px;
+    border: 2px solid gray;
+  }
+
   body {
     background: #1c1c1c;
     color: #cccccc;
@@ -6,16 +21,27 @@
     margin: auto;
     margin-bottom: 100px;
   }
+
+  .item-desc{
+    display: flex;
+    flex-direction: row;
+  }
+
+  .item-desc-icon{
+    height: 100px;
+  }
+
 </style>
 
+[test](#guns)
+
 # Table of Contents
-- Introduction
-- Background & Motivations
-  - Synthetik: Legion Risig
-  - Warframe
-- Project 45: User Features
-  - Quickstart Guide
-  - Mechanics
+- [Introduction](#introduction)
+- [Background & Motivations](#background--motivations)
+  - [Synthetik: Legion Rising](#synthetik-legion-rising)
+  - [Warframe](#warframe)
+- [Project 45: User Features](#project-45-user-features)
+  - [Mechanics](#mechanics)
 - Project 45: Developer Features
 
 # Introduction
@@ -74,25 +100,14 @@ The ranged weapons of Warframe have a stat called ["Multishot"](https://warframe
 
 # Project 45: User Features
 
-## Quickstart Guide
+## Quickstart
 
 The Project 45 Gun Shop can be crafted with the Inventor's table. Guns, Mods, Ammo (Custom Projectiles) and Stat upgrades can be bought there, as well as a few miscallenous items.
-
-### Weapon Shop Items
-#### Guns
-|Gun|Archetype|Description|
-|-|-|-|
-|Pipe Gun|Makeshift Gun|Zip gun that's automatically loaded after every shot.|
-|Pistol|Handgun|A zip gun. Particularly well-made; WS45 parts are amazing.|
-
-#### Mods
-#### Stat
-#### Ammo
-#### Misc
 
 ## Mechanics
 
 ## Firing
+
 ### Fire Mode Settings
 
 Guns can have multiple fire mode configurations.
@@ -157,14 +172,75 @@ Recoil is affected by the player character's movement; the less you move, the mo
 
 ### Ammo and Active Reload
 
-The weapons of Project 45 take ammo from the player character's energy pool, and only consume energy when reloaded.
+The weapons of Project 45 are ammo-based and only consume energy when reloaded.
 
-Reloading essentially functions similarly to that of Synthetik, but guns cannot be reloaded manually under normal circumstances; they must first be out of ammo before their magazines could be ejected.
+When the gun runs out of ammo (i.e. the ammo counter is 0), the player must eject the magazine by pressing the fire button. After which, the player may press the fire button again to initiate a reload.
+
+When a reload is initiated, a bar appears, with three distinct regions
+- a white "fail" region,
+- a dark purple "good" success region, and
+- a light purple "perfect" success region, typically within the dark purple region.
+
+A red indicator will also begin moving from the bottom of the bar to the top. Pressing the fire button stops the indicator. 
+- Stopping it over the white region turns the bar red, indicating a "bad" reload.
+- Stopping it over the dark purple region means the reload is "good", and
+- stopping the indicator over the light purple region means the reload is "perfect".
+- Allowing the indicator to reach the top of the bar executes an "okay" reload.
+
+"Bad", "Good", "Perfect" and "Okay" are what you call the Reload Rating of the executed active reload.
+- "Bad" reloads typically incur an 80% multiplicative penalty to damage. and a higher chance to jam.
+- "Okay" reloads have no penalty nor benefit other than a reasonable chance to jam.
+- "Good" reloads provide a 125% multiplicative bonus to damage, and typically eliminates the odds of the weapon jamming.
+- "Perfect" reloads provide a 150% multiplicative bonus to damage and typically eliminates the odds of the weapon jamming.
+
+> The mod allows different jam chances and damage bonuses. TODO: Elaborate
+
+Some guns load ammo by the bullet. With such guns, pressing the fire button to stop the indicator resets it to the bottom of the reload bar. Per-bullet loaded guns have a different reload rating system based on the final score of the reload.
+- A "bad" reload gives no points.
+- A "good" reload gives 1 point.
+- A "perfect" reload gives 2 points.
+- An "okay" reload ends the reloading process (while itself loading a \[set of\] rounds).
+
+When the reloading process is finished (either when the gun is fully loaded or an "okay" reload was executed), the final reload score is divided by the number of [sets of] rounds loaded (i.e. the number of times the indicator was stopped).
+- If the quotient is greater than 1, the reload is "perfect".
+- Otherwise, if the quotient is greater than 2/3, the reload is "good".
+- Otherwise, if the quotient is greater than 1/3, the reload is "okay".
+- Otherwise, the reload is "bad".
 
 ### Jamming
+
+All guns have a chance of jamming depending on how well they were reloaded. The odds of jamming depend on the weapon; details can be seen under the [Guns](#guns) section.
+
 ### Modding
+
+Project 45 gun mods work very much like EPP augments. They are applied to any Project 45-based weapon via right-clicking on the weapon while the mod is held by the cursor.
+
+Gun tooltips indicate the visible attachments they can accept.
+
+TODO: add tooltip image
+
+#### Ammo Mods
+
+Ammo mods change the nature of the projectile a weapon fires. Some weapons only accept a specific kind of ammo mods.
+
+
+
 ## Items
 ### Guns
+**Pipe Gun**
+<div class="item-desc">
+
+<img class="item-desc-icon" src="assets/project45-neo-pipegun-icon.png" />
+
+|Stat|Value|
+|-|-|
+|Fire mode|Semi-fire, manually fed|
+|Ammo Capacity|1|
+|Spread|30°|
+
+</div>
+
+
 ### Mods
 #### Ability
 #### Ammo (Projectile)

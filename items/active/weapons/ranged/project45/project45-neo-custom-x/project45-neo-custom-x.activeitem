@@ -205,13 +205,14 @@
   },
 
 
-  "baseOffset" : [1.25, 0.125],
+  //"baseOffset" : [1.25, 0.125],
+  "baseOffset" : [1.25, 3],
   "muzzleOffset" : [1.7, 0.375],
   "ejectionPortOffset": [-0.25, 0.75],
   "magazineOffset": [0, 0],
 
   "railOffset" : [2, 0.25],
-  "sightsOffset": [1, 0.90],
+  "sightsOffset": [0.75, 0.90],
   "stockOffset": [-1, 0.25],
   "underbarrelOffset": [2, 0],
 
@@ -219,6 +220,9 @@
     
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
+
+    "debug": true,
+
     // SECTION: PRIMARY ABILITY
     "projectileKind": "summoned",
     "projectileType": "project45_elecexplosion",
