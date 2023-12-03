@@ -118,8 +118,9 @@ function apply(input)
       "stock"
     })
     if needImage[augment.slot] then
-        table.insert(modSlots.ability, config.getParameter("inventoryIcon"))
+      table.insert(modSlots[augment.slot], config.getParameter("inventoryIcon"))
     end
+
     output:setInstanceValue("modSlots", modSlots)
 
     -- return output:descriptor(), 1

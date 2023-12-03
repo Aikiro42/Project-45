@@ -1536,6 +1536,8 @@ function Project45GunFire:evalProjectileKind()
     
     self.muzzlePosition = self.firePosition
     self.firePosition = hitscanLib.summonPosition
+    GunFire.firePosition = hitscanLib.summonPosition
+    AltFireAttack.firePosition = hitscanLib.summonPosition
 
     self.muzzleVector = self.aimVector
     self.aimVector = hitscanLib.summonVector

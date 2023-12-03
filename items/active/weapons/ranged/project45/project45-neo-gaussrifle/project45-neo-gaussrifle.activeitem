@@ -109,8 +109,8 @@
     "underbarrel": "green"
   },
 
-  "sightsOffset": [0.375, 0.875],
-  "railOffset": [1.5, 0.25],
+  "sightsOffset": [-0.45, 1],
+  "railOffset": [0.5, 0.625],
 
   "scripts" : ["/items/active/weapons/ranged/project45gunneo.lua"],
     

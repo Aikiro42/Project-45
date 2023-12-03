@@ -75,9 +75,9 @@
   "ejectionPortOffset": [-0.25, 0.5],
   "magazineOffset": [-0.25, -0.25],
   
-  "railOffset": [1.75, 0.5],
-  "sightsOffset": [1, 0.75],
-  "underbarrelOffset": [2, 0.125],
+  "railOffset": [0.75, 0.375],
+  "sightsOffset": [0, 0.75],
+  "underbarrelOffset": [0.875, 0],
   
   "debugPointColors": {
     "rail": "red",
