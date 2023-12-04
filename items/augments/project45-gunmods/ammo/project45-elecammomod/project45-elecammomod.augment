@@ -11,7 +11,7 @@
   "augment":{
     "modName": "Electro Lasers",
     "category": "energy",
-    "archetype": "beam",
+    "archetype": "laser",
     "spread": 0.01,
     "projectileCount": 1,
     "muzzleFlashColor": [210,156,231],
@@ -19,7 +19,7 @@
     "hitscanParameters":{
       "hitscanColor": [210,156,231],
       "hitscanDamageConfig": {
-        "damageKind": "electric",
+        "damageSourceKind": "electric",
         "statusEffects":["electrified"]
       },
       "hitscanActionOnHit": [

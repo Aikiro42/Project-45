@@ -50,7 +50,9 @@
       "beam",
       "summoned"
     ],
-    "acceptsAmmoArchetypes":[],
+    "acceptsAmmoArchetype":[
+      "laser"
+    ],
     "acceptsModSlot": [
       "rail",
       "underbarrel",

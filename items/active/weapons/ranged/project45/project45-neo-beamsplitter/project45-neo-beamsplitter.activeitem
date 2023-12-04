@@ -49,7 +49,9 @@
       "projectile",
       "summoned"
     ],
-    "acceptsAmmoArchetype":[],
+    "acceptsAmmoArchetype":[
+      "laser"
+    ],
     "acceptsModSlot": [
       "rail",
       "underbarrel",

@@ -11,14 +11,14 @@
   "augment":{
     "modName": "Cryo Lasers",
     "category": "energy",
-    "archetype": "beam",
+    "archetype": "laser",
     "spread": 0.01,
     "muzzleFlashColor": [150,203,231],
     "projectileKind": "hitscan",
     "hitscanParameters":{
       "hitscanColor": [150,203,231],
       "hitscanDamageConfig":{
-        "damageKind": "ice",
+        "damageSourceKind": "ice",
         "statusEffects":["frostsnare", "frostslow", "project45freeze"]
       }
     },
