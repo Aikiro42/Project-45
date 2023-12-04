@@ -9,7 +9,7 @@
   "actionOnReap" : [
     {
       "action" : "config",
-      "file" : "/projectiles/explosions/vsmallregularexplosion/vsmallregularexplosionknockback.config"
+      "file" : "/projectiles/explosions/regularexplosion2/regularexplosionknockback.config"
     }
   ],
   "statusEffects" : [ ],

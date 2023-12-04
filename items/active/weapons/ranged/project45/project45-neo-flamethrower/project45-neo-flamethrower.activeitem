@@ -151,7 +151,8 @@
     "projectileKind": "projectile",
     "projectileType": "project45-starforge-firefluxbolt",
     "projectileParameters": {
-      "speed": 50
+      "speed": 50,
+      "statusEffects":["burning"]
     },
     "multishot": 2.5,
     "screenShakeAmount": [1, 0.1],
