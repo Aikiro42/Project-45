@@ -1,8 +1,8 @@
 {
   "itemName" : "project45-neo-revolver",
-  "price" : 1000,
+  "price" : 5000,
   "maxStack" : 1,
-  "rarity" : "Essential",
+  "rarity" : "Legendary",
   "description" : "A revolver. Packs quite a punch.",
   "shortdescription" : "Revolver",
   "tooltipKind" : "project45gun",

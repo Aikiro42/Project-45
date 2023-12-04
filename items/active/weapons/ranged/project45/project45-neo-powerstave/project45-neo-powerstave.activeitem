@@ -1,6 +1,6 @@
 {
   "itemName" : "project45-neo-powerstave",
-  "price" : 1000,
+  "price" : 10000,
   "maxStack" : 1,
   "rarity" : "Essential",
   "description" : "A stave that summons projectiles at your desired location.",

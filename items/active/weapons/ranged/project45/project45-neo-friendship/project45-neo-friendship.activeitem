@@ -1,8 +1,8 @@
 {
   "itemName" : "project45-neo-friendship",
-  "price" : 1000,
+  "price" : 1250,
   "maxStack" : 1,
-  "rarity" : "Essential",
+  "rarity" : "Uncommon",
   "description" : "Gib your enemies with the power of Friendship!",
   "shortdescription" : "Friendship",
   "tooltipKind" : "project45gun",
