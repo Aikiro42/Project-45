@@ -1,8 +1,8 @@
 {
   "itemName" : "project45-neo-grenadelauncher",
-  "price" : 1000,
+  "price" : 5000,
   "maxStack" : 1,
-  "rarity" : "Essential",
+  "rarity" : "Legendary",
   "description" : "A grenade launcher.",
   "shortdescription" : "Grenade Launcher",
   "tooltipKind" : "project45gun",
@@ -138,6 +138,7 @@
     
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
+    "baseDamage": 50,
     "maxAmmo": 5,
     "bulletsPerReload": 5,
     "semi": true,

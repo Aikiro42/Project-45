@@ -1,8 +1,8 @@
 {
   "itemName" : "project45-neo-servicerifle",
-  "price" : 1000,
+  "price" : 2500,
   "maxStack" : 1,
-  "rarity" : "Essential",
+  "rarity" : "Rare",
   "description" : "A service rifle.",
   "shortdescription" : "Service Rifle",
   "tooltipKind" : "project45gun",
@@ -88,7 +88,7 @@
     
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
-
+    "baseDamage": 15,
     "maxAmmo": 10,
     "bulletsPerReload": 10,
     "inaccuracy": 3,

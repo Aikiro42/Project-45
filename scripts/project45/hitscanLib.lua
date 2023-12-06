@@ -200,6 +200,7 @@ function hitscanLib:fireBeam()
   
       if ammoConsumeTimer >= beamTimeout then
         -- TODO: if self:jam() then break end
+        if self:jam() then break end
         ammoConsumeTimer = 0
         if self.beamParameters.consumeAmmoOverTime or not consumedAmmo then
           self:updateAmmo(-self.ammoPerShot)

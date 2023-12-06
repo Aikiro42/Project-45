@@ -1,8 +1,8 @@
 {
   "itemName" : "project45-neo-smg",
-  "price" : 1000,
+  "price" : 2500,
   "maxStack" : 1,
-  "rarity" : "Essential",
+  "rarity" : "Rare",
   "description" : "A fast-firing submachine gun.",
   "shortdescription" : "SMG",
   "tooltipKind" : "project45gun",
@@ -88,9 +88,9 @@
     "semi": false,
     "burstCount": 1,
     "inaccuracy": 1.5,
-    "recoilAmount": 1,
+    "recoilAmount": 0.5,
     "recoilMaxDeg": 7.5,
-    "recoverDelay": 0.05,
+    // "recoverDelay": 0.05,
     "cycleTime": 0.005,
     "projectileKind": "projectile",
 

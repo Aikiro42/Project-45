@@ -1,8 +1,8 @@
 {
   "itemName" : "project45-neo-scaramouche",
-  "price" : 1000,
+  "price" : 5000,
   "maxStack" : 1,
-  "rarity" : "Essential",
+  "rarity" : "Legendary",
   "description" : "A high-power, automatic assault rifle.",
   "shortdescription" : "Scaramouche",
   "tooltipKind" : "project45gun",
@@ -92,14 +92,15 @@
     
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
+    "baseDamage": 14,
     "maxAmmo": 20,
     "bulletsPerReload": 20,
     "semi": false,
     "burstCount": 1,
     "inaccuracy": 1.625,
-    "recoilAmount": 3,
-    "recoilMaxDeg": 15,
-    "recoverDelay": 0.1,
+    "recoilAmount": 1,
+    "recoilMaxDeg": 7.5,
+    "recoverDelay": 0.125,
     "cycleTime": 0.1125,
     "projectileKind": "projectile",
     "laser":{

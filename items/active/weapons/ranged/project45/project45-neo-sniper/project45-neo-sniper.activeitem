@@ -1,8 +1,8 @@
 {
   "itemName" : "project45-neo-sniper",
-  "price" : 1000,
+  "price" : 5000,
   "maxStack" : 1,
-  "rarity" : "Essential",
+  "rarity" : "Legendary",
   "description" : "A semi-auto bullpup marksman rifle.",
   "shortdescription" : "Sniper",
   "tooltipKind" : "project45gun",
@@ -89,7 +89,7 @@
     
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
-
+    "baseDamage": 14,
     "maxAmmo": 12,
     "bulletsPerReload": 12,
     "semi": false,

@@ -1,8 +1,8 @@
 {
   "itemName" : "project45-neo-accelerator",
-  "price" : 1000,
+  "price" : 5000,
   "maxStack" : 1,
-  "rarity" : "Essential",
+  "rarity" : "Legendary",
   "description" : "Energy AR with ramping fire rate.",
   "shortdescription" : "Accelerator",
   "gunArchetype": "Energy Gun",

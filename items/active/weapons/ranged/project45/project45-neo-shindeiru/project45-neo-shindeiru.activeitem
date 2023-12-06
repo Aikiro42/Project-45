@@ -1,6 +1,6 @@
 {
   "itemName" : "project45-neo-shindeiru",
-  "price" : 1000,
+  "price" : 10000,
   "maxStack" : 1,
   "rarity" : "Essential",
   "description" : "A smart SMG.",
@@ -99,9 +99,10 @@
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
 
+    "baseDamage": 10,
 
     "critChance": 0.15,
-    "critDamageMult": 0.1,
+    "critDamageMult": 1.1,
 
     "maxAmmo": 40,
     "bulletsPerReload": 40,

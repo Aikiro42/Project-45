@@ -1,8 +1,8 @@
 {
   "itemName" : "project45-neo-huntingrifle",
-  "price" : 1000,
+  "price" : 1250,
   "maxStack" : 1,
-  "rarity" : "Essential",
+  "rarity" : "Uncommon",
   "description" : "A hunting rifle.",
   "shortdescription" : "Hunting Rifle",
   "tooltipKind" : "project45gun",
@@ -86,6 +86,7 @@
     
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
+    "baseDamage": 15.5,
     "maxAmmo": 10,
     "bulletsPerReload": 5,
     "inaccuracy": 3,

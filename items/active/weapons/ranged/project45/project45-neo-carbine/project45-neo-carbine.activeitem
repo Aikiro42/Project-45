@@ -1,8 +1,8 @@
 {
   "itemName" : "project45-neo-carbine",
-  "price" : 1000,
+  "price" : 2500,
   "maxStack" : 1,
-  "rarity" : "Essential",
+  "rarity" : "Rare",
   "description" : "An highly modifiable automatic short rifle.",
   "shortdescription" : "Carbine",
   "tooltipKind" : "project45gun",
@@ -108,13 +108,14 @@
     
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
+    "baseDamage": 8,
     "maxAmmo": 27,
     "bulletsPerReload": 27,
     "semi": false,
     "burstCount": 1,
-    "inaccuracy": 1.5,
-    "recoilAmount": 1,
-    "recoilMaxDeg": 7.5,
+    "inaccuracy": 1,
+    "recoilAmount": 0.5,
+    "recoilMaxDeg": 5,
     "recoverDelay": 0.05,
     "cycleTime": 0.1,
     "projectileKind": "projectile",

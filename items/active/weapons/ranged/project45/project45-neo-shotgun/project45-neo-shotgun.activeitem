@@ -1,8 +1,8 @@
 {
   "itemName" : "project45-neo-shotgun",
-  "price" : 1000,
+  "price" : 2500,
   "maxStack" : 1,
-  "rarity" : "Essential",
+  "rarity" : "Rare",
   "description" : "A shotgun.",
   "shortdescription" : "Shotgun",
   "tooltipKind" : "project45gun",
@@ -91,7 +91,7 @@
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
 
-    "baseDamage": 10,
+    "baseDamage": 20,
     "maxAmmo": 6,
     "bulletsPerReload": 1,
     "inaccuracy": 4,

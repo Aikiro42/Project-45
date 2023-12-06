@@ -1,6 +1,6 @@
 {
   "itemName" : "project45-neo-powerstave",
-  "price" : 1000,
+  "price" : 10000,
   "maxStack" : 1,
   "rarity" : "Essential",
   "description" : "A stave that summons projectiles at your desired location.",
@@ -148,6 +148,7 @@
     
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
+    "baseDamage": 20,
     "debug": true,
     "maxAmmo": 10,
     "bulletsPerReload": 10,

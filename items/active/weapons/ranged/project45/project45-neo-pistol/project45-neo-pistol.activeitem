@@ -1,8 +1,8 @@
 {
   "itemName" : "project45-neo-pistol",
-  "price" : 1000,
+  "price" : 1250,
   "maxStack" : 1,
-  "rarity" : "Essential",
+  "rarity" : "Uncommon",
   "description" : "A good ol' handgun. Reliable, deadly.",
   "shortdescription" : "Pistol",
   "tooltipKind" : "project45gun",
@@ -103,7 +103,7 @@
 
   "project45GunModInfo":{
     "category": "ballistic",
-    "statModCountMax": 10,
+    "statModCountMax": 20,
     "allowsConversion": [
       "hitscan",
       "beam",
@@ -146,7 +146,6 @@
     
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
-
     "maxAmmo": 16,
     "bulletsPerReload": 16,
     "inaccuracy": 3,

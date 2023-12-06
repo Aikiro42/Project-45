@@ -1,8 +1,8 @@
 {
   "itemName" : "project45-neo-machinegun",
-  "price" : 1000,
+  "price" : 5000,
   "maxStack" : 1,
-  "rarity" : "Essential",
+  "rarity" : "Legendary",
   "description" : "An entry-level firearm.",
   "shortdescription" : "Machine Gun",
   "gunArchetype": "LMG",
@@ -146,6 +146,7 @@
     
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
+    "baseDamage": 7,
     "cycleTime": 0.05,
     "semi": false,
     "chargeFrames": 4,
@@ -159,7 +160,7 @@
     "magLoopFrames": 2,
     "magAmmoRange": [0, 5],
     "chargeSmoke": true,
-
+    "postReloadDelay": 0.125,
     "stances":{
       "aimStance":{
         "frontArmFrame": "run.3"

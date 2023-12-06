@@ -1,8 +1,8 @@
 {
   "itemName" : "project45-neo-beamgun",
-  "price" : 1000,
+  "price" : 5000,
   "maxStack" : 1,
-  "rarity" : "Essential",
+  "rarity" : "Legendary",
   "description" : "A weapon that shines irradiating light at the enemy.",
   "shortdescription" : "Beam Gun",
   "gunArchetype": "Energy Weapon",
@@ -100,6 +100,7 @@
     
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
+    "baseDamage": 10,
     "maxAmmo": 100,
     "bulletsPerReload": 100,
     

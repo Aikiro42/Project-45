@@ -1,8 +1,8 @@
 {
   "itemName" : "project45-neo-beamsplitter",
-  "price" : 1000,
+  "price" : 2500,
   "maxStack" : 1,
-  "rarity" : "Essential",
+  "rarity" : "Rare",
   "description" : "An energy gun that splits high-amplitude low-frequency waves with a specially-cut crystal.",
   "shortdescription" : "Beamsplitter",
   "tooltipKind" : "project45gun",
@@ -80,6 +80,7 @@
     
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
+    "baseDamage": 25,
     "maxAmmo": 15,
     "bulletsPerReload": 15,
     "inaccuracy": 3,

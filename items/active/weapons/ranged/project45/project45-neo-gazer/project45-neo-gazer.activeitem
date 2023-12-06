@@ -1,8 +1,8 @@
 {
   "itemName" : "project45-neo-gazer",
-  "price" : 1000,
+  "price" : 5000,
   "maxStack" : 1,
-  "rarity" : "Essential",
+  "rarity" : "Legendary",
   "description" : "An energy sniper rifle.",
   "shortdescription" : "Gazer",
   "tooltipKind" : "project45gun",
@@ -84,6 +84,7 @@
     
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
+    "baseDamage": 30,
     "maxAmmo": 15,
     "bulletsPerReload": 15,
     "inaccuracy": 3,
