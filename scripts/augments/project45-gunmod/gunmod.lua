@@ -1,4 +1,5 @@
 require "/scripts/augments/item.lua"
+require "/scripts/augments/project45-gunmod-helper.lua"
 require "/scripts/util.lua"
 require "/scripts/vec2.lua"
 require "/scripts/set.lua"
@@ -37,8 +38,8 @@ function apply(input, override, augment)
         -- check if gun mod is particularly denied
         local denied = set.new(modExceptions.deny)
         if denied[config.getParameter("itemName")] then
-        sb.logError("(gunmod.lua) Mod application failed: gun does not accept this specific mod")
-        return
+            sb.logError("(gunmod.lua) Mod application failed: gun does not accept this specific mod")
+            return gunmodHelper.addMessage(input, "Incompatible mod: " .. config.getParameter("shortdescription"))
         end
 
         -- check if gun mod is particularly accepted
@@ -52,13 +53,13 @@ function apply(input, override, augment)
             and modInfo.category ~= "universal"
             and modInfo.category ~= augment.category then
                 sb.logError("(gunmod.lua) Gun mod application failed: category mismatch")
-                return
+                return gunmodHelper.addMessage(input, "Wrong Category: " .. config.getParameter("shortdescription"))
             end
 
             -- do not install mod if gun denies installation of such type/slot
             if not acceptsModSlot[augment.slot] then
                 sb.logError("(gunmod.lua) Gun mod application failed: gun does not accept mods in slot")
-                return
+                return gunmodHelper.addMessage(input, "Cannot install " .. augment.slot .. " mods")
             end
         
         end
@@ -66,7 +67,7 @@ function apply(input, override, augment)
         -- do not install mod if slot is occupied
         if modSlots[augment.slot] then
             sb.logError("(gunmod.lua) Gun mod application failed: slot already occupied")
-            return
+            return gunmodHelper.addMessage(input, project45util.capitalize(augment.slot) .. " mod slot occupied")
         end
 
     end

@@ -24,7 +24,8 @@ function init()
   end
 
   activeItem.setScriptedAnimationParameter("hand", activeItem.hand())
-
+  activeItem.setScriptedAnimationParameter("project45GunFireMessages", config.getParameter("project45GunFireMessages", {}))
+  activeItem.setInstanceValue("project45GunFireMessages", {})
   self.weapon:init()
 end
 

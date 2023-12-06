@@ -1,4 +1,5 @@
 require "/scripts/augments/item.lua"
+require "/scripts/augments/project45-gunmod-helper.lua"
 require "/scripts/util.lua"
 require "/scripts/vec2.lua"
 require "/scripts/set.lua"
@@ -18,7 +19,7 @@ function apply(input)
     -- do not install if ammo type is already installed
     local modSlots = input.parameters.modSlots or {}
     if modSlots.ammoType then
-        return
+      return gunmodHelper.addMessage(input, "Ammo mod slot Occupied")
     end
 
     local modExceptions = modInfo.modExceptions or {}
@@ -29,7 +30,7 @@ function apply(input)
     local denied = set.new(modExceptions.deny)
     if denied[config.getParameter("itemName")] then
       sb.logError("(ammomod.lua) Ammo mod application failed: gun does not accept this specific ammo mod")
-      return
+      return gunmodHelper.addMessage(input, "Incompatible Mod: " .. config.getParameter("shortdescription"))
     end
 
     -- check if ammo mod is particularly accepted
@@ -42,7 +43,7 @@ function apply(input)
       and modInfo.category ~= augment.category
       then
         sb.logError("(ammomod.lua) Ammo mod application failed: category mismatch")
-        return
+        return gunmodHelper.addMessage(input, "Wrong Category: " .. config.getParameter("shortdescription"))
       end
       
       -- do not install ammo mod if its archetype is not accepted
@@ -52,7 +53,7 @@ function apply(input)
       and not acceptedArchetype[augment.archetype]
       then
         sb.logError("(ammomod.lua) Ammo mod application failed: gun does not accept ammo archetype")
-        return
+        return gunmodHelper.addMessage(input, "Incompatible Mod: " .. config.getParameter("shortdescription"))
       end
 
     end

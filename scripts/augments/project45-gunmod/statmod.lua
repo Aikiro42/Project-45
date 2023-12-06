@@ -1,4 +1,5 @@
 require "/scripts/augments/item.lua"
+require "/scripts/augments/project45-gunmod-helper.lua"
 require "/scripts/util.lua"
 require "/scripts/vec2.lua"
 require "/scripts/set.lua"
@@ -29,7 +30,7 @@ function apply(input)
     local denied = set.new(modExceptions.deny)
     if denied[config.getParameter("itemName")] then
       sb.logError("(statmod.lua) Stat mod application failed: gun does not accept this specific stat mod")
-      return
+      return gunmodHelper.addMessage(input, "Incompatible stat mod: " .. config.getParameter("shortdescription"))
     end
 
     -- If the max number of stat mods that can be installed is specified (i.e. non-negative number)
@@ -37,7 +38,7 @@ function apply(input)
     -- do not apply stat mod
     if statModCountMax > -1 and statModCount >= statModCountMax then
         sb.logError("(statmod.lua) Stat mod application failed: max number of stat mods have been installed")
-        return
+        return gunmodHelper.addMessage(input, "Max stat mod capacity reached")
     end
 
     -- MOD INSTALLATION PROCESS
