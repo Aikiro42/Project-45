@@ -526,6 +526,9 @@ function Project45GunFire:ejecting()
   or self.reloadTimer >= 0)
   or self.isCocking
   then
+    if self.loadRoundsThroughBolt and storage.ammo <= 0 then
+      self:screenShake(0.5)
+    end
     animator.setAnimationState("gun", "boltPulling")
     animator.playSound("boltPull")
     self:setStance(self.stances.boltPull)
@@ -1111,7 +1114,12 @@ function Project45GunFire:ejectMag()
   self.triggered = true
   storage.burstCounter = 0
 
-  if not self.ejectMagOnEmpty or (self.ejectMagOnEmpty ~= "firing" and self.ejectMagOnEmpty ~= "ejecting") then
+  if (
+    not self.ejectMagOnEmpty
+    or (self.ejectMagOnEmpty ~= "firing" and self.ejectMagOnEmpty ~= "ejecting")
+  )
+  and not (self.loadRoundsThroughBolt and storage.ammo <= 0)
+  then
     self:screenShake(0.5)
     -- self:recoil(true) -- Removed; recoil now dictated via the stance's armRecoil and weaponRecoil
   end
