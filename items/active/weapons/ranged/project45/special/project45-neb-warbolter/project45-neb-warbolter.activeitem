@@ -1,0 +1,153 @@
+{
+  "itemName" : "project45-neb-warbolter",
+  "price" : 1000,
+  "maxStack" : 1,
+  "rarity" : "Essential",
+  "description" : "A gun that's oddly effective against Miniknog Zombies.",
+  "shortdescription" : "Warbolter",
+  "tooltipKind" : "project45gun",
+  "gunArchetype": "Lever-Action Rifle",
+  "category" : "rifle",
+  "twoHanded" : true,
+  "itemTags" : ["weapon","ranged","rifle"],
+  "level" : 1,
+  "muzzleFlashColor": [161, 178, 255],
+  "inventoryIcon" : "project45-neb-warbolter-icon.png",
+
+  "project45GunModInfo":{
+    "category": "energy",
+    "statModCountMax": 10,
+    "allowsConversion": [
+      "projectile",
+      "summoned"
+    ],
+    "acceptsModSlot": [
+    ],
+    "acceptsAmmoArchetype": [
+      "bullet",
+      "shotgun"
+    ]
+  },
+
+  "animationParts" : {
+    "middle" : "project45-neb-warbolter.png",
+    "middleFullbright" : "project45-neb-warbolter-fullbright.png",
+    "charge": "",
+    "chargeFullbright": "",
+    "magazine": "",
+    "magazineFullbright": ""
+  },
+
+  "animationCustom": {
+    "particleEmitters": {
+      "ejectionPort": {
+        "particles": [
+          {"particle": "project45bulletcase"},
+          {"particle": "project45bulletcase"},
+          {"particle": "project45bulletcase"}
+        ]
+      },
+      "magazine": {
+        "particles": [
+        ]
+      }
+    },
+
+    "sounds": {
+      "ejectMag": [ ],
+      "boltPull" : ["/sfx/project45neosfx/boltpull/boltpull-generic1.ogg"],
+      "boltPush" : ["/sfx/project45neosfx/boltpush/boltpush-shotgun1.ogg"],
+      "fire" : ["/sfx/project45neosfx/special/kineticarbiter/kineticarbiter_fire.ogg"],
+      "loadRound": ["/sfx/project45neosfx/loadround/loadround-revolver1.ogg"],
+      "goodReload": [ ]
+    }
+  },
+
+  "baseOffset" : [0.5, 3.375],
+  "muzzleOffset" : [1.875, 0.375],
+  "ejectionPortOffset": [0, 0.5],
+  "magazineOffset": [0, 0],
+
+  "railOffset": [0.125, 0],
+  "underbarrelOffset": [0.625, -0.25],
+  "sightsOffset": [0.5, 0.5],
+
+  "scripts" : ["/items/active/weapons/ranged/project45gunneo.lua"],
+    
+  "primaryAbilityType": "project45gunfire",
+  "primaryAbility": {
+    "debug": false,
+    "baseDamage": 25,
+    "maxAmmo": 1,
+    "bulletsPerReload": 1,
+    "inaccuracy": 0,
+    "spread": 0,
+    "semi": true,
+    "cycleTime": 0.125,
+    "cockTime": 0.4,
+    "projectileKind": "hitscan",
+    "multishot": 1.2,
+
+    "recoilAmount": 5,
+    "recoilMaxDeg": 90,
+    "recoverDelay": 0.1,
+    "recoverTime": 2,
+    
+    "manualFeed": true,
+    "internalMag": true,
+    "loadRoundsThroughBolt": true,
+
+    "reloadTime": 0.75,
+
+    "stances":{
+      "aimStance": {
+        "frontArmFrame" : "run.2"
+      },
+      "boltPull": {
+        "lite": true,
+        "frontArmFrame" : "rotation"
+      },
+      "boltPush": {
+        "lock": true,
+        "weaponRotation": -360,
+        "armRotation": -30,
+        "weaponAngularVelocity": 1800,
+        "armAngularVelocity": 150
+      },
+      
+      "slamFire": {
+        "frontArmFrame" : "run.2",
+        "allowRotate": true,
+        "allowFlip": true
+      },
+      
+      "loadRound": {
+        "armRotation" : -20,
+        "weaponRotation" : -25,
+        "twoHanded" : true,
+        "allowRotate" : false,
+        "allowFlip" : true,
+        "duration": 0.25
+      },
+
+      // stance taken while reloading
+      "reloading" : {
+        "armRotation" : -15,
+        "weaponRotation" : 30,
+        "twoHanded" : true,
+        "frontArmFrame": "run.5",
+        "allowRotate" : false,
+        "aimAngle": 0,
+        "allowFlip" : true
+      },
+      "jammed": {
+        "frontArmFrame" : "run.2"
+      },
+      "unjam": {
+        "frontArmFrame" : "rotation"
+      }
+    }
+  },
+
+  "builder" : "/items/buildscripts/buildproject45neoneo.lua"
+}
