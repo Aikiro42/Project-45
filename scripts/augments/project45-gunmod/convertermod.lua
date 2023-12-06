@@ -1,7 +1,15 @@
 require "/scripts/augments/item.lua"
+require "/scripts/augments/project45-gunmod-helper.lua"
 require "/scripts/util.lua"
 require "/scripts/vec2.lua"
 require "/scripts/set.lua"
+
+local plurals = {
+  projectile = "projectiles",
+  hitscan = "hitscans",
+  beam = "beam",
+  summoned = "summons"
+}
 
 function apply(input)
 
@@ -17,21 +25,20 @@ function apply(input)
   -- Do not proceed if mod slot is occupied
   if modSlots.ammoType then
     sb.logError("(convertermod.lua) Conversion not applied; ammo/conversion mod is installed.")
-    return
+    return gunmodHelper.addMessage(input, "Ammo mod slot occupied")
   end
+  -- Do not proceed if conversion is to same type
+  if primaryAbility.projectileKind == conversion then
+    sb.logError("(convertermod.lua) Conversion not applied; gun already fires " .. conversion)
+    return gunmodHelper.addMessage(input, "Gun already fires " .. plurals[conversion])
+  end  
 
   -- Do not proceed if gun doesn't allow conversion
   construct(output, "config", "project45GunModInfo")
   local whitelist = set.new(output.config.project45GunModInfo.allowsConversion or {})
   if not whitelist[conversion] then
     sb.logError("(convertermod.lua) Conversion not applied; gun does not allow " .. conversion .. " conversion.")
-    return
-  end
-
-  -- Do not proceed if conversion is to same type
-  if primaryAbility.projectileKind == conversion then
-    sb.logError("(convertermod.lua) Conversion not applied; gun already fires " .. conversion)
-    return
+    return gunmodHelper.addMessage(input, "Incompatible converter mod: " .. config.getParameter("shortdescription"))
   end
 
   -- Do not proceed if conversion is invalid

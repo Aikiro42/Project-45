@@ -1,5 +1,9 @@
 project45util = {}
 
+function project45util.capitalize(str)
+  return (str:gsub("^%l", string.upper))
+end
+
 function project45util.diceroll(chance)
   return math.random() <= chance
 end

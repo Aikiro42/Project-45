@@ -1,8 +1,10 @@
 require "/scripts/augments/item.lua"
+require "/scripts/augments/project45-gunmod-helper.lua"
 require "/scripts/util.lua"
 require "/scripts/vec2.lua"
 require "/scripts/set.lua"
 require "/scripts/augments/project45-gunmod/gunmod.lua"
+require "/scripts/project45/project45util.lua"
 
 local gunmod_apply = apply
 
@@ -38,7 +40,7 @@ function apply(input)
     local denied = set.new(modExceptions.deny)
     if denied[config.getParameter("itemName")] then
       sb.logError("(abilitymod.lua) Ability mod application failed: gun does not accept this specific ability mod")
-      return
+      return gunmodHelper.addMessage(input, "Incompatible mod: " .. config.getParameter("shortdescription"))
     end
 
     -- check if gun mod is particularly accepted
@@ -52,13 +54,13 @@ function apply(input)
       and modInfo.category ~= "universal"
       and modInfo.category ~= augment.category then
         sb.logError("(abilitymod.lua) Ability mod application failed: category mismatch")
-        return
+        return gunmodHelper.addMessage(input, "Wrong Category: " .. config.getParameter("shortdescription"))
       end
       
       -- do not install mod if gun denies installation on slot
       if not acceptsModSlot[augment.slot] then
         sb.logError("(abilitymod.lua) Ability mod application failed: gun disallows mod slot")
-        return
+        return gunmodHelper.addMessage(input, "Cannot install " .. augment.slot .. " mods")
       end
       
     end
@@ -66,13 +68,13 @@ function apply(input)
     -- do not install mod if slot is occupied
     if modSlots[augment.slot] then
       sb.logError("(abilitymod.lua) Ability mod application failed: something already installed in slot")
-      return
+      return gunmodHelper.addMessage(input, project45util.capitalize(augment.slot) .. " mod slot occupied")
     end
 
     -- do not install mod if ability is already installed
     if modSlots.ability or input.parameters.altAbilityType or (output.config.altAbilityType or output.config.altAbility) then
       sb.logError("(abilitymod.lua) Ability mod application failed: something already installed in ability")
-      return
+      return gunmodHelper.addMessage(input, "Weapon has ability")
     end
 
     -- MOD INSTALLATION PROCESS

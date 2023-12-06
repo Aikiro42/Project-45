@@ -3,6 +3,8 @@ require "/scripts/util.lua"
 require "/scripts/poly.lua"
 
 local warningTriggered = false
+local messagesToRender = {}
+local renderMessageTimer = 0
 
 synthethikmechanics_altInit = init or function()
   if not warningTriggered then
@@ -20,15 +22,21 @@ synthethikmechanics_altUpdate = update or function()
 
 function init()
   synthethikmechanics_altInit()
+  messagesToRender = animationConfig.animationParameter("project45GunFireMessages")
 end
 
 function update()
   localAnimator.clearDrawables()
   localAnimator.clearLightSources()
   synthethikmechanics_altUpdate()
+
   if not warningTriggered then
     warningTriggered = true
     -- sb.logInfo("[PROJECT 45] Obtained alt-ability animation update script.")
+  end
+
+  if #messagesToRender > 0 then
+    renderMessageTimer = renderMessageTimer == 0 and renderMessages() or renderMessageTimer - 1
   end
 
   local hand = animationConfig.animationParameter("hand")
@@ -63,6 +71,23 @@ function update()
   renderBeam()
 
 end
+
+function renderMessages(messageOffset)
+  -- render incompat messages
+  localAnimator.spawnParticle({
+    type = "text",
+    text= "^shadow;" .. messagesToRender[1],
+    color = {255, 128, 128},
+    size = 0.4,
+    fullbright = true,
+    flippable = false,
+    layer = "front",
+    timeToLive = 1,
+    initialVelocity = {0, 2},
+  }, vec2.add(activeItemAnimation.ownerPosition(), messageOffset or {0, 2}))
+  table.remove(messagesToRender, 1)
+  return math.floor(60 * 0.3)
+end  
 
 function renderAmmoNumber(offset)
   
