@@ -17,6 +17,7 @@
     "projectileKind": "hitscan",
     "hitscanParameters":{
       "hitscanColor": [150,203,231],
+      "hitscanBrightness": 0.5,
       "hitscanDamageConfig":{
         "damageSourceKind": "ice",
         "statusEffects":["frostsnare", "frostslow", "project45freeze"]

@@ -18,6 +18,7 @@
     "projectileKind": "hitscan",
     "hitscanParameters":{
       "hitscanColor": [210,156,231],
+      "hitscanBrightness": 0.5,
       "hitscanDamageConfig": {
         "damageSourceKind": "electric",
         "statusEffects":["electrified"]

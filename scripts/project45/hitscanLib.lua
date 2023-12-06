@@ -74,7 +74,17 @@ function hitscanLib:fireHitscan(projectileType)
         maxLifetime = life,
         color = self.hitscanParameters.hitscanColor
       })
-      
+
+      if self.hitscanParameters.hitscanBrightness > 0 then
+        table.insert(self.projectileStack, {
+          width = self.hitscanParameters.hitscanWidth * self.hitscanParameters.hitscanBrightness,
+          origin = hitscanInfo[3][1],
+          destination = hitscanInfo[3][2],
+          lifetime = life,
+          maxLifetime = life,
+          color = {255,255,255}
+        })
+      end   
     end
 
     -- hitscan vfx
