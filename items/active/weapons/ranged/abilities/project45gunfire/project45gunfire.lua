@@ -1535,6 +1535,7 @@ function Project45GunFire:evalProjectileKind()
   self.muzzleFlashColor = config.getParameter("muzzleFlashColor", {255, 255, 200})
   self.updateProjectileStack = function() end
   if self.projectileKind == "hitscan" then
+    self.hitscanParameters.hitscanBrightness = util.clamp(self.hitscanParameters.hitscanBrightness or 0, 0, 1)
     self.fireProjectile = hitscanLib.fireHitscan
     self.updateProjectileStack = hitscanLib.updateProjectileStack
     self.hitscanParameters.hitscanColor = self.muzzleFlashColor
