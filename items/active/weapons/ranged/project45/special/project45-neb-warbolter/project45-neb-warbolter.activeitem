@@ -57,7 +57,7 @@
       "ejectMag": [ ],
       "boltPull" : ["/sfx/project45neosfx/boltpull/boltpull-generic1.ogg"],
       "boltPush" : ["/sfx/project45neosfx/boltpush/boltpush-shotgun1.ogg"],
-      "fire" : ["/sfx/project45neosfx/special/kineticarbiter/kineticarbiter_fire.ogg"],
+      "fire" : ["/sfx/project45neosfx/special/warbolter/fire-warbolter.ogg"],
       "loadRound": ["/sfx/project45neosfx/loadround/loadround-revolver1.ogg"],
       "goodReload": [ ]
     }
@@ -98,6 +98,10 @@
     "loadRoundsThroughBolt": true,
 
     "reloadTime": 0.75,
+
+    "hitscanParameters":{
+      "hitscanWidth": 5
+    },
 
     "stances":{
       "aimStance": {
