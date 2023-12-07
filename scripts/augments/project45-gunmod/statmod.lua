@@ -67,7 +67,7 @@ function apply(input)
     -- Alter general Fire Rate
     if augment.fireTime then
 
-    
+        local newCockTime = oldPrimaryAbility.cockTime
         local newCycleTime = oldPrimaryAbility.cycleTime
         local newChargeTime = oldPrimaryAbility.chargeTime
         local newOverchargeTime = oldPrimaryAbility.overchargeTime
@@ -81,6 +81,7 @@ function apply(input)
                 newCycleTime = newCycleTime + augment.fireTime.value
             end
         
+            newCockTime = newCockTime + augment.fireTime.value
             newChargeTime = newChargeTime + augment.fireTime.value
             newOverchargeTime = newOverchargeTime + augment.fireTime.value
             newFireTime = newFireTime + augment.fireTime.value
@@ -93,6 +94,7 @@ function apply(input)
                 newCycleTime = newCycleTime * augment.fireTime.value
             end
         
+            newCockTime = newCockTime * augment.fireTime.value
             newChargeTime = newChargeTime * augment.fireTime.value
             newOverchargeTime = newOverchargeTime * augment.fireTime.value
             newFireTime = newFireTime * augment.fireTime.value
@@ -102,6 +104,7 @@ function apply(input)
         -- sb.logInfo(newOverchargeTime)
 
         newPrimaryAbility = sb.jsonMerge(newPrimaryAbility, {
+            cockTime = newCockTime,
             cycleTime = newCycleTime,
             chargeTime = newChargeTime,
             overchargeTime = newOverchargeTime,

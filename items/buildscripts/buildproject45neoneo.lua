@@ -282,7 +282,13 @@ function build(directory, config, parameters, level, seed)
         * (config.primaryAbility.overchargeTime > 0 and 2 or 1)
       config.tooltipFields.damagePerShotLabel = "^#FF9000;" .. util.round(loDamage, 1) .. " - " .. util.round(hiDamage, 1)
 
-      -- fire rate
+      --[[ fire time calculation:
+      If gun is manualFeed:
+        fireTime* = cockTime + fireTime
+      else:
+        fireTime* = cycleTime + fireTime
+      
+      ]]--
       config.primaryAbility.manualFeed = parameters.primaryAbility.manualFeed or config.primaryAbility.manualFeed
       config.primaryAbility.cockTime = parameters.primaryAbility.cockTime or config.primaryAbility.cockTime
       config.primaryAbility.cycleTime = parameters.primaryAbility.cycleTime or config.primaryAbility.cycleTime
