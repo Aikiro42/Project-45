@@ -65,7 +65,7 @@ function apply(input)
     end
 
     -- Alter general Fire Rate
-    if augment.fireRate then
+    if augment.fireTime then
 
     
         local newCycleTime = oldPrimaryAbility.cycleTime
@@ -73,29 +73,29 @@ function apply(input)
         local newOverchargeTime = oldPrimaryAbility.overchargeTime
         local newFireTime = oldPrimaryAbility.fireTime
         
-        if augment.fireRate.operation == "add" then
+        if augment.fireTime.operation == "add" then
             
             if type(newCycleTime) == "table" then
-                newCycleTime = vec2.add(newCycleTime, augment.fireRate.value)
+                newCycleTime = vec2.add(newCycleTime, augment.fireTime.value)
             else
-                newCycleTime = newCycleTime + augment.fireRate.value
+                newCycleTime = newCycleTime + augment.fireTime.value
             end
         
-            newChargeTime = newChargeTime + augment.fireRate.value
-            newOverchargeTime = newOverchargeTime + augment.fireRate.value
-            newFireTime = newFireTime + augment.fireRate.value
+            newChargeTime = newChargeTime + augment.fireTime.value
+            newOverchargeTime = newOverchargeTime + augment.fireTime.value
+            newFireTime = newFireTime + augment.fireTime.value
 
-        elseif augment.fireRate.operation == "multiply" then
+        elseif augment.fireTime.operation == "multiply" then
             
             if type(newCycleTime) == "table" then
-                newCycleTime = vec2.mul(newCycleTime, augment.fireRate.value)
+                newCycleTime = vec2.mul(newCycleTime, augment.fireTime.value)
             else
-                newCycleTime = newCycleTime * augment.fireRate.value
+                newCycleTime = newCycleTime * augment.fireTime.value
             end
         
-            newChargeTime = newChargeTime * augment.fireRate.value
-            newOverchargeTime = newOverchargeTime * augment.fireRate.value
-            newFireTime = newFireTime * augment.fireRate.value
+            newChargeTime = newChargeTime * augment.fireTime.value
+            newOverchargeTime = newOverchargeTime * augment.fireTime.value
+            newFireTime = newFireTime * augment.fireTime.value
 
         end
 

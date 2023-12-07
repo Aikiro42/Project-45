@@ -12,7 +12,7 @@
     /*
     STATS:
     damagePerShot
-    fireRate
+    fireTime
     reloadCost
     critChance
     critDamageMult
