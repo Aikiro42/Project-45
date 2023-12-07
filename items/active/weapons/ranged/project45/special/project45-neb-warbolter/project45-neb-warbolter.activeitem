@@ -52,11 +52,10 @@
     },
 
     "sounds": {
-      "ejectMag": [ ],
-      "boltPull" : ["/sfx/project45neosfx/boltpull/boltpull-generic1.ogg"],
-      "boltPush" : ["/sfx/project45neosfx/boltpush/boltpush-shotgun1.ogg"],
+      "ejectMag": [ "/sfx/project45neosfx/special/warbolter/ejectmag-warbolter.ogg" ],
+      "boltPull" : ["/sfx/project45neosfx/special/warbolter/boltpull-warbolter.ogg"],
+      "boltPush" : ["/sfx/project45neosfx/special/warbolter/boltpush-warbolter.ogg"],
       "fire" : ["/sfx/project45neosfx/special/warbolter/fire-warbolter.ogg"],
-      "loadRound": ["/sfx/project45neosfx/loadround/loadround-revolver1.ogg"],
       "goodReload": [ ]
     }
   },
