@@ -235,7 +235,14 @@ function build(directory, config, parameters, level, seed)
         end
       end
       
-      config.tooltipFields.ammoTypeImage = modList.ammoType and modList.ammoType[3] or ""
+      if not (
+        #(config.project45GunModInfo.allowsConversion or {}) == 0
+        and #(config.project45GunModInfo.acceptsAmmoArchetype or {}) == 0
+      )
+      then
+        config.tooltipFields.ammoTypeImage = modList.ammoType and modList.ammoType[3] or ""        
+      end
+
     end
     
 
@@ -336,15 +343,7 @@ function build(directory, config, parameters, level, seed)
       if modList then
         modListDesc = "^#abfc6d;"
         -- FIXME: Turn me to a set
-        local exclude = {
-          ability=true,
-          rail=true,
-          sights=true,
-          muzzle=true,
-          underbarrel=true,
-          stock=true,
-          ammoType=true
-        }
+        local exclude = set.new({"ability","rail","sights","muzzle","underbarrel","stock","ammoType"})
         for modSlot, modKind in pairs(modList) do
           if not exclude[modSlot] and modKind[1] ~= "ability" then
             modListDesc = modListDesc .. modKind[1] .. ".\n"
