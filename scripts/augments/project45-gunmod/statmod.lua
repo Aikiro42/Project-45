@@ -72,32 +72,45 @@ function apply(input)
         local newChargeTime = oldPrimaryAbility.chargeTime
         local newOverchargeTime = oldPrimaryAbility.overchargeTime
         local newFireTime = oldPrimaryAbility.fireTime
+
+        local minFireTime = math.min(
+            0.001, -- TODO: add default min value
+            type(newCycleTime) == "table" and newCycleTime[1] or newCycleTime,
+            newCockTime,
+            newFireTime
+        )
         
         if augment.fireTime.operation == "add" then
             
             if type(newCycleTime) == "table" then
-                newCycleTime = vec2.add(newCycleTime, augment.fireTime.value)
+                newCycleTime = {
+                    math.max(minFireTime, newCycleTime[1] + augment.fireTime.value),
+                    math.max(minFireTime, newCycleTime[2] + augment.fireTime.value)
+                }
             else
-                newCycleTime = newCycleTime + augment.fireTime.value
+                newCycleTime = math.max(minFireTime, newCycleTime + augment.fireTime.value)
             end
         
-            newCockTime = newCockTime + augment.fireTime.value
-            newChargeTime = newChargeTime + augment.fireTime.value
-            newOverchargeTime = newOverchargeTime + augment.fireTime.value
-            newFireTime = newFireTime + augment.fireTime.value
+            newCockTime = math.max(minFireTime, newCockTime + augment.fireTime.value)
+            newFireTime = math.max(minFireTime, newFireTime + augment.fireTime.value)
+            newChargeTime = math.max(0, newChargeTime + augment.fireTime.value)
+            newOverchargeTime = math.max(0, newOverchargeTime + augment.fireTime.value)
 
         elseif augment.fireTime.operation == "multiply" then
             
             if type(newCycleTime) == "table" then
-                newCycleTime = vec2.mul(newCycleTime, augment.fireTime.value)
+                newCycleTime = {
+                    math.max(minFireTime, newCycleTime[1] * augment.fireTime.value),
+                    math.max(minFireTime, newCycleTime[2] * augment.fireTime.value)
+                }
             else
-                newCycleTime = newCycleTime * augment.fireTime.value
+                newCycleTime = math.max(minFireTime, newCycleTime * augment.fireTime.value)
             end
         
-            newCockTime = newCockTime * augment.fireTime.value
-            newChargeTime = newChargeTime * augment.fireTime.value
-            newOverchargeTime = newOverchargeTime * augment.fireTime.value
-            newFireTime = newFireTime * augment.fireTime.value
+            newCockTime = math.max(minFireTime, newCockTime * augment.fireTime.value)
+            newFireTime = math.max(minFireTime, newFireTime * augment.fireTime.value)
+            newChargeTime = math.max(0, newChargeTime * augment.fireTime.value)
+            newOverchargeTime = math.max(0, newOverchargeTime * augment.fireTime.value)
 
         end
 
