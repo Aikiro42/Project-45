@@ -154,10 +154,12 @@
         "project45-critdamageaddmod",
         
         "project45-damagemultmod",
-        "project45-fireratemultmod",
+        "project45-firetimemultmod",
         "project45-reloadcostmultmod",
         "project45-critchancemultmod",
-        "project45-critdamagemultmod"
+        "project45-critdamagemultmod",
+
+        "project45-levelmod"
       ],
       
       "ammo": [

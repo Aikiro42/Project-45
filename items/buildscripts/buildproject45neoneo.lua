@@ -23,6 +23,9 @@ function build(directory, config, parameters, level, seed)
   if level and not configParameter("fixedLevel", true) then
     parameters.level = level
   end
+  -- calculate mod capacity
+  construct(config, "project45GunModInfo")
+  config.project45GunModInfo.statModCountMax = (config.project45GunModInfo.statModCountMax or 10) + ((configParameter("level", 1) - 1) * 2)
 
   parameters.shortdescription = config.shortdescription
   parameters.project45GunModInfo = config.project45GunModInfo
@@ -60,7 +63,7 @@ function build(directory, config, parameters, level, seed)
 
   -- calculate damage level multiplier
   config.damageLevelMultiplier = root.evalFunction("weaponDamageLevelMultiplier", configParameter("level", 1))
-
+  
   -- palette swaps
   config.paletteSwaps = ""
   if config.palette then
@@ -282,7 +285,13 @@ function build(directory, config, parameters, level, seed)
         * (config.primaryAbility.overchargeTime > 0 and 2 or 1)
       config.tooltipFields.damagePerShotLabel = "^#FF9000;" .. util.round(loDamage, 1) .. " - " .. util.round(hiDamage, 1)
 
-      -- fire rate
+      --[[ fire time calculation:
+      If gun is manualFeed:
+        fireTime* = cockTime + fireTime
+      else:
+        fireTime* = cycleTime + fireTime
+      
+      ]]--
       config.primaryAbility.manualFeed = parameters.primaryAbility.manualFeed or config.primaryAbility.manualFeed
       config.primaryAbility.cockTime = parameters.primaryAbility.cockTime or config.primaryAbility.cockTime
       config.primaryAbility.cycleTime = parameters.primaryAbility.cycleTime or config.primaryAbility.cycleTime
@@ -295,10 +304,10 @@ function build(directory, config, parameters, level, seed)
         actualCycleTime = {actualCycleTime, actualCycleTime}
       end
       
-      local loFireRate = actualCycleTime[1] + (parameters.primaryAbility.fireTime or config.primaryAbility.fireTime)
-      local hiFireRate = actualCycleTime[2] + (parameters.primaryAbility.fireTime or config.primaryAbility.fireTime)
-      config.tooltipFields.fireRateLabel = ("^#FFD400;" .. util.round(loFireRate*1000, 1))
-      .. (loFireRate == hiFireRate and "ms" or (" - " .. util.round(hiFireRate*1000, 1) .. "ms"))
+      local loFireTime = actualCycleTime[1] + (parameters.primaryAbility.fireTime or config.primaryAbility.fireTime)
+      local hiFireTime = actualCycleTime[2] + (parameters.primaryAbility.fireTime or config.primaryAbility.fireTime)
+      config.tooltipFields.fireTimeLabel = ("^#FFD400;" .. util.round(loFireTime*1000, 1))
+      .. (loFireTime == hiFireTime and "ms" or (" - " .. util.round(hiFireTime*1000, 1) .. "ms"))
       
       -- set reload cost
       config.primaryAbility.reloadCost = parameters.primaryAbility.reloadCost or config.primaryAbility.reloadCost

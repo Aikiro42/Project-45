@@ -10,16 +10,13 @@
 
   "augment":{
     "baseDamage": {
-      "operation": "multiply",
-      "value": 100
+      "multiplicative": 100
     },
     "critChance": {
-      "operation": "add",
-      "value": 3
+      "additive": 3
     },
     "critDamage": {
-      "operation": "add",
-      "value": 50
+      "additive": 50
     }
   },
 

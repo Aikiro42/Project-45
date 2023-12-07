@@ -5,13 +5,12 @@
   "tooltipKind" : "project45gunmod",
   "category" : "Stat Mod",
   "inventoryIcon" : "/items/augments/project45-gunmods/stat/project45-critdamagemod/project45-critdamagemultmod.png",
-  "description" : "^#D93A3A;Critical Damage x120%^reset;",
+  "description" : "^#D93A3A;Critical Damage Mult +0.2^reset;",
   "shortdescription" : "^#D93A3A;Crit Damage X",
 
   "augment":{
     "critDamage": {
-      "operation": "multiply",
-      "value": 1.2
+      "multiplicative": 0.2
     }
   },
 
