@@ -23,6 +23,9 @@ function build(directory, config, parameters, level, seed)
   if level and not configParameter("fixedLevel", true) then
     parameters.level = level
   end
+  -- calculate mod capacity
+  construct(config, "project45GunModInfo")
+  config.project45GunModInfo.statModCountMax = (config.project45GunModInfo.statModCountMax or 10) + ((configParameter("level", 1) - 1) * 2)
 
   parameters.shortdescription = config.shortdescription
   parameters.project45GunModInfo = config.project45GunModInfo
@@ -60,7 +63,7 @@ function build(directory, config, parameters, level, seed)
 
   -- calculate damage level multiplier
   config.damageLevelMultiplier = root.evalFunction("weaponDamageLevelMultiplier", configParameter("level", 1))
-
+  
   -- palette swaps
   config.paletteSwaps = ""
   if config.palette then

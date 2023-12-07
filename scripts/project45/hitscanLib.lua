@@ -14,7 +14,7 @@ function hitscanLib:fireHitscan(projectileType)
     -- hitreg[2] is where the bullet trail terminates
 
     local hitscanInfos = {}
-    local finalDamage = self:damagePerShot()
+    local finalDamage = self:damagePerShot(true)
     local nProjs = self.projectileCount * self:rollMultishot()
     local nProjsOverflowMult = math.max(1, nProjs/modConfig.hitscanProjectileLimit)
     -- get damage source (line) information

@@ -36,7 +36,7 @@ function apply(input)
     -- If the max number of stat mods that can be installed is specified (i.e. non-negative number)
     -- and the number of mods installed already reached that cap
     -- do not apply stat mod
-    if statModCountMax > -1 and statModCount >= statModCountMax then
+    if statModCountMax > -1 and statModCount >= statModCountMax and not augment.level then
         sb.logError("(statmod.lua) Stat mod application failed: max number of stat mods have been installed")
         return gunmodHelper.addMessage(input, "Max stat mod capacity reached")
     end
@@ -224,7 +224,10 @@ function apply(input)
         local newCritDamage = statModifiers.critDamage.base
             * (statModifiers.critDamage.multiplicative or 1) + (statModifiers.critDamage.additive or 0)
         newPrimaryAbility = sb.jsonMerge(newPrimaryAbility, {critDamageMult = newCritDamage})
+    end
 
+    if augment.level then
+        output:setInstanceValue("level", (input.parameters.level or output.config.level) + 1)
     end
 
     -- merge changes

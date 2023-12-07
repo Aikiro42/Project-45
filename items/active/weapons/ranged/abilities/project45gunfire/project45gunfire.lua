@@ -1609,12 +1609,13 @@ function Project45GunFire:crit()
 end
 
 -- Calculates the damage per shot of the weapon.
-function Project45GunFire:damagePerShot()
+function Project45GunFire:damagePerShot(noDLM)
 
   local critDmg = self:crit()
   local lastShotDmg = (storage.ammo <= (self.ammoPerShot or 1) and self.lastShotDamageMult or 1)
   
   return self.baseDamage
+  * (noDLM and 1 or config.getParameter("damageLevelMultiplier", 1))
   * self.chargeDamage -- up to 2x at full overcharge
   * self.reloadRatingDamage -- as low as 0.8 (bad), as high as 1.5 (perfect)
   * critDmg -- this way, rounds deal crit damage individually
