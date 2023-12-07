@@ -2,14 +2,16 @@
   "itemName" : "project45-grenadelaunchermod",
   "price" : 15000,
   "rarity" : "Essential",
-  "tooltipKind" : "project45gunmod",
+  "tooltipKind" : "project45gunmod2",
   "category" : "Ability Mod",
   "tooltipFields":{
     "objectImage": "/items/augments/project45-gunmods/ability/project45-grenadelaunchermod/project45-grenadelaunchermod.png"
   },
   "inventoryIcon" : "/items/augments/project45-gunmods/ability/project45-grenadelaunchermod/project45-grenadelaunchermodicon.png",
-  "description" : "A portable launcher attached under a gun's barrel.\n^#EA9931;Right-click to load, fire or eject.",
+  "description" : "A portable launcher attached under a gun's barrel. Includes a trajectory predictor for easier bombing.",
+  "technicalInfo": "Right-click to load, fire or eject.",
   "shortdescription" : "Grenade Launcher",
+  "archetype": "Active Ability",
 
   "radioMessagesOnPickup" : [ "pickupaugment" ],
 
@@ -22,5 +24,7 @@
 
   },
 
-  "scripts" : [ "/scripts/augments/project45-gunmod/abilitymod.lua" ]
+  "scripts" : [ "/scripts/augments/project45-gunmod/abilitymod.lua" ],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
+
 }
