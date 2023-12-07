@@ -1,5 +1,10 @@
 project45util = {}
 
+function project45util.rgbToHex(rgbArray)
+  local hexString = string.format("%02X%02X%02X", rgbArray[1], rgbArray[2], rgbArray[3])
+  return hexString
+end
+
 function project45util.capitalize(str)
   return (str:gsub("^%l", string.upper))
 end

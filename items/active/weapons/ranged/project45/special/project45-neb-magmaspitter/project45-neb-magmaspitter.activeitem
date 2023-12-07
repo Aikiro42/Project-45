@@ -13,6 +13,10 @@
   "level" : 1,
   "muzzleFlashColor": [255, 255, 200],
   "inventoryIcon" : "project45-neb-magmaspitter-icon.png",
+  
+  "project45GunModInfo": {
+    "category": "experimental"
+  },
 
   "animationParts" : {
     "middle" : "project45-neb-magmaspitter.png",

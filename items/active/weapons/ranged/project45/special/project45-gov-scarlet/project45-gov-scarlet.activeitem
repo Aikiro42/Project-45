@@ -13,6 +13,10 @@
   "level" : 1,
   "inventoryIcon" : "project45-gov-scarlet-icon.png",
 
+  "project45GunModInfo": {
+    "category": "special"
+  },
+
   "animationParts" : {
     "middle" : "project45-gov-scarlet.png",
     "middleFullbright" : "project45-gov-scarletfullbright.png",

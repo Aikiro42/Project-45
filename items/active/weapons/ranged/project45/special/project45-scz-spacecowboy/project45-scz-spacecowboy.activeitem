@@ -14,6 +14,10 @@
   "muzzleFlashColor": [255, 255, 200],
   "inventoryIcon" : "project45-scz-spacecowboy-icon.png",
 
+  "project45GunModInfo": {
+    "category": "special"
+  },
+
   "animationParts" : {
     "middle" : "project45-scz-spacecowboy.png",
     "middleFullbright" : "project45-scz-spacecowboy-fullbright.png",

@@ -5,6 +5,15 @@ require "/scripts/project45/project45util.lua"
 require "/scripts/versioningutils.lua"
 require "/items/buildscripts/project45abilities.lua"
 
+local categoryStrings = {
+  ballistic = "^#51bd3b; Ballistic^reset;",
+  energy = "^#d29ce7; Energy^reset; ",
+  generic = "^#FFFFFF;Ѻ Generic^reset; ",
+  experimental = "^#A8E6E2; Experimental^reset; ",
+  special = "^#e2c344;© Special^reset; ",
+  universal = "¤ Universal^reset;"
+}
+
 function build(directory, config, parameters, level, seed)
   
   parameters = parameters or {}
@@ -25,7 +34,7 @@ function build(directory, config, parameters, level, seed)
   end
   -- calculate mod capacity
   construct(config, "project45GunModInfo")
-  config.project45GunModInfo.statModCountMax = (config.project45GunModInfo.statModCountMax or 10) + ((configParameter("level", 1) - 1) * 2)
+  config.project45GunModInfo.statModCountMax = (config.project45GunModInfo.statModCountMax or 0) + ((configParameter("level", 1) - 1) * 2)
 
   parameters.shortdescription = config.shortdescription
   parameters.project45GunModInfo = config.project45GunModInfo
@@ -209,7 +218,7 @@ function build(directory, config, parameters, level, seed)
   -- populate tooltip fields
   if config.tooltipKind == "project45gun" then
     config.tooltipFields = config.tooltipFields or {}
-    config.tooltipFields.subtitle = "^#FFFFFF;" .. config.gunArchetype or config.category
+    config.tooltipFields.subtitle = categoryStrings[config.project45GunModInfo.category or "Generic"] -- .. "^#D1D1D1;" .. config.gunArchetype or config.category
     -- config.tooltipFields.title = "^FF0000;FUCK"  -- doesn't work
     -- config.tooltipFields.subTitle = "^#FFFFFF;BASE"  -- works
     -- config.tooltipFields.subTitle.color = {255,255,255} -- doesn't work
@@ -382,9 +391,4 @@ function build(directory, config, parameters, level, seed)
   parameters.price = config.price -- needed for gunshop
 
   return config, parameters
-end
-
-function rgbToHex(rgbArray)
-  local hexString = string.format("%02X%02X%02X", rgbArray[1], rgbArray[2], rgbArray[3])
-  return hexString
 end
