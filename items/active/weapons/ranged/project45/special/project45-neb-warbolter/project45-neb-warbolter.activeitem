@@ -15,18 +15,8 @@
   "inventoryIcon" : "project45-neb-warbolter-icon.png",
 
   "project45GunModInfo":{
-    "category": "energy",
-    "statModCountMax": 10,
-    "allowsConversion": [
-      "projectile",
-      "summoned"
-    ],
-    "acceptsModSlot": [
-    ],
-    "acceptsAmmoArchetype": [
-      "bullet",
-      "shotgun"
-    ]
+    "category": "experimental",
+    "statModCountMax": 10
   },
 
   "animationParts" : {
