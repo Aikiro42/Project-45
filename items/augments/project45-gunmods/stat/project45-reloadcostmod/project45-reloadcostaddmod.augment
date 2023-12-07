@@ -10,8 +10,7 @@
 
   "augment":{
     "reloadCost": {
-      "operation": "add",
-      "value": -10
+      "additive": -10
     }
   },
 

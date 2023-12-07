@@ -10,8 +10,7 @@
 
   "augment":{
     "critChance": {
-      "operation": "add",
-      "value": 0.1
+      "additive": 0.1
     }
   },
 

@@ -126,15 +126,15 @@
     "wrapWidth" : 126
   },
 
-  "fireRateTitleLabel": {
+  "fireTimeTitleLabel": {
     "type" : "label",
     "position" : [9, 68],
     "hAnchor" : "left",
     "centered": true,
     "wrapWidth" : 126,
-    "value": "Fire Rate"
+    "value": "Fire Time"
   },
-  "fireRateLabel": {
+  "fireTimeLabel": {
     "type" : "label",
     "position" : [18, 58],
     "hAnchor" : "left",

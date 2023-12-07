@@ -22,7 +22,7 @@
     },
     {
         "op": "add",
-        "path": "/project45statupgrades",
+        "path": "/project45statmods",
         "value": [
             "/spawnitem project45-damageaddmod 10",
             "/spawnitem project45-critchanceaddmod 10",

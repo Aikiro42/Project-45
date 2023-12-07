@@ -5,13 +5,12 @@
   "tooltipKind" : "project45gunmod",
   "category" : "Stat Mod",
   "inventoryIcon" : "/items/augments/project45-gunmods/stat/project45-damagemod/project45-damagemultmod.png",
-  "description" : "^#EA9931;Base Damage x120%^reset;",
+  "description" : "^#EA9931;Base Damage Mult +0.5^reset;",
   "shortdescription" : "^#EA9931;Base Damage X",
 
   "augment":{
     "baseDamage": {
-      "operation": "multiply",
-      "value": 1.2
+      "multiplicative": 0.5
     }
   },
 
