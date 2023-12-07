@@ -5,13 +5,12 @@
   "tooltipKind" : "project45gunmod",
   "category" : "Stat Mod",
   "inventoryIcon" : "/items/augments/project45-gunmods/stat/project45-firetimemod/project45-firetimemultmod.png",
-  "description" : "^#E2C344;Fire Time x80%^reset;",
+  "description" : "^#E2C344;Fire Time Div +0.2^reset;",
   "shortdescription" : "^#E2C344;Fire Time X",
 
   "augment":{
     "fireTime": {
-      "operation": "multiply",
-      "value": 0.8
+      "multiplicative": 0.2
     }
   },
 
