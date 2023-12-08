@@ -2,10 +2,11 @@
   "itemName" : "project45-poisonammomod",
   "price" : 15000,
   "rarity" : "Legendary",
-  "tooltipKind" : "project45gunmod",
-  "category" : "Ballistic Ammo Mod",
+  "tooltipKind" : "project45gunmod2",
+  "category" : "Ammo Mod",
   "inventoryIcon" : "/items/augments/project45-gunmods/ammo/project45-poisonammomod/project45-poisonammomod.png",
-  "description" : "Custom mercury-tipped bullets. Incompatible with energy guns.",
+  "description" : "Custom-made cartridges with mercury-tipped bullets.",
+  "technicalInfo": "Fires projectiles that poisons the enemy while dealing poison damage.",
   "shortdescription" : "Mercury-tipped Bullets",
 
   "augment":{
@@ -21,5 +22,6 @@
 
   "radioMessagesOnPickup" : [ "pickupaugment" ],
 
-  "scripts" : [ "/scripts/augments/project45-gunmod/ammomod.lua" ]
+  "scripts" : [ "/scripts/augments/project45-gunmod/ammomod.lua" ],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
 }

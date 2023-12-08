@@ -6,7 +6,10 @@ function project45util.rgbToHex(rgbArray)
 end
 
 function project45util.capitalize(str)
-  return (str:gsub("^%l", string.upper))
+  if str then
+    return (str:gsub("^%l", string.upper))
+  end
+  return nil
 end
 
 function project45util.diceroll(chance)
