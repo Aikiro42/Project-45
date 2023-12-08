@@ -29,7 +29,7 @@
     "hAnchor" : "left",
     "centered": true,
     "wrapWidth" : 126,
-    "value": "^#51bd3b; Ballistic^reset;"
+    "value": "?"
   },
 
   "slotTitleLabel": {
@@ -46,7 +46,7 @@
     "hAnchor" : "left",
     "centered": true,
     "wrapWidth" : 126,
-    "value": "^#9da8af;Underbarrel^reset;"
+    "value": "?"
   },
 
   "archetypeTitleLabel": {
@@ -63,7 +63,7 @@
     "hAnchor" : "left",
     "centered": true,
     "wrapWidth" : 126,
-    "value": "^#ea9931;Passive^reset;"
+    "value": "?"
   },
 
   "technicalTitleLabel": {
@@ -81,7 +81,7 @@
     "vAnchor" : "top",
     "lineSpacing" : 1.15,
     "wrapWidth" : 85,
-    "value": "N/A"
+    "value": "Missing associated buildscript."
   },
 
   "descriptionLabel" : {
@@ -95,11 +95,11 @@
 
   "applyTitleLabel" : {
     "type" : "label",
-    "position" : [23, 21],
+    "position" : [20, 21],
     "hAnchor" : "left",
     "vAnchor" : "bottom",
     "wrapWidth" : 85,
-    "value" : "  Apply to gun\nwith right-click.",
+    "value" : "Apply to weapon\n with right-click.",
     "color" : "#D66E18"
   },
   

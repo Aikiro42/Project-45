@@ -2,11 +2,14 @@
   "itemName" : "project45-critdamagemultmod",
   "price" : 50000,
   "rarity" : "Legendary",
-  "tooltipKind" : "project45gunmod",
+  "tooltipKind" : "project45gunmod2",
   "category" : "Stat Mod",
   "inventoryIcon" : "/items/augments/project45-gunmods/stat/project45-critdamagemod/project45-critdamagemultmod.png",
-  "description" : "^#D93A3A;Critical Damage Mult +0.2^reset;",
-  "shortdescription" : "^#D93A3A;Crit Damage X",
+  "slot": "critDamage",
+  "archetype": "Multiplicative",
+  "description": "Increases Crit Damage by 20% of base.",
+  "statInfo" : "^#D93A3A;Crit Damage +0.2x^reset;",
+  "shortdescription" : "^#D93A3A;Crit Damage (*)",
 
   "augment":{
     "critDamage": {
@@ -14,5 +17,6 @@
     }
   },
 
-  "scripts" : [ "/scripts/augments/project45-gunmod/statmod.lua" ]
+  "scripts" : [ "/scripts/augments/project45-gunmod/statmod.lua" ],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
 }

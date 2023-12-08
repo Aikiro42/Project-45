@@ -1,5 +1,14 @@
 project45util = {}
 
+project45util.categoryStrings = {
+  ballistic = "^#51bd3b; Ballistic^reset;",
+  energy = "^#d29ce7; Energy^reset; ",
+  generic = "^#FFFFFF;Ѻ Generic^reset; ",
+  experimental = "^#A8E6E2; Experimental^reset; ",
+  special = "^#e2c344;© Special^reset; ",
+  universal = "^#cfcfcf;¤ Universal^reset;"
+}
+
 function project45util.rgbToHex(rgbArray)
   local hexString = string.format("%02X%02X%02X", rgbArray[1], rgbArray[2], rgbArray[3])
   return hexString
