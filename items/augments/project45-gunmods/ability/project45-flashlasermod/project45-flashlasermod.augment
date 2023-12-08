@@ -2,14 +2,16 @@
   "itemName" : "project45-flashlasermod",
   "price" : 7500,
   "rarity" : "Essential",
-  "tooltipKind" : "project45gunmod",
+  "tooltipKind" : "project45gunmod2",
   "category" : "Ability Mod",
   "tooltipFields":{
     "objectImage": "/items/augments/project45-gunmods/ability/project45-flashlasermod/project45-flashlasermod.png"
   },
   "inventoryIcon" : "/items/augments/project45-gunmods/ability/project45-flashlasermod/project45-flashlasermodicon.png",
-  "description" : "A compact flashlight and laser.\n^#EA9931;Right-click to toggle between modes.",
+  "description" : "A compact high-intensity flashlight and green laser. Very tacticool.",
+  "technicalInfo": "Right-click to toggle between modes.",
   "shortdescription" : "Military Flashlight Mod",
+  "archetype": "Active Ability",
 
   "augment":{
     "category": "universal",
@@ -22,5 +24,6 @@
 
   "radioMessagesOnPickup" : [ "pickupaugment" ],
 
-  "scripts" : [ "/scripts/augments/project45-gunmod/abilitymod.lua" ]
+  "scripts" : [ "/scripts/augments/project45-gunmod/abilitymod.lua" ],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
 }

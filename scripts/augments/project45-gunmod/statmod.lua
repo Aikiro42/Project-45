@@ -41,6 +41,11 @@ function apply(input)
         return gunmodHelper.addMessage(input, "Max stat mod capacity reached")
     end
 
+    if augment.level and (input.parameters.level or 1) >= 10 then
+        sb.logError("(statmod.lua) Stat mod application failed: max level reached.")
+        return gunmodHelper.addMessage(input, "Max level reached")
+    end
+
     -- MOD INSTALLATION PROCESS
 
     -- prepare to alter stats and the primary ability in general

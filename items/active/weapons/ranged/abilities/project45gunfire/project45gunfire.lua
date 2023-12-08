@@ -98,7 +98,7 @@ function Project45GunFire:init()
       crouching = self.recoverTime/2 -- halfed recover time while crouching
     }
   end
-  self.currentRecoverTime = self.recoverTime.mobile
+  self.currentRecoverTime = self.recoverTime.mobile * self.recoverMult
 
   -- initialize self.cycleTimer if cycleTimer is
   -- set to be dynamic
@@ -318,7 +318,7 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
   -- accuracy settings
   local movementState = self:getMovementState()
   self.currentInaccuracy = self.inaccuracy[movementState]
-  self.currentRecoverTime = self.recoverTime[movementState]
+  self.currentRecoverTime = self.recoverTime[movementState] * self.recoverMult
   activeItem.setCursor("/cursors/project45-neo-cursor-" .. movementState .. ".cursor")
 
   -- trigger i/o logic
@@ -1108,7 +1108,7 @@ function Project45GunFire:recoil(down, mult, amount, recoverDelay)
   
   -- recover delay (no recover delay by default)
   storage.stanceProgress = 0
-  self.recoverDelayTimer = recoverDelay or self.recoverDelay or self.fireTime or 0
+  self.recoverDelayTimer = (recoverDelay or self.recoverDelay or self.fireTime or 0) * self.recoverMult
 end
 
 -- Ejects mag

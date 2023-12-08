@@ -2,14 +2,16 @@
   "itemName" : "project45-mlgscopemod",
   "price" : 15000,
   "rarity" : "Essential",
-  "tooltipKind" : "project45gunmod",
+  "tooltipKind" : "project45gunmod2",
   "category" : "Ability Mod",
   "tooltipFields": {
     "objectImage": "/items/augments/project45-gunmods/ability/project45-mlgscopemod/project45-mlgscopemod.png"
   },
   "inventoryIcon" : "/items/augments/project45-gunmods/ability/project45-mlgscopemod/project45-mlgscopemodicon.png",
-  "description" : "420 BLAZE IT FTW!\n^#EA9931;Hold Right-click and circle your cursor around your character to get a brief damage bonus.",
-  "shortdescription" : "MLG Scope",
+  "description" : "^#d93a3a;I walk the road alone, ^#96cbe7;but my hope will never die.\n\n^#d1e160;- 420SniperDragon",
+  "technicalInfo": "Hold Right-click and circle your cursor around your character to get a brief damage buff.",
+  "shortdescription" : "^#d93a3a;M^reset;L^#96cbe7;G^#d1e160; Scope",
+  "archetype": "Active Ability",
 
   "augment":{
     "category": "universal",
@@ -22,5 +24,7 @@
 
   "radioMessagesOnPickup" : [ "pickupaugment" ],
 
-  "scripts" : [ "/scripts/augments/project45-gunmod/abilitymod.lua" ]
+  "scripts" : [ "/scripts/augments/project45-gunmod/abilitymod.lua" ],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
+
 }

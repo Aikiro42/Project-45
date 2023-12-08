@@ -1,8 +1,8 @@
 {
   "itemName" : "project45-beamconverter",
   "price" : 7500,
-  "rarity" : "Essential",
-  "tooltipKind" : "project45gunmod",
+  "rarity" : "Legendary",
+  "tooltipKind" : "project45gunmod2",
   "category" : "Converter Mod",
   "inventoryIcon" : "/items/augments/project45-gunmods/other/converter/project45-beamconverter/project45-beamconverter.png",
   "description" : "Converts bullets fired to beam ones.",
@@ -12,5 +12,9 @@
 
   "radioMessagesOnPickup" : [ "pickupaugment" ],
 
-  "scripts" : [ "/scripts/augments/project45-gunmod/convertermod.lua" ]
+  "scripts" : [ "/scripts/augments/project45-gunmod/convertermod.lua" ],
+  
+  "technicalInfo": "Affects damage per shot.\nMay be rejected by some weapons.",
+  "archetype": "Converter",
+  "builder": "/items/buildscripts/buildproject45mod.lua"
 }

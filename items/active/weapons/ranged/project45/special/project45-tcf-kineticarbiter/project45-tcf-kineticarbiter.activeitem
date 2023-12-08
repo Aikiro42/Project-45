@@ -15,14 +15,9 @@
   "inventoryIcon" : "project45-tcf-kineticarbiter-icon.png",
 
   "project45GunModInfo": {
-    "category": "ballistic",
-    "statModCountMax": 0,
-    "acceptsAmmoArchetype": [
-    ],
+    "category": "special",
     "acceptsModSlot": [
       "sights"
-    ],
-    "flipSlot": [
     ]
   },
 
@@ -154,7 +149,7 @@
   "ejectionPortOffset": [-0.25, 0.5],
   "magazineOffset": [-1, 0.25],
 
-  "sightsOffset": [1, 1.375],
+  "sightsOffset": [-0.5, 1.125],
 
   "scripts" : ["/items/active/weapons/ranged/project45gunneo.lua"],
     

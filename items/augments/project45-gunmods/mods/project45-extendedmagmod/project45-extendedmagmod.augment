@@ -2,13 +2,14 @@
   "itemName" : "project45-extendedmagmod",
   "price" : 15000,
   "rarity" : "Legendary",
-  "tooltipKind" : "project45gunmod",
-  "category" : "Magazine Mod",
+  "tooltipKind" : "project45gunmod2",
+  "category" : "Gun Mod",
   "tooltipFields":{
     "objectImage": "/items/augments/project45-gunmods/mods/project45-extendedmagmod/project45-extendedmagmod.png"
   },
   "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-extendedmagmod/project45-extendedmagmodicon.png",
-  "description" : "Doubles ammo capacity.",
+  "description": "If shooting it won't make it go away, shoot it more.",
+  "statInfo" : "Ammo capacity x2",
   "shortdescription" : "Extended Magazines",
 
   "augment":{
@@ -26,5 +27,6 @@
 
   "radioMessagesOnPickup" : [ "pickupaugment" ],
 
-  "scripts" : [ "/scripts/augments/project45-gunmod/gunmod.lua" ]
+  "scripts" : [ "/scripts/augments/project45-gunmod/gunmod.lua" ],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
 }
