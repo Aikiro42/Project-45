@@ -2,7 +2,7 @@
   "itemName" : "project45-hitscanconverter",
   "price" : 7500,
   "rarity" : "Legendary",
-  "tooltipKind" : "project45gunmod",
+  "tooltipKind" : "project45gunmod2",
   "category" : "Converter Mod",
   "inventoryIcon" : "/items/augments/project45-gunmods/other/converter/project45-hitscanconverter/project45-hitscanconverter.png",
   "description" : "Converts bullets fired to hitscan ones.",
@@ -12,5 +12,9 @@
 
   "radioMessagesOnPickup" : [ "pickupaugment" ],
 
-  "scripts" : [ "/scripts/augments/project45-gunmod/convertermod.lua" ]
+  "scripts" : [ "/scripts/augments/project45-gunmod/convertermod.lua" ],
+  
+  "technicalInfo": "Affects damage per shot.\nMay be rejected by some weapons.",
+  "archetype": "Converter",
+  "builder": "/items/buildscripts/buildproject45mod.lua"
 }

@@ -1,4 +1,5 @@
 require "/scripts/project45/project45util.lua"
+require "/scripts/versioningutils.lua"
 require "/scripts/util.lua"
 
 local categoryStrings = {
@@ -24,15 +25,17 @@ function build(directory, config, parameters, level, seed)
   end
   --]]
 
+  construct(config, "augment")
+
   config.tooltipFields = config.tooltipFields or {}
-  config.tooltipFields.categoryLabel = categoryStrings[config.augment.category]
+  config.tooltipFields.categoryLabel = categoryStrings[config.augment.category or "universal"]
   config.tooltipFields.slotLabel = "^#9da8af;" ..  (
-    (config.category == "Ammo Mod" and "Ammo")
+    ((config.category == "Ammo Mod" or config.category == "Converter Mod") and "Ammo")
     or (config.category == "Stat Mod" and "Stat")
-    or project45util.capitalize(config.augment.slot or "N/A")
+    or project45util.capitalize(config.augment.slot or config.slot or "N/A")
   )
   config.tooltipFields.archetypeLabel = "^#ea9931;" .. (project45util.capitalize(config.augment.archetype) or config.archetype or "^#a0a0a0;N/A")
-  config.tooltipFields.technicalLabel = "^#ffd495;" .. (config.technicalInfo or "^#a0a0a0;N/A") .. "\n^#b2e89d;" .. (config.statInfo or "")
+  config.tooltipFields.technicalLabel = "^#ffd495;" .. (config.technicalInfo or "") .. "\n^#b2e89d;" .. (config.statInfo or "")
 
   return config, parameters
 end
