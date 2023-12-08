@@ -1,6 +1,7 @@
 require "/scripts/project45/project45util.lua"
 require "/scripts/versioningutils.lua"
 require "/scripts/util.lua"
+require "/scripts/set.lua"
 
 local categoryStrings = {
   ballistic = "^#51bd3b; Ballistic^reset;",
@@ -34,8 +35,37 @@ function build(directory, config, parameters, level, seed)
     or (config.category == "Stat Mod" and "Stat")
     or project45util.capitalize(config.augment.slot or config.slot or "N/A")
   )
-  config.tooltipFields.archetypeLabel = "^#ea9931;" .. (project45util.capitalize(config.augment.archetype) or config.archetype or "^#a0a0a0;N/A")
-  config.tooltipFields.technicalLabel = "^#ffd495;" .. (config.technicalInfo or "") .. "\n^#b2e89d;" .. (config.statInfo or "")
+
+  local extrinsicModSlots = set.new({
+    "rail",
+    "sights",
+    "muzzle",
+    "underbarrel",
+    "stock"
+  })
+
+  config.tooltipFields.archetypeLabel = "^#ea9931;"
+  if config.category == "Gun Mod" then
+    if extrinsicModSlots[config.augment.slot or config.slot] then
+      config.tooltipFields.archetypeLabel = config.tooltipFields.archetypeLabel .. "Extrinsic"
+    else
+      config.tooltipFields.archetypeLabel = config.tooltipFields.archetypeLabel .. "Intrinsic"  
+    end
+  else
+    config.tooltipFields.archetypeLabel = config.tooltipFields.archetypeLabel .. (
+      project45util.capitalize(config.augment.archetype)
+      or config.archetype
+      or "^#a0a0a0;N/A"
+    )
+  end
+
+  config.tooltipFields.technicalLabel = ""
+  if config.technicalInfo then
+    config.tooltipFields.technicalLabel = config.tooltipFields.technicalLabel .. "^#ffd495;" .. config.technicalInfo .. "^reset;\n"
+  end
+  if config.statInfo then
+    config.tooltipFields.technicalLabel = config.tooltipFields.technicalLabel .. "^#b2e89d;" .. config.statInfo .. "^reset;\n"
+  end
 
   return config, parameters
 end

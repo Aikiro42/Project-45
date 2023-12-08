@@ -276,6 +276,7 @@
     
     "recoverTime": 1.5, // time it takes to recover aim completely, in seconds
     "recoverDelay": 0.1, // time before aim is recovered
+    "recoverMult": 1, // multipler to recoverTime and recoverDelay
     "recoilMomentum": 0,  // amount of momentum applied to player when firing the gun; canceled by crouching
     "screenShakeAmount": [0.5, 0.1], // amount of screenshake per shot
     // time it takes to reach the max cycle time, in seconds
