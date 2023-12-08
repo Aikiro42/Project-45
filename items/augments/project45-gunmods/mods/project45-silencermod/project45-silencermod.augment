@@ -2,20 +2,20 @@
   "itemName" : "project45-silencermod",
   "price" : 15000,
   "rarity" : "Legendary",
-  "tooltipKind" : "project45gunmod",
-  "category" : "Muzzle Mod",
+  "tooltipKind" : "project45gunmod2",
+  "category" : "Gun Mod",
   "tooltipFields":{
     "objectImage": "/items/augments/project45-gunmods/mods/project45-silencermod/project45-silencermod.png"
   },
   "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-silencermod/project45-silencermodicon.png",
-  "description" : "Dissipates existing gas, reducing gunshot noise and reducing vertical recoil by 10%.",
+  "description" : "Dissipates existing gas, reducing gunshot noise and recoil. Also hides muzzle flash.",
+  "statInfo": "Recoil x0.75",
   "shortdescription" : "Silencer",
 
   "augment":{
     "modName": "Silencer",
     "category": "ballistic",
     "slot": "muzzle",
-    "recoilMult": 0.9,
     "muzzleOffset": [1, 0],
     "primaryAbility": {
       "flashHidden": {
@@ -31,6 +31,10 @@
         // and increase internal pressure
         "operation": "replace",
         "value": 1.1
+      },
+      "recoilMult": {
+        "operation": "multiply",
+        "value": 0.75
       }
     },
 
@@ -64,5 +68,6 @@
 
   "radioMessagesOnPickup" : [ "pickupaugment" ],
 
-  "scripts" : [ "/scripts/augments/project45-gunmod/gunmod.lua" ]
+  "scripts" : [ "/scripts/augments/project45-gunmod/gunmod.lua" ],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
 }

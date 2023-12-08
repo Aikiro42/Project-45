@@ -2,10 +2,11 @@
   "itemName" : "project45-incendiaryammomod",
   "price" : 15000,
   "rarity" : "Legendary",
-  "tooltipKind" : "project45gunmod",
-  "category" : "Ballistic Ammo Mod",
+  "tooltipKind" : "project45gunmod2",
+  "category" : "Ammo Mod",
   "inventoryIcon" : "/items/augments/project45-gunmods/ammo/project45-incendiaryammomod/project45-incendiaryammomod.png",
-  "description" : "Standard-issue incendiary bullets. Incompatible with energy guns.",
+  "description" : "Standard-issue cartridges with magnesium-tipped bullets.",
+  "technicalInfo": "Fires projectiles that burns the enemy while dealing fire damage.",
   "shortdescription" : "Incendiary Bullets",
 
   "augment":{
@@ -21,5 +22,6 @@
 
   "radioMessagesOnPickup" : [ "pickupaugment" ],
 
-  "scripts" : [ "/scripts/augments/project45-gunmod/ammomod.lua" ]
+  "scripts" : [ "/scripts/augments/project45-gunmod/ammomod.lua" ],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
 }

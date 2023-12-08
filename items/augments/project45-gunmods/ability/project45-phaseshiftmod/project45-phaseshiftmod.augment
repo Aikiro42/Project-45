@@ -2,14 +2,16 @@
   "itemName" : "project45-phaseshiftmod",
   "price" : 15000,
   "rarity" : "Essential",
-  "tooltipKind" : "project45gunmod",
+  "tooltipKind" : "project45gunmod2",
   "category" : "Ability Mod",
   "tooltipFields": {
     "objectImage": "/items/augments/project45-gunmods/ability/project45-phaseshiftmod/project45-phaseshiftmod.png"
   },
   "inventoryIcon" : "/items/augments/project45-gunmods/ability/project45-phaseshiftmod/project45-phaseshiftmodicon.png",
-  "description" : "Allows you to transfer between planes of reality.\n^#EA9931;Tap walk to dash.\nRight-click to phase.",
+  "description" : "Technology that utilizes Erchius, allowing you to transfer between planes of reality.",
+  "technicalInfo": "- Tap walk to dash.\n- Right-click to phase.\n- You cannot deal damage while phased.",
   "shortdescription" : "Phase Shifter",
+  "archetype": "Active Ability",
   
   "augment":{
     "category": "universal",
@@ -23,5 +25,6 @@
 
   "radioMessagesOnPickup" : [ "pickupaugment" ],
 
-  "scripts" : [ "/scripts/augments/project45-gunmod/abilitymod.lua" ]
+  "scripts" : [ "/scripts/augments/project45-gunmod/abilitymod.lua" ],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
 }

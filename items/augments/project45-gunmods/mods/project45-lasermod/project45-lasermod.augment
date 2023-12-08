@@ -2,23 +2,20 @@
   "itemName" : "project45-lasermod",
   "price" : 15000,
   "rarity" : "Legendary",
-  "tooltipKind" : "project45gunmod",
-  "category" : "Rail Mod",
+  "tooltipKind" : "project45gunmod2",
+  "category" : "Gun Mod",
   "tooltipFields":{
     "objectImage": "/items/augments/project45-gunmods/mods/project45-lasermod/project45-lasermod.png"
   },
   "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-lasermod/project45-lasermodicon.png",
-  "description" : "A perpetually on laser. Decreases spread and recoil by 75%",
+  "description" : "A laser that can't be turned off. It oddly never runs out of battery.",
+  "statInfo": "Spread x0.25\nRecoil x0.25",
   "shortdescription" : "Laser Beam",
 
   "augment":{
     "modName": "Reflex Sights",
     "category": "universal",
     "slot": "rail",
-    "recoilMult": {
-      "operation": "multiply",
-      "value": 0.25
-    },
     "primaryAbility": {
       "laser": {
         "operation": "replace",
@@ -29,6 +26,10 @@
         }
       },
       "spread": {
+        "operation": "multiply",
+        "value": 0.25
+      },  
+      "recoilMult": {
         "operation": "multiply",
         "value": 0.25
       }
@@ -61,5 +62,6 @@
 
   "radioMessagesOnPickup" : [ "pickupaugment" ],
 
-  "scripts" : [ "/scripts/augments/project45-gunmod/gunmod.lua" ]
+  "scripts" : [ "/scripts/augments/project45-gunmod/gunmod.lua" ],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
 }

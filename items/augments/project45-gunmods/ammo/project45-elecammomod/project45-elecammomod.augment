@@ -2,17 +2,18 @@
   "itemName" : "project45-elecammomod",
   "price" : 15000,
   "rarity" : "Legendary",
-  "tooltipKind" : "project45gunmod",
-  "category" : "Energy Ammo Mod",
+  "tooltipKind" : "project45gunmod2",
+  "category" : "Ammo Mod",
   "inventoryIcon" : "/items/augments/project45-gunmods/ammo/project45-elecammomod/project45-elecammomod.png",
-  "description" : "Hi-conductivity config for energy guns. Incompatible with ballistic guns.",
+  "description" : "Hi-conductivity laser configuration for maximum killing efficiency.",
+  "technicalInfo": "Generates an electric explosion at the end of the hitscan projectile.",
   "shortdescription" : "Electro Lasers",
 
   "augment":{
     "modName": "Electro Lasers",
     "category": "energy",
     "archetype": "laser",
-    "spread": 0.01,
+    "spread": 0.5,
     "projectileCount": 1,
     "muzzleFlashColor": [210,156,231],
     "projectileKind": "hitscan",
@@ -41,5 +42,6 @@
 
   "radioMessagesOnPickup" : [ "pickupaugment" ],
 
-  "scripts" : [ "/scripts/augments/project45-gunmod/ammomod.lua" ]
+  "scripts" : [ "/scripts/augments/project45-gunmod/ammomod.lua" ],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
 }

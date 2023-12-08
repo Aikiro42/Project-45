@@ -2,14 +2,16 @@
   "itemName" : "project45-underbarrelshotgunmod",
   "price" : 15000,
   "rarity" : "Essential",
-  "tooltipKind" : "project45gunmod",
+  "tooltipKind" : "project45gunmod2",
   "category" : "Ability Mod",
   "tooltipFields": {
     "objectImage": "/items/augments/project45-gunmods/ability/project45-underbarrelshotgunmod/project45-underbarrelshotgunmod.png"
   },
   "inventoryIcon" : "/items/augments/project45-gunmods/ability/project45-underbarrelshotgunmod/project45-underbarrelshotgunmodicon.png",
-  "description" : "A small underbarrel shotgun that siphons its bullets from the gun's.\n^#EA9931;Right-click to fire.",
+  "description" : "A small underbarrel shotgun that siphons its bullets from the gun's.",
+  "technicalInfo": "Right-click to fire; consumes 5 ammo per shot.",
   "shortdescription" : "Modular Shotgun",
+  "archetype": "Active Ability",
 
   "radioMessagesOnPickup" : [ "pickupaugment" ],
 
@@ -37,5 +39,7 @@
 
   },
 
-  "scripts" : [ "/scripts/augments/project45-gunmod/abilitymod.lua" ]
+  "scripts" : [ "/scripts/augments/project45-gunmod/abilitymod.lua" ],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
+
 }

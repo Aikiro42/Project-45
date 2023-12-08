@@ -2,15 +2,19 @@
   "itemName" : "project45-levelmod",
   "price" : 50000,
   "rarity" : "Essential",
-  "tooltipKind" : "project45gunmod",
+  "tooltipKind" : "project45gunmod2",
   "category" : "Stat Mod",
   "inventoryIcon" : "/items/augments/project45-gunmods/stat/project45-levelmod/project45-levelmod.png",
-  "description" : "^#FFFFFF;Increase weapon level (+1) and mod capacity (+2).^reset;",
-  "shortdescription" : "^#FFFFFF;Level Upgrade",
+  "statInfo" : "^#a8e6e2;Weapon Level +1.\nMod capacity +2.",
+  "description": "Increments weapon level, up to a maximum level of 10.",
+  "slot": "level",
+  "archetype": "Additive",
+  "shortdescription" : "^#a8e6e2;Level Upgrade",
 
   "augment":{
     "level": true
   },
 
-  "scripts" : [ "/scripts/augments/project45-gunmod/statmod.lua" ]
+  "scripts" : [ "/scripts/augments/project45-gunmod/statmod.lua" ],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
 }

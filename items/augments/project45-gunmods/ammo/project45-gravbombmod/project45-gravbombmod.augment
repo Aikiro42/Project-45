@@ -2,10 +2,11 @@
   "itemName" : "project45-gravbombmod",
   "price" : 15000,
   "rarity" : "Legendary",
-  "tooltipKind" : "project45gunmod",
-  "category" : "Summoned Ammo Mod",
+  "tooltipKind" : "project45gunmod2",
+  "category" : "Ammo Mod",
   "inventoryIcon" : "/items/augments/project45-gunmods/ammo/project45-gravbombmod/project45-gravbombmod.png",
-  "description" : "Summons temporal singularities that float in mid-air, detonating after a short time.",
+  "description": "Technology adapted from Ancient Artifacts. Does not seem to affect the caster.",
+  "technicalInfo" : "Summons temporal singularities that float in mid-air, detonating after a short time, dealing electric damage.",
   "shortdescription" : "Singularity Essence",
 
   "augment":{
@@ -22,5 +23,6 @@
 
   "radioMessagesOnPickup" : [ "pickupaugment" ],
 
-  "scripts" : [ "/scripts/augments/project45-gunmod/ammomod.lua" ]
+  "scripts" : [ "/scripts/augments/project45-gunmod/ammomod.lua" ],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
 }

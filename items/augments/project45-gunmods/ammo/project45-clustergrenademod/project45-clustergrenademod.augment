@@ -1,11 +1,12 @@
 {
   "itemName" : "project45-clustergrenademod",
-  "price" : 15000,
+  "price" : 1000,
   "rarity" : "Legendary",
-  "tooltipKind" : "project45gunmod",
-  "category" : "Grenade Ammo Mod",
+  "tooltipKind" : "project45gunmod2",
+  "category" : "Ammo Mod",
   "inventoryIcon" : "/items/augments/project45-gunmods/ammo/project45-clustergrenademod/project45-clustergrenademod.png",
-  "description" : "Grenades that split into smaller grenades on impact.",
+  "description": "Geneva Convention? More like Geneva Suggestion.",
+  "technicalInfo" : "Grenades that split into smaller grenades on impact.",
   "shortdescription" : "Cluster Grenades",
 
   "augment":{
@@ -21,5 +22,7 @@
 
   "radioMessagesOnPickup" : [ "pickupaugment" ],
 
-  "scripts" : [ "/scripts/augments/project45-gunmod/ammomod.lua" ]
+  "scripts" : [ "/scripts/augments/project45-gunmod/ammomod.lua" ],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
+
 }

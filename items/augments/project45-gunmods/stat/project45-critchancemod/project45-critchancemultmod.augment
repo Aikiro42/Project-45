@@ -2,11 +2,14 @@
   "itemName" : "project45-critchancemultmod",
   "price" : 50000,
   "rarity" : "Legendary",
-  "tooltipKind" : "project45gunmod",
+  "tooltipKind" : "project45gunmod2",
   "category" : "Stat Mod",
   "inventoryIcon" : "/items/augments/project45-gunmods/stat/project45-critchancemod/project45-critchancemultmod.png",
-  "description" : "^#D93A3A;Critical Chance Mult +0.25^reset;",
-  "shortdescription" : "^#D93A3A;Crit Chance X",
+  "description": "Increases Crit Chance by 25% of base.",
+  "statInfo" : "^#D93A3A;Crit Chance +0.25x^reset;",
+  "shortdescription" : "^#D93A3A;Crit Chance (*)",
+  "slot": "critChance",
+  "archetype": "Multiplicative",
 
   "augment":{
     "critChance": {
@@ -14,5 +17,6 @@
     }
   },
 
-  "scripts" : [ "/scripts/augments/project45-gunmod/statmod.lua" ]
+  "scripts" : [ "/scripts/augments/project45-gunmod/statmod.lua" ],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
 }
