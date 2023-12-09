@@ -27,8 +27,22 @@ function build(directory, config, parameters, level, seed)
   construct(config, "project45GunModInfo")
   config.project45GunModInfo.statModCountMax = (config.project45GunModInfo.statModCountMax or 0) + ((configParameter("level", 1) - 1) * 2)
 
-  parameters.shortdescription = config.shortdescription
-  parameters.project45GunModInfo = config.project45GunModInfo
+  -- recalculate rarity
+  local rarityLevel = configParameter("level", 1)/10
+  local levelRarityAssoc = {"Common", "Uncommon", "Rare", "Legendary", "Essential"}
+  local rarityLevelAssoc = {Essential=1,Legendary=0.8,Rare=0.6,Uncommon=0.4,Common=0.2}
+  sb.logInfo(configParameter("rarity", "Common") .. " " .. rarityLevel)
+  if rarityLevelAssoc[configParameter("rarity", "Common")] < rarityLevel then
+    parameters.rarity = levelRarityAssoc[math.ceil(rarityLevel * #levelRarityAssoc)]
+  end
+
+  parameters.shortdescription = configParameter("shortdescription", "?")
+  parameters.project45GunModInfo = configParameter("project45GunModInfo")
+  
+  if configParameter("level", 1) >= 10 then
+    parameters.shortdescription = config.shortdescription .. " ^yellow;^reset;"
+  end
+
 
   -- retrieve ability animation scripts
   local primaryAnimationScripts = setupAbility(config, parameters, "primary")
