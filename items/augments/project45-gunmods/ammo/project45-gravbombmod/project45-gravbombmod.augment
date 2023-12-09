@@ -4,7 +4,10 @@
   "rarity" : "Legendary",
   "tooltipKind" : "project45gunmod2",
   "category" : "Ammo Mod",
-  "inventoryIcon" : "/items/augments/project45-gunmods/ammo/project45-gravbombmod/project45-gravbombmod.png",
+  "tooltipFields":{
+    "objectImage": "/items/augments/project45-gunmods/ammo/project45-gravbombmod/project45-gravbombmod.png"
+  },
+  "inventoryIcon" : "/items/augments/project45-gunmods/ammo/project45-gravbombmod/project45-gravbombmodicon.png",
   "description": "Technology adapted from Ancient Artifacts. Does not seem to affect the caster.",
   "technicalInfo" : "Summons temporal singularities that float in mid-air, detonating after a short time, dealing electric damage.",
   "shortdescription" : "Singularity Essence",

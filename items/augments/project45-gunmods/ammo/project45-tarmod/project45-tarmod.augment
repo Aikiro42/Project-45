@@ -4,7 +4,10 @@
   "rarity" : "Legendary",
   "tooltipKind" : "project45gunmod2",
   "category" : "Ammo Mod",
-  "inventoryIcon" : "/items/augments/project45-gunmods/ammo/project45-tarmod/project45-tarmod.png",
+  "tooltipFields":{
+    "objectImage": "/items/augments/project45-gunmods/ammo/project45-tarmod/project45-tarmod.png"
+  },
+  "inventoryIcon" : "/items/augments/project45-gunmods/ammo/project45-tarmod/project45-tarmodicon.png",
   "description" : "Spews black tar that slows enemies and makes them vulnerable.",
   "technicalInfo": "Fires 3 arcing projectiles that inflict slow and vulnerability while inflicting physical damage.",
   "shortdescription" : "Tar Tank",

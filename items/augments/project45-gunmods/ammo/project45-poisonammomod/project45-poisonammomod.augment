@@ -4,7 +4,10 @@
   "rarity" : "Legendary",
   "tooltipKind" : "project45gunmod2",
   "category" : "Ammo Mod",
-  "inventoryIcon" : "/items/augments/project45-gunmods/ammo/project45-poisonammomod/project45-poisonammomod.png",
+  "tooltipFields":{
+    "objectImage": "/items/augments/project45-gunmods/ammo/project45-poisonammomod/project45-poisonammomod.png"
+  },
+  "inventoryIcon" : "/items/augments/project45-gunmods/ammo/project45-poisonammomod/project45-poisonammomodicon.png",
   "description" : "Custom-made cartridges with mercury-tipped bullets.",
   "technicalInfo": "Fires projectiles that poisons the enemy while dealing poison damage.",
   "shortdescription" : "Mercury-tipped Bullets",
