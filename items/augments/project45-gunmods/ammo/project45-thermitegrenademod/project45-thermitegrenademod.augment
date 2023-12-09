@@ -4,7 +4,10 @@
   "rarity" : "Legendary",
   "tooltipKind" : "project45gunmod2",
   "category" : "Grenade Ammo Mod",
-  "inventoryIcon" : "/items/augments/project45-gunmods/ammo/project45-thermitegrenademod/project45-thermitegrenademod.png",
+  "tooltipFields":{
+    "objectImage": "/items/augments/project45-gunmods/ammo/project45-thermitegrenademod/project45-thermitegrenademod.png"
+  },
+  "inventoryIcon" : "/items/augments/project45-gunmods/ammo/project45-thermitegrenademod/project45-thermitegrenademodicon.png",
   "description": "These are just grenade casings designed to work like molotovs.",
   "technicalInfo" : "Fires grenades that burst into flames on impact.",
   "shortdescription" : "Thermite Grenades",

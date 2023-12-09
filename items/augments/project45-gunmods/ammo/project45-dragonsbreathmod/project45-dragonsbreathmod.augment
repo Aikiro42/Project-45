@@ -4,7 +4,10 @@
   "rarity" : "Legendary",
   "tooltipKind" : "project45gunmod2",
   "category" : "Ammo Mod",
-  "inventoryIcon" : "/items/augments/project45-gunmods/ammo/project45-dragonsbreathmod/project45-dragonsbreathmod.png",
+  "tooltipFields":{
+    "objectImage": "/items/augments/project45-gunmods/ammo/project45-dragonsbreathmod/project45-dragonsbreathmod.png"
+  },
+  "inventoryIcon" : "/items/augments/project45-gunmods/ammo/project45-dragonsbreathmod/project45-dragonsbreathmodicon.png",
   "description" : "Magnesium pellets in a fun-sized shell.",
   "technicalInfo": "Fires short-lived incendiary projectiles.",
   "statInfo": "Projectiles: 5",

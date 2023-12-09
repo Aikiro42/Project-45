@@ -4,7 +4,10 @@
   "rarity" : "Legendary",
   "tooltipKind" : "project45gunmod2",
   "category" : "Ammo Mod",
-  "inventoryIcon" : "/items/augments/project45-gunmods/ammo/project45-firebeammod/project45-firebeammod.png",
+  "tooltipFields":{
+    "objectImage": "/items/augments/project45-gunmods/ammo/project45-firebeammod/project45-firebeammod.png"
+  },
+  "inventoryIcon" : "/items/augments/project45-gunmods/ammo/project45-firebeammod/project45-firebeammodicon.png",
   "description" : "Overloaded beam configuration for energy guns. The power of the sun in the chamber of your gun.",
   "technicalInfo": "Fires a beam that deals fire damage.",
   "shortdescription" : "Fire Beam",

@@ -4,7 +4,10 @@
   "rarity" : "Legendary",
   "tooltipKind" : "project45gunmod2",
   "category" : " Ammo Mod",
-  "inventoryIcon" : "/items/augments/project45-gunmods/ammo/project45-slugshellsmod/project45-slugshellsmod.png",
+  "tooltipFields":{
+    "objectImage": "/items/augments/project45-gunmods/ammo/project45-slugshellsmod/project45-slugshellsmod.png"
+  },
+  "inventoryIcon" : "/items/augments/project45-gunmods/ammo/project45-slugshellsmod/project45-slugshellsmodicon.png",
   "description" : "Slug shells. Shells with slugs. Slug shells.",
   "technicalInfo": "Fires a single, slow semi-accurate projectile.",
   "statInfo": "Spread: 1 deg.",
