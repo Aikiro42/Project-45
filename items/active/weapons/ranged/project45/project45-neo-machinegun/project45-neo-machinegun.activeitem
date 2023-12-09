@@ -1,8 +1,8 @@
 {
   "itemName" : "project45-neo-machinegun",
-  "price" : 1000,
+  "price" : 5000,
   "maxStack" : 1,
-  "rarity" : "Essential",
+  "rarity" : "Legendary",
   "description" : "An entry-level firearm.",
   "shortdescription" : "Machine Gun",
   "gunArchetype": "LMG",
@@ -17,14 +17,21 @@
   "project45GunModInfo": {
     "category": "ballistic",
     "statModCountMax": 10,
-    "acceptsAmmoArchetypes": [
+    "allowsConversion": [
+      "hitscan",
+      "summoned"
+    ],
+    "acceptsAmmoArchetype": [
       "bullet"
     ],
     "acceptsModSlot": [
       "rail",
       "sights",
       "underbarrel",
-      "muzzle"
+      "muzzle",
+      
+      "magazine",
+      "material"
     ]
   },
 
@@ -124,9 +131,9 @@
   "ejectionPortOffset": [-1, 0.625],
   "magazineOffset": [-0.5, -0.375],
 
-  "sightsOffset": [2, 0.625],
-  "railOffset": [1.75, 0.25],
-  "underbarrelOffset": [2.125, -0.25],
+  "sightsOffset": [1.3125, 0.625],
+  "railOffset": [1, 0],
+  "underbarrelOffset": [1.5, -0.25],
   
   "debugPointColors": {
     "rail": "red",
@@ -139,6 +146,7 @@
     
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
+    "baseDamage": 7,
     "cycleTime": 0.05,
     "semi": false,
     "chargeFrames": 4,
@@ -152,7 +160,7 @@
     "magLoopFrames": 2,
     "magAmmoRange": [0, 5],
     "chargeSmoke": true,
-
+    "postReloadDelay": 0.125,
     "stances":{
       "aimStance":{
         "frontArmFrame": "run.3"

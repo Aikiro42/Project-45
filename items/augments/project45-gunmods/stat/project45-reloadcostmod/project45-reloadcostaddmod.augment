@@ -2,18 +2,21 @@
   "itemName" : "project45-reloadcostaddmod",
   "price" : 10000,
   "rarity" : "Legendary",
-  "tooltipKind" : "project45gunmod",
+  "tooltipKind" : "project45gunmod2",
   "category" : "Stat Mod",
   "inventoryIcon" : "/items/augments/project45-gunmods/stat/project45-reloadcostmod/project45-reloadcostaddmod.png",
-  "description" : "^#9BBA3D;Reload Cost -10^reset;",
+  "description": "Decreases Reload Cost by 10 energy.",
+  "statInfo" : "^#9BBA3D;Reload Cost -10^reset;",
+  "slot": "reloadCost",
+  "archetype": "Additive",
   "shortdescription" : "Reload Cost +",
 
   "augment":{
     "reloadCost": {
-      "operation": "add",
-      "value": -10
+      "additive": -10
     }
   },
 
-  "scripts" : [ "/scripts/augments/project45-gunmod/statmod.lua" ]
+  "scripts" : [ "/scripts/augments/project45-gunmod/statmod.lua" ],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
 }

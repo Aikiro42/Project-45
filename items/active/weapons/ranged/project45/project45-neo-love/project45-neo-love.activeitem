@@ -1,0 +1,204 @@
+{
+  "itemName" : "project45-neo-love",
+  "price" : 1250,
+  "maxStack" : 1,
+  "rarity" : "Uncommon",
+  "description" : "Rip and tear until it's done.",
+  "shortdescription" : "Love",
+  "tooltipKind" : "project45gun",
+  "gunArchetype": "Double-barrel Sawed-off",
+  "category" : "shotgun",
+  "twoHanded" : false,
+  "itemTags" : ["weapon","ranged","shotgun"],
+  "level" : 1,
+  "muzzleFlashColor": [255, 255, 200],
+  "inventoryIcon" : "project45-neo-love.png:idle.1",
+
+  "project45GunModInfo": {
+    "category": "ballistic",
+    "statModCountMax": 20,
+    "allowsConversion": [
+      "projectile",
+      "summoned"
+    ],
+    "acceptsAmmoArchetype": [
+      "shotgun"
+    ],
+    "acceptsModSlot": [
+      "stock",
+      "sights",
+
+      "material"
+    ],
+    "flipSlot": [
+    ]
+  },
+
+  "animationParts" : {
+    "middle" : "project45-neo-love.png",
+    "middleFullbright" : "",
+    "charge": "",
+    "chargeFullbright": "",
+    "magazine": "",
+    "magazineFullbright": ""
+  },
+
+  "animationCustom": {
+    "particleEmitters": {
+      "ejectionPort": {
+        "particles": [
+          {"particle": "project45shell"}
+        ]
+      },
+      "magazine": {
+        "particles": [
+        ]
+      }
+    },
+
+    "sounds": {
+      "fire" : ["/sfx/project45neosfx/fire/fire-shotgun1.ogg"],
+      "ejectCasing": [
+      ],
+      "ejectMag": [ "/sfx/project45neosfx/boltpull/boltpull-rifle2.ogg" ],
+      "boltPull" : [ ],
+      "boltPush" : ["/sfx/project45neosfx/boltpush/boltpush-rifle2.ogg"],
+      "reloadEnd": [],
+      "loadRound": [
+        "/sfx/project45neosfx/loadround/loadround-shotgun1.ogg",
+        "/sfx/project45neosfx/loadround/loadround-shotgun2.ogg"
+      ]
+
+    },
+    "animatedParts": {
+      "parts":{
+        "middle":{
+          "partStates":{
+            "gun":{
+              "fired": {
+                "properties": {
+                  "image": "<partImage>:firing.1"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+
+  "baseOffset" : [1, 0],
+  "muzzleOffset" : [1.125, 0.3],
+  "ejectionPortOffset": [-0.25, 0.625],
+  "magazineOffset": [0, 0],
+
+  "sightsOffset": [-0.5, 0.625],
+  "stockOffset": [-1.5, -0.375],
+
+  "debugPointColors": {
+    "rail": "red",
+    "sights": "orange",
+    "underbarrel": "green",
+    "stock": "magenta"
+  },
+
+  "scripts" : ["/items/active/weapons/ranged/project45gunneo.lua"],
+    
+  "primaryAbilityType": "project45gunfire",
+  "primaryAbility": {
+    "baseDamage": 25,
+    "maxAmmo": 2,
+    "bulletsPerReload": 2,
+    "inaccuracy": 5,
+    "semi": true,
+    "cycleTime": 0.1,
+    "cockTime": 0.2,
+    "projectileKind": "hitscan",
+    "projectileCount": 4,
+    "reloadTime": 0.5,
+    "spread": 5,
+
+    /*
+    "breakAction": true,
+    "ejectCasingsWithMag": true,
+    */
+    
+    // "internalMag": true,
+    // "loadRoundsThroughBolt": true,
+    "ejectCasingsWithMag": true,
+    "breakAction": true,
+
+    "jamChances": [0.5, 0.1, 0, 0],
+
+    "recoilAmount": 15, // amount of recoil per shot, in degrees; arm and weapon will rotate by half of this
+    "recoilMaxDeg": 15, // the most the arm and weapon will rotate, in degrees.
+    "recoverDelay": 0.125,
+    "recoverTime": 0.9, // time it takes to recover aim completely, in seconds
+    
+    "stances":{
+      "aimStance": {
+        "twoHanded": false
+      },
+      "ejectmag" : {
+        "armRotation" : -45,
+        "weaponRotation" : 45,
+        "armRecoil": -45,
+        "twoHanded" : false,
+        "allowRotate" : false,
+        "allowFlip" : false
+      },
+      "empty": {
+        "armRotation": -15,
+        "weaponRotation": -15,
+        "twoHanded": false
+      },
+      "reloading": {
+        "armRotation": -30,
+        "weaponRotation": -30,
+        "frontArmFrame": "rotation",
+        "backArmFrame": "rotation",
+        "allowRotate": false,
+        "twoHanded": false
+      },
+      "reloaded" : {
+        "armRotation": 30,
+        "weaponRotation": 15,
+        "frontArmFrame": "rotation",
+        "backArmFrame": "rotation",
+        "allowRotate": false,
+        "twoHanded": false
+      },
+      "boltPull": {
+        "lite": true,
+        "frontArmFrame": "rotation",
+        "backArmFrame": "rotation",
+        "twoHanded": false
+      },
+      "boltPush": {
+        "lite": true,
+        "frontArmFrame": "rotation",
+        "backArmFrame": "rotation",
+        "twoHanded": false
+      },
+      "loadRound": {
+        "armRotation": -20,
+        "weaponRotation": -30,
+        "flipWeapon": true,
+        "allowRotate": false,
+        "weaponOffset": [-0.5, -0.5],
+        "frontArmFrame": "rotation",
+        "backArmFrame": "rotation"
+      },
+      "jammed" : {
+        "twoHanded": false
+      },
+      "unjam": {
+        "armRotation": -30,
+        "weaponRotation": -30,
+        "twoHanded": false
+      }
+    }
+  },
+
+  "builder" : "/items/buildscripts/buildproject45neoneo.lua"
+}

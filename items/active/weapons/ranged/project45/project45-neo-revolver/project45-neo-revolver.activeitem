@@ -1,8 +1,8 @@
 {
   "itemName" : "project45-neo-revolver",
-  "price" : 1000,
+  "price" : 5000,
   "maxStack" : 1,
-  "rarity" : "Essential",
+  "rarity" : "Legendary",
   "description" : "A revolver. Packs quite a punch.",
   "shortdescription" : "Revolver",
   "tooltipKind" : "project45gun",
@@ -27,8 +27,15 @@
   "project45GunModInfo": {
     "category": "ballistic",
     "statModCountMax": 10,
+    "allowsConversion": [
+      "hitscan",
+      "beam",
+      "summoned"
+    ],
     "acceptsModSlot": [
-      "stock"
+      "stock",
+      
+      "material"
     ],
     "acceptsAmmoArchetype": [
       "bullet"
@@ -123,7 +130,7 @@
   "ejectionPortOffset": [-0.25, 0.5],
   "magazineOffset": [0, 0],
 
-  "stockOffset": [-0.375, -0.375],
+  "stockOffset": [-1.25, 0],
 
   "debugPointColors": {
     "rail": "red",
@@ -154,11 +161,21 @@
     "slamFire": true,
 
     "recoilAmount": 5, // amount of recoil per shot, in degrees; arm and weapon will rotate by half of this
-    "recoilMaxDeg": 45, // the most the arm and weapon will rotate, in degrees.
-    "recoverDelay": 0.1,
-    "recoverTime": 0.5, // time it takes to recover aim completely, in seconds
+    // "recoilMaxDeg": 15, // the most the arm and weapon will rotate, in degrees.
+    "recoverDelay": 0.125,
+    "recoverTime": 1, // time it takes to recover aim completely, in seconds
 
     // "reloadTime": 10,
+
+    "muzzleProjectiles": [
+      {
+        "type": "project45_muzzleshockwavesmall",
+        "parameters": {
+          "speed": -2.5
+        },
+        "firePerShot": true
+      }
+    ],
 
     "laser":{
       "enabled": false
@@ -181,6 +198,7 @@
         "twoHanded": false
       },
       
+      // DELETEME:
       "manualFeed": {
         "armRotation" : 0,
         "weaponRotation" : 1,

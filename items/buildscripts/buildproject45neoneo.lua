@@ -23,9 +23,26 @@ function build(directory, config, parameters, level, seed)
   if level and not configParameter("fixedLevel", true) then
     parameters.level = level
   end
+  -- calculate mod capacity
+  construct(config, "project45GunModInfo")
+  config.project45GunModInfo.statModCountMax = (config.project45GunModInfo.statModCountMax or 0) + ((configParameter("level", 1) - 1) * 2)
 
-  parameters.shortdescription = config.shortdescription
-  parameters.project45GunModInfo = config.project45GunModInfo
+  -- recalculate rarity
+  local rarityLevel = configParameter("level", 1)/10
+  local levelRarityAssoc = {"Common", "Uncommon", "Rare", "Legendary", "Essential"}
+  local rarityLevelAssoc = {Essential=1,Legendary=0.8,Rare=0.6,Uncommon=0.4,Common=0.2}
+  sb.logInfo(configParameter("rarity", "Common") .. " " .. rarityLevel)
+  if rarityLevelAssoc[configParameter("rarity", "Common")] < rarityLevel then
+    parameters.rarity = levelRarityAssoc[math.ceil(rarityLevel * #levelRarityAssoc)]
+  end
+
+  parameters.shortdescription = configParameter("shortdescription", "?")
+  parameters.project45GunModInfo = configParameter("project45GunModInfo")
+  
+  if configParameter("level", 1) >= 10 then
+    parameters.shortdescription = config.shortdescription .. " ^yellow;^reset;"
+  end
+
 
   -- retrieve ability animation scripts
   local primaryAnimationScripts = setupAbility(config, parameters, "primary")
@@ -52,6 +69,7 @@ function build(directory, config, parameters, level, seed)
   
   -- elemental type and config (for alt ability)
   local elementalType = configParameter("elementalType", "physical")
+
   replacePatternInData(config, nil, "<elementalType>", elementalType)
   if config.altAbility and config.altAbility.elementalConfig then
     util.mergeTable(config.altAbility, config.altAbility.elementalConfig[elementalType])
@@ -59,7 +77,7 @@ function build(directory, config, parameters, level, seed)
 
   -- calculate damage level multiplier
   config.damageLevelMultiplier = root.evalFunction("weaponDamageLevelMultiplier", configParameter("level", 1))
-
+  
   -- palette swaps
   config.paletteSwaps = ""
   if config.palette then
@@ -130,6 +148,7 @@ function build(directory, config, parameters, level, seed)
 
     for _, modPart in ipairs(modParts) do
       if config[modPart .. "Offset"] then
+          config[modPart .. "Offset"] = vec2.add(config.baseOffset, config[modPart .. "Offset"])
           construct(config, "animationCustom", "animatedParts", "parts", modPart, "properties")
           construct(config, "animationCustom", "animatedParts", "parts", modPart .. "Fullbright", "properties")
           local modPartOffset = config.animationCustom.animatedParts.parts[modPart].properties.offset or {0, 0}
@@ -204,7 +223,7 @@ function build(directory, config, parameters, level, seed)
   -- populate tooltip fields
   if config.tooltipKind == "project45gun" then
     config.tooltipFields = config.tooltipFields or {}
-    config.tooltipFields.subtitle = "^#FFFFFF;" .. config.gunArchetype or config.category
+    config.tooltipFields.subtitle = project45util.categoryStrings[config.project45GunModInfo.category or "Generic"] -- .. "^#D1D1D1;" .. config.gunArchetype or config.category
     -- config.tooltipFields.title = "^FF0000;FUCK"  -- doesn't work
     -- config.tooltipFields.subTitle = "^#FFFFFF;BASE"  -- works
     -- config.tooltipFields.subTitle.color = {255,255,255} -- doesn't work
@@ -233,7 +252,14 @@ function build(directory, config, parameters, level, seed)
         end
       end
       
-      config.tooltipFields.ammoTypeImage = modList.ammoType and modList.ammoType[3] or ""
+      if not (
+        #(config.project45GunModInfo.allowsConversion or {}) == 0
+        and #(config.project45GunModInfo.acceptsAmmoArchetype or {}) == 0
+      )
+      then
+        config.tooltipFields.ammoTypeImage = modList.ammoType and modList.ammoType[3] or ""        
+      end
+
     end
     
 
@@ -273,10 +299,17 @@ function build(directory, config, parameters, level, seed)
         * (config.primaryAbility.overchargeTime > 0 and 2 or 1)
       config.tooltipFields.damagePerShotLabel = "^#FF9000;" .. util.round(loDamage, 1) .. " - " .. util.round(hiDamage, 1)
 
-      -- fire rate
+      --[[ fire time calculation:
+      If gun is manualFeed:
+        fireTime* = cockTime + fireTime
+      else:
+        fireTime* = cycleTime + fireTime
+      
+      ]]--
       config.primaryAbility.manualFeed = parameters.primaryAbility.manualFeed or config.primaryAbility.manualFeed
       config.primaryAbility.cockTime = parameters.primaryAbility.cockTime or config.primaryAbility.cockTime
       config.primaryAbility.cycleTime = parameters.primaryAbility.cycleTime or config.primaryAbility.cycleTime
+      
       local actualCycleTime = config.primaryAbility.manualFeed
         and config.primaryAbility.cockTime
         or config.primaryAbility.cycleTime
@@ -284,16 +317,16 @@ function build(directory, config, parameters, level, seed)
       if type(actualCycleTime) ~= "table" then
         actualCycleTime = {actualCycleTime, actualCycleTime}
       end
-      local loFireRate = actualCycleTime[1] + config.primaryAbility.fireTime
-      local hiFireRate = actualCycleTime[2] + config.primaryAbility.fireTime
-      config.tooltipFields.fireRateLabel = ("^#FFD400;" .. util.round(loFireRate*1000, 1))
-      .. (loFireRate == hiFireRate and "ms" or (" - " .. util.round(hiFireRate*1000, 1) .. "ms"))
-
+      
+      local loFireTime = actualCycleTime[1] + (parameters.primaryAbility.fireTime or config.primaryAbility.fireTime)
+      local hiFireTime = actualCycleTime[2] + (parameters.primaryAbility.fireTime or config.primaryAbility.fireTime)
+      config.tooltipFields.fireTimeLabel = ("^#FFD400;" .. util.round(loFireTime*1000, 1))
+      .. (loFireTime == hiFireTime and "ms" or (" - " .. util.round(hiFireTime*1000, 1) .. "ms"))
+      
       -- set reload cost
       config.primaryAbility.reloadCost = parameters.primaryAbility.reloadCost or config.primaryAbility.reloadCost
       config.tooltipFields.reloadCostLabel = "^#b0ff78;" .. config.primaryAbility.reloadCost or 0
 
-      
       local bulletReloadTime = parameters.primaryAbility.reloadTime or config.primaryAbility.reloadTime
       local bulletsPerReload = parameters.primaryAbility.bulletsPerReload or config.primaryAbility.bulletsPerReload
       local maxAmmo = parameters.primaryAbility.maxAmmo or config.primaryAbility.maxAmmo
@@ -333,15 +366,7 @@ function build(directory, config, parameters, level, seed)
       if modList then
         modListDesc = "^#abfc6d;"
         -- FIXME: Turn me to a set
-        local exclude = {
-          ability=true,
-          rail=true,
-          sights=true,
-          muzzle=true,
-          underbarrel=true,
-          stock=true,
-          ammoType=true
-        }
+        local exclude = set.new({"ability","rail","sights","muzzle","underbarrel","stock","ammoType"})
         for modSlot, modKind in pairs(modList) do
           if not exclude[modSlot] and modKind[1] ~= "ability" then
             modListDesc = modListDesc .. modKind[1] .. ".\n"
@@ -355,7 +380,13 @@ function build(directory, config, parameters, level, seed)
 
     end
     -- sb.logInfo("[ PROJECT 45 ] " .. sb.printJson(parameters.primaryAbility))
-    config.tooltipFields.altAbilityLabel = config.altAbility and ("^#ABD2FF;" .. (config.altAbility.name or "unknown")) or "^#777777;None"
+    if parameters.altAbility then
+      config.tooltipFields.altAbilityLabel = ("^#ABD2FF;" .. (parameters.altAbility.name or "Unknown"))
+    elseif config.altAbility then
+      config.tooltipFields.altAbilityLabel = ("^#ABD2FF;" .. (config.altAbility.name or "Unknown"))
+    else
+      config.tooltipFields.altAbilityLabel = "^#777777;None"
+    end
 
   end
 
@@ -365,9 +396,4 @@ function build(directory, config, parameters, level, seed)
   parameters.price = config.price -- needed for gunshop
 
   return config, parameters
-end
-
-function rgbToHex(rgbArray)
-  local hexString = string.format("%02X%02X%02X", rgbArray[1], rgbArray[2], rgbArray[3])
-  return hexString
 end

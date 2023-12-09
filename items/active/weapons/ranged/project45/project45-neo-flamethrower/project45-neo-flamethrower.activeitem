@@ -1,9 +1,9 @@
 {
   "itemName" : "project45-neo-flamethrower",
-  "price" : 1000,
+  "price" : 10000,
   "maxStack" : 1,
   "rarity" : "Essential",
-  "description" : "A flamethrower.",
+  "description" : "The design of this geneva-violating weapon of mass destruction was brought to you by Hanz and Co.",
   "shortdescription" : "Flamethrower",
   "tooltipKind" : "project45gun",
   "gunArchetype": "Experimental",
@@ -26,8 +26,13 @@
   "project45GunModInfo": {
     "category": "experimental",
     "statModCountMax": 10,
+    "allowsConversion": [
+      "beam"
+    ],
     "acceptsModSlot": [
-      "rail"
+      "rail",
+      
+      "material"
     ],
     "acceptsAmmoArchetype": [
       "liquid",
@@ -129,22 +134,27 @@
   "ejectionPortOffset": [-0.25, 0.5],
   "magazineOffset": [0, 0],
 
-  "railOffset": [0.5, -1],
+  "railOffset": [0.25, 0],
 
   "scripts" : ["/items/active/weapons/ranged/project45gunneo.lua"],
     
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
+    "baseDamage": 4.5,
     "maxAmmo": 100,
     "bulletsPerReload": 100,
     "ammoConsumeChance": 0.5,
     "inaccuracy": 3,
-    "spread": 7.5,
+    "spread": 2,
     "semi": true,
     "cycleTime": 0.05,
     "loopFiringAnimation": true,
     "projectileKind": "projectile",
-    "projectileType": "flamethrower",
+    "projectileType": "project45-starforge-firefluxbolt",
+    "projectileParameters": {
+      "speed": 50,
+      "statusEffects":["burning"]
+    },
     "multishot": 2.5,
     "screenShakeAmount": [1, 0.1],
     "maxScreenShakeTime": 1,

@@ -1,9 +1,9 @@
 {
   "itemName" : "project45-neo-beamsplitter",
-  "price" : 1000,
+  "price" : 2500,
   "maxStack" : 1,
-  "rarity" : "Essential",
-  "description" : "An energy shotgun.",
+  "rarity" : "Rare",
+  "description" : "An energy gun that splits high-amplitude low-frequency waves with a specially-cut crystal.",
   "shortdescription" : "Beamsplitter",
   "tooltipKind" : "project45gun",
   "gunArchetype": "Energy Shotgun",
@@ -45,11 +45,20 @@
   "project45GunModInfo":{
     "category": "energy",
     "statModCountMax": 10,
-    "acceptsAmmoArchetypes":[],
+    "allowsConversion": [
+      "projectile",
+      "summoned"
+    ],
+    "acceptsAmmoArchetype":[
+      "laser"
+    ],
     "acceptsModSlot": [
       "rail",
       "underbarrel",
-      "muzzle"
+      "muzzle",
+      
+      "receiver",
+      "material"
     ]
   },
 
@@ -59,7 +68,7 @@
   "magazineOffset": [0, 0],
 
   "railOffset": [1, 0],
-  "underbarrelOffset": [0.5, -0.5],
+  "underbarrelOffset": [0.75, 0],
 
   "debugPointColors": {
     "rail": "red",
@@ -71,6 +80,7 @@
     
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
+    "baseDamage": 25,
     "maxAmmo": 15,
     "bulletsPerReload": 15,
     "inaccuracy": 3,
@@ -78,7 +88,7 @@
     "recoilMaxDeg": 7.5,
     "recoverDelay": 0.05,
     "semi": true,
-    "cycleTime": 0.1,
+    "cycleTime": 0.25,
     "projectileKind": "hitscan",
     "projectileCount": 3,
     "spread": 3,

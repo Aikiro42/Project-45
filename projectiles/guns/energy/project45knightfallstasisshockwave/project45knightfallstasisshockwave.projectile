@@ -16,7 +16,7 @@
   "lightColor" : [225, 225, 225],
   "fullbright" : true,
   "statusEffects" : [
-	  "knightfall_shortstasis"
+	  "project45knightfallstasis"
   ],
   "knockback" : 0,
   "knockbackDirectional" : true

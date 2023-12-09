@@ -1,8 +1,8 @@
 {
   "itemName" : "project45-neo-sniper",
-  "price" : 1000,
+  "price" : 5000,
   "maxStack" : 1,
-  "rarity" : "Essential",
+  "rarity" : "Legendary",
   "description" : "A semi-auto bullpup marksman rifle.",
   "shortdescription" : "Sniper",
   "tooltipKind" : "project45gun",
@@ -47,17 +47,24 @@
   "project45GunModInfo":{
     "category": "ballistic",
     "statModCountMax": 10,
+    "allowsConversion": [
+      "hitscan",
+      "summoned"
+    ],
     "acceptsAmmoTypes":{
       "ballistic": true
     },
-    "acceptsAmmoArchetypes":{
+    "acceptsAmmoArchetype":{
       "generic": true
     },
     "acceptsModSlot": [
       "rail",
       "sights",
       "underbarrel",
-      "muzzle"
+      "muzzle",
+      
+      "magazine",
+      "material"
     ]
   },
 
@@ -67,9 +74,9 @@
   "ejectionPortOffset": [-1.375, 0.5625],
   "magazineOffset": [-1.375, -0.125],
   
-  "railOffset": [0.75, 0.5],
-  "underbarrelOffset": [1.5, 0.1875],
-  "sightsOffset": [1.25, 0.9375],
+  "railOffset": [1, 0.125],
+  "underbarrelOffset": [0.5, -0.05],
+  "sightsOffset": [0.375, 0.6875],
 
   "debugPointColors": {
     "rail": "red",
@@ -82,7 +89,7 @@
     
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
-
+    "baseDamage": 14,
     "maxAmmo": 12,
     "bulletsPerReload": 12,
     "semi": false,

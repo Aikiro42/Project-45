@@ -2,10 +2,14 @@
   "itemName" : "project45-firebeammod",
   "price" : 15000,
   "rarity" : "Legendary",
-  "tooltipKind" : "project45gunmod",
-  "category" : "Energy Ammo Mod",
-  "inventoryIcon" : "/items/augments/project45-gunmods/ammo/project45-firebeammod/project45-firebeammod.png",
-  "description" : "Overloaded beam config for energy guns. Incompatible with ballistic guns.",
+  "tooltipKind" : "project45gunmod2",
+  "category" : "Ammo Mod",
+  "tooltipFields":{
+    "objectImage": "/items/augments/project45-gunmods/ammo/project45-firebeammod/project45-firebeammod.png"
+  },
+  "inventoryIcon" : "/items/augments/project45-gunmods/ammo/project45-firebeammod/project45-firebeammodicon.png",
+  "description" : "Overloaded beam configuration for energy guns. The power of the sun in the chamber of your gun.",
+  "technicalInfo": "Fires a beam that deals fire damage.",
   "shortdescription" : "Fire Beam",
 
   "augment":{
@@ -38,5 +42,6 @@
 
   "radioMessagesOnPickup" : [ "pickupaugment" ],
 
-  "scripts" : [ "/scripts/augments/project45-gunmod/ammomod.lua" ]
+  "scripts" : [ "/scripts/augments/project45-gunmod/ammomod.lua" ],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
 }

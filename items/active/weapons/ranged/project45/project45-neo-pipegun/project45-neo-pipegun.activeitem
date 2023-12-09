@@ -1,12 +1,12 @@
 {
   "itemName" : "project45-neo-pipegun",
-  "price" : 1000,
+  "price" : 625,
   "maxStack" : 1,
-  "rarity" : "Essential",
+  "rarity" : "Common",
   "description" : "A zip gun. Particularly well-made; WS45 parts are amazing.",
   "shortdescription" : "Pipe Gun",
   "tooltipKind" : "project45gun",
-  "gunArchetype": "Pipe Gun",
+  "gunArchetype": "Makeshift Gun",
   "category" : "pistol",
   "twoHanded" : true,
   "itemTags" : ["weapon","ranged","pistol"],
@@ -17,6 +17,10 @@
   "project45GunModInfo": {
     "category": "ballistic",
     "statModCountMax": 20,
+    "allowsConversion": [
+      "hitscan",
+      "summoned"
+    ],
     "acceptsAmmoArchetype": [
       "bullet",
       "shotgun"
@@ -26,7 +30,9 @@
       "sights",
       "muzzle",
       "underbarrel",
-      "stock"
+      "stock",
+      
+      "material"
     ],
     "flipSlot": [
       "stock"
@@ -106,14 +112,14 @@
   },
 
   "baseOffset" : [0.75, 0.25],
-  "muzzleOffset" : [1.75, 0.375],
+  "muzzleOffset" : [1.75, 0.325],
   "ejectionPortOffset": [-1, 0.375],
   "magazineOffset": [0, 0],
 
-  "railOffset": [1.75, 0.5],
-  "underbarrelOffset": [1.5, 0.25],
-  "sightsOffset": [1, 0.625],
-  "stockOffset": [0, -0.125],
+  "railOffset": [1, 0.25],
+  "underbarrelOffset": [0.75, 0],
+  "sightsOffset": [0.25, 0.5],
+  "stockOffset": [-0.75, -0.5625],
 
   "debugPointColors": {
     "rail": "red",
@@ -141,9 +147,9 @@
     "loadRoundsThroughBolt": true,
     "ejectCasingsWithMag": true,
     "ejectMagOnEmpty": "ejecting",
-    "reloadOnEjectMag": true,
-    "slamFire": true,
-    "jamChances": [1, 0.5, 0.1, 0],
+    "reloadOnEjectMag": false,
+    "slamFire": false,
+    "jamChances": [0.5, 0.1, 0.05, 0],
 
     "recoilAmount": 15, // amount of recoil per shot, in degrees; arm and weapon will rotate by half of this
     "recoilMaxDeg": 45, // the most the arm and weapon will rotate, in degrees.

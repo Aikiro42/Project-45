@@ -1,6 +1,6 @@
 {
   "itemName" : "project45-scz-spacecowboy",
-  "price" : 1000,
+  "price" : 15000,
   "maxStack" : 1,
   "rarity" : "Essential",
   "description" : "A railgun designed from blueprints found in a hazardous containment zone.",
@@ -13,6 +13,10 @@
   "level" : 1,
   "muzzleFlashColor": [255, 255, 200],
   "inventoryIcon" : "project45-scz-spacecowboy-icon.png",
+
+  "project45GunModInfo": {
+    "category": "special"
+  },
 
   "animationParts" : {
     "middle" : "project45-scz-spacecowboy.png",
@@ -95,8 +99,20 @@
     "recoverTime": 1,
     "cockTime": 0.5,
     "cycleTime": 1,
+    "screenShakeAmount": 1,
     "projectileKind": "projectile",
     "projectileType": "project45stdfirebullet",
+
+    "muzzleProjectiles": [
+      {
+        "type": "project45_muzzleshockwave",
+        "parameters": {
+          "speed": -5
+        },
+        "firePerShot": true
+      }
+    ],
+
     "laser":{
       "enabled": false
     },
@@ -106,6 +122,10 @@
   },
 
   "altAbilityType": "project45gunscope",
+  "altAbility": {
+    "reticleProjectile": "project45hightechcamera",
+    "laserColor": [252, 119, 3]
+  },
 
   "builder" : "/items/buildscripts/buildproject45neoneo.lua"
 }

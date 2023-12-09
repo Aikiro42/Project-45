@@ -4,6 +4,8 @@ require "/scripts/poly.lua"
 
 hitscanLib = {}
 
+local modConfig = root.assetJson("/configs/project45/project45_generalconfig.config")
+
 -- replaces fireProjectile
 function hitscanLib:fireHitscan(projectileType)
 
@@ -12,9 +14,11 @@ function hitscanLib:fireHitscan(projectileType)
     -- hitreg[2] is where the bullet trail terminates
 
     local hitscanInfos = {}
-
+    local finalDamage = self:damagePerShot(true)
+    local nProjs = self.projectileCount * self:rollMultishot()
+    local nProjsOverflowMult = math.max(1, nProjs/modConfig.hitscanProjectileLimit)
     -- get damage source (line) information
-    for i=1, (self.projectileCount * self:rollMultishot()) do
+    for i=1, math.min(modConfig.hitscanProjectileLimit, nProjs) do
 
       local hitReg = self:hitscan(false)
       local damageArea = {
@@ -22,14 +26,18 @@ function hitscanLib:fireHitscan(projectileType)
         vec2.sub(hitReg[2], mcontroller.position())
       }
       
-      local finalDamage = self:damagePerShot()
       local damageConfig = {
         -- we included activeItem.ownerPowerMultiplier() in
         -- self:damagePerShot() so we cancel it
-        baseDamage = finalDamage,
+        -- multiply nProjsOverflowMult to final damage to compensate for lost multishot
+        baseDamage = finalDamage*nProjsOverflowMult,
         timeout = self.currentCycleTime,
       }
       damageConfig = sb.jsonMerge(damageConfig, self.hitscanParameters.hitscanDamageConfig or {})
+      if self.critFlag then 
+        damageConfig.statusEffects = sb.jsonMerge(damageConfig.statusEffects, {"project45critdamaged"})
+        self.critFlag = false
+      end
       damageConfig.timeoutGroup = "project45projectile" .. i
 
       table.insert(hitscanInfos, {
@@ -66,7 +74,17 @@ function hitscanLib:fireHitscan(projectileType)
         maxLifetime = life,
         color = self.hitscanParameters.hitscanColor
       })
-      
+
+      if self.hitscanParameters.hitscanBrightness > 0 then
+        table.insert(self.projectileStack, {
+          width = self.hitscanParameters.hitscanWidth * self.hitscanParameters.hitscanBrightness,
+          origin = hitscanInfo[3][1],
+          destination = hitscanInfo[3][2],
+          lifetime = life,
+          maxLifetime = life,
+          color = {255,255,255}
+        })
+      end   
     end
 
     -- hitscan vfx
@@ -166,6 +184,8 @@ function hitscanLib:fireBeam()
     local ammoConsumeTimer = beamTimeout
     local consumedAmmo = false
 
+    local originalStatusEffects = sb.jsonMerge(beamDamageConfig.statusEffects)
+
     local hitreg = self:hitscan(true)
     local beamStart = hitreg[1]
     local beamEnd = nil
@@ -190,6 +210,7 @@ function hitscanLib:fireBeam()
   
       if ammoConsumeTimer >= beamTimeout then
         -- TODO: if self:jam() then break end
+        if self:jam() then break end
         ammoConsumeTimer = 0
         if self.beamParameters.consumeAmmoOverTime or not consumedAmmo then
           self:updateAmmo(-self.ammoPerShot)
@@ -215,8 +236,15 @@ function hitscanLib:fireBeam()
   
         -- update base damage accordingly
         local crit = self:crit()
-        beamDamageConfig.baseDamage = self:damagePerShot(true) * crit
-  
+        local multishot = self.projectileCount * self:rollMultishot()
+        beamDamageConfig.baseDamage = self:damagePerShot(true) * crit * multishot
+
+        if crit > 1 then
+          beamDamageConfig.statusEffects = sb.jsonMerge(beamDamageConfig.statusEffects, { "project45critdamaged" })
+        else
+          beamDamageConfig.statusEffects = sb.jsonMerge(originalStatusEffects)
+        end
+
         -- draw damage poly
         self.weapon:setDamage(
           beamDamageConfig,
@@ -301,6 +329,7 @@ function hitscanLib:fireBeam()
     self:stopFireLoop()
 
     self.isFiring = false
+    self.muzzleProjectileFired = false
 
     hitreg = self:hitscan(true)
     beamEnd = hitreg[2]
@@ -425,9 +454,12 @@ function hitscanLib:updateLaser()
 end
 
 function hitscanLib:updateSummonAreaIndicator()
-  if not self.laser.enabled then return
+  if not (self.laser.enabled or storage.altLaserEnabled) then
+    activeItem.setScriptedAnimationParameter("primarySummonArea", nil)
+    return
   elseif storage.ammo < 0 or self.reloadTimer >= 0 then
     activeItem.setScriptedAnimationParameter("primaryLaserEnabled", false)
+    activeItem.setScriptedAnimationParameter("primarySummonArea", nil)
     return
   end
   activeItem.setScriptedAnimationParameter("primaryLaserEnabled", not self.performanceMode)

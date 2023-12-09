@@ -1,5 +1,26 @@
 project45util = {}
 
+project45util.categoryStrings = {
+  ballistic = "^#51bd3b; Ballistic^reset;",
+  energy = "^#d29ce7; Energy^reset; ",
+  generic = "^#FFFFFF;Ѻ Generic^reset; ",
+  experimental = "^#A8E6E2; Experimental^reset; ",
+  special = "^#e2c344;© Special^reset; ",
+  universal = "^#cfcfcf;¤ Universal^reset;"
+}
+
+function project45util.rgbToHex(rgbArray)
+  local hexString = string.format("%02X%02X%02X", rgbArray[1], rgbArray[2], rgbArray[3])
+  return hexString
+end
+
+function project45util.capitalize(str)
+  if str then
+    return (str:gsub("^%l", string.upper))
+  end
+  return nil
+end
+
 function project45util.diceroll(chance)
   return math.random() <= chance
 end
@@ -58,5 +79,37 @@ function project45util.mergeLists(lista, listb)
     table.remove(lista, 1)
   end
 
+end
 
+function project45util.__vividness(color)
+  -- vividness is distance from "gray diagonal"
+  --[[
+      Chen, T. (January 2022)
+      A measurement of the overall vividness of a color image based on RGB color model.
+      Electronic Imaging.
+      Society for Imaging Science and Technology.
+      DOI: https://doi.org/10.2352/EI.2022.34.15.COLOR-245
+  --]]
+  return (math.sqrt(6)/3) * math.sqrt(
+      color[1]^2
+      + color[2]^2
+      + color[3]^2
+      - (color[1] * color[2])
+      - (color[1] * color[3])
+      - (color[2] * color[3])
+  )
+end
+
+function project45util.moreVividColor(color1, color2)
+  local alpha = 255
+
+  -- compare color transparency; choose less transparent color
+  if #color1 > 3 and #color2 > 3 then
+      alpha = math.max(color1[4], color2[4])
+  end
+  
+  -- choose more vivid color
+  local chosen = project45util.__vividness(color1) > project45util.__vividness(color2) and color1 or color2
+  table.insert(chosen, alpha)
+  return chosen
 end

@@ -1,8 +1,8 @@
 {
   "itemName" : "project45-neo-grenadelauncher",
-  "price" : 1000,
+  "price" : 5000,
   "maxStack" : 1,
-  "rarity" : "Essential",
+  "rarity" : "Legendary",
   "description" : "A grenade launcher.",
   "shortdescription" : "Grenade Launcher",
   "tooltipKind" : "project45gun",
@@ -29,8 +29,9 @@
     "statModCountMax": 10,
     "acceptsModSlot": [
       "rail",
-      "sights",
-      "muzzle"
+      // "sights",
+      
+      "material"
     ],
     "acceptsAmmoArchetype": [
       "grenade"
@@ -130,13 +131,14 @@
     "underbarrel": "green"
   },
 
-  "railOffset": [1.5, 0.125],
-  "sightsOffset": [0.375, 0.75],
+  "railOffset": [1, 0.125],
+  // "sightsOffset": [0.25, 0.8],
 
   "scripts" : ["/items/active/weapons/ranged/project45gunneo.lua"],
     
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
+    "baseDamage": 50,
     "maxAmmo": 5,
     "bulletsPerReload": 5,
     "semi": true,

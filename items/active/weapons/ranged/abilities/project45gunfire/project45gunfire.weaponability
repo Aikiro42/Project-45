@@ -105,21 +105,45 @@
 
     },
 
+
     // settings for firing multiple types of projectiles
     // only matters if `projectileType` is a list
+    /*
     "projectileFireSettings": {
-      "sequential": false,
-      "resetProjectileIndexOnReload": false,
+      "sequential": false,  // whether the projectiles are fired sequentially or randomly
+      "resetProjectileIndexOnReload": false, // only matters if "sequential" is true
+      // determines whether multiple projectiles fired are of the same projectileType
+      // or different projectileTypes
       "batchFire": true
     },
+    */
 
     // You can make the muzzle shoot an additional projectile this way.
+    /*
     "muzzleProjectileType": null,
     "muzzleProjectileParameters": {
 
     },
+    // Offset when firing muzzle projectiles; sometimes the firePosition is way back into the barrel
+    // like in project45-neo-gaussrifle, so you'd want to move the muzzle projectile forward
+    "muzzleProjectileOffset": [0, 0],
 
-    "summonParameters": {
+    // List of Projectile VFX that will be spawned from the projectile tip
+    "muzzleProjectiles": [{
+        "type": "project45_muzzleshockwave",
+        "offset": [5, 0],
+        "parameters": {
+          "speed": -5
+        },
+        "count": 1,
+        "spread": 1,
+        "firePerShot": true
+      }
+    ],
+    */
+
+    "summonedProjectileType": "project45_defaultsummon",
+    "summonedProjectileParameters": {
       "summonAnywhere": false, // if true, can summon projectiles anywhere as long as it isn't within terrain
       "summonInTerrain": false // if true, can summon in terrain. Renders summonAnywhere true.
     },
@@ -140,6 +164,7 @@
       // damage configuraiton of hitscan damage line
       // baseDamage is calculated by self:damagePerShot() * crit / activeItem.ownerPowerMultiplier()
       // but can be overridden; it's recommended that it shouldn't be overridden
+      // "hitscanBrightness": 0, // % width of white line inside visual hitscan line, max 1 (equal width)
       "hitscanDamageConfig": {
         "damageKind": "physical",
         "statusEffects": []
@@ -236,21 +261,22 @@
 
     // [bad, ok, good, perfect] reload damage multiplier
     "reloadRatingDamageMults": [0.8, 1, 1.25, 1.5],
-    "jamChances": [0.5, 0.05, 0, 0],
+    "jamChances": [0.05, 0.013, 0, 0],
 
     // ____________________________________[ SECTION: Accuracy and Recoil Config ] ____________________________________
 
     // standard deviation of random arm movement as the gun recoils (in degrees, not radians)
     // note that this deviation is eliminated if the player crouches
-    "inaccuracy": 5, 
+    "inaccuracy": 3, 
     "recoilUpOnly": false, // forces inaccuracy to cause the weapon to go upwards only
-    "recoilAmount": 1 , // amount of recoil per shot, in degrees; arm and weapon will rotate by half of this
-    "recoilMaxDeg": 7.5, // the most the arm and weapon will rotate, in degrees.
+    "recoilAmount": 0.5, // amount of recoil per shot, in degrees; arm and weapon will rotate by half of this
+    "recoilMaxDeg": 5, // the most the arm and weapon will rotate, in degrees.
     "recoilMult": 1, // multiplies recoilAmount
     "recoilCrouchMult": 0.5, // mulitplies recoil and recoilMaxDeg when crouching
     
     "recoverTime": 1.5, // time it takes to recover aim completely, in seconds
     "recoverDelay": 0.1, // time before aim is recovered
+    "recoverMult": 1, // multipler to recoverTime and recoverDelay
     "recoilMomentum": 0,  // amount of momentum applied to player when firing the gun; canceled by crouching
     "screenShakeAmount": [0.5, 0.1], // amount of screenshake per shot
     // time it takes to reach the max cycle time, in seconds

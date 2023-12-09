@@ -1,9 +1,9 @@
 {
   "itemName" : "project45-neo-amr",
-  "price" : 1000,
+  "price" : 10000,
   "maxStack" : 1,
   "rarity" : "Essential",
-  "description" : "An anti-materiel rifle.",
+  "description" : "An anti-materiel rifle. The recoil is enough to throw you across a room.",
   "shortdescription" : "AMR",
   "tooltipKind" : "project45gun",
   "gunArchetype": "Bolt-action",
@@ -27,10 +27,18 @@
   "project45GunModInfo": {
     "category": "ballistic",
     "statModCountMax": 10,
+    "allowsConversion": [
+      "hitscan",
+      "summoned"
+    ],
     "acceptsModSlot": [
       "rail",
       "sights",
-      "underbarrel"
+      "underbarrel",
+      
+      "material",
+      "magazine",
+      "receiver"
     ],
     "acceptsAmmoArchetype": [
       "bullet",
@@ -77,9 +85,9 @@
   "ejectionPortOffset": [-0.5, 0.625],
   "magazineOffset": [-0.5, -0.25],
   
-  "railOffset": [3, 0.5],
-  "sightsOffset": [1.5, 0.875],
-  "underbarrelOffset": [2, 0.125],
+  "railOffset": [0.75, 0.375],
+  "sightsOffset": [-0.25, 0.8],
+  "underbarrelOffset": [0.75, 0.125],
 
   "debugPointColors": {
     "rail": "red",
@@ -91,11 +99,14 @@
     
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
+    "baseDamage": 45,
     "maxAmmo": 5,
     "bulletsPerReload": 5,
     "inaccuracy": 10,
     "semi": true,
-    "cycleTime": 0.1,
+    "cycleTime": 0.5,
+    "audibleEjection": true,
+    
     "cockTime": 0.6,
     "screenShakeAmount": 2,
     "manualFeed": true,
@@ -109,8 +120,15 @@
     "recoverDelay": 0.125,
     "recoverTime": 1,
 
-
-    // "reloadTime": 10,
+    "muzzleProjectiles": [
+      {
+        "type": "project45_muzzleshockwave",
+        "parameters": {
+          "speed": -5
+        },
+        "firePerShot": true
+      }
+    ],
   
     "stances":{
       "reloading": {

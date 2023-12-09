@@ -1,10 +1,10 @@
 {
   "itemName" : "project45-neo-leveraction",
-  "price" : 1000,
+  "price" : 2500,
   "maxStack" : 1,
-  "rarity" : "Essential",
+  "rarity" : "Rare",
   "description" : "A lever-action coach gun.",
-  "shortdescription" : "New Lever Action",
+  "shortdescription" : "Lever Action",
   "tooltipKind" : "project45gun",
   "gunArchetype": "Lever-Action Rifle",
   "category" : "rifle",
@@ -17,11 +17,18 @@
   "project45GunModInfo":{
     "category": "ballistic",
     "statModCountMax": 10,
+    "allowsConversion": [
+      "hitscan",
+      "summoned"
+    ],
     "acceptsModSlot": [
       "rail",
       "sights",
       "underbarrel",
-      "muzzle"
+      "muzzle",
+      
+      "magazine",
+      "material"
     ],
     "acceptsAmmoArchetype": [
       "bullet",
@@ -66,9 +73,9 @@
   "ejectionPortOffset": [0, 0.5],
   "magazineOffset": [0, 0],
 
-  "railOffset": [0.5, 0.375],
-  "underbarrelOffset": [1.625, 0.375],
-  "sightsOffset": [1.125, 0.75],
+  "railOffset": [0.125, 0],
+  "underbarrelOffset": [0.625, -0.25],
+  "sightsOffset": [0.5, 0.5],
 
   "debugPointColors": {
     "rail": "red",
@@ -81,7 +88,7 @@
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
     "debug": false,
-    "baseDamage": 10,
+    "baseDamage": 12,
     "maxAmmo": 8,
     "bulletsPerReload": 1,
     "inaccuracy": 0,

@@ -1,6 +1,6 @@
 {
   "itemName" : "project45-gov-scarlet",
-  "price" : 1000,
+  "price" : 15000,
   "maxStack" : 1,
   "rarity" : "Essential",
   "description" : "A katana forged from a material called \"Godesium\". Found in a raptured planet.",
@@ -12,6 +12,10 @@
   "itemTags" : ["weapon","ranged","rifle"],
   "level" : 1,
   "inventoryIcon" : "project45-gov-scarlet-icon.png",
+
+  "project45GunModInfo": {
+    "category": "special"
+  },
 
   "animationParts" : {
     "middle" : "project45-gov-scarlet.png",
@@ -69,7 +73,7 @@
     "baseDamage": 50,
 
     "projectileKind": "summoned",
-    "projectileType": "project45_elecexplosion",
+    "summonedProjectileType": "project45_elecexplosion",
     "cycleTime": 0.075,
     "semi": false,
     "hideMuzzleFlash": true,

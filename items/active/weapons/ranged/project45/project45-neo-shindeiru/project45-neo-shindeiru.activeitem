@@ -1,6 +1,6 @@
 {
   "itemName" : "project45-neo-shindeiru",
-  "price" : 1000,
+  "price" : 10000,
   "maxStack" : 1,
   "rarity" : "Essential",
   "description" : "A smart SMG.",
@@ -30,7 +30,7 @@
           {
             "particle" : {
               "type" : "animated",
-              "image" : "/particles/bulletcases/project45bulletcasesmall/project45bulletcasesmall.animation",
+              "image" : "/particles/project45/bulletcases/project45bulletcasesmall/project45bulletcasesmall.animation",
               "fade" : 0.9,
               "position" : [0, 0],
               "size" : 1.0,
@@ -69,7 +69,10 @@
     "acceptsModSlot": [
       "rail",
       "sights",
-      "muzzle"
+      "muzzle",
+      
+      "magazine",
+      "material"
     ],
     "acceptsAmmoArchetype": [
       "bullet"
@@ -81,8 +84,8 @@
   "ejectionPortOffset": [-1, 0.125],
   "magazineOffset": [0.125, 0.5],
   
-  "railOffset": [1.125, 0.5],
-  "sightsOffset": [1, 1],
+  "railOffset": [0.5, 0],
+  "sightsOffset": [0.5, 0.75],
 
   "debugPointColors": {
     "rail": "red",
@@ -96,9 +99,10 @@
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
 
+    "baseDamage": 10,
 
     "critChance": 0.15,
-    "critDamageMult": 0.1,
+    "critDamageMult": 1.1,
 
     "maxAmmo": 40,
     "bulletsPerReload": 40,

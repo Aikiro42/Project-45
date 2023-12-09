@@ -2,25 +2,30 @@
   "itemName" : "project45-gravbombmod",
   "price" : 15000,
   "rarity" : "Legendary",
-  "tooltipKind" : "project45gunmod",
-  "category" : "Grenade Ammo Mod",
-  "inventoryIcon" : "/items/augments/project45-gunmods/ammo/project45-gravbombmod/project45-gravbombmod.png",
-  "description" : "Temporal Grenades that float in mid-air, detonating after a short time.",
-  "shortdescription" : "Gravity Grenades",
+  "tooltipKind" : "project45gunmod2",
+  "category" : "Ammo Mod",
+  "tooltipFields":{
+    "objectImage": "/items/augments/project45-gunmods/ammo/project45-gravbombmod/project45-gravbombmod.png"
+  },
+  "inventoryIcon" : "/items/augments/project45-gunmods/ammo/project45-gravbombmod/project45-gravbombmodicon.png",
+  "description": "Technology adapted from Ancient Artifacts. Does not seem to affect the caster.",
+  "technicalInfo" : "Summons temporal singularities that float in mid-air, detonating after a short time, dealing electric damage.",
+  "shortdescription" : "Singularity Essence",
 
   "augment":{
-    "modName": "Gravity Grenades",
-    "category": "ballistic", // todo: make this either matter or energy and make a gun for this
-    "archetype": "grenade",
+    "modName": "Singularity Essence",
+    "category": "experimental", // TODO: make this either matter or energy and make a gun for this
+    "archetype": "summoned",
 
-    "projectileKind": "projectile",
-    "projectileType": "project45gravitygrenade",
-    "projectileParameters":{
-      "speed": 25
+    "projectileKind": "summoned",
+    "summonedProjectileType": "project45gravitygrenade",
+    "summonedProjectileParameters":{
+      "speed": 0
     }
   },
 
   "radioMessagesOnPickup" : [ "pickupaugment" ],
 
-  "scripts" : [ "/scripts/augments/project45-gunmod/ammomod.lua" ]
+  "scripts" : [ "/scripts/augments/project45-gunmod/ammomod.lua" ],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
 }

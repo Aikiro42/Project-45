@@ -1,0 +1,112 @@
+{
+  "itemName" : "project45-neo-gazer",
+  "price" : 5000,
+  "maxStack" : 1,
+  "rarity" : "Legendary",
+  "description" : "An energy sniper rifle.",
+  "shortdescription" : "Gazer",
+  "tooltipKind" : "project45gun",
+  "gunArchetype": "Energy Sniper Rifle",
+  "category" : "sniper",
+  "twoHanded" : true,
+  "itemTags" : ["weapon","ranged","sniper"],
+  "level" : 1,
+  "muzzleFlashColor": [255, 255, 255],
+  "inventoryIcon" : "project45-neo-gazer-icon.png",
+
+  "animationParts" : {
+    "middle" : "project45-neo-gazer.png",
+    "middleFullbright" : "",
+    "charge": "",
+    "chargeFullbright": "",
+    "magazine": "project45-neo-gazer-mag.png",
+    "magazineFullbright": ""
+  },
+
+  "animationCustom": {
+    "particleEmitters": {
+      "ejectionPort": {
+        "particles": [
+        ]
+      },
+      "magazine": {
+        "particles": [
+          {"particle": "project45energygunmag3"}
+        ]
+      }
+    },
+
+    "sounds": {
+      "fire" : ["/sfx/project45neosfx/fire/fire-energy1.ogg"],
+      "hollow": []
+    }
+  },
+
+  "project45GunModInfo":{
+    "category": "energy",
+    "statModCountMax": 10,
+    "allowsConversion": [
+      "projectile",
+      "beam",
+      "summoned"
+    ],
+    "acceptsAmmoArchetype":[
+      "laser"
+    ],
+    "acceptsModSlot": [
+      "rail",
+      "underbarrel",
+      "muzzle",
+      "sights",
+
+      "receiver",
+      "material",
+      "magazine"
+    ]
+  },
+
+  "baseOffset" : [1, 0.25],
+  "muzzleOffset" : [2.125, 0.1625],
+  "ejectionPortOffset": [-0.25, 0.5],
+  "magazineOffset": [0, -0.25],
+
+  "railOffset": [1, 0.25],
+  "underbarrelOffset": [1.5, -0.3125],
+  "sightsOffset": [-0.25, 0.675],
+
+  "debugPointColors": {
+    "rail": "red",
+    "sights": "orange",
+    "underbarrel": "green"
+  },
+
+  "scripts" : ["/items/active/weapons/ranged/project45gunneo.lua"],
+    
+  "primaryAbilityType": "project45gunfire",
+  "primaryAbility": {
+    "baseDamage": 30,
+    "maxAmmo": 15,
+    "bulletsPerReload": 15,
+    "inaccuracy": 3,
+    "recoilAmount": 5,
+    "recoilMaxDeg": 15,
+    "recoverDelay": 0.1,
+    "semi": true,
+    "cycleTime": 0.3,
+    "projectileKind": "hitscan",
+    "projectileCount": 1,
+    "spread": 0.001,
+
+    "hitscanParameters": {
+      "hitscanWidth": 3
+    },
+
+    // "reloadTime": 10,
+
+    "laser":{
+      "enabled": false
+    }
+  },
+
+  "builder" : "/items/buildscripts/buildproject45neoneo.lua"
+}

@@ -2,23 +2,28 @@
   "itemName" : "project45-iceammomod",
   "price" : 15000,
   "rarity" : "Legendary",
-  "tooltipKind" : "project45gunmod",
-  "category" : "Energy Ammo Mod",
-  "inventoryIcon" : "/items/augments/project45-gunmods/ammo/project45-iceammomod/project45-iceammomod.png",
-  "description" : "Sub-zero laser configuration for energy guns. Incompatible with ballistic guns.",
+  "tooltipKind" : "project45gunmod2",
+  "category" : "Ammo Mod",
+  "tooltipFields":{
+    "objectImage": "/items/augments/project45-gunmods/ammo/project45-iceammomod/project45-iceammomod.png"
+  },
+  "inventoryIcon" : "/items/augments/project45-gunmods/ammo/project45-iceammomod/project45-iceammomodicon.png",
+  "description" : "Sub-zero laser configuration: simply a violation of thermodynamic principles.",
+  "technicalInfo" : "Fires hitscans that freeze enemies and deal ice damage.",
   "shortdescription" : "Cryo Lasers",
 
   "augment":{
     "modName": "Cryo Lasers",
     "category": "energy",
-    "archetype": "beam",
+    "archetype": "laser",
     "spread": 0.01,
     "muzzleFlashColor": [150,203,231],
     "projectileKind": "hitscan",
     "hitscanParameters":{
       "hitscanColor": [150,203,231],
+      "hitscanBrightness": 0.5,
       "hitscanDamageConfig":{
-        "damageKind": "ice",
+        "damageSourceKind": "ice",
         "statusEffects":["frostsnare", "frostslow", "project45freeze"]
       }
     },
@@ -34,5 +39,6 @@
 
   "radioMessagesOnPickup" : [ "pickupaugment" ],
 
-  "scripts" : [ "/scripts/augments/project45-gunmod/ammomod.lua" ]
+  "scripts" : [ "/scripts/augments/project45-gunmod/ammomod.lua" ],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
 }

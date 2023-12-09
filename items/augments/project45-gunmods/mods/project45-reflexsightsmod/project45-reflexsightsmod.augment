@@ -2,17 +2,20 @@
   "itemName" : "project45-reflexsightsmod",
   "price" : 15000,
   "rarity" : "Legendary",
-  "tooltipKind" : "project45gunmod",
-  "category" : "Grip Mod",
-  "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-reflexsightsmod/project45-reflexsightsmod.png",
-  "description" : "Allows for quicker target acquisition. Decreases spread by 75%.",
+  "tooltipKind" : "project45gunmod2",
+  "category" : "Gun Mod",
+  "tooltipFields":{
+    "objectImage": "/items/augments/project45-gunmods/mods/project45-reflexsightsmod/project45-reflexsightsmod.png"
+  },
+  "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-reflexsightsmod/project45-reflexsightsmodicon.png",
+  "description" : "Attachment that exploits reflective properties to acquire targets faster.",
+  "statInfo": "Spread x0.25\nRecoil x0.25\nRecovery Time x0.25",
   "shortdescription" : "Reflex Sights",
 
   "augment":{
     "modName": "Reflex Sights",
     "category": "universal",
     "slot": "sights",
-    "recoilMult": 0.1,
     "primaryAbility": {
       "laser": {
         "operation": "replace",
@@ -25,6 +28,14 @@
       "spread": {
         "operation": "multiply",
         "value": 0.25
+      },
+      "recoveryMult": {
+        "operation": "multiply",
+        "value": 0.25
+      },
+      "recoilMult": {
+        "operation": "multiply",
+        "value": 0.25
       }
     },
 
@@ -32,7 +43,7 @@
       "zLevel" : 5,
       "centered" : true,
       "image" : "/items/augments/project45-gunmods/mods/project45-reflexsightsmod/project45-reflexsightsmodsprite.png<directives>",
-      "offset": [0.0625, 0.1875]
+      "offset": [0.0625, 0.0625]
     }
 
     /*
@@ -55,5 +66,6 @@
 
   "radioMessagesOnPickup" : [ "pickupaugment" ],
 
-  "scripts" : [ "/scripts/augments/project45-gunmod/gunmod.lua" ]
+  "scripts" : [ "/scripts/augments/project45-gunmod/gunmod.lua" ],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
 }

@@ -1,4 +1,5 @@
 require "/scripts/augments/item.lua"
+require "/scripts/augments/project45-gunmod-helper.lua"
 require "/scripts/util.lua"
 require "/scripts/vec2.lua"
 require "/scripts/set.lua"
@@ -18,22 +19,22 @@ function apply(input)
     -- do not install if ammo type is already installed
     local modSlots = input.parameters.modSlots or {}
     if modSlots.ammoType then
-        return
+      return gunmodHelper.addMessage(input, "Ammo mod slot Occupied")
     end
 
-    local ammoExceptions = modInfo.ammoExceptions or {}
-    ammoExceptions.accept = ammoExceptions.accept or {}
-    ammoExceptions.deny = ammoExceptions.deny or {}
+    local modExceptions = modInfo.modExceptions or {}
+    modExceptions.accept = modExceptions.accept or {}
+    modExceptions.deny = modExceptions.deny or {}
 
     -- check if ammo mod is particularly denied
-    local denied = set.new(ammoExceptions.deny)
+    local denied = set.new(modExceptions.deny)
     if denied[config.getParameter("itemName")] then
       sb.logError("(ammomod.lua) Ammo mod application failed: gun does not accept this specific ammo mod")
-      return
+      return gunmodHelper.addMessage(input, "Incompatible Mod: " .. config.getParameter("shortdescription"))
     end
 
     -- check if ammo mod is particularly accepted
-    local accepted = set.new(ammoExceptions.accept)
+    local accepted = set.new(modExceptions.accept)
     if not accepted[config.getParameter("itemName")] then 
 
       -- do not install ammo mod if it does not meet category
@@ -42,7 +43,7 @@ function apply(input)
       and modInfo.category ~= augment.category
       then
         sb.logError("(ammomod.lua) Ammo mod application failed: category mismatch")
-        return
+        return gunmodHelper.addMessage(input, "Wrong Category: " .. config.getParameter("shortdescription"))
       end
       
       -- do not install ammo mod if its archetype is not accepted
@@ -52,7 +53,7 @@ function apply(input)
       and not acceptedArchetype[augment.archetype]
       then
         sb.logError("(ammomod.lua) Ammo mod application failed: gun does not accept ammo archetype")
-        return
+        return gunmodHelper.addMessage(input, "Incompatible Mod: " .. config.getParameter("shortdescription"))
       end
 
     end
@@ -76,10 +77,11 @@ function apply(input)
     -- alter specific projectile settings
     newPrimaryAbility.projectileKind = augment.projectileKind or oldPrimaryAbility.projectileKind
     newPrimaryAbility.projectileType = augment.projectileType or oldPrimaryAbility.projectileType
+    newPrimaryAbility.summonedProjectileType = augment.summonedProjectileType or oldPrimaryAbility.summonedProjectileType
     newPrimaryAbility.projectileParameters = augment.projectileParameters
     newPrimaryAbility.hitscanParameters = augment.hitscanParameters
     newPrimaryAbility.beamParameters = augment.beamParameters
-    newPrimaryAbility.summonParameters = augment.summonParameters
+    newPrimaryAbility.summonedProjectileParameters = augment.summonedProjectileParameters
     
     newPrimaryAbility.hideMuzzleFlash = augment.hideMuzzleFlash
     newPrimaryAbility.hideMuzzleSmoke = augment.hideMuzzleSmoke
@@ -91,9 +93,13 @@ function apply(input)
 
     -- for audio
     if augment.customSounds then
-      output:setInstanceValue("animationCustom", sb.jsonMerge(input.parameters.animationCustom or {}, {
-        sounds = augment.customSounds
-      }))
+
+      construct(input, "parameters", "animationCustom", "sounds")
+      for soundName, soundArr in pairs(augment.customSounds) do
+        input.parameters.animationCustom.sounds[soundName] = copy(soundArr)
+      end
+
+      output:setInstanceValue("animationCustom", input.parameters.animationCustom)
     end
 
     -- merge changes

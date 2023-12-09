@@ -1,8 +1,8 @@
 {
   "itemName" : "project45-neo-shotgun",
-  "price" : 1000,
+  "price" : 2500,
   "maxStack" : 1,
-  "rarity" : "Essential",
+  "rarity" : "Rare",
   "description" : "A shotgun.",
   "shortdescription" : "Shotgun",
   "tooltipKind" : "project45gun",
@@ -52,10 +52,18 @@
   "project45GunModInfo":{
     "category": "ballistic",
     "statModCountMax": 10,
+    "allowsConversion": [
+      "hitscan",
+      "summoned"
+    ],
     "acceptsModSlot": [
       "rail",
       "sights",
-      "muzzle"
+      "muzzle",
+      
+      "magazine",
+      "material",
+      "receiver"
     ],
     "acceptsAmmoArchetype": [
       "shotgun"
@@ -68,7 +76,7 @@
   "magazineOffset": [0, 0],
 
   "railOffset": [1.5, 0],
-  "sightsOffset": [0, 0.375],
+  "sightsOffset": [0, 0.6],
 
   
   "debugPointColors": {
@@ -83,13 +91,13 @@
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
 
-    "baseDamage": 10,
+    "baseDamage": 20,
     "maxAmmo": 6,
     "bulletsPerReload": 1,
     "inaccuracy": 4,
     "spread": 1,
     "semi": true,
-    "cycleTime": 0.05,
+    "cycleTime": 0.2,
     "cockTime": 0.4,
     "projectileKind": "projectile",
     "projectileCount": 5,

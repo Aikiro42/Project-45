@@ -1,17 +1,18 @@
 require "/scripts/augments/item.lua"
+require "/scripts/augments/project45-gunmod-helper.lua"
 require "/scripts/util.lua"
 require "/scripts/vec2.lua"
 require "/scripts/set.lua"
+require "/scripts/project45/project45util.lua"
 
 -- General mod application script
 
-function apply(input)
-
+function apply(input, override, augment)
   -- do not install mod if gun has no mod information
   local modInfo = input.parameters.project45GunModInfo
   if not modInfo then return end
 
-  local augment = config.getParameter("augment")
+  augment = augment or config.getParameter("augment")
   local output = Item.new(input)
 
   
@@ -23,40 +24,61 @@ function apply(input)
 
     -- get list of accepted mod slots
     local acceptsModSlot = modInfo.acceptsModSlot or {}
-    table.insert(acceptsModSlot, "intrinsic")
     acceptsModSlot = set.new(acceptsModSlot)
-
+    set.insert(acceptsModSlot, "intrinsic")
+    
     -- MOD INSTALLATION GATES
 
-    -- do not install mod if augment is not universal
-    -- and gun is not of the universal category
-    -- and it does not belong to the weapon category
-    if augment.category ~= "universal"
-    and modInfo.category ~= "universal"
-    and modInfo.category ~= augment.category then
-        sb.logError("(gunmod.lua) Gun mod application failed: category mismatch")
-        return
-    end
+    if not override then  -- gatekeep if not called from abilitymod.lua
 
-    -- do not install mod if gun denies installation of such type/slot
-    if not acceptsModSlot[augment.slot] then
-        sb.logError("(gunmod.lua) Gun mod application failed: gun does not accept mods in slot")
-        return
-    end
+        local modExceptions = modInfo.modExceptions or {}
+        modExceptions.accept = modExceptions.accept or {}
+        modExceptions.deny = modExceptions.deny or {}
 
-    -- do not install mod if slot is occupied
-    if modSlots[augment.slot] then
-        sb.logError("(gunmod.lua) Gun mod application failed: slot already occupied")
-        return
-    end    
+        -- check if gun mod is particularly denied
+        local denied = set.new(modExceptions.deny)
+        if denied[config.getParameter("itemName")] then
+            sb.logError("(gunmod.lua) Mod application failed: gun does not accept this specific mod")
+            return gunmodHelper.addMessage(input, "Incompatible mod: " .. config.getParameter("shortdescription"))
+        end
+
+        -- check if gun mod is particularly accepted
+        local isAccepted = set.new(modExceptions.accept)[config.getParameter("itemName")]
+        if not isAccepted then
+
+            -- do not install mod if augment is not universal
+            -- and gun is not of the universal category
+            -- and it does not belong to the weapon category
+            if augment.category ~= "universal"
+            and modInfo.category ~= "universal"
+            and modInfo.category ~= augment.category then
+                sb.logError("(gunmod.lua) Gun mod application failed: category mismatch")
+                return gunmodHelper.addMessage(input, "Wrong Category: " .. config.getParameter("shortdescription"))
+            end
+
+            -- do not install mod if gun denies installation of such type/slot
+            if not acceptsModSlot[augment.slot] then
+                sb.logError("(gunmod.lua) Gun mod application failed: gun does not accept mods in slot")
+                return gunmodHelper.addMessage(input, "Cannot install " .. augment.slot .. " mods")
+            end
+        
+        end
+
+        -- do not install mod if slot is occupied
+        if modSlots[augment.slot] then
+            sb.logError("(gunmod.lua) Gun mod application failed: slot already occupied")
+            return gunmodHelper.addMessage(input, project45util.capitalize(augment.slot) .. " mod slot occupied")
+        end
+
+    end
     
     -- MOD INSTALLATION PROCESS
 
     -- prepare tables to alter primary ability
     local oldPrimaryAbility = output.config.primaryAbility or {} -- retrieve old primary ability
     local newPrimaryAbility = input.parameters.primaryAbility or {} -- retrieve modified primary ability
-    oldPrimaryAbility = sb.jsonMerge(oldPrimaryAbility, newPrimaryAbility) -- TESTME: merge new primary ability on old
-    sb.logInfo("(gunmod.lua) initial parameters: " .. sb.printJson(newPrimaryAbility))
+    oldPrimaryAbility = sb.jsonMerge(oldPrimaryAbility, newPrimaryAbility)
+    -- sb.logInfo("(gunmod.lua) initial parameters: " .. sb.printJson(newPrimaryAbility))
     
     -- replace general primaryability parameters
     -- using json patch-esque operations
@@ -115,9 +137,20 @@ function apply(input)
             -- since the mod can turn the laser off
             local laser = newPrimaryAbility.laser or oldPrimaryAbility.laser
             if laser and laser.enabled then
+                -- compare more vivid color first
+                if laser.color and augment.primaryAbility.laser.value.color then
+                    laser.color = project45util.moreVividColor(laser.color, augment.primaryAbility.laser.value.color)
+                end
+
+                -- compare thicker laser first
+                if laser.width and augment.primaryAbility.laser.value.width then
+                    laser.width = math.max(laser.width, augment.primaryAbility.laser.value.width)
+                end
+                
                 augment.primaryAbility.laser = {augment.primaryAbility.laser}
                 laser.enabled = nil
                 laser.alwaysActive = nil
+                
                 table.insert(augment.primaryAbility.laser, {
                     operation="merge",
                     value=laser
@@ -161,9 +194,9 @@ function apply(input)
     end
 
     -- merge changes
-    local finalPrimaryAbility = sb.jsonMerge(oldPrimaryAbility, newPrimaryAbility)
-    sb.logInfo("(gunmod.lua) new parameters: " .. sb.printJson(finalPrimaryAbility))
-    output:setInstanceValue("primaryAbility", finalPrimaryAbility)
+    -- local finalPrimaryAbility = sb.jsonMerge(oldPrimaryAbility, newPrimaryAbility)
+    -- sb.logInfo("(gunmod.lua) new parameters: " .. sb.printJson(finalPrimaryAbility))
+    output:setInstanceValue("primaryAbility", newPrimaryAbility)
 
     -- for visible weapon parts like grips, etc.
 
@@ -172,7 +205,8 @@ function apply(input)
       newAnimationCustom = copy(augment.animationCustom)
       -- output:setInstanceValue("animationCustom", sb.jsonMerge(input.parameters.animationCustom or {}, augment.animationCustom))
     end
-
+    
+    local flipSlots = set.new(modInfo.flipSlot or {})
     if augment.sprite then
         newAnimationCustom = newAnimationCustom or {}
         construct(newAnimationCustom, "animatedParts", "parts", augment.slot, "properties")
@@ -180,7 +214,6 @@ function apply(input)
         newAnimationCustom.animatedParts.parts[augment.slot].properties.centered = true
         newAnimationCustom.animatedParts.parts[augment.slot].properties.transformationGroups = {"weapon"}
 
-        local flipSlots = set.new(modInfo.flipSlot or {})
         local flipDirective = ""
         if flipSlots[augment.slot] then
             flipDirective = "?flipy"
@@ -198,6 +231,28 @@ function apply(input)
             newAnimationCustom.animatedParts.parts[augment.slot].properties.offset = vec2.add(output.config[augment.slot .. "Offset"] or {0, 0}, augment.sprite.offset or {0, 0})
             newAnimationCustom.animatedParts.parts[augment.slot .. "Fullbright"].properties.image = augment.sprite.imageFullbright .. flipDirective .. "<directives>"
         end
+    elseif flipSlots[augment.slot] then
+        -- if the sprite is set up in the weaponability and we need to fiddle with it,
+        -- we need to retrieve the custom animation from the item's config or parameters
+        local configAnimationCustom = output.config.animationCustom or {}
+        newAnimationCustom = newAnimationCustom or {}
+        
+        construct(configAnimationCustom, "animatedParts", "parts", augment.slot, "properties")
+        construct(newAnimationCustom, "animatedParts", "parts", augment.slot, "properties")
+        
+        local newPartImage = newAnimationCustom.animatedParts.parts[augment.slot].properties.image
+            or configAnimationCustom.animatedParts.parts[augment.slot].properties.image
+        newPartImage = newPartImage and newPartImage .. "?flipy" or newPartImage
+        
+        local newPartOffset = newAnimationCustom.animatedParts.parts[augment.slot].properties.offset
+            or configAnimationCustom.animatedParts.parts[augment.slot].properties.offset
+        newPartOffset = newPartOffset and vec2.mul(newPartOffset, {1, -1}) or newPartOffset
+
+        newAnimationCustom.animatedParts.parts[augment.slot].properties.image = newPartImage
+        newAnimationCustom.animatedParts.parts[augment.slot .. "Fullbright"].properties.image = newPartImage
+        newAnimationCustom.animatedParts.parts[augment.slot].properties.offset = newPartOffset
+        newAnimationCustom.animatedParts.parts[augment.slot .. "Fullbright"].properties.offset = newPartOffset
+
     end
 
     -- if custom animation is set then modify
@@ -237,27 +292,30 @@ function apply(input)
   
 
     -- MODIFICATION POST-MORTEM
-
     -- add mod info to list of installed mods
+    if not override then
+                        
+        modSlots[augment.slot] = {
+            augment.modName,
+            config.getParameter("itemName")
+        }
 
-    modSlots[augment.slot] = {
-        augment.modName,
-        config.getParameter("itemName")
-    }
-    
-    local needImage = {
-        rail=true,
-        sights=true,
-        underbarrel=true,
-        muzzle=true,
-        stock=true
-    }
-    if needImage[augment.slot] then
-        table.insert(modSlots[augment.slot], config.getParameter("inventoryIcon"))
+        local needImage = set.new({
+            "rail",
+            "sights",
+            "underbarrel",
+            "muzzle",
+            "stock"
+        })
+        if needImage[augment.slot] then
+            table.insert(modSlots[augment.slot], config.getParameter("inventoryIcon"))
+        end
+        
+        output:setInstanceValue("modSlots", modSlots)
+        
     end
-    
-    output:setInstanceValue("modSlots", modSlots)
     output:setInstanceValue("isModded", true)
+
 
     return output:descriptor(), 1
 

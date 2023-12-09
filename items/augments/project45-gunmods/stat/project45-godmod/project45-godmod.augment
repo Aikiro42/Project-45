@@ -2,26 +2,28 @@
   "itemName" : "project45-godmod",
   "price" : 999999,
   "rarity" : "Essential",
-  "tooltipKind" : "project45gunmod",
+  "tooltipKind" : "project45gunmod2",
   "category" : "Stat Mod",
   "inventoryIcon" : "/items/augments/project45-gunmods/stat/project45-godmod/project45-godmod.png",
-  "description" : "^#FFFFFF;Damage x100\nCrit Chance +300%\nCrit Damage +50^reset;",
+  "statInfo" : "^#FFFFFF;Damage x100\nCrit Chance +300%\nCrit Damage +50^reset;",
+  "description": "One mod to rule them all.",
+  "slot": "multiple",
+  "archetype": "Mixed",
   "shortdescription" : "^#FFFFFF;The God Mod",
 
   "augment":{
     "baseDamage": {
-      "operation": "multiply",
-      "value": 100
+      "multiplicative": 100
     },
     "critChance": {
-      "operation": "add",
-      "value": 3
+      "additive": 3
     },
     "critDamage": {
-      "operation": "add",
-      "value": 50
+      "additive": 50
     }
   },
 
-  "scripts" : [ "/scripts/augments/project45-gunmod/statmod.lua" ]
+  "scripts" : [ "/scripts/augments/project45-gunmod/statmod.lua" ],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
+
 }

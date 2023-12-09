@@ -2,12 +2,15 @@
   "itemName" : "project45-stockmod",
   "price" : 15000,
   "rarity" : "Legendary",
-  "tooltipKind" : "project45gunmod",
-  "category" : "Stock Mod",
-  "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-stockmod/project45-stockmod.png",
+  "tooltipKind" : "project45gunmod2",
+  "category" : "Gun Mod",
+  "tooltipFields":{
+    "objectImage": "/items/augments/project45-gunmods/mods/project45-stockmod/project45-stockmod.png"
+  },
+  "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-stockmod/project45-stockmodicon.png",
   "shortdescription" : "Padded Stock",
-  "description" : "Reduces screen shake.",
-
+  "statInfo" : "Screen Shake: 0.1\nRecoil x0.5",
+  "description": "Gun stock padded with mooshi leather, cushioned with fluffalo wool.",
   "radioMessagesOnPickup" : [ "pickupaugment" ],
 
   "augment": {
@@ -18,6 +21,10 @@
       "screenShakeMult": {
         "operation": "replace",
         "value": 0.1
+      },
+      "recoilMult": {
+        "operation": "multiply",
+        "value": 0.5
       }
     },
     "sprite": {
@@ -42,5 +49,6 @@
 
   },
 
-  "scripts" : [ "/scripts/augments/project45-gunmod/gunmod.lua" ]
+  "scripts" : [ "/scripts/augments/project45-gunmod/gunmod.lua" ],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
 }

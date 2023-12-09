@@ -77,9 +77,12 @@
         "project45-neo-revolver",
         "project45-neo-smg",
         "project45-neo-shindeiru",
+        "project45-neo-love",
         "project45-neo-shotgun",
+        "project45-neo-friendship",
         "project45-neo-leveraction",
         "project45-neo-assaultrifle",
+        "project45-neo-scaramouche",
         "project45-neo-carbine",
         "project45-neo-servicerifle",
         "project45-neo-huntingrifle",
@@ -98,8 +101,11 @@
         "project45-neo-accelerator",
         "project45-neo-beamsplitter",
         "project45-neo-beamgun",
+        "project45-neo-gazer",
 
+        "project45-neo-powerstave",
         "project45-neb-zweibrandyr",
+        "project45-neb-warbolter",
         "project45-neb-magmaspitter",
         "project45-scz-spacecowboy",
         "project45-gov-scarlet",
@@ -110,6 +116,7 @@
       "mods": [
         // abilities
         "project45-gunscopemod",
+        "project45-supergunscopemod",
         "project45-mlgscopemod",
         "project45-enemyradarmod",
         "project45-flashlasermod",
@@ -119,17 +126,23 @@
 
         // sights
         "project45-reflexsightsmod",
+        
+        // rail
+        "project45-lasermod",
 
         // receiver
         "project45-autofiremod",
         "project45-multithreadermod",
+
+        // magazine
+        "project45-extendedmagmod",
+        "project45-overampmod",
 
         // misc mods
         "project45-gripmod",
         "project45-muzzlebrakemod",
         "project45-silencermod",
         "project45-extendedbarrelmod",
-        "project45-extendedmagmod",
         "project45-weightmod",
         "project45-stockmod"
       ],
@@ -141,15 +154,19 @@
         "project45-critdamageaddmod",
         
         "project45-damagemultmod",
-        "project45-fireratemultmod",
+        "project45-firetimemultmod",
         "project45-reloadcostmultmod",
         "project45-critchancemultmod",
-        "project45-critdamagemultmod"
+        "project45-critdamagemultmod",
+
+        "project45-levelmod"
       ],
       
       "ammo": [
-        "project45-bulletmod",
-        "project45-hitscanmod",
+        "project45-projectileconverter",
+        "project45-hitscanconverter",
+        "project45-beamconverter",
+        "project45-summonconverter",
         
         // ballistic ammo
         "project45-explosiveammomod",
@@ -183,7 +200,10 @@
         "project45manual-codex",
         "project45-gundisassembler",
         "project45-gunrepairkit",
-        "project45-energystim"
+        "project45-energystim",
+
+        "nanowrap",
+        "dubloon"
       ]
     }
   }

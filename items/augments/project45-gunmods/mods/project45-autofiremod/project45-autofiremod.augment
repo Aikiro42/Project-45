@@ -2,12 +2,16 @@
   "itemName" : "project45-autofiremod",
   "price" : 15000,
   "rarity" : "Legendary",
-  "tooltipKind" : "project45gunmod",
-  "category" : "Receiver Mod",
-  "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-autofiremod/project45-autofiremod.png",
-  "description" : "Allows a weapon to have an automatic firemode.",
+  "tooltipKind" : "project45gunmod2",
+  "category" : "Gun Mod",
+  "tooltipFields":{
+    "objectImage": "/items/augments/project45-gunmods/mods/project45-autofiremod/project45-autofiremod.png"
+  },
+  "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-autofiremod/project45-autofiremodicon.png",
+  "description": "Turns semi/burst weapons full auto. Just don't tell the UATF you installed this gun mod.",
+  "technicalInfo" : "Manual-feed weapons auto-feed.\nCharge weapons automatically fire when fully charged.",
+  "statInfo": "Trigger time: 0.1s",
   "shortdescription" : "Automatic Receiver",
-
   "radioMessagesOnPickup" : [ "pickupaugment" ],
 
   "augment": {
@@ -38,5 +42,6 @@
     }
   },
 
-  "scripts" : [ "/scripts/augments/project45-gunmod/gunmod.lua" ]
+  "scripts" : [ "/scripts/augments/project45-gunmod/gunmod.lua" ],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
 }

@@ -1,0 +1,32 @@
+{
+  "itemName" : "project45-overampmod",
+  "price" : 15000,
+  "rarity" : "Legendary",
+  "tooltipKind" : "project45gunmod2",
+  "category" : "Gun Mod",
+  "tooltipFields":{
+    "objectImage": "/items/augments/project45-gunmods/mods/project45-overampmod/project45-overampmod.png"
+  },
+  "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-overampmod/project45-overampmodicon.png",
+  "description": "If shooting it won't make it go away, shoot it more.",
+  "statInfo" : "Ammo capacity x2",
+  "shortdescription" : "Overamped Batteries",
+
+  "augment":{
+    "modName": "Overamped Batteries",
+    "category": "energy",
+    "slot": "magazine",
+    "primaryAbility": {
+      "maxAmmo": {
+        "operation": "multiply",
+        "value": 2
+      }
+    }
+  },
+
+
+  "radioMessagesOnPickup" : [ "pickupaugment" ],
+
+  "scripts" : [ "/scripts/augments/project45-gunmod/gunmod.lua" ],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
+}

@@ -1,9 +1,9 @@
 {
   "itemName" : "project45-neo-assaultrifle",
-  "price" : 1000,
+  "price" : 2500,
   "maxStack" : 1,
-  "rarity" : "Essential",
-  "description" : "A burst-fire Assault Rifle.",
+  "rarity" : "Rare",
+  "description" : "A burst-fire assault rifle. Great for fast-paced combat.",
   "shortdescription" : "Assault Rifle",
   "tooltipKind" : "project45gun",
   "gunArchetype": "Assault Rifle",
@@ -48,6 +48,10 @@
   "project45GunModInfo":{
     "category": "ballistic",
     "statModCountMax": 10,
+    "allowsConversion": [
+      "hitscan",
+      "summoned"
+    ],
     "acceptsAmmoTypes":{
       "ballistic": true
     },
@@ -60,7 +64,9 @@
       "underbarrel",
       "muzzle",
 
-      "receiver"
+      "receiver",
+      "magazine",
+      "material"
     ]
   },
 
@@ -69,9 +75,9 @@
   "ejectionPortOffset": [-0.25, 0.5],
   "magazineOffset": [-0.25, -0.25],
   
-  "railOffset": [1.75, 0.5],
-  "sightsOffset": [1, 0.75],
-  "underbarrelOffset": [2, 0.125],
+  "railOffset": [0.75, 0.375],
+  "sightsOffset": [0, 0.75],
+  "underbarrelOffset": [0.875, 0],
   
   "debugPointColors": {
     "rail": "red",
@@ -83,6 +89,7 @@
     
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
+    "baseDamage": 9,
     "maxAmmo": 30,
     "bulletsPerReload": 30,
     "semi": true,

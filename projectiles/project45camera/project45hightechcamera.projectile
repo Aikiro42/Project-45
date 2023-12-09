@@ -1,0 +1,23 @@
+{
+  "projectileName" : "project45hightechcamera",
+  "image" : "project45hightechcamera.png",
+  "scripts": ["project45camera.lua"],
+  "frameNumber" : 8,
+  "power": 0,
+  "speed" : 0,
+  "piercing": true,
+  "fullbright": true,
+  "lightColor": [50, 0, 0],
+  "ignoreTerrain": true,
+  "timeToLive": 10,
+  "damagePoly" : [ [-36, 0], [-24, -24], [0, -36], [24, -24], [36, 0], [24, 24], [0, 36], [-24, 24] ],
+  "animationLoops" : true,
+  "flippable" : true,
+  "damageTeam" : { "type" : "indiscriminate" },
+  "damageKind" : "NoDamage",
+  "renderLayer": "Overlay",
+  "bounces": -1,
+  "movementSettings":{
+    "collisionEnabled": false
+  }
+}

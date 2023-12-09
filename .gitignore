@@ -4,6 +4,7 @@ npcs/threats/*.*
 items/active/weapons/ranged/gunfire.lua
 items/active/weapons/ranged/beamfire.lua
 items/active/weapons/ranged/abilities/altfire.lua
+/docs/*.*
 /docs/Project 45/docs.pdf
 /docs/Project 45/docs.html
 /docs/Project 45/todo.md

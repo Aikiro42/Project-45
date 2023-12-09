@@ -1,6 +1,6 @@
 {
   "itemName" : "project45-neb-magmaspitter",
-  "price" : 1000,
+  "price" : 15000,
   "maxStack" : 1,
   "rarity" : "Essential",
   "description" : "A revolver that shoots magma.",
@@ -13,6 +13,10 @@
   "level" : 1,
   "muzzleFlashColor": [255, 255, 200],
   "inventoryIcon" : "project45-neb-magmaspitter-icon.png",
+  
+  "project45GunModInfo": {
+    "category": "experimental"
+  },
 
   "animationParts" : {
     "middle" : "project45-neb-magmaspitter.png",
@@ -134,7 +138,21 @@
     "recoilMaxDeg": 45, // the most the arm and weapon will rotate, in degrees.
     "recoverTime": 0.5, // time it takes to recover aim completely, in seconds
 
-    // "reloadTime": 10,
+    "muzzleProjectiles": [
+      {
+        "type": "project45_muzzleshockwavesmall",
+        "parameters": {
+          "speed": -2.5
+        },
+        "firePerShot": true
+      },
+      {
+        "type": "project45stdfirebullet",
+        "fireChance": 0.5,
+        "count": 3,
+        "firePerShot": true
+      }
+    ],
 
     "laser":{
       "enabled": false

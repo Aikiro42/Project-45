@@ -18,6 +18,7 @@ function Project45GunFire:init()
   -- INITIALIZATIONS
   self.debugTimer = self.debugTime
   self.isFiring = false
+  self.projectileCount = math.floor(self.projectileCount)
     
   -- separate cock time and reload time
   -- self.reloadTime = self.reloadTime * 0.8
@@ -73,6 +74,7 @@ function Project45GunFire:init()
   -- always enable laser if debug is on
   self.laser.enabled = self.debug or self.laser.enabled
 
+  self.projectileFireSettings = self.projectileFireSettings or {}
   self.projectileFireSettings.batchFire = type(self.projectileType) == "table" and self.projectileFireSettings.batchFire
 
   -- let inaccuracy be a table
@@ -96,7 +98,7 @@ function Project45GunFire:init()
       crouching = self.recoverTime/2 -- halfed recover time while crouching
     }
   end
-  self.currentRecoverTime = self.recoverTime.mobile
+  self.currentRecoverTime = self.recoverTime.mobile * self.recoverMult
 
   -- initialize self.cycleTimer if cycleTimer is
   -- set to be dynamic
@@ -316,7 +318,7 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
   -- accuracy settings
   local movementState = self:getMovementState()
   self.currentInaccuracy = self.inaccuracy[movementState]
-  self.currentRecoverTime = self.recoverTime[movementState]
+  self.currentRecoverTime = self.recoverTime[movementState] * self.recoverMult
   activeItem.setCursor("/cursors/project45-neo-cursor-" .. movementState .. ".cursor")
 
   -- trigger i/o logic
@@ -443,7 +445,9 @@ function Project45GunFire:firing()
   self:screenShake()
   self:recoil()
 
-  if self.recoilMomentum > 0 and not mcontroller.crouching() then
+  if self.projectileKind ~= "summoned"
+  and self.recoilMomentum > 0
+  and not mcontroller.crouching() then
     mcontroller.addMomentum(vec2.mul(self:aimVector(), self.recoilMomentum * -1))
   end
 
@@ -522,6 +526,9 @@ function Project45GunFire:ejecting()
   or self.reloadTimer >= 0)
   or self.isCocking
   then
+    if self.loadRoundsThroughBolt and storage.ammo <= 0 then
+      self:screenShake(0.5)
+    end
     animator.setAnimationState("gun", "boltPulling")
     animator.playSound("boltPull")
     self:setStance(self.stances.boltPull)
@@ -694,6 +701,7 @@ function Project45GunFire:reloading()
 
   -- begin minigame
   -- self.weapon:setStance(self.stances.reloading)
+  animator.playSound("reloadLoop", -1)
   while self.reloadTimer <= self.reloadTime do
     activeItem.setScriptedAnimationParameter("reloadTimer", self.reloadTimer)
 
@@ -768,18 +776,14 @@ function Project45GunFire:reloading()
     self.reloadTimer = self.reloadTimer + self.dt
     coroutine.yield()
   end
-  
+  animator.stopAllSounds("reloadLoop")
+
   self:setStance(self.stances.reloaded, not self.reloadOnEjectMag)
   if self.projectileFireSettings.resetProjectileIndexOnReload then
     storage.savedProjectileIndex = 1
   end
   animator.setAnimationState("magazine", self.internalMag and "absent" or "present")
   
-  if self.breakAction then
-    animator.setAnimationState("gun", "ejected")
-
-  end
-
   -- if there hasn't been any input, just load round
   if storage.ammo < self.maxAmmo and not energyDepletedFlag then
     sumRating = sumRating + 0.5 -- OK: 0.5
@@ -794,7 +798,7 @@ function Project45GunFire:reloading()
 
     -- proportionally consume energy; break out of loop once out of energy
     status.overConsumeResource("energy", self.reloadCost * (reloadedBullets / self.maxAmmo))
-end
+  end
   
   -- begin final reload evaluation
   --                     MAX AVERAGE
@@ -822,6 +826,10 @@ end
     util.wait(self.postReloadDelay)
   else
     util.wait(self.cockTime/8)
+  end
+  
+  if self.breakAction then
+    animator.setAnimationState("gun", "ejected")
   end
 
   self:setState(self.cocking)
@@ -911,12 +919,39 @@ function Project45GunFire:jam()
   return false
 end
 
-function Project45GunFire:muzzleFlash()
+function Project45GunFire:muzzleProjectile(projectile, parameters, addOffset, spread, count, firePerShot, fireChance)  
+  if firePerShot and self.muzzleProjectileFired then return end
+  if not project45util.diceroll(fireChance or 1) then return end
 
-  -- fire muzzle projectile
-  if self.muzzleProjectileType then
-    self:fireProjectile(self.muzzleProjectileType, self.muzzleProjectileParameters)
+  if self.projectileKind ~= "projectile" then
+    self:fireMuzzleProjectile(
+      projectile or self.muzzleProjectileType,
+      parameters or self.muzzleProjectileParameters,
+      nil,
+      self.muzzlePosition and self:muzzlePosition(nil, addOffset or self.muzzleProjectileOffset),
+      count or 1,
+      self.muzzleVector and self:muzzleVector(spread or 0, nil, self.muzzlePosition and self:muzzlePosition()),
+      not self.muzzlePosition and (addOffset or self.muzzleProjectileOffset) or nil
+    )
+  else
+    self:fireProjectile(
+      projectile or self.muzzleProjectileType,
+      parameters or self.muzzleProjectileParameters,
+      nil,
+      self.muzzlePosition and self:muzzlePosition(),
+      count or 1,
+      self.muzzleVector and self:muzzleVector(spread or 0, nil, self.muzzlePosition and self:muzzlePosition()),
+      addOffset or self.muzzleProjectileOffset
+    )
   end
+
+  if firePerShot and self.muzzleProjectileFired == false then 
+    self.muzzleProjectileFired = true
+  end
+  
+end
+
+function Project45GunFire:muzzleFlash()
 
   if (self.projectileKind or "projectile") ~= "beam" then
     -- play fire and hollow sound if the gun isn't firing a beam
@@ -941,6 +976,21 @@ function Project45GunFire:muzzleFlash()
   if self.hideMuzzleSmoke ~= nil and not self.hideMuzzleSmoke then
     self.muzzleSmokeTimer = self.muzzleSmokeTime + self.currentCycleTime + 0.1
   end
+
+  if self.muzzleProjectiles then
+    for _, muzzProj in ipairs(self.muzzleProjectiles) do
+      self:muzzleProjectile(
+        type(muzzProj.type) == "table" and muzzProj.type[math.random(#muzzProj.type)] or muzzProj.type,
+        muzzProj.parameters,
+        muzzProj.offset,
+        muzzProj.spread,
+        muzzProj.count,
+        muzzProj.firePerShot,
+        muzzProj.fireChance
+      )
+    end
+  end
+
 end
 
 function Project45GunFire:startFireLoop()
@@ -961,26 +1011,29 @@ function Project45GunFire:stopFireLoop()
   end
 end
 
-function Project45GunFire:fireProjectile(projectileType, projectileParameters, inaccuracy, firePosition, projectileCount)
-  
-  local params = sb.jsonMerge(self.projectileParameters, projectileParameters or {})
+function Project45GunFire:fireProjectile(projectileType, projectileParameters, inaccuracy, firePosition, projectileCount, aimVector, addOffset)
+  local params = sb.jsonMerge(self.projectileKind == "summoned" and self.summonedProjectileParameters or self.projectileParameters, projectileParameters or {})
   params.power = self:damagePerShot()
   params.powerMultiplier = activeItem.ownerPowerMultiplier()
   params.speed = util.randomInRange(params.speed)
+  local selectedProjectileType = nil
 
   if not projectileType then
-    projectileType = self.projectileType
+    projectileType = self.projectileKind == "summoned" and self.summonedProjectileType or self.projectileType
   end
+
+  selectedProjectileType = projectileType
   
   if type(projectileType) == "table" then
-    projectileType = projectileType[storage.savedProjectileIndex]
+    selectedProjectileType = projectileType[storage.savedProjectileIndex]
     if not self.projectileFireSettings or not self.projectileFireSettings.batchFire then
       self:rerollProjectileIndex(#projectileType)
     end
   end
   
   local projectileId = 0
-    
+  
+  -- if crit was rolled, all projectiles fired inflict a crit hit
   for i = 1, (projectileCount or (self.projectileCount * self:rollMultishot())) do
 
     if params.timeToLive then
@@ -988,15 +1041,17 @@ function Project45GunFire:fireProjectile(projectileType, projectileParameters, i
     end
 
     projectileId = world.spawnProjectile(
-      projectileType,
-      firePosition or self:firePosition(),
+      selectedProjectileType,
+      firePosition or self:firePosition(nil, addOffset),
       activeItem.ownerEntityId(),
-      self:aimVector(inaccuracy or self.spread),
+      aimVector or self:aimVector(inaccuracy or self.spread),
       false,
-      params
+      self.critFlag and sb.jsonMerge(params, {statusEffects = {"project45critdamaged"}}) or params
     )
 
   end
+
+  self.critFlag = false
 
   return projectileId
   
@@ -1027,6 +1082,10 @@ function Project45GunFire:recoil(down, mult, amount, recoverDelay)
   self.projectileKind = self.projectileKind or "projectile"
 
   local mult = mult or self.recoilMult or 1
+  
+  -- makes it easier to aim directly downwards/upwards
+  mult = mult * math.abs(math.cos(activeItem.aimAngle(0, activeItem.ownerAimPosition())))
+  
   mult = down and -mult or mult
   local crouchMult = mcontroller.crouching() and self.recoilCrouchMult or 1
   mult = mult * crouchMult
@@ -1049,7 +1108,7 @@ function Project45GunFire:recoil(down, mult, amount, recoverDelay)
   
   -- recover delay (no recover delay by default)
   storage.stanceProgress = 0
-  self.recoverDelayTimer = recoverDelay or self.recoverDelay or self.fireTime or 0
+  self.recoverDelayTimer = (recoverDelay or self.recoverDelay or self.fireTime or 0) * self.recoverMult
 end
 
 -- Ejects mag
@@ -1059,7 +1118,12 @@ function Project45GunFire:ejectMag()
   self.triggered = true
   storage.burstCounter = 0
 
-  if not self.ejectMagOnEmpty or (self.ejectMagOnEmpty ~= "firing" and self.ejectMagOnEmpty ~= "ejecting") then
+  if (
+    not self.ejectMagOnEmpty
+    or (self.ejectMagOnEmpty ~= "firing" and self.ejectMagOnEmpty ~= "ejecting")
+  )
+  and not (self.loadRoundsThroughBolt and storage.ammo <= 0)
+  then
     self:screenShake(0.5)
     -- self:recoil(true) -- Removed; recoil now dictated via the stance's armRecoil and weaponRecoil
   end
@@ -1420,13 +1484,17 @@ end
 -- depending on projectileKind.
 function Project45GunFire:evalProjectileKind()
 
-  
+  self.updateLaser = function() end
+
   if self.laser or self.projectileKind ~= "projectile" then
 
+    self.fireMuzzleProjectile = self.fireProjectile
+
     if self.projectileKind == "summoned" then
+      self.updateLaser = hitscanLib.updateSummonAreaIndicator
+
       activeItem.setScriptedAnimationParameter("isSummonedProjectile", true)
       if self.laser.enabled then
-        self.updateLaser = hitscanLib.updateSummonAreaIndicator
         activeItem.setScriptedAnimationParameter("primaryLaserEnabled", not self.performanceMode)
         activeItem.setScriptedAnimationParameter("primaryLaserColor", self.laser.color)
         activeItem.setScriptedAnimationParameter("primaryLaserWidth", self.laser.width)
@@ -1436,7 +1504,6 @@ function Project45GunFire:evalProjectileKind()
       
       -- laser uses the hitscan helper function, so assign that
       self.hitscan = hitscanLib.hitscan
-      self.updateLaser = function() end
       -- initialize projectile stack
       -- this stack is used by the hitscan functions and the animator
       -- to animate hitscan trails.
@@ -1468,20 +1535,29 @@ function Project45GunFire:evalProjectileKind()
   self.muzzleFlashColor = config.getParameter("muzzleFlashColor", {255, 255, 200})
   self.updateProjectileStack = function() end
   if self.projectileKind == "hitscan" then
+    self.hitscanParameters.hitscanBrightness = util.clamp(self.hitscanParameters.hitscanBrightness or 0, 0, 1)
     self.fireProjectile = hitscanLib.fireHitscan
     self.updateProjectileStack = hitscanLib.updateProjectileStack
     self.hitscanParameters.hitscanColor = self.muzzleFlashColor
   elseif self.projectileKind == "beam" then
+    self.muzzleProjectileFired = false
     self.firing = hitscanLib.fireBeam
     self.updateProjectileStack = hitscanLib.updateProjectileStack
     self.beamParameters.beamColor = self.muzzleFlashColor
     activeItem.setScriptedAnimationParameter("beamColor", self.muzzleFlashColor)
   elseif self.projectileKind == "summoned" then
+    
+    self.muzzlePosition = self.firePosition
     self.firePosition = hitscanLib.summonPosition
+    GunFire.firePosition = hitscanLib.summonPosition
+    AltFireAttack.firePosition = hitscanLib.summonPosition
+
+    self.muzzleVector = self.aimVector
     self.aimVector = hitscanLib.summonVector
+    
     self.muzzleObstructed = function()
-      if self.summonParameters.summonInTerrain then return true
-      elseif self.summonParameters.summonAnywhere then
+      if self.summonedProjectileParameters.summonInTerrain then return true
+      elseif self.summonedProjectileParameters.summonAnywhere then
         return world.pointTileCollision(activeItem.ownerAimPosition())
       end
       return world.lineTileCollision(mcontroller.position(), activeItem.ownerAimPosition())      
@@ -1523,16 +1599,27 @@ end
 -- Typically called when the weapon is about to deal damage.
 function Project45GunFire:crit()
   if not self.critChance then return 1 end
-  return project45util.diceroll(self.critChance, "Crit: ") and self.critDamageMult or 1
+
+  local critTier = math.floor(self.critChance);
+  local baseCritDamageMult = self.critDamageMult * critTier
+
+  if project45util.diceroll(self.critChance - critTier, "Crit: ") then
+    self.critFlag = true
+    return baseCritDamageMult + self.critDamageMult
+  else
+    self.critFlag = baseCritDamageMult > 1
+    return math.max(1, baseCritDamageMult)
+  end
 end
 
 -- Calculates the damage per shot of the weapon.
-function Project45GunFire:damagePerShot()
+function Project45GunFire:damagePerShot(noDLM)
 
   local critDmg = self:crit()
   local lastShotDmg = (storage.ammo <= (self.ammoPerShot or 1) and self.lastShotDamageMult or 1)
   
   return self.baseDamage
+  * (noDLM and 1 or config.getParameter("damageLevelMultiplier", 1))
   * self.chargeDamage -- up to 2x at full overcharge
   * self.reloadRatingDamage -- as low as 0.8 (bad), as high as 1.5 (perfect)
   * critDmg -- this way, rounds deal crit damage individually
@@ -1550,10 +1637,14 @@ function Project45GunFire:canTrigger()
 end
 
 -- Returns the muzzle of the gun
-function Project45GunFire:firePosition(altOverride)
+function Project45GunFire:firePosition(altOverride, addOffset)
   local muzzleOffset = self.weapon.muzzleOffset
   if self.abilitySlot == "alt" or altOverride then
     muzzleOffset = config.getParameter("altMuzzleOffset", self.weapon.muzzleOffset)
+  end
+
+  if addOffset then
+    muzzleOffset = vec2.add(muzzleOffset, addOffset)
   end
 
   return vec2.add(
@@ -1570,14 +1661,14 @@ end
 -- Returns the angle the gun is pointed
 -- This is different from the vanilla aim vector, which only takes into account the entity's position
 -- and the entity's aim position
-function Project45GunFire:aimVector(spread, degAdd)
+function Project45GunFire:aimVector(spread, degAdd, firePosition)
   
   local muzzleOffset = self.weapon.muzzleOffset
   if self.abilitySlot == "alt" then
     muzzleOffset = config.getParameter("altMuzzleOffset", self.weapon.muzzleOffset)
   end
 
-  local firePos = self:firePosition()
+  local firePos = firePosition or self:firePosition()
   local basePos =  vec2.add(
     mcontroller.position(),
     activeItem.handPosition(
@@ -1659,6 +1750,13 @@ function Project45GunFire:loadGunState()
     
   storage.ammo = storage.ammo or loadedGunState.ammo
   storage.savedProjectileIndex = storage.savedProjectileIndex or loadedGunState.savedProjectileIndex
+
+  -- saved projectile index validation
+  local projectiles = self.projectileKind == "summoned" and self.summonedProjectileType or self.projectileType
+  if type(projectiles) == "table" and storage.savedProjectileIndex > #projectiles then
+    storage.savedProjectileIndex = #projectiles
+  end
+
   storage.reloadRating = storage.reloadRating or loadedGunState.reloadRating
   activeItem.setScriptedAnimationParameter("reloadRating", reloadRatingList[storage.reloadRating])
   storage.unejectedCasings = storage.unejectedCasings or loadedGunState.unejectedCasings
@@ -1670,7 +1768,9 @@ function Project45GunFire:loadGunState()
   if loadedGunState.bolt == "open" then
     loadedGunState.gunAnimation = (self.breakAction and not loadedGunState.loadSuccess) and "open" or "ejected"
   end
-  
+  if storage.ammo < 0 and self.breakAction then
+    loadedGunState.gunAnimation = "open"
+  end
   animator.setAnimationState("gun", loadedGunState.gunAnimation)
 
 end

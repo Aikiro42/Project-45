@@ -1,8 +1,8 @@
 {
   "itemName" : "project45-neo-cyclo",
-  "price" : 1000,
+  "price" : 2500,
   "maxStack" : 1,
-  "rarity" : "Essential",
+  "rarity" : "Rare",
   "description" : "A compact hardlight emitter.",
   "shortdescription" : "Cyclo",
   "tooltipKind" : "project45gun",
@@ -48,11 +48,19 @@
   "project45GunModInfo":{
     "category": "energy",
     "statModCountMax": 10,
+    "allowsConversion": [
+      "projectile",
+      "hitscan",
+      "summoned"
+    ],
     "acceptsAmmoArchetype": [
       "beam"
     ],
     "acceptsModSlot": [
       "muzzle",
+      "receiver",
+      
+      "material",
       "receiver"
     ]
   },
@@ -66,6 +74,7 @@
     
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
+    "baseDamage": 8,
     "maxAmmo": 100,
     "bulletsPerReload": 100,
     "inaccuracy": 3,

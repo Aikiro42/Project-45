@@ -2,10 +2,13 @@
   "itemName" : "project45-poisonbeammod",
   "price" : 15000,
   "rarity" : "Legendary",
-  "tooltipKind" : "project45gunmod",
-  "category" : "Energy Ammo Mod",
-  "inventoryIcon" : "/items/augments/project45-gunmods/ammo/project45-poisonbeammod/project45-poisonbeammod.png",
-  "description" : "Radiation beam config for energy guns. Incompatible with ballistic guns.",
+  "tooltipKind" : "project45gunmod2",
+  "category" : "Ammo Mod",
+  "tooltipFields":{
+    "objectImage": "/items/augments/project45-gunmods/ammo/project45-poisonbeammod/project45-poisonbeammod.png"
+  },
+  "inventoryIcon" : "/items/augments/project45-gunmods/ammo/project45-poisonbeammod/project45-poisonbeammodicon.png",
+  "description" : "Radiation beam configuration. Sometimes used as an on-field MRE cooking config.",
   "shortdescription" : "Radiation Beam",
 
   "augment":{
@@ -37,5 +40,7 @@
 
   "radioMessagesOnPickup" : [ "pickupaugment" ],
 
-  "scripts" : [ "/scripts/augments/project45-gunmod/ammomod.lua" ]
+  "scripts" : [ "/scripts/augments/project45-gunmod/ammomod.lua" ],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
+  
 }

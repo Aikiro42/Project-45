@@ -3,6 +3,8 @@ require "/scripts/util.lua"
 require "/scripts/poly.lua"
 
 local warningTriggered = false
+local messagesToRender = {}
+local renderMessageTimer = 0
 
 synthethikmechanics_altInit = init or function()
   if not warningTriggered then
@@ -20,15 +22,21 @@ synthethikmechanics_altUpdate = update or function()
 
 function init()
   synthethikmechanics_altInit()
+  messagesToRender = animationConfig.animationParameter("project45GunFireMessages")
 end
 
 function update()
   localAnimator.clearDrawables()
   localAnimator.clearLightSources()
   synthethikmechanics_altUpdate()
+
   if not warningTriggered then
     warningTriggered = true
     -- sb.logInfo("[PROJECT 45] Obtained alt-ability animation update script.")
+  end
+
+  if #messagesToRender > 0 then
+    renderMessageTimer = renderMessageTimer == 0 and renderMessages() or renderMessageTimer - 1
   end
 
   local hand = animationConfig.animationParameter("hand")
@@ -63,6 +71,23 @@ function update()
   renderBeam()
 
 end
+
+function renderMessages(messageOffset)
+  -- render incompat messages
+  localAnimator.spawnParticle({
+    type = "text",
+    text= "^shadow;" .. messagesToRender[1],
+    color = {255, 128, 128},
+    size = 0.4,
+    fullbright = true,
+    flippable = false,
+    layer = "front",
+    timeToLive = 1,
+    initialVelocity = {0, 2},
+  }, vec2.add(activeItemAnimation.ownerPosition(), messageOffset or {0, 2}))
+  table.remove(messagesToRender, 1)
+  return math.floor(60 * 0.3)
+end  
 
 function renderAmmoNumber(offset)
   
@@ -122,8 +147,18 @@ function renderLaser()
   or animationConfig.animationParameter("primaryLaserEnabled"))
   then return end
 
+  local laserColor = animationConfig.animationParameter("altLaserColor")
+    or animationConfig.animationParameter("primaryLaserColor")
+    or {255, 50, 50, 128}
+
+    
+  local laserWidth = animationConfig.animationParameter("altLaserWidth")
+    or animationConfig.animationParameter("primaryLaserWidth")
+    or 0.5
+
+
   if animationConfig.animationParameter("isSummonedProjectile") then
-    drawSummonArea()
+    drawSummonArea(laserColor, laserWidth)
     return
   end
 
@@ -134,15 +169,6 @@ function renderLaser()
   local laserEnd = animationConfig.animationParameter("altLaserEnd")
     or animationConfig.animationParameter("primaryLaserEnd")
     or activeItemAnimation.ownerPosition()
-  
-  local laserColor = animationConfig.animationParameter("altLaserColor")
-    or animationConfig.animationParameter("primaryLaserColor")
-    or {255, 50, 50, 128}
-
-  local laserWidth = animationConfig.animationParameter("altLaserWidth")
-    or animationConfig.animationParameter("primaryLaserWidth")
-    or 0.5
-
 
   if animationConfig.animationParameter("primaryLaserArcGravMult") then
     drawTrajectory(
@@ -525,7 +551,7 @@ function drawTrajectory(muzzlePos, angle, speed, steps, renderTime, color, gravM
   end
 end
 
-function drawSummonArea()
+function drawSummonArea(color, width)
 
   local circlePoly = poly.translate(
     animationConfig.animationParameter("primarySummonArea") or {{0, 0}},
@@ -533,8 +559,13 @@ function drawSummonArea()
   )
   table.insert(circlePoly, circlePoly[1])
   local obstructed = animationConfig.animationParameter("muzzleObstructed")
-  local circleColor = obstructed and {128, 128, 128, 128} or animationConfig.animationParameter("primaryLaserColor") or {0, 255, 255, 128}
-  local circleWidth = animationConfig.animationParameter("primaryLaserWidth") or 0.5
+  
+  local circleColor = obstructed and {128, 128, 128, 128}
+    or color
+    or {0, 255, 255, 128}
+
+  local circleWidth = width or 0.5
+  
   local i = 1
   while i < #circlePoly do
     local segment = {circlePoly[i], circlePoly[i+1]}

@@ -2,10 +2,14 @@
   "itemName" : "project45-multithreadermod",
   "price" : 15000,
   "rarity" : "Legendary",
-  "tooltipKind" : "project45gunmod",
-  "category" : "Receiver Mod",
-  "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-multithreadermod/project45-multithreadermod.png",
-  "description" : "Allows an energy weapon to have an automatic firemode.",
+  "tooltipKind" : "project45gunmod2",
+  "category" : "Gun Mod",
+  "tooltipFields": {
+    "objectImage": "/items/augments/project45-gunmods/mods/project45-multithreadermod/project45-multithreadermod.png"
+  },
+  "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-multithreadermod/project45-multithreadermodicon.png",
+  "description": "Turns semi/burst weapons full auto. Just don't tell the UATF you installed this gun mod.",
+  "technicalInfo" : "Manual-feed weapons auto-feed.\nCharge weapons automatically fire when fully charged.",
   "shortdescription" : "Multithreader",
 
   "radioMessagesOnPickup" : [ "pickupaugment" ],
@@ -15,10 +19,12 @@
     "category": "energy",
     "slot": "receiver",
     "primaryAbility": {
+      /*
       "projectileKind": {
         "operation": "replace",
         "value": "hitscan"
       },
+      */
       "semi": {
         "operation": "replace",
         "value": false
@@ -42,5 +48,6 @@
     }
   },
 
-  "scripts" : [ "/scripts/augments/project45-gunmod/gunmod.lua" ]
+  "scripts" : [ "/scripts/augments/project45-gunmod/gunmod.lua" ],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
 }
