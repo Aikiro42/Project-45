@@ -4,7 +4,10 @@
   "rarity" : "Legendary",
   "tooltipKind" : "project45gunmod2",
   "category" : "Ammo Mod",
-  "inventoryIcon" : "/items/augments/project45-gunmods/ammo/project45-poisonbeammod/project45-poisonbeammod.png",
+  "tooltipFields":{
+    "objectImage": "/items/augments/project45-gunmods/ammo/project45-poisonbeammod/project45-poisonbeammod.png"
+  },
+  "inventoryIcon" : "/items/augments/project45-gunmods/ammo/project45-poisonbeammod/project45-poisonbeammodicon.png",
   "description" : "Radiation beam configuration. Sometimes used as an on-field MRE cooking config.",
   "shortdescription" : "Radiation Beam",
 

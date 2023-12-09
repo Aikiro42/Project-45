@@ -4,7 +4,10 @@
   "rarity" : "Legendary",
   "tooltipKind" : "project45gunmod2",
   "category" : "Ammo Mod",
-  "inventoryIcon" : "/items/augments/project45-gunmods/ammo/project45-explosiveammomod/project45-explosiveammomod.png",
+  "tooltipFields":{
+    "objectImage": "/items/augments/project45-gunmods/ammo/project45-explosiveammomod/project45-explosiveammomod.png"
+  },
+  "inventoryIcon" : "/items/augments/project45-gunmods/ammo/project45-explosiveammomod/project45-explosiveammomodicon.png",
   "description" : "Ballistic cartridges with stably-primed core fragment bullets.",
   "technicalInfo": "Fires projectiles that explode on impact.",
   "shortdescription" : "High-explosive Bullets",
