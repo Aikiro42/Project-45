@@ -1,7 +1,7 @@
 {
   "itemName" : "project45-extendedmagmod",
-  "price" : 15000,
-  "rarity" : "Legendary",
+  "price" : 4500,
+  "rarity" : "Uncommon",
   "tooltipKind" : "project45gunmod2",
   "category" : "Gun Mod",
   "tooltipFields":{
