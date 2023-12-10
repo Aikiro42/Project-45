@@ -9,6 +9,10 @@ project45util.categoryStrings = {
   universal = "^#cfcfcf;¤ Universal^reset;"
 }
 
+function project45util.colorText(color, text)
+  return "^" .. color .. ";" .. text .. "^reset;"
+end
+
 function project45util.rgbToHex(rgbArray)
   local hexString = string.format("%02X%02X%02X", rgbArray[1], rgbArray[2], rgbArray[3])
   return hexString
