@@ -8,7 +8,7 @@
     "objectImage": "/items/augments/project45-gunmods/mods/project45-extendedbarrelmod/project45-extendedbarrelmod.png"
   },
   "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-extendedbarrelmod/project45-extendedbarrelmodicon.png",
-  "statInfo" : "Decreases spread by 50%",
+  "statInfo" : "Spread x0.5",
   "description": "Isn't it weird that regardless of caliber, this magically fits on so many weapons?",
   "shortdescription" : "Extended Barrel",
   "augment":{
