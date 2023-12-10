@@ -1,18 +1,18 @@
 {
-  "itemName" : "project45-neo-friendship",
+  "itemName" : "project45-neo-doublebarrel",
   "price" : 1250,
   "maxStack" : 1,
   "rarity" : "Uncommon",
   "description" : "Gib your enemies with the power of Friendship!",
-  "shortdescription" : "Friendship",
+  "shortdescription" : "Double-barrel Shotgun",
   "tooltipKind" : "project45gun",
-  "gunArchetype": "Double-barreled Shotgun",
+  "gunArchetype": "Shotgun",
   "category" : "shotgun",
   "twoHanded" : true,
   "itemTags" : ["weapon","ranged","shotgun"],
   "level" : 1,
   "muzzleFlashColor": [255, 255, 200],
-  "inventoryIcon" : "project45-neo-friendship.png:idle.1",
+  "inventoryIcon" : "project45-neo-doublebarrel.png:idle.1",
 
   "project45GunModInfo": {
     "category": "ballistic",
@@ -32,7 +32,7 @@
   },
 
   "animationParts" : {
-    "middle" : "project45-neo-friendship.png",
+    "middle" : "project45-neo-doublebarrel.png",
     "middleFullbright" : "",
     "charge": "",
     "chargeFullbright": "",

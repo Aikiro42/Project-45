@@ -73,36 +73,50 @@
         // "project45-neo-custom-x",
         "project45-neo-pipegun",
         
+
+        // Pistols
         "project45-neo-pistol",
         "project45-neo-revolver",
+        
+        // SMGs
         "project45-neo-smg",
         "project45-neo-shindeiru",
-        "project45-neo-love",
+        
+        // Shotguns
+        "project45-neo-sawedoff",
         "project45-neo-shotgun",
-        "project45-neo-friendship",
+        "project45-neo-doublebarrel",
+
+        // Rifles
         "project45-neo-leveraction",
         "project45-neo-assaultrifle",
-        "project45-neo-scaramouche",
+        "project45-neo-combatrifle",
         "project45-neo-carbine",
+
+        // Marksman Rifles
         "project45-neo-servicerifle",
         "project45-neo-huntingrifle",
         "project45-neo-sniper",
+
+        // Machine guns
         "project45-neo-machinegun",
         
+        // Heavies
         "project45-neo-amr",
         "project45-neo-grenadelauncher",
         "project45-neo-rocketlauncher",
         "project45-neo-minigun",
         "project45-neo-flamethrower",
-        
         "project45-neo-gaussrifle",
         
+        // Energy Guns
         "project45-neo-cyclo",
         "project45-neo-accelerator",
         "project45-neo-beamsplitter",
         "project45-neo-beamgun",
         "project45-neo-gazer",
 
+        // Special/Experimental
         "project45-neo-powerstave",
         "project45-neb-zweibrandyr",
         "project45-neb-warbolter",

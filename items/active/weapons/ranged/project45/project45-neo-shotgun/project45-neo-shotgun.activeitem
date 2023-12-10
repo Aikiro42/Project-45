@@ -4,7 +4,7 @@
   "maxStack" : 1,
   "rarity" : "Rare",
   "description" : "A shotgun.",
-  "shortdescription" : "Shotgun",
+  "shortdescription" : "Pump-action Shotgun",
   "tooltipKind" : "project45gun",
   "gunArchetype": "Shotgun",
   "category" : "shotgun",

@@ -1,18 +1,18 @@
 {
-  "itemName" : "project45-neo-love",
+  "itemName" : "project45-neo-sawedoff",
   "price" : 1250,
   "maxStack" : 1,
   "rarity" : "Uncommon",
   "description" : "Rip and tear until it's done.",
-  "shortdescription" : "Love",
+  "shortdescription" : "Sawed-off Shotgun",
   "tooltipKind" : "project45gun",
-  "gunArchetype": "Double-barrel Sawed-off",
+  "gunArchetype": "Shotgun",
   "category" : "shotgun",
   "twoHanded" : false,
   "itemTags" : ["weapon","ranged","shotgun"],
   "level" : 1,
   "muzzleFlashColor": [255, 255, 200],
-  "inventoryIcon" : "project45-neo-love.png:idle.1",
+  "inventoryIcon" : "project45-neo-sawedoff.png:idle.1",
 
   "project45GunModInfo": {
     "category": "ballistic",
@@ -35,7 +35,7 @@
   },
 
   "animationParts" : {
-    "middle" : "project45-neo-love.png",
+    "middle" : "project45-neo-sawedoff.png",
     "middleFullbright" : "",
     "charge": "",
     "chargeFullbright": "",
