@@ -9,7 +9,7 @@
   "statInfo" : "^#9BBA3D;Reload Cost -10^reset;",
   "slot": "reloadCost",
   "archetype": "Additive",
-  "shortdescription" : "Reload Cost +",
+  "shortdescription" : "Reload Cost (+)",
 
   "augment":{
     "reloadCost": {

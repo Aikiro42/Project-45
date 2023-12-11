@@ -166,18 +166,16 @@
       ],
 
       "stat": [
-        "project45-damageaddmod",
+        "project45-levelmod",
         "project45-reloadcostaddmod",
-        "project45-critchanceaddmod",
-        "project45-critdamageaddmod",
-        
-        "project45-damagemultmod",
-        "project45-firetimemultmod",
         "project45-reloadcostmultmod",
-        "project45-critchancemultmod",
+        "project45-firetimemultmod",
+        "project45-damageaddmod",
+        "project45-damagemultmod",
+        "project45-critdamageaddmod",
         "project45-critdamagemultmod",
-
-        "project45-levelmod"
+        "project45-critchanceaddmod",
+        "project45-critchancemultmod"
       ],
       
       "ammo": [

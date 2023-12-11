@@ -1,6 +1,6 @@
 {
   "itemName" : "project45-critdamageaddmod",
-  "price" : 10000,
+  "price" : 25000,
   "rarity" : "Legendary",
   "tooltipKind" : "project45gunmod2",
   "category" : "Stat Mod",
@@ -9,7 +9,7 @@
   "statInfo" : "^#D93A3A;Crit Damage +1^reset;",
   "slot": "critDamage",
   "archetype": "Additive",
-  "shortdescription" : "Crit Damage +",
+  "shortdescription" : "Crit Damage (+)",
 
   "augment":{
     "critDamage": {
