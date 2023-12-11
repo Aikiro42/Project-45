@@ -4,240 +4,100 @@
   "description" : "A codex describing how to use the Weapon Standard 45 product line of weapons.",
   "icon" : "project45manualcover.png",
   "contentPages" : [
-
-    //1____________________________________________________________________________________
-
-    "^#EA9931;TABLE OF CONTENTS^reset;
-    
-    ^#E2C344;INTRODUCTION^reset;
-     3 - INTRODUCTION
-    
-     ^#E2C344;GUN PROPERTIES^reset;
-     4 - Weapon Standard 45 Guns
-     6 - Stats
-    
-     ^#E2C344;BASIC USAGE^reset;
-     8 - Firing
-     9 - Dodging
-    10 - Ammo
-    12 - Reloading",
-    
-    //2____________________________________________________________________________________
-
-    "^#EA9931;TABLE OF CONTENTS^reset;
-
-    ^#E2C344;BASIC USAGE (cont.)^reset;
-    13 - Reload Rating
-    15 - Per-bullet Reload
-    17 - Per-bullet Reload Rating
-    18 - Gun Jams
-    19 - Gun Repair Kit
-
-    ^#E2C344;GUN MODDING^reset;
-    21 - Modding Basics
-    23 - Mod Types
-    25 - Abilities",
-
-    //3____________________________________________________________________________________
-
-    "^#EA9931;INTRODUCTION^reset;
-    
-    Welcome to our user manual for WS45 firearms!
-    
-    This manual provides detailed instructions on how to operate your weapons.
-    
-    Thank you for choosing our product line of weapons and we hope you will enjoy them.",
-
-    //4____________________________________________________________________________________
-
-    "^#EA9931;GUN PROPERTIES 1-A - WEAPON STANDARD 45 GUNS 1^reset;
-    
-    WS45 guns are different from other guns in that
-
-    a. their projectiles have a ^#D93A3A;chance to deal increased damage^reset;,
-    b. they can be loaded and stored, ready to be retrieved and fired in the future,",
-
-    //5____________________________________________________________________________________
-
-    "^#EA9931;GUN PROPERTIES 1-B - WEAPON STANDARD 45 GUNS 2^reset;
-
-    c. they can be fired without needing energy and only ^#51BD3B;consumes a percentage of the user's energy when reloading^reset;, and
-    d. they are modifiable.",
-
-    //6____________________________________________________________________________________
-
-    "^#EA9931;GUN PROPERTIES 2-A - STATS 1^reset;
-    
-    WS45 guns have the following stats:
-    
-    ^#EA9931;Damage per Shot^reset; - The range of damage a gun's (initial) projectiles will deal at 100% power multiplier, disregarding the target's defense.
-    ^#E2C344;Fire Rate^reset; - the time it takes for the gun to cycle and fire a round.
-    ^#51BD3B;Reload Cost^reset; - the total percentage of energy required to reload a gun to its full capacity.",
-
-    //7____________________________________________________________________________________
-
-    "^#EA9931;GUN PROPERTIES 2-B - STATS 2^reset;
-    
-    Reload Time - the maximum possible amount of time it takes to reload a gun to its full capacity.
-    ^#D93A3A;Crit Chance^reset; - the chance of the gun dealing increased damage.
-    ^#D93A3A;Crit Damage^reset; - the number multiplied to the projectile's damage if the gun would deal increased damage.",
-
-    //8____________________________________________________________________________________
-
-    "^#EA9931;BASIC USAGE 1 - FIRING^reset;
-    
-    WS45 guns fire like any other gun, except they have a relatively predictable recoil. When firing, your gun's muzzle will kick up, and you will have to adjust your aim downward to counteract the recoil.
-    
-    The amount of recoil is also affected by how much you're moving, whether you're walking, running or standing still. To drastically reduce recoil, it is recommended to shoot while crouched.",
-
-    //9____________________________________________________________________________________
-
-    "^#EA9931;BASIC USAGE 2 - DODGING^reset;
-    
-    WS45 guns have a special feature that allows you to avoid damage by dodging. ^#EA9931;Tap the walk key to dodge in the direction you were previously (or currently) going in.^reset;
-
-    ",
-
-    //10____________________________________________________________________________________
-
-    "^#EA9931;BASIC USAGE 3-A - AMMO 1^reset;
-    
-    You will have an indicator next to your crosshair showing the amount of ammo your weapon has.
-
-    - If the indicator is ^#D93A3A;\"0\"^reset;, you will need to eject the magazine to reload. In this case, ^#EA9931;fire the gun to eject the magazine^reset;.",
-
-    //11____________________________________________________________________________________
-
-    "^#EA9931;BASIC USAGE 3-B - AMMO 2^reset;
-
-    - If the indicator is ^#D93A3A;\"E\"^reset;, the weapon has no magazine - you are ready to reload. ^#EA9931;Fire the gun to consume energy and begin reloading.^reset;
-    
-    ^#D93A3A;Energy does not regenerate while you hold a WS45 gun, unless the gun is empty (i.e. the indicator is \"0\" or \"E\") and you are out of energy.^reset;",
-
-    //12____________________________________________________________________________________
-
-    "^#EA9931;BASIC USAGE 4 - RELOADING^reset;
-
-    When you begin reloading, a vertical bar with a colored section will appear in place of the ammo indicator, and a red line will move up along it. ^#EA9931;Fire the weapon when the red line is over the colored region to finish a reload early.^reset;",
-
-    //13____________________________________________________________________________________
-
-    "^#EA9931;BASIC USAGE 5-A - RELOAD RATING I^reset;
-
-    Your weapon's performance will change depending on whether you executed a quick reload and whether you hit the colored regions:
-
-    ^#E2C344;PERFECT^reset; - Hitting the lighter-colored region gives your gun a ^#E2C344;1.3x damage bonus^reset; and ^#E2C344;completely prevents jamming^reset;.",
-
-    //14____________________________________________________________________________________
-
-    "^#EA9931;BASIC USAGE 5-B - RELOAD RATING II^reset;
-
-    ^#60B8EA;GOOD^reset; - Hitting the darker-colored region gives your gun a ^#60B8EA;1.1x damage bonus^reset; and ^#60B8EA;completely prevents jamming^reset;.
-
-    OK - Allowing the red line to reach the end of the bar will simply reload your gun.
-
-    ^#D93A3A;BAD^reset; - Hitting the white region will ^#D93A3A;increase the chance of a gun jam happening^reset;.",
-    
-    //15____________________________________________________________________________________
-
-    "^#EA9931;BASIC USAGE 6-A - PER-BULLET RELOAD 1^reset;
-    
-    Some guns allow you to reload them on a per-bullet or per-clip basis. The \"reload rating\" of your gun (discussed in the previous section) depends on your \"reload score\" from reloading each (set of) bullets:
-
-    - ^#E2C344;Perfect reloads add the number of bullets you reloaded^reset; to the reload score.",
-
-    //16____________________________________________________________________________________
-
-    "^#EA9931;BASIC USAGE 6-B - PER-BULLET RELOAD 2^reset;
-    
-    - ^#D93A3A;Bad reloads subtract the number of bullets you reloaded^reset; from the reload score.
-
-    Allowing the red line to reach the end of the bar will end the reload sequence, leaving your gun with the amount of ammo you ended up with. ^#EA9931;Your reload score will be evaluated at the end of the reload sequence.^reset;",
-
-    //17____________________________________________________________________________________
-
-    "^#EA9931;BASIC USAGE 7-A - PER-BULLET RELOAD RATING 1^reset;
-    
-    - You will achieve a ^#D93A3A;BAD^reset; rating if you did ^#D93A3A;more bad reloads than good^reset; (i.e. your reload score is less than 0) and ^#D93A3A;over half of the bullets you reloaded are from bad reloads^reset; (i.e. the absolute value of your reload score is greater than half the ammo capacity of your gun).",
-    
-    "^#EA9931;BASIC USAGE 7-B - PER-BULLET RELOAD RATING 2^reset;
-    
-    - If you did ^#E2C344;more good reloads than bad^reset;, you will get a ^#60B8EA;GOOD^reset; rating at worst (if your reload score is exactly 0) and a ^#E2C344;PERFECT^reset; rating at best (if your reload score is positive).",
-
-    //18____________________________________________________________________________________
-
-    "^#EA9931;BASIC USAGE 8 - GUN JAMS^reset;
-    
-    Sometimes, depending on the gun and how well you reloaded, your gun will jam. In this case, the ammo indicator will be replaced with a filled bar. ^#EA9931;Repeatedly fire your weapon to deplete the bar and unjam your weapon.^reset;",
-
-    //19____________________________________________________________________________________
-
-    "^#EA9931;BASIC USAGE 9-A - GUN REPAIR KIT 1^reset;
-    
-    Suppose you have a gun that has a high ammo capacity, but is very hard to reload well. When you reload it badly, you are at risk of jamming the gun until your next reload! ^#9DA8AF;(The developer of this framework couldn't figure out how to best allow players to reload a gun with ammo still in it)^reset;",
-
-    //20____________________________________________________________________________________
-
-    "^#EA9931;BASIC USAGE 9-B - GUN REPAIR KIT 2^reset;
-
-    The aforementioned problem is addressed by the ^#EA9931;Gun Repair Kit^reset;, available in the \"UTIL\" section of your local WS45 vending machine, which can be used to fix, perfectly reload, and prevent WS45 guns from jamming.
-    
-    ^#EA9931;Use the repair kit the same way you would install an EPP augment.^reset;",
-
-    //21____________________________________________________________________________________
-    
-    "^#EA9931;GUN MODDING 1-A - MODDING BASICS 1^reset;
-    
-    Gun mods and attachments are available at your local WS45 vending machine. ^#EA9931;Install mods on your gun just like you would install an augment on an EPP.^reset;
-    
-    Unlike EPP augments, though, you can retrieve gun mods using our store-provided ^#EA9931;Gun Disassembly Kit^reset;: Place the kit, put the modded gun in the item slot, and click on the \"Disassemble\" button.",
-
-    //22____________________________________________________________________________________
-
-    "^#EA9931;GUN MODDING 1-B - MODDING BASICS 2^reset;
-    
-    Gun mods are indicated in the tooltip. Certain unique properties of the weapon are also indicated in the tooltip, and these properties can be changed by the mods you install on the weapon",
-    
-    //23____________________________________________________________________________________
-
-    "^#EA9931;GUN MODDING 2-A - MOD TYPES 1^reset;
-
-    The general nature of the mods sold in the following sections are as such:
-
-    ^#EA9931;MODS^reset; - Actual gun attachments that fundamentally change how your gun works. These mods occupy attachment points - ^#D93A3A;you can't install two attachments in the same attachment point^reset;. Some guns also cannot accept certain attachments.",
-
-    //24____________________________________________________________________________________
-
-    "^#EA9931;GUN MODDING 2-B - MOD TYPES 2^reset;
-
-    ^#EA9931;STAT^reset; - Intrinsic mods that improve your gun's stats, indicated in your weapon's tooltip (and were discussed in page 5).
-
-    ^#EA9931;AMMO^reset; - Ammo-type mods that change the nature of the projectile your weapon shoots. Some ammo types are incompatible with some weapon types. ^#9DA8AF;(With that being said, you can use shotgun shells on a .50 BMG rifle.)^reset;",
-
-    //25____________________________________________________________________________________
-
-    "^#EA9931;GUN MODDING 3-A - ABILITIES 1^reset;
-    
-    Some attachments, when installed, provide your gun with an alternative ability. Here are some of those abilities, discussed in detail:
-
-    ^#B2E89D;Scope^reset; - Holding right click will focus your camera on scope crosshairs. The farther your cursor is from the scope, the faster the scope will move in that direction. The crosshairs will stop moving if your cursor is within them. A laser helps indicate the projectile's path.",
-
-    //26____________________________________________________________________________________
-
-    "^#EA9931;GUN MODDING 3-B - ABILITIES 2^reset;
-    
-    ^#B2E89D;Military Flashlight^reset; - Right-click to toggle between flashlight mode, laser mode, and flashlight laser mode.
-    
-    ^#B2E89D;Grenade Launcher^reset; - Right-click to fire an impact grenade. You need to manually eject and load a new grenade by right-clicking; loading consumes energy. ^#D93A3A;You cannot modify the projectile of this launcher.^reset;",
-
-    //27____________________________________________________________________________________
-
-    "^#EA9931;GUN MODDING 3-C - ABILITIES 3^reset;
-
-    ^#B2E89D;Underbarrel shotgun^reset; - Right-click to fire a shotgun round. You need to manually cock the gun by right-clicking; cocking consumes energy. ^#D93A3A;You cannot modify the projectile of this shotgun.^reset;"
-
-
-
+"# ^#E2C344;Introduction^reset;
+Project 45 guns are different from vanilla guns in the following aspects:
+1. They have the ability to ^#D93A3A;crit^reset; (and supercrit beyond 100% chance).
+2. They are more ^#51BD3B;energy-efficient^reset; due to being ammo-based.
+3. They are ^#d29ce7;modifiable and upgradable^reset; on the fly.
+4. Some fire different kinds of projectiles.
+5. Most can be converted to fire other kinds of projectiles.
+",
+
+"# ^#E2C344;Weapon Stats^reset;
+^#95d1f3;- Upgrade Capacity^reset;: The number of Stat Mods you can install on the weapon.
+^#EA9931;- Damage per Shot^reset;: The range of damage a gun's (initial) projectiles will deal at 100% power multiplier, disregarding the target's defense.
+^#E2C344;- Fire Rate^reset;: the time it takes for the gun to cycle and fire a round.
+^#51BD3B;- Reload Cost^reset;: the total percentage of energy required to reload a gun to its full capacity.
+",
+"# ^#E2C344;Weapon Stats^reset;
+^#cccccc;- Reload Time^reset;: the maximum possible amount of time it takes to reload a gun to its full capacity.
+^#D93A3A;- Crit Chance^reset;: the chance of the gun dealing increased damage. Odds beyond 100% give shots a chance to deal even more damage.
+^#D93A3A;- Crit Damage^reset;: the number multiplied to the projectile's damage if the gun would deal increased damage.
+",
+
+"# ^#E2C344;Firing & Recoil^reset;
+Project 45 guns fire like any other gun, except they have a relatively predictable recoil.
+
+When firing, your gun's muzzle will kick up, and you will have to adjust your aim downward to counteract the recoil.
+",
+"# ^#E2C344;Firing & Recoil^reset;
+The amount of recoil is also affected by how much you're moving, whether you're walking, running or standing still.
+
+To drastically reduce recoil, it is recommended to shoot while crouched. You could also modify your weapon with mods that reduce recoil.
+",
+
+"# ^#E2C344;Ammo & Reloading^reset;
+You will have an indicator next to your crosshair showing the amount of ammo your weapon has.
+
+- If the indicator is ^#D93A3A;\"0\"^reset;, you will need to eject the magazine to reload. In this case, ^#EA9931;fire the gun to eject the magazine^reset;.
+",
+"# ^#E2C344;Ammo & Reloading^reset;
+- If the indicator is ^#D93A3A;\"E\"^reset;, the weapon has no magazine - you are ready to reload. ^#EA9931;Fire the gun to consume energy and begin reloading.^reset;
+
+^#D93A3A;Energy does not regenerate while you hold a WS45 gun, unless the gun is empty (i.e. the indicator is \"0\" or \"E\") and you are out of energy.^reset;
+",
+"# ^#E2C344;Ammo & Reloading^reset;
+When you begin reloading, a vertical bar with a colored section will appear in place of the ammo indicator, and a red line will move up along it.
+
+^#EA9931;Fire the weapon when the red line is over the colored region to execute an Active Reload, finishing the reloading process early.^reset;
+",
+
+"# ^#E2C344;Reload Rating^reset;
+Your weapon's performance will change depending on whether you executed an Active Reload and whether you hit the colored regions:
+
+^#E2C344;PERFECT^reset; - Hitting the lighter-colored region gives your gun a ^#E2C344;1.3x damage bonus^reset; and ^#E2C344;completely prevents jamming^reset;
+
+^#60B8EA;GOOD^reset; - Hitting the darker-colored region gives your gun a ^#60B8EA;1.1x damage bonus^reset; and ^#60B8EA;completely prevents jamming^reset;.
+",
+"# ^#E2C344;Reload Rating^reset;
+OK - Allowing the red line to reach the end of the bar will simply reload your gun.
+
+^#D93A3A;BAD^reset; - Hitting the white region will ^#D93A3A;increase the chance of a gun jam happening^reset;
+",
+
+"# ^#E2C344;Per-bullet Reload^reset;
+Some guns allow you to reload them on a per-bullet or per-clip basis. The \"reload rating\" of your gun (discussed in the previous section) depends on your \"reload score\" from reloading each (set of) bullets:
+
+- ^#E2C344;Perfect reloads are worth 2 points.^reset;
+- ^#60B8EA;Good reloads are worth 1 point.^reset;
+- ^#D93A3A;Bad reloads are worth 0 points.^reset;
+",
+"# ^#E2C344;Per-bullet Reload^reset;
+Allowing the red line to reach the end of the bar will end the reload sequence, leaving your gun with the amount of ammo you ended up with.
+
+^#EA9931;Your reload score will be evaluated at the end of the reload sequence:^reset;
+
+- ^#E2C344;Perfect reloads are worth 2 points.^reset;
+- ^#60B8EA;Good reloads are worth 1 point.^reset;
+- ^#D93A3A;Bad reloads are worth 0 points^reset;.
+",
+
+"## ^#E2C344;Jamming^reset;
+Some guns have a chance to jam when firing, especially when reloaded badly. When they do, they fail to fire, and an orange jam bar appears beside the crosshair.
+
+^#EA9931;Press the fire button to deplenish the jam bar.^reset;
+
+Your gun will unjam and load the next round when the jam bar is empty.
+",
+
+"# ^#E2C344;Gun Modding^reset;
+Modding weapons is similar to installing augments on EPPs. Whether you can install a mod on a weapon or not is largely dependent on both of their ^#d29ce7;Categories^reset; and associated ^#9da8af;Mod Slots^reset;.
+
+For ammo mods, their ^#EA9931;Archetype^reset; also matters. For stat mods, the weapon's remaining ^#95d1f3;Upgrade Capacity^reset; matters.
+",
+"# ^#E2C344;Gun Modding^reset;
+If a mod is incompatible with a weapon, it will be indicated the next time you hold your weapon via red text that appears above the player character's head.
+"
   ],
 
   "itemConfig" : {
