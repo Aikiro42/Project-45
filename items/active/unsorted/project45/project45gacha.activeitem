@@ -1,0 +1,38 @@
+{
+  "itemName" : "project45gacha",
+  "price" : 500,
+  "level" : 1,
+  "maxStack" : 99,
+  "rarity" : "Legendary",
+  "category" : "mysteriousReward",
+  "description" : "Open this and get a random gun!",
+  "shortdescription" : "Gun Bag",
+  "twoHanded" : true,
+
+  "inventoryIcon" : "project45gachaicon.png",
+  "animation" : "project45gacha.animation",
+  "animationCustom" : {
+    "sounds": {
+      "project45-guns-xssr": ["/sfx/objects/essencechest_open3.ogg"],
+      "project45-guns-ssr": ["/sfx/objects/essencechest_open2.ogg"],
+      "project45-guns-sr": ["/sfx/objects/essencechest_open1.ogg"],
+      "project45-guns-r": [ ]
+    }
+  },
+  "scripts" : ["project45gacha.lua"],
+
+  "fireTime" : 0.1,
+  "fireOffset" : [1.0, 0.0],
+
+  "odds": [
+    ["project45-guns-xssr", 2],
+    ["project45-guns-ssr", 4],
+    ["project45-guns-sr", 50],
+    ["project45-guns-r", 100]
+  ],
+
+  "treasure" : {
+    "pool" : "project45guns",
+    "level" : 1
+  }
+}
