@@ -1,0 +1,185 @@
+{
+
+  // GUNS
+
+  "project45-guns-r": [
+    [0, {
+      "pool" : [
+        {"weight" : 1, "item" : "project45-neo-pipegun"},
+        {"weight" : 1, "item" : "project45-neo-pistol"},
+        {"weight" : 1, "item" : "project45-neo-sawedoff"},
+        {"weight" : 1, "item" : "project45-neo-doublebarrel"},
+        {"weight" : 1, "item" : "project45-neo-huntingrifle"},
+
+        {"weight" : 1, "item" : "project45-neo-smg"},
+        {"weight" : 1, "item" : "project45-neo-carbine"},
+        {"weight" : 1, "item" : "project45-neo-shotgun"},
+        {"weight" : 1, "item" : "project45-neo-servicerifle"},
+        {"weight" : 1, "item" : "project45-neo-assaultrifle"},
+        {"weight" : 1, "item" : "project45-neo-leveraction"}
+      ],
+      "poolRounds" : 1,
+      "allowDuplication" : false
+    }]
+  ],
+
+  "project45-guns-sr": [
+    [0, {
+      "pool" : [
+        
+        {"weight" : 1, "item" : "project45-neo-revolver"},
+        {"weight" : 1, "item" : "project45-neo-machinegun"},
+        {"weight" : 1, "item" : "project45-neo-combatrifle"},
+        {"weight" : 1, "item" : "project45-neo-grenadelauncher"},
+        {"weight" : 1, "item" : "project45-neo-sniper"},
+
+        {"weight" : 1, "item" : "project45-neo-cyclo"},
+        {"weight" : 1, "item" : "project45-neo-accelerator"},
+        {"weight" : 1, "item" : "project45-neo-beamgun"},
+        {"weight" : 1, "item" : "project45-neo-beamsplitter"},
+        {"weight" : 1, "item" : "project45-neo-gazer"}
+
+      ],
+      "poolRounds" : 1,
+      "allowDuplication" : false
+    }]
+  ],
+
+  "project45-guns-ssr": [
+    [0, {
+      "pool" : [
+        {"weight" : 1, "item" : "project45-neo-amr"},
+        {"weight" : 1, "item" : "project45-neo-rocketlauncher"},
+        {"weight" : 1, "item" : "project45-neo-minigun"},
+        {"weight" : 1, "item" : "project45-neo-powerstave"},
+        {"weight" : 1, "item" : "project45-neo-flamethrower"},
+        {"weight" : 1, "item" : "project45-neo-shindeiru"}
+      ],
+      "poolRounds" : 1,
+      "allowDuplication" : false
+    }]
+  ],
+
+  "project45-guns-xssr": [
+    [0, {
+      "pool" : [
+        
+        {"weight" : 1, "item" : "project45-neb-magmaspitter"},
+        {"weight" : 1, "item" : "project45-neb-warbolter"},
+        {"weight" : 1, "item" : "project45-neb-zweibrandyr"},
+        {"weight" : 1, "item" : "project45-pkf-typhon"},
+        {"weight" : 1, "item" : "project45-tcf-kineticarbiter"},
+        {"weight" : 1, "item" : "project45-scz-spacecowboy"},
+        {"weight" : 1, "item" : "project45-gov-scarlet"}
+
+      ],
+      "poolRounds" : 1,
+      "allowDuplication" : false
+    }]
+  ],
+
+  // STATS
+
+  "project45-stats-ssr": [
+    [0, {
+      "pool" : [
+        
+        {"weight" : 0.95, "item" : "project45-levelmod"},
+        {"weight" : 0.05, "item" : "project45-godmod"}
+
+      ],
+      "poolRounds" : 1,
+      "allowDuplication" : false
+    }]
+  ],
+
+  "project45-stats-sr": [
+    [0, {
+      "pool" : [
+        
+        {"weight" : 1, "item" : "project45-critdamagemultmod"},
+        {"weight" : 1, "item" : "project45-critchancemultmod"},
+        {"weight" : 1, "item" : "project45-damagemultmod"},
+        {"weight" : 1, "item" : "project45-reloadcostmultmod"}
+
+      ],
+      "poolRounds" : 1,
+      "allowDuplication" : false
+    }]
+  ],
+
+  "project45-stats-r": [
+    [0, {
+      "pool" : [
+        {"weight" : 1, "item" : "project45-critchanceaddmod"},
+        {"weight" : 1, "item" : "project45-critdamageaddmod"},
+        {"weight" : 1, "item" : "project45-damageaddmod"},
+        {"weight" : 1, "item" : "project45-reloadcostaddmod"}
+      ],
+      "poolRounds" : 1,
+      "allowDuplication" : false
+    }]
+  ],
+  
+  // MODS
+
+  "project45-mods-xssr": [
+    [0, {
+      "pool" : [
+        {"weight" : 1, "item" : "project45-mlgscopemod"},
+        {"weight" : 1, "item" : "project45-phaseshiftmod"},
+        {"weight" : 1, "item" : "project45-supergunscopemod"}
+      ],
+      "poolRounds" : 1,
+      "allowDuplication" : false
+    }]
+  ],
+
+  "project45-mods-ssr": [
+    [0, {
+      "pool" : [
+        {"weight" : 1, "item" : "project45-enemyradarmod"},
+        {"weight" : 1, "item" : "project45-grenadelaunchermod"},
+        {"weight" : 1, "item" : "project45-underbarrelshotgunmod"},
+        
+        {"weight" : 1, "item" : "project45-autofiremod"},
+        {"weight" : 1, "item" : "project45-multithreadermod"},
+        {"weight" : 1, "item" : "project45-splittermod"}
+      ],
+      "poolRounds" : 1,
+      "allowDuplication" : false
+    }]
+  ],
+
+  "project45-mods-sr": [
+    [0, {
+      "pool" : [
+        {"weight" : 1, "item" : "project45-flashlasermod"},
+        {"weight" : 1, "item" : "project45-gunscopemod"},
+
+        {"weight" : 1, "item" : "project45-muzzlebrakemod"},
+        {"weight" : 1, "item" : "project45-silencermod"},
+        {"weight" : 1, "item" : "project45-extendedbarrelmod"},
+        {"weight" : 1, "item" : "project45-convergermod"}
+      ],
+      "poolRounds" : 1,
+      "allowDuplication" : false
+    }]
+  ],
+
+  "project45-mods-r": [
+    [0, {
+      "pool" : [
+        {"weight" : 1, "item" : "project45-stockmod"},
+        {"weight" : 1, "item" : "project45-weightmod"},
+        {"weight" : 1, "item" : "project45-gripmod"},
+        {"weight" : 1, "item" : "project45-extendedmagmod"},
+        {"weight" : 1, "item" : "project45-overampmod"},
+        {"weight" : 1, "item" : "project45-lasermod"},
+        {"weight" : 1, "item" : "project45-reflexsightsmod"}
+      ],
+      "poolRounds" : 1,
+      "allowDuplication" : false
+    }]
+  ]
+}

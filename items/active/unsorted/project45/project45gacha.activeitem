@@ -2,7 +2,7 @@
   "itemName" : "project45gacha",
   "price" : 500,
   "level" : 1,
-  "maxStack" : 99,
+  "maxStack" : 1,
   "rarity" : "Legendary",
   "category" : "mysteriousReward",
   "description" : "Open this and get a random gun!",
@@ -13,10 +13,10 @@
   "animation" : "project45gacha.animation",
   "animationCustom" : {
     "sounds": {
-      "project45-guns-xssr": ["/sfx/objects/essencechest_open3.ogg"],
-      "project45-guns-ssr": ["/sfx/objects/essencechest_open2.ogg"],
-      "project45-guns-sr": ["/sfx/objects/essencechest_open1.ogg"],
-      "project45-guns-r": [ ]
+      "gacha-xssr": ["/sfx/objects/essencechest_open3.ogg"],
+      "gacha-ssr": ["/sfx/objects/essencechest_open2.ogg"],
+      "gacha-sr": ["/sfx/objects/essencechest_open1.ogg"],
+      "gacha-r": [ ]
     }
   },
   "scripts" : ["project45gacha.lua"],
@@ -25,10 +25,10 @@
   "fireOffset" : [1.0, 0.0],
 
   "odds": [
-    ["project45-guns-xssr", 2],
-    ["project45-guns-ssr", 4],
-    ["project45-guns-sr", 50],
-    ["project45-guns-r", 100]
+    ["gacha-xssr", 2],
+    ["gacha-ssr", 4],
+    ["gacha-sr", 50],
+    ["gacha-r", 100]
   ],
 
   "treasure" : {

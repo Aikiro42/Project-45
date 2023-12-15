@@ -70,8 +70,6 @@
     "goods":{
       "guns": [
 
-        "project45gacha",
-
         // "project45-neo-custom-x",
         "project45-neo-pipegun",
         
@@ -221,6 +219,7 @@
         "project45manual-codex",
         "project45-gundisassembler",
         "project45-gunrepairkit",
+        "project45gacha",
         "project45-energystim",
 
         "nanowrap",
