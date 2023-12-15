@@ -20,6 +20,20 @@ function build(directory, config, parameters, level, seed)
     end
   end
 
+  local primaryAbility = function(keyName, defaultValue, set)
+    if set then
+      parameters.primaryAbility[keyName] = defaultValue  
+    else
+      if parameters.primaryAbility[keyName] ~= nil then
+        return parameters.primaryAbility[keyName]
+      elseif config.primaryAbility[keyName] ~= nil then
+        return config.primaryAbility[keyName]
+      else
+        return defaultValue
+      end
+    end
+  end
+
   if level and not configParameter("fixedLevel", true) then
     parameters.level = level
   end
@@ -31,7 +45,6 @@ function build(directory, config, parameters, level, seed)
   local rarityLevel = configParameter("level", 1)/10
   local levelRarityAssoc = {"Common", "Uncommon", "Rare", "Legendary", "Essential"}
   local rarityLevelAssoc = {Essential=1,Legendary=0.8,Rare=0.6,Uncommon=0.4,Common=0.2}
-  sb.logInfo(configParameter("rarity", "Common") .. " " .. rarityLevel)
   if rarityLevelAssoc[configParameter("rarity", "Common")] < rarityLevel then
     parameters.rarity = levelRarityAssoc[math.ceil(rarityLevel * #levelRarityAssoc)]
   end
@@ -191,11 +204,11 @@ function build(directory, config, parameters, level, seed)
       "ejecting",
       "feeding"
     }
-    local cycleTime = config.primaryAbility.cycleTime
+    local cycleTime = primaryAbility("cycleTime", 0.1)
     if type(cycleTime) == "table" then
       cycleTime = math.min(cycleTime[1], cycleTime[2])
     end
-    local stateCycleTime = cycleTime / (#fireTimeRelatedStates + (config.primaryAbility.loopFiringAnimation and 0 or 1))
+    local stateCycleTime = cycleTime / (#fireTimeRelatedStates + (primaryAbility("loopFiringAnimation", false) and 0 or 1))
     for _, state in ipairs(fireTimeRelatedStates) do
       construct(config, "animationCustom", "animatedParts", "stateTypes", "gun", "states", state)
       config.animationCustom.animatedParts.stateTypes.gun.states[state].cycle = stateCycleTime
@@ -203,19 +216,19 @@ function build(directory, config, parameters, level, seed)
     end
 
     construct(config, "animationCustom", "animatedParts", "stateTypes", "gun", "states", "firing")
-    config.animationCustom.animatedParts.stateTypes.gun.states.firing.cycle = config.primaryAbility.loopFiringAnimation and cycleTime or stateCycleTime
+    config.animationCustom.animatedParts.stateTypes.gun.states.firing.cycle = primaryAbility("loopFiringAnimation", false) and cycleTime or stateCycleTime
 
     construct(config, "animationCustom", "animatedParts", "stateTypes", "charge", "states", "charging")
     config.animationCustom.animatedParts.stateTypes.charge.states.charging.cycle = math.max(0.05, cycleTime)
 
     construct(config, "animationCustom", "animatedParts", "stateTypes", "gun", "states", "boltPulling")
-    config.animationCustom.animatedParts.stateTypes.gun.states.boltPulling.cycle = config.primaryAbility.cockTime/2
+    config.animationCustom.animatedParts.stateTypes.gun.states.boltPulling.cycle = primaryAbility("cockTime", 0.1)/2
 
     construct(config, "animationCustom", "animatedParts", "stateTypes", "gun", "states", "unjamming")
-    config.animationCustom.animatedParts.stateTypes.gun.states.unjamming.cycle = config.primaryAbility.cockTime/2
+    config.animationCustom.animatedParts.stateTypes.gun.states.unjamming.cycle = primaryAbility("cockTime", 0.1)/2
 
     construct(config, "animationCustom", "animatedParts", "stateTypes", "gun", "states", "boltPushing")
-    config.animationCustom.animatedParts.stateTypes.gun.states.boltPushing.cycle = config.primaryAbility.cockTime/2
+    config.animationCustom.animatedParts.stateTypes.gun.states.boltPushing.cycle = primaryAbility("cockTime", 0.1)/2
 
   end
 
@@ -224,17 +237,7 @@ function build(directory, config, parameters, level, seed)
   if config.tooltipKind == "project45gun" then
     config.tooltipFields = config.tooltipFields or {}
     config.tooltipFields.subtitle = project45util.categoryStrings[config.project45GunModInfo.category or "Generic"] -- .. "^#D1D1D1;" .. config.gunArchetype or config.category
-    -- config.tooltipFields.title = "^FF0000;FUCK"  -- doesn't work
-    -- config.tooltipFields.subTitle = "^#FFFFFF;BASE"  -- works
-    -- config.tooltipFields.subTitle.color = {255,255,255} -- doesn't work
     config.tooltipFields.levelLabel = util.round(configParameter("level", 1), 1)
-    
-    -- IMPORT PARAMETERS
-    --[[
-    if parameters.primaryAbility then
-        config.primaryAbility = sb.jsonMerge(config.primaryAbility, parameters.primaryAbility)
-    end
-    --]]
 
     local modList = parameters.modSlots or config.modSlots or {}
     if config.project45GunModInfo then
@@ -262,11 +265,6 @@ function build(directory, config, parameters, level, seed)
 
     end
     
-
-    if elementalType ~= "physical" then
-      config.tooltipFields.damageKindImage = "/interface/elements/"..elementalType..".png"
-    end
-
     if config.primaryAbility then
       
       if config.project45GunModInfo and config.project45GunModInfo.statModCountMax
@@ -276,29 +274,29 @@ function build(directory, config, parameters, level, seed)
           local max = config.project45GunModInfo.statModCountMax
           config.tooltipFields.upgradeCapacityLabel = (count < max and "^#96cbe7;" or "^#777777;") .. (max - count) .. "/" .. max .. "^reset;"
         else
-          config.tooltipFields.upgradeCapacityLabel = "^#96cbe7;Unlimited^reset;"
+          config.tooltipFields.upgradeCapacityLabel = project45util.colorText("#96cbe7","Unlimited")
         end
       else
-        config.tooltipFields.upgradeCapacityLabel = "^#777777;0/0^reset;"
+        config.tooltipFields.upgradeCapacityLabel = project45util.colorText("#777777", "0/0")
       end
 
         
       -- damage per shot
       -- FIXME: max damage seems inaccurate
-      config.primaryAbility.baseDamage = parameters.primaryAbility.baseDamage or config.primaryAbility.baseDamage
-      config.primaryAbility.reloadRatingDamageMults = parameters.primaryAbility.reloadRatingDamageMults or config.primaryAbility.reloadRatingDamageMults
-      local baseDamage = (config.primaryAbility.baseDamage or 0)
+      local baseDamage = primaryAbility("baseDamage", 0)
       * config.damageLevelMultiplier
       -- low damage = base damage * worst reload damage
       local loDamage = baseDamage
-        * math.min(table.unpack(config.primaryAbility.reloadRatingDamageMults))
+        * math.min(table.unpack(primaryAbility("reloadRatingDamageMults", {0,0,0,0})))
       -- high damage = base damage * best reload damage * last shot damage mult * overcharge mult
       local hiDamage = baseDamage
-        * math.max(table.unpack(config.primaryAbility.reloadRatingDamageMults))
-        * config.primaryAbility.lastShotDamageMult
-        * (config.primaryAbility.overchargeTime > 0 and 2 or 1)
-      config.tooltipFields.damagePerShotLabel = "^#FF9000;" .. util.round(loDamage, 1) .. " - " .. util.round(hiDamage, 1)
+        * math.max(table.unpack(primaryAbility("reloadRatingDamageMults", {0,0,0,0})))
+        * primaryAbility("lastShotDamageMult", 1)
+        * (primaryAbility("overchargeTime", 0) > 0 and 2 or 1)
+      
+      config.tooltipFields.damagePerShotLabel = project45util.colorText("#FF9000", util.round(loDamage, 1) .. " - " .. util.round(hiDamage, 1))
 
+      
       --[[ fire time calculation:
       If gun is manualFeed:
         fireTime* = cockTime + fireTime
@@ -306,80 +304,89 @@ function build(directory, config, parameters, level, seed)
         fireTime* = cycleTime + fireTime
       
       ]]--
-      config.primaryAbility.manualFeed = parameters.primaryAbility.manualFeed or config.primaryAbility.manualFeed
-      config.primaryAbility.cockTime = parameters.primaryAbility.cockTime or config.primaryAbility.cockTime
-      config.primaryAbility.cycleTime = parameters.primaryAbility.cycleTime or config.primaryAbility.cycleTime
       
-      local actualCycleTime = config.primaryAbility.manualFeed
-        and config.primaryAbility.cockTime
-        or config.primaryAbility.cycleTime
+      local actualCycleTime = primaryAbility("manualFeed", false)
+        and primaryAbility("cockTime", 0.1)
+        or primaryAbility("cycleTime", 0.1)
       
       if type(actualCycleTime) ~= "table" then
         actualCycleTime = {actualCycleTime, actualCycleTime}
       end
       
-      local loFireTime = actualCycleTime[1] + (parameters.primaryAbility.fireTime or config.primaryAbility.fireTime)
-      local hiFireTime = actualCycleTime[2] + (parameters.primaryAbility.fireTime or config.primaryAbility.fireTime)
-      config.tooltipFields.fireTimeLabel = ("^#FFD400;" .. util.round(loFireTime*1000, 1))
-      .. (loFireTime == hiFireTime and "ms" or (" - " .. util.round(hiFireTime*1000, 1) .. "ms"))
+      local loFireTime = actualCycleTime[1] + primaryAbility("fireTime", 0.1)
+      local hiFireTime = actualCycleTime[2] + primaryAbility("fireTime", 0.1)
+      if loFireTime == hiFireTime then
+        config.tooltipFields.fireTimeLabel = project45util.colorText("#FFD400", util.round(loFireTime*1000, 1) .. "ms")
+      else
+        config.tooltipFields.fireTimeLabel = project45util.colorText("#FFD400",
+          util.round(loFireTime*1000, 1) .. " - " .. util.round(hiFireTime*1000, 1) .. "ms")
+      end
       
-      -- set reload cost
-      config.primaryAbility.reloadCost = parameters.primaryAbility.reloadCost or config.primaryAbility.reloadCost
-      config.tooltipFields.reloadCostLabel = "^#b0ff78;" .. config.primaryAbility.reloadCost or 0
+      -- reload cost
+      config.tooltipFields.reloadCostLabel = project45util.colorText("#b0ff78", primaryAbility("reloadCost", 0))
 
-      local bulletReloadTime = parameters.primaryAbility.reloadTime or config.primaryAbility.reloadTime
-      local bulletsPerReload = parameters.primaryAbility.bulletsPerReload or config.primaryAbility.bulletsPerReload
-      local maxAmmo = parameters.primaryAbility.maxAmmo or config.primaryAbility.maxAmmo
+      -- reload time
+      local bulletReloadTime = primaryAbility("reloadTime", 0.1)
+      local bulletsPerReload = primaryAbility("bulletsPerReload", 1)
+      local maxAmmo = primaryAbility("maxAmmo")
       local actualReloadTime = bulletReloadTime * math.max(1, maxAmmo / bulletsPerReload)
-      config.primaryAbility.reloadTime = bulletReloadTime
-      config.tooltipFields.reloadTimeLabel = util.round(
-        (actualReloadTime or 0),
-        1
-      ) .. "s"
-
-      config.primaryAbility.critChance = parameters.primaryAbility.critChance or config.primaryAbility.critChance
-      config.tooltipFields.critChanceLabel = (config.primaryAbility.critChance > 0 and "^#FF6767;" or "^#777777;") .. util.round(
-        (config.primaryAbility.critChance or 0) * 100,
-        1
-      ) .. "%"
-
-      config.primaryAbility.critDamageMult = parameters.primaryAbility.critDamageMult or config.primaryAbility.critDamageMult
-      config.tooltipFields.critDamageLabel = (config.primaryAbility.critChance > 0 and "^#FF6767;" or "^#777777;") .. util.round(
-        (config.primaryAbility.critDamageMult or 1),
-        1
-      ) .. "x"
-
-      config.primaryAbility.heavyWeapon = parameters.primaryAbility.heavyWeapon or config.primaryAbility.heavyWeapon
-      local heavyDesc = config.primaryAbility.heavyWeapon and "^#FF5050;Heavy.^reset;\n" or ""
-
-      config.primaryAbility.multishot = parameters.primaryAbility.multishot or config.primaryAbility.multishot
-      local multishotDesc = config.primaryAbility.multishot ~= 1 and ("^#9dc6f5;" .. util.round(config.primaryAbility.multishot, 1) .. "x multishot.^reset;\n") or ""
       
-      config.primaryAbility.chargeTime = parameters.primaryAbility.chargeTime or config.primaryAbility.chargeTime
-      local chargeDesc = config.primaryAbility.chargeTime > 0 and ("^#FF5050;" .. util.round(config.primaryAbility.chargeTime, 1) .. "s charge time.^reset;\n") or ""
-      
-      config.primaryAbility.overchargeTime = parameters.primaryAbility.overchargeTime or config.primaryAbility.overchargeTime
-      local overchargeDesc = config.primaryAbility.overchargeTime > 0 and ("^#9dc6f5;" .. util.round(config.primaryAbility.overchargeTime, 1) .. "s overcharge.^reset;\n") or ""
-      
+      config.tooltipFields.reloadTimeLabel = util.round((actualReloadTime or 0), 1) .. "s"
 
+      -- crit chance
+      local critChance = primaryAbility("critChance", 0)
+      if critChance > 0 then
+        config.tooltipFields.critChanceLabel = project45util.colorText("#FF6767", util.round(critChance*100, 1) .. "%")
+      else
+        config.tooltipFields.critChanceLabel = project45util.colorText("#777777", util.round(critChance*100, 1) .. "%")
+      end
+
+      -- crit damage
+      local critDamage = primaryAbility("critDamageMult", 1)
+      if critChance > 0 then
+        config.tooltipFields.critDamageLabel = project45util.colorText("#FF6767", util.round(critDamage*100, 1) .. "%")
+      else
+        config.tooltipFields.critDamageLabel = project45util.colorText("#777777", util.round(critDamage*100, 1) .. "%")
+      end
+
+      local miscStats = {
+        "heavyWeapon",
+        "multishot",
+        "chargeTime",
+        "overchargeTime"
+      }
+
+      local heavyDesc = primaryAbility("heavyWeapon", false)
+        and (project45util.colorText("#FF5050", "Heavy") .. "\n")
+        or ""
+
+      local multishotDesc = primaryAbility("multishot", 1) ~= 1
+        and (project45util.colorText("#9dc6f5", util.round(primaryAbility("multishot", 1), 1) .. "x multishot") .. "\n")
+        or ""
+
+      local chargeDesc = primaryAbility("chargeTime", 0) > 0
+        and (project45util.colorText("#FF5050", util.round(primaryAbility("chargeTime", 0), 1) .. "s charge time.") .. "\n")
+        or ""
+        
+      local overchargeDesc = primaryAbility("overchargeTime", 0) > 0
+        and (project45util.colorText("#9dc6f5", util.round(primaryAbility("overchargeTime", 0), 1) .. "s overcharge.") .. "\n")
+        or ""
+      
       local modListDesc = ""
       if modList then
-        modListDesc = "^#abfc6d;"
-        -- FIXME: Turn me to a set
         local exclude = set.new({"ability","rail","sights","muzzle","underbarrel","stock","ammoType"})
         for modSlot, modKind in pairs(modList) do
           if not exclude[modSlot] and modKind[1] ~= "ability" then
-            modListDesc = modListDesc .. modKind[1] .. ".\n"
+            modListDesc = modListDesc .. project45util.colorText("#abfc6d", modKind[1]) .. "\n"
           end
         end
-        modListDesc = modListDesc .. "^reset;"
       end
 
       local finalDescription = heavyDesc .. chargeDesc .. overchargeDesc .. multishotDesc .. modListDesc -- .. config.description
-      config.description = finalDescription -- == "" and "^#777777;No notable qualities.^reset;" or finalDescription
+      config.description = finalDescription == "" and project45util.colorText("#777777", "No notable qualities.") or finalDescription
 
     end
-    -- sb.logInfo("[ PROJECT 45 ] " .. sb.printJson(parameters.primaryAbility))
+
     if parameters.altAbility then
       config.tooltipFields.altAbilityLabel = ("^#ABD2FF;" .. (parameters.altAbility.name or "Unknown"))
     elseif config.altAbility then

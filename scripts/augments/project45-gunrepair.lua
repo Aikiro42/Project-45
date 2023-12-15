@@ -13,7 +13,7 @@ function apply(input)
     bolt = "closed",
     gunAnimation = "idle",
     ammo = 0,
-    reloadRating = OK,
+    reloadRating = 2,
     unejectedCasings = 0,
     jamAmount = 0,
     loadSuccess = false

@@ -1,13 +1,13 @@
 {
   "itemName" : "project45-damageaddmod",
-  "price" : 10000,
+  "price" : 7500,
   "rarity" : "Legendary",
   "tooltipKind" : "project45gunmod2",
   "category" : "Stat Mod",
   "inventoryIcon" : "/items/augments/project45-gunmods/stat/project45-damagemod/project45-damageaddmod.png",
   "statInfo" : "^#EA9931;Base Damage +10^reset;",
   "description": "Increases Base Damage by 10.",
-  "shortdescription" : "Base Damage +",
+  "shortdescription" : "Base Damage (+)",
   "slot": "baseDamage",
   "archetype": "Additive",
   "augment":{

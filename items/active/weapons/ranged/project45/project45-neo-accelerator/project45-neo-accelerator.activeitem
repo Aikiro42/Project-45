@@ -27,6 +27,7 @@
     "acceptsModSlot": [
       "rail",
       "sights",
+      "muzzle",
       "underbarrel"
     ]
   },

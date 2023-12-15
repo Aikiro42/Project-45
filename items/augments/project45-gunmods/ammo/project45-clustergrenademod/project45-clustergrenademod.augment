@@ -1,7 +1,7 @@
 {
   "itemName" : "project45-clustergrenademod",
-  "price" : 1000,
-  "rarity" : "Legendary",
+  "price" : 1250,
+  "rarity" : "Rare",
   "tooltipKind" : "project45gunmod2",
   "category" : "Ammo Mod",
   "tooltipFields":{

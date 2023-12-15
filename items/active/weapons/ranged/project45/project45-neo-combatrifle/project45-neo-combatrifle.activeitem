@@ -1,10 +1,10 @@
 {
-  "itemName" : "project45-neo-scaramouche",
+  "itemName" : "project45-neo-combatrifle",
   "price" : 5000,
   "maxStack" : 1,
   "rarity" : "Legendary",
   "description" : "A high-power, automatic assault rifle.",
-  "shortdescription" : "Scaramouche",
+  "shortdescription" : "Combat Rifle",
   "tooltipKind" : "project45gun",
   "gunArchetype": "Battle Rifle",
   "category" : "rifle",
@@ -12,14 +12,14 @@
   "itemTags" : ["weapon","ranged","rifle"],
   "level" : 1,
   "muzzleFlashColor": [255, 255, 200],
-  "inventoryIcon" : "project45-neo-scaramouche-icon.png",
+  "inventoryIcon" : "project45-neo-combatrifle-icon.png",
 
   "animationParts" : {
-    "middle" : "project45-neo-scaramouche.png",
+    "middle" : "project45-neo-combatrifle.png",
     "middleFullbright" : "",
     "charge": "",
     "chargeFullbright": "",
-    "magazine": "project45-neo-scaramouche-mag.png",
+    "magazine": "project45-neo-combatrifle-mag.png",
     "magazineFullbright": ""
   },
 
@@ -32,7 +32,7 @@
       },
       "magazine": {
         "particles": [
-          {"particle": "project45scaramouchemag"}
+          {"particle": "project45combatriflemag"}
         ]
       }
     },

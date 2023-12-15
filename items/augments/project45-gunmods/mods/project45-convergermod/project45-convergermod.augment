@@ -1,0 +1,70 @@
+{
+  "itemName" : "project45-convergermod",
+  "price" : 7500,
+  "rarity" : "Rare",
+  "tooltipKind" : "project45gunmod2",
+  "category" : "Gun Mod",
+  "tooltipFields":{
+    "objectImage": "/items/augments/project45-gunmods/mods/project45-convergermod/project45-convergermod.png"
+  },
+  "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-convergermod/project45-convergermodicon.png",
+  "description" : "A muzzle implement that concentrates energy rays, but gives shots a bit more kick.",
+  "statInfo": "Recoil x1.5\nProjectile Count: 1\nSpread: x0.01",
+  "shortdescription" : "Converger",
+
+  "augment":{
+    "modName": "Converger",
+    "category": "energy",
+    "slot": "muzzle",
+    "muzzleOffset": [0.25, 0],
+    "primaryAbility": {
+      "projectileCount": {
+        "operation": "replace",
+        "value": 1
+      },
+      "spread": {
+        "operation": "multiply",
+        "value": 0.01
+      },
+      "recoilMult": {
+        "operation": "multiply",
+        "value": 1.5
+      },
+      "hitscanParameters":{
+        "operation": "merge",
+        "value": {
+          "hitscanWidth": 2,
+          "hitscanBrightness": 0.5
+        }
+      }
+    },
+    
+    "sprite": {
+      "zLevel": 5,
+      "image": "/items/augments/project45-gunmods/mods/project45-convergermod/project45-convergermodsprite.png",
+      "offset": [0, -0.125]
+    }
+
+    /*
+    ,"animationCustom": {
+      "animatedParts" : { "parts" : {
+        "muzzle" : {
+          "properties" : {
+            "zLevel" : 5,
+            "centered" : true,
+            "offset" : [0.375, -0.125],
+            "transformationGroups" : ["muzzle"],
+            "image" : "/items/augments/project45-gunmods/mods/project45-muzzlebrakemod/project45-muzzlebrakemodsprite.png<directives>"
+          }
+        }}}
+    }
+    */
+    
+  },
+
+
+  "radioMessagesOnPickup" : [ "pickupaugment" ],
+
+  "scripts" : [ "/scripts/augments/project45-gunmod/gunmod.lua" ],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
+}

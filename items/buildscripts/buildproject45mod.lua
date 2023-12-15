@@ -54,12 +54,13 @@ function build(directory, config, parameters, level, seed)
       "stock"
     })
     config.tooltipFields.archetypeTitleLabel = "Mod Type"
-    if extrinsicModSlots[config.augment.slot or config.slot] then
-      config.tooltipFields.archetypeLabel = "^#ea9931;Extrinsic"
-    else
-      config.tooltipFields.archetypeLabel = "^#ea9931;Intrinsic"  
-    end
-    
+    if not config.archetype then
+      if extrinsicModSlots[config.augment.slot or config.slot] then
+        config.tooltipFields.archetypeLabel = "^#ea9931;Extrinsic"
+      else
+        config.tooltipFields.archetypeLabel = "^#ea9931;Intrinsic"  
+      end
+    end    
   elseif config.category == "Ammo Mod" then
       config.tooltipFields.archetypeTitleLabel = "Ammo Archetype"
       config.tooltipFields.archetypeLabel = "^#ea9931;" .. project45util.capitalize(config.augment.archetype)

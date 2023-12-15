@@ -13,7 +13,7 @@
 
   "augment":{
     "baseDamage": {
-      "multiplicative": 0.5
+      "multiplicative": 0.9
     }
   },
 
