@@ -1,0 +1,172 @@
+{
+  "project45-guns-r": [
+    [0, {
+      "pool" : [
+        {"weight" : 0.1, "item" : "project45-neo-pipegun"},
+        {"weight" : 0.1, "item" : "project45-neo-pistol"},
+        {"weight" : 0.1, "item" : "project45-neo-sawedoff"},
+        {"weight" : 0.1, "item" : "project45-neo-doublebarrel"},
+        {"weight" : 0.1, "item" : "project45-neo-huntingrifle"},
+
+        {"weight" : 0.1, "item" : "project45-neo-smg"},
+        {"weight" : 0.1, "item" : "project45-neo-carbine"},
+        {"weight" : 0.1, "item" : "project45-neo-shotgun"},
+        {"weight" : 0.1, "item" : "project45-neo-servicerifle"},
+        {"weight" : 0.1, "item" : "project45-neo-assaultrifle"},
+        {"weight" : 0.1, "item" : "project45-neo-leveraction"}
+      ],
+      "poolRounds" : 1,
+      "allowDuplication" : false
+    }]
+  ],
+
+  "project45-guns-sr": [
+    [0, {
+      "pool" : [
+        
+        {"weight" : 0.1, "item" : "project45-neo-revolver"},
+        {"weight" : 0.1, "item" : "project45-neo-machinegun"},
+        {"weight" : 0.1, "item" : "project45-neo-combatrifle"},
+        {"weight" : 0.1, "item" : "project45-neo-grenadelauncher"},
+        {"weight" : 0.1, "item" : "project45-neo-sniper"},
+
+        {"weight" : 0.1, "item" : "project45-neo-cyclo"},
+        {"weight" : 0.1, "item" : "project45-neo-accelerator"},
+        {"weight" : 0.1, "item" : "project45-neo-beamgun"},
+        {"weight" : 0.1, "item" : "project45-neo-beamsplitter"},
+        {"weight" : 0.1, "item" : "project45-neo-gazer"}
+
+      ],
+      "poolRounds" : 1,
+      "allowDuplication" : false
+    }]
+  ],
+
+  "project45-guns-ssr": [
+    [0, {
+      "pool" : [
+        {"weight" : 0.1, "item" : "project45-neo-amr"},
+        {"weight" : 0.1, "item" : "project45-neo-rocketlauncher"},
+        {"weight" : 0.1, "item" : "project45-neo-minigun"},
+        {"weight" : 0.1, "item" : "project45-neo-powerstave"},
+        {"weight" : 0.1, "item" : "project45-neo-flamethrower"},
+        {"weight" : 0.1, "item" : "project45-neo-shindeiru"}
+      ],
+      "poolRounds" : 1,
+      "allowDuplication" : false
+    }]
+  ],
+
+  "project45-guns-xssr": [
+    [0, {
+      "pool" : [
+        
+        {"weight" : 0.1, "item" : "project45-neb-magmaspitter"},
+        {"weight" : 0.1, "item" : "project45-neb-warbolter"},
+        {"weight" : 0.1, "item" : "project45-neb-zweibrandyr"},
+        {"weight" : 0.1, "item" : "project45-pkf-typhon"},
+        {"weight" : 0.1, "item" : "project45-tcf-kineticarbiter"},
+        {"weight" : 0.1, "item" : "project45-scz-spacecowboy"},
+        {"weight" : 0.1, "item" : "project45-gov-scarlet"}
+
+      ],
+      "poolRounds" : 1,
+      "allowDuplication" : false
+    }]
+  ],
+
+  "project45-stats-r": [
+    [0, {
+      "pool" : [
+        {"weight" : 0.1, "item" : "project45-critchancemultmod"},
+        {"weight" : 0.1, "item" : "project45-critdamagemultmod"},
+        {"weight" : 0.1, "item" : "project45-firetimemultmod"},
+        {"weight" : 0.1, "item" : "project45-reloadcostmultmod"}
+      ],
+      "poolRounds" : 1,
+      "allowDuplication" : false
+    }]
+  ],
+
+  "project45-stats-sr": [
+    [0, {
+      "pool" : [
+        
+        {"weight" : 0.1, "item" : "project45-critdamageaddmod"},
+        {"weight" : 0.1, "item" : "project45-damagemultmod"},
+        {"weight" : 0.1, "item" : "project45-levelmod"},
+        {"weight" : 0.1, "item" : "project45-reloadcostaddmod"}
+
+      ],
+      "poolRounds" : 1,
+      "allowDuplication" : false
+    }]
+  ],
+
+  "project45-stats-ssr": [
+    [0, {
+      "pool" : [
+        
+        {"weight" : 0.1, "item" : "project45-critchanceaddmod"},
+        {"weight" : 0.1, "item" : "project45-damageaddmod"}
+
+      ],
+      "poolRounds" : 1,
+      "allowDuplication" : false
+    }]
+  ],
+
+  "gacha-xssr": [
+    [0, {
+      "pool" : [
+        
+        {"weight" : 0.1, "pool" : "project45-guns-xssr"},
+        {"weight" : 0.1, "pool" : "project45-guns-ssr"}
+
+      ],
+      "poolRounds" : 1,
+      "allowDuplication" : false
+    }]
+  ],
+
+  "gacha-ssr": [
+    [0, {
+      "pool" : [
+        
+        {"weight" : 0.1, "pool" : "project45-stats-ssr"},
+        {"weight" : 0.1, "pool" : "project45-guns-sr"}
+
+      ],
+      "poolRounds" : 1,
+      "allowDuplication" : false
+    }]
+  ],
+
+  "gacha-sr": [
+    [0, {
+      "pool" : [
+        
+        {"weight" : 1, "pool" : "project45-stats-sr"},
+        {"weight" : 1, "pool" : "project45-stats-sr"},
+        {"weight" : 1, "pool" : "project45-guns-r"}
+
+      ],
+      "poolRounds" : 1,
+      "allowDuplication" : false
+    }]
+  ],
+
+  "gacha-r": [
+    [0, {
+      "pool" : [
+        
+        {"weight" : 1, "pool" : "project45-stats-r"},
+        {"weight" : 1, "pool" : "project45-stats-r"},
+        {"weight" : 1, "pool" : "project45-stats-r"}
+
+      ],
+      "poolRounds" : 1,
+      "allowDuplication" : false
+    }]
+  ]
+}
