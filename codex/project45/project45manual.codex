@@ -16,13 +16,13 @@ Project 45 guns are different from vanilla guns in the following aspects:
 "# ^#E2C344;Weapon Stats^reset;
 ^#95d1f3;- Upgrade Capacity^reset;: The number of Stat Mods you can install on the weapon.
 ^#EA9931;- Damage per Shot^reset;: The range of damage a gun's (initial) projectiles will deal at 100% power multiplier, disregarding the target's defense.
-^#E2C344;- Fire Rate^reset;: the time it takes for the gun to cycle and fire a round.
+^#E2C344;- Fire Time^reset;: the overall time it takes for the gun to fire a round.
 ^#51BD3B;- Reload Cost^reset;: the total percentage of energy required to reload a gun to its full capacity.
 ",
 "# ^#E2C344;Weapon Stats^reset;
 ^#cccccc;- Reload Time^reset;: the maximum possible amount of time it takes to reload a gun to its full capacity.
-^#D93A3A;- Crit Chance^reset;: the chance of the gun dealing increased damage. Odds beyond 100% give shots a chance to deal even more damage.
-^#D93A3A;- Crit Damage^reset;: the number multiplied to the projectile's damage if the gun would deal increased damage.
+^#D93A3A;- Crit Chance^reset;: the chance of the gun dealing increased damage. Odds beyond 100% give shots a chance to deal even more damage (i.e. a \"Supercrit\").
+^#D93A3A;- Crit Damage^reset;: the number multiplied to the projectile's damage when it deals a super/crit.
 ",
 
 "# ^#E2C344;Firing & Recoil^reset;
@@ -34,6 +34,17 @@ When firing, your gun's muzzle will kick up, and you will have to adjust your ai
 The amount of recoil is also affected by how much you're moving, whether you're walking, running or standing still.
 
 To drastically reduce recoil, it is recommended to shoot while crouched. You could also modify your weapon with mods that reduce recoil.
+",
+"# ^#E2C344;Misc Stats^reset;
+These stats are not necessarily shown in the weapon's tooltip, but affect the weapon's performance nonetheless.
+^#96cbe7;- Multishot^reset;: Multiplier to the number of projectiles a weapon fires. Decimals are treated as odds that the gun fires an additional set of projectiles.
+^#f4988c;- Heavy^reset;: Forces the wielder to walk while holding the weapon.
+^#f4988c;- Recoil^reset;: Multiplier to the kick-up angle (and maximum recoil angle) of the gun when firing.
+",
+"# ^#E2C344;Misc Stats^reset;
+^#f4988c;- Inaccuracy^reset;: Random movement of the arm as the weapon fires.
+^#f4988c;- Spread^reset;: Natural deviation of bullets from their trajectory.
+^#9da8af;- Trigger Time^reset;: Amount of time it takes before registering the next click. A factor of overall ^#E2C344;fire time^reset;.
 ",
 
 "# ^#E2C344;Ammo & Reloading^reset;
