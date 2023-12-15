@@ -1,0 +1,43 @@
+{
+  "itemName" : "project45gacha",
+  "price" : 50000,
+  "level" : 1,
+  "maxStack" : 1,
+  "rarity" : "Legendary",
+  "category" : "mysteriousReward",
+  "description" : "An infinitely replenishing quantum bag.",
+  "shortdescription" : "Gun Bag",
+  "twoHanded" : true,
+
+  "inventoryIcon" : "project45gachaicon.png",
+  "animation" : "project45gacha.animation",
+  
+  "animationScripts": [
+    "/items/active/unsorted/project45/project45gacha/project45gachaanimation.lua"
+  ],
+  
+  "animationCustom" : {
+    "sounds": {
+      "xssr": ["/sfx/objects/essencechest_open3.ogg"],
+      "ssr": ["/sfx/objects/essencechest_open2.ogg"],
+      "sr": ["/sfx/objects/essencechest_open1.ogg"],
+      "r": [ ]
+    }
+  },
+  "scripts" : ["project45gacha.lua"],
+  "hardPity": 20,
+  "fireTime" : 0.1,
+  "fireOffset" : [1.0, 0.0],
+
+  "gachaPools": {
+    "xssr": [2, "gacha-xssr"],
+    "ssr": [2, "gacha-ssr"],
+    "sr": [46, "gacha-sr"],
+    "r": [50, "gacha-r"]
+  },
+
+  "treasure" : {
+    "pool" : "project45guns",
+    "level" : 1
+  }
+}

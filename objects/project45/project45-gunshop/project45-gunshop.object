@@ -220,7 +220,10 @@
         "project45-gundisassembler",
         "project45-gunrepairkit",
         "project45gacha",
-        "project45-energystim",
+        "project45-gachapull",
+        {"name": "project45-gachapull", "count":10},
+        {"name": "project45-energystim", "count":10},
+        {"name": "nanowrap", "count":10},
 
         "nanowrap",
         "dubloon"
