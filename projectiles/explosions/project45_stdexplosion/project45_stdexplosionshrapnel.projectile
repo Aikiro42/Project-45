@@ -1,0 +1,23 @@
+{
+  "projectileName" : "project45_stdexplosionshrapnel",
+  "image" : "shrapnel.png",
+  "frameNumber" : 1,
+  "physics" : "shrapnel",
+  "bounces" : 1,
+  "piercing" : true,
+  "damageKindImage" : "icon.png",
+  "pointLight" : false,
+  "actionOnReap" : [
+    {
+      "action" : "config",
+      "file" : "/projectiles/explosions/bulletexplosion/bulletexplosion.config"
+    }
+  ],
+  "statusEffects" : [ ],
+  "emitters" : [ "rocketsmoke" ],
+  "power" : 5.0,
+  "speed" : 35,
+  "knockback" : 10,
+  "damageTeam" : { "type" : "indiscriminate" },
+  "damageKind" : "shotgunbullet"
+}

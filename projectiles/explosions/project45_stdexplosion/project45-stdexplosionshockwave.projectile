@@ -1,0 +1,22 @@
+{
+  "projectileName" : "project45-stdexplosionshockwave",
+  "image" : "project45-stdexplosionshockwave.png",
+  "animationCycle" : 0.2,
+  "frameNumber" : 6,
+  "speed" : 0,
+  "damagePoly" : [
+    [ 50, 0 ],
+    [ 26.27, 42.55 ],
+    [ -22.4, 44.7 ],
+    [ -49.8, 4.42 ],
+    [ -29.92, -40.06 ],
+    [ 18.37, -46.5 ],
+    [ 49.22, -8.8 ],
+    [ 33.35, 37.26 ]
+  ],
+  "animationLoops" : false,
+  "piercing" : true,
+  "flippable" : true,
+  "damageTeam" : { "type" : "indiscriminate" },
+  "damageKind" : "default"
+}
