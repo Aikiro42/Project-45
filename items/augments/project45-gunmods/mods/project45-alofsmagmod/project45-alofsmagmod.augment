@@ -1,0 +1,47 @@
+{
+  "itemName" : "project45-alofsmagmod",
+  "price" : 8000,
+  "rarity" : "Legendary",
+  "tooltipKind" : "project45gunmod2",
+  "category" : "Gun Mod",
+  "tooltipFields":{
+    "objectImage": "/items/augments/project45-gunmods/mods/project45-alofsmagmod/project45-alofsmagmod.png"
+  },
+  "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-alofsmagmod/project45-alofsmagmodicon.png",
+  "description": "A magazine for break-action shotguns. Uses a spring mechanism to chamber rounds.",
+  "technicalInfo" : "Makes weapon manual-feed.",
+  "statInfo": "\nCock time: 0.5s\nAmmo Capacity +4",
+  "shortdescription" : "Alof's Magazine",
+  "radioMessagesOnPickup" : [ "pickupaugment" ],
+
+  "augment": {
+    "modName": "Alof's Magazine",
+    "category": "ballistic",
+    "slot": "magazine",
+    "primaryAbility": {
+      "manualFeed": {
+        "operation": "replace",
+        "value": true
+      },
+      "cockTime": {
+        "operation": "replace",
+        "value": 0.5
+      },
+      "ejectCasingsWithMag": {
+        "operation": "replace",
+        "value": false
+      },
+      "maxAmmo": {
+        "operation": "add",
+        "value": 4
+      },
+      "bulletsPerReload": {
+        "operation": "replace",
+        "value": 1
+      }
+    }
+  },
+
+  "scripts" : [ "/scripts/augments/project45-gunmod/gunmod.lua" ],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
+}

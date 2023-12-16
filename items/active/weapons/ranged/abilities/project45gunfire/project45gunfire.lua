@@ -510,7 +510,7 @@ end
 
 function Project45GunFire:ejecting()
 
-  
+
   if not self.ejectCasingsWithMag
   and self.ejectBeforeAnimation
   then
@@ -837,7 +837,6 @@ function Project45GunFire:reloading()
 end
 
 function Project45GunFire:cocking()
-
   self.cooldownTimer = self.fireTime
   self.isCocking = true
 
@@ -1139,7 +1138,8 @@ function Project45GunFire:ejectMag()
   end
   self:setStance(self.stances.empty)
 
-  if self.ejectCasingsWithMag then
+  if self.ejectCasingsWithMag or
+  (self.breakAction and animator.animationState("chamber") == "filled") then
     -- if the mag is internal,
     -- discard any undiscarded casings instead
     self:discardCasings()

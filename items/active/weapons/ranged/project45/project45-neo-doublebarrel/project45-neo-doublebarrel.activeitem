@@ -17,6 +17,11 @@
   "project45GunModInfo": {
     "category": "ballistic",
     "statModCountMax": 20,
+    "modExceptions": {
+      "accept": [
+        "project45-alofsmagmod"
+      ]
+    },
     "allowsConversion": [
       "projectile",
       "summoned"

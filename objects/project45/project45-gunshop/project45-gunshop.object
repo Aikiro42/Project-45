@@ -150,6 +150,7 @@
 
         // magazine
         "project45-extendedmagmod",
+        "project45-alofsmagmod",
         "project45-overampmod",
 
         // muzzle mods

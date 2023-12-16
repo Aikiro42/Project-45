@@ -43,6 +43,7 @@ function apply(input, override, augment)
         end
 
         -- check if gun mod is particularly accepted
+        sb.logInfo(sb.printJson(modInfo))
         local isAccepted = set.new(modExceptions.accept)[config.getParameter("itemName")]
         if not isAccepted then
 
@@ -361,7 +362,7 @@ function modify(oldValue, operation, modValue)
     -- this is a base case
     else
         if operation == "add" then
-            newValue = oldValue * modValue
+            newValue = oldValue + modValue
         elseif operation == "multiply" then
             newValue = oldValue * modValue
         end
