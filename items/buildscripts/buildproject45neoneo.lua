@@ -7,6 +7,8 @@ require "/items/buildscripts/project45abilities.lua"
 
 function build(directory, config, parameters, level, seed)
   
+  local generalConfig = root.assetJson("/configs/project45/project45_generalconfig.config")
+  
   parameters = parameters or {}
   parameters.primaryAbility = parameters.primaryAbility or {}
 
@@ -22,7 +24,7 @@ function build(directory, config, parameters, level, seed)
 
   local primaryAbility = function(keyName, defaultValue, set)
     if set then
-      parameters.primaryAbility[keyName] = defaultValue  
+      config.primaryAbility[keyName] = defaultValue
     else
       if parameters.primaryAbility[keyName] ~= nil then
         return parameters.primaryAbility[keyName]
@@ -89,7 +91,7 @@ function build(directory, config, parameters, level, seed)
   end
 
   -- calculate damage level multiplier
-  config.damageLevelMultiplier = root.evalFunction("weaponDamageLevelMultiplier", configParameter("level", 1))
+  config.damageLevelMultiplier = root.evalFunction("weaponDamageLevelMultiplier", configParameter("level", 1)) * generalConfig.globalDamageMultiplier
   
   -- palette swaps
   config.paletteSwaps = ""

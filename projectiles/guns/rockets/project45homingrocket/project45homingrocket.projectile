@@ -9,7 +9,7 @@
   "actionOnReap" : [
     {
       "action" : "config",
-      "file" : "/projectiles/explosions/regularexplosion2/regularexplosion2.config"
+      "file" : "/projectiles/explosions/project45_stdexplosion/project45_stdexplosion.config"
     }
   ],
   "emitters" : [ "rocketsmoke" ],

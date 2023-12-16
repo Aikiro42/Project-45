@@ -147,7 +147,14 @@
     "cockTime": 0.25,
     "projectileKind": "projectile",
     "projectileType": "impactgrenade",
-    "projectileParameters": {},
+    "projectileParameters": {
+      "actionOnReap" : [
+        {
+          "action" : "config",
+          "file" : "/projectiles/explosions/project45_stdexplosion/project45_stdexplosion.config"
+        }
+      ]
+    },
     "reloadTime": 1,
 
     // "internalMag": true,
