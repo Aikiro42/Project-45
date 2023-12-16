@@ -883,7 +883,7 @@ function Project45GunFire:unjamming()
     activeItem.setScriptedAnimationParameter("reloadRating", reloadRatingList[OK])
     self.reloadTimer = self.reloadTime
     animator.setAnimationState("bolt", "closed")
-    animator.setAnimationState("chamber", "filled")
+    self:updateChamberState("filled")
     self:setState(self.cocking)
     return
   end
@@ -1143,6 +1143,7 @@ function Project45GunFire:ejectMag()
     -- if the mag is internal,
     -- discard any undiscarded casings instead
     self:discardCasings()
+    self:updateChamberState("empty")
   end
 
   self:updateAmmo(-1, true)
@@ -1746,7 +1747,7 @@ function Project45GunFire:loadGunState()
     sb.logInfo("WARNING: GUN STATE NOT LOADED")
   end
 
-  animator.setAnimationState("chamber", loadedGunState.chamber)
+  self:updateChamberState(loadedGunState.chamber)
     
   storage.ammo = storage.ammo or loadedGunState.ammo
   storage.savedProjectileIndex = storage.savedProjectileIndex or loadedGunState.savedProjectileIndex

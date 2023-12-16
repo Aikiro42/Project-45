@@ -3,8 +3,8 @@
   "definition" : {
     "type" : "ember",
     "size" : 1.5,
-    "color" : [283, 59, 100, 200],
-    "light" : [65, 65, 65],
+    "color" : [164, 81, 196, 200],
+    "light" : [106, 34, 132],
     "fullbright": true,
     "destructionTime" : 1.2,
     "destructionAction": "shrink",

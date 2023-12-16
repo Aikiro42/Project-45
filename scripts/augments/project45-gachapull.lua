@@ -7,7 +7,8 @@ function apply(input)
 
   if input.name == "project45gacha" then
     local output = Item.new(input)
-    output:setInstanceValue("pulls", (input.parameters.pulls or 1) + 1)
+    local pullsAdd = config.getParameter("pullsAdd", 1)
+    output:setInstanceValue("pulls", (input.parameters.pulls or 1) + pullsAdd)
     return output
   end
 

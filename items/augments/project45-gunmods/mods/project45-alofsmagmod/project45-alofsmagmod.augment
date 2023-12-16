@@ -10,7 +10,7 @@
   "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-alofsmagmod/project45-alofsmagmodicon.png",
   "description": "A magazine for break-action shotguns. Uses a spring mechanism to chamber rounds.",
   "technicalInfo" : "Makes weapon manual-feed.",
-  "statInfo": "\nCock time: 0.5s\nAmmo Capacity +4",
+  "statInfo": "Cock time: 0.5s\nAmmo Capacity +4",
   "shortdescription" : "Alof's Magazine",
   "radioMessagesOnPickup" : [ "pickupaugment" ],
 

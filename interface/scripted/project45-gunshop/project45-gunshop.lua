@@ -76,7 +76,7 @@ function populateItemList(forceRepop, mode)
       }
       )
       
-      widget.setVisible(string.format("%s.unavailableoverlay", listItem), cost > playerMoney)
+      widget.setVisible(string.format("%s.unavailableoverlay", listItem), cost * generatedItem.count > playerMoney)
     end
 
     self.selectedItem = nil

@@ -42,7 +42,7 @@
     "xssr" : {
       "emissionRate" : 500.0,
       "emissionRateVariance" : 0.0,
-      "active" : true,
+      "active" : false,
 
       "particles" : [
         {"particle": "project45gachar"},
@@ -53,7 +53,7 @@
     "ssr" : {
       "emissionRate" : 500.0,
       "emissionRateVariance" : 0.0,
-      "active" : true,
+      "active" : false,
 
       "particles" : [
         {"particle": "project45gachassr"},
@@ -64,7 +64,7 @@
     "sr" : {
       "emissionRate" : 500.0,
       "emissionRateVariance" : 0.0,
-      "active" : true,
+      "active" : false,
 
       "particles" : [
         {"particle": "project45gachasr"},
@@ -75,7 +75,7 @@
     "r" : {
       "emissionRate" : 500.0,
       "emissionRateVariance" : 0.0,
-      "active" : true,
+      "active" : false,
 
       "particles" : [
         {"particle": "project45gachar"},
