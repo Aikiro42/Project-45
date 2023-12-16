@@ -15,7 +15,9 @@
   "inventoryIcon" : "project45-scz-spacecowboy-icon.png",
 
   "project45GunModInfo": {
-    "category": "special"
+    "category": "special",
+    "statModCountMax": 30
+
   },
 
   "animationParts" : {

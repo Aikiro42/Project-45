@@ -16,7 +16,7 @@
 
   "project45GunModInfo":{
     "category": "experimental",
-    "statModCountMax": 10
+    "statModCountMax": 30
   },
 
   "animationParts" : {
@@ -63,6 +63,9 @@
     
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
+    "reloadCost": 35,
+    "critChance": 0.20,
+    "critDamageMult": 3,
     "baseDamage": 15,
     "maxAmmo": 1,
     "bulletsPerReload": 1,

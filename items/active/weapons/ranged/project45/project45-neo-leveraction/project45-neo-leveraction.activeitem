@@ -87,6 +87,9 @@
     
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
+    "reloadCost": 40,
+    "critChance": 0.3,
+    "critDamageMult": 1.3,
     "debug": false,
     "baseDamage": 12,
     "maxAmmo": 8,

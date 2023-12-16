@@ -16,6 +16,7 @@
 
   "project45GunModInfo": {
     "category": "special",
+    "statModCountMax": 20,
     "acceptsModSlot": [
       "sights"
     ]
@@ -156,6 +157,9 @@
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
 
+    "baseDamage": 70,
+    "critChance": 0.75,
+    "critDamageMult": 2,
     "maxAmmo": 4,
     "bulletsPerReload": 4,
     "semi": true,

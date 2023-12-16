@@ -16,7 +16,7 @@
 
   "project45GunModInfo": {
     "category": "experimental",
-    "statModCountMax": 10,
+    "statModCountMax": 30,
     "acceptsAmmoArchetype": [
     ],
     "acceptsModSlot": [

@@ -344,9 +344,9 @@ function build(directory, config, parameters, level, seed)
       -- crit damage
       local critDamage = primaryAbility("critDamageMult", 1)
       if critChance > 0 then
-        config.tooltipFields.critDamageLabel = project45util.colorText("#FF6767", util.round(critDamage*100, 1) .. "%")
+        config.tooltipFields.critDamageLabel = project45util.colorText("#FF6767", util.round(critDamage, 1) .. "x")
       else
-        config.tooltipFields.critDamageLabel = project45util.colorText("#777777", util.round(critDamage*100, 1) .. "%")
+        config.tooltipFields.critDamageLabel = project45util.colorText("#777777", util.round(critDamage, 1) .. "x")
       end
 
       local miscStats = {

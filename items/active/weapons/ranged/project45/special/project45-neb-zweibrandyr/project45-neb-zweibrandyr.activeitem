@@ -16,6 +16,7 @@
 
   "project45GunModInfo": {
     "category": "ballistic",
+    "statModCountMax": 10,
     "acceptsAmmoArchetype": [
       "bullet"
     ],
@@ -130,6 +131,7 @@
     
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
+    "baseDamage": 10,
     "projectileType": "project45frangiblebullet",
     "cycleTime": 0.1,
     "semi": false,

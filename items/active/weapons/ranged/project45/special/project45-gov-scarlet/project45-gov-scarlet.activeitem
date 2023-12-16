@@ -14,7 +14,8 @@
   "inventoryIcon" : "project45-gov-scarlet-icon.png",
 
   "project45GunModInfo": {
-    "category": "special"
+    "category": "special",
+    "statModCountMax": 30
   },
 
   "animationParts" : {
@@ -70,6 +71,8 @@
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
 
+    "critDamageMult": 2,
+    "reloadCost": 65,
     "baseDamage": 50,
 
     "projectileKind": "summoned",

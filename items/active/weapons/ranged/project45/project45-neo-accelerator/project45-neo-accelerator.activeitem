@@ -89,6 +89,8 @@
     
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
+    "reloadCost": 40,
+    "critDamageMult": 1.75,
     "projectileKind": "hitscan",
     "cycleTime": [0.25, 0.01],
     "semi": false,
