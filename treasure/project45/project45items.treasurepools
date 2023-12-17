@@ -6,6 +6,7 @@
     [0, {
       "pool" : [
         {"weight" : 1, "item" : "project45-neo-pipegun"},
+        {"weight" : 1, "item" : "project45-neo-bow"},
         {"weight" : 1, "item" : "project45-neo-pistol"},
         {"weight" : 1, "item" : "project45-neo-sawedoff"},
         {"weight" : 1, "item" : "project45-neo-doublebarrel"},

@@ -1,0 +1,161 @@
+{
+  "itemName" : "project45-neo-bow",
+  "price" : 3000,
+  "maxStack" : 1,
+  "rarity" : "Rare",
+  "description" : "Feel like hawkeye with this awesome bow!",
+  "shortdescription" : "Neo-compound Bow",
+  "tooltipKind" : "project45gun",
+  "gunArchetype": "Bow",
+  "category" : "bow",
+  "twoHanded" : true,
+  "itemTags" : ["weapon","ranged","bow"],
+  "level" : 1,
+  "muzzleFlashColor": [200, 255, 255],
+  "inventoryIcon" : "project45-neo-bow-icon.png",
+
+  "project45GunModInfo": {
+    "category": "ballistic",
+    "statModCountMax": 20,
+    "acceptsModSlot": []
+  },
+
+  "animationParts" : {
+    "middle" : "",
+    "middleFullbright" : "",
+    "charge": "project45-neo-bow.png",
+    "chargeFullbright": "",
+    "magazine": "",
+    "magazineFullbright": ""
+  },
+
+  "animationCustom": {
+    "particleEmitters": {
+      "ejectionPort": {
+        "particles": [
+        ]
+      },
+      "magazine": {
+        "particles": [
+        ]
+      }
+    },
+
+    "sounds": {
+      "fire" : [ "/sfx/gun/bow_loose_perfect.ogg" ],
+      "chargeStart": ["/sfx/gun/bow_draw1.ogg"],
+      "chargeDrone": [],
+      "boltPull" : [ ],
+      "boltPush" : [ ],
+      "ejectMag": [],
+      "reloadStart": [],
+      "reloadEnd": [],
+      "loadRound": [],
+      "badReload": [
+      ],
+  
+      // plays when there is an active reload and the red indicator is over the purple zone
+      "goodReload": [],
+  
+      // plays when there is an active reload and the red indicator is over the pink zone
+      "perfectReload": []
+  
+    },
+    "animatedParts": {
+      "parts":{
+        "middle":{
+          "partStates":{
+            "gun":{
+              
+            }
+          }
+        },
+        "charge":{
+          "partStates":{
+            "charge":{
+              "off": {
+                "properties": {
+                  "image": "<partImage>:fired.1"
+                }
+              }
+            }
+          }
+        }
+      },
+      "stateTypes": {
+        "charge":{
+          "states":{
+            "charging":{
+              "frames": 5
+            }
+          }
+        },
+        "gun": {
+          "states":{
+          }
+        }
+      }
+    }
+  },
+
+  "baseOffset" : [0.5, 0],
+  "muzzleOffset" : [0.25, 0.25],
+  "ejectionPortOffset": [-0.25, 0.5],
+  "magazineOffset": [-1, 0.25],
+
+  "sightsOffset": [-0.5, 1.125],
+
+  "scripts" : ["/items/active/weapons/ranged/project45gunneo.lua"],
+    
+  "primaryAbilityType": "project45gunfire",
+  "primaryAbility": {
+
+    "baseDamage": 10,
+    "critChance": 0.2,
+    "critDamageMult": 2.5,
+    "maxAmmo": 1,
+    "bulletsPerReload": 1,
+    "semi": true,
+
+    "spread": 3,
+    "reloadTime": 0.5,
+    "quickReloadTimeframe": [0, 0.6, 0.8, 0.8], // [ good% [ perfect% ] good% ] of <reloadTime>
+    "resetChargeOnFire": true,
+    "reloadOnEjectMag": true,
+    "chargeFrames": 5,
+    "ejectMagOnEmpty": "firing",
+
+    "chargeArm": "front", // relative, facing right
+    // ["rotation", "swim.2", "swim.2", "swim.2", "swimIdle.1", "swimIdle.1"],
+    "chargeArmFrames": [
+      {
+        "frontArmFrame": "rotation"
+      },
+      {
+        "frontArmFrame": "swim.2"
+      },
+      {
+        "frontArmFrame": "swim.2"
+      },
+      {
+        "frontArmFrame": "swimIdle.1"
+      },
+      {
+        "frontArmFrame": "swimIdle.1"
+      }
+    ],
+    "chargeTime": 0.1,
+    "overchargeTime": 1,
+    "animateBeforeOvercharge": true,
+    "jamChances": [0, 0, 0, 0],
+    "reloadRatingDamageMults": [0.5, 1, 1.15, 1.5],
+
+
+    "hideMuzzleSmoke": true,
+    "hideMuzzleFlash": true
+
+    // "reloadTime": 10,
+  },
+
+  "builder" : "/items/buildscripts/buildproject45neoneo.lua"
+}

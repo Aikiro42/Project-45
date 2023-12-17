@@ -237,7 +237,7 @@
     Their difference lies in the animation state of the gun
     (as well as whether manual feed guns empty on eject)
     */
-    "ejectMagOnEmpty": false, // immediately eject mag when the gun hits 0 ammo
+    // "ejectMagOnEmpty": "firing", // immediately eject mag when the gun hits 0 ammo
     "reloadOnEjectMag": false, // immediately begin reload sequence upon ejecting
     
     "ejectMagOnReload": false, // ejects mag every (active) reload, like loading a strip and discarding the metal

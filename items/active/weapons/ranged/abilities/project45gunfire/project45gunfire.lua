@@ -109,6 +109,22 @@ function Project45GunFire:init()
   else
     self.currentCycleTime = self.cycleTime
   end
+
+  if self.chargeArmFrames then
+    self.chargeArmFrames[1].frontArmFrame = self.chargeArmFrames[1].frontArmFrame or self.stances.aimStance.frontArmFrame
+    self.chargeArmFrames[1].backArmFrame = self.chargeArmFrames[1].backArmFrame or self.stances.aimStance.backArmFrame
+    local i = 2;
+    while i <= #self.chargeArmFrames do
+      self.chargeArmFrames[i].frontArmFrame =
+        self.chargeArmFrames[i].frontArmFrame or
+        self.chargeArmFrames[i-1].frontArmFrame
+      self.chargeArmFrames[i].backArmFrame =
+        self.chargeArmFrames[i].backArmFrame or
+        self.chargeArmFrames[i-1].backArmFrame
+      i = i + 1
+    end
+    sb.logInfo(sb.printJson(self.chargeArmFrames))
+  end
   
   -- initialize self.screenShakeTimer if cycleTimer is
   -- set to be dynamic
@@ -494,6 +510,10 @@ function Project45GunFire:postFiringTransitionHandler()
         util.wait(self.currentCycleTime/3)
         if storage.ammo == 0 and self.ejectMagOnEmpty and self.ejectMagOnEmpty == "firing" then
           self:ejectMag()
+          self:stopFireLoop()
+          self.cooldownTimer = self.fireTime
+          self.isFiring = false    
+          return
         end  
         self:setState(self.ejecting)
       end
@@ -772,7 +792,7 @@ function Project45GunFire:reloading()
       -- otherwise, player has to wait until end of reload time
       elseif reloadRating ~= "BAD" then break end
 
-    end   
+    end
     self.reloadTimer = self.reloadTimer + self.dt
     coroutine.yield()
   end
@@ -1207,9 +1227,16 @@ function Project45GunFire:updateCharge()
   and (self.chargeWhenObstructed or not self:muzzleObstructed())
   and (self.manualFeed and animator.animationState("chamber") == "ready" or not self.manualFeed)
   then
+    if self.chargeTimer == 0 then
+      animator.playSound("chargeStart")
+    end
     self.chargeTimer = math.min(self.chargeTime + self.overchargeTime, self.chargeTimer + self.dt)
     self.dischargeDelayTimer = self.dischargeDelayTime
   else
+    if self.chargeTimer == 0 then
+      animator.stopAllSounds("chargeStart")
+      animator.playSound("chargeEnd")
+    end
     if self.dischargeDelayTimer <= 0 then
       self.chargeTimer = math.max(0, self.chargeTimer - self.dt * self.dischargeTimeMult)
     else
@@ -1278,6 +1305,14 @@ function Project45GunFire:updateCharge()
   if self.progressiveCharge then
     self.chargeFrame = util.clamp(math.ceil(self.chargeFrames * (self.chargeTimer / timeBasis)), 1, self.chargeFrames)
     animator.setGlobalTag("chargeFrame", self.chargeFrame)
+    if self.chargeArmFrames then
+      self:setStance({
+        frontArmFrame = self.chargeArmFrames[math.max(1, self.chargeFrame)].frontArmFrame,
+        backArmFrame = self.chargeArmFrames[math.max(1, self.chargeFrame)].backArmFrame
+      }, nil, true)
+      -- activeItem.setFrontArmFrame(self.chargeArmFrames[math.max(1, self.chargeFrame)].frontArmFrame)
+      -- activeItem.setBackArmFrame(self.chargeArmFrames[math.max(1, self.chargeFrame)].backArmFrame)  
+    end
   end
 
 end
@@ -1778,7 +1813,7 @@ end
 
 -- SECTION: HELPER FUNCTIONS
 
-function Project45GunFire:setStance(stance, snap)
+function Project45GunFire:setStance(stance, snap, armsOnly)
 
   if stance.disabled then return end
 
@@ -1790,6 +1825,14 @@ function Project45GunFire:setStance(stance, snap)
   end
 
   stance = copy(stance)
+
+  if armsOnly then
+    self.weapon.stance.frontArmFrame = stance.frontArmFrame
+    self.weapon.stance.backArmFrame = stance.backArmFrame
+    activeItem.setFrontArmFrame(stance.frontArmFrame)
+    activeItem.setBackArmFrame(stance.backArmFrame)
+    return
+  end
   
   snap = snap or stance.lock or stance.snap
   -- get old stance, plus rotations, for smooth stance transition
