@@ -71,7 +71,9 @@ function apply(input)
       "spread"
     }
     for _, v in ipairs(projectileSettingsList) do
-      newPrimaryAbility[v] = augment[v] -- or oldPrimaryAbility[v]
+      if augment[v] then
+        newPrimaryAbility[v] = augment[v] -- or oldPrimaryAbility[v]
+      end
     end
 
     -- alter specific projectile settings

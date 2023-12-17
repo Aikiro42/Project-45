@@ -143,6 +143,7 @@
         
         // rail
         "project45-lasermod",
+        "project45-bowstabilizermod",
 
         // receiver
         "project45-autofiremod",
@@ -152,6 +153,10 @@
         "project45-extendedmagmod",
         "project45-alofsmagmod",
         "project45-overampmod",
+
+        // bowstring
+        "project45-customnockmod",  
+        "project45-multinockmod",
 
         // muzzle mods
         "project45-muzzlebrakemod",

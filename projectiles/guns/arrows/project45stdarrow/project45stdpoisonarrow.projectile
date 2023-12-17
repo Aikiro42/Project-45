@@ -36,7 +36,7 @@
       "specification" : {
         "type" : "streak",
         "layer" : "back",
-        "fullbright" : true,
+        "fullbright" : false,
         "destructionAction" : "shrink",
         "size" : 1,
         "color" : [178, 232, 157, 255],

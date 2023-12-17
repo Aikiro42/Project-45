@@ -24,8 +24,7 @@
       "rail",
       "sights",
       
-      "string",
-      "stabilizer", // muzzle
+      "bowstring",
       "material"
     ],
     "acceptsAmmoArchetype": [
@@ -55,17 +54,15 @@
     },
 
     "sounds": {
-      "fire" : [ "/sfx/gun/bow_loose_perfect.ogg" ],
+      "fire" : [ "/sfx/project45neosfx/fire/fire-bow1.ogg" ],
       "chargeStart": ["/sfx/gun/bow_draw1.ogg"],
-      "chargeDrone": [],
+      "chargeDrone": ["/sfx/project45neosfx/chargedrone/chargedrone-bow1.ogg"],
       "boltPull" : [ ],
       "boltPush" : [ ],
       "ejectMag": [],
-      "reloadStart": [],
-      "reloadEnd": [],
+      "reloadEnd": ["/sfx/project45neosfx/loadmag/loadmag-bow1.ogg"],
       "loadRound": [],
-      "badReload": [
-      ],
+      "badReload": [],
   
       // plays when there is an active reload and the red indicator is over the purple zone
       "goodReload": [],
@@ -76,13 +73,6 @@
     },
     "animatedParts": {
       "parts":{
-        "middle":{
-          "partStates":{
-            "gun":{
-              
-            }
-          }
-        },
         "charge":{
           "partStates":{
             "charge":{
@@ -127,6 +117,7 @@
     "baseDamage": 10,
     "critChance": 0.2,
     "critDamageMult": 2.5,
+    "reloadCost": 10,
     "maxAmmo": 1,
     "bulletsPerReload": 1,
     "semi": true,
@@ -140,6 +131,8 @@
     "reloadOnEjectMag": true,
     "chargeFrames": 5,
     "ejectMagOnEmpty": "firing",
+
+    "hideGunWhenCharging": true,
 
     "chargeArm": "front", // relative, facing right
     // ["rotation", "swim.2", "swim.2", "swim.2", "swimIdle.1", "swimIdle.1"],
@@ -168,9 +161,15 @@
 
 
     "hideMuzzleSmoke": true,
-    "hideMuzzleFlash": true
+    "hideMuzzleFlash": true,
 
     // "reloadTime": 10,
+
+    "stances": {
+      "aimStance": {
+      }
+
+    }
   },
 
   "builder" : "/items/buildscripts/buildproject45neoneo.lua"

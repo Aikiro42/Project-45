@@ -1,0 +1,42 @@
+{
+  "itemName" : "project45-multinockmod",
+  "price" : 6000,
+  "rarity" : "Rare",
+  "tooltipKind" : "project45gunmod2",
+  "category" : "Gun Mod",
+  "tooltipFields":{
+    "objectImage": "/items/augments/project45-gunmods/mods/project45-multinockmod/project45-multinockmod.png"
+  },
+  "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-multinockmod/project45-multinockmodicon.png",
+  "description": "A custom nock that allows you to fire multiple arrows at once.",
+  "statInfo": "Multishot +3\nSpread x2",
+  "shortdescription" : "Multi-nock",
+  "radioMessagesOnPickup" : [ "pickupaugment" ],
+
+  "augment": {
+    "modName": "Multi-nock",
+    "category": "ballistic",
+    "slot": "bowstring",
+    "primaryAbility": {
+      "multishot": {
+        "operation": "add",
+        "value": 3
+      },
+      "maxAmmo": {
+        "operation": "add",
+        "value": 3
+      },
+      "ammoPerShot": {
+        "operation": "add",
+        "value": 3
+      },
+      "spread": {
+        "operation": "multiply",
+        "value": 2
+      }
+    }
+  },
+
+  "scripts" : [ "/scripts/augments/project45-gunmod/gunmod.lua" ],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
+}
