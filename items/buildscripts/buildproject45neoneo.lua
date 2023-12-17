@@ -41,8 +41,9 @@ function build(directory, config, parameters, level, seed)
   end
   -- calculate mod capacity
   construct(config, "project45GunModInfo")
-  config.project45GunModInfo.statModCountMax = (config.project45GunModInfo.statModCountMax or 0) + ((configParameter("level", 1) - 1) * 2)
-
+  construct(parameters, "project45GunModInfo")
+  parameters.project45GunModInfo.statModCountMax = (config.project45GunModInfo.statModCountMax or 0) + ((configParameter("level", 1) - 1) * 2)
+  
   -- recalculate rarity
   local rarityLevel = configParameter("level", 1)/10
   local levelRarityAssoc = {"Common", "Uncommon", "Rare", "Legendary", "Essential"}
@@ -273,7 +274,7 @@ function build(directory, config, parameters, level, seed)
       then
         if config.project45GunModInfo.statModCountMax > -1 then
           local count = parameters.statModCount or 0
-          local max = config.project45GunModInfo.statModCountMax
+          local max = parameters.project45GunModInfo.statModCountMax
           config.tooltipFields.upgradeCapacityLabel = (count < max and "^#96cbe7;" or "^#777777;") .. (max - count) .. "/" .. max .. "^reset;"
         else
           config.tooltipFields.upgradeCapacityLabel = project45util.colorText("#96cbe7","Unlimited")
