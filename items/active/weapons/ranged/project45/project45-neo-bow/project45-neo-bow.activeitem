@@ -131,7 +131,7 @@
     "bulletsPerReload": 1,
     "semi": true,
 
-    "projectileType": "project45stdfirearrow",
+    "projectileType": "project45stdarrow",
 
     "spread": 3,
     "reloadTime": 0.5,

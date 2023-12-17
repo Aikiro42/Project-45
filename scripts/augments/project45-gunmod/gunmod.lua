@@ -10,7 +10,7 @@ require "/scripts/project45/project45util.lua"
 function apply(input, override, augment)
   -- do not install mod if gun has no mod information
   local output = Item.new(input)
-  local modInfo = sb.jsonMerge(input.parameters.project45GunModInfo, output.config.project45GunModInfo)
+  local modInfo = sb.jsonMerge(output.config.project45GunModInfo, input.parameters.project45GunModInfo)
   if not modInfo then return end
 
   augment = augment or config.getParameter("augment")

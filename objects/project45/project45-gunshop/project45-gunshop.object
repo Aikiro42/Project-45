@@ -201,6 +201,11 @@
         "project45-elecammomod",
         "project45-firebeammod",
         "project45-poisonbeammod",
+
+        // arrows
+        "project45-incendiaryarrowsmod",
+        "project45-poisonarrowsmod",
+        "project45-elecarrowsmod",
         
         // grenade ammo
         "project45-clustergrenademod",

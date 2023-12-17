@@ -6,11 +6,11 @@ require "/scripts/set.lua"
 
 function apply(input)
 
-  local modInfo = input.parameters.project45GunModInfo
+  local output = Item.new(input)
+  local modInfo = sb.jsonMerge(output.config.project45GunModInfo, input.parameters.project45GunModInfo)
   if not modInfo then return end
 
   local augment = config.getParameter("augment")
-  local output = Item.new(input)
   
   if augment then
 

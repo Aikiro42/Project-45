@@ -7,11 +7,11 @@ require "/scripts/set.lua"
 function apply(input)
 
   -- do not install mod if the thing this mod is applied to isn't a gun
-  local modInfo = input.parameters.project45GunModInfo
-  if not modInfo then return end
+    local output = Item.new(input)
+    local modInfo = sb.jsonMerge(output.config.project45GunModInfo, input.parameters.project45GunModInfo)
+    if not modInfo then return end
 
   local augment = config.getParameter("augment")
-  local output = Item.new(input)
   
   -- if augment field exists, do something
   if augment then
