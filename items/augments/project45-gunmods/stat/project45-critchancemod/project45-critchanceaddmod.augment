@@ -1,6 +1,6 @@
 {
   "itemName" : "project45-critchanceaddmod",
-  "price" : 50000,
+  "price" : 2500,
   "rarity" : "Legendary",
   "tooltipKind" : "project45gunmod2",
   "category" : "Stat Mod",
@@ -9,7 +9,7 @@
   "statInfo" : "^#D93A3A;Crit Chance +3%^reset;",
   "slot": "critChance",
   "archetype": "Additive",
-  "shortdescription" : "Crit Chance (+)",
+  "shortdescription" : "^#D93A3A;Crit Chance (+)",
 
   "augment":{
     "critChance": {

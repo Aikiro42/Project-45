@@ -80,13 +80,20 @@
 
   // STATS
 
+  "project45-stats-xssr": [
+    [0, {
+      "pool" : [
+        {"weight" : 0.01, "item" : "project45-godmod"}
+      ],
+      "poolRounds" : 1,
+      "allowDuplication" : false
+    }]
+  ],
+
   "project45-stats-ssr": [
     [0, {
       "pool" : [
-        
-        {"weight" : 0.95, "item" : "project45-levelmod"},
-        {"weight" : 0.05, "item" : "project45-godmod"}
-
+        {"weight" : 0.01, "item" : "project45-godmod"}
       ],
       "poolRounds" : 1,
       "allowDuplication" : false
@@ -96,12 +103,7 @@
   "project45-stats-sr": [
     [0, {
       "pool" : [
-        
-        {"weight" : 1, "item" : "project45-critdamagemultmod"},
-        {"weight" : 1, "item" : "project45-critchancemultmod"},
-        {"weight" : 1, "item" : "project45-damagemultmod"},
-        {"weight" : 1, "item" : "project45-reloadcostmultmod"}
-
+        {"weight" : 1, "item" : "project45-firetimemultmod"}
       ],
       "poolRounds" : 1,
       "allowDuplication" : false
@@ -111,10 +113,21 @@
   "project45-stats-r": [
     [0, {
       "pool" : [
-        {"weight" : 1, "item" : "project45-critchanceaddmod"},
-        {"weight" : 1, "item" : "project45-critdamageaddmod"},
-        {"weight" : 1, "item" : "project45-damageaddmod"},
-        {"weight" : 1, "item" : "project45-reloadcostaddmod"}
+        
+        {"weight" : 0.50, "item" : "project45-levelmod"},
+
+        {"weight" : 0.0625, "item" : "project45-critchanceaddmod"},
+        {"weight" : 0.0625, "item" : "project45-critchancemultmod"},
+        
+        {"weight" : 0.0625, "item" : "project45-critdamageaddmod"},
+        {"weight" : 0.0625, "item" : "project45-critdamagemultmod"},
+        
+        {"weight" : 0.0625, "item" : "project45-damageaddmod"},
+        {"weight" : 0.0625, "item" : "project45-damagemultmod"},
+        
+        {"weight" : 0.0625, "item" : "project45-reloadcostaddmod"},
+        {"weight" : 0.0625, "item" : "project45-reloadcostmultmod"}
+
       ],
       "poolRounds" : 1,
       "allowDuplication" : false
@@ -174,6 +187,7 @@
         {"weight" : 1, "item" : "project45-weightmod"},
         {"weight" : 1, "item" : "project45-gripmod"},
         {"weight" : 1, "item" : "project45-extendedmagmod"},
+        {"weight" : 1, "item" : "project45-alofsmagmod"},
         {"weight" : 1, "item" : "project45-overampmod"},
         {"weight" : 1, "item" : "project45-lasermod"},
         {"weight" : 1, "item" : "project45-reflexsightsmod"}

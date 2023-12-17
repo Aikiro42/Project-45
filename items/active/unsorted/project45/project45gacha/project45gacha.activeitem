@@ -1,9 +1,9 @@
 {
   "itemName" : "project45gacha",
-  "price" : 50000,
+  "price" : 20000,
   "level" : 1,
   "maxStack" : 1,
-  "rarity" : "Legendary",
+  "rarity" : "Essential",
   "category" : "mysteriousReward",
   "description" : "An infinitely replenishing quantum bag.",
   "shortdescription" : "Gun Bag",

@@ -1,6 +1,6 @@
 {
   "itemName" : "project45-reloadcostaddmod",
-  "price" : 10000,
+  "price" : 2500,
   "rarity" : "Legendary",
   "tooltipKind" : "project45gunmod2",
   "category" : "Stat Mod",
@@ -9,7 +9,7 @@
   "statInfo" : "^#9BBA3D;Reload Cost -10^reset;",
   "slot": "reloadCost",
   "archetype": "Additive",
-  "shortdescription" : "Reload Cost (+)",
+  "shortdescription" : "^#9BBA3D;Reload Cost (+)",
 
   "augment":{
     "reloadCost": {

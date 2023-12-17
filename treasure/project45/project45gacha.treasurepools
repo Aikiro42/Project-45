@@ -2,9 +2,9 @@
   "gacha-r": [
     [0, {
       "pool" : [
-        {"weight" : 0.01, "pool" : "project45-guns-r"},
-        {"weight" : 0.09, "pool" : "project45-mods-r"},
-        {"weight" : 0.90, "pool" : "project45-stats-r"}
+        {"weight" : 0.34, "pool" : "project45-stats-r"},
+        {"weight" : 0.33, "pool" : "project45-mods-r"},
+        {"weight" : 0.33, "pool" : "project45-guns-r"}
       ],
       "poolRounds" : 1,
       "allowDuplication" : false
@@ -14,9 +14,9 @@
   "gacha-sr": [
     [0, {
       "pool" : [
-        {"weight" : 0.01, "pool" : "project45-guns-sr"},
-        {"weight" : 0.09, "pool" : "project45-mods-sr"},
-        {"weight" : 0.90, "pool" : "project45-stats-sr"}
+        {"weight" : 0.34, "pool" : "project45-stats-sr"},
+        {"weight" : 0.33, "pool" : "project45-mods-sr"},
+        {"weight" : 0.33, "pool" : "project45-guns-sr"}
       ],
       "poolRounds" : 1,
       "allowDuplication" : false
@@ -26,9 +26,10 @@
   "gacha-ssr": [
     [0, {
       "pool" : [
-        {"weight" : 0.01, "pool" : "project45-guns-ssr"},
-        {"weight" : 0.09, "pool" : "project45-mods-ssr"},
-        {"weight" : 0.90, "pool" : "project45-stats-ssr"}
+        {"weight" : 0.50, "pool" : "project45-guns-ssr"},
+        {"weight" : 0.24, "pool" : "project45-mods-ssr"},
+        {"weight" : 0.25, "pool" : "project45-mods-xssr"},
+        {"weight" : 0.01, "item" : "project45-godmod"}
       ],
       "poolRounds" : 1,
       "allowDuplication" : false
@@ -38,8 +39,8 @@
   "gacha-xssr": [
     [0, {
       "pool" : [
-        {"weight" : 0.1, "pool" : "project45-guns-xssr"},
-        {"weight" : 0.9, "pool" : "project45-mods-xssr"}
+        {"weight" : 0.50, "pool" : "project45-guns-xssr"},
+        {"weight" : 0.50, "item" : "project45-godmod"}
       ],
       "poolRounds" : 1,
       "allowDuplication" : false
