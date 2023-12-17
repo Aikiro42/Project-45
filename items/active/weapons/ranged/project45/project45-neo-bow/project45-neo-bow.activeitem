@@ -17,7 +17,20 @@
   "project45GunModInfo": {
     "category": "ballistic",
     "statModCountMax": 20,
-    "acceptsModSlot": []
+    "allowsConversion": [
+      "hitscan"
+    ],
+    "acceptsModSlot": [
+      "rail",
+      "sights",
+      
+      "string",
+      "stabilizer", // muzzle
+      "material"
+    ],
+    "acceptsAmmoArchetype": [
+      "arrow"
+    ]
   },
 
   "animationParts" : {
@@ -99,11 +112,12 @@
   },
 
   "baseOffset" : [0.5, 0],
-  "muzzleOffset" : [0.25, 0.25],
+  "muzzleOffset" : [0, 0],
   "ejectionPortOffset": [-0.25, 0.5],
   "magazineOffset": [-1, 0.25],
 
-  "sightsOffset": [-0.5, 1.125],
+  "railOffset": [0, -0.5],
+  "sightsOffset": [0.5, 0.75],
 
   "scripts" : ["/items/active/weapons/ranged/project45gunneo.lua"],
     
@@ -116,6 +130,8 @@
     "maxAmmo": 1,
     "bulletsPerReload": 1,
     "semi": true,
+
+    "projectileType": "project45stdfirearrow",
 
     "spread": 3,
     "reloadTime": 0.5,

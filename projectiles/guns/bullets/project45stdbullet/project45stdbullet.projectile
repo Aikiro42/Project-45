@@ -27,30 +27,6 @@
   "bounces" : 0,
 
   "periodicActions" : [
-    
-    /*
-    {
-      "time" : 0.01,
-      "repeat" : true,
-      "action" : "particle",
-      "rotate" : true,
-      
-      "specification" : {
-        "type" : "textured",
-        "image" : "/projectiles/guns/bullets/project45stdbullet/project45stdbullettrail.png",
-        "position" : [-2, 0],
-        "initialVelocity":[16, 0],
-        "layer" : "back",
-        "timeToLive" : 0.01,
-        "destructionTime" : 0.25,
-        "destructionAction" : "shrink",
-        "fullbright" : true
-      }
-
-    }
-    //*/
-    
-    
     {
       "time" : 0.01,
       "repeat" : true,

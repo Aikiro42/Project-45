@@ -9,11 +9,11 @@ require "/scripts/project45/project45util.lua"
 
 function apply(input, override, augment)
   -- do not install mod if gun has no mod information
-  local modInfo = input.parameters.project45GunModInfo
+  local output = Item.new(input)
+  local modInfo = sb.jsonMerge(input.parameters.project45GunModInfo, output.config.project45GunModInfo)
   if not modInfo then return end
 
   augment = augment or config.getParameter("augment")
-  local output = Item.new(input)
 
   
   -- if augment field exists, do something
@@ -43,7 +43,6 @@ function apply(input, override, augment)
         end
 
         -- check if gun mod is particularly accepted
-        sb.logInfo(sb.printJson(modInfo))
         local isAccepted = set.new(modExceptions.accept)[config.getParameter("itemName")]
         if not isAccepted then
 
