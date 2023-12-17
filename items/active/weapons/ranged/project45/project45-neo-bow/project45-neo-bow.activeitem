@@ -11,7 +11,7 @@
   "twoHanded" : true,
   "itemTags" : ["weapon","ranged","bow"],
   "level" : 1,
-  "muzzleFlashColor": [200, 255, 255],
+  "muzzleFlashColor": [255, 255, 255],
   "inventoryIcon" : "project45-neo-bow-icon.png",
 
   "project45GunModInfo": {
