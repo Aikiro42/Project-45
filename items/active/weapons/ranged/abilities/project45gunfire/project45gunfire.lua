@@ -123,7 +123,6 @@ function Project45GunFire:init()
         self.chargeArmFrames[i-1].backArmFrame
       i = i + 1
     end
-    sb.logInfo(sb.printJson(self.chargeArmFrames))
   end
   
   -- initialize self.screenShakeTimer if cycleTimer is

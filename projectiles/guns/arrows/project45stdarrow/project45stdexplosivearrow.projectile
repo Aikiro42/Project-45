@@ -1,17 +1,17 @@
 {
-  "projectileName" : "project45stdelecarrow",
-  "image" : "project45stdarrow.png?multiply=FF00AAFF",
+  "projectileName" : "project45stdexplosivearrow",
+  "image" : "project45stdarrow.png",
   "scripts": ["/projectiles/scripts/project45-killprojectileonstick.lua"],
   "physics" : "arrow",
   "animationCycle" : 0.25,
   "frameNumber" : 1,
-  "damageKind" : "electric",
-  "pointLight" : false,
+  "damageKind" : "standardbullet",
+  "pointLight" : true,
   "lightColor": [1, 1, 1],
   "fullbright": false,
   "flippable" : true,
   "piercing": false,
-  "statusEffects" : [],
+  "statusEffects" : [ ],
   "power" : 5.0,
   "speed" : 100,
   "knockback" : 5,
@@ -36,12 +36,12 @@
       "specification" : {
         "type" : "streak",
         "layer" : "back",
-        "fullbright" : true,
+        "fullbright" : false,
         "destructionAction" : "shrink",
         "size" : 1,
-        "color" : [210, 156, 231, 255],
+        "color" : [255, 255, 255, 255],
         "collidesForeground" : false,
-        "length" : 30,
+        "length" : 45,
         "position" : [0, 0],
         "timeToLive" : 0,
         "destructionTime" : 0.2,
@@ -63,7 +63,7 @@
     },
     {
       "action": "config",
-      "file": "/projectiles/explosions/project45_elecexplosion/project45_weakelecexplosion.config"
+      "file": "/projectiles/explosions/regularexplosion/regularexplosion.config"
     },
     {
       "action" : "loop",
@@ -74,8 +74,8 @@
           "specification" : {
             "type" : "ember",
             "size" : 1,
-            "color" : [210, 156, 231, 255],
-            "light" : [106, 34, 132],
+            "color" : [255, 255, 255, 255],
+            "light" : [65, 65, 51],
             "fullbright" : true,
             "destructionTime" : 0.2,
             "destructionAction" : "shrink",

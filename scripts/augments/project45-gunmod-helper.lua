@@ -3,7 +3,6 @@ require "/scripts/util.lua"
 gunmodHelper = {}
 
 function gunmodHelper.addMessage(input, message)
-  sb.logInfo(sb.printJson(input.parameters.project45GunFireMessages))
   local messages = {""}
   for _, m in ipairs(input.parameters.project45GunFireMessages or {}) do
     table.insert(messages, m)
