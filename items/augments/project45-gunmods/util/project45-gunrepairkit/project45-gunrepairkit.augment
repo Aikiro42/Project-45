@@ -4,7 +4,10 @@
   "rarity" : "Legendary",
   "tooltipKind" : "project45gunmod",
   "category" : "Applied Utility",
-  "inventoryIcon" : "/items/augments/project45-gunmods/util/project45-gunrepairkit/project45-gunrepairkit.png",
+  "tooltipFields":{
+    "objectImage": "/items/augments/project45-gunmods/util/project45-gunrepairkit/project45-gunrepairkit.png"
+  },
+  "inventoryIcon" : "/items/augments/project45-gunmods/util/project45-gunrepairkit/project45-gunrepairkiticon.png",
   "description" : "A one-time-use kit for repairing your weapon in case of a bad reload.",
   "shortdescription" : "Gun Repair Kit",
   "scripts" : [ "/scripts/augments/project45-gunrepair.lua" ]

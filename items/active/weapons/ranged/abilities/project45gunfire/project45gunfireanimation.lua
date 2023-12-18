@@ -1,6 +1,7 @@
 require "/scripts/vec2.lua"
 require "/scripts/util.lua"
 require "/scripts/poly.lua"
+require "/scripts/project45/project45util.lua"
 
 local warningTriggered = false
 local messagesToRender = {}
@@ -138,6 +139,34 @@ function renderChamberIndicator(offset)
     color = {255,255,255},
     fullbright = true,
   }, "ForegroundEntity+1")
+end
+
+function renderBezierTest()
+  local pos = activeItemAnimation.ownerPosition()
+  local aim = activeItemAnimation.ownerAimPosition()
+  local mid = {(pos[1] + aim[1])/2, (pos[2] + aim[2])/2}
+  local i = vec2.add(pos, {0, 0})
+  local o = vec2.add(aim, {0, 0})
+  
+  local tfunc = function(a, b)
+    local x = world.lineTileCollisionPoint(a, b)
+    if x then
+      return x[1]
+    end
+  end
+
+  local c = vec2.add(mid, {sb.nrand(5, 0), sb.nrand(5, 0)})
+  -- local c = vec2.add(mid, {0, 5})
+  local curve = project45util.drawBezierCurve(10, i, o, c, tfunc)
+  for _, line in ipairs(curve) do
+    local laserLine = worldify(line[1], line[2])
+    localAnimator.addDrawable({
+      line = laserLine,
+      width = 0.5,
+      fullbright = true,
+      color = {255,255,255}
+    }, "Player+1")
+  end
 end
 
 function renderLaser()

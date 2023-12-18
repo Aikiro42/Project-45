@@ -153,8 +153,8 @@
         "frontArmFrame": "swimIdle.1"
       }
     ],
-    "chargeTime": 0.1,
-    "overchargeTime": 1,
+    "chargeTime": 0.5,
+    "overchargeTime": 3,
     "animateBeforeOvercharge": true,
     "jamChances": [0, 0, 0, 0],
     "reloadRatingDamageMults": [0.5, 1, 1.15, 1.5],

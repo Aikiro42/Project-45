@@ -9,6 +9,44 @@ project45util.categoryStrings = {
   universal = "^#cfcfcf;¤ Universal^reset;"
 }
 
+-- draws a quadratic bezier curve from spoint to epoint
+function project45util.drawBezierCurve(nsegments, spoint, epoint, cpoint, tCondFunc, tCondFuncLastPoint)
+  
+  tCondFunc = tCondFunc or function(a, b) return false end
+  
+  local curve = {}
+  -- for each segment
+  local prev = spoint
+  for i = 1, nsegments do
+    local t = i/nsegments
+
+    local next = vec2.add(
+      vec2.mul(vec2.add(vec2.mul(spoint, 1 - t), vec2.mul(cpoint, t)), 1 - t),
+      vec2.mul(vec2.add(vec2.mul(cpoint, 1 - t), vec2.mul(epoint, t)), t)
+    )
+
+    local tCondFunc = tCondFunc(prev, next)
+    if tCondFunc then
+      if type(tCondFunc) == "table" then
+        next = tCondFunc
+        table.insert(curve, {
+          prev, next
+        })    
+      end
+      break
+    end
+
+    table.insert(curve, {
+      prev, next
+    })
+
+    prev = next
+  end
+
+  return curve
+  
+end
+
 function project45util.colorText(color, text)
   return "^" .. color .. ";" .. text .. "^reset;"
 end
