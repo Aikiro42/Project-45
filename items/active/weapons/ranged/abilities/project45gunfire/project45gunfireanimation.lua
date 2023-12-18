@@ -380,6 +380,7 @@ function renderChargeBar(offset, position, barColor, length, width, borderwidth)
 
   local chargeTime = animationConfig.animationParameter("chargeTime")
   local overchargeTime = animationConfig.animationParameter("overchargeTime")
+  local perfectChargeRange = animationConfig.animationParameter("perfectChargeRange")
 
   local position = activeItemAnimation.ownerAimPosition()
   local offset = offset or {0, -1.5}
@@ -424,6 +425,23 @@ function renderChargeBar(offset, position, barColor, length, width, borderwidth)
     fullbright = true,
     color = {255, 0, 0}
   }, "ForegroundEntity+1")
+
+
+  if perfectChargeRange then
+    local overchargeLength = length * overchargeTime / (chargeTime + overchargeTime)
+    local perfectChargeBase = vec2.add(base_a, {chargeLength, 0})
+    local perfectChargeTimeBar = worldify(
+      vec2.add(perfectChargeBase, {overchargeLength * perfectChargeRange[1], 0}),
+      vec2.add(perfectChargeBase, {overchargeLength * perfectChargeRange[2], 0})
+    )
+    localAnimator.addDrawable({
+      line = perfectChargeTimeBar,
+      width = barWidth,
+      fullbright = true,
+      color = {255, 255, 255}
+    }, "ForegroundEntity+1")
+  end
+
 
   -- render charge progress
   a = base_a

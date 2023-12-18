@@ -55,6 +55,7 @@
 
     "sounds": {
       "fire" : [ "/sfx/project45neosfx/fire/fire-bow1.ogg" ],
+      "perfectChargeFire": [ "/sfx/projectiles/spinning_throw.ogg" ],
       "chargeStart": ["/sfx/gun/bow_draw1.ogg"],
       "chargeDrone": ["/sfx/project45neosfx/chargedrone/chargedrone-bow1.ogg"],
       "boltPull" : [ ],
@@ -159,6 +160,7 @@
     "jamChances": [0, 0, 0, 0],
     "reloadRatingDamageMults": [0.5, 1, 1.15, 1.5],
 
+    "perfectChargeRange": [0.2, 0.5],
 
     "hideMuzzleSmoke": true,
     "hideMuzzleFlash": true,

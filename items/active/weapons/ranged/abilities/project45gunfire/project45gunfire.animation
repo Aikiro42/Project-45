@@ -640,6 +640,7 @@
     
     // plays every time the gun fires
     "fire": ["/sfx/project45neosfx/fire/fire-pistol1.ogg"],
+    "perfectChargeFire": [],
 
     // functions as expected of vanilla starbound
     "fireStart": [ ],

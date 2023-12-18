@@ -49,6 +49,10 @@ function Project45GunFire:init()
   -- Unless the gun continues firing until the gun is undercharged. (Should this be implemented?)
   self.fireBeforeOvercharge = not self.semi
 
+  if self.perfectChargeRange then
+    self.perfectChargeDamageMult = math.max(2, (self.perfectChargeDamageMult or 2))
+  end
+
   -- self.resetChargeOnFire only matters if gun doesn't fire before overcharge
   -- otherwise, the gun will never overcharge
   -- If this is false and the gun is semifire, then the charge is maintained (while left click is held) and
@@ -175,6 +179,7 @@ function Project45GunFire:init()
 
   activeItem.setScriptedAnimationParameter("chargeTime", self.chargeTime)
   activeItem.setScriptedAnimationParameter("overchargeTime", self.overchargeTime)
+  activeItem.setScriptedAnimationParameter("perfectChargeRange", self.perfectChargeRange)
 
   
   -- Add functions used by this primaryAbility to altAbility
@@ -976,6 +981,9 @@ function Project45GunFire:muzzleFlash()
     animator.setSoundPitch("fire", sb.nrand(0.01, 1))
     animator.setSoundVolume("hollow", util.clamp((1 - storage.ammo/self.maxAmmo) * self.hollowSoundMult, 0, self.hollowSoundMult))
     animator.playSound("fire")
+    if self.perfectlyCharged then
+      animator.playSound("perfectChargeFire")
+    end
     animator.playSound("hollow")
   end
   
@@ -1261,7 +1269,14 @@ function Project45GunFire:updateCharge()
 
   -- update charge damage multiplier
   if self.overchargeTime > 0 then
-    self.chargeDamage = 1 + ((self.chargeTimer - self.chargeTime) / self.overchargeTime)
+    local progress = (self.chargeTimer - self.chargeTime) / self.overchargeTime
+    self.chargeDamage = 1 + progress
+    if self.perfectChargeRange then
+      self.perfectlyCharged = self.perfectChargeRange[1] <= progress and self.perfectChargeRange[2] >= progress
+      if self.perfectlyCharged then
+        self.chargeDamage = self.perfectChargeDamageMult
+      end
+    end
   end
 
   -- update sounds

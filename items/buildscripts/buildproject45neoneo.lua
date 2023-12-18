@@ -285,7 +285,7 @@ function build(directory, config, parameters, level, seed)
 
         
       -- damage per shot
-      -- FIXME: max damage seems inaccurate
+
       local baseDamage = primaryAbility("baseDamage", 0)
       * config.damageLevelMultiplier
       -- low damage = base damage * worst reload damage
@@ -295,7 +295,7 @@ function build(directory, config, parameters, level, seed)
       local hiDamage = baseDamage
         * math.max(table.unpack(primaryAbility("reloadRatingDamageMults", {0,0,0,0})))
         * primaryAbility("lastShotDamageMult", 1)
-        * (primaryAbility("overchargeTime", 0) > 0 and 2 or 1)
+        * (primaryAbility("overchargeTime", 0) > 0 and (primaryAbility("perfectChargeDamageMult") or 2) or 1)
       
       config.tooltipFields.damagePerShotLabel = project45util.colorText("#FF9000", util.round(loDamage, 1) .. " - " .. util.round(hiDamage, 1))
 
