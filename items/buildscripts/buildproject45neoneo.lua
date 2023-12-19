@@ -273,7 +273,7 @@ function build(directory, config, parameters, level, seed)
       if config.project45GunModInfo and config.project45GunModInfo.upgradeCapacity
       then
         if config.project45GunModInfo.upgradeCapacity > -1 then
-          local count = parameters.statModCount or 0
+          local count = parameters.upgradeCount or 0
           local max = parameters.project45GunModInfo.upgradeCapacity
           config.tooltipFields.upgradeCapacityLabel = (count < max and "^#96cbe7;" or "^#777777;") .. (max - count) .. "/" .. max .. "^reset;"
         else

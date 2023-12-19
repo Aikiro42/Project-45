@@ -17,7 +17,7 @@ function apply(input)
   if augment then
 
     local statList = input.parameters.statList or {nil} -- retrieve stat mods
-    local statModCount = input.parameters.statModCount or 0
+    local upgradeCount = input.parameters.upgradeCount or 0
     local upgradeCapacity = modInfo.upgradeCapacity or -1
     
     -- MOD INSTALLATION GATES
@@ -36,7 +36,7 @@ function apply(input)
     -- If the max number of stat mods that can be installed is specified (i.e. non-negative number)
     -- and the number of mods installed already reached that cap
     -- do not apply stat mod
-    if upgradeCapacity > -1 and statModCount >= upgradeCapacity and not augment.level then
+    if upgradeCapacity > -1 and upgradeCount >= upgradeCapacity and not augment.level then
         sb.logError("(statmod.lua) Stat mod application failed: max number of stat mods have been installed")
         return gunmodHelper.addMessage(input, "Max stat mod capacity reached")
     end
@@ -241,15 +241,15 @@ function apply(input)
 
     -- count stat
     statList[config.getParameter("itemName")] = (statList[config.getParameter("itemName")] or 0) + 1
-    if not statModCount then
-        statModCount = 0
+    if not upgradeCount then
+        upgradeCount = 0
     else
-        statModCount = statModCount + 1
+        upgradeCount = upgradeCount + 1
     end
     
     
     output:setInstanceValue("statList", statList)
-    output:setInstanceValue("statModCount", statModCount)
+    output:setInstanceValue("upgradeCount", upgradeCount)
 
     output:setInstanceValue("isModded", true)
 
