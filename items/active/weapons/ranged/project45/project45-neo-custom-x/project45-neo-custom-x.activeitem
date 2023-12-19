@@ -84,14 +84,12 @@
 
     // exceptions for specific ammo mods
     // denial takes precedence over acceptance
-    "modExceptions": {
-      "accept": [
-        "project45-homingrocketmod"
-      ],
-      "deny": [
-        "project45-dragonsbreathmod"
-      ]
-    },
+    "compatibleMods": [
+      "project45-homingrocketmod"
+    ],
+    "incompatibleMods": [
+      "project45-dragonsbreathmod"
+    ],
 
     "acceptsModSlot": [
 

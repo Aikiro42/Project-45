@@ -16,6 +16,7 @@
   "augment":{
     "modName": "Bow Stabilizer",
     "category": "universal",
+    "compatibleWeapons": ["project45-neo-bow"],
     "slot": "rail",
     "primaryAbility": {
       "laser": {

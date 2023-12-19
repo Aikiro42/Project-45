@@ -32,6 +32,42 @@ function apply(input)
 
     -- MOD INSTALLATION GATES
 
+    -- check if mod accepts gun
+    if augment.compatibleWeapons then
+      local acceptedWeapons = set.new(augment.compatibleWeapons)
+      if not acceptedWeapons[input.name] then
+          sb.logError("(gunmod.lua) Mod application failed: Mod incompatible with " .. input.name)
+          return gunmodHelper.addMessage(input, "Incompatible mod: " .. config.getParameter("shortdescription"))    
+      end
+    end
+
+    -- check if mod rejects gun
+    if augment.incompatibleWeapons then
+      local deniedWeapons = set.new(augment.incompatibleWeapons)
+      if deniedWeapons[input.name] then
+          sb.logError("(gunmod.lua) Mod application failed: Mod incompatible with " .. input.name)
+          return gunmodHelper.addMessage(input, "Incompatible mod: " .. config.getParameter("shortdescription"))    
+      end
+    end
+    
+    -- check if gun accepts mod
+    if modInfo.compatibleMods then
+      local acceptedMods = set.new(modInfo.compatibleMods)
+      if not acceptedMods[config.getParameter("shortdescription")] then
+          sb.logError("(gunmod.lua) Mod application failed: Mod incompatible with " .. input.name)
+          return gunmodHelper.addMessage(input, "Incompatible mod: " .. config.getParameter("shortdescription"))    
+      end
+    end
+
+    -- check if gun rejects mod
+    if modInfo.incompatibleMods then
+        local deniedMods = set.new(modInfo.incompatibleMods)
+        if not deniedMods[config.getParameter("shortdescription")] then
+            sb.logError("(gunmod.lua) Mod application failed: Mod incompatible with " .. input.name)
+            return gunmodHelper.addMessage(input, "Incompatible mod: " .. config.getParameter("shortdescription"))    
+        end
+    end
+
     local modExceptions = modInfo.modExceptions or {}
     modExceptions.accept = modExceptions.accept or {}
     modExceptions.deny = modExceptions.deny or {}

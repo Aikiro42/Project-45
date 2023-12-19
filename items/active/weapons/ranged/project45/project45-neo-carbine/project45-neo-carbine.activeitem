@@ -53,11 +53,9 @@
   "project45GunModInfo":{
     "category": "ballistic",
     "statModCountMax": 20,
-    "modExceptions": {
-      "deny": [
-        "project45-autofiremod"
-      ]
-    },
+    "incompatibleMods": [
+      "project45-autofiremod"
+    ],
     "allowsConversion": [
       "hitscan",
       "beam",
