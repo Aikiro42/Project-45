@@ -5,6 +5,14 @@ require "/scripts/set.lua"
 
 function build(directory, config, parameters, level, seed)
   
+  local extrinsicModSlots = set.new({
+    "rail",
+    "sights",
+    "muzzle",
+    "underbarrel",
+    "stock"
+  })
+
   --[[
   local configParameter = function(keyName, defaultValue)
     if parameters[keyName] ~= nil then
@@ -18,6 +26,13 @@ function build(directory, config, parameters, level, seed)
   --]]
 
   construct(config, "augment")
+
+  -- if no set upgrade cost,
+  -- extrinsic mods are free,
+  -- intrinsic mods cost 1 upgrade capacity
+  if not config.augment.upgradeCost then
+    config.augment.upgradeCost = extrinsicModSlots[config.augment.slot or config.slot] and 0 or 1
+  end
 
   config.tooltipFields = config.tooltipFields or {}
   config.tooltipFields.categoryLabel = project45util.categoryStrings[config.augment.category or "universal"]
@@ -46,13 +61,6 @@ function build(directory, config, parameters, level, seed)
 
   config.tooltipFields.archetypeLabel = ""
   if config.category == "Gun Mod" then
-    local extrinsicModSlots = set.new({
-      "rail",
-      "sights",
-      "muzzle",
-      "underbarrel",
-      "stock"
-    })
     config.tooltipFields.archetypeTitleLabel = "Mod Type"
     if not config.archetype then
       if extrinsicModSlots[config.augment.slot or config.slot] then
@@ -78,7 +86,10 @@ function build(directory, config, parameters, level, seed)
     )
   end
 
-  config.tooltipFields.technicalLabel = ""
+  config.tooltipFields.technicalLabel = config.augment.upgradeCost > 1
+    and project45util.colorText("#FF5050", string.format("Cost: %d\n", config.augment.upgradeCost))
+    or ""
+
   if config.technicalInfo then
     config.tooltipFields.technicalLabel = config.tooltipFields.technicalLabel .. "^#ffd495;" .. config.technicalInfo .. "^reset;\n"
   end

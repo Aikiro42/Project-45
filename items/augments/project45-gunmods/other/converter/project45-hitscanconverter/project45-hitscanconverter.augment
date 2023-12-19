@@ -9,6 +9,7 @@
   "shortdescription" : "Hitscan Conversion",
 
   "conversion": "hitscan",
+  "upgradeCost": 3,
 
   "radioMessagesOnPickup" : [ "pickupaugment" ],
 

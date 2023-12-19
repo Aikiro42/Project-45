@@ -28,8 +28,19 @@ function apply(input, override, augment)
     set.insert(acceptsModSlot, "intrinsic")
     
     -- MOD INSTALLATION GATES
+    local upgradeCost = augment.upgradeCost
+    local upgradeCapacity, upgradeCount
 
     if not override then  -- gatekeep if not called from abilitymod.lua
+
+        if upgradeCost then
+          upgradeCount = input.parameters.upgradeCount or 0
+          upgradeCapacity = modInfo.upgradeCapacity or -1
+          if upgradeCapacity > -1 and upgradeCount >= upgradeCapacity then
+            sb.logError("(abilitymod.lua) Ability mod application failed: max upgrade capacity reached")
+            return gunmodHelper.addMessage(input, "Max stat mod capacity reached")
+          end
+        end    
 
         -- check if mod accepts gun
         if augment.compatibleWeapons then
@@ -349,7 +360,9 @@ function apply(input, override, augment)
         end
         
         output:setInstanceValue("modSlots", modSlots)
-        
+        if upgradeCost then
+            output:setInstanceValue("upgradeCount", upgradeCount + upgradeCost)
+        end      
     end
     output:setInstanceValue("isModded", true)
 

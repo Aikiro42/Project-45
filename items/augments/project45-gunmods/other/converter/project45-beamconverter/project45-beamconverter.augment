@@ -9,6 +9,7 @@
   "shortdescription" : "Beam Conversion",
 
   "conversion": "beam",
+  "upgradeCost": 2,
 
   "radioMessagesOnPickup" : [ "pickupaugment" ],
 

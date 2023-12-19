@@ -31,6 +31,17 @@ function apply(input)
     set.insert(acceptsModSlot, "ability")
 
     -- MOD INSTALLATION GATES
+    
+    local upgradeCost = augment.upgradeCost
+    local upgradeCapacity, upgradeCount
+    if upgradeCost then
+      upgradeCount = input.parameters.upgradeCount or 0
+      upgradeCapacity = modInfo.upgradeCapacity or -1
+      if upgradeCapacity > -1 and upgradeCount >= upgradeCapacity then
+        sb.logError("(abilitymod.lua) Ability mod application failed: max upgrade capacity reached")
+        return gunmodHelper.addMessage(input, "Max stat mod capacity reached")
+      end
+    end
 
     -- check if mod accepts gun
     if augment.compatibleWeapons then
@@ -160,6 +171,9 @@ function apply(input)
     end
 
     output:setInstanceValue("modSlots", modSlots)
+    if upgradeCost then
+      output:setInstanceValue("upgradeCount", upgradeCount + upgradeCost)
+    end
 
     -- return output:descriptor(), 1
     return gunmod_apply(output, true, augment)

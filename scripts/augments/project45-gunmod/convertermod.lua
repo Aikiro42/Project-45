@@ -22,6 +22,17 @@ function apply(input)
 
   -- CONVERSION GATES
 
+  local upgradeCost = config.getParameter("upgradeCost")
+  local upgradeCapacity, upgradeCount
+  if upgradeCost then
+    upgradeCount = input.parameters.upgradeCount or 0
+    upgradeCapacity = modInfo.upgradeCapacity or -1
+    if upgradeCapacity > -1 and upgradeCount >= upgradeCapacity then
+      sb.logError("(abilitymod.lua) Ability mod application failed: max upgrade capacity reached")
+      return gunmodHelper.addMessage(input, "Max stat mod capacity reached")
+    end
+  end
+
   -- Do not proceed if mod slot is occupied
   if modSlots.ammoType then
     sb.logError("(convertermod.lua) Conversion not applied; ammo/conversion mod is installed.")
@@ -152,6 +163,9 @@ function apply(input)
   }
 
   output:setInstanceValue("modSlots", modSlots)
+  if upgradeCost then
+    output:setInstanceValue("upgradeCount", upgradeCount + upgradeCost)
+  end
   output:setInstanceValue("isModded", true)
 
   return output:descriptor(), 1

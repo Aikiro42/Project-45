@@ -9,6 +9,7 @@
   "shortdescription" : "Summon Conversion",
 
   "conversion": "summoned",
+  "upgradeCost": 3,
 
   "radioMessagesOnPickup" : [ "pickupaugment" ],
 
