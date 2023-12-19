@@ -241,15 +241,9 @@ function apply(input)
 
     -- count stat
     statList[config.getParameter("itemName")] = (statList[config.getParameter("itemName")] or 0) + 1
-    if not upgradeCount then
-        upgradeCount = 0
-    else
-        upgradeCount = upgradeCount + 1
-    end
-    
     
     output:setInstanceValue("statList", statList)
-    output:setInstanceValue("upgradeCount", upgradeCount)
+    output:setInstanceValue("upgradeCount", upgradeCount + 1)
 
     output:setInstanceValue("isModded", true)
 
