@@ -243,7 +243,7 @@ function apply(input)
     statList[config.getParameter("itemName")] = (statList[config.getParameter("itemName")] or 0) + 1
     
     output:setInstanceValue("statList", statList)
-    output:setInstanceValue("upgradeCount", upgradeCount + 1)
+    output:setInstanceValue("upgradeCount", upgradeCount + (augment.level and 0 or 1))
 
     output:setInstanceValue("isModded", true)
 
