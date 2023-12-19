@@ -111,7 +111,7 @@
 
   "project45GunModInfo":{
     "category": "experimental",
-    "statModCountMax": 10,
+    "upgradeCapacity": 10,
     "allowsConversion": [
       "hitscan",
       "beam",

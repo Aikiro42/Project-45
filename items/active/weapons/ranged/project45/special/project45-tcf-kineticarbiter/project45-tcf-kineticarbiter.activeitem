@@ -16,7 +16,7 @@
 
   "project45GunModInfo": {
     "category": "special",
-    "statModCountMax": 20,
+    "upgradeCapacity": 20,
     "acceptsModSlot": [
       "sights"
     ]

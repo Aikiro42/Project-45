@@ -48,7 +48,7 @@
 
     */
     "category": "universal",
-    "statModCountMax": 99, // maximum number of stat mods allowed to be installed on the gun
+    "upgradeCapacity": 99, // maximum number of stat mods allowed to be installed on the gun
 
     /*
     Used by converter mods; list of allowed changes to the kind of of projectile fired
