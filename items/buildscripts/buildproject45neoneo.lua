@@ -357,6 +357,8 @@ function build(directory, config, parameters, level, seed)
         config.tooltipFields.critDamageLabel = project45util.colorText("#777777", util.round(critDamage, 1) .. "x")
       end
 
+      local descriptionScore = 0
+
       local miscStats = {
         "heavyWeapon",
         "multishot",
@@ -364,34 +366,53 @@ function build(directory, config, parameters, level, seed)
         "overchargeTime"
       }
 
-      local heavyDesc = primaryAbility("heavyWeapon", false)
-        and (project45util.colorText("#FF5050", "Heavy") .. "\n")
-        or ""
+      local heavyDesc = ""
+      if primaryAbility("heavyWeapon", false) then
+        descriptionScore = descriptionScore + 1
+        heavyDesc = project45util.colorText("#FF5050", "Heavy") .. "\n"
+      end
 
-      local multishotDesc = primaryAbility("multishot", 1) ~= 1
-        and (project45util.colorText("#9dc6f5", util.round(primaryAbility("multishot", 1), 1) .. "x multishot") .. "\n")
-        or ""
+      local multishotDesc = ""
+      local multishot = primaryAbility("multishot", 1)
+      if multishot ~= 1 then
+        descriptionScore = descriptionScore + 1
+        multishotDesc = project45util.colorText(multishot > 1 and "#9dc6f5" or "#FF5050", util.round(multishot, 1) .. "x multishot") .. "\n"
+      end
 
-      local chargeDesc = primaryAbility("chargeTime", 0) > 0
-        and (project45util.colorText("#FF5050", util.round(primaryAbility("chargeTime", 0), 1) .. "s charge time.") .. "\n")
-        or ""
+      local chargeDesc = ""
+      if primaryAbility("chargeTime", 0) > 0 then
+        descriptionScore = descriptionScore + 1
+        chargeDesc = project45util.colorText("#FF5050", util.round(primaryAbility("chargeTime", 0), 1) .. "s charge time.") .. "\n"
+      end
         
-      local overchargeDesc = primaryAbility("overchargeTime", 0) > 0
-        and (project45util.colorText("#9dc6f5", util.round(primaryAbility("overchargeTime", 0), 1) .. "s overcharge.") .. "\n")
-        or ""
+
+      local overchargeDesc = ""
+      if primaryAbility("overchargeTime", 0) > 0 then
+        descriptionScore = descriptionScore + 1
+        chargeDesc = project45util.colorText("#9dc6f5", util.round(primaryAbility("overchargeTime", 0), 1) .. "s overcharge.") .. "\n"
+      end
       
       local modListDesc = ""
       if modList then
         local exclude = set.new({"ability","rail","sights","muzzle","underbarrel","stock","ammoType"})
         for modSlot, modKind in pairs(modList) do
           if not exclude[modSlot] and modKind[1] ~= "ability" then
+            descriptionScore = descriptionScore + 1
             modListDesc = modListDesc .. project45util.colorText("#abfc6d", modKind[1]) .. "\n"
           end
         end
       end
 
       local finalDescription = heavyDesc .. chargeDesc .. overchargeDesc .. multishotDesc .. modListDesc -- .. config.description
-      config.description = finalDescription == "" and project45util.colorText("#777777", "No notable qualities.") or finalDescription
+      finalDescription = finalDescription == "" and project45util.colorText("#777777", "No notable qualities.") or finalDescription
+      
+      descriptionScore = descriptionScore + math.ceil((#config.description)/18)
+      
+      if descriptionScore <= 7 then
+        config.description = config.description .. "\n" .. finalDescription
+      else
+        config.description = (descriptionScore < 8 and "Highly modified.\n" or "") .. finalDescription
+      end
 
     end
 
