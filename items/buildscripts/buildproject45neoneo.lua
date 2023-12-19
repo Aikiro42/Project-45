@@ -331,7 +331,7 @@ function build(directory, config, parameters, level, seed)
       end
       
       -- reload cost
-      config.tooltipFields.reloadCostLabel = project45util.colorText("#b0ff78", primaryAbility("reloadCost", 0))
+      config.tooltipFields.reloadCostLabel = project45util.colorText("#b0ff78", util.round(primaryAbility("reloadCost", 0), 1))
 
       -- reload time
       local bulletReloadTime = primaryAbility("reloadTime", 0.1)

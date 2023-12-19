@@ -132,6 +132,7 @@ function purchase()
       local consumedCurrency = player.consumeCurrency("money", selectedItem.parameters.price * selectedItem.count)
 
       if consumedCurrency then
+        selectedItem.parameters.seed = math.floor(math.random() * 100000000)
         player.giveItem(selectedItem)
         --[[
         widget.setData(listItem,

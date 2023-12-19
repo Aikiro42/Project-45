@@ -239,9 +239,13 @@ function apply(input)
     output:setInstanceValue("primaryAbility", sb.jsonMerge(input.parameters.primaryAbility, newPrimaryAbility))
     output:setInstanceValue("statModifiers", statModifiers)
 
-    -- count stat
-    statList[config.getParameter("itemName")] = (statList[config.getParameter("itemName")] or 0) + 1
-    
+    -- count stat if not wildcard
+    if not augment.wildcard then
+        statList[config.getParameter("itemName")] = (statList[config.getParameter("itemName")] or 0) + 1
+    else
+        statList.wildcards = statList.wildcards or {}
+        table.insert(statList.wildcards, config.getParameter("seed"))
+    end
     output:setInstanceValue("statList", statList)
     output:setInstanceValue("upgradeCount", upgradeCount + (augment.level and 0 or 1))
 

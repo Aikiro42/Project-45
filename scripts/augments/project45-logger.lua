@@ -6,6 +6,7 @@ require "/scripts/async.lua"
 function apply(input)
   local output = Item.new(root.createItem(input.name))
   sb.logInfo(sb.printJson(input))
+  sb.logInfo(sb.printJson(sb.staticRandomI32Range(1, 100, 69)))
   sb.logInfo(sb.printJson(output:descriptor()))
   sb.logInfo(sb.printJson(output.config.primaryAbility))
 end
