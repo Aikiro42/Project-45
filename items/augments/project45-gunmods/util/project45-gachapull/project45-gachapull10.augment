@@ -5,8 +5,8 @@
   "tooltipKind" : "project45gunmod",
   "category" : "Applied Utility",
   "inventoryIcon" : "/items/augments/project45-gunmods/util/project45-gachapull/project45-gachapull10.png",
-  "description" : "Ten one-time-use keys for opening the ever-replenishing Gun Bag.",
-  "shortdescription" : "Gun Bag Key x10",
+  "description" : "Ten (10) one-time-use keys for opening the ever-replenishing Gun Bag.",
+  "shortdescription" : "Gun Bag Key Bundle",
   "pullsAdd": 10,
   "scripts" : [ "/scripts/augments/project45-gachapull.lua" ]
 }

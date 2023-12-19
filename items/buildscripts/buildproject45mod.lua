@@ -86,7 +86,7 @@ function build(directory, config, parameters, level, seed)
     )
   end
 
-  config.tooltipFields.technicalLabel = config.augment.upgradeCost > 1
+  config.tooltipFields.technicalLabel = config.augment.upgradeCost > (extrinsicModSlots[config.augment.slot or config.slot] and 0 or 1)
     and project45util.colorText("#FF5050", string.format("Cost: %d\n", config.augment.upgradeCost))
     or ""
 
