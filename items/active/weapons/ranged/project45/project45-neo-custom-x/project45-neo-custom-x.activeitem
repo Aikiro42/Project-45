@@ -6,7 +6,7 @@
   "description" : "THE ULTIMATE TEST FIREARM",
   "shortdescription" : "_PROJECT45NEOCUSTOMX_",
   "tooltipKind" : "project45gun",
-  "gunArchetype": "Test Gun",
+  "gunArchetype": "magic",
   "category" : "rifle",
   "twoHanded" : true,
   "itemTags" : ["weapon","ranged","rifle"],

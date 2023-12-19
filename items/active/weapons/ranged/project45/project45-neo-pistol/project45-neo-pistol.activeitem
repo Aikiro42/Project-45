@@ -6,7 +6,7 @@
   "description" : "A good ol' handgun. Reliable, deadly.",
   "shortdescription" : "Pistol",
   "tooltipKind" : "project45gun",
-  "gunArchetype": "Handgun",
+  "gunArchetype": "pistol",
   "category" : "pistol",
   "twoHanded" : false,
   "itemTags" : ["weapon","ranged","pistol"],

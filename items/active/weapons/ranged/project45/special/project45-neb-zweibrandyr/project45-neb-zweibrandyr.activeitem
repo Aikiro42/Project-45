@@ -5,7 +5,7 @@
   "rarity" : "Essential",
   "description" : "A firearm of Raiizy's and Nebulox's design.",
   "shortdescription" : "Zweibrandyr",
-  "gunArchetype": "LMG",
+  "gunArchetype": "machineGun",
   "tooltipKind" : "project45gun",
   "category" : "rifle",
   "twoHanded" : true,

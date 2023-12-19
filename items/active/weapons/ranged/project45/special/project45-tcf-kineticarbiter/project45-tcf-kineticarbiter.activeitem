@@ -6,7 +6,7 @@
   "description" : "A railgun found in the forests of Fortuna III.",
   "shortdescription" : "Kinetic Arbiter",
   "tooltipKind" : "project45gun",
-  "gunArchetype": "Railgun",
+  "gunArchetype": "antiMateriel",
   "category" : "sniper",
   "twoHanded" : true,
   "itemTags" : ["weapon","ranged","sniper"],

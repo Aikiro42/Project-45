@@ -6,7 +6,7 @@
   "description" : "A compact hardlight emitter.",
   "shortdescription" : "Cyclo",
   "tooltipKind" : "project45gun",
-  "gunArchetype": "Beam Emitter",
+  "gunArchetype": "beam",
   "category" : "pistol",
   "twoHanded" : false,
   "itemTags" : ["weapon","ranged","pistol"],

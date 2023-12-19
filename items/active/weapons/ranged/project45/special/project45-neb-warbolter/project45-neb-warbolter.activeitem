@@ -6,7 +6,7 @@
   "description" : "A gun that's oddly effective against Miniknog Zombies.",
   "shortdescription" : "Warbolter",
   "tooltipKind" : "project45gun",
-  "gunArchetype": "Lever-Action Rifle",
+  "gunArchetype": "antiMateriel",
   "category" : "rifle",
   "twoHanded" : true,
   "itemTags" : ["weapon","ranged","rifle"],

@@ -6,7 +6,7 @@
   "description" : "An anti-materiel rifle. The recoil is enough to throw you across a room.",
   "shortdescription" : "AMR",
   "tooltipKind" : "project45gun",
-  "gunArchetype": "Bolt-action",
+  "gunArchetype": "antiMateriel",
   "category" : "sniper",
   "twoHanded" : true,
   "itemTags" : ["weapon","ranged","sniper"],

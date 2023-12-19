@@ -5,7 +5,7 @@
   "rarity" : "Legendary",
   "description" : "An entry-level firearm.",
   "shortdescription" : "Machine Gun",
-  "gunArchetype": "LMG",
+  "gunArchetype": "machineGun",
   "tooltipKind" : "project45gun",
   "category" : "rifle",
   "twoHanded" : true,

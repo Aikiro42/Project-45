@@ -6,7 +6,7 @@
   "description" : "A stave that summons projectiles at your desired location.",
   "shortdescription" : "Powerstave",
   "tooltipKind" : "project45gun",
-  "gunArchetype": "Magitek Stave",
+  "gunArchetype": "magic",
   "category" : "staff",
   "twoHanded" : false,
   "itemTags" : ["weapon","ranged","staff"],

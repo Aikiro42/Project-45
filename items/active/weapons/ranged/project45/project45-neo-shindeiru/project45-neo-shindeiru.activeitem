@@ -6,7 +6,7 @@
   "description" : "A smart SMG.",
   "shortdescription" : "Shindeiru",
   "tooltipKind" : "project45gun",
-  "gunArchetype": "Smart SMG",
+  "gunArchetype": "smg",
   "category" : "rifle",
   "twoHanded" : true,
   "itemTags" : ["weapon","ranged","rifle"],

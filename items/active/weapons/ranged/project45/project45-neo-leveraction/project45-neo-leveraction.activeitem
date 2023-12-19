@@ -6,7 +6,7 @@
   "description" : "A lever-action coach gun.",
   "shortdescription" : "Lever Action",
   "tooltipKind" : "project45gun",
-  "gunArchetype": "Lever-Action Rifle",
+  "gunArchetype": "rifle",
   "category" : "rifle",
   "twoHanded" : true,
   "itemTags" : ["weapon","ranged","rifle"],

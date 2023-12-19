@@ -6,7 +6,7 @@
   "description" : "The design of this geneva-violating weapon of mass destruction was brought to you by Hanz and Co.",
   "shortdescription" : "Flamethrower",
   "tooltipKind" : "project45gun",
-  "gunArchetype": "Experimental",
+  "gunArchetype": "flamethrower",
   "category" : "rifle",
   "twoHanded" : true,
   "itemTags" : ["weapon","ranged","rifle"],

@@ -6,7 +6,7 @@
   "description" : "A zip gun. Particularly well-made; WS45 parts are amazing.",
   "shortdescription" : "Pipe Gun",
   "tooltipKind" : "project45gun",
-  "gunArchetype": "Makeshift Gun",
+  "gunArchetype": "pistol",
   "category" : "pistol",
   "twoHanded" : true,
   "itemTags" : ["weapon","ranged","pistol"],

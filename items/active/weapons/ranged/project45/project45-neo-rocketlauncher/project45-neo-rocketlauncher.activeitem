@@ -5,7 +5,7 @@
   "rarity" : "Essential",
   "description" : "An entry-level firearm.",
   "shortdescription" : "Rocket Launcher",
-  "gunArchetype": "Missile Launcher",
+  "gunArchetype": "rocketLauncher",
   "tooltipKind" : "project45gun",
   "category" : "rocketlauncher",
   "twoHanded" : true,

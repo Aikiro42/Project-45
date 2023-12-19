@@ -5,7 +5,7 @@
   "rarity" : "Legendary",
   "description" : "Energy AR with ramping fire rate.",
   "shortdescription" : "Accelerator",
-  "gunArchetype": "Energy Gun",
+  "gunArchetype": "assaultRifle",
   "tooltipKind" : "project45gun",
   "category" : "rifle",
   "twoHanded" : true,

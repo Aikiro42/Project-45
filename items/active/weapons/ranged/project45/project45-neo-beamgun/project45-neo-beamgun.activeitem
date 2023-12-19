@@ -5,7 +5,7 @@
   "rarity" : "Legendary",
   "description" : "A weapon that shines irradiating light at the enemy.",
   "shortdescription" : "Beam Gun",
-  "gunArchetype": "Energy Weapon",
+  "gunArchetype": "beam",
   "tooltipKind" : "project45gun",
   "category" : "rifle",
   "twoHanded" : true,

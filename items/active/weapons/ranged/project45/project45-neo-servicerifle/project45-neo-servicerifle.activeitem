@@ -6,7 +6,7 @@
   "description" : "A service rifle.",
   "shortdescription" : "Service Rifle",
   "tooltipKind" : "project45gun",
-  "gunArchetype": "Service Rifle",
+  "gunArchetype": "rifle",
   "category" : "sniper",
   "twoHanded" : true,
   "itemTags" : ["weapon","ranged","sniper"],

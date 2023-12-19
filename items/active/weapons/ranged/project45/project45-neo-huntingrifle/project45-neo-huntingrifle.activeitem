@@ -6,7 +6,7 @@
   "description" : "A hunting rifle.",
   "shortdescription" : "Hunting Rifle",
   "tooltipKind" : "project45gun",
-  "gunArchetype": "Bolt-action",
+  "gunArchetype": "rifle",
   "category" : "sniper",
   "twoHanded" : true,
   "itemTags" : ["weapon","ranged","sniper"],

@@ -6,7 +6,7 @@
   "description" : "A railgun designed from blueprints found in a hazardous containment zone.",
   "shortdescription" : "Space Cowboy",
   "tooltipKind" : "project45gun",
-  "gunArchetype": "Thermal Railgun",
+  "gunArchetype": "antiMateriel",
   "category" : "sniper",
   "twoHanded" : true,
   "itemTags" : ["weapon","ranged","sniper"],

@@ -6,7 +6,7 @@
   "description" : "Rip and tear until it's done.",
   "shortdescription" : "Sawed-off Shotgun",
   "tooltipKind" : "project45gun",
-  "gunArchetype": "Shotgun",
+  "gunArchetype": "shotgun",
   "category" : "shotgun",
   "twoHanded" : false,
   "itemTags" : ["weapon","ranged","shotgun"],

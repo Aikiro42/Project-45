@@ -5,7 +5,7 @@
   "rarity" : "Essential",
   "description" : "A large machine gun of Nitrosteel's design, adapted to W.S. 45.",
   "shortdescription" : "Typhon P45",
-  "gunArchetype": "Heavy Plasma MG",
+  "gunArchetype": "machineGun",
   "tooltipKind" : "project45gun",
   "category" : "rifle",
   "twoHanded" : true,

@@ -6,7 +6,7 @@
   "description" : "An highly modifiable automatic short rifle.",
   "shortdescription" : "Carbine",
   "tooltipKind" : "project45gun",
-  "gunArchetype": "Assault Rifle",
+  "gunArchetype": "smg",
   "category" : "rifle",
   "twoHanded" : true,
   "itemTags" : ["weapon","ranged","rifle"],

@@ -6,7 +6,7 @@
   "description" : "An energy sniper rifle.",
   "shortdescription" : "Gazer",
   "tooltipKind" : "project45gun",
-  "gunArchetype": "Energy Sniper Rifle",
+  "gunArchetype": "sniper",
   "category" : "sniper",
   "twoHanded" : true,
   "itemTags" : ["weapon","ranged","sniper"],

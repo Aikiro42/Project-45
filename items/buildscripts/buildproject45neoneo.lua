@@ -283,11 +283,16 @@ function build(directory, config, parameters, level, seed)
         config.tooltipFields.upgradeCapacityLabel = project45util.colorText("#777777", "0/0")
       end
 
+      -- recalculate baseDamage
+      if config.gunArchetype then
+        local archetypeDamage = generalConfig.gunArchetypeDamages[config.gunArchetype]
+        -- sb.logInfo(string.format("%s (%s): %s",config.shortdescription, config.gunArchetype, sb.printJson(archetypeDamage)))
+        config.primaryAbility.baseDamage = archetypeDamage or config.primaryAbility.baseDamage
+      end
         
       -- damage per shot
-
-      local baseDamage = primaryAbility("baseDamage", 0)
-      * config.damageLevelMultiplier
+      -- recalculate
+      local baseDamage = primaryAbility("baseDamage", 0) * config.damageLevelMultiplier
       -- low damage = base damage * worst reload damage
       local loDamage = baseDamage
         * math.min(table.unpack(primaryAbility("reloadRatingDamageMults", {0,0,0,0})))

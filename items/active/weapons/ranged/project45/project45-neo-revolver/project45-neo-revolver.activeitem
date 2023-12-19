@@ -6,7 +6,7 @@
   "description" : "A revolver. Packs quite a punch.",
   "shortdescription" : "Revolver",
   "tooltipKind" : "project45gun",
-  "gunArchetype": "Break-action",
+  "gunArchetype": "revolver",
   "category" : "pistol",
   "twoHanded" : false,
   "itemTags" : ["weapon","ranged","pistol"],

@@ -6,7 +6,7 @@
   "description" : "Feel like hawkeye with this awesome bow!",
   "shortdescription" : "Neo-compound Bow",
   "tooltipKind" : "project45gun",
-  "gunArchetype": "Bow",
+  "gunArchetype": "bow",
   "category" : "bow",
   "twoHanded" : true,
   "itemTags" : ["weapon","ranged","bow"],

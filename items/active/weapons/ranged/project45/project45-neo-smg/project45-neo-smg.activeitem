@@ -6,7 +6,7 @@
   "description" : "A fast-firing submachine gun.",
   "shortdescription" : "SMG",
   "tooltipKind" : "project45gun",
-  "gunArchetype": "Submachine Gun",
+  "gunArchetype": "smg",
   "category" : "rifle",
   "twoHanded" : true,
   "itemTags" : ["weapon","ranged","rifle"],

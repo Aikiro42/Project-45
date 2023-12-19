@@ -6,7 +6,7 @@
   "description" : "A revolver that shoots magma.",
   "shortdescription" : "Magma Spitter",
   "tooltipKind" : "project45gun",
-  "gunArchetype": "Break-action Shotgun",
+  "gunArchetype": "shotgun",
   "category" : "shotgun",
   "twoHanded" : false,
   "itemTags" : ["weapon","ranged","shotgun"],
