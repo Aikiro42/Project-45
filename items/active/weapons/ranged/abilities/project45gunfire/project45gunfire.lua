@@ -261,6 +261,8 @@ function Project45GunFire:init()
   self.debugModPositions.underbarrel = config.getParameter("underbarrelOffset", {0, 0})
   self.debugModPositions.stock = config.getParameter("stockOffset", {0, 0})
 
+  animator.playSound("init")
+
 end
 
 function Project45GunFire:renderModPositionDebug()

@@ -637,6 +637,9 @@
   },
 
   "sounds" : {
+
+    // plays when the gun is equipped
+    "init": [],
     
     // plays every time the gun fires
     "fire": ["/sfx/project45neosfx/fire/fire-pistol1.ogg"],
