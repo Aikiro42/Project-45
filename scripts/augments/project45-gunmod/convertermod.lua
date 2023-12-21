@@ -15,6 +15,7 @@ function apply(input)
 
   local conversion = config.getParameter("conversion")
   local output = Item.new(input)
+  local modInfo = sb.jsonMerge(output.config.project45GunModInfo, input.parameters.project45GunModInfo)
 
   local primaryAbility = sb.jsonMerge(output.config.primaryAbility or {}, input.parameters.primaryAbility or {})
   local newPrimaryAbility = input.parameters.primaryAbility or {}
@@ -27,9 +28,9 @@ function apply(input)
   if upgradeCost then
     upgradeCount = input.parameters.upgradeCount or 0
     upgradeCapacity = modInfo.upgradeCapacity or -1
-    if upgradeCapacity > -1 and upgradeCount >= upgradeCapacity then
-      sb.logError("(abilitymod.lua) Ability mod application failed: max upgrade capacity reached")
-      return gunmodHelper.addMessage(input, "Max stat mod capacity reached")
+    if upgradeCapacity > -1 and upgradeCount + upgradeCost > upgradeCapacity then
+      sb.logError("(convertermod.lua) Converter mod application failed: Not Enough Upgrade Capacity")
+      return gunmodHelper.addMessage(input, "Not Enough Upgrade Capacity")
     end
   end
 

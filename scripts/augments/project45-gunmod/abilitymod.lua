@@ -32,14 +32,15 @@ function apply(input)
 
     -- MOD INSTALLATION GATES
     
+    -- Deny installation if upgrade capacity is maxed
     local upgradeCost = augment.upgradeCost
     local upgradeCapacity, upgradeCount
     if upgradeCost then
       upgradeCount = input.parameters.upgradeCount or 0
       upgradeCapacity = modInfo.upgradeCapacity or -1
-      if upgradeCapacity > -1 and upgradeCount >= upgradeCapacity then
-        sb.logError("(abilitymod.lua) Ability mod application failed: max upgrade capacity reached")
-        return gunmodHelper.addMessage(input, "Max stat mod capacity reached")
+      if upgradeCapacity > -1 and upgradeCount + upgradeCost > upgradeCapacity then
+        sb.logError("(abilitymod.lua) Ability mod application failed: Not Enough Upgrade Capacity")
+        return gunmodHelper.addMessage(input, "Not Enough Upgrade Capacity")
       end
     end
 

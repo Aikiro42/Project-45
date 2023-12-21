@@ -1,8 +1,8 @@
 {
-  "kind" : "project45shindeirumag",
+  "kind" : "project45smartgunmag",
   "definition" : {
     "type" : "textured",
-    "image" : "/particles/project45/magazines/project45shindeirumag/project45shindeirumag.png",
+    "image" : "/particles/project45/magazines/project45smartgunmag/project45smartgunmag.png",
     "fade" : 0.9,
 	  "position" : [-1, 0],
 	  "size" : 1.0,

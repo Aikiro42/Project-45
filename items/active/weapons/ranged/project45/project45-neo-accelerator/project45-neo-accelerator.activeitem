@@ -3,7 +3,7 @@
   "price" : 5000,
   "maxStack" : 1,
   "rarity" : "Legendary",
-  "description" : "Energy AR with ramping fire rate.",
+  "description" : "An energy assault rifle; the fire rate goes up the longer it's fired.",
   "shortdescription" : "Accelerator",
   "gunArchetype": "assaultRifle",
   "tooltipKind" : "project45gun",

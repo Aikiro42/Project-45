@@ -3,7 +3,7 @@
   "price" : 50000,
   "maxStack" : 1,
   "rarity" : "Essential",
-  "description" : "*chunk* *chik* HEAVY MACHINE GUN!",
+  "description" : "A simple machine gun, oddly effective against Big Ape's goons.",
   "shortdescription" : "Marco's HMG",
   "tooltipKind" : "project45gun",
   "gunArchetype": "machineGun",
@@ -46,6 +46,8 @@
       // "fireLoop": ["/sfx/project45neosfx/special/marcohmg/marcohmg_fireloop.ogg"],
       // "fireEnd": ["/sfx/project45neosfx/special/marcohmg/marcohmg_fireend.ogg"],
       "boltPull": ["/sfx/project45neosfx/special/marcohmg/marcohmg_loadmag.ogg"],
+      "unjam": ["/sfx/project45neosfx/special/marcohmg/marcohmg_unjam.ogg"],
+      "hollow": [ ],
       "boltPush": [ ],
       "ejectMag": [ ],
       "reloadEnd": [ ]

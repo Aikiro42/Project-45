@@ -37,8 +37,8 @@ function apply(input)
     -- and the number of mods installed already reached that cap
     -- do not apply stat mod
     if upgradeCapacity > -1 and upgradeCount >= upgradeCapacity and not augment.level then
-        sb.logError("(statmod.lua) Stat mod application failed: max number of stat mods have been installed")
-        return gunmodHelper.addMessage(input, "Max stat mod capacity reached")
+        sb.logError("(statmod.lua) Stat mod application failed: Not Enough Upgrade Capacity")
+        return gunmodHelper.addMessage(input, "Not Enough Upgrade Capacity")
     end
 
     if augment.level and (input.parameters.level or 1) >= 10 then

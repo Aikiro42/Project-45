@@ -1,10 +1,10 @@
 {
-  "itemName" : "project45-neo-shindeiru",
+  "itemName" : "project45-neo-smartgun",
   "price" : 10000,
   "maxStack" : 1,
   "rarity" : "Essential",
-  "description" : "A smart SMG.",
-  "shortdescription" : "Shindeiru",
+  "description" : "An SMG that fires projectiles that home in on enemies.",
+  "shortdescription" : "Smart Gun",
   "tooltipKind" : "project45gun",
   "gunArchetype": "smg",
   "category" : "rifle",
@@ -12,14 +12,14 @@
   "itemTags" : ["weapon","ranged","rifle"],
   "level" : 1,
   "muzzleFlashColor": [255, 200, 255],
-  "inventoryIcon" : "project45-neo-shindeiru-icon.png",
+  "inventoryIcon" : "project45-neo-smartgun-icon.png",
 
   "animationParts" : {
-    "middle" : "project45-neo-shindeiru.png",
+    "middle" : "project45-neo-smartgun.png",
     "middleFullbright" : "",
     "charge": "",
     "chargeFullbright": "",
-    "magazine": "project45-neo-shindeiru-mag.png",
+    "magazine": "project45-neo-smartgun-mag.png",
     "magazineFullbright": ""
   },
 
@@ -51,7 +51,7 @@
       },
       "magazine": {
         "particles": [
-          {"particle": "project45shindeirumag"}
+          {"particle": "project45smartgunmag"}
         ]
       }
     },

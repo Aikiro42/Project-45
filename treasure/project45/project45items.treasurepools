@@ -54,7 +54,7 @@
         {"weight" : 1, "item" : "project45-neo-minigun"},
         {"weight" : 1, "item" : "project45-neo-powerstave"},
         {"weight" : 1, "item" : "project45-neo-flamethrower"},
-        {"weight" : 1, "item" : "project45-neo-shindeiru"}
+        {"weight" : 1, "item" : "project45-neo-smartgun"}
       ],
       "poolRounds" : 1,
       "allowDuplication" : false
