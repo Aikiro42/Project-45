@@ -5,14 +5,14 @@
   "tooltipKind" : "project45gunmod2",
   "category" : "Stat Mod",
   "inventoryIcon" : "/items/augments/project45-gunmods/stat/project45-damagemod/project45-damageaddmod.png",
-  "statInfo" : "^#EA9931;Base Damage +5^reset;",
-  "description": "Increases Base Damage by 5.",
+  "statInfo" : "^#EA9931;Base Damage +2^reset;",
+  "description": "Increases Base Damage by 2.",
   "shortdescription" : "^#EA9931;Base Damage (+)",
   "slot": "baseDamage",
   "archetype": "Additive",
   "augment":{
     "baseDamage": {
-      "additive": 5
+      "additive": 2
     }
   },
 

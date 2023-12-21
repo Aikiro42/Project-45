@@ -5,15 +5,15 @@
   "tooltipKind" : "project45gunmod2",
   "category" : "Stat Mod",
   "inventoryIcon" : "/items/augments/project45-gunmods/stat/project45-damagemod/project45-damagemultmod.png",
-  "description" : "Increases Base Damage by 90% of base.",
+  "description" : "Increases Base Damage by 25% of base.",
   "slot": "baseDamage",
   "archetype": "Multiplicative",
-  "statInfo": "^#EA9931;Base Damage +0.9x^reset;",
+  "statInfo": "^#EA9931;Base Damage +0.25x^reset;",
   "shortdescription" : "^#EA9931;Base Damage (*)",
 
   "augment":{
     "baseDamage": {
-      "multiplicative": 0.9
+      "multiplicative": 0.25
     }
   },
 

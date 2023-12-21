@@ -7,13 +7,13 @@
   "inventoryIcon" : "/items/augments/project45-gunmods/stat/project45-critdamagemod/project45-critdamagemultmod.png",
   "slot": "critDamage",
   "archetype": "Multiplicative",
-  "description": "Increases Crit Damage by 90% of base.",
-  "statInfo" : "^#D93A3A;Crit Damage +0.9x^reset;",
+  "description": "Increases Crit Damage by 30% of base.",
+  "statInfo" : "^#D93A3A;Crit Damage +0.3x^reset;",
   "shortdescription" : "^#D93A3A;Crit Damage (*)",
 
   "augment":{
     "critDamage": {
-      "multiplicative": 0.9 // Organ Shatter
+      "multiplicative": 0.3
     }
   },
 

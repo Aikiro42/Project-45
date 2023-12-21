@@ -5,15 +5,15 @@
   "tooltipKind" : "project45gunmod2",
   "category" : "Stat Mod",
   "inventoryIcon" : "/items/augments/project45-gunmods/stat/project45-reloadcostmod/project45-reloadcostaddmod.png",
-  "description": "Decreases Reload Cost by 10 energy.",
-  "statInfo" : "^#9BBA3D;Reload Cost -10^reset;",
+  "description": "Decreases Reload Cost by 3 energy.",
+  "statInfo" : "^#9BBA3D;Reload Cost -3^reset;",
   "slot": "reloadCost",
   "archetype": "Additive",
   "shortdescription" : "^#9BBA3D;Reload Cost (+)",
 
   "augment":{
     "reloadCost": {
-      "additive": -10
+      "additive": -3
     }
   },
 
