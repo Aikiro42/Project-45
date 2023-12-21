@@ -9,6 +9,17 @@ project45util.categoryStrings = {
   universal = "^#cfcfcf;¤ Universal^reset;"
 }
 
+
+function project45util.truncatei(n, places)
+  local ten = 10 ^ places
+  return math.floor(n / ten) * ten
+end
+
+function project45util.truncatef(n, places)
+  local ten = 10 ^ places
+  return math.floor(n * ten) / ten
+end
+
 -- draws a quadratic bezier curve from spoint to epoint
 function project45util.drawBezierCurve(nsegments, spoint, epoint, cpoint, tCondFunc, tCondFuncLastPoint)
   

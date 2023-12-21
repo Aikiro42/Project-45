@@ -3,7 +3,7 @@ require "/scripts/versioningutils.lua"
 require "/scripts/util.lua"
 require "/scripts/set.lua"
 
-function build(directory, config, parameters, level, seed)
+function build(directory, config, parameters, level, seed, wildcardStatInfo)
 
   parameters = parameters or {}
   config.tooltipFields = config.tooltipFields or {}
@@ -39,77 +39,6 @@ function build(directory, config, parameters, level, seed)
   --]]
 
   construct(config, "augment")
-
-  local wildcardStatInfo = nil
-
-
-  if config.category == "Stat Mod"
-  and config.augment.wildcard
-  and (parameters.seed or seed) then
-    parameters.seed = parameters.seed or seed
-    local rng = sb.makeRandomSource(parameters.seed)
-    local statNames = {
-      "baseDamage",
-      "reloadCost",
-      "critChance",
-      "critDamage"
-    }
-    local maxStats = {
-      baseDamage = {
-        additive = 10,
-        multiplicative = 0.5
-      },
-      reloadCost = {
-        additive = 3,
-        multiplicative = 0.5
-      },
-      critChance = {
-        additive = 0.25,
-        multiplicative = 1
-      },
-      critDamage = {
-        additive = 0.75,
-        multiplicative = 0.25
-      },
-    }
-    local percent = set.new({
-      "critChance"
-    })
-    local isdiv = set.new({
-      "reloadCost",
-    })
-    wildcardStatInfo = ""
-    -- util.round(x, 1)
-    config.archetype = nil
-    config.slot = nil
-    local firstStat = (rng:randu32() % #statNames) + 1
-    local statsModified = 0
-    for i, statName in ipairs(statNames) do
-      if rng:randb() or i == firstStat then
-        statsModified = statsModified + 1
-        config.augment[statName] = {}
-        local modification = rng:randb() and "additive" or "multiplicative"
-        local actualStat = rng:randf(0, maxStats[statName][modification]) * (isdiv[statName] and modification == "additive" and -1 or 1)
-        config.augment[statName][modification] = actualStat
-
-        config.slot = statsModified == 1 and statName or "multiple"
-        
-        if config.archetype then
-          config.archetype = config.archetype ~= modification and "Mixed" or modification
-        else
-          config.archetype = modification
-        end
-
-        wildcardStatInfo = wildcardStatInfo .. string.format("%s %s%.1f%s^reset;\n",
-          statSlots[statName],
-          isdiv[statName] and modification == "additive" and "" or "+",
-          util.round(actualStat * (percent[statName] and modification == "additive" and 100 or 1), 1),
-          (modification == "multiplicative" and (isdiv[statName] and "d" or "x") or (percent[statName] and "%" or ""))
-        )
-      end
-    end
-    config.archetype = project45util.capitalize(config.archetype)
-  end
 
   -- if no set upgrade cost,
   -- extrinsic mods are free,

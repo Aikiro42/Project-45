@@ -240,11 +240,12 @@ function apply(input)
     output:setInstanceValue("statModifiers", statModifiers)
 
     -- count stat if not wildcard
-    if not augment.wildcard then
+    if not augment.randomStats then
         statList[config.getParameter("itemName")] = (statList[config.getParameter("itemName")] or 0) + 1
     else
+        local retrievedSeed = config.getParameter("seed")
         statList.wildcards = statList.wildcards or {}
-        table.insert(statList.wildcards, config.getParameter("seed"))
+        table.insert(statList.wildcards, retrievedSeed)
     end
     output:setInstanceValue("statList", statList)
     output:setInstanceValue("upgradeCount", upgradeCount + (augment.level and 0 or 1))

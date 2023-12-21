@@ -28,7 +28,6 @@ function disassemble()
       end
 
       if input.parameters.statList then
-        sb.logInfo(sb.printJson(input.parameters.statList))
         for k, v in pairs(input.parameters.statList) do
           if k ~= "wildcards" then
             player.giveItem({

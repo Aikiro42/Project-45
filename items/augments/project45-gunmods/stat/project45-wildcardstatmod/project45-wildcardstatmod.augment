@@ -12,10 +12,30 @@
   "shortdescription" : "^#d29ce7;Wildcard Mod",
 
   "augment":{
-    "wildcard": true
+    "randomStats": true,
+    "baseDamage": {
+      "additive": [1, 5],
+      "multiplicative": [0.01, 0.5]
+    },
+    "critChance": {
+      "additive": [0.01, 0.3],
+      "multiplicative": [0.01, 0.5]
+    },
+    "critDamage": {
+      "additive": [0.1, 0.5],
+      "multiplicative": [0.01, 0.5]
+    },
+    "reloadCost": {
+      "additive": [-10, -1],
+      "multiplicative": [0.01, 0.5]
+    },
+    "fireTime": {
+      "additive": [-0.05, -0.001],
+      "multiplicative": [0.01, 0.5]
+    }
   },
 
   "scripts" : [ "/scripts/augments/project45-gunmod/statmod.lua" ],
-  "builder": "/items/buildscripts/buildproject45mod.lua"
+  "builder": "/items/buildscripts/buildproject45randstatmod.lua"
 
 }
