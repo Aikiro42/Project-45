@@ -12,6 +12,7 @@
   "shortdescription" : "^#9BBA3D;Reload Cost (*)",
 
   "augment":{
+    "upgradeCost": 2,
     "reloadCost": {
       "multiplicative": 0.2
     }

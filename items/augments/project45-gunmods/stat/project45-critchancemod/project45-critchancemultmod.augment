@@ -12,6 +12,7 @@
   "archetype": "Multiplicative",
 
   "augment":{
+    "upgradeCost": 2,
     "critChance": {
       "multiplicative": 0.3
     }

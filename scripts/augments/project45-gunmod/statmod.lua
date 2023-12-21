@@ -16,11 +16,20 @@ function apply(input)
   -- if augment field exists, do something
   if augment then
 
+    local upgradeCost = augment.upgradeCost or 1
     local statList = input.parameters.statList or {nil} -- retrieve stat mods
     local upgradeCount = input.parameters.upgradeCount or 0
     local upgradeCapacity = modInfo.upgradeCapacity or -1
     
     -- MOD INSTALLATION GATES
+
+    -- If the max number of stat mods that can be installed is specified (i.e. non-negative number)
+    -- and the number of mods installed already reached that cap
+    -- do not apply stat mod
+    if upgradeCapacity > -1 and upgradeCount + upgradeCost > upgradeCapacity then
+        sb.logError("(statmod.lua) Stat mod application failed: Not Enough Upgrade Capacity")
+        return gunmodHelper.addMessage(input, "Not Enough Upgrade Capacity")
+    end
 
     local modExceptions = modInfo.modExceptions or {}
     modExceptions.accept = modExceptions.accept or {}
@@ -33,13 +42,6 @@ function apply(input)
       return gunmodHelper.addMessage(input, "Incompatible stat mod: " .. config.getParameter("shortdescription"))
     end
 
-    -- If the max number of stat mods that can be installed is specified (i.e. non-negative number)
-    -- and the number of mods installed already reached that cap
-    -- do not apply stat mod
-    if upgradeCapacity > -1 and upgradeCount >= upgradeCapacity and not augment.level then
-        sb.logError("(statmod.lua) Stat mod application failed: Not Enough Upgrade Capacity")
-        return gunmodHelper.addMessage(input, "Not Enough Upgrade Capacity")
-    end
 
     if augment.level and (input.parameters.level or 1) >= 10 then
         sb.logError("(statmod.lua) Stat mod application failed: max level reached.")
@@ -232,7 +234,7 @@ function apply(input)
     end
 
     if augment.level then
-        output:setInstanceValue("level", (input.parameters.level or output.config.level) + 1)
+        output:setInstanceValue("level", (input.parameters.level or output.config.level) + augment.level)
     end
 
     -- merge changes
@@ -248,7 +250,7 @@ function apply(input)
         table.insert(statList.wildcards, retrievedSeed)
     end
     output:setInstanceValue("statList", statList)
-    output:setInstanceValue("upgradeCount", upgradeCount + (augment.level and 0 or 1))
+    output:setInstanceValue("upgradeCount", upgradeCount + upgradeCost)
 
     output:setInstanceValue("isModded", true)
 

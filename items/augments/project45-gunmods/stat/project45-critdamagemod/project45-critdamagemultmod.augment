@@ -12,6 +12,7 @@
   "shortdescription" : "^#D93A3A;Crit Damage (*)",
 
   "augment":{
+    "upgradeCost": 2,
     "critDamage": {
       "multiplicative": 0.3
     }

@@ -13,6 +13,7 @@
   "shortdescription" : "^#a8e6e2;Level Upgrade",
 
   "augment":{
+    "upgradeCost": 0,
     "level": 1
   },
 
