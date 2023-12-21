@@ -134,7 +134,7 @@
     "projectileKind": "projectile",
     "projectileType": "project45-starforge-firefluxbolt",
     "reloadTime": 1,
-    "multishot": 6,
+    "multishot": 6.1,
 
     "breakAction": true,
     "ejectCasingsWithMag": true,

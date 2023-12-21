@@ -3,7 +3,7 @@
   "price" : 10000,
   "maxStack" : 1,
   "rarity" : "Essential",
-  "description" : "A stave that summons projectiles at your desired location.",
+  "description" : "A prototype utilizing magitek. Has the letters \"KF\" engraved on it.",
   "shortdescription" : "Powerstave",
   "tooltipKind" : "project45gun",
   "gunArchetype": "magic",

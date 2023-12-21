@@ -156,7 +156,8 @@
       "speed": 50,
       "statusEffects":["burning"]
     },
-    "multishot": 2.5,
+    "projectileCount": 2,
+    "multishot": 1.5,
     "screenShakeAmount": [1, 0.1],
     "maxScreenShakeTime": 1,
     // "reloadTime": 10,

@@ -98,8 +98,8 @@
     "overchargeTime": 3,
     "dischargeTimeMult": 0.75,
     "progressiveCharge": true,
-    "inaccuracy": 2.5, // affects arm movement as the trigger is pulled
-    "spread": 0,
+    "inaccuracy": 1, // affects arm movement as the trigger is pulled
+    "spread": 0.01,
     "maxAmmo": 75,
     "bulletsPerReload": 75
   },

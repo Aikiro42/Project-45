@@ -119,9 +119,10 @@
     "maxAmmo": 7,
     "bulletsPerReload": 7,
     "inaccuracy": 3,
-    "recoilAmount": 5,
-    "recoilMaxDeg": 30,
-    "recoverDelay": 0.25,
+    "recoilAmount": 5, // amount of recoil per shot, in degrees; arm and weapon will rotate by half of this
+    // "recoilMaxDeg": 15, // the most the arm and weapon will rotate, in degrees.
+    "recoverDelay": 0.125,
+    "recoverTime": 1, // time it takes to recover aim completely, in seconds
     "semi": true,
     "cycleTime": 0.25,
     "projectileKind": "projectile",
