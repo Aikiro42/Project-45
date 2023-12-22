@@ -403,7 +403,7 @@ to use
 ```lua
 function init()
   message.setHandler("test123", function(_, isLocal, ...)
-    sb.logInfo(...)
+    -- sb.logInfo(...)
     return "bla"
   end)
 end

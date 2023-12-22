@@ -1,5 +1,5 @@
 {
-  "itemName" : "project45gacha",
+  "itemName" : "project45-gunbag",
   "price" : 20000,
   "level" : 1,
   "maxStack" : 1,
@@ -9,11 +9,11 @@
   "shortdescription" : "Gun Bag",
   "twoHanded" : true,
 
-  "inventoryIcon" : "project45gachaicon.png",
-  "animation" : "project45gacha.animation",
+  "inventoryIcon" : "project45-gunbag-icon.png",
+  "animation" : "project45-gunbag.animation",
   
   "animationScripts": [
-    "/items/active/unsorted/project45/project45gacha/project45gachaanimation.lua"
+    "/items/active/unsorted/project45/project45-gunbag/project45-gunbaganimation.lua"
   ],
   
   "animationCustom" : {
@@ -24,7 +24,7 @@
       "r": [ ]
     }
   },
-  "scripts" : ["project45gacha.lua"],
+  "scripts" : ["project45-gunbag.lua"],
   "hardPity": 25,
   "fireTime" : 0.1,
   "fireOffset" : [1.0, 0.0],

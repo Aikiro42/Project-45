@@ -1,0 +1,22 @@
+{
+  "itemName" : "project45-maxlevelmod",
+  "price" : 20000,
+  "rarity" : "Essential",
+  "tooltipKind" : "project45gunmod2",
+  "category" : "Stat Mod",
+  "inventoryIcon" : "/items/augments/project45-gunmods/stat/project45-levelmod/project45-maxlevelmod.png",
+  "technicalInfo": "Upgrade capacity increases by 2 per level.",
+  "statInfo" : "^#a8e6e2;Weapon Level +10",
+  "description": "Maximizes weapon level to 10.",
+  "slot": "level",
+  "archetype": "Additive",
+  "shortdescription" : "^#a8e6e2;Max Level Upgrade",
+
+  "augment":{
+    "upgradeCost": 0,
+    "level": 10
+  },
+
+  "scripts" : [ "/scripts/augments/project45-gunmod/statmod.lua" ],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
+}

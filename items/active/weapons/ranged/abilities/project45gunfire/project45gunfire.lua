@@ -1795,7 +1795,7 @@ function Project45GunFire:loadGunState()
   })
 
   if not loadedGunState.loadSuccess then
-    sb.logInfo("WARNING: GUN STATE NOT LOADED")
+    sb.logInfo("[PROJECT 45] WARNING: GUN STATE NOT LOADED")
   end
 
   self:updateChamberState(loadedGunState.chamber)

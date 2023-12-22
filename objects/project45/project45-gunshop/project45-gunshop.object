@@ -174,9 +174,9 @@
       ],
 
       "stat": [
-        "project45-levelmod",
-        {"name": "project45-levelmod", "count": 9},
         "project45-wildcardstatmod",
+        "project45-levelmod",
+        "project45-maxlevelmod",
         "project45-reloadcostaddmod",
         "project45-reloadcostmultmod",
         "project45-firetimemultmod",
@@ -235,7 +235,7 @@
         "project45manual-codex",
         "project45-gundisassembler",
         "project45-gunrepairkit",
-        "project45gacha",
+        "project45-gunbag",
         
         "project45-gachapull",
         "project45-gachapull10",

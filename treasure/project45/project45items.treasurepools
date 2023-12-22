@@ -85,7 +85,8 @@
   "project45-stats-xssr": [
     [0, {
       "pool" : [
-        {"weight" : 0.01, "item" : "project45-godmod"}
+        {"weight" : 0.75, "item" : "project45-godmod"},
+        {"weight" : 0.25, "item" : "project45-maxlevelmod"}
       ],
       "poolRounds" : 1,
       "allowDuplication" : false
@@ -95,7 +96,8 @@
   "project45-stats-ssr": [
     [0, {
       "pool" : [
-        {"weight" : 0.01, "item" : "project45-godmod"}
+        {"weight" : 0.75, "item" : "project45-godmod"},
+        {"weight" : 0.25, "item" : "project45-maxlevelmod"}
       ],
       "poolRounds" : 1,
       "allowDuplication" : false

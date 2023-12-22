@@ -262,7 +262,7 @@ function apply(input)
     end
 
     if augment.level then
-        output:setInstanceValue("level", (input.parameters.level or output.config.level) + augment.level)
+        output:setInstanceValue("level", math.min(10, (input.parameters.level or output.config.level) + augment.level))
     end
 
     -- merge changes

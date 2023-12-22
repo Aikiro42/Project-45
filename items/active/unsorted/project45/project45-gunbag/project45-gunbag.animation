@@ -31,7 +31,7 @@
       "gun" : {
         "properties" : {
           "centered" : true,
-          "image" : "project45gachaicon.png",
+          "image" : "project45-gunbag-icon.png",
           "offset" : [0.0, 0.0]
         }
       }
