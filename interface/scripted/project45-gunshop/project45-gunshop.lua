@@ -1,4 +1,5 @@
 require "/scripts/util.lua"
+require "/scripts/set.lua"
 
 local radioButtonIDs = {
   "guns",
@@ -19,6 +20,8 @@ function init()
     ammo = {},
     util = {}
   })
+
+  self.seededItems = set.new(config.getParameter("seededItems", {}))
   
   self.mode = "guns"
   widget.setSelectedOption("shopTabs", 1)
@@ -132,7 +135,10 @@ function purchase()
       local consumedCurrency = player.consumeCurrency("money", selectedItem.parameters.price * selectedItem.count)
 
       if consumedCurrency then
-        selectedItem.parameters.seed = math.floor(math.random() * 100000000)
+        if self.seededItems[selectedItem.name] then
+          selectedItem.parameters.seed = math.floor(math.random() * 100000000)
+          selectedItem.seed = selectedItem.parameters.seed
+        end
         player.giveItem(selectedItem)
         --[[
         widget.setData(listItem,

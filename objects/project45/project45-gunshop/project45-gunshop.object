@@ -246,9 +246,17 @@
         "nanowrap",
         {"name": "nanowrap", "count":10},
         
+        "manipulatormodule",
+        "techcard",
+        "upgrademodule",
         "dubloon"
       ]
-    }
+    },
+          
+    "seededItems": [
+      "project45-wildcardstatmod"
+    ]
+
   }
 }
 

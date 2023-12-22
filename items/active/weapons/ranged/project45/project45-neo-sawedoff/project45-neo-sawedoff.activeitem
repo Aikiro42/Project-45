@@ -111,7 +111,7 @@
   "primaryAbility": {
     "critChance": 0.20,
     "critDamageMult": 1.4,
-    "reloadCost": 25,
+    "reloadCost": 8,
     "baseDamage": 25,
 
     "maxAmmo": 2,
