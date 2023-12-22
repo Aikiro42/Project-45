@@ -16,7 +16,7 @@ function hitscanLib:fireHitscan(projectileType)
     local hitscanInfos = {}
     local finalDamage = self:damagePerShot(true)
     local nProjs = self.projectileCount * self:rollMultishot()
-    local nProjsOverflowMult = math.max(1, nProjs/modConfig.hitscanProjectileLimit)
+    local nProjsOverflowMult = math.max(1, nProjs/(self.maxProjectileCount or modConfig.hitscanProjectileLimit))
     -- get damage source (line) information
     for i=1, math.min(modConfig.hitscanProjectileLimit, nProjs) do
 

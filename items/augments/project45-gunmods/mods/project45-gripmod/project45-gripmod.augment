@@ -16,6 +16,7 @@
     "modName": "Vertical Grip",
     "category": "universal",
     "slot": "underbarrel",
+    "incompatibleWeapons": ["project45-neo-bow"],
     "primaryAbility": {
       "recoilMult": {
         "operation": "multiply",

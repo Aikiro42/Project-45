@@ -23,6 +23,7 @@
     "acceptsModSlot": [
       "rail",
       "sights",
+      "underbarrel",
       
       "bowstring",
       "material"
@@ -109,6 +110,7 @@
 
   "railOffset": [0, -0.5],
   "sightsOffset": [0.5, 0.75],
+  "underbarrelOffset": [0.5, 0],
 
   "scripts" : ["/items/active/weapons/ranged/project45gunneo.lua"],
     

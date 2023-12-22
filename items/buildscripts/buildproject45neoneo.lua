@@ -363,13 +363,6 @@ function build(directory, config, parameters, level, seed)
 
       local descriptionScore = 0
 
-      local miscStats = {
-        "heavyWeapon",
-        "multishot",
-        "chargeTime",
-        "overchargeTime"
-      }
-
       local heavyDesc = ""
       if primaryAbility("heavyWeapon", false) then
         descriptionScore = descriptionScore + 1

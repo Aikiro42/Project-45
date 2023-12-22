@@ -1061,8 +1061,16 @@ function Project45GunFire:fireProjectile(projectileType, projectileParameters, i
   
   local projectileId = 0
   
+  local nproj = (projectileCount or (self.projectileCount * self:rollMultishot()))
+  if self.maxProjectileCount then
+    if nproj > self.maxProjectileCount then
+      params.power = params.power * nproj / self.maxProjectileCount
+      nproj = math.min(nproj, self.maxProjectileCount)
+    end
+  end
+
   -- if crit was rolled, all projectiles fired inflict a crit hit
-  for i = 1, (projectileCount or (self.projectileCount * self:rollMultishot())) do
+  for i = 1, nproj do
 
     if params.timeToLive then
       params.timeToLive = util.randomInRange(params.timeToLive)
