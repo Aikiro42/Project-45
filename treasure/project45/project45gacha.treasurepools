@@ -26,10 +26,10 @@
   "gacha-ssr": [
     [0, {
       "pool" : [
-        {"weight" : 0.50, "pool" : "project45-guns-ssr"},
-        {"weight" : 0.24, "pool" : "project45-mods-ssr"},
-        {"weight" : 0.25, "pool" : "project45-mods-xssr"},
-        {"weight" : 0.01, "item" : "project45-godmod"}
+        {"weight" : 0.25, "pool" : "project45-guns-ssr"},
+        {"weight" : 0.25, "pool" : "project45-mods-ssr"},
+        {"weight" : 0.25, "pool" : "project45-stats-ssr"},
+        {"weight" : 0.25, "pool" : "project45-mods-xssr"}
       ],
       "poolRounds" : 1,
       "allowDuplication" : false
@@ -40,7 +40,7 @@
     [0, {
       "pool" : [
         {"weight" : 0.50, "pool" : "project45-guns-xssr"},
-        {"weight" : 0.50, "item" : "project45-godmod"}
+        {"weight" : 0.50, "pool" : "project45-stats-xssr"}
       ],
       "poolRounds" : 1,
       "allowDuplication" : false

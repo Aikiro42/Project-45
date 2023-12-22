@@ -1,6 +1,6 @@
 {
   "id" : "project45manual",
-  "title" : "^#FF9000;WS45 Manual",
+  "title" : "^#FF9000;Project 45 Manual",
   "description" : "A codex describing how to use Project 45 weapons.",
   "icon" : "project45manualcover.png",
   "contentPages" : [
@@ -35,6 +35,21 @@ The amount of recoil is also affected by how much you're moving, whether you're 
 
 To drastically reduce recoil, it is recommended to shoot while crouched. You could also modify your weapon with mods that reduce recoil.
 ",
+"# ^#E2C344;Charged Weapons^reset;
+Some weapons require to be charged before being able to fire them, and some continue ^#96cbe7;overcharging^reset; to deal bonus damage.
+
+The charge level of the weapon is indicated below the chamber indicator:
+
+- The ^#838383;gray^reset; zone is the charging region. The weapon ^#D93A3A;cannot fire*^reset; while the charge level is within this region.
+",
+"# ^#E2C344;Charged Weapons^reset;
+- The ^#D93A3A;red^reset; zone is the ^#96cbe7;overcharge region^reset;. Projectiles fired by the weapon while the charge level is in this ^#96cbe7;deals up to 2x bonus damage^reset;. 
+
+- The white zone is the ^#E2C344;perfect charge region^reset;. Projectiles fired by the weapon while the charge level is in this region ^#E2C344;deals at least 2x bonus damage^reset;.
+
+^#838383;* except for some weapons, like the Cyclo.^reset;
+"
+,
 "# ^#E2C344;Misc Stats^reset;
 These stats are not necessarily shown in the weapon's tooltip, but affect the weapon's performance nonetheless.
 ^#96cbe7;- Multishot^reset;: Multiplier to the number of projectiles a weapon fires. Decimals are treated as odds that the gun fires an additional set of projectiles.
@@ -100,14 +115,28 @@ Some guns have a chance to jam when firing, especially when reloaded badly. When
 
 Your gun will unjam and load the next round when the jam bar is empty.
 ",
-
 "# ^#E2C344;Gun Modding^reset;
-Modding weapons is similar to installing augments on EPPs. Whether you can install a mod on a weapon or not is largely dependent on both of their ^#d29ce7;Categories^reset; and associated ^#9da8af;Mod Slots^reset;.
-
-For ammo mods, their ^#EA9931;Archetype^reset; also matters. For stat mods, the weapon's remaining ^#95d1f3;Upgrade Capacity^reset; matters.
+Modding weapons is similar to installing augments on EPPs. Whether you can install a mod on a weapon or not is largely dependent on their ^#d29ce7;Categories^reset;, ^#95d1f3;Upgrade Capacity^reset; and associated ^#9da8af;Mod Slots^reset;. For ammo mods, their ^#EA9931;Archetype^reset; also matters.
 ",
 "# ^#E2C344;Gun Modding^reset;
-If a mod is incompatible with a weapon, it will be indicated the next time you hold your weapon via red text that appears above the player character's head.
+If a mod cannot be installed on a weapon, it will be indicated the next time you hold your weapon via red text that appears above the player character's head.
+",
+"# ^#E2C344;The Gun Bag^reset;
+Gun Bags provides a relatively affordable way to get various Project 45 items.
+
+They work like a reusable reward bag; the first time a Gun Bag is bought, they come with one free use.
+",
+"# ^#E2C344;The Gun Bag^reset;
+Gun Bags have the following odds:
+- a ^#96cbe7;50%^reset; chance to give a ^#96cbe7;Common or Rare item (R)^reset;,
+- a ^#cb44ff;46%^reset; chance to give a ^#cb44ff;Rare or higher rarity item (SR)^reset;,
+- a ^#ffffa7;2%^reset; chance to give an ^#ffffa7;Essential item (SSR)^reset;, and
+- a ^#fdd14d;2%^reset; chance to give ^#fdd14d;Unique Essential items (XSSR)^reset;.
+",
+"# ^#E2C344;Gun Bag Guarantees^reset;
+Gun Bags will guarantee you a ^#fdd14d;Unique (XSSR)^reset; item within the first 25 pulls. After that, it will guarantee you either a ^#fdd14d;Unique (XSSR)^reset; or ^#ffffa7;Essential (SSR)^reset; item within the next 25 pulls after.
+
+If you obtain an ^#ffffa7;Essential (SSR)^reset; item, you are guaranteed a ^#fdd14d;Unique (XSSR)^reset; item within the next 25 pulls.
 "
   ],
 

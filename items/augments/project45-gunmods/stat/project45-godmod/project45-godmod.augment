@@ -9,7 +9,7 @@
   "description": "One mod to rule them all.",
   "slot": "multiple",
   "archetype": "Mixed",
-  "shortdescription" : "^#d29ce7;The God Mod",
+  "shortdescription" : "^#fdd14d;The God Mod^reset;",
 
   "augment":{
     "upgradeCost": 3,

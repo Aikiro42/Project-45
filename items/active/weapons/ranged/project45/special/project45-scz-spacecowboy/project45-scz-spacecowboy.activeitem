@@ -4,7 +4,7 @@
   "maxStack" : 1,
   "rarity" : "Essential",
   "description" : "A railgun designed from blueprints found in a hazardous containment zone.",
-  "shortdescription" : "Space Cowboy",
+  "shortdescription" : "^#fdd14d;Space Cowboy^reset;",
   "tooltipKind" : "project45gun",
   "gunArchetype": "antiMateriel",
   "category" : "sniper",

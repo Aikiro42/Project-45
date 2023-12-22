@@ -4,7 +4,7 @@
   "maxStack" : 1,
   "rarity" : "Essential",
   "description" : "A simple machine gun, effective against Big Ape's constructs.",
-  "shortdescription" : "Marco's HMG",
+  "shortdescription" : "^#fdd14d;Marco's HMG^reset;",
   "tooltipKind" : "project45gun",
   "gunArchetype": "machineGun",
   "category" : "rifle",

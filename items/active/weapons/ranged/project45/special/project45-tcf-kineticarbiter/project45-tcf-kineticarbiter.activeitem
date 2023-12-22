@@ -4,7 +4,7 @@
   "maxStack" : 1,
   "rarity" : "Essential",
   "description" : "A railgun found in the forests of Fortuna III.",
-  "shortdescription" : "Kinetic Arbiter",
+  "shortdescription" : "^#fdd14d;Kinetic Arbiter^reset;",
   "tooltipKind" : "project45gun",
   "gunArchetype": "antiMateriel",
   "category" : "sniper",

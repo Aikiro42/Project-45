@@ -4,7 +4,7 @@
   "maxStack" : 1,
   "rarity" : "Essential",
   "description" : "A machine gun made out of ^#f4988c;Raiizy^reset;-^#d29ce7;Nebulox^reset; alloy.",
-  "shortdescription" : "Zweibrandyr",
+  "shortdescription" : "^^#fdd14d;Zweibrandyr^reset;",
   "gunArchetype": "machineGun",
   "tooltipKind" : "project45gun",
   "category" : "rifle",
