@@ -1967,7 +1967,6 @@ end
 
 function Project45GunFire:auto()
   if storage.ammo <= 0
-  or self.ammoPerShot > storage.ammo
   or storage.jamAmount > 0
   then
     -- animator.playSound("click")
@@ -1992,7 +1991,6 @@ end
 function Project45GunFire:burst()
   
   if storage.ammo <= 0
-  or self.ammoPerShot > storage.ammo
   or storage.jamAmount > 0
   then
     -- animator.playSound("click")
@@ -2011,7 +2009,6 @@ function Project45GunFire:burst()
     
     self:updateAmmo(-(self.ammoPerShot or 1))
     if storage.ammo <= 0
-    or self.ammoPerShot > storage.ammo
     then break end
 
     util.wait(self.burstTime)
