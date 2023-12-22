@@ -1,0 +1,41 @@
+{
+  "itemName" : "project45-teststatmod",
+  "price" : 30000,
+  "rarity" : "Essential",
+  "tooltipKind" : "project45gunmod2",
+  "category" : "Stat Mod",
+  "inventoryIcon" : "/items/augments/project45-gunmods/stat/project45-godmod/project45-godmod.png",
+  "statInfo" : "\nDamage*2+1\nfireTime*2-1\n(reloadCost/2)-1\ncritChance*2+1\ncritDamage*2+1",
+  "description": "Mod used to test statmod.lua.",
+  "slot": "multiple",
+  "archetype": "Mixed",
+  "shortdescription" : "Test Stat Mod",
+
+  "augment":{
+    "upgradeCost": 5,
+    "baseDamage": {
+      "additive": 1,
+      "multiplicative": 1
+    },
+    "fireTime": {
+      "additive": -0.001,
+      "multiplicative": 1
+    },
+    "critChance": {
+      "additive": 0.01,
+      "multiplicative": 1
+    },
+    "critDamage": {
+      "additive": 1,
+      "multiplicative": 1
+    },
+    "reloadCost": {
+      "additive": -1,
+      "multiplicative": 1
+    }
+  },
+
+  "scripts" : [ "/scripts/augments/project45-gunmod/statmod.lua" ],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
+
+}

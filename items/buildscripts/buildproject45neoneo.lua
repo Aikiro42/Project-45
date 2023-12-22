@@ -302,8 +302,12 @@ function build(directory, config, parameters, level, seed)
         * primaryAbility("lastShotDamageMult", 1)
         * (primaryAbility("overchargeTime", 0) > 0 and (primaryAbility("perfectChargeDamageMult") or 2) or 1)
       
-      config.tooltipFields.damagePerShotLabel = project45util.colorText("#FF9000", util.round(loDamage, 1) .. " - " .. util.round(hiDamage, 1))
 
+      config.tooltipFields.damagePerShotLabel = project45util.colorText("#FF9000", util.round(loDamage, 1) .. " - " .. util.round(hiDamage, 1))
+      
+      if primaryAbility("debug") then
+        config.tooltipFields.damagePerShotLabel = project45util.colorText("#FF9000", primaryAbility("baseDamage", 0))
+      end
       
       --[[ fire time calculation:
       If gun is manualFeed:
