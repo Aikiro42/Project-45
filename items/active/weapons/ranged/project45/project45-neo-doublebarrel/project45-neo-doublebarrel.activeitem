@@ -3,7 +3,7 @@
   "price" : 1250,
   "maxStack" : 1,
   "rarity" : "Uncommon",
-  "description" : "Gib your enemies with the power of Friendship!",
+  "description" : "A weapon of timeless design. A best-seller among Novakids.",
   "shortdescription" : "Double-barrel Shotgun",
   "tooltipKind" : "project45gun",
   "gunArchetype": "shotgun",

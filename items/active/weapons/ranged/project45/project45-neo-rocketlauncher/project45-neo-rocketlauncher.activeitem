@@ -3,7 +3,7 @@
   "price" : 10000,
   "maxStack" : 1,
   "rarity" : "Essential",
-  "description" : "An entry-level firearm.",
+  "description" : "An over-engineered rocket launcher. Still deadly, either way.",
   "shortdescription" : "Rocket Launcher",
   "gunArchetype": "rocketLauncher",
   "tooltipKind" : "project45gun",

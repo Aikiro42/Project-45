@@ -3,7 +3,7 @@
   "price" : 2500,
   "maxStack" : 1,
   "rarity" : "Rare",
-  "description" : "A shotgun.",
+  "description" : "A pump-action shotgun. Slam-fireable, too.",
   "shortdescription" : "Pump-action Shotgun",
   "tooltipKind" : "project45gun",
   "gunArchetype": "shotgun",

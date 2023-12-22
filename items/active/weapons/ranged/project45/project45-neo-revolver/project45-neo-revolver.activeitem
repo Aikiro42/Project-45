@@ -3,7 +3,7 @@
   "price" : 5000,
   "maxStack" : 1,
   "rarity" : "Legendary",
-  "description" : "A revolver. Packs quite a punch.",
+  "description" : "A big iron. Packs quite a punch, especially against red things.",
   "shortdescription" : "Revolver",
   "tooltipKind" : "project45gun",
   "gunArchetype": "revolver",

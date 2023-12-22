@@ -3,7 +3,7 @@
   "price" : 1250,
   "maxStack" : 1,
   "rarity" : "Uncommon",
-  "description" : "A hunting rifle.",
+  "description" : "A hunting rifle of timeless design. Favored by Novakids.",
   "shortdescription" : "Hunting Rifle",
   "tooltipKind" : "project45gun",
   "gunArchetype": "rifle",

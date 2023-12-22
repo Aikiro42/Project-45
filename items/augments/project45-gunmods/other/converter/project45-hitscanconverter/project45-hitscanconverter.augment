@@ -1,7 +1,7 @@
 {
   "itemName" : "project45-hitscanconverter",
   "price" : 7500,
-  "rarity" : "Legendary",
+  "rarity" : "Essential",
   "tooltipKind" : "project45gunmod2",
   "category" : "Converter Mod",
   "inventoryIcon" : "/items/augments/project45-gunmods/other/converter/project45-hitscanconverter/project45-hitscanconverter.png",

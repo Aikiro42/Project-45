@@ -415,7 +415,7 @@ function build(directory, config, parameters, level, seed)
       if descriptionScore <= 7 then
         config.description = config.description .. "\n" .. finalDescription
       else
-        config.description = (descriptionScore < 8 and "Highly modified.\n" or "") .. finalDescription
+        config.description = "Highly modified.\n" .. finalDescription
       end
 
     end

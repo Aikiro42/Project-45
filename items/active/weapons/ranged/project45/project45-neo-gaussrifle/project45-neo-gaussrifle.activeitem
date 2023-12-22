@@ -3,7 +3,7 @@
   "price" : 10000,
   "maxStack" : 1,
   "rarity" : "Essential",
-  "description" : "Launches projectiles near lightspeed. Oddly, this doesn't destroy its immediate surroundings what with the magnitude of acceleration it gives.",
+  "description" : "Launches high-speed projectiles with ultra-string magneticism.",
   "shortdescription" : "Gauss Rifle",
   "gunArchetype": "antiMateriel",
   "tooltipKind" : "project45gun",

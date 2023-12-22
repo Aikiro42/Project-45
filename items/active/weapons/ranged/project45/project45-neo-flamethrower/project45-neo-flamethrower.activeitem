@@ -3,7 +3,7 @@
   "price" : 10000,
   "maxStack" : 1,
   "rarity" : "Essential",
-  "description" : "The design of this geneva-violating weapon of mass destruction was brought to you by Hanz and Co.",
+  "description" : "This is a flamethrower. It throws flames.",
   "shortdescription" : "Flamethrower",
   "tooltipKind" : "project45gun",
   "gunArchetype": "flamethrower",
@@ -140,6 +140,7 @@
     
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
+    "heavyWeapon": true,
     "reloadCost": 80,
     "baseDamage": 4.5,
     "maxAmmo": 100,

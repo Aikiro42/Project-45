@@ -3,7 +3,7 @@
   "price" : 3000,
   "maxStack" : 1,
   "rarity" : "Rare",
-  "description" : "A compound bow designed with Andersen's timeless bow techniques in mind.",
+  "description" : "A compound bow designed with quickdraw bow techniques in mind.",
   "shortdescription" : "Neo-compound Bow",
   "tooltipKind" : "project45gun",
   "gunArchetype": "bow",

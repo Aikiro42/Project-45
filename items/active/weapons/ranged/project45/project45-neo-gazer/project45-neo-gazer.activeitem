@@ -3,7 +3,7 @@
   "price" : 5000,
   "maxStack" : 1,
   "rarity" : "Legendary",
-  "description" : "An energy sniper rifle.",
+  "description" : "An sleek, energy marksman rifle.",
   "shortdescription" : "Gazer",
   "tooltipKind" : "project45gun",
   "gunArchetype": "sniper",

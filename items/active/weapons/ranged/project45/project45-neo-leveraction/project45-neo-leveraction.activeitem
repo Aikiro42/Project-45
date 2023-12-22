@@ -3,7 +3,7 @@
   "price" : 2500,
   "maxStack" : 1,
   "rarity" : "Rare",
-  "description" : "A lever-action coach gun.",
+  "description" : "A lever-action coach gun. Oddly favored by the Glitch.",
   "shortdescription" : "Lever Action",
   "tooltipKind" : "project45gun",
   "gunArchetype": "rifle",

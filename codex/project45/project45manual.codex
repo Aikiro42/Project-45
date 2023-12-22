@@ -1,7 +1,7 @@
 {
   "id" : "project45manual",
   "title" : "^#FF9000;WS45 Manual",
-  "description" : "A codex describing how to use the Weapon Standard 45 product line of weapons.",
+  "description" : "A codex describing how to use Project 45 weapons.",
   "icon" : "project45manualcover.png",
   "contentPages" : [
 "# ^#E2C344;Introduction^reset;

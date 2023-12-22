@@ -3,7 +3,7 @@
   "price" : 5000,
   "maxStack" : 1,
   "rarity" : "Legendary",
-  "description" : "A grenade launcher.",
+  "description" : "This is a grenade launcher. It launches grenades.",
   "shortdescription" : "Grenade Launcher",
   "tooltipKind" : "project45gun",
   "gunArchetype": "grenadeLauncher",

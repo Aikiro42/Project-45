@@ -59,6 +59,10 @@ function project45util.drawBezierCurve(nsegments, spoint, epoint, cpoint, tCondF
 end
 
 function project45util.colorText(color, text)
+  if not color then return text end
+  if type(color) == "table" then
+    color = "#" .. rgbToHex(color)
+  end
   return "^" .. color .. ";" .. text .. "^reset;"
 end
 

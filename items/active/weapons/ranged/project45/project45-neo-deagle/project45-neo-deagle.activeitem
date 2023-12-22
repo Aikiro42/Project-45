@@ -3,7 +3,7 @@
   "price" : 1250,
   "maxStack" : 1,
   "rarity" : "Legendary",
-  "description" : "Fires an impractically powerful caliber, but tacticool nonetheless.",
+  "description" : "Fires an impractically powerful caliber, but reliable nonetheless.",
   "shortdescription" : "Handcannon",
   "tooltipKind" : "project45gun",
   "gunArchetype": "revolver",

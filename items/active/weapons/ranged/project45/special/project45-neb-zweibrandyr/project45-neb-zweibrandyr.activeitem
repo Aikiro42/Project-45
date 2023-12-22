@@ -3,7 +3,7 @@
   "price" : 50000,
   "maxStack" : 1,
   "rarity" : "Essential",
-  "description" : "A firearm of Raiizy's and Nebulox's design.",
+  "description" : "A machine gun made out of ^#f4988c;Raiizy^reset;-^#d29ce7;Nebulox^reset; alloy.",
   "shortdescription" : "Zweibrandyr",
   "gunArchetype": "machineGun",
   "tooltipKind" : "project45gun",

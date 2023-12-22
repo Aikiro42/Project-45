@@ -3,7 +3,7 @@
   "price" : 5000,
   "maxStack" : 1,
   "rarity" : "Legendary",
-  "description" : "An entry-level firearm.",
+  "description" : "Its design is inspired by a reliable weapon of the long past.",
   "shortdescription" : "Machine Gun",
   "gunArchetype": "machineGun",
   "tooltipKind" : "project45gun",

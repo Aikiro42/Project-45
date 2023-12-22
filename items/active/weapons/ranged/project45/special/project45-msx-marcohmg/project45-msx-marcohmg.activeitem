@@ -3,7 +3,7 @@
   "price" : 50000,
   "maxStack" : 1,
   "rarity" : "Essential",
-  "description" : "A simple machine gun, oddly effective against Big Ape's goons.",
+  "description" : "A simple machine gun, effective against Big Ape's constructs.",
   "shortdescription" : "Marco's HMG",
   "tooltipKind" : "project45gun",
   "gunArchetype": "machineGun",

@@ -3,7 +3,7 @@
   "price" : 50000,
   "maxStack" : 1,
   "rarity" : "Essential",
-  "description" : "A revolver that shoots magma.",
+  "description" : "A revolver that shoots magma. How the cylinder holds the magma is a mystery.",
   "shortdescription" : "Magma Spitter",
   "tooltipKind" : "project45gun",
   "gunArchetype": "shotgun",

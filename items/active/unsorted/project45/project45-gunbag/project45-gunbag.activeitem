@@ -5,7 +5,7 @@
   "maxStack" : 1,
   "rarity" : "Essential",
   "category" : "mysteriousReward",
-  "description" : "An infinitely replenishing quantum bag.",
+  "description" : "Contains a random item. Oddly replenishes and locks every time after it's closed.",
   "shortdescription" : "Gun Bag",
   "twoHanded" : true,
 

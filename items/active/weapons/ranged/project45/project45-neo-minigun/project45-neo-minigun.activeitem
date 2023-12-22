@@ -3,7 +3,7 @@
   "price" : 10000,
   "maxStack" : 1,
   "rarity" : "Essential",
-  "description" : "A minigun.",
+  "description" : "A heavy minigun with a compact magazine.",
   "shortdescription" : "Minigun",
   "tooltipKind" : "project45gun",
   "gunArchetype": "machineGun",

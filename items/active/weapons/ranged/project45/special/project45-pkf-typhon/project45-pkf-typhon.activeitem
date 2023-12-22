@@ -3,7 +3,7 @@
   "price" : 50000,
   "maxStack" : 1,
   "rarity" : "Essential",
-  "description" : "A large machine gun of Nitrosteel's design, adapted to W.S. 45.",
+  "description" : "A large plasma machine gun made out of ^#a8e6e2;Nitrosteel^reset;.",
   "shortdescription" : "Typhon P45",
   "gunArchetype": "machineGun",
   "tooltipKind" : "project45gun",

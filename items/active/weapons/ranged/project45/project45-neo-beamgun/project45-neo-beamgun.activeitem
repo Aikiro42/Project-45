@@ -3,7 +3,7 @@
   "price" : 5000,
   "maxStack" : 1,
   "rarity" : "Legendary",
-  "description" : "A weapon that shines irradiating light at the enemy.",
+  "description" : "A weapon that shines damaging hardlight at the enemy.",
   "shortdescription" : "Beam Gun",
   "gunArchetype": "beam",
   "tooltipKind" : "project45gun",

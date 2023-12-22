@@ -3,7 +3,7 @@
   "price" : 625,
   "maxStack" : 1,
   "rarity" : "Common",
-  "description" : "A zip gun. Particularly well-made; WS45 parts are amazing.",
+  "description" : "A zip gun that's particularly well-made.",
   "shortdescription" : "Pipe Gun",
   "tooltipKind" : "project45gun",
   "gunArchetype": "pistol",

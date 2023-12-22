@@ -3,7 +3,7 @@
   "price" : 2500,
   "maxStack" : 1,
   "rarity" : "Rare",
-  "description" : "A service rifle.",
+  "description" : "The latest iteration of a reliable rifle design, complete with the iconic *ping*.",
   "shortdescription" : "Service Rifle",
   "tooltipKind" : "project45gun",
   "gunArchetype": "rifle",

@@ -3,7 +3,7 @@
   "price" : 10000,
   "maxStack" : 1,
   "rarity" : "Essential",
-  "description" : "A prototype utilizing magitek. Has the letters \"KF\" engraved on it.",
+  "description" : "A prototype utilizing magitek made out of ^#96cbe7;Nitrosteel^reset;.", 
   "shortdescription" : "Powerstave",
   "tooltipKind" : "project45gun",
   "gunArchetype": "magic",
