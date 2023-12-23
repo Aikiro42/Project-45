@@ -18,6 +18,5 @@
   "power" : 5.0,
   "speed" : 35,
   "knockback" : 10,
-  "damageTeam" : { "type" : "indiscriminate" },
   "damageKind" : "shotgunbullet"
 }

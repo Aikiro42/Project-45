@@ -3,7 +3,6 @@
   "physics" : "grenade",
   "bounces" : 0,
   "timeToLive" : 3,
-  "damageKindImage" : "icon.png",
   "image" : "project45stdgrenade.png",
   "animationCycle" : 0.5,
   "frameNumber" : 4,
