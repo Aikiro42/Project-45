@@ -18,6 +18,14 @@ function apply(input)
 
     local upgradeCost = augment.upgradeCost
     local upgradeCapacity, upgradeCount
+
+    -- do not install if ammo type is already installed
+    local modSlots = input.parameters.modSlots or {}
+    if modSlots.ammoType then
+      return gunmodHelper.addMessage(input, "Ammo mod slot Occupied")
+    end
+
+    -- deny installation if upgrade capacity is not enough
     if upgradeCost then
       upgradeCount = input.parameters.upgradeCount or 0
       upgradeCapacity = modInfo.upgradeCapacity or -1
@@ -27,62 +35,39 @@ function apply(input)
       end
     end
 
-    -- check if mod accepts gun
-    if augment.compatibleWeapons then
-      local acceptedWeapons = set.new(augment.compatibleWeapons)
-      if not acceptedWeapons[input.name] then
-          sb.logError("(gunmod.lua) Mod application failed: Mod incompatible with " .. input.name)
-          return gunmodHelper.addMessage(input, "Incompatible mod: " .. config.getParameter("shortdescription"))    
-      end
-    end
-
-    -- check if mod rejects gun
+    -- deny installation if ammo rejects gun
     if augment.incompatibleWeapons then
       local deniedWeapons = set.new(augment.incompatibleWeapons)
       if deniedWeapons[input.name] then
-          sb.logError("(gunmod.lua) Mod application failed: Mod incompatible with " .. input.name)
+          sb.logError("(ammomod.lua) Mod application failed: Mod incompatible with " .. input.name)
           return gunmodHelper.addMessage(input, "Incompatible mod: " .. config.getParameter("shortdescription"))    
       end
     end
 
-      -- check if gun accepts mod
+    -- deny installation if gun rejects ammo
+    if modInfo.incompatibleMods then
+      local deniedMods = set.new(modInfo.incompatibleMods)
+      if deniedMods[config.getParameter("itemName")] then
+          sb.logError("(ammomod.lua) Mod application failed: Mod incompatible with " .. input.name)
+          return gunmodHelper.addMessage(input, "Incompatible mod: " .. config.getParameter("shortdescription"))    
+      end
+    end
+
+    local bypassCompatChecks = false
+
+    -- check if ammo accepts gun
+    if augment.compatibleWeapons then
+      local acceptedWeapons = set.new(augment.compatibleWeapons)
+      bypassCompatChecks = bypassCompatChecks or acceptedWeapons[input.name]
+    end
+
+    -- check if gun accepts ammo
     if modInfo.compatibleMods then
       local acceptedMods = set.new(modInfo.compatibleMods)
-      if not acceptedMods[config.getParameter("shortdescription")] then
-          sb.logError("(gunmod.lua) Mod application failed: Mod incompatible with " .. input.name)
-          return gunmodHelper.addMessage(input, "Incompatible mod: " .. config.getParameter("shortdescription"))    
-      end
+      bypassCompatChecks = bypassCompatChecks or acceptedMods[config.getParameter("itemName")]
     end
 
-    -- check if gun rejects mod
-    if modInfo.incompatibleMods then
-        local deniedMods = set.new(modInfo.incompatibleMods)
-        if not deniedMods[config.getParameter("shortdescription")] then
-            sb.logError("(gunmod.lua) Mod application failed: Mod incompatible with " .. input.name)
-            return gunmodHelper.addMessage(input, "Incompatible mod: " .. config.getParameter("shortdescription"))    
-        end
-    end
-  
-    -- do not install if ammo type is already installed
-    local modSlots = input.parameters.modSlots or {}
-    if modSlots.ammoType then
-      return gunmodHelper.addMessage(input, "Ammo mod slot Occupied")
-    end
-
-    local modExceptions = modInfo.modExceptions or {}
-    modExceptions.accept = modExceptions.accept or {}
-    modExceptions.deny = modExceptions.deny or {}
-
-    -- check if ammo mod is particularly denied
-    local denied = set.new(modExceptions.deny)
-    if denied[config.getParameter("itemName")] then
-      sb.logError("(ammomod.lua) Ammo mod application failed: gun does not accept this specific ammo mod")
-      return gunmodHelper.addMessage(input, "Incompatible Mod: " .. config.getParameter("shortdescription"))
-    end
-
-    -- check if ammo mod is particularly accepted
-    local accepted = set.new(modExceptions.accept)
-    if not accepted[config.getParameter("itemName")] then 
+    if not bypassCompatChecks then 
 
       -- do not install ammo mod if it does not meet category
       if augment.category ~= "universal"

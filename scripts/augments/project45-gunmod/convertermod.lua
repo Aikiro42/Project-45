@@ -23,8 +23,23 @@ function apply(input)
 
   -- CONVERSION GATES
 
+  -- Do not proceed if mod slot is occupied
+  if modSlots.ammoType then
+    sb.logError("(convertermod.lua) Conversion not applied; ammo/conversion mod is installed.")
+    return gunmodHelper.addMessage(input, "Ammo mod slot occupied")
+  end
+
+  -- Do not proceed if conversion is to same type
+  if primaryAbility.projectileKind == conversion then
+    sb.logError("(convertermod.lua) Conversion not applied; gun already fires " .. conversion)
+    return gunmodHelper.addMessage(input, "Gun already fires " .. plurals[conversion])
+  end  
+
+
   local upgradeCost = config.getParameter("upgradeCost")
   local upgradeCapacity, upgradeCount
+
+  -- Do not proceed if upgrade capacity not enough
   if upgradeCost then
     upgradeCount = input.parameters.upgradeCount or 0
     upgradeCapacity = modInfo.upgradeCapacity or -1
@@ -34,18 +49,8 @@ function apply(input)
     end
   end
 
-  -- Do not proceed if mod slot is occupied
-  if modSlots.ammoType then
-    sb.logError("(convertermod.lua) Conversion not applied; ammo/conversion mod is installed.")
-    return gunmodHelper.addMessage(input, "Ammo mod slot occupied")
-  end
-  -- Do not proceed if conversion is to same type
-  if primaryAbility.projectileKind == conversion then
-    sb.logError("(convertermod.lua) Conversion not applied; gun already fires " .. conversion)
-    return gunmodHelper.addMessage(input, "Gun already fires " .. plurals[conversion])
-  end  
-
   -- Do not proceed if gun doesn't allow conversion
+  -- TODO: add check if conversion allows gun?
   construct(output, "config", "project45GunModInfo")
   local whitelist = set.new(output.config.project45GunModInfo.allowsConversion or {})
   if not whitelist[conversion] then

@@ -5,14 +5,14 @@ require "/scripts/vec2.lua"
 require "/scripts/set.lua"
 require "/scripts/project45/project45util.lua"
 
-function apply(input)
+function apply(input, override, augment)
 
   -- do not install mod if the thing this mod is applied to isn't a gun
     local output = Item.new(input)
     local modInfo = sb.jsonMerge(output.config.project45GunModInfo, input.parameters.project45GunModInfo)
     if not modInfo then return end
 
-  local augment = config.getParameter("augment")
+  local augment = augment or config.getParameter("augment")
   
   -- if augment field exists, do something
   if augment then
@@ -24,29 +24,21 @@ function apply(input)
     
     -- MOD INSTALLATION GATES
 
-    -- If the max number of stat mods that can be installed is specified (i.e. non-negative number)
-    -- and the number of mods installed already reached that cap
-    -- do not apply stat mod
-    if upgradeCapacity > -1 and upgradeCount + upgradeCost > upgradeCapacity then
-        sb.logError("(statmod.lua) Stat mod application failed: Not Enough Upgrade Capacity")
-        return gunmodHelper.addMessage(input, "Not Enough Upgrade Capacity")
-    end
+    if not override then
 
-    local modExceptions = modInfo.modExceptions or {}
-    modExceptions.accept = modExceptions.accept or {}
-    modExceptions.deny = modExceptions.deny or {}
+        -- deny installation if upgrade capacity not enough
+        if upgradeCapacity > -1 and upgradeCount + upgradeCost > upgradeCapacity then
+            sb.logError("(statmod.lua) Stat mod application failed: Not Enough Upgrade Capacity")
+            return gunmodHelper.addMessage(input, "Not Enough Upgrade Capacity")
+        end
 
-    -- check if stat mod is particularly denied
-    local denied = set.new(modExceptions.deny)
-    if denied[config.getParameter("itemName")] then
-      sb.logError("(statmod.lua) Stat mod application failed: gun does not accept this specific stat mod")
-      return gunmodHelper.addMessage(input, "Incompatible stat mod: " .. config.getParameter("shortdescription"))
-    end
-
-
-    if augment.level and (input.parameters.level or 1) >= 10 then
-        sb.logError("(statmod.lua) Stat mod application failed: max level reached.")
-        return gunmodHelper.addMessage(input, "Max level reached")
+        -- deny installation if stat mod upgrades level
+        -- and level of weapon is 10
+        if augment.level and (input.parameters.level or 1) >= 10 then
+            sb.logError("(statmod.lua) Stat mod application failed: max level reached.")
+            return gunmodHelper.addMessage(input, "Max level reached")
+        end
+    
     end
 
     -- MOD INSTALLATION PROCESS
@@ -269,18 +261,20 @@ function apply(input)
     output:setInstanceValue("primaryAbility", sb.jsonMerge(input.parameters.primaryAbility, newPrimaryAbility))
     output:setInstanceValue("statModifiers", statModifiers)
 
-    -- count stat if not wildcard
-    if not augment.randomStats then
-        statList[config.getParameter("itemName")] = (statList[config.getParameter("itemName")] or 0) + 1
-    else
-        local retrievedSeed = config.getParameter("seed")
-        statList.wildcards = statList.wildcards or {}
-        table.insert(statList.wildcards, retrievedSeed)
-    end
-    output:setInstanceValue("statList", statList)
-    output:setInstanceValue("upgradeCount", upgradeCount + upgradeCost)
+    if not override then
+        -- count stat if not wildcard
+        if not augment.randomStats then
+            statList[config.getParameter("itemName")] = (statList[config.getParameter("itemName")] or 0) + 1
+        else
+            local retrievedSeed = config.getParameter("seed")
+            statList.wildcards = statList.wildcards or {}
+            table.insert(statList.wildcards, retrievedSeed)
+        end
+        output:setInstanceValue("statList", statList)
+        output:setInstanceValue("upgradeCount", upgradeCount + upgradeCost)
 
-    output:setInstanceValue("isModded", true)
+        output:setInstanceValue("isModded", true)
+    end
 
     return output:descriptor(), 1
   
