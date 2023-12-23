@@ -146,15 +146,7 @@
     "cycleTime": 0.25,
     "cockTime": 0.25,
     "projectileKind": "projectile",
-    "projectileType": "impactgrenade",
-    "projectileParameters": {
-      "actionOnReap" : [
-        {
-          "action" : "config",
-          "file" : "/projectiles/explosions/project45_stdexplosion/project45_stdexplosion.config"
-        }
-      ]
-    },
+    "projectileType": "project45stdgrenade",
     "reloadTime": 1,
 
     // "internalMag": true,
