@@ -10,7 +10,7 @@
   "inventoryIcon" : "/items/augments/project45-gunmods/ability/project45-supergunscopemod/project45-supergunscopemodicon.png",
   "description" : "A high-tech scope mod equipped with gyrostabilizers that help manage recoil and accuracy.",
   "technicalInfo": "Works similar to the Scope Mod.",
-  "statInfo": "Recoil x0.5\nInaccuracy x0.5",
+  "statInfo": "Recoil x0.5\nInaccuracy x0.5\nCrit Chance +50% when aiming",
   "shortdescription" : "Hi-tech Scope",
   "archetype": "Active Ability",
 

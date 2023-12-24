@@ -10,7 +10,8 @@
   "inventoryIcon" : "/items/augments/project45-gunmods/ability/project45-gunscopemod/project45-gunscopemodicon.png",
   "description" : "Easily aim at faraway targets. Also includes weak nightvision and a purple laser.",
   "shortdescription" : "Scope Mod",
-  "technicalInfo": "- Hold Right-click to aim.\n- Move cursor to move crosshairs.\n- Tap crouch to lock crosshair.",
+  "technicalInfo": "- Hold RClick to aim.\n- Move cursor to move crosshairs.\n- Tap crouch to lock scope.",
+  "statInfo": "Crit Chance +50% when aiming",
   "archetype": "Active Ability",
 
   "augment":{
