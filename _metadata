@@ -1,10 +1,10 @@
 {
   "author" : "Aikiro42, Nebulox, Nitrosteel",
-  "description" : "Adds moddable guns with Synthetik-esque mechanics into the game. This description will be updated. This mod is supposed to be hidden. This mod is not yet ready to be released. This is just a test release.",
-  "friendlyName" : "Project 45 (Deployment Test)",
+  "description" : "Adds moddable guns with Synthetik-esque mechanics into the game.\n\n[h1]How to Obtain[/h1]\nCraft the \"Project 45 Gun Shop\" with the Inventor's Table. All Project 45 related items can be bought from there.\n\n[img]https://i.imgur.com/617c7EM.png[/img]\n\nGuns:\n[img]https://i.imgur.com/Xj04TVY.png[/img]\n\nRecoil Demonstration:\n[img]https://i.imgur.com/MdOVPaQ.gif[/img]\n\n[img]https://i.imgur.com/OecaFZv.png[/img]\n\nReload Demonstration:\n[img]https://i.imgur.com/mHeiMS6.gif[/img]\n\nJam Demonstration:\n[img]https://i.imgur.com/t2ePe0k.gif[/img]\n\n[img]https://i.imgur.com/1yzB9tS.png[/img]\n\nModding Demonstration\n[img]https://i.imgur.com/HAXmipr.gif[/img]",
+  "friendlyName" : "Project 45",
   "link" : "steam://url/CommunityFilePage/3117517322",
   "name" : "aikiro42-project45",
   "steamContentId" : "3117517322",
-  "tags" : "Crafting and Building|Weapons|Cheats and God Items|In-Game Tools|Mechanics",
+  "tags" : "Weapons|Cheats and God Items|In-Game Tools|Mechanics",
   "version" : "v0.99"
 }

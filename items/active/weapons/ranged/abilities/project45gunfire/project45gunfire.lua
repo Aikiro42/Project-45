@@ -33,7 +33,14 @@ function Project45GunFire:init()
 
   -- initialize burst counter
   storage.burstCounter = storage.burstCounter or self.burstCount
+
+  -- initialize crit storage for alt abilities that affect crit chance (project45gunscope)
+  storage.baseCritChance = self.critChance
+  storage.currentCritChance = storage.currentCritChance or self.critChance
+  
+  --- initialize charge time storage for alt abilities that use charge time (project45mlgnoscope)
   storage.primaryChargeTime = self.chargeTime + self.overchargeTime
+  
   -- VALIDATIONS
 
   -- SETTING VALIDATIONS: These validations serve to reduce firing conditions and allow consistent logic.
@@ -1658,12 +1665,12 @@ end
 -- Returns the critical multiplier.
 -- Typically called when the weapon is about to deal damage.
 function Project45GunFire:crit()
-  if not self.critChance then return 1 end
+  if not storage.currentCritChance then return 1 end
 
-  local critTier = math.floor(self.critChance);
+  local critTier = math.floor(storage.currentCritChance);
   local baseCritDamageMult = self.critDamageMult * critTier
 
-  if project45util.diceroll(self.critChance - critTier, "Crit: ") then
+  if project45util.diceroll(storage.currentCritChance - critTier, "Crit: ") then
     self.critFlag = true
     return baseCritDamageMult + self.critDamageMult
   else
