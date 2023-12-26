@@ -11,14 +11,14 @@
   "inventoryIcon" : "/items/augments/project45-gunmods/stat/project45-critdamagemod/project45-critdamagemultmod.png",
   "slot": "critDamage",
   "archetype": "Multiplicative",
-  "description": "Increases Crit Damage by 30% of base.",
-  "statInfo" : "^#D93A3A;Crit Damage +0.3x^reset;",
+  "description": "Increases Crit Damage by 15% of base.",
+  "statInfo" : "^#D93A3A;Crit Damage +0.15x^reset;",
   "shortdescription" : "^#D93A3A;Crit Damage (*)",
 
   "augment":{
     "upgradeCost": 2,
     "critDamage": {
-      "multiplicative": 0.3
+      "multiplicative": 0.15
     }
   },
 
