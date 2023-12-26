@@ -7,6 +7,13 @@ The greatest minds of Letheia Corp. and The Miniknog Institute present to you: P
 [h1]How to Obtain[/h1]
 Craft the "Project 45 Gun Shop" with the [b]fully upgraded Inventor's Table[/b]. All Project 45 related items can be bought from there.
 
+[quote=Aikiro42]
+[h1]Disclaimer:[/h1]
+The weapons of this mod have the potential to become [b]overpowered[/b], which may affect your gameplay experience.
+
+[i](The mod author has made attempts to balance the mod around endgame, but the nature of the mod's modding system and gunfire mechanics make it extremely difficult.)[/i]
+[/quote]
+
 [img]https://i.imgur.com/617c7EM.png[/img]
 
 Project 45 features new weapons introducing new mechanics inspired from [url=https://store.steampowered.com/app/528230/SYNTHETIK_Legion_Rising/]Synthetik[/url] and [url=https://store.steampowered.com/app/230410/Warframe/]Warframe[/url], including but not limited to:
@@ -52,5 +59,5 @@ More information can be found in the in-mod [b]Project 45 Manual[/b] sold by the
 [*] [b]Nebulox and The [url=https://steamcommunity.com/sharedfiles/filedetails/?id=2431875552]Starforge[/url] Team[/b] for references, borrowed assets and code snippets (homing bullet script and Magma Spitter and Flamethrower Oil Projectiles)
 [*] [b]Shift Up[/b], [b]Yager Development[/b], [b]SNK Corp.[/b], [b]Infinity Ward[/b], [b]Amazing Seasun Games[/b] for weapon concepts, game mechanic ideas and SFX and VFX assets
 [*] [b]Digital Extremes[/b] and [b]Flow Fire Games[/b] for game mechanic ideas
-[*] [b]Freesound[/b], [b][url=https://www.youtube.com/@mgwsounddesign4838]MGW Sound Design[/url][/b], [b][url=https://www.youtube.com/@TenaciousTrilobite]Tenacious Trilobyte[/url][/b], [b][url=https://www.youtube.com/@mishas_guns]Misha's Guns[/url][/b], [b][url=https://www.youtube.com/@GunsOfTheWorld]Guns of the World[/url][/b] and other gun youtubers for sound effects and references
+[*] [b][url=https://freesound.org/]Freesound[/url][/b], [b][url=https://www.youtube.com/@mgwsounddesign4838]MGW Sound Design[/url][/b], [b][url=https://www.youtube.com/@TenaciousTrilobite]Tenacious Trilobyte[/url][/b], [b][url=https://www.youtube.com/@mishas_guns]Misha's Guns[/url][/b], [b][url=https://www.youtube.com/@GunsOfTheWorld]Guns of the World[/url][/b] and other gun youtubers for sound effects and references
 [/list]
