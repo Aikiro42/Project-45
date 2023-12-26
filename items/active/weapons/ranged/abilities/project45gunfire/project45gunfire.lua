@@ -17,6 +17,8 @@ function Project45GunFire:init()
 
   -- INITIALIZATIONS
   self.isFiring = false
+
+  self.performanceMode = status.statusProperty("project45_performanceMode", false) or self.performanceMode
     
   -- separate cock time and reload time
   -- self.reloadTime = self.reloadTime * 0.8
