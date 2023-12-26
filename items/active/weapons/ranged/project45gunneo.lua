@@ -5,7 +5,6 @@ require "/items/active/weapons/weapon.lua"
 function init()
   activeItem.setCursor("/cursors/reticle0.cursor")
   animator.setGlobalTag("paletteSwaps", config.getParameter("paletteSwaps", ""))
-  local generalConfig = root.assetJson("/configs/project45/project45_generalconfig.config")
   self.weapon = Weapon:new()
 
   self.weapon:addTransformationGroup("weapon", {0,0}, 0)

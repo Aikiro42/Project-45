@@ -1,5 +1,10 @@
+function promptRestart()
+  widget.setText("lblRestartToSave", "^red;Restart Game to Apply Changes.")
+end
+
 function toggleCursorBars()
-	status.setStatusProperty("renderBarsAtCursor", widget.getChecked("btnToggleCursorBars"))
+	status.setStatusProperty("project45_renderBarsAtCursor", widget.getChecked("btnToggleCursorBars"))
+  promptRestart()
 end
 
 function init()
