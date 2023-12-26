@@ -4,7 +4,7 @@
     { "item" : "battery", "count" : 1 },
     { "item" : "wire", "count" : 6 },
     { "item" : "siliconboard", "count" : 3 },
-    { "item" : "teleportercore", "count" : 3 }
+    { "item" : "teleportercore", "count" : 1 }
   ],
   "output" : {
     "item" : "project45-gunshop",
