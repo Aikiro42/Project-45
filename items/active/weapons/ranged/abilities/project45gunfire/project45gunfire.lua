@@ -1660,14 +1660,17 @@ end
 function Project45GunFire:crit()
   if not storage.currentCritChance then return 1 end
 
+  -- crit damage = base crit damage + floor(crit chance)
+  -- crit damage + 1 if super crit; crit damage + 0 otherwise
+
   local critTier = math.floor(storage.currentCritChance);
-  local baseCritDamageMult = self.critDamageMult * critTier
+  local baseCritDamageMult = critTier > 0 and (self.critDamageMult + critTier - 1) or 0
 
   if project45util.diceroll(storage.currentCritChance - critTier, "Crit: ") then
     self.critFlag = true
-    return baseCritDamageMult + self.critDamageMult
+    return math.max(1, baseCritDamageMult + (critTier > 0 and 1 or self.critDamageMult))
   else
-    self.critFlag = baseCritDamageMult > 1
+    self.critFlag = critTier > 0
     return math.max(1, baseCritDamageMult)
   end
 end

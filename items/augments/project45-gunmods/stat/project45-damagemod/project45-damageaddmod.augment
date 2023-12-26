@@ -9,14 +9,14 @@
   "modCategory" : "statMod",
   "category" : "eppAugment",
   "inventoryIcon" : "/items/augments/project45-gunmods/stat/project45-damagemod/project45-damageaddmod.png",
-  "statInfo" : "^#EA9931;Base Damage +2^reset;",
-  "description": "Increases Base Damage by 2.",
+  "statInfo" : "^#EA9931;Base Damage +1^reset;",
+  "description": "Increases Base Damage by 1.",
   "shortdescription" : "^#EA9931;Base Damage (+)",
   "slot": "baseDamage",
   "archetype": "Additive",
   "augment":{
     "baseDamage": {
-      "additive": 2
+      "additive": 1
     }
   },
 

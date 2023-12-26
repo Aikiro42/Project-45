@@ -9,15 +9,15 @@
   "modCategory" : "statMod",
   "category" : "eppAugment",
   "inventoryIcon" : "/items/augments/project45-gunmods/stat/project45-critchancemod/project45-critchanceaddmod.png",
-  "description": "Increases Crit Chance by 3%",
-  "statInfo" : "^#D93A3A;Crit Chance +3%^reset;",
+  "description": "Increases Crit Chance by 5%",
+  "statInfo" : "^#D93A3A;Crit Chance +5%^reset;",
   "slot": "critChance",
   "archetype": "Additive",
   "shortdescription" : "^#D93A3A;Crit Chance (+)",
 
   "augment":{
     "critChance": {
-      "additive": 0.03
+      "additive": 0.05
     }
   },
 
