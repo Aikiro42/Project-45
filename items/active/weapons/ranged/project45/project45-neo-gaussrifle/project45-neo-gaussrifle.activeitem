@@ -25,7 +25,7 @@
 
   "project45GunModInfo": {
     "category": "ballistic",
-    "upgradeCapacity": 10,
+    "upgradeCapacity": 6,
     "allowsConversion": [
       "projectile"
     ],

@@ -47,7 +47,7 @@
 
   "project45GunModInfo":{
     "category": "energy",
-    "upgradeCapacity": 10,
+    "upgradeCapacity": 6,
     "allowsConversion": [
       "projectile",
       "hitscan",

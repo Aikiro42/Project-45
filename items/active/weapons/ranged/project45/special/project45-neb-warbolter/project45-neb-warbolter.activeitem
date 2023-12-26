@@ -16,7 +16,7 @@
 
   "project45GunModInfo":{
     "category": "experimental",
-    "upgradeCapacity": 30
+    "upgradeCapacity": 10
   },
 
   "animationParts" : {

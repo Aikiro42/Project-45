@@ -62,40 +62,6 @@
               "frames": 2
             }
           }
-        },
-        "gun": {
-          "states":{
-            "idle": {
-              "frames": 1
-            },
-            "firing": {
-              "frames": 1
-            },
-            "firingLoop": {
-              "frames": 1
-            },
-            "ejecting": {
-              "frames": 1
-            },
-            "boltPulling": {
-              "frames": 1
-            },
-            "ejected": {
-              "frames": 1
-            },
-            "feeding": {
-              "frames": 1
-            },
-            "boltPushing": {
-              "frames": 1
-            },
-            "jammed": {
-              "frames": 1
-            },
-            "unjamming": {
-              "frames": 1
-            }
-          }
         }
       }
     }
@@ -103,7 +69,7 @@
 
   "project45GunModInfo":{
     "category": "ballistic",
-    "upgradeCapacity": 20,
+    "upgradeCapacity": 9,
     "allowsConversion": [
       "hitscan",
       "beam",

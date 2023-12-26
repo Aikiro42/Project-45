@@ -16,7 +16,7 @@
 
   "project45GunModInfo": {
     "category": "ballistic",
-    "upgradeCapacity": 20,
+    "upgradeCapacity": 5,
     "compatibleMods": [
       "project45-alofsmagmod"
     ],

@@ -26,7 +26,7 @@
 
   "project45GunModInfo": {
     "category": "ballistic",
-    "upgradeCapacity": 10,
+    "upgradeCapacity": 5,
     "acceptsModSlot": [
       "rail",
       // "sights",

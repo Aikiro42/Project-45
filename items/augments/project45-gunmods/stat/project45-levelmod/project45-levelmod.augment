@@ -9,7 +9,7 @@
   "modCategory" : "statMod",
   "category" : "eppAugment",
   "inventoryIcon" : "/items/augments/project45-gunmods/stat/project45-levelmod/project45-levelmod.png",
-  "technicalInfo": "Upgrade capacity increases by 2 per level.",
+  "technicalInfo": "Upgrade capacity increases by 1 per level.",
   "statInfo" : "^#a8e6e2;Weapon Level +1",
   "description": "Increments weapon level, up to a maximum level of 10.",
   "slot": "level",

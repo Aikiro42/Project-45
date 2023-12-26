@@ -314,7 +314,6 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
   -- update timers
   self.cooldownTimer = math.max(0, self.cooldownTimer - self.dt)
 
-
   -- world.debugPoint(self:firePosition(true), "cyan")
 
   -- update relevant stuff
@@ -1006,7 +1005,7 @@ function Project45GunFire:muzzleFlash()
     self.muzzleFlashTimer = self.muzzleFlashTime or 0.05
   end
 
-  if self.hideMuzzleSmoke ~= nil and not self.hideMuzzleSmoke then
+  if not self.hideMuzzleSmoke then
     self.muzzleSmokeTimer = self.muzzleSmokeTime + self.currentCycleTime + 0.1
   end
 

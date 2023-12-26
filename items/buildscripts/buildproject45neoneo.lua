@@ -42,7 +42,7 @@ function build(directory, config, parameters, level, seed)
   -- calculate mod capacity
   construct(config, "project45GunModInfo")
   construct(parameters, "project45GunModInfo")
-  parameters.project45GunModInfo.upgradeCapacity = (config.project45GunModInfo.upgradeCapacity or 0) + ((configParameter("level", 1) - 1) * 2)
+  parameters.project45GunModInfo.upgradeCapacity = (config.project45GunModInfo.upgradeCapacity or 0) + (configParameter("level", 1) - 1)
   
   -- recalculate rarity
   local rarityLevel = configParameter("level", 1)/10

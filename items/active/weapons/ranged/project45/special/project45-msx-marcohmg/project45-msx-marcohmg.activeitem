@@ -56,7 +56,7 @@
 
   "project45GunModInfo":{
     "category": "special",
-    "upgradeCapacity": 20
+    "upgradeCapacity": 10
   },
 
   "baseOffset" : [0, -0.5],

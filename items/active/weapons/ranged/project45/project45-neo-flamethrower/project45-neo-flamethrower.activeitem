@@ -25,7 +25,7 @@
 
   "project45GunModInfo": {
     "category": "experimental",
-    "upgradeCapacity": 10,
+    "upgradeCapacity": 5,
     "allowsConversion": [
       "beam"
     ],

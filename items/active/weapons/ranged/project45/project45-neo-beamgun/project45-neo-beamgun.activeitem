@@ -26,7 +26,7 @@
 
   "project45GunModInfo": {
     "category": "energy",
-    "upgradeCapacity": 10,
+    "upgradeCapacity": 5,
     "allowsConversion": [
       "projectile",
       "hitscan"
@@ -36,7 +36,9 @@
     ],
     "acceptsModSlot": [
       "rail",
-      "sights"
+      "sights",
+
+      "material"
     ]
   },
 

@@ -46,17 +46,14 @@
 
   "project45GunModInfo":{
     "category": "ballistic",
-    "upgradeCapacity": 10,
+    "upgradeCapacity": 8,
     "allowsConversion": [
       "hitscan",
       "summoned"
     ],
-    "acceptsAmmoTypes":{
-      "ballistic": true
-    },
-    "acceptsAmmoArchetype":{
-      "generic": true
-    },
+    "acceptsAmmoArchetype":[
+      "generic"
+    ],
     "acceptsModSlot": [
       "rail",
       "sights",
