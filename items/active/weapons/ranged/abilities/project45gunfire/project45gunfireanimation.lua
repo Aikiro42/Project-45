@@ -6,6 +6,7 @@ require "/scripts/project45/project45util.lua"
 local warningTriggered = false
 local messagesToRender = {}
 local renderMessageTimer = 0
+local renderBarsAtCursor = false
 
 synthethikmechanics_altInit = init or function()
   if not warningTriggered then
@@ -24,6 +25,7 @@ synthethikmechanics_altUpdate = update or function()
 function init()
   synthethikmechanics_altInit()
   messagesToRender = animationConfig.animationParameter("project45GunFireMessages")
+  renderBarsAtCursor = animationConfig.animationParameter("renderBarsAtCursor")
 end
 
 function update()
@@ -52,21 +54,20 @@ function update()
   [charge bar]                                             [charge bar]
   --]]
 
-  local horizontalOffset = reloadTimer < 0 and 0 or 2
-
-  horizontalOffset = horizontalOffset + (jamAmount <= 0 and 0 or 2)
-
-  horizontalOffset = horizontalOffset + 2 -- ammo count, charge bar
-
+  local barXOffset = reloadTimer < 0 and 2 or 0
+  barXOffset = barXOffset + jamAmount <= 0 and 2 or 0
+  local horizontalOffset = 2
+  horizontalOffset = horizontalOffset + (renderBarsAtCursor and barXOffset or 0)
   horizontalOffset = hand == "primary" and -horizontalOffset or horizontalOffset
+  barXOffset = hand == "primary" and -barXOffset or barXOffset
 
-  renderAmmoNumber({horizontalOffset, 0})
+  renderAmmoNumber({horizontalOffset, 0}, reloadTimer >= 0)
 
   renderChamberIndicator({horizontalOffset, 0})
 
   renderLaser()
-  renderReloadBar({horizontalOffset, 0})
-  renderJamBar({horizontalOffset, 0})
+  renderReloadBar({horizontalOffset + (renderBarsAtCursor and 0 or barXOffset), 0})
+  renderJamBar({horizontalOffset + (renderBarsAtCursor and 0 or barXOffset), 0})
   renderChargeBar({horizontalOffset, -1.625})
   renderHitscanTrails()
   renderBeam()
@@ -90,7 +91,7 @@ function renderMessages(messageOffset)
   return math.floor(60 * 0.3)
 end  
 
-function renderAmmoNumber(offset)
+function renderAmmoNumber(offset, reloading)
   
   local reloadRatingTextColor = {
     PERFECT = {255, 241, 191},
@@ -116,7 +117,7 @@ function renderAmmoNumber(offset)
   else  -- TODO: show crossed-out mag instead of "E"
     localAnimator.spawnParticle({
       type = "text",
-      text= "^shadow;E",
+      text= string.format("^shadow;%s", reloading and "R" or "E"),
       color = {255, 255, 255},
       size = 1,
       fullbright = true,
@@ -232,7 +233,7 @@ function renderReloadBar(offset, barColor, length, width, borderwidth)
   local quickReloadTimeframe = animationConfig.animationParameter("quickReloadTimeframe")
   local good = {quickReloadTimeframe[1], quickReloadTimeframe[4]}
   local perfect = {quickReloadTimeframe[2], quickReloadTimeframe[3]}
-  local position = activeItemAnimation.ownerAimPosition()
+  local position = renderBarsAtCursor and activeItemAnimation.ownerAimPosition() or activeItemAnimation.ownerPosition()
 
   local length = length or 4
   local barWidth = width or 2
@@ -323,7 +324,7 @@ end
 function renderJamBar(offset, barColor, length, width, borderwidth)
   local jamScore = animationConfig.animationParameter("jamAmount")
   if not jamScore or jamScore <= 0 then return end
-  local position = activeItemAnimation.ownerAimPosition()
+  local position = renderBarsAtCursor and activeItemAnimation.ownerAimPosition() or activeItemAnimation.ownerPosition()
   local offset = offset or {-2, 0}
   offset[1] = (offset[1] < 0) and (offset[1] + 2) or (offset[1] - 2)
 

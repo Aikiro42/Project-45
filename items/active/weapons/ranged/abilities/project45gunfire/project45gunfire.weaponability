@@ -37,9 +37,11 @@
     },
 
     // Movement settings
-    "movementSpeedFactor": 1.25,
-    "jumpHeightFactor": 1.25,
-    // "heavyWeapon": false,
+    /*
+    "movementSpeedFactor": 1,
+    "jumpHeightFactor": 1,
+    "heavyWeapon": false,
+    */
 
     /*
     if true, disables the following:
@@ -53,7 +55,6 @@
     */
     // "performanceMode": false,
     // "debug": false,
-    "debugTime": 0.1, // time to wait before running the debug function again
 
     /*
     Hide Muzzle Flash & Smoke

@@ -16,9 +16,7 @@ Project45GunFire = WeaponAbility:new()
 function Project45GunFire:init()
 
   -- INITIALIZATIONS
-  self.debugTimer = self.debugTime
   self.isFiring = false
-  self.projectileCount = math.floor(self.projectileCount)
     
   -- separate cock time and reload time
   -- self.reloadTime = self.reloadTime * 0.8
@@ -42,6 +40,12 @@ function Project45GunFire:init()
   storage.primaryChargeTime = self.chargeTime + self.overchargeTime
   
   -- VALIDATIONS
+
+  -- VALUE VALIDATIONS: These validations serve to convert values to correct ones, if not already correct
+  self.projectileCount = math.floor(self.projectileCount)
+  self.movementSpeedFactor = self.movementSpeedFactor or 1
+  self.jumpHeightFactor = self.jumpHeightFactor or 1
+
 
   -- SETTING VALIDATIONS: These validations serve to reduce firing conditions and allow consistent logic.
 
@@ -315,7 +319,6 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
 
   -- update relevant stuff
   self:renderModPositionDebug()
-  self:updateDebugTimer()
   self:updateLaser()
   self:updateCharge()
   self:updateStance()
@@ -324,11 +327,6 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
   self:updateProjectileStack()
   self:updateMovementControlModifiers()
   self:updateMuzzleFlash()
-
-  if self.debugTimer <= 0 then
-    self:debugFunction()
-    self.debugTimer = self.debugTime
-  end
 
   -- Prevent energy regen if there is energy or if currently reloading
   if storage.ammo > 0
@@ -1232,10 +1230,6 @@ end
 
 -- SECTION:  UPDATE FUNCTIONS
 
-function Project45GunFire:updateDebugTimer()
-  self.debugTimer = math.max(0, self.debugTimer - self.dt)
-end
-
 -- Updates the charge of the gun
 -- This is supposed to be called every tick in `Project45GunFire:update()`
 function Project45GunFire:updateCharge()
@@ -1925,15 +1919,6 @@ function Project45GunFire:setStance(stance, snap, armsOnly)
   end
 
   storage.stanceProgress = 0
-end
-
-function Project45GunFire:debugFunction()
-  
-  if not self.debug then return end
-
-  self:discardCasings(1)
-  animator.burstParticleEmitter("magazine")
-
 end
 
 --[[
