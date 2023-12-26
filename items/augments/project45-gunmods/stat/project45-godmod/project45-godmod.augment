@@ -3,7 +3,11 @@
   "price" : 30000,
   "rarity" : "Essential",
   "tooltipKind" : "project45gunmod2",
-  "category" : "Stat Mod",
+  "tooltipFields": {
+    "subtitle": "Stat Mod"
+  },
+  "modCategory" : "statMod",
+  "category" : "eppAugment",
   "inventoryIcon" : "/items/augments/project45-gunmods/stat/project45-godmod/project45-godmod.png",
   "statInfo" : "^#d29ce7;Damage +2x\nCrit Chance +100%\nCrit Damage +1\nFire Time +0.5d^reset;",
   "description": "One mod to rule them all.",

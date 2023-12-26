@@ -3,8 +3,10 @@
   "price" : 6000,
   "rarity" : "Rare",
   "tooltipKind" : "project45gunmod2",
-  "category" : "Gun Mod",
+  "modCategory" : "gunMod",
+  "category" : "eppAugment",
   "tooltipFields":{
+    "subtitle": "Gun Mod",
     "objectImage": "/items/augments/project45-gunmods/mods/project45-extendedbarrelmod/project45-extendedbarrelmod.png"
   },
   "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-extendedbarrelmod/project45-extendedbarrelmodicon.png",

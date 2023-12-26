@@ -3,7 +3,11 @@
   "price" : 2500,
   "rarity" : "Legendary",
   "tooltipKind" : "project45gunmod2",
-  "category" : "Stat Mod",
+  "tooltipFields": {
+    "subtitle": "Stat Mod"
+  },
+  "modCategory" : "statMod",
+  "category" : "eppAugment",
   "inventoryIcon" : "/items/augments/project45-gunmods/stat/project45-reloadcostmod/project45-reloadcostaddmod.png",
   "description": "Decreases Reload Cost by 3 energy.",
   "statInfo" : "^#9BBA3D;Reload Cost -3^reset;",

@@ -3,7 +3,11 @@
   "price" : 1000,
   "rarity" : "Essential",
   "tooltipKind" : "project45gunmod2",
-  "category" : "Stat Mod",
+  "tooltipFields": {
+    "subtitle": "Stat Mod"
+  },
+  "modCategory" : "statMod",
+  "category" : "eppAugment",
   "inventoryIcon" : "/items/augments/project45-gunmods/stat/project45-wildcardstatmod/project45-wildcardstatmod.png",
   "statInfo" : "^#d29ce7;???",
   "description": "A mod that provides random stat bonuses.",

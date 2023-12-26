@@ -3,7 +3,11 @@
   "price" : 5000,
   "rarity" : "Legendary",
   "tooltipKind" : "project45gunmod2",
-  "category" : "Stat Mod",
+  "tooltipFields": {
+    "subtitle": "Stat Mod"
+  },
+  "modCategory" : "statMod",
+  "category" : "eppAugment",
   "inventoryIcon" : "/items/augments/project45-gunmods/stat/project45-reloadcostmod/project45-reloadcostmultmod.png",
   "statInfo" : "^#9BBA3D;Reload Cost +0.2d^reset;",
   "description": "Increases Reload Cost denominator by 0.2.",

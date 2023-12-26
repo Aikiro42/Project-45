@@ -3,8 +3,10 @@
   "price" : 2500,
   "rarity" : "Rare",
   "tooltipKind" : "project45gunmod2",
-  "category" : "Ammo Mod",
+  "modCategory" : "ammoMod",
+  "category" : "eppAugment",
   "tooltipFields":{
+    "subtitle": "Ammo Mod",
     "objectImage": "/items/augments/project45-gunmods/ammo/project45-firebeammod/project45-firebeammod.png"
   },
   "inventoryIcon" : "/items/augments/project45-gunmods/ammo/project45-firebeammod/project45-firebeammodicon.png",

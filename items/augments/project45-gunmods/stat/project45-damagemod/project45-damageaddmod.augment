@@ -3,7 +3,11 @@
   "price" : 2500,
   "rarity" : "Legendary",
   "tooltipKind" : "project45gunmod2",
-  "category" : "Stat Mod",
+  "tooltipFields": {
+    "subtitle": "Stat Mod"
+  },
+  "modCategory" : "statMod",
+  "category" : "eppAugment",
   "inventoryIcon" : "/items/augments/project45-gunmods/stat/project45-damagemod/project45-damageaddmod.png",
   "statInfo" : "^#EA9931;Base Damage +2^reset;",
   "description": "Increases Base Damage by 2.",

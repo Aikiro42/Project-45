@@ -3,8 +3,10 @@
   "price" : 6000,
   "rarity" : "Rare",
   "tooltipKind" : "project45gunmod2",
-  "category" : "Gun Mod",
+  "modCategory" : "gunMod",
+  "category" : "eppAugment",
   "tooltipFields":{
+    "subtitle": "Gun Mod",
     "objectImage": "/items/augments/project45-gunmods/mods/project45-multinockmod/project45-multinockmod.png"
   },
   "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-multinockmod/project45-multinockmodicon.png",

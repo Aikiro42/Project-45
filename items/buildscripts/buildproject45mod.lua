@@ -49,10 +49,10 @@ function build(directory, config, parameters, level, seed, wildcardStatInfo)
 
   config.tooltipFields.categoryLabel = project45util.categoryStrings[config.augment.category or "universal"]
 
-  if config.category == "Ammo Mod" or config.category == "Converter Mod" then
+  if config.modCategory == "ammoMod" or config.modCategory == "converterMod" then
     config.tooltipFields.slotLabel = "^#9da8af;Ammo"
   
-  elseif config.category == "Stat Mod" then
+  elseif config.modCategory == "statMod" then
     config.tooltipFields.slotTitleLabel = "Stat"
     config.tooltipFields.slotLabel = statSlots[config.slot]
   
@@ -63,7 +63,7 @@ function build(directory, config, parameters, level, seed, wildcardStatInfo)
   end
 
   config.tooltipFields.archetypeLabel = ""
-  if config.category == "Gun Mod" then
+  if config.modCategory == "gunMod" then
     config.tooltipFields.archetypeTitleLabel = "Mod Type"
     if not config.archetype then
       if extrinsicModSlots[config.augment.slot or config.slot] then
@@ -72,14 +72,14 @@ function build(directory, config, parameters, level, seed, wildcardStatInfo)
         config.tooltipFields.archetypeLabel = "^#ea9931;Intrinsic"  
       end
     end    
-  elseif config.category == "Ammo Mod" then
+  elseif config.modCategory == "ammoMod" then
       config.tooltipFields.archetypeTitleLabel = "Ammo Archetype"
       config.tooltipFields.archetypeLabel = "^#ea9931;" .. project45util.capitalize(config.augment.archetype)
   
   else
-    if config.category == "Ability Mod" then
+    if config.modCategory == "abilityMod" then
       config.tooltipFields.archetypeTitleLabel = "Ability Type"
-    elseif config.category == "Stat Mod" then
+    elseif config.modCategory == "statMod" then
       config.tooltipFields.archetypeTitleLabel = "Application"
     end
     config.tooltipFields.archetypeLabel = "^#ea9931;" .. (

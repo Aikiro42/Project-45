@@ -3,7 +3,11 @@
   "price" : 20000,
   "rarity" : "Essential",
   "tooltipKind" : "project45gunmod2",
-  "category" : "Stat Mod",
+  "tooltipFields": {
+    "subtitle": "Stat Mod"
+  },
+  "modCategory" : "statMod",
+  "category" : "eppAugment",
   "inventoryIcon" : "/items/augments/project45-gunmods/stat/project45-levelmod/project45-maxlevelmod.png",
   "technicalInfo": "Upgrade capacity increases by 2 per level.",
   "statInfo" : "^#a8e6e2;Weapon Level +10",

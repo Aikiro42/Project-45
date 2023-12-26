@@ -3,7 +3,10 @@
   "price" : 2500,
   "rarity" : "Legendary",
   "tooltipKind" : "project45gunmod",
-  "category" : "Applied Utility",
+  "category" : "upgradeComponent",
+  "tooltipFields":{
+    "subtitle": "Applied Utility"
+  },
   "inventoryIcon" : "/items/augments/project45-gunmods/util/project45-gachapull/project45-gachapull.png",
   "description" : "A one-time-use key for opening the ever-replenishing Gun Bag.",
   "shortdescription" : "Gun Bag Key",

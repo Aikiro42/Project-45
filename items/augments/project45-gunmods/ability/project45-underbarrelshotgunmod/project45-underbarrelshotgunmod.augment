@@ -3,8 +3,10 @@
   "price" : 15000,
   "rarity" : "Essential",
   "tooltipKind" : "project45gunmod2",
-  "category" : "Ability Mod",
+  "modCategory" : "abilityMod",
+  "category" : "eppAugment",
   "tooltipFields": {
+    "subtitle": "Ability Mod",
     "objectImage": "/items/augments/project45-gunmods/ability/project45-underbarrelshotgunmod/project45-underbarrelshotgunmod.png"
   },
   "inventoryIcon" : "/items/augments/project45-gunmods/ability/project45-underbarrelshotgunmod/project45-underbarrelshotgunmodicon.png",

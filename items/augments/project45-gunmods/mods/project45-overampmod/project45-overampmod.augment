@@ -3,8 +3,10 @@
   "price" : 4500,
   "rarity" : "Uncommon",
   "tooltipKind" : "project45gunmod2",
-  "category" : "Gun Mod",
+  "modCategory" : "gunMod",
+  "category" : "eppAugment",
   "tooltipFields":{
+    "subtitle": "Gun Mod",
     "objectImage": "/items/augments/project45-gunmods/mods/project45-overampmod/project45-overampmod.png"
   },
   "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-overampmod/project45-overampmodicon.png",

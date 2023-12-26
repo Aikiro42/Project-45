@@ -3,7 +3,11 @@
   "price" : 5000,
   "rarity" : "Legendary",
   "tooltipKind" : "project45gunmod2",
-  "category" : "Stat Mod",
+  "tooltipFields": {
+    "subtitle": "Stat Mod"
+  },
+  "modCategory" : "statMod",
+  "category" : "eppAugment",
   "inventoryIcon" : "/items/augments/project45-gunmods/stat/project45-critdamagemod/project45-critdamagemultmod.png",
   "slot": "critDamage",
   "archetype": "Multiplicative",

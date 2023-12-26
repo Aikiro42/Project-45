@@ -3,7 +3,11 @@
   "price" : 7500,
   "rarity" : "Essential",
   "tooltipKind" : "project45gunmod2",
-  "category" : "Converter Mod",
+  "modCategory" : "converterMod",
+  "category" : "eppAugment",
+  "tooltipFields": {
+    "subtitle": "Converter Mod"
+  },
   "inventoryIcon" : "/items/augments/project45-gunmods/other/converter/project45-hitscanconverter/project45-hitscanconverter.png",
   "description" : "Converts bullets fired to hitscan ones.",
   "shortdescription" : "Hitscan Conversion",

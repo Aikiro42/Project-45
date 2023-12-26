@@ -3,8 +3,10 @@
   "price" : 3000,
   "rarity" : "Uncommon",
   "tooltipKind" : "project45gunmod2",
-  "category" : "Gun Mod",
+  "modCategory" : "gunMod",
+  "category" : "eppAugment",
   "tooltipFields":{
+    "subtitle": "Gun Mod",
     "objectImage": "/items/augments/project45-gunmods/mods/project45-stockmod/project45-stockmod.png"
   },
   "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-stockmod/project45-stockmodicon.png",
