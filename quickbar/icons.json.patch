@@ -1,0 +1,11 @@
+[
+  {
+    "op": "add",
+    "path": "/items/project45",
+    "value": {
+      "label": "Project 45 Configuration",
+      "icon": "/interface/project45-configui/project45-configui-icon.png",
+      "action": [ "pane", "/interface/project45-configui/project45-configui.config" ]
+    }
+  }
+]

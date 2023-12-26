@@ -24,7 +24,11 @@ function init()
   end
 
   activeItem.setScriptedAnimationParameter("hand", activeItem.hand())
-  activeItem.setScriptedAnimationParameter("renderBarsAtCursor", generalConfig.renderBarsAtCursor)
+  activeItem.setScriptedAnimationParameter("renderBarsAtCursor",
+    status.statusProperty("project45_renderBarsAtCursor",
+    root.assetJson("/configs/project45/project45_generalconfig.config:renderBarsAtCursor",
+    true
+  )))
   activeItem.setScriptedAnimationParameter("project45GunFireMessages", config.getParameter("project45GunFireMessages", {}))
   activeItem.setInstanceValue("project45GunFireMessages", {})
   self.weapon:init()
