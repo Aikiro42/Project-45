@@ -327,13 +327,6 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
   self:updateMovementControlModifiers()
   self:updateMuzzleFlash()
 
-  -- Prevent energy regen if there is energy or if currently reloading
-  if storage.ammo > 0
-  or self.reloadTimer > 0
-  or not status.resourceLocked("energy") then
-    status.setResource("energyRegenBlock", 1)
-  end
-
   if not self.isFiring then
     if not self:triggering() then
       self.triggered = false
