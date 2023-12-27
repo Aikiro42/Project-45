@@ -19,6 +19,7 @@ function Project45GunFire:init()
   self.isFiring = false
 
   self.performanceMode = status.statusProperty("project45_performanceMode", false) or self.performanceMode
+  self.hideMuzzleSmoke = self.performanceMode or self.hideMuzzleSmoke
     
   -- separate cock time and reload time
   -- self.reloadTime = self.reloadTime * 0.8
@@ -979,13 +980,17 @@ function Project45GunFire:muzzleFlash()
 
   if (self.projectileKind or "projectile") ~= "beam" then
     -- play fire and hollow sound if the gun isn't firing a beam
-    animator.setSoundPitch("fire", sb.nrand(0.01, 1))
-    animator.setSoundVolume("hollow", util.clamp((1 - storage.ammo/self.maxAmmo) * self.hollowSoundMult, 0, self.hollowSoundMult))
+    if not self.performanceMode then
+      animator.setSoundPitch("fire", sb.nrand(0.01, 1))
+      animator.setSoundVolume("hollow", util.clamp((1 - storage.ammo/self.maxAmmo) * self.hollowSoundMult, 0, self.hollowSoundMult))
+    end
     animator.playSound("fire")
     if self.perfectlyCharged then
       animator.playSound("perfectChargeFire")
     end
-    animator.playSound("hollow")
+    if not self.performanceMode then
+      animator.playSound("hollow")
+    end
   end
   
   if not self.performanceMode then animator.burstParticleEmitter("muzzleFlash") end
@@ -1470,11 +1475,12 @@ function Project45GunFire:updateMuzzleFlash()
   self.muzzleFlashTimer = math.max(0, self.muzzleFlashTimer - self.dt)
   storage.altMuzzleFlashTimer = math.max(0, storage.altMuzzleFlashTimer - self.dt)
   
-  if animator.animationState("gun") ~= "open" then
+  if not self.performanceMode and animator.animationState("gun") ~= "open" then
     self.muzzleSmokeTimer = math.max(0, self.muzzleSmokeTimer - self.dt)
   else
     self.muzzleSmokeTimer = 0
   end
+
   if self.muzzleFlashTimer <= 0 then
     animator.setLightActive("muzzleFlash", false)
   end

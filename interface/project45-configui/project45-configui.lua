@@ -31,9 +31,14 @@ function toggleUseAmmoCounterImages()
 end
 
 function init()
-	widget.setChecked("btnToggleCursorBars", status.statusProperty("project45_renderBarsAtCursor", true))
 	widget.setChecked("btnTogglePerformanceMode", status.statusProperty("project45_performanceMode", false))
-	widget.setChecked("btnUseAmmoCounterImages", status.statusProperty("project45_useAmmoCounterImages", true))
+	widget.setChecked("btnToggleCursorBars", status.statusProperty("project45_renderBarsAtCursor", true))
+	if widget.getChecked("btnTogglePerformanceMode") then
+		widget.setChecked("btnUseAmmoCounterImages", false)
+		widget.setFontColor("lblUseAmmoCounterImages", "gray")
+	else
+		widget.setChecked("btnUseAmmoCounterImages", status.statusProperty("project45_useAmmoCounterImages", true))
+	end
 end
 
 function uninit()

@@ -82,10 +82,10 @@ When you begin reloading, a vertical bar with a colored section will appear in p
 Your weapon's performance will change depending on whether you executed an Active Reload and whether you hit the colored regions:
 
 ^#E2C344;PERFECT^reset; - Hitting the lighter-colored region gives your gun a ^#E2C344;1.3x damage bonus^reset; and ^#E2C344;completely prevents jamming^reset;
-
-^#60B8EA;GOOD^reset; - Hitting the darker-colored region gives your gun a ^#60B8EA;1.1x damage bonus^reset; and ^#60B8EA;completely prevents jamming^reset;.
 ",
 "# ^#E2C344;Reload Rating^reset;
+^#60B8EA;GOOD^reset; - Hitting the darker-colored region gives your gun a ^#60B8EA;1.1x damage bonus^reset; and ^#60B8EA;completely prevents jamming^reset;.
+
 OK - Allowing the red line to reach the end of the bar will simply reload your gun.
 
 ^#D93A3A;BAD^reset; - Hitting the white region will ^#D93A3A;increase the chance of a gun jam happening^reset;
@@ -137,7 +137,22 @@ Gun Bags have the following odds:
 Gun Bags will guarantee you a ^#fdd14d;Unique (XSSR)^reset; item within the first 25 pulls. After that, it will guarantee you either a ^#fdd14d;Unique (XSSR)^reset; or ^#ffffa7;Essential (SSR)^reset; item within the next 25 pulls after.
 
 If you obtain an ^#ffffa7;Essential (SSR)^reset; item, you are guaranteed a ^#fdd14d;Unique (XSSR)^reset; item within the next 25 pulls.
+",
+"# ^#E2C344;(Quickbar) Mod Settings^reset;
+If you have Stardust Core/Lite or Quickbar Mini installed, you can change the following settings:
+- ^#EA9931;Performance Mode:^reset; If this setting is ticked,
+  - most particles (e.g. casings, smoke) will not be emitted,
+  - dynamic audio (hollow sounds, firing sound pitch changes) is disabled,
+  - screenshake, magazine animations, and lasers are disabled, and
+  - you cannot use empty and reload indicator images.
+
+",
+"# ^#E2C344;(Quickbar) Mod Settings^reset;
+- ^#EA9931;Render Bars Beside Cursor:^reset; If this setting is ticked, the reload bar and jam bar will be rendered beside the cursor.
+
+- ^#EA9931;Use Reload/Empty Images:^reset; If this setting is ticked, animated sprites will be used to indicate a reloading or empty gun, instead of 'R' and 'E'.
 "
+
   ],
 
   "itemConfig" : {

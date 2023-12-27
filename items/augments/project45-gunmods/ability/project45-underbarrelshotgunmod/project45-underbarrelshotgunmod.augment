@@ -10,7 +10,7 @@
     "objectImage": "/items/augments/project45-gunmods/ability/project45-underbarrelshotgunmod/project45-underbarrelshotgunmod.png"
   },
   "inventoryIcon" : "/items/augments/project45-gunmods/ability/project45-underbarrelshotgunmod/project45-underbarrelshotgunmodicon.png",
-  "description" : "A small underbarrel shotgun that siphons its bullets from the gun's.",
+  "description" : "A small underbarrel shotgun that siphons its bullets from the gun.",
   "technicalInfo": "Right-click to fire; consumes 5 ammo per shot.",
   "shortdescription" : "Modular Shotgun",
   "archetype": "Active Ability",
