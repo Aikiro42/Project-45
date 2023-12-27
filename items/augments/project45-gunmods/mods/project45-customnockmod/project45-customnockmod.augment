@@ -13,7 +13,7 @@
   "description": "A custom nock that allows you to quickly fire multiple arrows in succession.",
   "statInfo": "Ammo Capacity +3",
   "shortdescription" : "Custom Nock",
-  "radioMessagesOnPickup" : [ "pickupaugment" ],
+   
 
   "augment": {
     "modName": "Custom Nock",

@@ -23,9 +23,6 @@
     "twoHanded": true
   },
 
-
-  "radioMessagesOnPickup" : [ "pickupaugment" ],
-
   "scripts" : [ "/scripts/augments/project45-gunmod/abilitymod.lua" ],
   "builder": "/items/buildscripts/buildproject45mod.lua"
 }

@@ -15,7 +15,7 @@
   "conversion": "beam",
   "upgradeCost": 2,
 
-  "radioMessagesOnPickup" : [ "pickupaugment" ],
+   
 
   "scripts" : [ "/scripts/augments/project45-gunmod/convertermod.lua" ],
   

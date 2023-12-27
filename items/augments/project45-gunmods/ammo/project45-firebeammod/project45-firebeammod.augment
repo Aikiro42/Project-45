@@ -42,7 +42,7 @@
   },
 
 
-  "radioMessagesOnPickup" : [ "pickupaugment" ],
+   
 
   "scripts" : [ "/scripts/augments/project45-gunmod/ammomod.lua" ],
   "builder": "/items/buildscripts/buildproject45mod.lua"

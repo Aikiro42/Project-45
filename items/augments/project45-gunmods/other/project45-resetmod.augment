@@ -8,7 +8,7 @@
   "description" : "Uninstalls all equipped mods and reverts your weapon to its stock form. ^#FFAAAA;Works on all items.^reset;",
   "shortdescription" : "Gun Disassembly Kit",
 
-  "radioMessagesOnPickup" : [ "pickupaugment" ],
+   
 
   "scripts" : [ "/scripts/augments/project45-gununmod.lua" ]
 }

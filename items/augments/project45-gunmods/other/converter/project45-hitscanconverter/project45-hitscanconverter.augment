@@ -15,7 +15,7 @@
   "conversion": "hitscan",
   "upgradeCost": 3,
 
-  "radioMessagesOnPickup" : [ "pickupaugment" ],
+   
 
   "scripts" : [ "/scripts/augments/project45-gunmod/convertermod.lua" ],
   

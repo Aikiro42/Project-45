@@ -13,7 +13,7 @@
   "description": "A custom nock that allows you to fire multiple arrows at once.",
   "statInfo": "Multishot +3\nSpread x2",
   "shortdescription" : "Multi-nock",
-  "radioMessagesOnPickup" : [ "pickupaugment" ],
+   
 
   "augment": {
     "modName": "Multi-nock",

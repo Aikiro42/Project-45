@@ -14,7 +14,7 @@
 
   "conversion": "projectile",
 
-  "radioMessagesOnPickup" : [ "pickupaugment" ],
+   
 
   "scripts" : [ "/scripts/augments/project45-gunmod/convertermod.lua" ],
   "technicalInfo": "Affects damage per shot.\nMay be rejected by some weapons.",

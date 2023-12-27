@@ -14,7 +14,7 @@
   "technicalInfo" : "Makes weapon manual-feed.",
   "statInfo": "Cock time: 0.5s\nAmmo Capacity +4",
   "shortdescription" : "Alof's Magazine",
-  "radioMessagesOnPickup" : [ "pickupaugment" ],
+   
 
   "augment": {
     "modName": "Alof's Magazine",

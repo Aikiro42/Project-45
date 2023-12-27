@@ -8,7 +8,7 @@
   "description" : "Mod Template.",
   "shortdescription" : "Mod Template.",
 
-  "radioMessagesOnPickup" : [ "pickupaugment" ],
+   
 
   "augment": {
 

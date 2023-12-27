@@ -14,7 +14,7 @@
   "technicalInfo" : "Manual-feed weapons auto-feed.\nCharge weapons automatically fire when fully charged.",
   "shortdescription" : "Multithreader",
 
-  "radioMessagesOnPickup" : [ "pickupaugment" ],
+   
 
   "augment": {
     "modName": "Multithreader",

@@ -15,8 +15,6 @@
   "shortdescription" : "Grenade Launcher",
   "archetype": "Active Ability",
 
-  "radioMessagesOnPickup" : [ "pickupaugment" ],
-
   "augment": {
     "category": "universal",
     "slot": "underbarrel",

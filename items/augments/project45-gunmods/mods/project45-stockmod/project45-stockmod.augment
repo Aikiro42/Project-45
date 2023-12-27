@@ -13,7 +13,7 @@
   "shortdescription" : "Padded Stock",
   "statInfo" : "Screen Shake: 0.1\nRecoil x0.5",
   "description": "Gun stock padded with mooshi leather, cushioned with fluffalo wool.",
-  "radioMessagesOnPickup" : [ "pickupaugment" ],
+   
 
   "augment": {
     "modName": "Padded Stock",

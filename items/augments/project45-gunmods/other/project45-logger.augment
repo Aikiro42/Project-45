@@ -8,7 +8,6 @@
   "description" : "Prints shit.",
   "shortdescription" : "DEBUG: Logger Tool",
 
-  "radioMessagesOnPickup" : [  ],
 
   "scripts" : [ "/scripts/augments/project45-logger.lua" ]
 }
