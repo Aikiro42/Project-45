@@ -7,6 +7,15 @@ local warningTriggered = false
 local messagesToRender = {}
 local renderMessageTimer = 0
 local renderBarsAtCursor = false
+local runAnimUpdateScript = false
+local animTable = {
+  ammo = {
+    ticks = 15,
+    ticker = 0,
+    frames = 2,
+    frame = 1
+  }
+}
 
 synthethikmechanics_altInit = init or function()
   if not warningTriggered then
@@ -26,12 +35,14 @@ function init()
   synthethikmechanics_altInit()
   messagesToRender = animationConfig.animationParameter("project45GunFireMessages")
   renderBarsAtCursor = animationConfig.animationParameter("renderBarsAtCursor")
+  runAnimUpdateScript = runAnimUpdateScript or animationConfig.animationParameter("useAmmoCounterImages")
 end
 
 function update()
   localAnimator.clearDrawables()
   localAnimator.clearLightSources()
   synthethikmechanics_altUpdate()
+  updateAnimTable()
 
   if not warningTriggered then
     warningTriggered = true
@@ -68,10 +79,21 @@ function update()
   renderLaser()
   renderReloadBar({horizontalOffset + (renderBarsAtCursor and 0 or barXOffset), 0})
   renderJamBar({horizontalOffset + (renderBarsAtCursor and 0 or barXOffset), 0})
-  renderChargeBar({horizontalOffset, -1.625})
+  renderChargeBar({horizontalOffset, animationConfig.animationParameter("performanceMode") and -1 or -1.625})
   renderHitscanTrails()
   renderBeam()
 
+end
+
+function updateAnimTable()
+  if not runAnimUpdateScript then return end
+  for anim, _ in pairs(animTable) do
+    animTable[anim].ticker = animTable[anim].ticker + 1
+    if animTable[anim].ticker > animTable[anim].ticks then
+      animTable[anim].frame = (animTable[anim].frame % animTable[anim].frames) + 1
+      animTable[anim].ticker = 0
+    end
+  end
 end
 
 function renderMessages(messageOffset)
@@ -102,6 +124,7 @@ function renderAmmoNumber(offset, reloading)
   
   local ammo = animationConfig.animationParameter("ammo") or "?"
   local rating = animationConfig.animationParameter("reloadRating")
+  local renderAmmoImage = animationConfig.animationParameter("useAmmoCounterImages")
 
   if ammo >= 0 then
     localAnimator.spawnParticle({
@@ -114,16 +137,34 @@ function renderAmmoNumber(offset, reloading)
       layer = "front"
     }, vec2.add(activeItemAnimation.ownerAimPosition(), offset))
 
-  else  -- TODO: show crossed-out mag instead of "E"
-    localAnimator.spawnParticle({
-      type = "text",
-      text= string.format("^shadow;%s", reloading and "R" or "E"),
-      color = {255, 255, 255},
-      size = 1,
-      fullbright = true,
-      flippable = false,
-      layer = "front"
-    }, vec2.add(activeItemAnimation.ownerAimPosition(), offset))
+  else
+    if renderAmmoImage then
+      if reloading then
+        localAnimator.addDrawable({
+          image = "/items/active/weapons/ranged/abilities/project45gunfire/reloadindicator.png:reloading." .. animTable.ammo.frame,
+          position = vec2.add(vec2.add(activeItemAnimation.ownerAimPosition(), offset), {0, 0.25}),
+          color = {255,255,255},
+          fullbright = true,
+        }, "overlay")
+      else
+        localAnimator.addDrawable({
+          image = "/items/active/weapons/ranged/abilities/project45gunfire/reloadindicator.png:empty." .. animTable.ammo.frame,
+          position = vec2.add(vec2.add(activeItemAnimation.ownerAimPosition(), offset), {0, 0.25}),
+          color = {255,255,255},
+          fullbright = true,
+        }, "overlay")
+      end
+    else
+      localAnimator.spawnParticle({
+        type = "text",
+        text= string.format("^shadow;%s", reloading and "R" or "E"),
+        color = {255, 255, 255},
+        size = 1,
+        fullbright = true,
+        flippable = false,
+        layer = "front"
+      }, vec2.add(activeItemAnimation.ownerAimPosition(), offset))
+    end
   end
 end
 

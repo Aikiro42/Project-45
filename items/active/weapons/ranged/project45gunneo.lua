@@ -28,6 +28,11 @@ function init()
     root.assetJson("/configs/project45/project45_generalconfig.config:renderBarsAtCursor",
     true
   )))
+  activeItem.setScriptedAnimationParameter("useAmmoCounterImages",
+    status.statusProperty("project45_useAmmoCounterImages",
+    root.assetJson("/configs/project45/project45_generalconfig.config:useAmmoCounterImages",
+    true
+  )))
   activeItem.setScriptedAnimationParameter("project45GunFireMessages", config.getParameter("project45GunFireMessages", {}))
   activeItem.setInstanceValue("project45GunFireMessages", {})
   self.weapon:init()
