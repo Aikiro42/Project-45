@@ -65,8 +65,7 @@ function update()
   [charge bar]                                             [charge bar]
   --]]
 
-  local barXOffset = reloadTimer < 0 and 2 or 0
-  barXOffset = barXOffset + jamAmount <= 0 and 2 or 0
+  local barXOffset = (reloadTimer >= 0 and 2 or 0) + (jamAmount > 0 and 2 or 0)
   local horizontalOffset = 2
   horizontalOffset = horizontalOffset + (renderBarsAtCursor and barXOffset or 0)
   horizontalOffset = hand == "primary" and -horizontalOffset or horizontalOffset
@@ -272,17 +271,16 @@ function renderReloadBar(offset, barColor, length, width, borderwidth)
 
   local timeMax = animationConfig.animationParameter("reloadTime")
   local quickReloadTimeframe = animationConfig.animationParameter("quickReloadTimeframe")
-  local good = {quickReloadTimeframe[1], quickReloadTimeframe[4]}
-  local perfect = {quickReloadTimeframe[2], quickReloadTimeframe[3]}
-  local position = renderBarsAtCursor and activeItemAnimation.ownerAimPosition() or activeItemAnimation.ownerPosition()
+  local goodScale = quickReloadTimeframe[4] - quickReloadTimeframe[1]
+  local perfectScale = quickReloadTimeframe[3] - quickReloadTimeframe[2]
 
-  local length = length or 4
-  local barWidth = width or 2
-  local borderwidth = borderwidth or 1
+  local position = renderBarsAtCursor and activeItemAnimation.ownerAimPosition() or activeItemAnimation.ownerPosition()
   local offset = offset or {-4, 0}
   offset[1] = (offset[1] < 0) and (offset[1] + 2) or (offset[1] - 2)
   local arrowLength = 0.4
   local textSize = 0.5
+
+  local length = length or 4
 
   local rating = animationConfig.animationParameter("reloadRating")
   local barColor = rating == "PERFECT" and {255, 200, 0}
@@ -295,60 +293,6 @@ function renderReloadBar(offset, barColor, length, width, borderwidth)
   local base_b = vec2.add(base, {0, length/2})  -- end   (top)
   local a, b, o
 
-  -- render border
-  a = vec2.add(base_a, {0, -borderwidth/8})
-  b = vec2.add(base_b, {0, borderwidth/8})
-  local reloadBarBorder = worldify(a, b)
-  localAnimator.addDrawable({
-    line = reloadBarBorder,
-    width = barWidth + borderwidth*2,
-    fullbright = true,
-    color = {0,0,0}
-  }, "ForegroundEntity+1")
-  
-  -- render text
-  o = vec2.add(base_b, {0, borderwidth/8 + textSize})
-  localAnimator.spawnParticle({
-    type = "text",
-    text= "^shadow;" .. rating,
-    color = {203, 203, 203},
-    size = textSize,
-    fullbright = true,
-    flippable = false,
-    layer = "front"
-  }, o)
-
-  -- render bar
-  local reloadLine = worldify(base_a, base_b)
-  localAnimator.addDrawable({
-    line = reloadLine,
-    width = barWidth,
-    fullbright = true,
-    color = barColor
-  }, "ForegroundEntity+1")
-
-  -- render good range
-  a = vec2.add(base_a, {0, good[1]*length})
-  b = vec2.add(base_a, {0, good[2]*length})
-  local goodRange = {a, b}
-  localAnimator.addDrawable({
-    line = goodRange,
-    width = barWidth,
-    fullbright = true,
-    color = {143, 0, 255}
-  }, "ForegroundEntity+1")
-
-  -- render perfect range
-  a = vec2.add(base_a, {0, perfect[1]*length})
-  b = vec2.add(base_a, {0, perfect[2]*length})
-  local perfectRange = {a, b}
-  localAnimator.addDrawable({
-    line = perfectRange,
-    width = barWidth,
-    fullbright = true,
-    color = {199, 128, 255}
-  }, "ForegroundEntity+1")
-
   -- render arrow
   a = vec2.add(base_a, {-arrowLength/2, time*length/timeMax})
   b = vec2.add(base_a, {arrowLength/2, time*length/timeMax})
@@ -358,7 +302,67 @@ function renderReloadBar(offset, barColor, length, width, borderwidth)
     width = 0.75,
     fullbright = true,
     color = {255, 0, 0}
-  }, "ForegroundEntity+1")
+  }, "Overlay+1")
+
+  
+  -- render text
+  o = vec2.add(base_b, {0, borderwidth/8 + textSize})
+  localAnimator.spawnParticle({
+    type = "text",
+    text= "^shadow;" .. rating,
+    color = barColor,
+    size = textSize,
+    fullbright = true,
+    flippable = false,
+    layer = "front"
+  }, o)
+
+  -- render bar image
+  localAnimator.addDrawable({
+    image = "/items/active/weapons/ranged/abilities/project45gunfire/reloadbar/project45-reloadbar-base.png" ..
+      (rating == "PERFECT" and string.format("?border=1;%s50;FFFFFF00", project45util.rgbToHex({255, 200, 0})) or "")
+    ,position = base,
+    fullbright = true,
+  }, "Overlay")
+
+  if rating == "BAD" then
+    -- render bar background if bad
+    localAnimator.addDrawable({
+      image = "/items/active/weapons/ranged/abilities/project45gunfire/reloadbar/project45-reloadbar.png:bad",
+      position = base,
+      fullbright = true,
+    }, "Overlay")
+  elseif rating == "GOOD" then
+    localAnimator.addDrawable({
+      image = "/items/active/weapons/ranged/abilities/project45gunfire/reloadbar/project45-reloadbar.png:good",
+      position = base,
+      fullbright = true,
+    }, "Overlay")
+  elseif rating == "PERFECT" then
+    localAnimator.addDrawable({
+      image = "/items/active/weapons/ranged/abilities/project45gunfire/reloadbar/project45-reloadbar.png:perfect",
+      position = base,
+      fullbright = true,
+    }, "Overlay")
+  end
+
+  -- render good
+  local mid = (quickReloadTimeframe[1] + quickReloadTimeframe[4])/2
+  localAnimator.addDrawable({
+    image = "/items/active/weapons/ranged/abilities/project45gunfire/reloadbar/project45-reloadbar.png:goodrange?scalenearest=1;" ..
+      string.format("%f", goodScale),
+    position = vec2.add(base, {0, (-0.5 + mid)*4}) ,
+    fullbright = true,
+  }, "Overlay")
+
+  -- render perfect
+  mid = (quickReloadTimeframe[2] + quickReloadTimeframe[3])/2
+  localAnimator.addDrawable({
+    image = "/items/active/weapons/ranged/abilities/project45gunfire/reloadbar/project45-reloadbar.png:perfectrange?scalenearest=1;" ..
+    string.format("%f", perfectScale),
+    position = vec2.add(base, {0, (-0.5 + mid)*4}),
+    fullbright = true,
+  }, "Overlay")
 
 end
 
@@ -368,48 +372,24 @@ function renderJamBar(offset, barColor, length, width, borderwidth)
   local position = renderBarsAtCursor and activeItemAnimation.ownerAimPosition() or activeItemAnimation.ownerPosition()
   local offset = offset or {-2, 0}
   offset[1] = (offset[1] < 0) and (offset[1] + 2) or (offset[1] - 2)
-
-  local barColor = barColor or {75,75,75}
-  local length = length or 4
-  local barWidth = width or 2
-  local borderwidth = borderwidth or 1
   
   -- calculate bar stuff
   local base = vec2.add(position, offset)
-  local base_a = vec2.add(base, {0, -length/2}) -- start (bottom)
-  local base_b = vec2.add(base, {0, length/2})  -- end   (top)
-  local a, b
 
-  -- render border
-  a = vec2.add(base_a, {0, -borderwidth/8})
-  b = vec2.add(base_b, {0, borderwidth/8})
-  local reloadBarBorder = worldify(a, b)
+  -- render bar image
   localAnimator.addDrawable({
-    line = reloadBarBorder,
-    width = barWidth + borderwidth*2,
+    image = "/items/active/weapons/ranged/abilities/project45gunfire/jambar/project45-jambar-base.png"
+    ,position = base,
     fullbright = true,
-    color = {0,0,0}
-  }, "ForegroundEntity+1")
+  }, "Overlay")
 
-  -- render bar
-  local unjamBar = worldify(base_a, base_b)
+  -- render jam score
   localAnimator.addDrawable({
-    line = unjamBar,
-    width = barWidth,
+    image = "/items/active/weapons/ranged/abilities/project45gunfire/jambar/project45-jambar.png?scale=1;"
+      .. string.format("%f", jamScore)
+    ,position = base,
     fullbright = true,
-    color = barColor
-  }, "ForegroundEntity+1")
-
-  -- render jamScore
-  a = base_a
-  b = vec2.add(base_a, {0, jamScore*length})
-  local jamScoreBar = {a, b}
-  localAnimator.addDrawable({
-    line = jamScoreBar,
-    width = barWidth,
-    fullbright = true,
-    color = {255, 128, 0}
-  }, "ForegroundEntity+1")
+  }, "Overlay")
 
 end
 
@@ -422,7 +402,7 @@ function renderChargeBar(offset, position, barColor, length, width, borderwidth)
 
   local chargeTime = animationConfig.animationParameter("chargeTime")
   local overchargeTime = animationConfig.animationParameter("overchargeTime")
-  local perfectChargeRange = animationConfig.animationParameter("perfectChargeRange")
+  local perfectChargeRange = animationConfig.animationParameter("perfectChargeRange") or {-1, -1}
 
   local position = activeItemAnimation.ownerAimPosition()
   local offset = offset or {0, -1.5}
@@ -437,64 +417,44 @@ function renderChargeBar(offset, position, barColor, length, width, borderwidth)
   local base_b = vec2.add(base, {length/2, 0})  -- end   (right)
   local a, b
 
-  -- render border
-  a = vec2.add(base_a, {-borderwidth/8, 0})
-  b = vec2.add(base_b, {borderwidth/8, 0})
-  local chargeBarBorder = worldify(a, b)
-  localAnimator.addDrawable({
-    line = chargeBarBorder,
-    width = barWidth + borderwidth*2,
-    fullbright = true,
-    color = {0,0,0}
-  }, "ForegroundEntity+1")
+  local chargeProgress = chargeTimer / (chargeTime + overchargeTime)
+  local overchargeProgress = math.max(0, chargeTimer - chargeTime) / overchargeTime
 
-  local chargeLength = length * chargeTime / (chargeTime + overchargeTime)
-
-  -- render chargetime bar
-  local chargeTimeBar = worldify(base_a, vec2.add(base_a, {chargeLength, 0}))
-  localAnimator.addDrawable({
-    line = chargeTimeBar,
-    width = barWidth,
-    fullbright = true,
-    color = barColor
-  }, "ForegroundEntity+1")
-
-  -- render overcharge time bar
-  local overchargeTimeBar = worldify(vec2.add(base_a, {chargeLength, 0}), base_b)
-  localAnimator.addDrawable({
-    line = overchargeTimeBar,
-    width = barWidth,
-    fullbright = true,
-    color = {255, 0, 0}
-  }, "ForegroundEntity+1")
-
-
-  if perfectChargeRange then
-    local overchargeLength = length * overchargeTime / (chargeTime + overchargeTime)
-    local perfectChargeBase = vec2.add(base_a, {chargeLength, 0})
-    local perfectChargeTimeBar = worldify(
-      vec2.add(perfectChargeBase, {overchargeLength * perfectChargeRange[1], 0}),
-      vec2.add(perfectChargeBase, {overchargeLength * perfectChargeRange[2], 0})
-    )
-    localAnimator.addDrawable({
-      line = perfectChargeTimeBar,
-      width = barWidth,
-      fullbright = true,
-      color = {255, 255, 255}
-    }, "ForegroundEntity+1")
+  local chargeHexColorFunction = function(chargeTimer, chargeTime, overchargeTime)
+    if chargeTimer < chargeTime then
+      return project45util.rgbToHex({128,128,128})
+    end
+    local chargeProgress = chargeTimer - chargeTime / overchargeTime
+    return project45util.rgbToHex({
+      255,
+      math.max(0, math.floor(255 * (1 - chargeProgress))),
+      0
+    })
   end
 
+  if (perfectChargeRange[1] < overchargeProgress and overchargeProgress < perfectChargeRange[2]) then
+    localAnimator.addDrawable({
+      image = "/items/active/weapons/ranged/abilities/project45gunfire/chargebar/project45-chargebar-perfect.png"
+      .. string.format("?multiply=FFFFFF%02X", math.floor(math.min(255, 1024*chargeProgress)))
+      ,position = base,
+      fullbright = true,
+    }, "Overlay") 
+  else
+    localAnimator.addDrawable({
+      image = "/items/active/weapons/ranged/abilities/project45gunfire/chargebar/project45-chargebar-base.png"
+      .. string.format("?multiply=FFFFFF%02X", math.floor(math.min(255, 1024*chargeProgress)))
+      ,position = base,
+      fullbright = true,
+    }, "Overlay") 
+  end
 
-  -- render charge progress
-  a = base_a
-  b = vec2.add(base_a, {length * chargeTimer / (chargeTime + overchargeTime), 0})
-  local jamScoreBar = {a, b}
   localAnimator.addDrawable({
-    line = jamScoreBar,
-    width = barWidth,
+    image = "/items/active/weapons/ranged/abilities/project45gunfire/chargebar/project45-chargebar.png"
+      .. string.format("?crop=0;0;%f;1", chargeProgress * 8)
+      .. string.format("?setcolor=%s", chargeHexColorFunction(chargeTimer, chargeTime, overchargeTime))
+    ,position = base,
     fullbright = true,
-    color = {255, 255, 0}
-  }, "ForegroundEntity+1")
+  }, "Overlay")
 
 end
 
