@@ -5,7 +5,11 @@ Adds moddable guns with Synthetik-esque mechanics into the game.
 The greatest minds of Letheia Corp. and The Miniknog Institute present to you: Project 45!
 
 [h1]How to Obtain[/h1]
-Craft the "Project 45 Gun Shop" with the [b]fully upgraded Inventor's Table[/b]. All Project 45 related items can be bought from there.
+[list]
+[*]Craft the "Project 45 Gun Shop" with the [b]fully upgraded Inventor's Table[/b].
+[*]Purchase the "Project 45 Gun Shop" from the Shipyard Captain for 10,000 pixels
+[/list]
+[b]All Project 45 related items can be purchased from the gun shop.[/b]
 
 [quote=Aikiro42]
 [h1]Disclaimer:[/h1]

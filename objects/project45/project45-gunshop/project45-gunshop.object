@@ -6,7 +6,7 @@
   "description" : "A revolutionary standard for weapons of war, brought to you in a nifty vending machine.",
   "race" : "human",
   "category" : "decorative",
-  "price" : 4500,
+  "price" : 10000, // price of crafting is 4500; at least this provides a way for the player to make a profit
   "lightColor" : [120, 65, 0],
   "printable" : false,
 
