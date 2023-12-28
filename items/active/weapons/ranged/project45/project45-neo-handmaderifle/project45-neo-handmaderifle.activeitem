@@ -97,6 +97,7 @@
     "recoilMaxDeg": 10,
     "recoverDelay": 0.1,
     "cycleTime": 0.0625,
+    "jamChances": [0.01, 0, 0, 0],
     "projectileKind": "projectile",
     "laser":{
       "enabled": false
