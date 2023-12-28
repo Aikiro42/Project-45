@@ -306,7 +306,7 @@ function renderReloadBar(offset, barColor, length, width, borderwidth)
 
   
   -- render text
-  o = vec2.add(base_b, {0, borderwidth/8 + textSize})
+  o = vec2.add(base_b, {0, textSize})
   localAnimator.spawnParticle({
     type = "text",
     text= "^shadow;" .. rating,
