@@ -65,3 +65,5 @@ More information can be found in the in-mod [b]Project 45 Manual[/b] sold by the
 [*] [b]Digital Extremes[/b] and [b]Flow Fire Games[/b] for game mechanic ideas
 [*] [b][url=https://freesound.org/]Freesound[/url][/b], [b][url=https://www.youtube.com/@mgwsounddesign4838]MGW Sound Design[/url][/b], [b][url=https://www.youtube.com/@TenaciousTrilobite]Tenacious Trilobyte[/url][/b], [b][url=https://www.youtube.com/@mishas_guns]Misha's Guns[/url][/b], [b][url=https://www.youtube.com/@GunsOfTheWorld]Guns of the World[/url][/b] and other gun youtubers for sound effects and references
 [/list]
+
+Check out the [url=https://github.com/Aikiro42/Project-45]Github page[/url]!
