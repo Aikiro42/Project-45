@@ -343,6 +343,26 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
   self.currentRecoverTime = self.recoverTime[movementState] * self.recoverMult
   activeItem.setCursor("/cursors/project45-neo-cursor-" .. movementState .. ".cursor")
 
+  if storage.reloadSignal then
+    if self.reloadTimer < 0 then
+      storage.reloadSignal = false
+    end
+    if storage.jamAmount <= 0
+    and not self.triggered
+    then
+      if storage.ammo >= 0 then
+        self:openBolt(self.breakAction and storage.ammo or self.ammoPerShot)
+        if self.internalMag then
+          self:setState(self.reloading)
+        else
+          self:ejectMag()
+        end
+      elseif self.reloadTimer < 0 then
+        self:setState(self.reloading)
+      end
+    end
+  end
+
   -- trigger i/o logic
   if self:triggering()
   and not self.weapon.currentAbility
@@ -479,7 +499,7 @@ function Project45GunFire:firing()
 
   -- add unejected casings
 
-  storage.unejectedCasings = storage.unejectedCasings + math.min(self.ammoPerShot, storage.ammo)
+  storage.unejectedCasings = storage.unejectedCasings + (self.casingsPerShot or math.min(self.ammoPerShot, storage.ammo))
   self:updateAmmo(project45util.diceroll(self.ammoConsumeChance) and -self.ammoPerShot or 0)
   
   self.triggered = storage.ammo == 0 or self.triggered
@@ -794,10 +814,13 @@ function Project45GunFire:reloading()
       -- if mag isn't fully loaded, reset minigame
       if storage.ammo < self.maxAmmo then
         self.reloadTimer = 0      
+      
+      -- DISABLED FEATURE: A BIT TOO PUNISHING; THE DAMAGE DECREASE AND JAMS WILL SUFFICE
       -- if reload rating is not bad, prematurely end minigame
       -- otherwise, player has to wait until end of reload time
-      elseif reloadRating ~= "BAD" then break end
-
+      -- elseif reloadRating ~= BAD then break
+      else break end
+      
     end
     self.reloadTimer = self.reloadTimer + self.dt
     coroutine.yield()
@@ -927,7 +950,7 @@ function Project45GunFire:jam()
     animator.setAnimationState("bolt", "jammed")
     animator.setAnimationState("gun", "jammed")
     self:updateChamberState("filled")
-    storage.unejectedCasings = math.min(storage.ammo, storage.unejectedCasings + self.ammoPerShot)
+    storage.unejectedCasings = math.min(storage.ammo, storage.unejectedCasings + (self.casingsPerShot or self.ammoPerShot))
     self:updateAmmo(-self.ammoPerShot)
     
     -- prevent triggering and firing
@@ -1151,6 +1174,18 @@ function Project45GunFire:recoil(down, mult, amount, recoverDelay)
   self.recoverDelayTimer = (recoverDelay or self.recoverDelay or self.fireTime or 0) * self.recoverMult
 end
 
+function Project45GunFire:openBolt(ammoDiscard, mute)
+  ammoDiscard = ammoDiscard or 0
+  if ammoDiscard > 0 then
+    self:updateAmmo(-ammoDiscard)
+    storage.unejectedCasings = storage.unejectedCasings + ammoDiscard
+  end
+  animator.setAnimationState("gun", self.breakAction and "open" or "ejecting")
+  if not self.mute then animator.playSound("boltPull") end
+  self:discardCasings()
+  self:updateChamberState("empty")
+end
+
 -- Ejects mag
 -- can immediately begin reloading minigame
 function Project45GunFire:ejectMag()
@@ -1178,6 +1213,10 @@ function Project45GunFire:ejectMag()
     animator.burstParticleEmitter("magazine")
   end
   self:setStance(self.stances.empty)
+
+  if animator.animationState("chamber") == "ready" then
+    storage.unejectedCasings = storage.unejectedCasings + (self.casingsPerShot or self.ammoPerShot)
+  end
 
   if self.ejectCasingsWithMag or
   (self.breakAction and animator.animationState("chamber") == "filled") then

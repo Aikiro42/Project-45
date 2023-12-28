@@ -61,7 +61,7 @@
       "ejectCasing": [
       ],
       "ejectMag": [ "/sfx/project45neosfx/boltpull/boltpull-rifle2.ogg" ],
-      "boltPull" : [ ],
+      "boltPull" : [ "/sfx/project45neosfx/boltpull/boltpull-rifle2.ogg" ],
       "boltPush" : ["/sfx/project45neosfx/boltpush/boltpush-rifle2.ogg"],
       "reloadEnd": [],
       "loadRound": [
@@ -136,12 +136,12 @@
       },
       "boltPull": {
         "lite": true,
-        "frontArmFrame": "run.3",
+        "frontArmFrame": "rotation",
         "backArmFrame": "jump.2"
       },
       "boltPush": {
         "lite": true,
-        "frontArmFrame": "run.3",
+        "frontArmFrame": "rotation",
         "backArmFrame": "fall.1"
       },
       "reloading": {

@@ -1,0 +1,16 @@
+{
+
+  "animationCustom": {
+    "sounds":{
+      "error": ["/sfx/interface/clickon_error.ogg"]
+    }
+  },
+
+  "ability" : {
+      "name" : "Manual Reload",
+      "type" : "project45gunfirereload",
+      "scripts" : ["/items/active/weapons/ranged/abilities/project45gunfirereload/project45gunfirereload.lua"],
+      "class" : "Project45GunFireReload"
+  }
+}
+  

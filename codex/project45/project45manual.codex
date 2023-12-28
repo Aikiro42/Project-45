@@ -4,6 +4,20 @@
   "description" : "A codex describing how to use Project 45 weapons.",
   "icon" : "project45manualcover.png",
   "contentPages" : [
+"# ^#E2C344;Contents^reset;
+- Introduction
+- Weapon Stats
+- Firing & Recoil
+- Charged Weapons
+- Misc Stats
+- Ammo & Reloading
+- Reload Rating
+- Per-Bullet Reload
+- Jamming
+- Gun Modding
+- The Gun Bag
+- (Quickbar) Mod Settings
+",
 "# ^#E2C344;Introduction^reset;
 Project 45 guns are different from vanilla guns in the following aspects:
 1. They have the ability to ^#D93A3A;crit^reset; (and supercrit beyond 100% chance).
@@ -151,6 +165,7 @@ If you have Stardust Core/Lite or Quickbar Mini installed, you can change the fo
 - ^#EA9931;Render Bars Beside Cursor:^reset; If this setting is ticked, the reload bar and jam bar will be rendered beside the cursor.
 
 - ^#EA9931;Use Reload/Empty Images:^reset; If this setting is ticked, animated sprites will be used to indicate a reloading or empty gun, instead of 'R' and 'E'.
+    - Enabling Performance Mode disables this setting.
 "
 
   ],

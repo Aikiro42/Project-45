@@ -1,0 +1,28 @@
+{
+  "itemName" : "project45-manualreloadmod",
+  "price" : 1000,
+  "rarity" : "Common",
+  "tooltipKind" : "project45gunmod2",
+  "modCategory" : "abilityMod",
+  "category" : "eppAugment",
+  "tooltipFields": {
+    "subtitle": "Ability Mod"
+  },
+  "inventoryIcon" : "/items/augments/project45-gunmods/ability/project45-manualreloadmod/project45-manualreloadmod.png",
+  "description" : "Enables you to manually reload your weapon.",
+  "technicalInfo": "- Right click to eject the magazine or initiate reload.\n- Fire to do an active reload.",
+  "shortdescription" : "Manual Reload",
+  "archetype": "Active Ability",
+  
+  "augment":{
+    "upgradeCost": 0,
+    "category": "universal",
+    "slot": "intrinsic",
+    "altAbilityType" : "project45gunfirereload",
+    "overrideTwoHanded": true,
+    "twoHanded": true
+  },
+
+  "scripts" : [ "/scripts/augments/project45-gunmod/abilitymod.lua" ],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
+}

@@ -54,7 +54,7 @@
         "/sfx/project45neosfx/special/scarlet/scarlet_reloadend.ogg"
       ],
       "ejectMag" : [],
-      "boltPull" : [],
+      "boltPull" : [ "/sfx/melee/charge_traildash2.ogg" ],
       "boltPush" : [],
       "click": []
     }
@@ -107,31 +107,6 @@
         "weaponOffset": [0, 0],
         "aimAngle": 0
       },
-      "firing": {
-        "frontArmFrame" : "idle.4",
-        "backArmFrame" : "swim.3",
-        "weaponRotation": 30,
-        "armRotation": 5,
-        "lock": true,
-        "allowRotate": false,
-        "weaponRotationCenter": [-1.125, 0]
-      },
-      "boltPulling": {
-        "frontArmFrame" : "idle.4",
-        "backArmFrame" : "fall.1",
-        "weaponRotation": 15,
-        "lock": true,
-        "allowRotate": false,
-        "weaponOffset": [0, 0]
-      },
-      "boltPushing": {
-        "frontArmFrame" : "idle.4",
-        "backArmFrame" : "fall.1",
-        "weaponRotation": 15,
-        "lock": true,
-        "allowRotate": false,
-        "weaponOffset": [0, 0]
-      },
       "empty": {
         "frontArmFrame" : "idle.4",
         "backArmFrame" : "fall.1",
@@ -151,6 +126,22 @@
         "weaponOffset": [0, 0],
         "weaponRotationCenter": [-0.5, -0.25]
       },
+      "boltPull": {
+        "frontArmFrame" : "idle.4",
+        "backArmFrame" : "fall.1",
+        "weaponRotation": 15,
+        "lock": true,
+        "allowRotate": false,
+        "weaponOffset": [0, 0]
+      },
+      "boltPush": {
+        "frontArmFrame" : "idle.4",
+        "backArmFrame" : "fall.1",
+        "weaponRotation": 15,
+        "lock": true,
+        "allowRotate": false,
+        "weaponOffset": [0, 0]
+      },
       "reloading": {
         "frontArmFrame" : "idle.4",
         "backArmFrame" : "swim.3",
@@ -169,6 +160,15 @@
         "allowRotate": false,
         "lock": true,
         "weaponOffset": [-0.5, 0.5]
+      },
+      "firing": {
+        "frontArmFrame" : "idle.4",
+        "backArmFrame" : "swim.3",
+        "weaponRotation": 30,
+        "armRotation": 5,
+        "lock": true,
+        "allowRotate": false,
+        "weaponRotationCenter": [-1.125, 0]
       }
 
     }

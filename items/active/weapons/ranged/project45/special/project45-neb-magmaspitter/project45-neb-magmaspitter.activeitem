@@ -6,7 +6,7 @@
   "description" : "A revolver that shoots magma. How the cylinder holds the magma is a mystery.",
   "shortdescription" : "^#fdd14d;Magma Spitter^reset;",
   "tooltipKind" : "project45gun",
-  "gunArchetype": "shotgun",
+  "gunArchetype": "pistol",
   "category" : "shotgun",
   "twoHanded" : false,
   "itemTags" : ["weapon","ranged","shotgun"],
