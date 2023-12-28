@@ -47,7 +47,7 @@
         "timeToLive" : 0.01,
         "destructionTime" : 0.2,
         "initialVelocity" : [0.5, 0],
-        "variance" : {"initialVelocity" : [0.5, 0]}
+        "variance" : {"length": 0}
       }
 
     }
