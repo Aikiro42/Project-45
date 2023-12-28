@@ -47,10 +47,12 @@
     "upgradeCapacity": 7,
     "allowsConversion": [
       "projectile",
+      "beam",
       "summoned"
     ],
     "acceptsAmmoArchetype":[
-      "laser"
+      "laser",
+      "beam"
     ],
     "acceptsModSlot": [
       "rail",

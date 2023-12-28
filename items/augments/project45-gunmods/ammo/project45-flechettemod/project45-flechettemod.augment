@@ -15,6 +15,7 @@
   "statInfo": "Multishot: 1.1\nHitscan Pen.: 3",
   "shortdescription" : "Flechette Shells",
 
+  "conversion": "projectile",
   "augment":{
     "modName": "Flechette Shells",
     "category": "ballistic",
@@ -24,9 +25,6 @@
     "projectileCount": 5,
     "projectileParameters": {
         "piercing": true
-    },
-    "hitscanParameters": {
-        "punchThrough": 3
     }
     
   },

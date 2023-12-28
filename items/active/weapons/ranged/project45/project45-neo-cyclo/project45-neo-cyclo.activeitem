@@ -54,7 +54,8 @@
       "summoned"
     ],
     "acceptsAmmoArchetype": [
-      "beam"
+      "beam",
+      "laser"
     ],
     "acceptsModSlot": [
       "muzzle",

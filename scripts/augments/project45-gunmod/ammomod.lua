@@ -1,8 +1,11 @@
 require "/scripts/augments/item.lua"
+require "/scripts/augments/project45-gunmod/convertermod.lua"
 require "/scripts/augments/project45-gunmod-helper.lua"
 require "/scripts/util.lua"
 require "/scripts/vec2.lua"
 require "/scripts/set.lua"
+
+local convertermod_apply = apply
 
 function apply(input)
 
@@ -92,6 +95,13 @@ function apply(input)
 
     -- MOD INSTALLATION PROCESS
 
+    -- make necessary conversion
+    local converted, conversionValid = convertermod_apply(input, true, augment)
+    if conversionValid == 0 then
+      return gunmodHelper.addMessage(input, "Conversion error: " .. config.getParameter("shortdescription"))
+    end
+    output = converted -- TESTME: will this work?
+
     -- prepare to alter stats and the primary ability in general
     local oldPrimaryAbility = output.config.primaryAbility or {}
     local newPrimaryAbility = input.parameters.primaryAbility or {}
@@ -109,16 +119,20 @@ function apply(input)
     end
 
     -- alter specific projectile settings
-    newPrimaryAbility.projectileKind = augment.projectileKind or oldPrimaryAbility.projectileKind
-    newPrimaryAbility.projectileType = augment.projectileType or oldPrimaryAbility.projectileType
-    newPrimaryAbility.summonedProjectileType = augment.summonedProjectileType or oldPrimaryAbility.summonedProjectileType
-    newPrimaryAbility.projectileParameters = augment.projectileParameters
-    newPrimaryAbility.hitscanParameters = augment.hitscanParameters
-    newPrimaryAbility.beamParameters = augment.beamParameters
-    newPrimaryAbility.summonedProjectileParameters = augment.summonedProjectileParameters
-    
-    newPrimaryAbility.hideMuzzleFlash = augment.hideMuzzleFlash
-    newPrimaryAbility.hideMuzzleSmoke = augment.hideMuzzleSmoke
+    -- newPrimaryAbility.projectileKind = augment.projectileKind or oldPrimaryAbility.projectileKind -- no need; conversion already done
+    local specificSettingsList = {
+      "projectileType",
+      "summonedProjectileType",
+      "projectileParameters",
+      "hitscanParameters",
+      "beamParameters",
+      "summonedProjectileParameters",
+      "hideMuzzleFlash",
+      "hideMuzzleSmoke"
+    }
+    for _, v in ipairs(specificSettingsList) do
+      newPrimaryAbility[v] = augment[v]
+    end
 
     -- alter muzzle flash color
     if augment.muzzleFlashColor then
@@ -139,11 +153,11 @@ function apply(input)
     -- merge changes
     output:setInstanceValue("primaryAbility", sb.jsonMerge(oldPrimaryAbility, newPrimaryAbility))
 
-    -- register ammo   
+    -- register ammo
     modSlots.ammoType = {
       augment.modName,
       config.getParameter("itemName"),
-      config.getParameter("inventoryIcon")
+      config.getParameter("tooltipFields", {}).objectImage or config.getParameter("inventoryIcon")
     }
     output:setInstanceValue("modSlots", modSlots)
     if upgradeCost then

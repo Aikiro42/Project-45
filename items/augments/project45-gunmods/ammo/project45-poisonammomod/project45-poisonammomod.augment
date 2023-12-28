@@ -14,12 +14,12 @@
   "technicalInfo": "Fires projectiles that poisons the enemy while dealing poison damage.",
   "shortdescription" : "Mercury-tipped Bullets",
 
+  "conversion": "projectile",
   "augment":{
     "modName": "Mercury-tipped Bullets",
     "category": "ballistic",
     "archetype": "bullet",
 
-    "projectileKind": "projectile",
     "projectileType": "project45stdpoisonbullet"
     
   },

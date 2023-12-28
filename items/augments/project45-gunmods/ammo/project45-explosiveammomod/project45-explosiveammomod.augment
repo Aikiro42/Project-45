@@ -14,11 +14,11 @@
   "technicalInfo": "Fires projectiles that explode on impact.",
   "shortdescription" : "High-explosive Bullets",
 
+  "conversion": "projectile",
   "augment":{
     "modName": "High-explosive Bullets",
     "category": "ballistic",
     "archetype": "bullet",
-    "projectileKind": "projectile",
     "projectileType": "project45explosivebullet"
   },
 

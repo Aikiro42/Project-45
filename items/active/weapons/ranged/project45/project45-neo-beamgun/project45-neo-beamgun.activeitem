@@ -32,7 +32,8 @@
       "hitscan"
     ],
     "acceptsAmmoArchetype": [
-      "beam"
+      "beam",
+      "laser"
     ],
     "acceptsModSlot": [
       "rail",

@@ -14,12 +14,12 @@
   "technicalInfo" : "Summons temporal singularities that float in mid-air, detonating after a short time, dealing electric damage.",
   "shortdescription" : "Singularity Essence",
 
+  "conversion": "summoned",
   "augment":{
     "modName": "Singularity Essence",
     "category": "experimental", // TODO: make this either matter or energy and make a gun for this
     "archetype": "summoned",
 
-    "projectileKind": "summoned",
     "summonedProjectileType": "project45gravitygrenade",
     "summonedProjectileParameters":{
       "speed": 0

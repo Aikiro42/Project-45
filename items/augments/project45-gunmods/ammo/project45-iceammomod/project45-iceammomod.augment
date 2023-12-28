@@ -14,13 +14,13 @@
   "technicalInfo" : "Fires hitscans that freeze enemies and deal ice damage.",
   "shortdescription" : "Cryo Lasers",
 
+  "conversion": "hitscan",
   "augment":{
     "modName": "Cryo Lasers",
     "category": "energy",
     "archetype": "laser",
     "spread": 0.01,
     "muzzleFlashColor": [150,203,231],
-    "projectileKind": "hitscan",
     "hitscanParameters":{
       "hitscanColor": [150,203,231],
       "hitscanBrightness": 0.5,

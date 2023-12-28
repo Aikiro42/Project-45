@@ -22,7 +22,8 @@
       "summoned"
     ],
     "acceptsAmmoArchetype": [
-      "laser"
+      "laser",
+      "beam"
     ],
     "acceptsModSlot": [
       "rail",

@@ -124,7 +124,9 @@
       "material"
     ],
     "acceptsAmmoArchetype":[
-      "summoned"
+      "summoned",
+      "laser",
+      "beam"
     ],
     "flipSlot": []
   },
