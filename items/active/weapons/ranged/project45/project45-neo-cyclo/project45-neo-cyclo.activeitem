@@ -50,6 +50,7 @@
     "upgradeCapacity": 6,
     "allowsConversion": [
       "projectile",
+      "beam",
       "hitscan",
       "summoned"
     ],

@@ -29,7 +29,8 @@
     "upgradeCapacity": 5,
     "allowsConversion": [
       "projectile",
-      "hitscan"
+      "hitscan",
+      "beam"
     ],
     "acceptsAmmoArchetype": [
       "beam",

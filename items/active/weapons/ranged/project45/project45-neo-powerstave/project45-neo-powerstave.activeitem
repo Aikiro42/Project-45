@@ -112,6 +112,12 @@
   "project45GunModInfo":{
     "category": "experimental",
     "upgradeCapacity": 5,
+    "compatibleMods": [
+      "project45-elecammomod",
+      "project45-iceammomod",
+      "project45-firebeammod",
+      "project45-poisonbeammod"
+    ],
     "allowsConversion": [
       "hitscan",
       "beam",

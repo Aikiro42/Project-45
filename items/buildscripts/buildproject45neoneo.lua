@@ -239,7 +239,7 @@ function build(directory, config, parameters, level, seed)
   -- populate tooltip fields
   if config.tooltipKind == "project45gun" then
     config.tooltipFields = config.tooltipFields or {}
-    config.tooltipFields.subtitle = project45util.categoryStrings[config.project45GunModInfo.category or "Generic"] -- .. "^#D1D1D1;" .. config.gunArchetype or config.category
+    config.tooltipFields.subtitle = generalConfig.categoryStrings[config.project45GunModInfo.category or "Generic"] -- .. "^#D1D1D1;" .. config.gunArchetype or config.category
     config.tooltipFields.levelLabel = util.round(configParameter("level", 1), 1)
 
     local modList = parameters.modSlots or config.modSlots or {}
