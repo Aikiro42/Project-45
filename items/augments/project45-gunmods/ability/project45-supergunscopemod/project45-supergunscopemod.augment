@@ -1,20 +1,23 @@
 {
   "itemName" : "project45-supergunscopemod",
-  "price" : 30000,
+  "price" : 17500,
   "rarity" : "Essential",
   "tooltipKind" : "project45gunmod2",
-  "category" : "Ability Mod",
+  "modCategory" : "abilityMod",
+  "category" : "eppAugment",
   "tooltipFields":{
+    "subtitle": "Ability Mod",
     "objectImage": "/items/augments/project45-gunmods/ability/project45-supergunscopemod/project45-supergunscopemod.png"
   },
   "inventoryIcon" : "/items/augments/project45-gunmods/ability/project45-supergunscopemod/project45-supergunscopemodicon.png",
   "description" : "A high-tech scope mod equipped with gyrostabilizers that help manage recoil and accuracy.",
-  "technicalInfo": "- Hold Right-click to aim.\n- Move cursor to move crosshairs.\n- Tap crouch to lock crosshair.",
-  "statInfo": "Recoil -90%\nInaccuracy -90%",
+  "technicalInfo": "Works similar to the Scope Mod.",
+  "statInfo": "Recoil x0.5\nInaccuracy x0.5\nCrit Chance +50% when aiming",
   "shortdescription" : "Hi-tech Scope",
   "archetype": "Active Ability",
 
   "augment":{
+    "upgradeCost": 1,
     "category": "universal",
     "slot": "sights",
     "altAbilityType" : "project45gunscope",
@@ -24,11 +27,11 @@
     "primaryAbility": {
       "inaccuracy": {
         "operation": "multiply",
-        "value": 0.1
+        "value": 0.5
       },
-      "spread": {
+      "recoilMult": {
         "operation": "multiply",
-        "value": 0.1
+        "value": 0.5
       }
     },
 
@@ -49,9 +52,6 @@
     }
 
   },
-
-
-  "radioMessagesOnPickup" : [ "pickupaugment" ],
 
   "scripts" : [ "/scripts/augments/project45-gunmod/abilitymod.lua" ],
   "builder": "/items/buildscripts/buildproject45mod.lua"

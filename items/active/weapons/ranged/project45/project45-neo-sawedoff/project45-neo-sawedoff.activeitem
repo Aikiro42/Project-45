@@ -6,7 +6,7 @@
   "description" : "Rip and tear until it's done.",
   "shortdescription" : "Sawed-off Shotgun",
   "tooltipKind" : "project45gun",
-  "gunArchetype": "Shotgun",
+  "gunArchetype": "shotgun",
   "category" : "shotgun",
   "twoHanded" : false,
   "itemTags" : ["weapon","ranged","shotgun"],
@@ -16,7 +16,10 @@
 
   "project45GunModInfo": {
     "category": "ballistic",
-    "statModCountMax": 20,
+    "upgradeCapacity": 5,
+    "compatibleMods": [
+      "project45-alofsmagmod"
+    ],
     "allowsConversion": [
       "projectile",
       "summoned"
@@ -61,7 +64,7 @@
       "ejectCasing": [
       ],
       "ejectMag": [ "/sfx/project45neosfx/boltpull/boltpull-rifle2.ogg" ],
-      "boltPull" : [ ],
+      "boltPull" : [ "/sfx/project45neosfx/boltpull/boltpull-rifle2.ogg" ],
       "boltPush" : ["/sfx/project45neosfx/boltpush/boltpush-rifle2.ogg"],
       "reloadEnd": [],
       "loadRound": [
@@ -106,7 +109,11 @@
     
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
+    "critChance": 0.20,
+    "critDamageMult": 1.4,
+    "reloadCost": 8,
     "baseDamage": 25,
+
     "maxAmmo": 2,
     "bulletsPerReload": 2,
     "inaccuracy": 5,
@@ -170,6 +177,7 @@
       },
       "boltPull": {
         "lite": true,
+        "armRecoil": -15,
         "frontArmFrame": "rotation",
         "backArmFrame": "rotation",
         "twoHanded": false

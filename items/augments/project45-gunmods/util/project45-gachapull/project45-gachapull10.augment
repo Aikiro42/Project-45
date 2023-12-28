@@ -1,0 +1,15 @@
+{
+  "itemName" : "project45-gachapull10",
+  "price" : 20000,
+  "rarity" : "Legendary",
+  "tooltipKind" : "project45gunmod",
+  "category" : "upgradeComponent",
+  "tooltipFields":{
+    "subtitle": "Applied Utility"
+  },
+  "inventoryIcon" : "/items/augments/project45-gunmods/util/project45-gachapull/project45-gachapull10.png",
+  "description" : "Ten (10) one-time-use keys for opening the ever-replenishing Gun Bag.",
+  "shortdescription" : "Gun Bag Key Bundle",
+  "pullsAdd": 10,
+  "scripts" : [ "/scripts/augments/project45-gachapull.lua" ]
+}

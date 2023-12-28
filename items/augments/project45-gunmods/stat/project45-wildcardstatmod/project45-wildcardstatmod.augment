@@ -1,0 +1,46 @@
+{
+  "itemName" : "project45-wildcardstatmod",
+  "price" : 1000,
+  "rarity" : "Essential",
+  "tooltipKind" : "project45gunmod2",
+  "tooltipFields": {
+    "subtitle": "Stat Mod"
+  },
+  "modCategory" : "statMod",
+  "category" : "eppAugment",
+  "inventoryIcon" : "/items/augments/project45-gunmods/stat/project45-wildcardstatmod/project45-wildcardstatmod.png",
+  "statInfo" : "^#d29ce7;???",
+  "description": "A mod that provides random stat bonuses.",
+  "slot": "multiple",
+  "archetype": "Mixed",
+  "shortdescription" : "^#d29ce7;Wildcard Mod",
+
+  "augment":{
+    "upgradeCost": 5,
+    "randomStats": true,
+    "baseDamage": {
+      "additive": [1, 4],
+      "multiplicative": [0.01, 0.4]
+    },
+    "critChance": {
+      "additive": [0.01, 0.05],
+      "multiplicative": [0.01, 0.5]
+    },
+    "critDamage": {
+      "additive": [0.1, 0.3],
+      "multiplicative": [0.01, 0.5]
+    },
+    "reloadCost": {
+      "additive": [-5, -1],
+      "multiplicative": [0.01, 0.3]
+    },
+    "fireTime": {
+      "additive": [-0.05, -0.001],
+      "multiplicative": [0.01, 0.5]
+    }
+  },
+
+  "scripts" : [ "/scripts/augments/project45-gunmod/statmod.lua" ],
+  "builder": "/items/buildscripts/buildproject45randstatmod.lua"
+
+}

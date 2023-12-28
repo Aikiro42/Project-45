@@ -6,7 +6,7 @@
   "description" : "A good ol' handgun. Reliable, deadly.",
   "shortdescription" : "Pistol",
   "tooltipKind" : "project45gun",
-  "gunArchetype": "Handgun",
+  "gunArchetype": "pistol",
   "category" : "pistol",
   "twoHanded" : false,
   "itemTags" : ["weapon","ranged","pistol"],
@@ -62,40 +62,6 @@
               "frames": 2
             }
           }
-        },
-        "gun": {
-          "states":{
-            "idle": {
-              "frames": 1
-            },
-            "firing": {
-              "frames": 1
-            },
-            "firingLoop": {
-              "frames": 1
-            },
-            "ejecting": {
-              "frames": 1
-            },
-            "boltPulling": {
-              "frames": 1
-            },
-            "ejected": {
-              "frames": 1
-            },
-            "feeding": {
-              "frames": 1
-            },
-            "boltPushing": {
-              "frames": 1
-            },
-            "jammed": {
-              "frames": 1
-            },
-            "unjamming": {
-              "frames": 1
-            }
-          }
         }
       }
     }
@@ -103,7 +69,7 @@
 
   "project45GunModInfo":{
     "category": "ballistic",
-    "statModCountMax": 20,
+    "upgradeCapacity": 9,
     "allowsConversion": [
       "hitscan",
       "beam",
@@ -116,7 +82,8 @@
       "stock",
       
       "magazine",
-      "material"
+      "material",
+      "receiver"
     ],
     "acceptsAmmoArchetype":[
       "bullet"
@@ -146,6 +113,7 @@
     
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
+    "reloadCost": 25,
     "maxAmmo": 16,
     "bulletsPerReload": 16,
     "inaccuracy": 3,

@@ -3,8 +3,10 @@
   "price" : 1250,
   "rarity" : "Uncommon",
   "tooltipKind" : "project45gunmod2",
-  "category" : "Ammo Mod",
+  "modCategory" : "ammoMod",
+  "category" : "eppAugment",
   "tooltipFields":{
+    "subtitle": "Ammo Mod",
     "objectImage": "/items/augments/project45-gunmods/ammo/project45-incendiaryammomod/project45-incendiaryammomod.png"
   },
   "inventoryIcon" : "/items/augments/project45-gunmods/ammo/project45-incendiaryammomod/project45-incendiaryammomodicon.png",
@@ -23,7 +25,7 @@
   },
 
 
-  "radioMessagesOnPickup" : [ "pickupaugment" ],
+   
 
   "scripts" : [ "/scripts/augments/project45-gunmod/ammomod.lua" ],
   "builder": "/items/buildscripts/buildproject45mod.lua"

@@ -6,7 +6,7 @@
   "description" : "An highly modifiable automatic short rifle.",
   "shortdescription" : "Carbine",
   "tooltipKind" : "project45gun",
-  "gunArchetype": "Assault Rifle",
+  "gunArchetype": "smg",
   "category" : "rifle",
   "twoHanded" : true,
   "itemTags" : ["weapon","ranged","rifle"],
@@ -52,12 +52,10 @@
 
   "project45GunModInfo":{
     "category": "ballistic",
-    "statModCountMax": 20,
-    "modExceptions": {
-      "deny": [
-        "project45-autofiremod"
-      ]
-    },
+    "upgradeCapacity": 10,
+    "incompatibleMods": [
+      "project45-autofiremod"
+    ],
     "allowsConversion": [
       "hitscan",
       "beam",
@@ -108,6 +106,7 @@
     
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
+    "reloadCost": 25,
     "baseDamage": 8,
     "maxAmmo": 27,
     "bulletsPerReload": 27,

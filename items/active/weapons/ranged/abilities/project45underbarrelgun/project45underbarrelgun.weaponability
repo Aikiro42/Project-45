@@ -68,6 +68,7 @@
 
     "fireTime": 0.1,
 		"projectileCount": 5,
+    "maxProjectileCount": 10,
 		"baseDps": 0,
 		"spread": 1,
 		"fireType": "auto",

@@ -1,12 +1,12 @@
 {
   "itemName" : "project45-neb-warbolter",
-  "price" : 15000,
+  "price" : 50000,
   "maxStack" : 1,
   "rarity" : "Essential",
   "description" : "A gun that's oddly effective against Miniknog Zombies.",
-  "shortdescription" : "Warbolter",
+  "shortdescription" : "^#fdd14d;Warbolter^reset;",
   "tooltipKind" : "project45gun",
-  "gunArchetype": "Lever-Action Rifle",
+  "gunArchetype": "antiMateriel",
   "category" : "rifle",
   "twoHanded" : true,
   "itemTags" : ["weapon","ranged","rifle"],
@@ -16,7 +16,7 @@
 
   "project45GunModInfo":{
     "category": "experimental",
-    "statModCountMax": 10
+    "upgradeCapacity": 10
   },
 
   "animationParts" : {
@@ -63,6 +63,9 @@
     
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
+    "reloadCost": 35,
+    "critChance": 0.20,
+    "critDamageMult": 3,
     "baseDamage": 15,
     "maxAmmo": 1,
     "bulletsPerReload": 1,

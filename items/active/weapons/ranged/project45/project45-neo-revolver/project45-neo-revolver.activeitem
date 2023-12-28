@@ -3,10 +3,10 @@
   "price" : 5000,
   "maxStack" : 1,
   "rarity" : "Legendary",
-  "description" : "A revolver. Packs quite a punch.",
+  "description" : "A big iron. Packs quite a punch, especially against red things.",
   "shortdescription" : "Revolver",
   "tooltipKind" : "project45gun",
-  "gunArchetype": "Break-action",
+  "gunArchetype": "revolver",
   "category" : "pistol",
   "twoHanded" : false,
   "itemTags" : ["weapon","ranged","pistol"],
@@ -26,7 +26,7 @@
 
   "project45GunModInfo": {
     "category": "ballistic",
-    "statModCountMax": 10,
+    "upgradeCapacity": 5,
     "allowsConversion": [
       "hitscan",
       "beam",
@@ -143,7 +143,8 @@
     
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
-
+    "critChance": 0.25,
+    "critDamageMult": 1.3,
     "maxAmmo": 6,
     "bulletsPerReload": 1,
     "inaccuracy": 3,

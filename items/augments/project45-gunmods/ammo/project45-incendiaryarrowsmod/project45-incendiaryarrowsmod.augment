@@ -1,0 +1,32 @@
+{
+  "itemName" : "project45-incendiaryarrowsmod",
+  "price" : 1250,
+  "rarity" : "Uncommon",
+  "tooltipKind" : "project45gunmod2",
+  "modCategory" : "ammoMod",
+  "category" : "eppAugment",
+  "tooltipFields":{
+    "subtitle": "Ammo Mod",
+    "objectImage": "/items/augments/project45-gunmods/ammo/project45-incendiaryarrowsmod/project45-incendiaryarrowsmod.png"
+  },
+  "inventoryIcon" : "/items/augments/project45-gunmods/ammo/project45-incendiaryarrowsmod/project45-incendiaryarrowsmodicon.png",
+  "description" : "Standard-issue arrows with magnesium-coated arrowheads.",
+  "technicalInfo": "Fires projectiles that burns the enemy while dealing fire damage.",
+  "shortdescription" : "Incendiary Arrows",
+
+  "augment":{
+    "modName": "Incendiary Arrows",
+    "category": "ballistic",
+    "archetype": "arrow",
+
+    "projectileKind": "projectile",
+    "projectileType": "project45stdfirearrow"
+    
+  },
+
+
+   
+
+  "scripts" : [ "/scripts/augments/project45-gunmod/ammomod.lua" ],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
+}

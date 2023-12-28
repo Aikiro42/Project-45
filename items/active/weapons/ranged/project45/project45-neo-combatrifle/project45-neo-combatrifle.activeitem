@@ -6,7 +6,7 @@
   "description" : "A high-power, automatic assault rifle.",
   "shortdescription" : "Combat Rifle",
   "tooltipKind" : "project45gun",
-  "gunArchetype": "Battle Rifle",
+  "gunArchetype": "assaultRifle",
   "category" : "rifle",
   "twoHanded" : true,
   "itemTags" : ["weapon","ranged","rifle"],
@@ -47,12 +47,10 @@
 
   "project45GunModInfo":{
     "category": "ballistic",
-    "statModCountMax": 10,
-    "modExceptions": {
-      "deny": [
-        "project45-autofiremod"
-      ]
-    },
+    "upgradeCapacity": 9,
+    "incompatibleMods": [
+      "project45-autofiremod"
+    ],
     "allowsConversion": [
       "hitscan",
       "summoned"
@@ -92,6 +90,7 @@
     
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
+    "critDamageMult": 2,
     "baseDamage": 14,
     "maxAmmo": 20,
     "bulletsPerReload": 20,

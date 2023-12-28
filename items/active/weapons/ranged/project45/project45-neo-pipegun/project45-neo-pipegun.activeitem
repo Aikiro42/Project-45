@@ -3,10 +3,10 @@
   "price" : 625,
   "maxStack" : 1,
   "rarity" : "Common",
-  "description" : "A zip gun. Particularly well-made; WS45 parts are amazing.",
+  "description" : "A zip gun that's particularly well-made.",
   "shortdescription" : "Pipe Gun",
   "tooltipKind" : "project45gun",
-  "gunArchetype": "Makeshift Gun",
+  "gunArchetype": "pistol",
   "category" : "pistol",
   "twoHanded" : true,
   "itemTags" : ["weapon","ranged","pistol"],
@@ -16,7 +16,7 @@
 
   "project45GunModInfo": {
     "category": "ballistic",
-    "statModCountMax": 20,
+    "upgradeCapacity": 10,
     "allowsConversion": [
       "hitscan",
       "summoned"
@@ -132,6 +132,9 @@
     
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
+    "reloadCost": 10,
+    "critDamageMult": 5,
+    "critChance": 0.02,
     "maxAmmo": 1,
     "bulletsPerReload": 1,
     "inaccuracy": 3,

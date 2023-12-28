@@ -3,10 +3,10 @@
   "price" : 2500,
   "maxStack" : 1,
   "rarity" : "Rare",
-  "description" : "A shotgun.",
+  "description" : "A pump-action shotgun. Slam-fireable, too.",
   "shortdescription" : "Pump-action Shotgun",
   "tooltipKind" : "project45gun",
-  "gunArchetype": "Shotgun",
+  "gunArchetype": "shotgun",
   "category" : "shotgun",
   "twoHanded" : true,
   "itemTags" : ["weapon","ranged","shotgun"],
@@ -51,7 +51,7 @@
   
   "project45GunModInfo":{
     "category": "ballistic",
-    "statModCountMax": 10,
+    "upgradeCapacity": 8,
     "allowsConversion": [
       "hitscan",
       "summoned"
@@ -90,7 +90,8 @@
     
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
-
+    "critChance": 0.16,
+    "reloadCost": 35,
     "baseDamage": 20,
     "maxAmmo": 6,
     "bulletsPerReload": 1,

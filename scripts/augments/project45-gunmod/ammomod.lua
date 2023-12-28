@@ -6,15 +6,18 @@ require "/scripts/set.lua"
 
 function apply(input)
 
-  local modInfo = input.parameters.project45GunModInfo
+  local output = Item.new(input)
+  local modInfo = sb.jsonMerge(output.config.project45GunModInfo, input.parameters.project45GunModInfo)
   if not modInfo then return end
 
   local augment = config.getParameter("augment")
-  local output = Item.new(input)
   
   if augment then
 
     -- MOD INSTALLATION GATES
+
+    local upgradeCost = augment.upgradeCost
+    local upgradeCapacity, upgradeCount
 
     -- do not install if ammo type is already installed
     local modSlots = input.parameters.modSlots or {}
@@ -22,20 +25,49 @@ function apply(input)
       return gunmodHelper.addMessage(input, "Ammo mod slot Occupied")
     end
 
-    local modExceptions = modInfo.modExceptions or {}
-    modExceptions.accept = modExceptions.accept or {}
-    modExceptions.deny = modExceptions.deny or {}
-
-    -- check if ammo mod is particularly denied
-    local denied = set.new(modExceptions.deny)
-    if denied[config.getParameter("itemName")] then
-      sb.logError("(ammomod.lua) Ammo mod application failed: gun does not accept this specific ammo mod")
-      return gunmodHelper.addMessage(input, "Incompatible Mod: " .. config.getParameter("shortdescription"))
+    -- deny installation if upgrade capacity is not enough
+    if upgradeCost then
+      upgradeCount = input.parameters.upgradeCount or 0
+      upgradeCapacity = modInfo.upgradeCapacity or -1
+      if upgradeCapacity > -1 and upgradeCount + upgradeCost > upgradeCapacity then
+        sb.logError("(ammomod.lua) Ammo mod application failed: Not Enough Upgrade Capacity")
+        return gunmodHelper.addMessage(input, "Not Enough Upgrade Capacity")
+      end
     end
 
-    -- check if ammo mod is particularly accepted
-    local accepted = set.new(modExceptions.accept)
-    if not accepted[config.getParameter("itemName")] then 
+    -- deny installation if ammo rejects gun
+    if augment.incompatibleWeapons then
+      local deniedWeapons = set.new(augment.incompatibleWeapons)
+      if deniedWeapons[input.name] then
+          sb.logError("(ammomod.lua) Mod application failed: Mod incompatible with " .. input.name)
+          return gunmodHelper.addMessage(input, "Incompatible mod: " .. config.getParameter("shortdescription"))    
+      end
+    end
+
+    -- deny installation if gun rejects ammo
+    if modInfo.incompatibleMods then
+      local deniedMods = set.new(modInfo.incompatibleMods)
+      if deniedMods[config.getParameter("itemName")] then
+          sb.logError("(ammomod.lua) Mod application failed: Mod incompatible with " .. input.name)
+          return gunmodHelper.addMessage(input, "Incompatible mod: " .. config.getParameter("shortdescription"))    
+      end
+    end
+
+    local bypassCompatChecks = false
+
+    -- check if ammo accepts gun
+    if augment.compatibleWeapons then
+      local acceptedWeapons = set.new(augment.compatibleWeapons)
+      bypassCompatChecks = bypassCompatChecks or acceptedWeapons[input.name]
+    end
+
+    -- check if gun accepts ammo
+    if modInfo.compatibleMods then
+      local acceptedMods = set.new(modInfo.compatibleMods)
+      bypassCompatChecks = bypassCompatChecks or acceptedMods[config.getParameter("itemName")]
+    end
+
+    if not bypassCompatChecks then 
 
       -- do not install ammo mod if it does not meet category
       if augment.category ~= "universal"
@@ -71,7 +103,9 @@ function apply(input)
       "spread"
     }
     for _, v in ipairs(projectileSettingsList) do
-      newPrimaryAbility[v] = augment[v] -- or oldPrimaryAbility[v]
+      if augment[v] then
+        newPrimaryAbility[v] = augment[v] -- or oldPrimaryAbility[v]
+      end
     end
 
     -- alter specific projectile settings
@@ -112,7 +146,9 @@ function apply(input)
       config.getParameter("inventoryIcon")
     }
     output:setInstanceValue("modSlots", modSlots)
-    -- sb.logInfo(sb.printJson(modSlots))
+    if upgradeCost then
+      output:setInstanceValue("upgradeCount", upgradeCount + upgradeCost)
+    end
     output:setInstanceValue("isModded", true)
 
     return output:descriptor(), 1

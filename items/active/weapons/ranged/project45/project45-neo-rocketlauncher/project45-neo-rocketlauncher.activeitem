@@ -3,9 +3,9 @@
   "price" : 10000,
   "maxStack" : 1,
   "rarity" : "Essential",
-  "description" : "An entry-level firearm.",
+  "description" : "An over-engineered rocket launcher. Still deadly, either way.",
   "shortdescription" : "Rocket Launcher",
-  "gunArchetype": "Missile Launcher",
+  "gunArchetype": "rocketLauncher",
   "tooltipKind" : "project45gun",
   "category" : "rocketlauncher",
   "twoHanded" : true,
@@ -16,7 +16,7 @@
 
   "project45GunModInfo": {
     "category": "ballistic",
-    "statModCountMax": 10,
+    "upgradeCapacity": 5,
     "acceptsAmmoArchetype": [
       "rocket",
       "grenade"
@@ -149,6 +149,7 @@
     
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
+    "reloadCost": 100,
     "baseDamage": 45,
     "cycleTime": 1,
     "semi": true,

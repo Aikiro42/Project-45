@@ -5,7 +5,6 @@ require "/items/active/weapons/weapon.lua"
 function init()
   activeItem.setCursor("/cursors/reticle0.cursor")
   animator.setGlobalTag("paletteSwaps", config.getParameter("paletteSwaps", ""))
-
   self.weapon = Weapon:new()
 
   self.weapon:addTransformationGroup("weapon", {0,0}, 0)
@@ -24,6 +23,16 @@ function init()
   end
 
   activeItem.setScriptedAnimationParameter("hand", activeItem.hand())
+  activeItem.setScriptedAnimationParameter("renderBarsAtCursor",
+    status.statusProperty("project45_renderBarsAtCursor",
+    root.assetJson("/configs/project45/project45_generalconfig.config:renderBarsAtCursor",
+    true
+  )))
+  activeItem.setScriptedAnimationParameter("useAmmoCounterImages",
+    status.statusProperty("project45_useAmmoCounterImages",
+    root.assetJson("/configs/project45/project45_generalconfig.config:useAmmoCounterImages",
+    true
+  )))
   activeItem.setScriptedAnimationParameter("project45GunFireMessages", config.getParameter("project45GunFireMessages", {}))
   activeItem.setInstanceValue("project45GunFireMessages", {})
   self.weapon:init()

@@ -1,0 +1,87 @@
+{
+  "animatedParts" : {
+    "stateTypes" : {
+      "firing" : {
+        "default" : "off",
+        "states" : {
+          "off" : {
+          },
+          "fire" : {
+            "frames" : 2,
+            "cycle" : 0.1,
+            "mode" : "transition",
+            "transition" : "confetti",
+            "properties" : {
+              "immediateSound" : "/sfx/objects/vault_open.ogg"
+            },
+            "frameProperties" : {
+              "stateNudge" : [ [-0.125, 0], [0, 0] ]
+            }
+          },
+          "confetti" : {
+            "cycle" : 0.2,
+            "mode" : "transition",
+            "transition" : "off"
+          }
+        }
+      }
+    },
+
+    "parts" : {
+      "gun" : {
+        "properties" : {
+          "centered" : true,
+          "image" : "project45-gunbag-icon.png",
+          "offset" : [0.0, 0.0]
+        }
+      }
+    }
+  },
+
+  "particleEmitters" : {
+    "xssr" : {
+      "emissionRate" : 500.0,
+      "emissionRateVariance" : 0.0,
+      "active" : false,
+
+      "particles" : [
+        {"particle": "project45gachar"},
+        {"particle": "project45gachasr"},
+        {"particle": "project45gachassr"}
+      ]
+    },
+    "ssr" : {
+      "emissionRate" : 500.0,
+      "emissionRateVariance" : 0.0,
+      "active" : false,
+
+      "particles" : [
+        {"particle": "project45gachassr"},
+        {"particle": "project45gachassr"},
+        {"particle": "project45gachassr"}
+      ]
+    },
+    "sr" : {
+      "emissionRate" : 500.0,
+      "emissionRateVariance" : 0.0,
+      "active" : false,
+
+      "particles" : [
+        {"particle": "project45gachasr"},
+        {"particle": "project45gachasr"},
+        {"particle": "project45gachasr"}
+      ]
+    },
+    "r" : {
+      "emissionRate" : 500.0,
+      "emissionRateVariance" : 0.0,
+      "active" : false,
+
+      "particles" : [
+        {"particle": "project45gachar"},
+        {"particle": "project45gachar"},
+        {"particle": "project45gachar"}
+      ]
+    }
+  }
+}

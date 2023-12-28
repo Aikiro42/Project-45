@@ -97,7 +97,13 @@
       "projectileParameters":{
         "speed": 50,
         "damageType": "IgnoresDef",
-        "periodicActions" : []
+        "periodicActions" : [],
+        "actionOnReap" : [
+          {
+            "action" : "config",
+            "file" : "/projectiles/explosions/project45_stdexplosion/project45_stdexplosion.config"
+          }
+        ]
       },
       "fireTime": 0.3,
       "chargeTime": 0.3,

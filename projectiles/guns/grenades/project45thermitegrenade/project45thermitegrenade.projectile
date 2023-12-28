@@ -18,74 +18,74 @@
       },
       {
         "action" : "config",
-        "file" : "/projectiles/explosions/molotovexplosion/molotovexplosion.config"
+        "file" : "/projectiles/explosions/project45_fireexplosion/project45_fireexplosion.config"
       },
       {
         "action" : "projectile",
-        "type" : "molotovflame",
+        "type" : "project45_thermalflame",
         "fuzzAngle" : 0,
         "inheritDamageFactor" : 0.05,
         "angleAdjust" : 35
       },
       {
         "action" : "projectile",
-        "type" : "molotovflame",
+        "type" : "project45_thermalflame",
         "fuzzAngle" : 0,
         "inheritDamageFactor" : 0.05,
         "angleAdjust" : -35
       },
       {
         "action" : "projectile",
-        "type" : "molotovflame",
+        "type" : "project45_thermalflame",
         "fuzzAngle" : 0,
         "inheritDamageFactor" : 0.05,
         "angleAdjust" : 1
       },
       {
         "action" : "projectile",
-        "type" : "molotovflame",
+        "type" : "project45_thermalflame",
         "fuzzAngle" : 0,
         "inheritDamageFactor" : 0.05,
         "angleAdjust" : -18
       },
       {
         "action" : "projectile",
-        "type" : "molotovflame",
+        "type" : "project45_thermalflame",
         "fuzzAngle" : 0,
         "inheritDamageFactor" : 0.05,
         "angleAdjust" : 18
       },
       {
         "action" : "projectile",
-        "type" : "molotovflame",
+        "type" : "project45_thermalflame",
         "fuzzAngle" : 0,
         "inheritDamageFactor" : 0.05,
         "angleAdjust" : 55
       },
       {
         "action" : "projectile",
-        "type" : "molotovflame",
+        "type" : "project45_thermalflame",
         "fuzzAngle" : 0,
         "inheritDamageFactor" : 0.05,
         "angleAdjust" : -55
       },
       {
         "action" : "projectile",
-        "type" : "molotovflame",
+        "type" : "project45_thermalflame",
         "fuzzAngle" : 0,
         "inheritDamageFactor" : 0.05,
         "angleAdjust" : -1
       },
       {
         "action" : "projectile",
-        "type" : "molotovflame",
+        "type" : "project45_thermalflame",
         "fuzzAngle" : 0,
         "inheritDamageFactor" : 0.05,
         "angleAdjust" : -65
       },
       {
         "action" : "projectile",
-        "type" : "molotovflame",
+        "type" : "project45_thermalflame",
         "fuzzAngle" : 0,
         "inheritDamageFactor" : 0.05,
         "angleAdjust" : 65

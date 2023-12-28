@@ -1,12 +1,12 @@
 {
   "itemName" : "project45-neb-magmaspitter",
-  "price" : 15000,
+  "price" : 50000,
   "maxStack" : 1,
   "rarity" : "Essential",
-  "description" : "A revolver that shoots magma.",
-  "shortdescription" : "Magma Spitter",
+  "description" : "A revolver that shoots magma. How the cylinder holds the magma is a mystery.",
+  "shortdescription" : "^#fdd14d;Magma Spitter^reset;",
   "tooltipKind" : "project45gun",
-  "gunArchetype": "Break-action Shotgun",
+  "gunArchetype": "pistol",
   "category" : "shotgun",
   "twoHanded" : false,
   "itemTags" : ["weapon","ranged","shotgun"],
@@ -15,7 +15,8 @@
   "inventoryIcon" : "project45-neb-magmaspitter-icon.png",
   
   "project45GunModInfo": {
-    "category": "experimental"
+    "category": "experimental",
+    "upgradeCapacity": 10
   },
 
   "animationParts" : {
@@ -118,6 +119,10 @@
     
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
+    "reloadCost": 75,
+    "critChance": 0.25,
+    "critDamageMult": 2,
+    "baseDamage": 20,
     "maxAmmo": 6,
     "bulletsPerReload": 6,
     "ammoPerShot": 6,
@@ -129,7 +134,7 @@
     "projectileKind": "projectile",
     "projectileType": "project45-starforge-firefluxbolt",
     "reloadTime": 1,
-    "multishot": 6,
+    "multishot": 6.1,
 
     "breakAction": true,
     "ejectCasingsWithMag": true,

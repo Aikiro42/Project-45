@@ -10,6 +10,7 @@
   "lightColor": [75, 75, 75],
   "fullbright": true,
   "flippable" : true,
+  "piercing": false,
   "statusEffects" : ["weakpoison"],
   "power" : 5.0,
   "speed" : 300,

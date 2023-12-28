@@ -6,7 +6,7 @@
   "description" : "An anti-materiel rifle. The recoil is enough to throw you across a room.",
   "shortdescription" : "AMR",
   "tooltipKind" : "project45gun",
-  "gunArchetype": "Bolt-action",
+  "gunArchetype": "antiMateriel",
   "category" : "sniper",
   "twoHanded" : true,
   "itemTags" : ["weapon","ranged","sniper"],
@@ -26,7 +26,7 @@
 
   "project45GunModInfo": {
     "category": "ballistic",
-    "statModCountMax": 10,
+    "upgradeCapacity": 8,
     "allowsConversion": [
       "hitscan",
       "summoned"
@@ -99,6 +99,9 @@
     
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
+    "critChance": 0.5,
+    "reloadCost": 75,
+    "critDamageMult": 2.6,
     "baseDamage": 45,
     "maxAmmo": 5,
     "bulletsPerReload": 5,

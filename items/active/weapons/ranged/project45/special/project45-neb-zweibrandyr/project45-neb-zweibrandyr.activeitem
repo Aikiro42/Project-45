@@ -1,11 +1,11 @@
 {
   "itemName" : "project45-neb-zweibrandyr",
-  "price" : 15000,
+  "price" : 50000,
   "maxStack" : 1,
   "rarity" : "Essential",
-  "description" : "A firearm of Raiizy's and Nebulox's design.",
-  "shortdescription" : "Zweibrandyr",
-  "gunArchetype": "LMG",
+  "description" : "A machine gun made out of ^#f4988c;raiizy^reset;-^#d29ce7;nebulox^reset; alloy.",
+  "shortdescription" : "^#fdd14d;Zweibrandyr^reset;",
+  "gunArchetype": "machineGun",
   "tooltipKind" : "project45gun",
   "category" : "rifle",
   "twoHanded" : true,
@@ -16,6 +16,7 @@
 
   "project45GunModInfo": {
     "category": "ballistic",
+    "upgradeCapacity": 10,
     "acceptsAmmoArchetype": [
       "bullet"
     ],
@@ -130,6 +131,7 @@
     
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
+    "baseDamage": 10,
     "projectileType": "project45frangiblebullet",
     "cycleTime": 0.1,
     "semi": false,

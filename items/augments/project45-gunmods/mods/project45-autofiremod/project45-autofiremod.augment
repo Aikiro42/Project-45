@@ -3,8 +3,10 @@
   "price" : 8000,
   "rarity" : "Legendary",
   "tooltipKind" : "project45gunmod2",
-  "category" : "Gun Mod",
+  "modCategory" : "gunMod",
+  "category" : "eppAugment",
   "tooltipFields":{
+    "subtitle": "Gun Mod",
     "objectImage": "/items/augments/project45-gunmods/mods/project45-autofiremod/project45-autofiremod.png"
   },
   "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-autofiremod/project45-autofiremodicon.png",
@@ -12,7 +14,7 @@
   "technicalInfo" : "Manual-feed weapons auto-feed.\nCharge weapons automatically fire when fully charged.",
   "statInfo": "Trigger time: 0.1s",
   "shortdescription" : "Automatic Receiver",
-  "radioMessagesOnPickup" : [ "pickupaugment" ],
+   
 
   "augment": {
     "modName": "Automatic Receiver",

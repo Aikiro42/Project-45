@@ -1,11 +1,11 @@
 {
   "itemName" : "project45-pkf-typhon",
-  "price" : 15000,
+  "price" : 50000,
   "maxStack" : 1,
   "rarity" : "Essential",
-  "description" : "A large machine gun of Nitrosteel's design, adapted to W.S. 45.",
-  "shortdescription" : "Typhon P45",
-  "gunArchetype": "Heavy Plasma MG",
+  "description" : "A large plasma machine gun made out of ^#a8e6e2;nitrosteel^reset;.",
+  "shortdescription" : "^#fdd14d;Typhon P45^reset;",
+  "gunArchetype": "machineGun",
   "tooltipKind" : "project45gun",
   "category" : "rifle",
   "twoHanded" : true,
@@ -16,7 +16,7 @@
 
   "project45GunModInfo": {
     "category": "experimental",
-    "statModCountMax": 10,
+    "upgradeCapacity": 10,
     "acceptsAmmoArchetype": [
     ],
     "acceptsModSlot": [

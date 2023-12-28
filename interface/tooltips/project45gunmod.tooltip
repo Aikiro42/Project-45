@@ -45,7 +45,7 @@
     "hAnchor" : "left",
     "vAnchor" : "bottom",
     "wrapWidth" : 127,
-    "value" : "     Install on WS45 guns.\nApply to gun with right-click.",
+    "value" : "   Apply to appropriate item\n           with right-click.",
     "color" : "#D66E18"
   }
 }

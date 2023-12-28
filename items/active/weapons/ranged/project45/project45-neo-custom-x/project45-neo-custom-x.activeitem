@@ -6,7 +6,7 @@
   "description" : "THE ULTIMATE TEST FIREARM",
   "shortdescription" : "_PROJECT45NEOCUSTOMX_",
   "tooltipKind" : "project45gun",
-  "gunArchetype": "Test Gun",
+  "gunArchetype": "magic",
   "category" : "rifle",
   "twoHanded" : true,
   "itemTags" : ["weapon","ranged","rifle"],
@@ -48,7 +48,7 @@
 
     */
     "category": "universal",
-    "statModCountMax": 99, // maximum number of stat mods allowed to be installed on the gun
+    "upgradeCapacity": 99, // maximum number of stat mods allowed to be installed on the gun
 
     /*
     Used by converter mods; list of allowed changes to the kind of of projectile fired
@@ -84,14 +84,12 @@
 
     // exceptions for specific ammo mods
     // denial takes precedence over acceptance
-    "modExceptions": {
-      "accept": [
-        "project45-homingrocketmod"
-      ],
-      "deny": [
-        "project45-dragonsbreathmod"
-      ]
-    },
+    "compatibleMods": [
+      "project45-homingrocketmod"
+    ],
+    "incompatibleMods": [
+      "project45-dragonsbreathmod"
+    ],
 
     "acceptsModSlot": [
 

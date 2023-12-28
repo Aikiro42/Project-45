@@ -1,0 +1,104 @@
+{
+  "projectileName" : "project45stdpoisonarrow",
+  "image" : "project45stdarrow.png?multiply=AAFF00FF",
+  "scripts": ["/projectiles/scripts/project45-killprojectileonstick.lua"],
+  "physics" : "arrow",
+  "animationCycle" : 0.25,
+  "frameNumber" : 1,
+  "damageKind" : "poison",
+  "pointLight" : false,
+  "lightColor": [1, 1, 1],
+  "fullbright": false,
+  "flippable" : true,
+  "piercing": false,
+  "statusEffects" : ["weakpoison"],
+  "power" : 5.0,
+  "speed" : 150,
+  "knockback" : 5,
+  "collisionPoly": [
+    [-8.5, 0],
+    [0, 1.5],
+    [8.5, 0],
+    [0, -1.5]
+  ],
+  "movementSettings":{
+    "collisionEnabled": true
+  },
+  "bounces" : 0,
+
+  "periodicActions" : [
+    {
+      "time" : 0.01,
+      "repeat" : true,
+      "action" : "particle",
+      "rotate" : true,
+      
+      "specification" : {
+        "type" : "streak",
+        "layer" : "back",
+        "fullbright" : false,
+        "destructionAction" : "shrink",
+        "size" : 1,
+        "color" : [178, 232, 157, 255],
+        "collidesForeground" : false,
+        "length" : 30,
+        "position" : [0, 0],
+        "timeToLive" : 0,
+        "destructionTime" : 0.2,
+        "initialVelocity" : [0.001, 0],
+        "variance" : {}
+      }
+
+    }
+    //*/
+  ],
+  "actionOnReap": [
+    { 
+      "action" : "sound",
+      "options" : [
+        "/sfx/project45neosfx/bulletimpact/bulletimpact-generic1.ogg",
+        "/sfx/project45neosfx/bulletimpact/bulletimpact-generic2.ogg",
+        "/sfx/project45neosfx/bulletimpact/bulletimpact-generic3.ogg"
+      ]
+    },
+    /*
+    
+    {
+      "action": "config",
+      "file": "/projectiles/explosions/project45_hitexplosion/project45_hitexplosion.config"
+    },
+    
+    */
+    {
+      "action" : "loop",
+      "count" : 6,
+      "body" : [
+        {
+          "action" : "particle",
+          "specification" : {
+            "type" : "ember",
+            "size" : 1,
+            "color" : [72, 131, 47, 255],
+            "light" : [65, 65, 51],
+            "fullbright" : true,
+            "destructionTime" : 0.2,
+            "destructionAction" : "shrink",
+            "fade" : 0.9,
+            "initialVelocity" : [0, 5],
+            "finalVelocity" : [0, -50],
+            "approach" : [0, 30],
+            "timeToLive" : 0,
+            "layer" : "middle",
+            "variance" : {
+              "position" : [0.25, 0.25],
+              "size" : 0.5,
+              "initialVelocity" : [10, 10],
+              "timeToLive" : 0.2
+            }
+          }
+        }
+      ]
+    }
+  ]
+  
+}

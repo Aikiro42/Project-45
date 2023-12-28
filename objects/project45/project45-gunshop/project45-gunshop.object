@@ -2,21 +2,21 @@
   "objectName" : "project45-gunshop",
   "colonyTags" : ["human","humanbunker","mechanical","commerce"],
   "rarity" : "Essential",
-  "shortdescription" : "^#FF9000;WS45 Gun Shop",
+  "shortdescription" : "^#FF9000;Project 45 Gun Shop",
   "description" : "A revolutionary standard for weapons of war, brought to you in a nifty vending machine.",
   "race" : "human",
   "category" : "decorative",
-  "price" : 4200,
+  "price" : 10000, // price of crafting is 4500; at least this provides a way for the player to make a profit
   "lightColor" : [120, 65, 0],
   "printable" : false,
 
-  "apexDescription" : "I have a single question: Do you... enjoy violence?",
-  "avianDescription" : "Of course you do.",
-  "floranDescription" : "It'ss a... part of you.",
-  "glitchDescription" : "Confrontational. And who are you to deny your own nature?",
-  "humanDescription" : "So come with me...",
-  "hylotlDescription" : "...and let me show you... ",
-  "novakidDescription" : "some real. Ultra. Violence.",
+  "apexDescription" : "The design of this vending machine couldn't be any more crude...",
+  "avianDescription" : "The weapons sold here seem blasphemous... How tempting.",
+  "floranDescription" : "GUNSSSS!! KILL!!",
+  "glitchDescription" : "Amazed. What a big selection of weapons!",
+  "humanDescription" : "Hey cool, they sell tacticool stuff.",
+  "hylotlDescription" : "Letheia Corp. has outdone themselves this time.",
+  "novakidDescription" : "THEY SELL 'DEM BIG IRONS? GIMME IT!",
 
   "inventoryIcon" : "project45-gunshopicon.png",
   
@@ -72,15 +72,16 @@
 
         // "project45-neo-custom-x",
         "project45-neo-pipegun",
+        "project45-neo-bow",
         
-
         // Pistols
         "project45-neo-pistol",
         "project45-neo-revolver",
+        "project45-neo-deagle",
         
         // SMGs
         "project45-neo-smg",
-        "project45-neo-shindeiru",
+        "project45-neo-smartgun",
         
         // Shotguns
         "project45-neo-sawedoff",
@@ -121,6 +122,7 @@
         "project45-neb-zweibrandyr",
         "project45-neb-warbolter",
         "project45-neb-magmaspitter",
+        "project45-msx-marcohmg",
         "project45-scz-spacecowboy",
         "project45-gov-scarlet",
         "project45-tcf-kineticarbiter",
@@ -129,6 +131,7 @@
       ],
       "mods": [
         // abilities
+        "project45-manualreloadmod",
         "project45-gunscopemod",
         "project45-supergunscopemod",
         "project45-mlgscopemod",
@@ -143,6 +146,7 @@
         
         // rail
         "project45-lasermod",
+        "project45-bowstabilizermod",
 
         // receiver
         "project45-autofiremod",
@@ -150,7 +154,12 @@
 
         // magazine
         "project45-extendedmagmod",
+        "project45-alofsmagmod",
         "project45-overampmod",
+
+        // bowstring
+        "project45-customnockmod",  
+        "project45-multinockmod",
 
         // muzzle mods
         "project45-muzzlebrakemod",
@@ -166,7 +175,9 @@
       ],
 
       "stat": [
+        "project45-wildcardstatmod",
         "project45-levelmod",
+        "project45-maxlevelmod",
         "project45-reloadcostaddmod",
         "project45-reloadcostmultmod",
         "project45-firetimemultmod",
@@ -200,6 +211,12 @@
         "project45-elecammomod",
         "project45-firebeammod",
         "project45-poisonbeammod",
+
+        // arrows
+        "project45-incendiaryarrowsmod",
+        "project45-poisonarrowsmod",
+        "project45-elecarrowsmod",
+        "project45-explosivearrowsmod",
         
         // grenade ammo
         "project45-clustergrenademod",
@@ -219,13 +236,28 @@
         "project45manual-codex",
         "project45-gundisassembler",
         "project45-gunrepairkit",
-        "project45gacha",
+        "project45-gunbag",
+        
+        "project45-gachapull",
+        "project45-gachapull10",
+        
         "project45-energystim",
-
+        {"name": "project45-energystim", "count":10},
+        
         "nanowrap",
+        {"name": "nanowrap", "count":10},
+        
+        "manipulatormodule",
+        "techcard",
+        "upgrademodule",
         "dubloon"
       ]
-    }
+    },
+          
+    "seededItems": [
+      "project45-wildcardstatmod"
+    ]
+
   }
 }
 

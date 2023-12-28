@@ -29,9 +29,19 @@ function disassemble()
 
       if input.parameters.statList then
         for k, v in pairs(input.parameters.statList) do
-          player.giveItem({
-            name = k,
-            count = v})
+          if k ~= "wildcards" then
+            player.giveItem({
+              name = k,
+              count = v})
+          else
+            for _, savedSeed in ipairs(v) do
+              player.giveItem({
+                name = "project45-wildcardstatmod",
+                parameters = {
+                  seed = savedSeed
+                }})  
+            end
+          end
         end
       end
         

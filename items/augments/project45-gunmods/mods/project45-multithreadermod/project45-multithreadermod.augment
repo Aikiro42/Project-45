@@ -3,8 +3,10 @@
   "price" : 10000,
   "rarity" : "Legendary",
   "tooltipKind" : "project45gunmod2",
-  "category" : "Gun Mod",
+  "modCategory" : "gunMod",
+  "category" : "eppAugment",
   "tooltipFields": {
+    "subtitle": "Gun Mod",
     "objectImage": "/items/augments/project45-gunmods/mods/project45-multithreadermod/project45-multithreadermod.png"
   },
   "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-multithreadermod/project45-multithreadermodicon.png",
@@ -12,7 +14,7 @@
   "technicalInfo" : "Manual-feed weapons auto-feed.\nCharge weapons automatically fire when fully charged.",
   "shortdescription" : "Multithreader",
 
-  "radioMessagesOnPickup" : [ "pickupaugment" ],
+   
 
   "augment": {
     "modName": "Multithreader",

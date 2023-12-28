@@ -6,7 +6,7 @@
   "description" : "A compact hardlight emitter.",
   "shortdescription" : "Cyclo",
   "tooltipKind" : "project45gun",
-  "gunArchetype": "Beam Emitter",
+  "gunArchetype": "beam",
   "category" : "pistol",
   "twoHanded" : false,
   "itemTags" : ["weapon","ranged","pistol"],
@@ -47,7 +47,7 @@
 
   "project45GunModInfo":{
     "category": "energy",
-    "statModCountMax": 10,
+    "upgradeCapacity": 6,
     "allowsConversion": [
       "projectile",
       "hitscan",
@@ -74,6 +74,8 @@
     
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
+    "reloadCost": 35,
+    "critChance": 0.3,
     "baseDamage": 8,
     "maxAmmo": 100,
     "bulletsPerReload": 100,

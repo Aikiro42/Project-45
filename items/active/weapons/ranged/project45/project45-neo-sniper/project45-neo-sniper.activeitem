@@ -6,7 +6,7 @@
   "description" : "A semi-auto bullpup marksman rifle.",
   "shortdescription" : "Sniper",
   "tooltipKind" : "project45gun",
-  "gunArchetype": "Bullpup DMR",
+  "gunArchetype": "sniper",
   "category" : "sniper",
   "twoHanded" : true,
   "itemTags" : ["weapon","ranged","sniper"],
@@ -46,17 +46,14 @@
 
   "project45GunModInfo":{
     "category": "ballistic",
-    "statModCountMax": 10,
+    "upgradeCapacity": 8,
     "allowsConversion": [
       "hitscan",
       "summoned"
     ],
-    "acceptsAmmoTypes":{
-      "ballistic": true
-    },
-    "acceptsAmmoArchetype":{
-      "generic": true
-    },
+    "acceptsAmmoArchetype":[
+      "generic"
+    ],
     "acceptsModSlot": [
       "rail",
       "sights",
@@ -89,6 +86,9 @@
     
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
+    "reloadCost": 60,
+    "critChance": 0.36,
+    "critDamageMult": 2,
     "baseDamage": 14,
     "maxAmmo": 12,
     "bulletsPerReload": 12,

@@ -1,12 +1,12 @@
 {
   "itemName" : "project45-scz-spacecowboy",
-  "price" : 15000,
+  "price" : 50000,
   "maxStack" : 1,
   "rarity" : "Essential",
   "description" : "A railgun designed from blueprints found in a hazardous containment zone.",
-  "shortdescription" : "Space Cowboy",
+  "shortdescription" : "^#fdd14d;Space Cowboy^reset;",
   "tooltipKind" : "project45gun",
-  "gunArchetype": "Thermal Railgun",
+  "gunArchetype": "antiMateriel",
   "category" : "sniper",
   "twoHanded" : true,
   "itemTags" : ["weapon","ranged","sniper"],
@@ -15,7 +15,9 @@
   "inventoryIcon" : "project45-scz-spacecowboy-icon.png",
 
   "project45GunModInfo": {
-    "category": "special"
+    "category": "special",
+    "upgradeCapacity": 10
+
   },
 
   "animationParts" : {

@@ -15,6 +15,7 @@ function apply(input)
 
   local conversion = config.getParameter("conversion")
   local output = Item.new(input)
+  local modInfo = sb.jsonMerge(output.config.project45GunModInfo, input.parameters.project45GunModInfo)
 
   local primaryAbility = sb.jsonMerge(output.config.primaryAbility or {}, input.parameters.primaryAbility or {})
   local newPrimaryAbility = input.parameters.primaryAbility or {}
@@ -27,13 +28,29 @@ function apply(input)
     sb.logError("(convertermod.lua) Conversion not applied; ammo/conversion mod is installed.")
     return gunmodHelper.addMessage(input, "Ammo mod slot occupied")
   end
+
   -- Do not proceed if conversion is to same type
   if primaryAbility.projectileKind == conversion then
     sb.logError("(convertermod.lua) Conversion not applied; gun already fires " .. conversion)
     return gunmodHelper.addMessage(input, "Gun already fires " .. plurals[conversion])
   end  
 
+
+  local upgradeCost = config.getParameter("upgradeCost")
+  local upgradeCapacity, upgradeCount
+
+  -- Do not proceed if upgrade capacity not enough
+  if upgradeCost then
+    upgradeCount = input.parameters.upgradeCount or 0
+    upgradeCapacity = modInfo.upgradeCapacity or -1
+    if upgradeCapacity > -1 and upgradeCount + upgradeCost > upgradeCapacity then
+      sb.logError("(convertermod.lua) Converter mod application failed: Not Enough Upgrade Capacity")
+      return gunmodHelper.addMessage(input, "Not Enough Upgrade Capacity")
+    end
+  end
+
   -- Do not proceed if gun doesn't allow conversion
+  -- TODO: add check if conversion allows gun?
   construct(output, "config", "project45GunModInfo")
   local whitelist = set.new(output.config.project45GunModInfo.allowsConversion or {})
   if not whitelist[conversion] then
@@ -152,6 +169,9 @@ function apply(input)
   }
 
   output:setInstanceValue("modSlots", modSlots)
+  if upgradeCost then
+    output:setInstanceValue("upgradeCount", upgradeCount + upgradeCost)
+  end
   output:setInstanceValue("isModded", true)
 
   return output:descriptor(), 1

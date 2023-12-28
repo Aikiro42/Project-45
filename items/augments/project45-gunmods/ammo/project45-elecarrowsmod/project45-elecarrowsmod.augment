@@ -1,0 +1,29 @@
+{
+  "itemName" : "project45-elecarrowsmod",
+  "price" : 1250,
+  "rarity" : "Uncommon",
+  "tooltipKind" : "project45gunmod2",
+  "modCategory" : "ammoMod",
+  "category" : "eppAugment",
+  "tooltipFields":{
+    "subtitle": "Ammo Mod",
+    "objectImage": "/items/augments/project45-gunmods/ammo/project45-elecarrowsmod/project45-elecarrowsmod.png"
+  },
+  "inventoryIcon" : "/items/augments/project45-gunmods/ammo/project45-elecarrowsmod/project45-elecarrowsmodicon.png",
+  "description" : "Weighty arrows fitted with high-voltage tasers for arrowheads.",
+  "technicalInfo": "Fires projectiles that deal electric damage.",
+  "shortdescription" : "Electric Arrows",
+
+  "augment":{
+    "modName": "Electric Arrows",
+    "category": "ballistic",
+    "archetype": "arrow",
+
+    "projectileKind": "projectile",
+    "projectileType": "project45stdelecarrow"
+    
+  },
+
+  "scripts" : [ "/scripts/augments/project45-gunmod/ammomod.lua" ],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
+}

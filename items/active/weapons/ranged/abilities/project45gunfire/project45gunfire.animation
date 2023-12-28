@@ -637,9 +637,13 @@
   },
 
   "sounds" : {
+
+    // plays when the gun is equipped
+    "init": [],
     
     // plays every time the gun fires
     "fire": ["/sfx/project45neosfx/fire/fire-pistol1.ogg"],
+    "perfectChargeFire": [],
 
     // functions as expected of vanilla starbound
     "fireStart": [ ],
@@ -697,10 +701,14 @@
     // audible while gun is cocking regardless of whether it's manual-fed or not
     "boltPush": ["/sfx/project45neosfx/boltpush/boltpush-generic1.ogg"],
     
+    // plays once when charging starts;
+    "chargeStart": [ ],
     // plays while charging; increases in pitch the closer the charge is to 100%
     "chargeWhine": [ ],
     // plays while charging; increases in volume the closer the charge is to 100%
     "chargeDrone": [ ],
+    // plays once when charging ends;
+    "chargeEnd": [ ],
     
     // properties present for compatibility
     "beamImpact": []

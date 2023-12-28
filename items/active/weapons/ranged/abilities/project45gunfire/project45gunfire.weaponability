@@ -25,21 +25,23 @@
 
     // Laser settings.
     "laser": {
-      "enabled": false, // if true, laser is rendered
+      // "enabled": false, // if true, laser is rendered
       "width": 0.25,
       "color": [255, 0, 0], // laser color
       "range": 100, // max distance to which the laser is drawn
       "trajectoryConfig": {
         "renderSteps": 50  // number of lines rendered in the laser arc when using gravity-affected projectiles
-      },
-      "renderUntilCursor": false // if true, laser is rendered up to player's aim position only
+      }
+      // ,"renderUntilCursor": false // if true, laser is rendered up to player's aim position only
       // ,"alwaysActive": false
     },
 
     // Movement settings
-    "movementSpeedFactor": 1.25,
-    "jumpHeightFactor": 1.25,
+    /*
+    "movementSpeedFactor": 1,
+    "jumpHeightFactor": 1,
     "heavyWeapon": false,
+    */
 
     /*
     if true, disables the following:
@@ -51,12 +53,14 @@
     - charge smoke
     - muzzle particles
     */
-    "performanceMode": false,
-    "debug": false,
-    "debugTime": 0.1, // time to wait before running the debug function again
+    // "performanceMode": false,
+    // "debug": false,
 
-    "hideMuzzleFlash": false,
-    "hideMuzzleSmoke": false,
+    /*
+    Hide Muzzle Flash & Smoke
+    */
+    // "hideMuzzleFlash": false,
+    // "hideMuzzleSmoke": false,
 
     // Audio settings
     "hollowSoundMult": 1, // affects volume of hollow sound
@@ -144,8 +148,8 @@
 
     "summonedProjectileType": "project45_defaultsummon",
     "summonedProjectileParameters": {
-      "summonAnywhere": false, // if true, can summon projectiles anywhere as long as it isn't within terrain
-      "summonInTerrain": false // if true, can summon in terrain. Renders summonAnywhere true.
+      // "summonAnywhere": false, // if true, can summon projectiles anywhere as long as it isn't within terrain
+      // "summonInTerrain": false // if true, can summon in terrain. Renders summonAnywhere true.
     },
 
     "hitscanParameters": {
@@ -155,8 +159,8 @@
       "punchThrough": 0,  // number of entities to register before stopping the scan
       "fullChargePunchThrough": 0,
       
-      "ignoresTerrain": false,  // pierces through terrain if true
-      "ignoresTerrainOnFullCharge": false,
+      // "ignoresTerrain": false,  // pierces through terrain if true
+      // "ignoresTerrainOnFullCharge": false,
       
       "hitscanFadeTime": 0.1, // how long the hitscan line fades away
       "hitscanWidth": 1, // visual width of hitscan line in pixels
@@ -185,8 +189,8 @@
       "fullChargePunchThrough": 3,
       
       // whether the beam fires through terrain or not
-      "ignoresTerrain": false,
-      "ignoresTerrainOnFullCharge": false,
+      // "ignoresTerrain": false,
+      // "ignoresTerrainOnFullCharge": false,
       
       "beamWidth": 5, // width of beam - beams that are too wide can look weird
       "beamInnerWidth": 3, // width of inner white beam - just for vfx
@@ -203,10 +207,10 @@
       // if true, consumes ammo over time.
       // Otherwise, will only consume ammo every time the beam starts
       // set to true if gun is not semi
-      "consumeAmmoOverTime": true,
+      "consumeAmmoOverTime": true//,
 
       // determines if gun transists to ejecting state if trigger is released
-      "ejectCasingsOnBeamEnd": false
+      // "ejectCasingsOnBeamEnd": false
 
 
     },
@@ -221,10 +225,10 @@
 
     // Reload and Magazine Config
 
-    "audibleEjection": false, // if true, plays bolt pulling sound when ejecting casings
+    // "audibleEjection": false, // if true, plays bolt pulling sound when ejecting casings
     "ejectBeforeAnimation": true, // ejects casings before animationState is set to "ejecting"
-    "ejectCasingsAfterBurst": false, // ejects casings after burst is finished
-    "ejectCasingsWithMag": false, // for revolvers, etc.; casings are not ejected until magazine is ejected
+    // "ejectCasingsAfterBurst": false, // ejects casings after burst is finished
+    // "ejectCasingsWithMag": false, // for revolvers, etc.; casings are not ejected until magazine is ejected
     
     /*
     if both <ejectMagOnEmpty> and <reloadOnEjectMag> are true, the gun will (almost) immediately begin reloading
@@ -237,21 +241,21 @@
     Their difference lies in the animation state of the gun
     (as well as whether manual feed guns empty on eject)
     */
-    "ejectMagOnEmpty": false, // immediately eject mag when the gun hits 0 ammo
-    "reloadOnEjectMag": false, // immediately begin reload sequence upon ejecting
+    // "ejectMagOnEmpty": "firing", // immediately eject mag when the gun hits 0 ammo
+    // "reloadOnEjectMag": false, // immediately begin reload sequence upon ejecting
     
-    "ejectMagOnReload": false, // ejects mag every (active) reload, like loading a strip and discarding the metal
+    // "ejectMagOnReload": false, // ejects mag every (active) reload, like loading a strip and discarding the metal
     
-    "internalMag": false, // whether the "magazine" is a strip or a clip (makes magazine invisible)
-    "loadRoundsThroughBolt": false, // whether the bolt must be opened before doing the reload sequence.
+    // "internalMag": false, // whether the "magazine" is a strip or a clip (makes magazine invisible)
+    // "loadRoundsThroughBolt": false, // whether the bolt must be opened before doing the reload sequence.
 
     // "postReloadDelay": null, // float; time to wait before cocking in seconds, cockTime/8 by default
     
     // determines whether the gun is break-action, i.e. breaks open when ejecting the mag
     // dictates whether the gun animation accesses the "open" state
-    "breakAction": false,
+    // "breakAction": false,
 
-    "magVisualPercentage": false, // Whether the mag visually indicates the percentage or count of ammo remaining
+    // "magVisualPercentage": false, // Whether the mag visually indicates the percentage or count of ammo remaining
     "magFrames": 1, // number of frames wherein the mag is "present" (for regular, opaque mags, set this to 1)
     "magLoopFrames": 1, // number of loop frames (doesn't matter if <magFrames = 1>)
     
@@ -268,7 +272,7 @@
     // standard deviation of random arm movement as the gun recoils (in degrees, not radians)
     // note that this deviation is eliminated if the player crouches
     "inaccuracy": 3, 
-    "recoilUpOnly": false, // forces inaccuracy to cause the weapon to go upwards only
+    // "recoilUpOnly": false, // forces inaccuracy to cause the weapon to go upwards only
     "recoilAmount": 0.5, // amount of recoil per shot, in degrees; arm and weapon will rotate by half of this
     "recoilMaxDeg": 5, // the most the arm and weapon will rotate, in degrees.
     "recoilMult": 1, // multiplies recoilAmount
@@ -300,11 +304,11 @@
     // Makes your gun not automatically eject right after firing,
     // requiring you to cock the gun to fire again.
     // if the gun is autofire (<semi = false>) then this will always be false
-    "manualFeed": false,
+    // "manualFeed": false,
     
     // Allows you to fire your gun immediately if you hold left-click down while cocking the gun.
     // If the gun isn't manual-feed, this is set to false.
-    "slamFire": false,
+    // "slamFire": false,
 
     // time it takes to cock the gun, cycle rounds, etc.
     // can also be a 2-element array of floats i.e.
@@ -341,7 +345,7 @@
     // the firing process is thus treated as a burst;
     // casings are ejected after bursting
     // if <ejectCasingsAfterBurst = true>
-    "loopFiringAnimation": false,
+    // "loopFiringAnimation": false,
 
     // ____________________________________[ SECTION: Charge Config ]____________________________________
 
@@ -349,6 +353,12 @@
 
     "overchargeTime": 0, // allows gun to deal up to 100% more damage, multiplicative to other bonuses
     
+    // Perfect Charge parameters; only matters if overchargeTime > 0
+    /*
+    "perfectChargeDamageMult": 2, // replaces current charge multiplier to damage; can never go below 2
+    "perfectChargeRange": [0.4, 0.6] // range of perfect charge; all values between 0 and 1 (i.e. percent)
+    */
+
     // time it takes for gun to hold charge before discharging
     // helps for consistent behavior
     "dischargeDelayTime": 0.025,
@@ -363,22 +373,22 @@
     
     // fires gun after charging, given that there's ammo
     // if the gun is autofire (<semi = false>) then this will always be false
-    "autoFireOnFullCharge": false,
+    // "autoFireOnFullCharge": false,
 
     // Resets charge after firing.
     // Only matters if the gun semi-fire (<semi = true>).
     // if the gun is autofire (<semi = false>) then this will always be false.
-    "resetChargeOnFire": false,
+    // "resetChargeOnFire": false,
 
     // resets charge when ejecting magazine
-    "resetChargeOnEject": false,
-    "resetChargeOnJam": false, // resets charge when jamming
+    // "resetChargeOnEject": false,
+    // "resetChargeOnJam": false, // resets charge when jamming
 
     // discharges if the weapon is obstructed by terrain
-    "chargeWhenObstructed": false,
+    // "chargeWhenObstructed": false,
 
     // Spawns more smoke puffs around specified offset region the higher the charge
-    "chargeSmoke": false,
+    // "chargeSmoke": false,
     "maxChargeSmokeEmissionRate": 25,
     
     /*
@@ -387,7 +397,7 @@
     Otherwise, progressive weapon charge is animated based on total charge time (charge + overcharge).
     This setting also affects charge smoke emission rate.
     */
-    "animateBeforeOvercharge": false,
+    // "animateBeforeOvercharge": false,
 
     // ____________________________________[ SECTION: Legacy Configs ]____________________________________
 

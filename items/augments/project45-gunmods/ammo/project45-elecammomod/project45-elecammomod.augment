@@ -3,8 +3,10 @@
   "price" : 5000,
   "rarity" : "Legendary",
   "tooltipKind" : "project45gunmod2",
-  "category" : "Ammo Mod",
+  "modCategory" : "ammoMod",
+  "category" : "eppAugment",
   "tooltipFields":{
+    "subtitle": "Ammo Mod",
     "objectImage": "/items/augments/project45-gunmods/ammo/project45-elecammomod/project45-elecammomod.png"
   },
   "inventoryIcon" : "/items/augments/project45-gunmods/ammo/project45-elecammomod/project45-elecammomodicon.png",
@@ -41,9 +43,6 @@
     }
 
   },
-
-
-  "radioMessagesOnPickup" : [ "pickupaugment" ],
 
   "scripts" : [ "/scripts/augments/project45-gunmod/ammomod.lua" ],
   "builder": "/items/buildscripts/buildproject45mod.lua"

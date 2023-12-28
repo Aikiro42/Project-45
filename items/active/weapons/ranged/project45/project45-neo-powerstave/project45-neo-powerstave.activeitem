@@ -3,10 +3,10 @@
   "price" : 10000,
   "maxStack" : 1,
   "rarity" : "Essential",
-  "description" : "A stave that summons projectiles at your desired location.",
+  "description" : "A prototype utilizing magitek made out of ^#96cbe7;nitrosteel^reset;.", 
   "shortdescription" : "Powerstave",
   "tooltipKind" : "project45gun",
-  "gunArchetype": "Magitek Stave",
+  "gunArchetype": "magic",
   "category" : "staff",
   "twoHanded" : false,
   "itemTags" : ["weapon","ranged","staff"],
@@ -111,7 +111,7 @@
 
   "project45GunModInfo":{
     "category": "experimental",
-    "statModCountMax": 10,
+    "upgradeCapacity": 5,
     "allowsConversion": [
       "hitscan",
       "beam",
@@ -149,6 +149,8 @@
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
     "baseDamage": 20,
+    "critChance": 0.36,
+    "critDamageMult": 2.2,
     "debug": true,
     "maxAmmo": 10,
     "bulletsPerReload": 10,

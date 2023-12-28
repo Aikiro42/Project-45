@@ -1,12 +1,12 @@
 {
   "itemName" : "project45-tcf-kineticarbiter",
-  "price" : 15000,
+  "price" : 50000,
   "maxStack" : 1,
   "rarity" : "Essential",
   "description" : "A railgun found in the forests of Fortuna III.",
-  "shortdescription" : "Kinetic Arbiter",
+  "shortdescription" : "^#fdd14d;Kinetic Arbiter^reset;",
   "tooltipKind" : "project45gun",
-  "gunArchetype": "Railgun",
+  "gunArchetype": "antiMateriel",
   "category" : "sniper",
   "twoHanded" : true,
   "itemTags" : ["weapon","ranged","sniper"],
@@ -16,6 +16,7 @@
 
   "project45GunModInfo": {
     "category": "special",
+    "upgradeCapacity": 10,
     "acceptsModSlot": [
       "sights"
     ]
@@ -156,6 +157,9 @@
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
 
+    "baseDamage": 70,
+    "critChance": 0.75,
+    "critDamageMult": 2,
     "maxAmmo": 4,
     "bulletsPerReload": 4,
     "semi": true,

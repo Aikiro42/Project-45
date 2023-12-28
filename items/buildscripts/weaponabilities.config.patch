@@ -41,6 +41,11 @@
     },
     {
         "op": "add",
+        "path": "/project45gunfirereload",
+        "value": "/items/active/weapons/ranged/abilities/project45gunfirereload/project45gunfirereload.weaponability"
+    },
+    {
+        "op": "add",
         "path": "/project45tester",
         "value": "/items/active/weapons/ranged/abilities/project45tester/project45tester.weaponability"
     }

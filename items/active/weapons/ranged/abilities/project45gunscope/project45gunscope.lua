@@ -12,6 +12,7 @@ function Project45GunScope:init()
   self.state = 0
   self.shiftHeldTimer = -1
   self.lockReticleTime = self.lockReticleTime or 0.2
+  self.aimedCritChance = (storage.baseCritChance or 0) + (self.critChanceBonus or 0.5)
 end
 
 function Project45GunScope:update(dt, fireMode, shiftHeld)
@@ -22,7 +23,7 @@ function Project45GunScope:update(dt, fireMode, shiftHeld)
   if storage.cameraProjectile then
     activeItem.setScriptedAnimationParameter("altLaserColor", self.laserColor)
     activeItem.setScriptedAnimationParameter("altLaserWidth", self.laserWidth)
-    
+    storage.currentCritChance = self.aimedCritChance
     if shiftHeld then
       if self.shiftHeldTimer < 0 then
         self.shiftHeldTimer = 0
@@ -39,6 +40,7 @@ function Project45GunScope:update(dt, fireMode, shiftHeld)
   else
     activeItem.setScriptedAnimationParameter("altLaserColor", nil)
     activeItem.setScriptedAnimationParameter("altLaserWidth", nil)
+    storage.currentCritChance = storage.baseCritChance
     self.reticleLocked = false
   end
   

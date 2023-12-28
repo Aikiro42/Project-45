@@ -3,12 +3,12 @@
   "price" : 15000,
   "rarity" : "Legendary",
   "tooltipKind" : "project45gunmod",
-  "category" : "Template Ability Mod",
+  "category" : "Template abilityMod",
   "inventoryIcon" : "/items/augments/project45-gunmods/other/project45-templatemod/project45-templatemod.png",
   "description" : "Mod Template.",
   "shortdescription" : "Mod Template.",
 
-  "radioMessagesOnPickup" : [ "pickupaugment" ],
+   
 
   /*
   

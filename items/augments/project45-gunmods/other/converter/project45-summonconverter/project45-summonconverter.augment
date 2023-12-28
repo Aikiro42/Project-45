@@ -1,16 +1,21 @@
 {
   "itemName" : "project45-summonconverter",
   "price" : 7500,
-  "rarity" : "Legendary",
+  "rarity" : "Essential",
   "tooltipKind" : "project45gunmod2",
-  "category" : "Converter Mod",
+  "modCategory" : "converterMod",
+  "category" : "eppAugment",
+  "tooltipFields": {
+    "subtitle": "Converter Mod"
+  },
   "inventoryIcon" : "/items/augments/project45-gunmods/other/converter/project45-summonconverter/project45-summonconverter.png",
   "description" : "Converts bullets fired to summoned ones.",
   "shortdescription" : "Summon Conversion",
 
   "conversion": "summoned",
+  "upgradeCost": 3,
 
-  "radioMessagesOnPickup" : [ "pickupaugment" ],
+   
 
   "scripts" : [ "/scripts/augments/project45-gunmod/convertermod.lua" ],
   "technicalInfo": "Affects damage per shot.\nMay be rejected by some weapons.",

@@ -3,9 +3,9 @@
   "price" : 5000,
   "maxStack" : 1,
   "rarity" : "Legendary",
-  "description" : "Energy AR with ramping fire rate.",
+  "description" : "An energy assault rifle; the fire rate goes up the longer it's fired.",
   "shortdescription" : "Accelerator",
-  "gunArchetype": "Energy Gun",
+  "gunArchetype": "assaultRifle",
   "tooltipKind" : "project45gun",
   "category" : "rifle",
   "twoHanded" : true,
@@ -15,7 +15,7 @@
 
   "project45GunModInfo": {
     "category": "energy",
-    "statModCountMax": 10,
+    "upgradeCapacity": 7,
     "allowsConversion": [
       "projectile",
       "beam",
@@ -28,7 +28,9 @@
       "rail",
       "sights",
       "muzzle",
-      "underbarrel"
+      "underbarrel",
+
+      "material"
     ]
   },
 
@@ -89,6 +91,8 @@
     
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
+    "reloadCost": 40,
+    "critDamageMult": 1.75,
     "projectileKind": "hitscan",
     "cycleTime": [0.25, 0.01],
     "semi": false,
@@ -96,8 +100,8 @@
     "overchargeTime": 3,
     "dischargeTimeMult": 0.75,
     "progressiveCharge": true,
-    "inaccuracy": 2.5, // affects arm movement as the trigger is pulled
-    "spread": 0,
+    "inaccuracy": 1, // affects arm movement as the trigger is pulled
+    "spread": 0.01,
     "maxAmmo": 75,
     "bulletsPerReload": 75
   },

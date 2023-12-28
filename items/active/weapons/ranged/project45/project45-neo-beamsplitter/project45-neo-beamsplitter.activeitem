@@ -6,7 +6,7 @@
   "description" : "An energy gun that splits high-amplitude low-frequency waves with a specially-cut crystal.",
   "shortdescription" : "Beamsplitter",
   "tooltipKind" : "project45gun",
-  "gunArchetype": "Energy Shotgun",
+  "gunArchetype": "shotgun",
   "category" : "shotgun",
   "twoHanded" : true,
   "itemTags" : ["weapon","ranged","shotgun"],
@@ -44,7 +44,7 @@
 
   "project45GunModInfo":{
     "category": "energy",
-    "statModCountMax": 10,
+    "upgradeCapacity": 7,
     "allowsConversion": [
       "projectile",
       "summoned"
@@ -80,10 +80,13 @@
     
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
+    "reloadCost": 35,
+    "critDamageMult": 2,
+    "critChance": 0.16,
     "baseDamage": 25,
     "maxAmmo": 15,
     "bulletsPerReload": 15,
-    "inaccuracy": 3,
+    "inaccuracy": 2,
     "recoilAmount": 1,
     "recoilMaxDeg": 7.5,
     "recoverDelay": 0.05,

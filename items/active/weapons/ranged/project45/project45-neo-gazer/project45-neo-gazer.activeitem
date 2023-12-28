@@ -3,10 +3,10 @@
   "price" : 5000,
   "maxStack" : 1,
   "rarity" : "Legendary",
-  "description" : "An energy sniper rifle.",
+  "description" : "An sleek, energy marksman rifle.",
   "shortdescription" : "Gazer",
   "tooltipKind" : "project45gun",
-  "gunArchetype": "Energy Sniper Rifle",
+  "gunArchetype": "sniper",
   "category" : "sniper",
   "twoHanded" : true,
   "itemTags" : ["weapon","ranged","sniper"],
@@ -44,7 +44,7 @@
 
   "project45GunModInfo":{
     "category": "energy",
-    "statModCountMax": 10,
+    "upgradeCapacity": 9,
     "allowsConversion": [
       "projectile",
       "beam",
@@ -84,6 +84,9 @@
     
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
+    "reloadCost": 65,
+    "critChance": 0.33,
+    "critDamageMult": 1.7,
     "baseDamage": 30,
     "maxAmmo": 15,
     "bulletsPerReload": 15,

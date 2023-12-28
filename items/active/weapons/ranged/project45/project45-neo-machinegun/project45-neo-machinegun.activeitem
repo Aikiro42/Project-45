@@ -3,9 +3,9 @@
   "price" : 5000,
   "maxStack" : 1,
   "rarity" : "Legendary",
-  "description" : "An entry-level firearm.",
+  "description" : "Its design is inspired by a reliable weapon of the long past.",
   "shortdescription" : "Machine Gun",
-  "gunArchetype": "LMG",
+  "gunArchetype": "machineGun",
   "tooltipKind" : "project45gun",
   "category" : "rifle",
   "twoHanded" : true,
@@ -16,7 +16,7 @@
 
   "project45GunModInfo": {
     "category": "ballistic",
-    "statModCountMax": 10,
+    "upgradeCapacity": 8,
     "allowsConversion": [
       "hitscan",
       "summoned"
@@ -146,6 +146,7 @@
     
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
+    "reloadCost": 75,
     "baseDamage": 7,
     "cycleTime": 0.05,
     "semi": false,

@@ -1,0 +1,13 @@
+{
+  "itemName" : "project45-logger",
+  "price" : 15000,
+  "rarity" : "Essential",
+  "tooltipKind" : "project45gunmod",
+  "category" : "Debug Tool",
+  "inventoryIcon" : "/items/augments/project45-gunmods/other/project45-logger.png",
+  "description" : "Prints shit.",
+  "shortdescription" : "DEBUG: Logger Tool",
+
+
+  "scripts" : [ "/scripts/augments/project45-logger.lua" ]
+}

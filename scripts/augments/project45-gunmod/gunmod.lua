@@ -9,11 +9,11 @@ require "/scripts/project45/project45util.lua"
 
 function apply(input, override, augment)
   -- do not install mod if gun has no mod information
-  local modInfo = input.parameters.project45GunModInfo
+  local output = Item.new(input)
+  local modInfo = sb.jsonMerge(output.config.project45GunModInfo, input.parameters.project45GunModInfo)
   if not modInfo then return end
 
   augment = augment or config.getParameter("augment")
-  local output = Item.new(input)
 
   
   -- if augment field exists, do something
@@ -28,23 +28,63 @@ function apply(input, override, augment)
     set.insert(acceptsModSlot, "intrinsic")
     
     -- MOD INSTALLATION GATES
+    local upgradeCost = augment.upgradeCost
+    local upgradeCapacity, upgradeCount
+
+    if upgradeCost then
+        upgradeCount = input.parameters.upgradeCount or 0
+        upgradeCapacity = modInfo.upgradeCapacity or -1
+    end
 
     if not override then  -- gatekeep if not called from abilitymod.lua
 
-        local modExceptions = modInfo.modExceptions or {}
-        modExceptions.accept = modExceptions.accept or {}
-        modExceptions.deny = modExceptions.deny or {}
+        sb.logInfo("First-level call of gunmod.lua:apply")
 
-        -- check if gun mod is particularly denied
-        local denied = set.new(modExceptions.deny)
-        if denied[config.getParameter("itemName")] then
-            sb.logError("(gunmod.lua) Mod application failed: gun does not accept this specific mod")
-            return gunmodHelper.addMessage(input, "Incompatible mod: " .. config.getParameter("shortdescription"))
+        -- do not install mod if slot is occupied
+        if modSlots[augment.slot] then
+            sb.logError("(gunmod.lua) Gun mod application failed: slot already occupied")
+            return gunmodHelper.addMessage(input, project45util.capitalize(augment.slot) .. " mod slot occupied")
+        end
+    
+        -- deny installation if capacity is not enough
+        if upgradeCost and upgradeCapacity > -1 and upgradeCount + upgradeCost > upgradeCapacity then
+            sb.logError("(gunmod.lua) Gun mod application failed: Not Enough Upgrade Capacity")
+            return gunmodHelper.addMessage(input, "Not Enough Upgrade Capacity")
         end
 
-        -- check if gun mod is particularly accepted
-        local isAccepted = set.new(modExceptions.accept)[config.getParameter("itemName")]
-        if not isAccepted then
+        -- deny installation if mod rejects gun
+        if augment.incompatibleWeapons then
+            local deniedWeapons = set.new(augment.incompatibleWeapons)
+            if deniedWeapons[input.name] then
+                sb.logError("(gunmod.lua) Mod application failed: Mod incompatible with " .. input.name)
+                return gunmodHelper.addMessage(input, "Incompatible mod: " .. config.getParameter("shortdescription"))    
+            end
+        end
+
+        -- deny installation if gun rejects mod
+        if modInfo.incompatibleMods then
+            local deniedMods = set.new(modInfo.incompatibleMods)
+            if deniedMods[config.getParameter("itemName")] then
+                sb.logError("(gunmod.lua) Mod application failed: Mod incompatible with " .. input.name)
+                return gunmodHelper.addMessage(input, "Incompatible mod: " .. config.getParameter("shortdescription"))    
+            end
+        end        
+  
+        local bypassCompatChecks = false
+
+        -- check if mod accepts gun
+        if augment.compatibleWeapons then
+            local acceptedWeapons = set.new(augment.compatibleWeapons)
+            bypassCompatChecks = bypassCompatChecks or acceptedWeapons[input.name]
+        end
+
+        -- check if gun accepts mod
+        if modInfo.compatibleMods then
+            local acceptedMods = set.new(modInfo.compatibleMods)
+            bypassCompatChecks = bypassCompatChecks or acceptedMods[config.getParameter("itemName")]
+        end
+
+        if not bypassCompatChecks then
 
             -- do not install mod if augment is not universal
             -- and gun is not of the universal category
@@ -62,12 +102,6 @@ function apply(input, override, augment)
                 return gunmodHelper.addMessage(input, "Cannot install " .. augment.slot .. " mods")
             end
         
-        end
-
-        -- do not install mod if slot is occupied
-        if modSlots[augment.slot] then
-            sb.logError("(gunmod.lua) Gun mod application failed: slot already occupied")
-            return gunmodHelper.addMessage(input, project45util.capitalize(augment.slot) .. " mod slot occupied")
         end
 
     end
@@ -312,7 +346,9 @@ function apply(input, override, augment)
         end
         
         output:setInstanceValue("modSlots", modSlots)
-        
+        if upgradeCost then
+            output:setInstanceValue("upgradeCount", upgradeCount + upgradeCost)
+        end      
     end
     output:setInstanceValue("isModded", true)
 
@@ -361,7 +397,7 @@ function modify(oldValue, operation, modValue)
     -- this is a base case
     else
         if operation == "add" then
-            newValue = oldValue * modValue
+            newValue = oldValue + modValue
         elseif operation == "multiply" then
             newValue = oldValue * modValue
         end

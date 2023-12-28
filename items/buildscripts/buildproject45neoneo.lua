@@ -7,6 +7,8 @@ require "/items/buildscripts/project45abilities.lua"
 
 function build(directory, config, parameters, level, seed)
   
+  local generalConfig = root.assetJson("/configs/project45/project45_generalconfig.config")
+  
   parameters = parameters or {}
   parameters.primaryAbility = parameters.primaryAbility or {}
 
@@ -22,7 +24,7 @@ function build(directory, config, parameters, level, seed)
 
   local primaryAbility = function(keyName, defaultValue, set)
     if set then
-      parameters.primaryAbility[keyName] = defaultValue  
+      config.primaryAbility[keyName] = defaultValue
     else
       if parameters.primaryAbility[keyName] ~= nil then
         return parameters.primaryAbility[keyName]
@@ -39,8 +41,9 @@ function build(directory, config, parameters, level, seed)
   end
   -- calculate mod capacity
   construct(config, "project45GunModInfo")
-  config.project45GunModInfo.statModCountMax = (config.project45GunModInfo.statModCountMax or 0) + ((configParameter("level", 1) - 1) * 2)
-
+  construct(parameters, "project45GunModInfo")
+  parameters.project45GunModInfo.upgradeCapacity = (config.project45GunModInfo.upgradeCapacity or 0) + (configParameter("level", 1) - 1)
+  
   -- recalculate rarity
   local rarityLevel = configParameter("level", 1)/10
   local levelRarityAssoc = {"Common", "Uncommon", "Rare", "Legendary", "Essential"}
@@ -89,7 +92,7 @@ function build(directory, config, parameters, level, seed)
   end
 
   -- calculate damage level multiplier
-  config.damageLevelMultiplier = root.evalFunction("weaponDamageLevelMultiplier", configParameter("level", 1))
+  config.damageLevelMultiplier = root.evalFunction("weaponDamageLevelMultiplier", configParameter("level", 1)) * generalConfig.globalDamageMultiplier
   
   -- palette swaps
   config.paletteSwaps = ""
@@ -267,11 +270,11 @@ function build(directory, config, parameters, level, seed)
     
     if config.primaryAbility then
       
-      if config.project45GunModInfo and config.project45GunModInfo.statModCountMax
+      if config.project45GunModInfo and config.project45GunModInfo.upgradeCapacity
       then
-        if config.project45GunModInfo.statModCountMax > -1 then
-          local count = parameters.statModCount or 0
-          local max = config.project45GunModInfo.statModCountMax
+        if config.project45GunModInfo.upgradeCapacity > -1 then
+          local count = parameters.upgradeCount or 0
+          local max = parameters.project45GunModInfo.upgradeCapacity
           config.tooltipFields.upgradeCapacityLabel = (count < max and "^#96cbe7;" or "^#777777;") .. (max - count) .. "/" .. max .. "^reset;"
         else
           config.tooltipFields.upgradeCapacityLabel = project45util.colorText("#96cbe7","Unlimited")
@@ -280,11 +283,16 @@ function build(directory, config, parameters, level, seed)
         config.tooltipFields.upgradeCapacityLabel = project45util.colorText("#777777", "0/0")
       end
 
+      -- recalculate baseDamage
+      if config.gunArchetype then
+        local archetypeDamage = generalConfig.gunArchetypeDamages[config.gunArchetype]
+        -- sb.logInfo(string.format("%s (%s): %s",config.shortdescription, config.gunArchetype, sb.printJson(archetypeDamage)))
+        config.primaryAbility.baseDamage = archetypeDamage or config.primaryAbility.baseDamage
+      end
         
       -- damage per shot
-      -- FIXME: max damage seems inaccurate
-      local baseDamage = primaryAbility("baseDamage", 0)
-      * config.damageLevelMultiplier
+      -- recalculate
+      local baseDamage = primaryAbility("baseDamage", 0) * config.damageLevelMultiplier
       -- low damage = base damage * worst reload damage
       local loDamage = baseDamage
         * math.min(table.unpack(primaryAbility("reloadRatingDamageMults", {0,0,0,0})))
@@ -292,10 +300,14 @@ function build(directory, config, parameters, level, seed)
       local hiDamage = baseDamage
         * math.max(table.unpack(primaryAbility("reloadRatingDamageMults", {0,0,0,0})))
         * primaryAbility("lastShotDamageMult", 1)
-        * (primaryAbility("overchargeTime", 0) > 0 and 2 or 1)
+        * (primaryAbility("overchargeTime", 0) > 0 and (primaryAbility("perfectChargeDamageMult") or 2) or 1)
       
-      config.tooltipFields.damagePerShotLabel = project45util.colorText("#FF9000", util.round(loDamage, 1) .. " - " .. util.round(hiDamage, 1))
 
+      config.tooltipFields.damagePerShotLabel = project45util.colorText("#FF9000", util.round(loDamage, 1) .. " - " .. util.round(hiDamage, 1))
+      
+      if primaryAbility("debug") then
+        config.tooltipFields.damagePerShotLabel = project45util.colorText("#FF9000", primaryAbility("baseDamage", 0))
+      end
       
       --[[ fire time calculation:
       If gun is manualFeed:
@@ -323,7 +335,7 @@ function build(directory, config, parameters, level, seed)
       end
       
       -- reload cost
-      config.tooltipFields.reloadCostLabel = project45util.colorText("#b0ff78", primaryAbility("reloadCost", 0))
+      config.tooltipFields.reloadCostLabel = project45util.colorText("#b0ff78", util.round(primaryAbility("reloadCost", 0), 1))
 
       -- reload time
       local bulletReloadTime = primaryAbility("reloadTime", 0.1)
@@ -344,46 +356,60 @@ function build(directory, config, parameters, level, seed)
       -- crit damage
       local critDamage = primaryAbility("critDamageMult", 1)
       if critChance > 0 then
-        config.tooltipFields.critDamageLabel = project45util.colorText("#FF6767", util.round(critDamage*100, 1) .. "%")
+        config.tooltipFields.critDamageLabel = project45util.colorText("#FF6767", util.round(critDamage, 1) .. "x")
       else
-        config.tooltipFields.critDamageLabel = project45util.colorText("#777777", util.round(critDamage*100, 1) .. "%")
+        config.tooltipFields.critDamageLabel = project45util.colorText("#777777", util.round(critDamage, 1) .. "x")
       end
 
-      local miscStats = {
-        "heavyWeapon",
-        "multishot",
-        "chargeTime",
-        "overchargeTime"
-      }
+      local descriptionScore = 0
 
-      local heavyDesc = primaryAbility("heavyWeapon", false)
-        and (project45util.colorText("#FF5050", "Heavy") .. "\n")
-        or ""
+      local heavyDesc = ""
+      if primaryAbility("heavyWeapon", false) then
+        descriptionScore = descriptionScore + 1
+        heavyDesc = project45util.colorText("#FF5050", "Heavy") .. "\n"
+      end
 
-      local multishotDesc = primaryAbility("multishot", 1) ~= 1
-        and (project45util.colorText("#9dc6f5", util.round(primaryAbility("multishot", 1), 1) .. "x multishot") .. "\n")
-        or ""
+      local multishotDesc = ""
+      local multishot = primaryAbility("multishot", 1)
+      if multishot ~= 1 then
+        descriptionScore = descriptionScore + 1
+        multishotDesc = project45util.colorText(multishot > 1 and "#9dc6f5" or "#FF5050", util.round(multishot, 1) .. "x multishot") .. "\n"
+      end
 
-      local chargeDesc = primaryAbility("chargeTime", 0) > 0
-        and (project45util.colorText("#FF5050", util.round(primaryAbility("chargeTime", 0), 1) .. "s charge time.") .. "\n")
-        or ""
+      local chargeDesc = ""
+      if primaryAbility("chargeTime", 0) > 0 then
+        descriptionScore = descriptionScore + 1
+        chargeDesc = project45util.colorText("#FF5050", util.round(primaryAbility("chargeTime", 0), 1) .. "s charge time.") .. "\n"
+      end
         
-      local overchargeDesc = primaryAbility("overchargeTime", 0) > 0
-        and (project45util.colorText("#9dc6f5", util.round(primaryAbility("overchargeTime", 0), 1) .. "s overcharge.") .. "\n")
-        or ""
+
+      local overchargeDesc = ""
+      if primaryAbility("overchargeTime", 0) > 0 then
+        descriptionScore = descriptionScore + 1
+        chargeDesc = project45util.colorText("#9dc6f5", util.round(primaryAbility("overchargeTime", 0), 1) .. "s overcharge.") .. "\n"
+      end
       
       local modListDesc = ""
       if modList then
         local exclude = set.new({"ability","rail","sights","muzzle","underbarrel","stock","ammoType"})
         for modSlot, modKind in pairs(modList) do
           if not exclude[modSlot] and modKind[1] ~= "ability" then
+            descriptionScore = descriptionScore + 1
             modListDesc = modListDesc .. project45util.colorText("#abfc6d", modKind[1]) .. "\n"
           end
         end
       end
 
       local finalDescription = heavyDesc .. chargeDesc .. overchargeDesc .. multishotDesc .. modListDesc -- .. config.description
-      config.description = finalDescription == "" and project45util.colorText("#777777", "No notable qualities.") or finalDescription
+      finalDescription = finalDescription == "" and project45util.colorText("#777777", "No notable qualities.") or finalDescription
+      
+      descriptionScore = descriptionScore + math.ceil((#config.description)/18)
+      
+      if descriptionScore <= 7 then
+        config.description = config.description .. "\n" .. finalDescription
+      else
+        config.description = "Highly modified.\n" .. finalDescription
+      end
 
     end
 

@@ -1,4 +1,5 @@
 require "/scripts/util.lua"
+require "/scripts/set.lua"
 
 local radioButtonIDs = {
   "guns",
@@ -19,6 +20,8 @@ function init()
     ammo = {},
     util = {}
   })
+
+  self.seededItems = set.new(config.getParameter("seededItems", {}))
   
   self.mode = "guns"
   widget.setSelectedOption("shopTabs", 1)
@@ -65,9 +68,9 @@ function populateItemList(forceRepop, mode)
       generatedItem.parameters.price = cost
 
       widget.setItemSlotItem(string.format("%s.itemIcon", listItem), generatedItem)
-      widget.setText(string.format("%s.itemName", listItem), "^#FF9000;" .. name)
+      widget.setText(string.format("%s.itemName", listItem), "^#FF9000;" .. name .. (generatedItem.count > 1 and (" (" .. generatedItem.count .. ")") or ""))
       
-      widget.setText(string.format("%s.priceLabel", listItem), "^#FF9000;" .. math.ceil(cost))
+      widget.setText(string.format("%s.priceLabel", listItem), "^#FF9000;" .. math.ceil(cost * generatedItem.count))
 
       widget.setData(listItem,
       {
@@ -76,7 +79,7 @@ function populateItemList(forceRepop, mode)
       }
       )
       
-      widget.setVisible(string.format("%s.unavailableoverlay", listItem), cost > playerMoney)
+      widget.setVisible(string.format("%s.unavailableoverlay", listItem), cost * generatedItem.count > playerMoney)
     end
 
     self.selectedItem = nil
@@ -93,7 +96,7 @@ function showWeapon(item)
   if item then
     local cost = item.parameters.price
     enableButton = playerMoney >= cost
-    widget.setText(self.totalCost, string.format("%s", "^#190700;" .. math.ceil(cost)))
+    widget.setText(self.totalCost, string.format("%s", "^#190700;" .. math.ceil(cost * (item.count or 1))))
   else
     widget.setText(self.totalCost, string.format("^#190700;--"))
   end
@@ -107,7 +110,7 @@ function itemSelected()
   if self.prevSelectedItem then
     local listItem = string.format("%s.%s", self.itemList, self.prevSelectedItem)
     local itemData = widget.getData(listItem)
-    widget.setText(string.format("%s.priceLabel", listItem), "^#FF9000;" .. itemData.price)
+    widget.setText(string.format("%s.priceLabel", listItem), "^#FF9000;" .. itemData.price * (itemData.item.count or 1))
   end
   
   self.prevSelectedItem = listItem
@@ -116,7 +119,7 @@ function itemSelected()
   if listItem then
     local listItem = string.format("%s.%s", self.itemList, self.selectedItem)
     local itemData = widget.getData(listItem)
-    widget.setText(string.format("%s.priceLabel", listItem), "^#190700;" .. itemData.price)
+    widget.setText(string.format("%s.priceLabel", listItem), "^#190700;" .. itemData.price * (itemData.item.count or 1))
     showWeapon(itemData.item)
   end
 end
@@ -129,9 +132,13 @@ function purchase()
 
     if selectedItem then
       --If we successfully consumed enough currency, give the new item to the player
-      local consumedCurrency = player.consumeCurrency("money", selectedItem.parameters.price)
+      local consumedCurrency = player.consumeCurrency("money", selectedItem.parameters.price * selectedItem.count)
 
       if consumedCurrency then
+        if self.seededItems[selectedItem.name] then
+          selectedItem.parameters.seed = math.floor(math.random() * 100000000)
+          selectedItem.seed = selectedItem.parameters.seed
+        end
         player.giveItem(selectedItem)
         --[[
         widget.setData(listItem,

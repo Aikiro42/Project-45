@@ -3,10 +3,10 @@
   "price" : 10000,
   "maxStack" : 1,
   "rarity" : "Essential",
-  "description" : "A minigun.",
+  "description" : "A heavy minigun with a compact magazine.",
   "shortdescription" : "Minigun",
   "tooltipKind" : "project45gun",
-  "gunArchetype": "Gatling Gun",
+  "gunArchetype": "machineGun",
   "category" : "rifle",
   "twoHanded" : true,
   "itemTags" : ["weapon","ranged","heavyweapon"],
@@ -16,7 +16,7 @@
 
   "project45GunModInfo": {
     "category": "ballistic",
-    "statModCountMax": 10,
+    "upgradeCapacity": 6,
     "allowsConversion": [
       "hitscan",
       "summoned",
@@ -148,6 +148,7 @@
     
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
+    "reloadCost": 100,
     "baseDamage": 10,
     "maxAmmo": 100,
     "bulletsPerReload": 100,

@@ -3,10 +3,10 @@
   "price" : 1250,
   "maxStack" : 1,
   "rarity" : "Uncommon",
-  "description" : "Gib your enemies with the power of Friendship!",
+  "description" : "A weapon of timeless design. A best-seller among Novakids.",
   "shortdescription" : "Double-barrel Shotgun",
   "tooltipKind" : "project45gun",
-  "gunArchetype": "Shotgun",
+  "gunArchetype": "shotgun",
   "category" : "shotgun",
   "twoHanded" : true,
   "itemTags" : ["weapon","ranged","shotgun"],
@@ -16,7 +16,10 @@
 
   "project45GunModInfo": {
     "category": "ballistic",
-    "statModCountMax": 20,
+    "upgradeCapacity": 5,
+    "compatibleMods": [
+      "project45-alofsmagmod"
+    ],
     "allowsConversion": [
       "projectile",
       "summoned"
@@ -58,7 +61,7 @@
       "ejectCasing": [
       ],
       "ejectMag": [ "/sfx/project45neosfx/boltpull/boltpull-rifle2.ogg" ],
-      "boltPull" : [ ],
+      "boltPull" : [ "/sfx/project45neosfx/boltpull/boltpull-rifle2.ogg" ],
       "boltPush" : ["/sfx/project45neosfx/boltpush/boltpush-rifle2.ogg"],
       "reloadEnd": [],
       "loadRound": [
@@ -100,6 +103,9 @@
     
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
+    "critChance": 0.22,
+    "critDamageMult": 1.65,
+    "reloadCost": 10,
     "baseDamage": 27,
     "maxAmmo": 2,
     "bulletsPerReload": 1,
@@ -130,12 +136,12 @@
       },
       "boltPull": {
         "lite": true,
-        "frontArmFrame": "run.3",
+        "frontArmFrame": "rotation",
         "backArmFrame": "jump.2"
       },
       "boltPush": {
         "lite": true,
-        "frontArmFrame": "run.3",
+        "frontArmFrame": "rotation",
         "backArmFrame": "fall.1"
       },
       "reloading": {

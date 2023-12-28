@@ -1,0 +1,119 @@
+{
+  "itemName" : "project45-msx-marcohmg",
+  "price" : 50000,
+  "maxStack" : 1,
+  "rarity" : "Essential",
+  "description" : "A simple machine gun, effective against Big Ape's constructs.",
+  "shortdescription" : "^#fdd14d;Marco's HMG^reset;",
+  "tooltipKind" : "project45gun",
+  "gunArchetype": "machineGun",
+  "category" : "rifle",
+  "twoHanded" : true,
+  "itemTags" : ["weapon","ranged","rifle"],
+  "level" : 1,
+  "muzzleFlashColor": [240, 168, 72],
+  "inventoryIcon" : "project45-msx-marcohmg-icon.png",
+  "tooltipFields":{
+    "objectImage": "/items/active/weapons/ranged/project45/special/project45-msx-marcohmg/project45-msx-marcohmg.png"
+  },
+  "animationParts" : {
+    "middle" : "project45-msx-marcohmg.png",
+    "middleFullbright" : "",
+    "charge": "",
+    "chargeFullbright": "",
+    "magazine": "",
+    "magazineFullbright": "",
+    "muzzleFlash": "/items/active/weapons/ranged/project45/special/project45-msx-marcohmg/muzzleflash.png"
+  },
+  "overrideMuzzleFlashDirectives": true,
+
+  "animationCustom": {
+    "particleEmitters": {
+      "ejectionPort": {
+        "particles": [
+          {"particle": "project45bulletcase"}
+        ]
+      },
+      "magazine": {
+        "particles": [
+        ]
+      }
+    },
+
+    "sounds": {
+      "init": ["/sfx/project45neosfx/special/marcohmg/marcohmg_init.ogg"],
+      "fire" : ["/sfx/project45neosfx/special/marcohmg/marcohmg_fire.ogg"],
+      // "fireLoop": ["/sfx/project45neosfx/special/marcohmg/marcohmg_fireloop.ogg"],
+      // "fireEnd": ["/sfx/project45neosfx/special/marcohmg/marcohmg_fireend.ogg"],
+      "boltPull": ["/sfx/project45neosfx/special/marcohmg/marcohmg_loadmag.ogg"],
+      "unjam": ["/sfx/project45neosfx/special/marcohmg/marcohmg_unjam.ogg"],
+      "hollow": [ ],
+      "boltPush": [ ],
+      "ejectMag": [ ],
+      "reloadEnd": [ ]
+    }
+  },
+
+  "project45GunModInfo":{
+    "category": "special",
+    "upgradeCapacity": 10
+  },
+
+  "baseOffset" : [0, -0.5],
+  "muzzleOffset" : [2.5, 0.375],
+  "ejectionPortOffset": [-0.125, 0.75],
+  "magazineOffset": [0.375, 0],
+
+  "scripts" : ["/items/active/weapons/ranged/project45gunneo.lua"],
+    
+  "primaryAbilityType": "project45gunfire",
+  "primaryAbility": {
+    "muzzleFlashVariants": 2,
+    "reloadCost": 25,
+    "maxAmmo": 200,
+    "bulletsPerReload": 200,
+    "semi": false,
+    "spread": 3,
+    "inaccuracy": 0,
+    "recoilAmount": 0,
+    "recoilMaxDeg": 0,
+    // "recoverDelay": 0.05,
+    "cycleTime": 0.005,
+    "projectileType": "project45marcohmgbullet",
+
+    "ejectMagOnEmpty": "firing",
+
+    "stances": {
+      "aimStance": {
+        "frontArmFrame": "run.3",
+        "backArmFrame": "fall.1"
+      },
+      "empty": {
+        "frontArmFrame": "run.3",
+        "backArmFrame": "fall.1"
+      },
+      
+      "reloading": {
+        "frontArmFrame": "run.3",
+        "backArmFrame": "idle.1"
+      },
+      "reloaded": {
+        "frontArmFrame" : "run.3",
+        "backArmFrame" : "idle.2"
+      },
+      "jammed": {
+        "frontArmFrame": "run.3",
+        "backArmFrame": "fall.1",
+        "weaponOffset": [0, -0.25]
+      },
+
+      "unjam": {
+        "frontArmFrame": "run.3",
+        "backArmFrame": "idle.2",
+        "weaponOffset": [0, -0.25]
+      }
+    }
+  },
+
+  "builder" : "/items/buildscripts/buildproject45neoneo.lua"
+}

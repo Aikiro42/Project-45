@@ -3,47 +3,42 @@ require "/scripts/augments/project45-gunmod-helper.lua"
 require "/scripts/util.lua"
 require "/scripts/vec2.lua"
 require "/scripts/set.lua"
+require "/scripts/project45/project45util.lua"
 
-function apply(input)
+function apply(input, override, augment)
 
   -- do not install mod if the thing this mod is applied to isn't a gun
-  local modInfo = input.parameters.project45GunModInfo
-  if not modInfo then return end
+    local output = Item.new(input)
+    local modInfo = sb.jsonMerge(output.config.project45GunModInfo, input.parameters.project45GunModInfo)
+    if not modInfo then return end
 
-  local augment = config.getParameter("augment")
-  local output = Item.new(input)
+  local augment = augment or config.getParameter("augment")
   
   -- if augment field exists, do something
   if augment then
 
+    local upgradeCost = augment.upgradeCost or 1
     local statList = input.parameters.statList or {nil} -- retrieve stat mods
-    local statModCount = input.parameters.statModCount or 0
-    local statModCountMax = modInfo.statModCountMax or -1
+    local upgradeCount = input.parameters.upgradeCount or 0
+    local upgradeCapacity = modInfo.upgradeCapacity or -1
     
     -- MOD INSTALLATION GATES
 
-    local modExceptions = modInfo.modExceptions or {}
-    modExceptions.accept = modExceptions.accept or {}
-    modExceptions.deny = modExceptions.deny or {}
+    if not override then
 
-    -- check if stat mod is particularly denied
-    local denied = set.new(modExceptions.deny)
-    if denied[config.getParameter("itemName")] then
-      sb.logError("(statmod.lua) Stat mod application failed: gun does not accept this specific stat mod")
-      return gunmodHelper.addMessage(input, "Incompatible stat mod: " .. config.getParameter("shortdescription"))
-    end
+        -- deny installation if upgrade capacity not enough
+        if upgradeCapacity > -1 and upgradeCount + upgradeCost > upgradeCapacity then
+            sb.logError("(statmod.lua) Stat mod application failed: Not Enough Upgrade Capacity")
+            return gunmodHelper.addMessage(input, "Not Enough Upgrade Capacity")
+        end
 
-    -- If the max number of stat mods that can be installed is specified (i.e. non-negative number)
-    -- and the number of mods installed already reached that cap
-    -- do not apply stat mod
-    if statModCountMax > -1 and statModCount >= statModCountMax and not augment.level then
-        sb.logError("(statmod.lua) Stat mod application failed: max number of stat mods have been installed")
-        return gunmodHelper.addMessage(input, "Max stat mod capacity reached")
-    end
-
-    if augment.level and (input.parameters.level or 1) >= 10 then
-        sb.logError("(statmod.lua) Stat mod application failed: max level reached.")
-        return gunmodHelper.addMessage(input, "Max level reached")
+        -- deny installation if stat mod upgrades level
+        -- and level of weapon is 10
+        if augment.level and (input.parameters.level or 1) >= 10 then
+            sb.logError("(statmod.lua) Stat mod application failed: max level reached.")
+            return gunmodHelper.addMessage(input, "Max level reached")
+        end
+    
     end
 
     -- MOD INSTALLATION PROCESS
@@ -57,27 +52,25 @@ function apply(input)
     if augment.baseDamage then
 
         statModifiers.baseDamage = statModifiers.baseDamage or {base = output.config.primaryAbility.baseDamage}
-        
+                
         if augment.baseDamage.additive then
             statModifiers.baseDamage.additive =
                 (statModifiers.baseDamage.additive or 0) + augment.baseDamage.additive
+        end
 
-        elseif augment.baseDamage.multiplicative then
+        if augment.baseDamage.multiplicative then
             statModifiers.baseDamage.multiplicative =
                 (statModifiers.baseDamage.multiplicative or 1) + augment.baseDamage.multiplicative
-        
-        else
-            statModifiers.baseDamage.additive = statModifiers.baseDamage.additive or 0
-            statModifiers.baseDamage.multiplicative = statModifiers.baseDamage.multiplicative or 1
-    
         end
         
         -- apply baseDamage modifiers
         newPrimaryAbility = sb.jsonMerge(newPrimaryAbility,
             {
-                baseDamage = statModifiers.baseDamage.base
-                * (statModifiers.baseDamage.multiplicative or 1)
-                + (statModifiers.baseDamage.additive or 0)
+                baseDamage = moddedStat(
+                    statModifiers.baseDamage.base,
+                    statModifiers.baseDamage.additive,
+                    statModifiers.baseDamage.multiplicative
+                )
             })
 
     end
@@ -105,46 +98,72 @@ function apply(input)
             newCockTime,
             newFireTime
         )
-        
+            
         if augment.fireTime.additive then
             statModifiers.fireTime.additive =
                 (statModifiers.fireTime.additive or 0) + augment.fireTime.additive
-
-        elseif augment.fireTime.multiplicative then
-            statModifiers.fireTime.multiplicative =
-                (statModifiers.fireTime.multiplicative or 1) + augment.fireTime.multiplicative
-        else
-            statModifiers.fireTime.additive = statModifiers.fireTime.additive or 0
-            statModifiers.fireTime.multiplicative = statModifiers.fireTime.multiplicative or 1
         end
 
+        if augment.fireTime.multiplicative then
+            statModifiers.fireTime.multiplicative =
+                (statModifiers.fireTime.multiplicative or 1) + augment.fireTime.multiplicative
+        end
+        
         -- apply fireTime modifiers
         if type(newCycleTime) == "table" then
             newCycleTime = {
-                math.max(minFireTime, newCycleTime[1]
-                    / (statModifiers.fireTime.multiplicative or 1) + (statModifiers.fireTime.additive or 0)
+                math.max(minFireTime, moddedStat(
+                        newCycleTime[1],
+                        statModifiers.fireTime.additive,
+                        statModifiers.fireTime.multiplicative,
+                        true
+                    )
                 ),
-                math.max(minFireTime, newCycleTime[2]
-                    / (statModifiers.fireTime.multiplicative or 1) + (statModifiers.fireTime.additive or 0)
+                math.max(minFireTime, moddedStat(
+                        newCycleTime[1],
+                        statModifiers.fireTime.additive,
+                        statModifiers.fireTime.multiplicative,
+                        true
+                    )
                 )
             }
         else
-            newCycleTime = math.max(minFireTime, newCycleTime
-                / (statModifiers.fireTime.multiplicative or 1) + (statModifiers.fireTime.additive or 0)
+            newCycleTime = math.max(minFireTime, moddedStat(
+                    newCycleTime,
+                    statModifiers.fireTime.additive,
+                    statModifiers.fireTime.multiplicative,
+                    true
+                )
             )
         end
     
-        newCockTime = math.max(minFireTime, newCockTime
-            / (statModifiers.fireTime.multiplicative or 1) + (statModifiers.fireTime.additive or 0)
+        newCockTime = math.max(minFireTime, moddedStat(
+                newCockTime,
+                statModifiers.fireTime.additive,
+                statModifiers.fireTime.multiplicative,
+                true
+            )
         )
-        newFireTime = math.max(minFireTime, newFireTime
-            / (statModifiers.fireTime.multiplicative or 1) + (statModifiers.fireTime.additive or 0)
+        newFireTime = math.max(minFireTime, moddedStat(
+                newFireTime,
+                statModifiers.fireTime.additive,
+                statModifiers.fireTime.multiplicative,
+                true
+            )
         )
-        newChargeTime = math.max(0, newChargeTime
-            / (statModifiers.fireTime.multiplicative or 1) + (statModifiers.fireTime.additive or 0)
+        newChargeTime = math.max(0, moddedStat(
+                newChargeTime,
+                statModifiers.fireTime.additive,
+                statModifiers.fireTime.multiplicative,
+                true
+            )
         )
-        newOverchargeTime = math.max(0, newOverchargeTime
-            / (statModifiers.fireTime.multiplicative or 1) + (statModifiers.fireTime.additive or 0)
+        newOverchargeTime = math.max(0, moddedStat(
+                newOverchargeTime,
+                statModifiers.fireTime.additive,
+                statModifiers.fireTime.multiplicative,
+                true
+            )
         )
 
 
@@ -167,20 +186,21 @@ function apply(input)
         if augment.reloadCost.additive then
             statModifiers.reloadCost.additive =
                 (statModifiers.reloadCost.additive or 0) + augment.reloadCost.additive
-        
-        elseif augment.reloadCost.multiplicative then
+        end
+
+        if augment.reloadCost.multiplicative then
             statModifiers.reloadCost.multiplicative =
                 (statModifiers.reloadCost.multiplicative or 1) + augment.reloadCost.multiplicative
-        else
-            statModifiers.reloadCost.additive = statModifiers.reloadCost.additive or 0
-            statModifiers.reloadCost.multiplicative = statModifiers.reloadCost.multiplicative or 1
-    
         end
         
         -- apply reloadCost modifiers
-        local newReloadCost = statModifiers.reloadCost.base
-        newReloadCost = math.max(0, newReloadCost
-            / (statModifiers.reloadCost.multiplicative or 1) + (statModifiers.reloadCost.additive or 0))
+        local newReloadCost = math.max(0, moddedStat(
+                statModifiers.reloadCost.base,
+                statModifiers.reloadCost.additive,
+                statModifiers.reloadCost.multiplicative,
+                true
+            )
+        )
         newPrimaryAbility = sb.jsonMerge(newPrimaryAbility, {reloadCost = newReloadCost})
 
     end
@@ -193,67 +213,83 @@ function apply(input)
         if augment.critChance.additive then
             statModifiers.critChance.additive =
                 (statModifiers.critChance.additive or 0) + augment.critChance.additive
+        end
 
-        elseif augment.critChance.multiplicative then
+        if augment.critChance.multiplicative then
             statModifiers.critChance.multiplicative =
                 (statModifiers.critChance.multiplicative or 1) + augment.critChance.multiplicative
-        else
-            statModifiers.critChance.additive = statModifiers.critChance.additive or 0
-            statModifiers.critChance.multiplicative = statModifiers.critChance.multiplicative or 1
-
         end
         
         -- apply critChance modifiers
-        local newCritChance = statModifiers.critChance.base
-            * (statModifiers.critChance.multiplicative or 1) + (statModifiers.critChance.additive or 0)
+        local newCritChance = moddedStat(
+            statModifiers.critChance.base,
+            statModifiers.critChance.additive,
+            statModifiers.critChance.multiplicative
+        )
         newPrimaryAbility = sb.jsonMerge(newPrimaryAbility, {critChance = newCritChance})
     end
 
     -- modify critDamage
     if augment.critDamage then
+        
         statModifiers.critDamage = statModifiers.critDamage or {base=output.config.primaryAbility.critDamageMult}
 
         if augment.critDamage.additive then
             statModifiers.critDamage.additive =
                 (statModifiers.critDamage.additive or 0) + augment.critDamage.additive
-
-        elseif augment.critDamage.multiplicative then
+        end
+        
+        if augment.critDamage.multiplicative then
             statModifiers.critDamage.multiplicative =
                 (statModifiers.critDamage.multiplicative or 1) + augment.critDamage.multiplicative
-        else
-            statModifiers.critDamage.additive = statModifiers.critDamage.additive or 0
-            statModifiers.critDamage.multiplicative = statModifiers.critDamage.multiplicative or 1
         end
         
         -- apply critDamageMult modifiers
-        local newCritDamage = statModifiers.critDamage.base
-            * (statModifiers.critDamage.multiplicative or 1) + (statModifiers.critDamage.additive or 0)
+        local newCritDamage = moddedStat(
+            statModifiers.critDamage.base,
+            statModifiers.critDamage.additive,
+            statModifiers.critDamage.multiplicative
+        )
         newPrimaryAbility = sb.jsonMerge(newPrimaryAbility, {critDamageMult = newCritDamage})
     end
 
     if augment.level then
-        output:setInstanceValue("level", (input.parameters.level or output.config.level) + 1)
+        output:setInstanceValue("level", math.min(10, (input.parameters.level or output.config.level) + augment.level))
     end
 
     -- merge changes
     output:setInstanceValue("primaryAbility", sb.jsonMerge(input.parameters.primaryAbility, newPrimaryAbility))
     output:setInstanceValue("statModifiers", statModifiers)
 
-    -- count stat
-    statList[config.getParameter("itemName")] = (statList[config.getParameter("itemName")] or 0) + 1
-    if not statModCount then
-        statModCount = 0
-    else
-        statModCount = statModCount + 1
-    end
-    
-    
-    output:setInstanceValue("statList", statList)
-    output:setInstanceValue("statModCount", statModCount)
+    if not override then
+        -- count stat if not wildcard
+        if not augment.randomStats then
+            statList[config.getParameter("itemName")] = (statList[config.getParameter("itemName")] or 0) + 1
+        else
+            local retrievedSeed = config.getParameter("seed")
+            statList.wildcards = statList.wildcards or {}
+            table.insert(statList.wildcards, retrievedSeed)
+        end
+        output:setInstanceValue("statList", statList)
+        output:setInstanceValue("upgradeCount", upgradeCount + upgradeCost)
 
-    output:setInstanceValue("isModded", true)
+        output:setInstanceValue("isModded", true)
+    end
 
     return output:descriptor(), 1
   
   end
+end
+
+function moddedStat(base, additive, multiplicative, isDiv)
+    
+    additive = additive or 0
+    multiplicative = multiplicative or 1
+
+    if isDiv then
+        return (base / multiplicative) + additive
+    end
+
+    return base * multiplicative + additive
+
 end

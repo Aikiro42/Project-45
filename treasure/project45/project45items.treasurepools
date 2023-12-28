@@ -6,6 +6,7 @@
     [0, {
       "pool" : [
         {"weight" : 1, "item" : "project45-neo-pipegun"},
+        {"weight" : 1, "item" : "project45-neo-bow"},
         {"weight" : 1, "item" : "project45-neo-pistol"},
         {"weight" : 1, "item" : "project45-neo-sawedoff"},
         {"weight" : 1, "item" : "project45-neo-doublebarrel"},
@@ -53,7 +54,7 @@
         {"weight" : 1, "item" : "project45-neo-minigun"},
         {"weight" : 1, "item" : "project45-neo-powerstave"},
         {"weight" : 1, "item" : "project45-neo-flamethrower"},
-        {"weight" : 1, "item" : "project45-neo-shindeiru"}
+        {"weight" : 1, "item" : "project45-neo-smartgun"}
       ],
       "poolRounds" : 1,
       "allowDuplication" : false
@@ -70,7 +71,8 @@
         {"weight" : 1, "item" : "project45-pkf-typhon"},
         {"weight" : 1, "item" : "project45-tcf-kineticarbiter"},
         {"weight" : 1, "item" : "project45-scz-spacecowboy"},
-        {"weight" : 1, "item" : "project45-gov-scarlet"}
+        {"weight" : 1, "item" : "project45-gov-scarlet"},
+        {"weight" : 1, "item" : "project45-msx-marcohmg"}
 
       ],
       "poolRounds" : 1,
@@ -80,13 +82,21 @@
 
   // STATS
 
+  "project45-stats-xssr": [
+    [0, {
+      "pool" : [
+        {"weight" : 1, "item" : "project45-godmod"}
+      ],
+      "poolRounds" : 1,
+      "allowDuplication" : false
+    }]
+  ],
+
   "project45-stats-ssr": [
     [0, {
       "pool" : [
-        
-        {"weight" : 0.95, "item" : "project45-levelmod"},
-        {"weight" : 0.05, "item" : "project45-godmod"}
-
+        {"weight" : 0.50, "item" : "project45-godmod"},
+        {"weight" : 0.50, "item" : "project45-maxlevelmod"}
       ],
       "poolRounds" : 1,
       "allowDuplication" : false
@@ -96,12 +106,11 @@
   "project45-stats-sr": [
     [0, {
       "pool" : [
-        
-        {"weight" : 1, "item" : "project45-critdamagemultmod"},
+        {"weight" : 1, "item" : "project45-firetimemultmod"},
         {"weight" : 1, "item" : "project45-critchancemultmod"},
+        {"weight" : 1, "item" : "project45-critdamagemultmod"},
         {"weight" : 1, "item" : "project45-damagemultmod"},
         {"weight" : 1, "item" : "project45-reloadcostmultmod"}
-
       ],
       "poolRounds" : 1,
       "allowDuplication" : false
@@ -111,10 +120,17 @@
   "project45-stats-r": [
     [0, {
       "pool" : [
-        {"weight" : 1, "item" : "project45-critchanceaddmod"},
-        {"weight" : 1, "item" : "project45-critdamageaddmod"},
-        {"weight" : 1, "item" : "project45-damageaddmod"},
-        {"weight" : 1, "item" : "project45-reloadcostaddmod"}
+        
+        {"weight" : 0.50, "item" : "project45-levelmod"},
+
+        {"weight" : 0.125, "item" : "project45-critchanceaddmod"},
+        
+        {"weight" : 0.125, "item" : "project45-critdamageaddmod"},
+        
+        {"weight" : 0.125, "item" : "project45-damageaddmod"},
+        
+        {"weight" : 0.125, "item" : "project45-reloadcostaddmod"}
+
       ],
       "poolRounds" : 1,
       "allowDuplication" : false
@@ -160,6 +176,8 @@
         {"weight" : 1, "item" : "project45-muzzlebrakemod"},
         {"weight" : 1, "item" : "project45-silencermod"},
         {"weight" : 1, "item" : "project45-extendedbarrelmod"},
+        {"weight" : 1, "item" : "project45-multinockmod"},
+        {"weight" : 1, "item" : "project45-bowstabilizermod"},
         {"weight" : 1, "item" : "project45-convergermod"}
       ],
       "poolRounds" : 1,
@@ -174,9 +192,12 @@
         {"weight" : 1, "item" : "project45-weightmod"},
         {"weight" : 1, "item" : "project45-gripmod"},
         {"weight" : 1, "item" : "project45-extendedmagmod"},
+        {"weight" : 1, "item" : "project45-alofsmagmod"},
         {"weight" : 1, "item" : "project45-overampmod"},
+        {"weight" : 1, "item" : "project45-customnockmod"},
         {"weight" : 1, "item" : "project45-lasermod"},
-        {"weight" : 1, "item" : "project45-reflexsightsmod"}
+        {"weight" : 1, "item" : "project45-reflexsightsmod"},
+        {"weight" : 1, "item" : "project45-manualreloadmod"}
       ],
       "poolRounds" : 1,
       "allowDuplication" : false

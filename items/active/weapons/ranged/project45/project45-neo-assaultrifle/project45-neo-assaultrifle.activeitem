@@ -6,7 +6,7 @@
   "description" : "A burst-fire assault rifle. Great for fast-paced combat.",
   "shortdescription" : "Assault Rifle",
   "tooltipKind" : "project45gun",
-  "gunArchetype": "Assault Rifle",
+  "gunArchetype": "assaultRifle",
   "category" : "rifle",
   "twoHanded" : true,
   "itemTags" : ["weapon","ranged","rifle"],
@@ -47,7 +47,7 @@
 
   "project45GunModInfo":{
     "category": "ballistic",
-    "statModCountMax": 10,
+    "upgradeCapacity": 9,
     "allowsConversion": [
       "hitscan",
       "summoned"
@@ -89,15 +89,17 @@
     
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
+    "reloadCost": 30,
     "baseDamage": 9,
     "maxAmmo": 30,
     "bulletsPerReload": 30,
     "semi": true,
     "burstCount": 3,
-    "inaccuracy": 3,
+    "spread": 1,
+    "inaccuracy": 2,
     "recoilAmount": 1,
-    "recoilMaxDeg": 30,
-    "recoverDelay": 0.1,
+    "recoilMaxDeg": 15,
+    "recoverDelay": 0,
     "cycleTime": 0.05,
     "fireTime": 0.25,
     "projectileKind": "projectile",

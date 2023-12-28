@@ -3,8 +3,10 @@
   "price" : 12500,
   "rarity" : "Legendary",
   "tooltipKind" : "project45gunmod2",
-  "category" : "Gun Mod",
+  "modCategory" : "gunMod",
+  "category" : "eppAugment",
   "tooltipFields":{
+    "subtitle": "Gun Mod",
     "objectImage": "/items/augments/project45-gunmods/mods/project45-splittermod/project45-splittermod.png"
   },
   "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-splittermod/project45-splittermodicon.png",
@@ -52,7 +54,7 @@
   },
 
 
-  "radioMessagesOnPickup" : [ "pickupaugment" ],
+   
 
   "scripts" : [ "/scripts/augments/project45-gunmod/gunmod.lua" ],
   "builder": "/items/buildscripts/buildproject45mod.lua"

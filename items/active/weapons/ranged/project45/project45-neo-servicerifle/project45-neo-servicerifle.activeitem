@@ -3,10 +3,10 @@
   "price" : 2500,
   "maxStack" : 1,
   "rarity" : "Rare",
-  "description" : "A service rifle.",
+  "description" : "The latest iteration of a reliable rifle design, complete with the iconic *ping*.",
   "shortdescription" : "Service Rifle",
   "tooltipKind" : "project45gun",
-  "gunArchetype": "Service Rifle",
+  "gunArchetype": "rifle",
   "category" : "sniper",
   "twoHanded" : true,
   "itemTags" : ["weapon","ranged","sniper"],
@@ -16,7 +16,7 @@
 
   "project45GunModInfo":{
     "category": "ballistic",
-    "statModCountMax": 10,
+    "upgradeCapacity": 9,
     "allowsConversion": [
       "hitscan",
       "summoned"
@@ -88,10 +88,13 @@
     
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
+    "reloadCost": 35,
+    "critChance": 0.32,
+    "critDamageMult": 1.33,
     "baseDamage": 15,
     "maxAmmo": 10,
     "bulletsPerReload": 10,
-    "inaccuracy": 3,
+    "inaccuracy": 2,
     "semi": true,
     "cycleTime": 0.1,
     "cockTime": 0.4,

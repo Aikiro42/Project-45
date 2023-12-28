@@ -3,10 +3,10 @@
   "price" : 10000,
   "maxStack" : 1,
   "rarity" : "Essential",
-  "description" : "The design of this geneva-violating weapon of mass destruction was brought to you by Hanz and Co.",
+  "description" : "This is a flamethrower. It throws flames.",
   "shortdescription" : "Flamethrower",
   "tooltipKind" : "project45gun",
-  "gunArchetype": "Experimental",
+  "gunArchetype": "flamethrower",
   "category" : "rifle",
   "twoHanded" : true,
   "itemTags" : ["weapon","ranged","rifle"],
@@ -25,7 +25,7 @@
 
   "project45GunModInfo": {
     "category": "experimental",
-    "statModCountMax": 10,
+    "upgradeCapacity": 5,
     "allowsConversion": [
       "beam"
     ],
@@ -140,6 +140,8 @@
     
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
+    "heavyWeapon": true,
+    "reloadCost": 80,
     "baseDamage": 4.5,
     "maxAmmo": 100,
     "bulletsPerReload": 100,
@@ -155,7 +157,8 @@
       "speed": 50,
       "statusEffects":["burning"]
     },
-    "multishot": 2.5,
+    "projectileCount": 2,
+    "multishot": 1.5,
     "screenShakeAmount": [1, 0.1],
     "maxScreenShakeTime": 1,
     // "reloadTime": 10,

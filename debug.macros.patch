@@ -8,9 +8,16 @@
     },
     {
         "op": "add",
-        "path": "/npunchy",
+        "path": "/npunchyx",
         "value": [
             "/spawnnpc apex miniknogagent"
+        ]
+    },
+    {
+        "op": "add",
+        "path": "/npunchy1",
+        "value": [
+            "/spawnnpc human arenafighter"
         ]
     },
     {
@@ -30,6 +37,37 @@
             "/spawnitem project45-damagemultmod 10",
             "/spawnitem project45-critchancemultmod 10",
             "/spawnitem project45-critdamagemultmod 10"
+        ]
+    },
+    {
+        "op": "add",
+        "path": "/artifactscans",
+        "value": [
+            // floran
+            "/spawnitem championspeardisplay",
+            "/spawnitem floranspinneret",
+            "/spawnitem floranwebbing",
+            
+            // hylotl
+            "/spawnitem librarycodex",
+            "/spawnitem librarymodel",
+            "/spawnitem pagodaaquarium",
+
+            // avian
+            "/spawnitem kluexstatue1",
+            "/spawnitem kluexstatue2",
+            "/spawnitem birdaltar2",
+            "/spawnitem consoletribal4",
+
+            // apex
+            "/spawnitem bigapedoll",
+            "/spawnitem minidronerack",
+            "/spawnitem miniknognewspaper",
+
+            // glitch
+            "/spawnitem glitchbaronfigure",
+            "/spawnitem glitchchess",
+            "/spawnitem glitchscribe"
         ]
     }
 ]

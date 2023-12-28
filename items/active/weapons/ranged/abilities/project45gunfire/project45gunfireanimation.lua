@@ -1,10 +1,21 @@
 require "/scripts/vec2.lua"
 require "/scripts/util.lua"
 require "/scripts/poly.lua"
+require "/scripts/project45/project45util.lua"
 
 local warningTriggered = false
 local messagesToRender = {}
 local renderMessageTimer = 0
+local renderBarsAtCursor = false
+local runAnimUpdateScript = false
+local animTable = {
+  ammo = {
+    ticks = 15,
+    ticker = 0,
+    frames = 2,
+    frame = 1
+  }
+}
 
 synthethikmechanics_altInit = init or function()
   if not warningTriggered then
@@ -23,12 +34,15 @@ synthethikmechanics_altUpdate = update or function()
 function init()
   synthethikmechanics_altInit()
   messagesToRender = animationConfig.animationParameter("project45GunFireMessages")
+  renderBarsAtCursor = animationConfig.animationParameter("renderBarsAtCursor")
+  runAnimUpdateScript = runAnimUpdateScript or animationConfig.animationParameter("useAmmoCounterImages")
 end
 
 function update()
   localAnimator.clearDrawables()
   localAnimator.clearLightSources()
   synthethikmechanics_altUpdate()
+  updateAnimTable()
 
   if not warningTriggered then
     warningTriggered = true
@@ -51,25 +65,35 @@ function update()
   [charge bar]                                             [charge bar]
   --]]
 
-  local horizontalOffset = reloadTimer < 0 and 0 or 2
-
-  horizontalOffset = horizontalOffset + (jamAmount <= 0 and 0 or 2)
-
-  horizontalOffset = horizontalOffset + 2 -- ammo count, charge bar
-
+  local barXOffset = reloadTimer < 0 and 2 or 0
+  barXOffset = barXOffset + jamAmount <= 0 and 2 or 0
+  local horizontalOffset = 2
+  horizontalOffset = horizontalOffset + (renderBarsAtCursor and barXOffset or 0)
   horizontalOffset = hand == "primary" and -horizontalOffset or horizontalOffset
+  barXOffset = hand == "primary" and -barXOffset or barXOffset
 
-  renderAmmoNumber({horizontalOffset, 0})
+  renderAmmoNumber({horizontalOffset, 0}, reloadTimer >= 0)
 
   renderChamberIndicator({horizontalOffset, 0})
 
   renderLaser()
-  renderReloadBar({horizontalOffset, 0})
-  renderJamBar({horizontalOffset, 0})
-  renderChargeBar({horizontalOffset, -1.625})
+  renderReloadBar({horizontalOffset + (renderBarsAtCursor and 0 or barXOffset), 0})
+  renderJamBar({horizontalOffset + (renderBarsAtCursor and 0 or barXOffset), 0})
+  renderChargeBar({horizontalOffset, animationConfig.animationParameter("performanceMode") and -1 or -1.625})
   renderHitscanTrails()
   renderBeam()
 
+end
+
+function updateAnimTable()
+  if not runAnimUpdateScript then return end
+  for anim, _ in pairs(animTable) do
+    animTable[anim].ticker = animTable[anim].ticker + 1
+    if animTable[anim].ticker > animTable[anim].ticks then
+      animTable[anim].frame = (animTable[anim].frame % animTable[anim].frames) + 1
+      animTable[anim].ticker = 0
+    end
+  end
 end
 
 function renderMessages(messageOffset)
@@ -89,7 +113,7 @@ function renderMessages(messageOffset)
   return math.floor(60 * 0.3)
 end  
 
-function renderAmmoNumber(offset)
+function renderAmmoNumber(offset, reloading)
   
   local reloadRatingTextColor = {
     PERFECT = {255, 241, 191},
@@ -100,6 +124,7 @@ function renderAmmoNumber(offset)
   
   local ammo = animationConfig.animationParameter("ammo") or "?"
   local rating = animationConfig.animationParameter("reloadRating")
+  local renderAmmoImage = animationConfig.animationParameter("useAmmoCounterImages")
 
   if ammo >= 0 then
     localAnimator.spawnParticle({
@@ -112,16 +137,34 @@ function renderAmmoNumber(offset)
       layer = "front"
     }, vec2.add(activeItemAnimation.ownerAimPosition(), offset))
 
-  else  -- TODO: show crossed-out mag instead of "E"
-    localAnimator.spawnParticle({
-      type = "text",
-      text= "^shadow;E",
-      color = {255, 255, 255},
-      size = 1,
-      fullbright = true,
-      flippable = false,
-      layer = "front"
-    }, vec2.add(activeItemAnimation.ownerAimPosition(), offset))
+  else
+    if renderAmmoImage then
+      if reloading then
+        localAnimator.addDrawable({
+          image = "/items/active/weapons/ranged/abilities/project45gunfire/reloadindicator.png:reloading." .. animTable.ammo.frame,
+          position = vec2.add(vec2.add(activeItemAnimation.ownerAimPosition(), offset), {0, 0.25}),
+          color = {255,255,255},
+          fullbright = true,
+        }, "overlay")
+      else
+        localAnimator.addDrawable({
+          image = "/items/active/weapons/ranged/abilities/project45gunfire/reloadindicator.png:empty." .. animTable.ammo.frame,
+          position = vec2.add(vec2.add(activeItemAnimation.ownerAimPosition(), offset), {0, 0.25}),
+          color = {255,255,255},
+          fullbright = true,
+        }, "overlay")
+      end
+    else
+      localAnimator.spawnParticle({
+        type = "text",
+        text= string.format("^shadow;%s", reloading and "R" or "E"),
+        color = {255, 255, 255},
+        size = 1,
+        fullbright = true,
+        flippable = false,
+        layer = "front"
+      }, vec2.add(activeItemAnimation.ownerAimPosition(), offset))
+    end
   end
 end
 
@@ -138,6 +181,34 @@ function renderChamberIndicator(offset)
     color = {255,255,255},
     fullbright = true,
   }, "ForegroundEntity+1")
+end
+
+function renderBezierTest()
+  local pos = activeItemAnimation.ownerPosition()
+  local aim = activeItemAnimation.ownerAimPosition()
+  local mid = {(pos[1] + aim[1])/2, (pos[2] + aim[2])/2}
+  local i = vec2.add(pos, {0, 0})
+  local o = vec2.add(aim, {0, 0})
+  
+  local tfunc = function(a, b)
+    local x = world.lineTileCollisionPoint(a, b)
+    if x then
+      return x[1]
+    end
+  end
+
+  local c = vec2.add(mid, {sb.nrand(5, 0), sb.nrand(5, 0)})
+  -- local c = vec2.add(mid, {0, 5})
+  local curve = project45util.drawBezierCurve(10, i, o, c, tfunc)
+  for _, line in ipairs(curve) do
+    local laserLine = worldify(line[1], line[2])
+    localAnimator.addDrawable({
+      line = laserLine,
+      width = 0.5,
+      fullbright = true,
+      color = {255,255,255}
+    }, "Player+1")
+  end
 end
 
 function renderLaser()
@@ -203,7 +274,7 @@ function renderReloadBar(offset, barColor, length, width, borderwidth)
   local quickReloadTimeframe = animationConfig.animationParameter("quickReloadTimeframe")
   local good = {quickReloadTimeframe[1], quickReloadTimeframe[4]}
   local perfect = {quickReloadTimeframe[2], quickReloadTimeframe[3]}
-  local position = activeItemAnimation.ownerAimPosition()
+  local position = renderBarsAtCursor and activeItemAnimation.ownerAimPosition() or activeItemAnimation.ownerPosition()
 
   local length = length or 4
   local barWidth = width or 2
@@ -294,7 +365,7 @@ end
 function renderJamBar(offset, barColor, length, width, borderwidth)
   local jamScore = animationConfig.animationParameter("jamAmount")
   if not jamScore or jamScore <= 0 then return end
-  local position = activeItemAnimation.ownerAimPosition()
+  local position = renderBarsAtCursor and activeItemAnimation.ownerAimPosition() or activeItemAnimation.ownerPosition()
   local offset = offset or {-2, 0}
   offset[1] = (offset[1] < 0) and (offset[1] + 2) or (offset[1] - 2)
 
@@ -351,6 +422,7 @@ function renderChargeBar(offset, position, barColor, length, width, borderwidth)
 
   local chargeTime = animationConfig.animationParameter("chargeTime")
   local overchargeTime = animationConfig.animationParameter("overchargeTime")
+  local perfectChargeRange = animationConfig.animationParameter("perfectChargeRange")
 
   local position = activeItemAnimation.ownerAimPosition()
   local offset = offset or {0, -1.5}
@@ -395,6 +467,23 @@ function renderChargeBar(offset, position, barColor, length, width, borderwidth)
     fullbright = true,
     color = {255, 0, 0}
   }, "ForegroundEntity+1")
+
+
+  if perfectChargeRange then
+    local overchargeLength = length * overchargeTime / (chargeTime + overchargeTime)
+    local perfectChargeBase = vec2.add(base_a, {chargeLength, 0})
+    local perfectChargeTimeBar = worldify(
+      vec2.add(perfectChargeBase, {overchargeLength * perfectChargeRange[1], 0}),
+      vec2.add(perfectChargeBase, {overchargeLength * perfectChargeRange[2], 0})
+    )
+    localAnimator.addDrawable({
+      line = perfectChargeTimeBar,
+      width = barWidth,
+      fullbright = true,
+      color = {255, 255, 255}
+    }, "ForegroundEntity+1")
+  end
+
 
   -- render charge progress
   a = base_a
