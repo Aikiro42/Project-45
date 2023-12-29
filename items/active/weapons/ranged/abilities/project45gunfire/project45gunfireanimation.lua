@@ -7,6 +7,7 @@ require "/scripts/project45/project45util.lua"
 local warningTriggered, renderBarsAtCursor, runAnimUpdateScript, accurateBars
 local messagesToRender = {}
 local renderMessageTimer = 0
+local prevReloadTimer = 0
 local animTable = {
   ammo = {
     ticks = 15,
@@ -292,20 +293,9 @@ function renderReloadBar(offset)
   }
 
   local base = vec2.add(position, offset)
-  local base_a = vec2.add(base, {0, -2}) -- start (bottom)
-  local base_b = vec2.add(base, {0, 2})  -- end   (top)
+  local base_a = {base[1], base[2]-2} -- start (bottom)
+  local base_b = {base[1], base[2]+2}  -- end   (top)
   local a, b, o
-
-  -- render arrow
-  a = vec2.add(base_a, {-0.25, 4*time/timeMax})
-  b = vec2.add(base_a, {0.25, 4*time/timeMax})
-  local arrow = worldify(a, b)
-  localAnimator.addDrawable({
-    line = arrow,
-    width = 1,
-    fullbright = true,
-    color = {255, 0, 0}
-  }, "Overlay+1")
   
   -- render text
   o = vec2.add(base_b, {0, textSize})
@@ -348,6 +338,34 @@ function renderReloadBar(offset)
     }, "Overlay")
   end
 
+
+  if animationConfig.animationParameter("performanceMode") and 
+  prevReloadTimer - time == 0 then return end
+  prevReloadTimer = time
+
+  
+  -- render arrow
+  if not accurateBars then
+    localAnimator.addDrawable({
+      image = "/items/active/weapons/ranged/abilities/project45gunfire/reloadbar/project45-reloadbar-arrow.png",
+      position = {base_a[1], base_a[2] + 4*time/timeMax},
+      fullbright = true,
+    }, "Overlay+1")
+
+  else
+    a = {base_a[1] - 0.25, base_a[2] + 4*time/timeMax}
+    b = {base_a[1] + 0.25, base_a[2] + 4*time/timeMax}
+
+    local arrow = worldify(a, b)
+    localAnimator.addDrawable({
+      line = arrow,
+      width = 0.5,
+      fullbright = true,
+      color = {255, 0, 0}
+    }, "Overlay+1")
+  end
+  
+  -- render ranges
   if not accurateBars then
 
     -- render good range
