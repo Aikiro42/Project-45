@@ -19,6 +19,7 @@
     "modName": "Bow Stabilizer",
     "category": "universal",
     "compatibleWeapons": ["project45-neo-bow"],
+    "exclusiveCompatibility": true,
     "slot": "rail",
     "primaryAbility": {
       "laser": {

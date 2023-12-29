@@ -70,6 +70,12 @@ function apply(input)
       bypassCompatChecks = bypassCompatChecks or acceptedMods[config.getParameter("itemName")]
     end
 
+    -- If exclusiveCompatibility and weapon not accepted then
+    if augment.exclusiveCompatibility and not bypassCompatChecks then
+      sb.logError("(abilitymod.lua) Mod application failed: Mod incompatible with " .. input.name .. " (gun rejects mod)")
+      return gunmodHelper.addMessage(input, "Incompatible mod: " .. config.getParameter("shortdescription"))    
+    end      
+
     if not bypassCompatChecks then 
 
       -- do not install ammo mod if it does not meet category
