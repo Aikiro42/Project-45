@@ -1,13 +1,12 @@
 require "/scripts/vec2.lua"
 require "/scripts/util.lua"
 require "/scripts/poly.lua"
+require "/scripts/actions/status.lua"
 require "/scripts/project45/project45util.lua"
 
-local warningTriggered = false
+local warningTriggered, renderBarsAtCursor, runAnimUpdateScript, accurateBars
 local messagesToRender = {}
 local renderMessageTimer = 0
-local renderBarsAtCursor = false
-local runAnimUpdateScript = false
 local animTable = {
   ammo = {
     ticks = 15,
@@ -35,6 +34,7 @@ function init()
   synthethikmechanics_altInit()
   messagesToRender = animationConfig.animationParameter("project45GunFireMessages")
   renderBarsAtCursor = animationConfig.animationParameter("renderBarsAtCursor")
+  accurateBars = animationConfig.animationParameter("accurateBars")
   runAnimUpdateScript = runAnimUpdateScript or animationConfig.animationParameter("useAmmoCounterImages")
 end
 
@@ -263,7 +263,7 @@ function renderLaser()
 
 end
 
-function renderReloadBar(offset, barColor, length, width, borderwidth)
+function renderReloadBar(offset)
   
   local time = animationConfig.animationParameter("reloadTimer")
   
@@ -280,37 +280,39 @@ function renderReloadBar(offset, barColor, length, width, borderwidth)
   local arrowLength = 0.4
   local textSize = 0.5
 
-  local length = length or 4
-
   local rating = animationConfig.animationParameter("reloadRating")
-  local barColor = rating == "PERFECT" and {255, 200, 0}
-    or rating == "GOOD" and {0, 255, 255}
-    or rating == "BAD" and {255, 0, 0}
-    or barColor or {255,255,255}
+  
+  local goodRangeColor = {106, 34, 132}
+  local perfectRangeColor = {210, 156, 231}
+  local textColors = {
+    PERFECT = {255, 200, 0},
+    GOOD = {150, 203, 231},
+    OK = {255,255,255},
+    BAD = {217, 58, 58}
+  }
 
   local base = vec2.add(position, offset)
-  local base_a = vec2.add(base, {0, -length/2}) -- start (bottom)
-  local base_b = vec2.add(base, {0, length/2})  -- end   (top)
+  local base_a = vec2.add(base, {0, -2}) -- start (bottom)
+  local base_b = vec2.add(base, {0, 2})  -- end   (top)
   local a, b, o
 
   -- render arrow
-  a = vec2.add(base_a, {-arrowLength/2, time*length/timeMax})
-  b = vec2.add(base_a, {arrowLength/2, time*length/timeMax})
-  local arrow = {a, b}
+  a = vec2.add(base_a, {-0.25, 4*time/timeMax})
+  b = vec2.add(base_a, {0.25, 4*time/timeMax})
+  local arrow = worldify(a, b)
   localAnimator.addDrawable({
     line = arrow,
-    width = 0.75,
+    width = 1,
     fullbright = true,
     color = {255, 0, 0}
   }, "Overlay+1")
-
   
   -- render text
   o = vec2.add(base_b, {0, textSize})
   localAnimator.spawnParticle({
     type = "text",
     text= "^shadow;" .. rating,
-    color = barColor,
+    color = textColors[rating],
     size = textSize,
     fullbright = true,
     flippable = false,
@@ -346,23 +348,52 @@ function renderReloadBar(offset, barColor, length, width, borderwidth)
     }, "Overlay")
   end
 
-  -- render good
-  local mid = (quickReloadTimeframe[1] + quickReloadTimeframe[4])/2
-  localAnimator.addDrawable({
-    image = "/items/active/weapons/ranged/abilities/project45gunfire/reloadbar/project45-reloadbar.png:goodrange?scalenearest=1;" ..
-      string.format("%f", goodScale),
-    position = vec2.add(base, {0, (-0.5 + mid)*4}) ,
-    fullbright = true,
-  }, "Overlay")
+  if not accurateBars then
 
-  -- render perfect
-  mid = (quickReloadTimeframe[2] + quickReloadTimeframe[3])/2
-  localAnimator.addDrawable({
-    image = "/items/active/weapons/ranged/abilities/project45gunfire/reloadbar/project45-reloadbar.png:perfectrange?scalenearest=1;" ..
-    string.format("%f", perfectScale),
-    position = vec2.add(base, {0, (-0.5 + mid)*4}),
-    fullbright = true,
-  }, "Overlay")
+    -- render good range
+    local mid = (quickReloadTimeframe[1] + quickReloadTimeframe[4])/2
+    localAnimator.addDrawable({
+      image = "/items/active/weapons/ranged/abilities/project45gunfire/reloadbar/project45-reloadbar.png:goodrange?scalenearest=1;"
+      .. string.format("%f", goodScale)
+      .. string.format("?setcolor=%s", project45util.rgbToHex(goodRangeColor))
+      ,position = vec2.add(base, {0, (-0.5 + mid)*4}) ,
+      fullbright = true,
+    }, "Overlay")
+
+    -- render perfect range
+    mid = (quickReloadTimeframe[2] + quickReloadTimeframe[3])/2
+    localAnimator.addDrawable({
+      image = "/items/active/weapons/ranged/abilities/project45gunfire/reloadbar/project45-reloadbar.png:perfectrange?scalenearest=1;"
+      .. string.format("%f", perfectScale)
+      .. string.format("?setcolor=%s", project45util.rgbToHex(perfectRangeColor))
+      ,position = vec2.add(base, {0, (-0.5 + mid)*4}),
+      fullbright = true,
+    }, "Overlay")
+
+  else
+    
+    local rangeStart, rangeEnd
+    
+    -- render good range
+    rangeStart = {base_a[1], base_a[2] + quickReloadTimeframe[1]*4}
+    rangeEnd = {base_a[1], base_a[2] + quickReloadTimeframe[4]*4}
+    localAnimator.addDrawable({
+      line = worldify(rangeStart, rangeEnd),
+      width = 2,
+      fullbright = true,
+      color = goodRangeColor
+    }, "Overlay")
+
+    -- render perfect range
+    rangeStart = {base_a[1], base_a[2] + quickReloadTimeframe[2]*4}
+    rangeEnd = {base_a[1], base_a[2] + quickReloadTimeframe[3]*4}
+    localAnimator.addDrawable({
+      line = worldify(rangeStart, rangeEnd),
+      width = 2,
+      fullbright = true,
+      color = perfectRangeColor
+    }, "Overlay")
+  end
 
 end
 
@@ -406,16 +437,9 @@ function renderChargeBar(offset, position, barColor, length, width, borderwidth)
 
   local position = activeItemAnimation.ownerAimPosition()
   local offset = offset or {0, -1.5}
-  local barColor = barColor or {75,75,75}
-  local length = length or 1
-  local barWidth = width or 1
-  local borderwidth = borderwidth or 0.7
   
   -- calculate bar stuff
   local base = vec2.add(position, offset)
-  local base_a = vec2.add(base, {-length/2, 0}) -- start (left)
-  local base_b = vec2.add(base, {length/2, 0})  -- end   (right)
-  local a, b
 
   local chargeProgress = chargeTimer / (chargeTime + overchargeTime)
   local overchargeProgress = math.max(0, chargeTimer - chargeTime) / overchargeTime
@@ -424,7 +448,7 @@ function renderChargeBar(offset, position, barColor, length, width, borderwidth)
     if chargeTimer < chargeTime then
       return project45util.rgbToHex({128,128,128})
     end
-    local chargeProgress = chargeTimer - chargeTime / overchargeTime
+    local chargeProgress = math.max(0, chargeTimer - chargeTime) / overchargeTime
     return project45util.rgbToHex({
       255,
       math.max(0, math.floor(255 * (1 - chargeProgress))),
