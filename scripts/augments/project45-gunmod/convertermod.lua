@@ -8,7 +8,7 @@ local plurals = {
   projectile = "projectiles",
   hitscan = "hitscans",
   beam = "beam",
-  summoned = "summons"
+  summoned = "summoned projectiles"
 }
 
 function apply(input, override, augment)
@@ -60,6 +60,14 @@ function apply(input, override, augment)
     sb.logError("(convertermod.lua) Conversion not applied; gun does not allow " .. conversion .. " conversion.")
     return gunmodHelper.addMessage(input, "Incompatible converter mod: " .. config.getParameter("shortdescription")), 0
   end
+
+  -- Do not proceed if gun already fires projectile kind
+  local projectileKind = input.parameters.primaryAbility.projectileKind or output.config.primaryAbility.projectileKind
+  if not projectileKind == conversion then
+    sb.logError("(convertermod.lua) Conversion not applied; Gun already fires " .. plurals[conversion])
+    return gunmodHelper.addMessage(input, "Gun already fires " .. plurals[conversion]), 0
+  end
+  
 
   -- Do not proceed if conversion is invalid
   if not set.new({"projectile", "hitscan", "beam", "summoned"})[conversion] then

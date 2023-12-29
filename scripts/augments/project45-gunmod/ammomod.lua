@@ -101,8 +101,16 @@ function apply(input)
 
     -- MOD INSTALLATION PROCESS
 
-    -- make necessary conversion
-    local converted, conversionValid = convertermod_apply(input, true, augment)
+    -- check whether conversion is necessary
+    local converted, conversionValid
+    local projectileKind = input.parameters.primaryAbility.projectileKind
+      or output.config.primaryAbility.projectileKind
+    -- make necessary conversion if necessary
+    if projectileKind ~= config.getParameter("conversion") then
+      converted, conversionValid = convertermod_apply(input, true, augment)
+    else
+      converted, conversionValid = output, 1
+    end
     if conversionValid == 0 then
       return gunmodHelper.addMessage(input, "Conversion error: " .. config.getParameter("shortdescription"))
     end
