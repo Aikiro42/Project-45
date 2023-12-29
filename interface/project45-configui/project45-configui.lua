@@ -1,3 +1,11 @@
+require "/scripts/project45/project45util.lua"
+
+	
+local invSettings = {
+	"useAmmoCounterImages",
+	"accurateBars"
+}
+
 function promptRestart()
   widget.setText("lblRestartToSave", "^red;Restart Game to Apply Changes.")
 end
@@ -10,12 +18,16 @@ end
 function togglePerformanceMode()
 	status.setStatusProperty("project45_performanceMode", widget.getChecked("btnTogglePerformanceMode"))
 	
-	if widget.getChecked("btnTogglePerformanceMode") then
-		status.setStatusProperty("project45_useAmmoCounterImages", false)
-		widget.setChecked("btnUseAmmoCounterImages", false)
-		widget.setFontColor("lblUseAmmoCounterImages", "gray")
-	else
-		widget.setFontColor("lblUseAmmoCounterImages", "white")
+	for _, setting in ipairs(invSettings) do
+	
+		if widget.getChecked("btnTogglePerformanceMode") then
+			status.setStatusProperty("project45_" .. setting, false)
+			widget.setChecked("btn" .. project45util.capitalize(setting), false)
+			widget.setFontColor("lbl" .. project45util.capitalize(setting), "gray")
+		else
+			widget.setFontColor("lbl" .. project45util.capitalize(setting), "white")
+		end
+
 	end
 
 	promptRestart()
@@ -30,15 +42,30 @@ function toggleUseAmmoCounterImages()
 	end
 end
 
+function toggleAccurateBars()
+	if not status.statusProperty("project45_performanceMode") then
+		status.setStatusProperty("project45_accurateBars", widget.getChecked("btnAccurateBars"))
+  	promptRestart()
+	else
+		widget.setChecked("btnAccurateBars", false)
+	end
+end
+
 function init()
 	widget.setChecked("btnTogglePerformanceMode", status.statusProperty("project45_performanceMode", false))
 	widget.setChecked("btnToggleCursorBars", status.statusProperty("project45_renderBarsAtCursor", true))
-	if widget.getChecked("btnTogglePerformanceMode") then
-		widget.setChecked("btnUseAmmoCounterImages", false)
-		widget.setFontColor("lblUseAmmoCounterImages", "gray")
-	else
-		widget.setChecked("btnUseAmmoCounterImages", status.statusProperty("project45_useAmmoCounterImages", true))
+
+	for _, setting in ipairs(invSettings) do	
+		if widget.getChecked("btnTogglePerformanceMode") then
+			widget.setChecked("btn" .. project45util.capitalize(setting), false)
+			widget.setFontColor("lbl" .. project45util.capitalize(setting), "gray")
+		else
+			widget.setChecked(
+				"btn" .. project45util.capitalize(setting),
+			status.statusProperty("project45_" .. setting, true))
+		end
 	end
+
 end
 
 function uninit()

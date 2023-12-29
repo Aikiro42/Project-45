@@ -22,17 +22,24 @@ function init()
     self.weapon:addAbility(secondaryAbility)
   end
 
+  local generalConfig = root.assetJson("/configs/project45/project45_generalconfig.config")
+
   activeItem.setScriptedAnimationParameter("hand", activeItem.hand())
-  activeItem.setScriptedAnimationParameter("renderBarsAtCursor",
-    status.statusProperty("project45_renderBarsAtCursor",
-    root.assetJson("/configs/project45/project45_generalconfig.config:renderBarsAtCursor",
-    true
-  )))
-  activeItem.setScriptedAnimationParameter("useAmmoCounterImages",
-    status.statusProperty("project45_useAmmoCounterImages",
-    root.assetJson("/configs/project45/project45_generalconfig.config:useAmmoCounterImages",
-    true
-  )))
+
+  local userSettings = {
+    "renderBarsAtCursor",
+    "useAmmoCounterImages",
+    "accurateBars"
+  }
+
+  for _, setting in ipairs(userSettings) do
+    activeItem.setScriptedAnimationParameter(
+      setting,
+      status.statusProperty("project45_" .. setting,
+      generalConfig[setting])
+    )
+  end
+
   activeItem.setScriptedAnimationParameter("project45GunFireMessages", config.getParameter("project45GunFireMessages", {}))
   activeItem.setInstanceValue("project45GunFireMessages", {})
   self.weapon:init()
