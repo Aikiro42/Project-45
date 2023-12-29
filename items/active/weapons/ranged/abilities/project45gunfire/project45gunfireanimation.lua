@@ -79,7 +79,7 @@ function update()
   renderLaser()
   renderReloadBar({horizontalOffset + (renderBarsAtCursor and 0 or barXOffset), 0})
   renderJamBar({horizontalOffset + (renderBarsAtCursor and 0 or barXOffset), 0})
-  renderChargeBar({horizontalOffset, animationConfig.animationParameter("performanceMode") and -1 or -1.625})
+  renderChargeBar({horizontalOffset, animationConfig.animationParameter("performanceMode") and -1 or -1.75})
   renderHitscanTrails()
   renderBeam()
 
@@ -295,10 +295,8 @@ function renderReloadBar(offset)
   local base = vec2.add(position, offset)
   local base_a = {base[1], base[2]-2} -- start (bottom)
   local base_b = {base[1], base[2]+2}  -- end   (top)
-  local a, b, o
   
   -- render text
-  o = vec2.add(base_b, {0, textSize})
   localAnimator.spawnParticle({
     type = "text",
     text= "^shadow;" .. rating,
@@ -307,7 +305,7 @@ function renderReloadBar(offset)
     fullbright = true,
     flippable = false,
     layer = "front"
-  }, o)
+  }, vec2.add(base_b, {0, textSize}))
 
   -- render bar image
   localAnimator.addDrawable({
@@ -353,9 +351,8 @@ function renderReloadBar(offset)
     }, "Overlay+1")
 
   else
-    a = {base_a[1] - 0.25, base_a[2] + 4*time/timeMax}
-    b = {base_a[1] + 0.25, base_a[2] + 4*time/timeMax}
-
+    local a = {base_a[1] - 0.375, base_a[2] + 4*time/timeMax}
+    local b = {base_a[1] + 0.375, base_a[2] + 4*time/timeMax}
     local arrow = worldify(a, b)
     localAnimator.addDrawable({
       line = arrow,
@@ -458,23 +455,34 @@ function renderChargeBar(offset, position, barColor, length, width, borderwidth)
   
   -- calculate bar stuff
   local base = vec2.add(position, offset)
+  local base_l = {base[1] - 0.5, base[2]}
+  local base_r = {base[1] + 0.5, base[2]}
 
   local chargeProgress = chargeTimer / (chargeTime + overchargeTime)
   local overchargeProgress = math.max(0, chargeTimer - chargeTime) / overchargeTime
+  local isPerfectCharge = perfectChargeRange[1] < overchargeProgress and overchargeProgress < perfectChargeRange[2]
 
-  local chargeHexColorFunction = function(chargeTimer, chargeTime, overchargeTime)
+  local chargeHexColorFunction = function(chargeTimer, chargeTime, overchargeTime, isPerfectCharge, asHex)
+    local color
     if chargeTimer < chargeTime then
-      return project45util.rgbToHex({128,128,128})
+      color = {128,128,128}
+      return asHex and project45util.rgbToHex(color) or color
+    end
+    if isPerfectCharge then
+      color = {164,81,196}
+      return asHex and project45util.rgbToHex(color) or color
     end
     local chargeProgress = math.max(0, chargeTimer - chargeTime) / overchargeTime
-    return project45util.rgbToHex({
+    color = {
       255,
       math.max(0, math.floor(255 * (1 - chargeProgress))),
       0
-    })
+    }
+    return asHex and project45util.rgbToHex(color) or color
   end
 
-  if (perfectChargeRange[1] < overchargeProgress and overchargeProgress < perfectChargeRange[2]) then
+  -- render base
+  if isPerfectCharge then
     localAnimator.addDrawable({
       image = "/items/active/weapons/ranged/abilities/project45gunfire/chargebar/project45-chargebar-perfect.png"
       .. string.format("?multiply=FFFFFF%02X", math.floor(math.min(255, 1024*chargeProgress)))
@@ -490,13 +498,26 @@ function renderChargeBar(offset, position, barColor, length, width, borderwidth)
     }, "Overlay") 
   end
 
-  localAnimator.addDrawable({
-    image = "/items/active/weapons/ranged/abilities/project45gunfire/chargebar/project45-chargebar.png"
-      .. string.format("?crop=0;0;%f;1", chargeProgress * 8)
-      .. string.format("?setcolor=%s", chargeHexColorFunction(chargeTimer, chargeTime, overchargeTime))
-    ,position = base,
-    fullbright = true,
-  }, "Overlay")
+  -- render bar
+  if not accurateBars then
+    localAnimator.addDrawable({
+      image = "/items/active/weapons/ranged/abilities/project45gunfire/chargebar/project45-chargebar.png"
+        -- .. string.format("?scale=%f;1", chargeProgress)
+        .. string.format("?crop=0;0;%f;1", chargeProgress * 8)
+        .. string.format("?setcolor=%s", chargeHexColorFunction(chargeTimer, chargeTime, overchargeTime, isPerfectCharge, true))
+      ,position = {base[1] - 0.5 + math.floor(chargeProgress * 8) * 0.0625, base[2]},
+      centered=true,
+      fullbright = true,
+    }, "Overlay")
+  else
+    local chargeEnd = {base_l[1] + chargeProgress, base_l[2]}
+    localAnimator.addDrawable({
+      line = worldify(base_l, chargeEnd),
+      width = 1,
+      fullbright = true,
+      color = chargeHexColorFunction(chargeTimer, chargeTime, overchargeTime, isPerfectCharge)
+    }, "Overlay")
+  end
 
 end
 
