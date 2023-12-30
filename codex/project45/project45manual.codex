@@ -43,6 +43,8 @@ Project 45 guns are different from vanilla guns in the following aspects:
 Project 45 guns fire like any other gun, except they have a relatively predictable recoil.
 
 When firing, your gun's muzzle will kick up, and you will have to adjust your aim downward to counteract the recoil.
+
+Take a moment to steady your aim; ^#D93A3A;projectile direction is based on the angle of your gun^reset;.
 ",
 "# ^#E2C344;Firing & Recoil^reset;
 The amount of recoil is also affected by how much you're moving, whether you're walking, running or standing still.
@@ -87,6 +89,8 @@ You will have an indicator next to your crosshair showing the amount of ammo you
 When you begin reloading, a vertical bar with a colored section will appear in place of the ammo indicator, and a red line will move up along it.
 
 ^#EA9931;Fire the weapon when the red line is over the colored region to execute an Active Reload, finishing the reloading process early.^reset;
+
+Take a moment to ready your aim after reloading; firing immediately can shoot projectiles off-target.
 ",
 
 "# ^#E2C344;Reload Rating^reset;
@@ -169,6 +173,7 @@ If you have Stardust Core/Lite or Quickbar Mini installed, you can change the fo
 
   "itemConfig" : {
     "rarity" : "rare",
-    "price" : 50
+    "price" : 50,
+    "inventoryIcon": "/codex/project45/project45manualcover.png"
   }
 }

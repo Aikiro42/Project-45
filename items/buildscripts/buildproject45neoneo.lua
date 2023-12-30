@@ -44,6 +44,8 @@ function build(directory, config, parameters, level, seed)
   construct(parameters, "project45GunModInfo")
   parameters.project45GunModInfo.upgradeCapacity = (config.project45GunModInfo.upgradeCapacity or 0) + (configParameter("level", 1) - 1)
   
+  -- sb.logInfo(string.format("Generated %s", configParameter("itemName")))
+
   -- recalculate rarity
   local rarityLevel = configParameter("level", 1)/10
   local levelRarityAssoc = {"Common", "Uncommon", "Rare", "Legendary", "Essential"}

@@ -38,8 +38,6 @@ function apply(input, override, augment)
 
     if not override then  -- gatekeep if not called from abilitymod.lua
 
-        sb.logInfo("First-level call of gunmod.lua:apply")
-
         -- do not install mod if slot is occupied
         if modSlots[augment.slot] then
             sb.logError("(gunmod.lua) Gun mod application failed: slot already occupied")
