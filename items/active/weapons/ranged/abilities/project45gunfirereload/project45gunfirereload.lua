@@ -27,7 +27,8 @@ function Project45GunFireReload:update(dt, fireMode, shiftHeld)
         end
 
         self.triggered = true
-  
+    else
+        storage.reloadSignal = false
     end
 
 end

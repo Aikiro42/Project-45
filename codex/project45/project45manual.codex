@@ -80,11 +80,8 @@ These stats are not necessarily shown in the weapon's tooltip, but affect the we
 You will have an indicator next to your crosshair showing the amount of ammo your weapon has.
 
 - If the indicator is ^#D93A3A;\"0\"^reset;, you will need to eject the magazine to reload. In this case, ^#EA9931;fire the gun to eject the magazine^reset;.
-",
-"# ^#E2C344;Ammo & Reloading^reset;
-- If the indicator is ^#D93A3A;\"E\"^reset;, the weapon has no magazine - you are ready to reload. ^#EA9931;Fire the gun to consume energy and begin reloading.^reset;
 
-^#D93A3A;Energy does not regenerate while you hold a WS45 gun, unless the gun is empty (i.e. the indicator is \"0\" or \"E\") and you are out of energy.^reset;
+- If the indicator is ^#D93A3A;\"E\"^reset;, the weapon has no magazine - you are ready to reload. ^#EA9931;Fire the gun to consume energy and begin reloading.^reset;
 ",
 "# ^#E2C344;Ammo & Reloading^reset;
 When you begin reloading, a vertical bar with a colored section will appear in place of the ammo indicator, and a red line will move up along it.
