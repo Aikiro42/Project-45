@@ -243,11 +243,7 @@
         "project45-gachapull10",
         
         "project45-energystim",
-        {"name": "project45-energystim", "count":10},
-        
-        "nanowrap",
-        {"name": "nanowrap", "count":10},
-        
+        "nanowrap",        
         "manipulatormodule",
         "techcard",
         "upgrademodule",
