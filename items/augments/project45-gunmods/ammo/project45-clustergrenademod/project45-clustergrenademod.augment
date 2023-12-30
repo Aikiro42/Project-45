@@ -14,11 +14,11 @@
   "technicalInfo" : "Grenades that split into smaller grenades on impact.",
   "shortdescription" : "Cluster Grenades",
 
+  "conversion": "projectile",
   "augment":{
     "modName": "Cluster Grenades",
     "category": "ballistic",
     "archetype": "grenade",
-    "projectileKind": "projectile",
     "projectileType": "clustergrenade",
     "projectileParameters": {
       "bounces": 0

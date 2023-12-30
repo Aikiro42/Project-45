@@ -15,11 +15,11 @@
   "statInfo": "Projectiles: 5",
   "shortdescription" : "Dragon's Breath",
 
+  "conversion": "projectile",
   "augment":{
     "modName": "Dragon's Breath",
     "category": "ballistic",
     "archetype": "shotgun",
-    "projectileKind": "projectile",
     "projectileCount": 5,
     "projectileType": "project45dragonsbreath"
   },

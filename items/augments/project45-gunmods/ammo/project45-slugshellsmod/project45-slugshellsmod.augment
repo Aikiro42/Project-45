@@ -15,13 +15,13 @@
   "statInfo": "Spread: 1 deg.",
   "shortdescription" : "Slug shells",
 
+  "conversion": "projectile",
   "augment":{
     "modName": "Slug shells",
     "category": "ballistic",
     "archetype": "shotgun",
     "spread": 1,
     "projectileCount": 1,
-    "projectileKind": "projectile",
     "projectileType": "project45stdbullet",
     "projectileParameters": {
       "speed" : 150

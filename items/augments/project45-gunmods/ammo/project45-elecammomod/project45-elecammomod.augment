@@ -14,6 +14,7 @@
   "technicalInfo": "Generates an electric explosion at the end of the hitscan projectile.",
   "shortdescription" : "Electro Lasers",
 
+  "conversion": "hitscan",
   "augment":{
     "modName": "Electro Lasers",
     "category": "energy",
@@ -21,7 +22,6 @@
     "spread": 0.5,
     "projectileCount": 1,
     "muzzleFlashColor": [210,156,231],
-    "projectileKind": "hitscan",
     "hitscanParameters":{
       "hitscanColor": [210,156,231],
       "hitscanBrightness": 0.5,

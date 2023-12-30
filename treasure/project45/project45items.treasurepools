@@ -16,6 +16,7 @@
         {"weight" : 1, "item" : "project45-neo-carbine"},
         {"weight" : 1, "item" : "project45-neo-shotgun"},
         {"weight" : 1, "item" : "project45-neo-servicerifle"},
+        {"weight" : 1, "item" : "project45-neo-handmaderifle"},
         {"weight" : 1, "item" : "project45-neo-assaultrifle"},
         {"weight" : 1, "item" : "project45-neo-leveraction"}
       ],

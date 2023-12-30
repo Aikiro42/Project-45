@@ -14,12 +14,12 @@
   "technicalInfo": "Fires projectiles that deal electric damage.",
   "shortdescription" : "Electric Arrows",
 
+  "conversion": "projectile",
   "augment":{
     "modName": "Electric Arrows",
     "category": "ballistic",
     "archetype": "arrow",
 
-    "projectileKind": "projectile",
     "projectileType": "project45stdelecarrow"
     
   },

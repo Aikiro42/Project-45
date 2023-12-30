@@ -1,15 +1,5 @@
 project45util = {}
 
-project45util.categoryStrings = {
-  ballistic = "^#51bd3b; Ballistic^reset;",
-  energy = "^#d29ce7; Energy^reset; ",
-  generic = "^#FFFFFF;Ѻ Generic^reset; ",
-  experimental = "^#A8E6E2; Experimental^reset; ",
-  special = "^#e2c344;© Special^reset; ",
-  universal = "^#cfcfcf;¤ Universal^reset;"
-}
-
-
 function project45util.truncatei(n, places)
   local ten = 10 ^ places
   return math.floor(n / ten) * ten

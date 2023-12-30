@@ -14,13 +14,13 @@
   "technicalInfo": "Fires 3 arcing projectiles that inflict slow and vulnerability while inflicting physical damage.",
   "shortdescription" : "Tar Tank",
 
+  "conversion": "projectile",
   "augment":{
     "modName": "Tar Tank",
     "category": "experimental",
     "archetype": "liquid",
 
     "projectileCount": 3,
-    "projectileKind": "projectile",
     "projectileType": "project45tarprojectile",
     "projectileParameters": {
       "physics": "grenade"

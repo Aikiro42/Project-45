@@ -41,12 +41,12 @@
         "size" : 1,
         "color" : [255, 255, 200, 255],
         "collidesForeground" : false,
-        "length" : 45,
+        "length" : 32,
         "position" : [0, 0],
         "timeToLive" : 0,
         "destructionTime" : 0.2,
         "initialVelocity" : [0.001, 0],
-        "variance" : {}
+        "variance" : {"length": 0}
       }
 
     }

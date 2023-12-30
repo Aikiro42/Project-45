@@ -112,6 +112,12 @@
   "project45GunModInfo":{
     "category": "experimental",
     "upgradeCapacity": 5,
+    "compatibleMods": [
+      "project45-elecammomod",
+      "project45-iceammomod",
+      "project45-firebeammod",
+      "project45-poisonbeammod"
+    ],
     "allowsConversion": [
       "hitscan",
       "beam",
@@ -124,7 +130,9 @@
       "material"
     ],
     "acceptsAmmoArchetype":[
-      "summoned"
+      "summoned",
+      "laser",
+      "beam"
     ],
     "flipSlot": []
   },
@@ -151,7 +159,6 @@
     "baseDamage": 20,
     "critChance": 0.36,
     "critDamageMult": 2.2,
-    "debug": true,
     "maxAmmo": 10,
     "bulletsPerReload": 10,
     "inaccuracy": 3,

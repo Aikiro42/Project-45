@@ -52,7 +52,7 @@ function build(directory, config, parameters, level, seed)
 
   local randomStatInfo = nil
 
-  if config.category == "Stat Mod"
+  if config.modCategory == "statMod"
   and config.augment.randomStats
   and (parameters.seed or seed) then
     
@@ -117,6 +117,8 @@ function build(directory, config, parameters, level, seed)
     end
     
     config.archetype = project45util.capitalize(config.archetype)
+    local basePrice = (parameters.price or config.price)
+    parameters.price = math.floor(rng:randf(basePrice/3, basePrice*3))
   end
 
   return unrandBuild(directory, config, parameters, level, seed, randomStatInfo)

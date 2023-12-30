@@ -13,12 +13,12 @@
   "description": "The missile knows where it is, because it knows where it isn't.",
   "technicalInfo" : "Fires small rockets that home in on enemies.",
   "shortdescription" : "Homing Rockets",
-
+  
+  "conversion": "projectile",
   "augment":{
     "modName": "Homing Rockets",
     "category": "ballistic",
     "archetype": "rocket",
-    "projectileKind": "projectile",
     "projectileType": "project45homingrocket",
     "projectileParameters": {
       "bounces": 0

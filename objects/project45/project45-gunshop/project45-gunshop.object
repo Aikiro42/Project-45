@@ -90,6 +90,7 @@
 
         // Rifles
         "project45-neo-leveraction",
+        "project45-neo-handmaderifle",
         "project45-neo-assaultrifle",
         "project45-neo-combatrifle",
         "project45-neo-carbine",

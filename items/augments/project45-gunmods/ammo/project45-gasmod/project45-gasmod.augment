@@ -14,13 +14,13 @@
   "technicalInfo": "Spews gas clouds that deal poison damage.",
   "shortdescription" : "Gas Tank",
 
+  "conversion": "projectile",
   "augment":{
     "modName": "Gas Tank",
     "category": "experimental",
     "archetype": "gas",
 
     "projectileCount": 1,
-    "projectileKind": "projectile",
     "projectileType": "project45gascloud",
     "projectileParameters": {
       "speed": 50,

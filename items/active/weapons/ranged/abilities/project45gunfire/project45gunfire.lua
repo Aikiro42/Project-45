@@ -344,22 +344,21 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
   activeItem.setCursor("/cursors/project45-neo-cursor-" .. movementState .. ".cursor")
 
   if storage.reloadSignal then
-    if self.reloadTimer < 0 then
-      storage.reloadSignal = false
-    end
-    if storage.jamAmount <= 0
-    and not self.triggered
-    then
-      if storage.ammo >= 0 then
-        self:openBolt(self.breakAction and storage.ammo or self.ammoPerShot)
-        if self.internalMag then
-          self:setState(self.reloading)
-        else
-          self:ejectMag()
-        end
-      elseif self.reloadTimer < 0 then
-        self:setState(self.reloading)
+    storage.reloadSignal = false
+    if storage.ammo >= 0 and not self.triggered then
+      if storage.jamAmount > 0 then
+        self:updateJamAmount(0, true)
+        self:openBolt(self.breakAction and storage.ammo or 0)
+      else
+        self:openBolt(self.breakAction and storage.ammo or self.ammoPerShot)        
       end
+      if self.internalMag then
+        self:setState(self.reloading)
+      else
+        self:ejectMag()
+      end
+    elseif self.reloadTimer < 0 then
+      self:setState(self.reloading)
     end
   end
 

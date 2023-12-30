@@ -14,24 +14,18 @@
   "technicalInfo": "Fires a beam that deals fire damage.",
   "shortdescription" : "Fire Beam",
 
+  "conversion": "beam",
   "augment":{
     "modName": "Fire Beam",
     "category": "energy",
     "archetype": "beam",
     
     "muzzleFlashColor": [234,153,49],
-    "projectileKind": "beam",
     "beamParameters":{
       "beamDamageConfig":{
         "damageSourceKind" : "fire",
         "statusEffects":["burning"],
         "knockback" : 2
-      }
-    },
-    "hitscanParameters":{
-      "hitscanDamageConfig": {
-        "damageKind": "fire",
-        "statusEffects":["burning"]
       }
     },
     "customSounds": {

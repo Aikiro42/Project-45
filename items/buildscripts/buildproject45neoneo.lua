@@ -44,6 +44,8 @@ function build(directory, config, parameters, level, seed)
   construct(parameters, "project45GunModInfo")
   parameters.project45GunModInfo.upgradeCapacity = (config.project45GunModInfo.upgradeCapacity or 0) + (configParameter("level", 1) - 1)
   
+  -- sb.logInfo(string.format("Generated %s", configParameter("itemName")))
+
   -- recalculate rarity
   local rarityLevel = configParameter("level", 1)/10
   local levelRarityAssoc = {"Common", "Uncommon", "Rare", "Legendary", "Essential"}
@@ -239,7 +241,7 @@ function build(directory, config, parameters, level, seed)
   -- populate tooltip fields
   if config.tooltipKind == "project45gun" then
     config.tooltipFields = config.tooltipFields or {}
-    config.tooltipFields.subtitle = project45util.categoryStrings[config.project45GunModInfo.category or "Generic"] -- .. "^#D1D1D1;" .. config.gunArchetype or config.category
+    config.tooltipFields.subtitle = generalConfig.categoryStrings[config.project45GunModInfo.category or "Generic"] -- .. "^#D1D1D1;" .. config.gunArchetype or config.category
     config.tooltipFields.levelLabel = util.round(configParameter("level", 1), 1)
 
     local modList = parameters.modSlots or config.modSlots or {}

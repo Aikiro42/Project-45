@@ -18,6 +18,11 @@
 
   "augment": {
     "modName": "Alof's Magazine",
+    "compatibleWeapons": [
+      "project45-neo-doublebarrel",
+      "project45-neo-sawnoff"
+    ],
+    "exclusiveCompatibility": true,
     "category": "ballistic",
     "slot": "magazine",
     "primaryAbility": {

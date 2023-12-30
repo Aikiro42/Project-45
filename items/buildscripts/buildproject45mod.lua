@@ -47,7 +47,7 @@ function build(directory, config, parameters, level, seed, wildcardStatInfo)
     config.augment.upgradeCost = extrinsicModSlots[config.augment.slot or config.slot] and 0 or 1
   end
 
-  config.tooltipFields.categoryLabel = project45util.categoryStrings[config.augment.category or "universal"]
+  config.tooltipFields.categoryLabel = root.assetJson("/configs/project45/project45_generalconfig.config:categoryStrings", {})[config.augment.category or "universal"] or ""
 
   if config.modCategory == "ammoMod" or config.modCategory == "converterMod" then
     config.tooltipFields.slotLabel = "^#9da8af;Ammo"

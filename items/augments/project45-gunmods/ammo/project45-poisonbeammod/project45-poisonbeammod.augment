@@ -13,23 +13,17 @@
   "description" : "Radiation beam configuration. Sometimes used as an on-field MRE cooking config.",
   "shortdescription" : "Radiation Beam",
 
+  "conversion": "beam",
   "augment":{
     "modName": "Radiation Beam",
     "category": "energy",
     "archetype": "beam",
     "muzzleFlashColor": [153,234,49],
-    "projectileKind": "beam",
     "beamParameters":{
       "beamDamageConfig":{
         "damageSourceKind" : "poison",
         "statusEffects":["weakpoison"],
         "knockback" : 2
-      }
-    },
-    "hitscanParameters":{
-      "hitscanDamageConfig": {
-        "damageKind": "poison",
-        "statusEffects":["weakpoison"]
       }
     },
     "customSounds": {

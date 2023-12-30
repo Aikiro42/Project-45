@@ -346,7 +346,7 @@ function hitscanLib:fireBeam()
   
     activeItem.setScriptedAnimationParameter("beamLine", nil)
     
-    if not self.alwaysMaintainCharge and self.resetChargeAfterFire then self.chargeTimer = 0 end
+    if not self.alwaysMaintainCharge and self.resetChargeOnFire then self.chargeTimer = 0 end
     
     if self.beamParameters.ejectCasingsOnBeamEnd then
       self:setState(self.ejecting)

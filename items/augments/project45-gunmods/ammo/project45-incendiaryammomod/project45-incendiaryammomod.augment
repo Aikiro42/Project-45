@@ -14,12 +14,12 @@
   "technicalInfo": "Fires projectiles that burns the enemy while dealing fire damage.",
   "shortdescription" : "Incendiary Bullets",
 
+  "conversion": "projectile",
   "augment":{
     "modName": "Incendiary Bullets",
     "category": "ballistic",
     "archetype": "bullet",
 
-    "projectileKind": "projectile",
     "projectileType": "project45stdfirebullet"
     
   },
