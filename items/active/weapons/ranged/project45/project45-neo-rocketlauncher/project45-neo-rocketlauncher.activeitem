@@ -160,7 +160,7 @@
     "bulletsPerReload": 1,
     "projectileType": "project45stdrocket",
     "hideMuzzleFlash": true,
-    "resetChargeAfterFire": true,
+    "resetChargeOnFire": true,
     
     "audibleEjection": true,
     "ejectMagOnEmpty": "ejecting",
