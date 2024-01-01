@@ -122,7 +122,9 @@
     [0, {
       "pool" : [
         
-        {"weight" : 0.50, "item" : "project45-levelmod"},
+        {"weight" : 0.375, "item" : "project45-levelmod"},
+
+        {"weight" : 0.125, "item" : "project45-firetimeaddmod"},
 
         {"weight" : 0.125, "item" : "project45-critchanceaddmod"},
         

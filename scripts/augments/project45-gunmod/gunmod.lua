@@ -198,6 +198,26 @@ function apply(input, override, augment)
             end
         end
 
+        local statModParameters = {
+            "baseDamage",
+            
+            "cockTime",
+            "cycleTime",
+            "chargeTime",
+            "overchargeTime",
+            "fireTime",
+
+            "reloadCost",
+
+            "critChance",
+            "critDamageMult"
+        }
+        -- protect gun from getting their stats modified directly
+        for _, param in ipairs(statModParameters) do
+            augment.primaryAbility[param] = nil
+        end
+        augment.level = nil
+
 
         -- GENERAL MODIFICATION
         -- generate new primaryAbility table

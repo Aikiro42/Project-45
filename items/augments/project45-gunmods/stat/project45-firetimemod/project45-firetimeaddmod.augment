@@ -1,0 +1,26 @@
+{
+  "itemName" : "project45-firetimeaddmod",
+  "price" : 5000,
+  "rarity" : "Legendary",
+  "tooltipKind" : "project45gunmod2",
+  "tooltipFields": {
+    "subtitle": "Stat Mod"
+  },
+  "modCategory" : "statMod",
+  "category" : "eppAugment",
+  "inventoryIcon" : "/items/augments/project45-gunmods/stat/project45-firetimemod/project45-firetimeaddmod.png",
+  "description": "Decreases Fire Time by 2ms.",
+  "statInfo" : "^#E2C344;Fire Time -10ms^reset;",
+  "slot": "fireTime",
+  "archetype": "Additive",
+  "shortdescription" : "^#E2C344;Fire Time (+)",
+  "augment":{
+    "upgradeCost": 1,
+    "fireTime": {
+      "additive": -0.01
+    }
+  },
+
+  "scripts" : [ "/scripts/augments/project45-gunmod/statmod.lua" ],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
+}

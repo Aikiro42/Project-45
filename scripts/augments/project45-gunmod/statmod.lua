@@ -85,15 +85,16 @@ function apply(input, override, augment)
             overchargeTime = output.config.primaryAbility.overchargeTime,
             fireTime = output.config.primaryAbility.fireTime
         }}
-
+        
         local newCockTime = statModifiers.fireTime.base.cockTime
         local newCycleTime = statModifiers.fireTime.base.cycleTime
-        local newChargeTime = statModifiers.fireTime.base.chargeTime
-        local newOverchargeTime = statModifiers.fireTime.base.overchargeTime
         local newFireTime = statModifiers.fireTime.base.fireTime
 
+        local newChargeTime = statModifiers.fireTime.base.chargeTime
+        local newOverchargeTime = statModifiers.fireTime.base.overchargeTime
+
         local minFireTime = math.min(
-            0.001, -- TODO: add default min value
+            root.assetJson("/configs/project45/project45_generalconfig.config:minimumFireTime", 0.001),
             type(newCycleTime) == "table" and newCycleTime[1] or newCycleTime,
             newCockTime,
             newFireTime
@@ -108,20 +109,51 @@ function apply(input, override, augment)
             statModifiers.fireTime.multiplicative =
                 (statModifiers.fireTime.multiplicative or 1) + augment.fireTime.multiplicative
         end
+
+        --[[
+        Recall: calculation of displayed fire time
+        If gun is manualFeed:
+            fireTime* = cockTime + fireTime + chargeTime
+        else:
+            fireTime* = cycleTime + fireTime + chargeTime
+        --]]
         
         -- apply fireTime modifiers
+
+        local fireTimeAdd, chargeAdd, overchargeAdd
+
+        if statModifiers.fireTime.additive then
+            local isSemi = output.config.semi
+
+            local distributedStats = (isSemi and newChargeTime > 0) and 3 or 2
+            
+            fireTimeAdd = statModifiers.fireTime.additive / distributedStats
+     
+            chargeAdd = fireTimeAdd
+            if newChargeTime > 0 and not isSemi then
+                chargeAdd = statModifiers.fireTime.additive
+            end
+
+            -- ensures that same amount of time will be spent overcharging
+            overchargeAdd = 0
+            if newChargeTime > 0 and newOverchargeTime > 0 then
+                overchargeAdd = newOverchargeTime * chargeAdd / newChargeTime
+            end
+
+        end
+
         if type(newCycleTime) == "table" then
             newCycleTime = {
                 math.max(minFireTime, moddedStat(
                         newCycleTime[1],
-                        statModifiers.fireTime.additive,
+                        fireTimeAdd,
                         statModifiers.fireTime.multiplicative,
                         true
                     )
                 ),
                 math.max(minFireTime, moddedStat(
-                        newCycleTime[1],
-                        statModifiers.fireTime.additive,
+                        newCycleTime[2],
+                        fireTimeAdd,
                         statModifiers.fireTime.multiplicative,
                         true
                     )
@@ -130,7 +162,7 @@ function apply(input, override, augment)
         else
             newCycleTime = math.max(minFireTime, moddedStat(
                     newCycleTime,
-                    statModifiers.fireTime.additive,
+                    fireTimeAdd,
                     statModifiers.fireTime.multiplicative,
                     true
                 )
@@ -139,28 +171,30 @@ function apply(input, override, augment)
     
         newCockTime = math.max(minFireTime, moddedStat(
                 newCockTime,
-                statModifiers.fireTime.additive,
+                fireTimeAdd,
                 statModifiers.fireTime.multiplicative,
                 true
             )
         )
         newFireTime = math.max(minFireTime, moddedStat(
                 newFireTime,
-                statModifiers.fireTime.additive,
+                fireTimeAdd,
                 statModifiers.fireTime.multiplicative,
                 true
             )
         )
+        
         newChargeTime = math.max(0, moddedStat(
                 newChargeTime,
-                statModifiers.fireTime.additive,
+                chargeAdd,
                 statModifiers.fireTime.multiplicative,
                 true
             )
         )
+
         newOverchargeTime = math.max(0, moddedStat(
                 newOverchargeTime,
-                statModifiers.fireTime.additive,
+                overchargeAdd,
                 statModifiers.fireTime.multiplicative,
                 true
             )

@@ -137,5 +137,5 @@ function generateRandomStat(statVector, rng, truncate)
   if truncate then
     stat = project45util.truncatef(stat, truncate)
   end
-  return stat > 0 and stat or nil
+  return stat ~= 0 and stat or nil
 end

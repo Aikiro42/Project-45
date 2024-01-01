@@ -312,23 +312,33 @@ function build(directory, config, parameters, level, seed)
       end
       
       --[[ fire time calculation:
+
+      chargeTime* = chargeTime
+      If gun is auto, chargeTime* = 0
+
       If gun is manualFeed:
-        fireTime* = cockTime + fireTime
+        fireTime* = cockTime + fireTime + chargeTime*
       else:
-        fireTime* = cycleTime + fireTime
+        fireTime* = cycleTime + fireTime + chargeTime*
       
       ]]--
       
       local actualCycleTime = primaryAbility("manualFeed", false)
         and primaryAbility("cockTime", 0.1)
         or primaryAbility("cycleTime", 0.1)
+
+      local chargeTime = primaryAbility("chargeTime", 0)
       
       if type(actualCycleTime) ~= "table" then
         actualCycleTime = {actualCycleTime, actualCycleTime}
       end
+
+      if not primaryAbility("semi", true) then
+        chargeTime = 0
+      end
       
-      local loFireTime = actualCycleTime[1] + primaryAbility("fireTime", 0.1)
-      local hiFireTime = actualCycleTime[2] + primaryAbility("fireTime", 0.1)
+      local loFireTime = actualCycleTime[1] + primaryAbility("fireTime", 0.1) + chargeTime
+      local hiFireTime = actualCycleTime[2] + primaryAbility("fireTime", 0.1) + chargeTime
       if loFireTime == hiFireTime then
         config.tooltipFields.fireTimeLabel = project45util.colorText("#FFD400", util.round(loFireTime*1000, 1) .. "ms")
       else
@@ -381,14 +391,14 @@ function build(directory, config, parameters, level, seed)
       local chargeDesc = ""
       if primaryAbility("chargeTime", 0) > 0 then
         descriptionScore = descriptionScore + 1
-        chargeDesc = project45util.colorText("#FF5050", util.round(primaryAbility("chargeTime", 0), 1) .. "s charge time.") .. "\n"
+        chargeDesc = project45util.colorText("#FF5050", project45util.truncatef(primaryAbility("chargeTime", 0), 2) .. "s charge time.") .. "\n"
       end
         
 
       local overchargeDesc = ""
       if primaryAbility("overchargeTime", 0) > 0 then
         descriptionScore = descriptionScore + 1
-        chargeDesc = project45util.colorText("#9dc6f5", util.round(primaryAbility("overchargeTime", 0), 1) .. "s overcharge.") .. "\n"
+        overchargeDesc = project45util.colorText("#9dc6f5", project45util.truncatef(primaryAbility("overchargeTime", 0), 2) .. "s overcharge.") .. "\n"
       end
       
       local modListDesc = ""
