@@ -350,7 +350,7 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
         self:updateJamAmount(0, true)
         self:openBolt(self.breakAction and storage.ammo or 0)
       else
-        self:openBolt(self.breakAction and storage.ammo or self.ammoPerShot)        
+        self:openBolt(self.breakAction and storage.ammo or math.min(storage.ammo, self.ammoPerShot))        
       end
       if self.internalMag then
         self:setState(self.reloading)
@@ -1179,8 +1179,11 @@ function Project45GunFire:openBolt(ammoDiscard, mute)
     self:updateAmmo(-ammoDiscard)
     storage.unejectedCasings = storage.unejectedCasings + ammoDiscard
   end
-  animator.setAnimationState("gun", self.breakAction and "open" or "ejecting")
-  if not self.mute then animator.playSound("boltPull") end
+  if animator.animationState("bolt") ~= "open" then
+    animator.setAnimationState("bolt", "open")
+    animator.setAnimationState("gun", self.breakAction and "open" or "ejecting")
+    if not self.mute then animator.playSound("boltPull") end
+  end
   self:discardCasings()
   self:updateChamberState("empty")
 end
