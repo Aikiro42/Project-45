@@ -157,16 +157,19 @@ If you obtain an ^#ffffa7;Essential (SSR)^reset; item, you are guaranteed a ^#fd
 If you have Stardust Core/Lite or Quickbar Mini installed, you can change the following settings:
 - ^#EA9931;Performance Mode:^reset; If this setting is ticked,
   - most particles (e.g. casings, smoke) will not be emitted,
-  - dynamic audio (hollow sounds, firing sound pitch changes) is disabled,
-  - screenshake, magazine animations, and lasers are disabled, and
-  - you cannot use empty and reload indicator images.
+  - dynamic audio (hollow sounds, firing sound pitch changes) is disabled, and
+  - screenshake, magazine animations, and lasers are disabled
 
 ",
 "# ^#E2C344;(Quickbar) Mod Settings^reset;
 - ^#EA9931;Render Bars Beside Cursor:^reset; If this setting is ticked, the reload bar and jam bar will be rendered beside the cursor.
 
 - ^#EA9931;Use Reload/Empty Images:^reset; If this setting is ticked, animated sprites will be used to indicate a reloading or empty gun, instead of 'R' and 'E'.
-    - Enabling Performance Mode disables this setting.
+  ^#D93A3A;- Enabling Performance Mode disables this setting.^reset;
+",
+"# ^#E2C344;(Quickbar) Mod Settings^reset;  
+- ^#EA9931;Accurate Reload/Charge Bars:^reset; If this setting is ticked, drawables will be used to render both the reload ranges and arrow and the charge bar progress.
+  ^#D93A3A;- Enabling Performance Mode disables this setting.^reset;
 "
 
   ],
