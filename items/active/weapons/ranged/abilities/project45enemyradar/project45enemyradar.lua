@@ -16,7 +16,7 @@ function Project45EnemyRadar:queryEnemies()
   -- self.radius
   local detectedEntities = world.entityQuery(mcontroller.position(), self.radius, {
     withoutEntityId = entity.id(),
-    includedTypes = {"monster", "npc", "player"},
+    includedTypes = {"creature"},
     order = "nearest"
   })
 

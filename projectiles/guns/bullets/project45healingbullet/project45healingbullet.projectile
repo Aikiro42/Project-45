@@ -37,12 +37,13 @@
     //*/
   ],
   
+  "entityHitActionChance": 0.5,
   "entityHitActions": [
     {
       "action" : "projectile",
       "inheritDamageFactor" : 0,
       "angleAdjust" : 180,
-      "fuzzAngle" : 5,
+      "fuzzAngle" : 90,
       "type" : "project45healingbullet2"
     }
   ],

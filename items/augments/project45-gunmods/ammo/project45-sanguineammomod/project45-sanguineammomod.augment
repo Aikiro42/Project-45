@@ -11,7 +11,7 @@
   },
   "inventoryIcon" : "/items/augments/project45-gunmods/ammo/project45-sanguineammomod/project45-sanguineammomodicon.png",
   "description" : "These cartridges are tipped with crimson bullets that steal vitality.",
-  "technicalInfo": "Fires projectiles that leech health.",
+  "technicalInfo": "Fires projectiles that have a 50% chance of leeching health.",
   "shortdescription" : "Sanguine Bullets",
 
   "conversion": "projectile",

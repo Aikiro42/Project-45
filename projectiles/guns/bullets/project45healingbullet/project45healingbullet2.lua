@@ -3,71 +3,28 @@ require "/scripts/util.lua"
 
 function init()
   self.targetSpeed = config.getParameter("targetSpeed") or vec2.mag(mcontroller.velocity())
-  self.searchDistance = config.getParameter("searchRadius")
-  --Checking which type of homing code to use
-  self.homingStyle = config.getParameter("homingStyle", "controlVelocity")
-  if self.homingStyle == "controlVelocity" then
-	self.controlForce = config.getParameter("baseHomingControlForce") * self.targetSpeed
-  elseif self.homingStyle == "rotateToTarget" then
-	self.rotationRate = config.getParameter("rotationRate")
-	self.trackingLimit = config.getParameter("trackingLimit")
-  end
-  
-  if config.getParameter("homingStartDelay") ~= nil then
-	self.homingEnabled = false
-	self.countdownTimer = config.getParameter("homingStartDelay")
-  else
-	self.homingEnabled = true
-  end
+	self.searchDistance = config.getParameter("searchRadius")
+	local targets = world.entityQuery(mcontroller.position(), self.searchDistance, {
+		-- withoutEntityId = projectile.sourceEntity(),
+		includedTypes = {"player"},
+		order = "nearest"
+	})
+	if #targets >= 1 then
+		self.playerTarget = targets[1]
+	end
+	if not (self.playerTarget and world.entityExists(self.playerTarget)) then
+		projectile.die()
+	end
+  self.controlForce = config.getParameter("baseHomingControlForce") * self.targetSpeed
 end
 
 function update(dt)
-  if self.homingEnabled == true then
-	local targets = world.entityQuery(mcontroller.position(), self.searchDistance, {
-      -- withoutEntityId = projectile.sourceEntity(),
-      includedTypes = {"player"},
-      order = "nearest"
-    })
-
-	for _, target in ipairs(targets) do
-	  if entity.entityInSight(target) then -- and world.entityCanDamage(projectile.sourceEntity(), target) then
-		local targetPos = world.entityPosition(target)
-		local myPos = mcontroller.position()
-		local dist = world.distance(targetPos, myPos)
-		if world.magnitude(targetPos, myPos) < 1 then projectile.die() end
-
-		if self.homingStyle == "controlVelocity" then
-		  mcontroller.approachVelocity(vec2.mul(vec2.norm(dist), self.targetSpeed), self.controlForce)
-		elseif self.homingStyle == "rotateToTarget" then
-		  local vel = mcontroller.velocity()
-		  local angle = vec2.angle(vel)
-		  local toTargetAngle = util.angleDiff(angle, vec2.angle(dist))
-		  
-		  if math.abs(toTargetAngle) > self.trackingLimit then
-			return
-		  end
-
-		  local rotateAngle = math.max(dt * -self.rotationRate, math.min(toTargetAngle, dt * self.rotationRate))
-
-		  vel = vec2.rotate(vel, rotateAngle)
-		  mcontroller.setVelocity(vel)
-		  
-		  break
-		end
-		return
-	  end
+	if not (self.playerTarget and world.entityExists(self.playerTarget)) then
+		projectile.die()
 	end
-  else
-	self.countdownTimer = math.max(0, self.countdownTimer - dt)
-	if self.countdownTimer == 0 then
-	  self.homingEnabled = true
-	end
-  end
-  
-  --Code for ensuring a constant speed
-  if config.getParameter("constantSpeed") == true then
-	local currentVelocity = mcontroller.velocity()
-	local newVelocity = vec2.mul(vec2.norm(currentVelocity), self.targetSpeed)
-	mcontroller.setVelocity(newVelocity)
-  end
+	local targetPos = vec2.add(world.entityPosition(self.playerTarget), {0, -0.375})
+	local myPos = mcontroller.position()
+	local dist = world.distance(targetPos, myPos)
+	if world.magnitude(targetPos, myPos) < 1 then projectile.die() end
+	mcontroller.approachVelocity(vec2.mul(vec2.norm(dist), self.targetSpeed), self.controlForce)
 end
