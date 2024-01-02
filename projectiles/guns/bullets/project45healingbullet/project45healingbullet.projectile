@@ -1,11 +1,11 @@
 {
   // copied from unbound
-  "projectileName" : "project45smartbullet",
-  "image" : "project45smartbullet.png",
+  "projectileName" : "project45healingbullet",
+  "image" : "project45healingbullet.png?setcolor=FFA0A0",
   "animationCycle" : 0.2,
   "frameNumber" : 1,
   "damageKindImage" : "icon.png",
-  "lightColor" : [72, 52, 79],
+  "lightColor" : [50, 0, 0],
   "fullbright" : true,
   "pointLight" : true,
   "periodicActions" : [
@@ -21,7 +21,7 @@
         "fullbright" : true,
         "destructionAction" : "shrink",
         "size" : 1,
-        "color" : [210, 156, 231, 255],
+        "color" : [255, 0, 0, 255],
         "collidesForeground" : false,
         "length" : 13.5,
         "position" : [0, 0],
@@ -36,6 +36,17 @@
     }
     //*/
   ],
+  
+  "entityHitActions": [
+    {
+      "action" : "projectile",
+      "inheritDamageFactor" : 0,
+      "angleAdjust" : 180,
+      "fuzzAngle" : 5,
+      "type" : "project45healingbullet2"
+    }
+  ],
+
   "actionOnReap" : [
     { 
       "action" : "sound",
@@ -76,16 +87,10 @@
       ]
     }
   ],
-  "power" : 10.0,
+  "power" : 0.0,
   "speed" : 100.0,
   "physics" : "default",
-  "rotationRate" : 25.5,
-  "trackingLimit" : 2.0,
-  "homingStartDelay": 0.125,
-  "homingStyle" : "controlVelocity",
-  "baseHomingControlForce" : 25,
-  "constantSpeed" : true,
-  "searchRadius" : 7.5,
-
-  "scripts" : [ "/projectiles/guns/bullets/project45smartbullet/project45smartbullet.lua" ]
+  "damageType": "damage",
+  // "damageTeam": {"type": "indiscriminate"},
+  "scripts" : [ "/projectiles/guns/bullets/project45healingbullet/project45healingbullet.lua" ]
 }

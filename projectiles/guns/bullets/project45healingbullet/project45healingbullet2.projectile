@@ -1,13 +1,16 @@
 {
   // copied from unbound
-  "projectileName" : "project45smartbullet",
-  "image" : "project45smartbullet.png",
+  "projectileName" : "project45healingbullet2",
+  "image" : "project45healingbullet.png?setcolor=FF0000",
   "animationCycle" : 0.2,
   "frameNumber" : 1,
   "damageKindImage" : "icon.png",
-  "lightColor" : [72, 52, 79],
+  "lightColor" : [50, 0, 0],
   "fullbright" : true,
   "pointLight" : true,
+  "bounces": -1,
+  "piercing": true,
+  "timeToLive": 2,
   "periodicActions" : [
     {
       "time" : 0,
@@ -16,35 +19,29 @@
       "rotate" : true,
       
       "specification" : {
-        "type" : "streak",
-        "layer" : "back",
-        "fullbright" : true,
-        "destructionAction" : "shrink",
+        "type" : "ember",
         "size" : 1,
-        "color" : [210, 156, 231, 255],
-        "collidesForeground" : false,
-        "length" : 13.5,
-        "position" : [0, 0],
-        "timeToLive" : 0,
-        "destructionTime" : 0.2,
-        "initialVelocity" : [0.001, 0],
+        "color" : [255, 0, 0, 128],
+        "light" : [128, 0, 0],
+        "fullbright" : true,
+        "destructionTime" : 0.5,
+        "destructionAction" : "shrink",
+        "fade" : 0.9,
+        "initialVelocity" : [0, 0],
+        "finalVelocity" : [0, 0],
+        "timeToLive" : 0.1,
+        "layer" : "middle",
         "variance" : {
-          "length": 0
-        }
+          "position" : [0.25, 0.25],
+          "size" : 0.5,
+          "timeToLive" : 0.2
+        }      
       }
 
     }
     //*/
   ],
   "actionOnReap" : [
-    { 
-      "action" : "sound",
-      "options" : [
-        "/sfx/project45neosfx/bulletimpact/bulletimpact-generic1.ogg",
-        "/sfx/project45neosfx/bulletimpact/bulletimpact-generic2.ogg",
-        "/sfx/project45neosfx/bulletimpact/bulletimpact-generic3.ogg"
-      ]
-    },
     {
       "action" : "loop",
       "count" : 6,
@@ -76,16 +73,19 @@
       ]
     }
   ],
-  "power" : 10.0,
-  "speed" : 100.0,
+  "power" : 0.0,
+  "speed" : 50.0,
   "physics" : "default",
-  "rotationRate" : 25.5,
+  "damageType" : "Environment",
+  "damageKind": "hidden",
+  "rotationRate" : 5,
   "trackingLimit" : 2.0,
   "homingStartDelay": 0.125,
   "homingStyle" : "controlVelocity",
-  "baseHomingControlForce" : 25,
-  "constantSpeed" : true,
-  "searchRadius" : 7.5,
-
-  "scripts" : [ "/projectiles/guns/bullets/project45smartbullet/project45smartbullet.lua" ]
+  "baseHomingControlForce" : 5,
+  "constantSpeed" : false,
+  "searchRadius" : 20,
+  "damageTeam" : { "type" : "indiscriminate" },
+  "statusEffects": ["salveheal"],
+  "scripts" : [ "/projectiles/guns/bullets/project45healingbullet/project45healingbullet2.lua" ]
 }

@@ -1,0 +1,30 @@
+{
+  "itemName" : "project45-testammomod",
+  "price" : 1,
+  "rarity" : "Essential",
+  "tooltipKind" : "project45gunmod2",
+  "modCategory" : "ammoMod",
+  "category" : "eppAugment",
+  "tooltipFields":{
+    "subtitle": "Ammo Mod",
+    "objectImage": "/items/augments/project45-gunmods/ammo/project45-testammomod/project45-testammomod.png"
+  },
+  "inventoryIcon" : "/items/augments/project45-gunmods/ammo/project45-testammomod/project45-testammomodicon.png",
+  "description" : "Bob, please add technical info.",
+  "technicalInfo": "Ammo mod for testing projectiles.",
+  "shortdescription" : "Test Projectiles",
+
+  "conversion": "projectile",
+  "augment":{
+    "modName": "Incendiary Bullets",
+    "category": "universal",
+    "archetype": "bullet",
+    "projectileType": "project45healingbullet"
+  },
+
+
+   
+
+  "scripts" : [ "/scripts/augments/project45-gunmod/ammomod.lua" ],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
+}
