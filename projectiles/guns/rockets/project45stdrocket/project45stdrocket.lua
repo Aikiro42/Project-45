@@ -1,7 +1,7 @@
 require "/scripts/vec2.lua"
 
 function init()
-  self.approach = vec2.norm(mcontroller.velocity())
+  self.approach = config.getParameter("approach", vec2.norm(mcontroller.velocity()))
 
   self.maxSpeed = config.getParameter("maxSpeed")
   self.controlForce = config.getParameter("controlForce")

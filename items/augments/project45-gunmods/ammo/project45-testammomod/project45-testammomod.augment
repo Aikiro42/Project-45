@@ -18,8 +18,8 @@
   "augment":{
     "modName": "Incendiary Bullets",
     "category": "universal",
-    "archetype": "bullet",
-    "projectileType": "project45healingbullet"
+    "archetype": "universal",
+    "projectileType": "project45itanorocket"
   },
 
 

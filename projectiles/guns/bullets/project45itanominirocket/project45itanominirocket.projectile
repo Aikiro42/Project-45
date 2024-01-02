@@ -1,0 +1,59 @@
+{
+  // copied from unbound
+  "projectileName" : "project45itanominirocket",
+  "image" : "project45itanominirocket.png",
+  "animationCycle" : 0.2,
+  "frameNumber" : 1,
+  "bounces": -1,
+  "lightColor" : [72, 52, 79],
+  "fullbright" : true,
+  "pointLight" : true,
+  "piercing": true,
+  "periodicActions" : [
+    {
+      "time" : 0,
+      "repeat" : true,
+      "action" : "particle",
+      "rotate" : true,
+      
+      "specification" : {
+        "type" : "streak",
+        "layer" : "back",
+        "fullbright" : true,
+        "destructionAction" : "shrink",
+        "size" : 1,
+        "color" : [210, 156, 231, 255],
+        "collidesForeground" : false,
+        "length" : 13.5,
+        "position" : [0, 0],
+        "timeToLive" : 0,
+        "destructionTime" : 0.2,
+        "initialVelocity" : [0.001, 0],
+        "variance" : {
+          "length": 0
+        }
+      }
+
+    }
+    //*/
+  ],
+  "actionOnReap" : [
+    {
+      "action": "config",
+      "file": "/projectiles/explosions/project45_stdexplosion/project45_stdsmallexplosion.config"
+    }
+  ],
+  "power" : 10.0,
+  "targetSpeed": 50,
+  "speed" : 25.0,
+  "physics" : "default",
+  "rotationRate" : 25.5,
+  "trackingLimit" : 2.0,
+  "homingStyle" : "controlVelocity",
+  "baseHomingControlForce" : 5,
+  "constantSpeed" : false,
+  "searchRadius" : 50,
+  "persistentAudio" : "/sfx/gun/rocket_fly.ogg",
+
+  "scripts" : [ "/projectiles/guns/bullets/project45itanominirocket/project45itanominirocket.lua" ]
+}
