@@ -11,7 +11,3 @@ end
 function update(dt)
   mcontroller.approachVelocity(vec2.mul(self.approach, self.maxSpeed), self.controlForce)
 end
-
-function setApproach(approach)
-  self.approach = approach
-end

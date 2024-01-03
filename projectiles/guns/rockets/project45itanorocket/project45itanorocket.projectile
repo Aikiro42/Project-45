@@ -32,10 +32,13 @@
 
     }
   ],
-  "scriptedActionOnReap" : [
+  "actionOnReap" : [
     {
-      "action" : "config",
-      "file" : "/projectiles/explosions/project45_itanoswarm/project45_itanoswarm.config"
+      "action" : "projectile",
+      "inheritDamageFactor" : 1,
+      "type" : "project45itanoswarmprimer",
+      "fuzzAngle" : 0,
+      "angleAdjust" : 0
     },
     {
       "action" : "projectile",
@@ -52,12 +55,6 @@
       "angleAdjust" : 270
     }
   ],
-  "scriptedActionOnReap2" : [
-    {
-      "action" : "config",
-      "file" : "/projectiles/explosions/project45_stdexplosion/project45_stdexplosion.config"
-    }
-  ],
   "statusEffects" : [ ],
   "emitters" : [ "tinyrocketsmoke" ],
   "flippable" : true,
@@ -66,8 +63,8 @@
   "physics" : "rocket",
   "damageType" : "NoDamage",
   "damageKind" : "default",
-  "approach": [0, 50],
-  "scripts" : [ "/projectiles/guns/rockets/project45itanorocket/project45itanorocket.lua" ],
+  // "approach": [0, 50],
+  "scripts" : [ "/projectiles/guns/rockets/project45stdrocket/project45stdrocket.lua" ],
   "maxSpeed" : 25,
   "controlForce" : 100,
 

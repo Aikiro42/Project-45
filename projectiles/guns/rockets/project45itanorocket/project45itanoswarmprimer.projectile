@@ -1,0 +1,15 @@
+{
+  "projectileName" : "project45itanoswarmprimer",
+  "image" : "/assetmissing.png",
+  "timeToLive": 0,
+  "damageType" : "NoDamage",
+  "damageKind" : "default",
+  "scripts" : [ "/projectiles/guns/rockets/project45itanorocket/project45itanoswarmprimer.lua" ],
+  "actionOnReap": [
+    {
+      "action" : "projectile",
+      "inheritDamageFactor" : 0.05,
+      "type" : "project45-stdexplosionshockwave"
+    }
+  ]
+}
