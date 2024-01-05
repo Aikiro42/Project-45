@@ -227,6 +227,7 @@
 
         // rocket ammo
         "project45-homingrocketmod",
+        "project45-itanorocketsmod",
 
         // experimental ammo
         "project45-gasmod",

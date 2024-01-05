@@ -1,0 +1,29 @@
+{
+  "itemName" : "project45-itanorocketsmod",
+  "price" : 6000,
+  "rarity" : "Legendary",
+  "tooltipKind" : "project45gunmod2",
+  "modCategory" : "ammoMod",
+  "category" : "eppAugment",
+  "tooltipFields":{
+    "subtitle": "Ammo Mod",
+    "objectImage": "/items/augments/project45-gunmods/ammo/project45-itanorocketsmod/project45-itanorocketsmod.png"
+  },
+  "inventoryIcon" : "/items/augments/project45-gunmods/ammo/project45-itanorocketsmod/project45-itanorocketsmodicon.png",
+  "description": "\"Why fire one missile when you launch a whole circus?\"\n- Ichirō Itano",
+  "technicalInfo" : "Fires multiple small rockets that home in on multiple enemies.",
+  "shortdescription" : "Itano Rockets",
+  
+  "conversion": "projectile",
+  "augment":{
+    "modName": "Itano Rockets",
+    "category": "ballistic",
+    "archetype": "rocket",
+    "projectileType": "project45itanorocket"
+  },
+
+   
+
+  "scripts" : [ "/scripts/augments/project45-gunmod/ammomod.lua" ],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
+}

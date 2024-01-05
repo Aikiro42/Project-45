@@ -73,6 +73,9 @@
       
       "chargeWhine": [ ],
       "chargeDrone": ["/sfx/interface/sniper_mark_pitch1.ogg"],
+      "goodReload": [ ],
+      
+      "loadRound": ["/sfx/project45neosfx/loadround/loadround-grenade1.ogg"],
 
       "reloadStart": [ "/sfx/project45neosfx/getmag/getmag-tank1.ogg" ],
       "reloadEnd" : ["/sfx/project45neosfx/loadround/loadround-grenade1.ogg"],
@@ -163,6 +166,7 @@
     "resetChargeOnFire": true,
     
     "audibleEjection": true,
+    "internalMag": true,
     "ejectMagOnEmpty": "ejecting",
 
     "stances":{
@@ -173,6 +177,15 @@
         "allowRotate" : false,
         "aimAngle": 0,
         "allowFlip" : false
+      },
+      "loadRound" : {
+        "armRotation" : -90,
+        "weaponRotation" : -5,
+        "twoHanded" : true,
+        "allowRotate" : false,
+        "aimAngle": 0,
+        "allowFlip" : false,
+        "frontArmFrame": "swim.3"
       },
       "reloaded" : {
         "armRotation" : -90,
