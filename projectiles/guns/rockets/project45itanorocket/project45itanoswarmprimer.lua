@@ -21,7 +21,7 @@ function init()
 	if #self.targetList == 0 then
 		projectile.processAction({
 			action = "config",
-			file = "/projectiles/explosions/project45_stdexplosion/project45_stdexplosion.config"
+			file = "/projectiles/explosions/project45_stdexplosion/project45_baditanoexplosion.config"
 		})
 		return
 	end
