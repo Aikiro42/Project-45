@@ -8,6 +8,19 @@ function init()
 	self.targetEntityId = config.getParameter("targetEntityId")
 	self.homingEnabled = false
 	self.countdownTimer = config.getParameter("homingStartDelay", sb.nrand(0.1, 0.25))
+	--[[
+	-- might be too noisy, starbound exponentially amplifies simultaneous sounds
+	projectile.processAction(
+		{
+			action = "sound",
+			options = {
+				"/sfx/gun/fireworkgun_large1.ogg",
+        "/sfx/gun/fireworkgun_large2.ogg",
+        "/sfx/gun/fireworkgun_large3.ogg"
+			}
+		}
+	)
+	-]]
 end
 
 function update(dt)

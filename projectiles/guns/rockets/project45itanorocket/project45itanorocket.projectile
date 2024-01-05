@@ -45,14 +45,14 @@
       "inheritDamageFactor" : 0,
       "type" : "project45itanorocketshellbottom",
       "fuzzAngle" : 15,
-      "angleAdjust" : 90
+      "angleAdjust" : 15
     },
     {
       "action" : "projectile",
       "inheritDamageFactor" : 0,
       "type" : "project45itanorocketshelltop",
       "fuzzAngle" : 15,
-      "angleAdjust" : 270
+      "angleAdjust" : -15
     }
   ],
   "statusEffects" : [ ],

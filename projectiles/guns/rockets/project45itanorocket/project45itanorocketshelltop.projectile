@@ -25,7 +25,7 @@
 
     }
   ],
-  "speed": 10,
+  "speed": 25,
   "power" : 0,
   "damageType" : "NoDamage",
   "damageKind" : "default"

@@ -2,6 +2,8 @@
   "projectileName" : "project45itanoswarmprimer",
   "image" : "/assetmissing.png",
   "timeToLive": 0,
+  "piercing": true,
+  "collisionEnabled": false,
   "damageType" : "NoDamage",
   "damageKind" : "default",
   "scripts" : [ "/projectiles/guns/rockets/project45itanorocket/project45itanoswarmprimer.lua" ],

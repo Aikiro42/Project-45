@@ -13,12 +13,18 @@ function init()
 		}
 	)
 	for _, potentialTarget in ipairs(detected) do
-		if world.entityCanDamage(projectile.sourceEntity(), potentialTarget) then
+		if entity.entityInSight(potentialTarget) and world.entityCanDamage(projectile.sourceEntity(), potentialTarget) then
 			table.insert(self.targetList, potentialTarget)
 		end
 	end
 	
-	if #self.targetList == 0 then return end
+	if #self.targetList == 0 then
+		projectile.processAction({
+			action = "config",
+			file = "/projectiles/explosions/project45_stdexplosion/project45_stdexplosion.config"
+		})
+		return
+	end
 
 	local totalProjectiles = 10
 	local i = 1
