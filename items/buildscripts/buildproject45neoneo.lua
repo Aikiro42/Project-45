@@ -436,7 +436,7 @@ function build(directory, config, parameters, level, seed)
   end
 
   -- set price
-  -- TODO: should this be handled elsewhere?
+  -- should this be handled elsewhere?
   config.price = (config.price or 0) * root.evalFunction("itemLevelPriceMultiplier", configParameter("level", 1))
   parameters.price = config.price -- needed for gunshop
 

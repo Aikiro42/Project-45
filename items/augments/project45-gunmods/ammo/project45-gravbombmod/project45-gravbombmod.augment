@@ -17,7 +17,7 @@
   "conversion": "summoned",
   "augment":{
     "modName": "Singularity Essence",
-    "category": "experimental", // TODO: make this either matter or energy and make a gun for this
+    "category": "experimental",
     "archetype": "summoned",
 
     "summonedProjectileType": "project45gravitygrenade",
