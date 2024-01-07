@@ -1,0 +1,21 @@
+{
+  "kind" : "project45muzzlecrit",
+  "definition" : {
+    "type" : "ember",
+    "size" : 1,
+    "color" : [100, 238, 255, 255],
+    "destructionAction": "shrink",
+    "destructionTime" : 0.3,
+    "fade" : 0.3,
+    "initialVelocity" : [15, 0],
+    "finalVelocity" : [0, 0],
+    "approach" : [-15, 0],
+    "timeToLive" : 0.1,
+    "layer" : "middle",
+    "fullbright" : true,
+    "variance" : {
+      "initialVelocity" : [2, 10],
+      "size" : 0
+    }
+  }
+}

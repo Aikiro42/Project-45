@@ -148,6 +148,7 @@
     "projectileKind": "projectile",
     "projectileType": "project45stdgrenade",
     "reloadTime": 1,
+    "enableMuzzleCritParticles": true,
 
     // "internalMag": true,
     // "loadRoundsThroughBolt": true,

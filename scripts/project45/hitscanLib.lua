@@ -35,6 +35,9 @@ function hitscanLib:fireHitscan(projectileType)
       }
       damageConfig = sb.jsonMerge(damageConfig, self.hitscanParameters.hitscanDamageConfig or {})
       if self.critFlag then 
+        if self.enableMuzzleCritParticles then
+          animator.burstParticleEmitter("muzzleCrit")
+        end
         damageConfig.statusEffects = sb.jsonMerge(damageConfig.statusEffects, {"project45critdamaged"})
         self.critFlag = false
       end
@@ -235,12 +238,15 @@ function hitscanLib:fireBeam()
         )
   
         -- update base damage accordingly
-        local crit = self:crit()
         local multishot = self.projectileCount * self:rollMultishot()
-        beamDamageConfig.baseDamage = self:damagePerShot(true) * crit * multishot
-
-        if crit > 1 then
+        beamDamageConfig.baseDamage = self:damagePerShot(true) * multishot
+      
+        if self.critFlag then
+          if self.enableMuzzleCritParticles then
+            animator.burstParticleEmitter("muzzleCrit")
+          end
           beamDamageConfig.statusEffects = sb.jsonMerge(beamDamageConfig.statusEffects, { "project45critdamaged" })
+          self.critFlag = false
         else
           beamDamageConfig.statusEffects = sb.jsonMerge(originalStatusEffects)
         end

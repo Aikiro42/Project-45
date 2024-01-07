@@ -1094,6 +1094,10 @@ function Project45GunFire:fireProjectile(projectileType, projectileParameters, i
       nproj = math.min(nproj, self.maxProjectileCount)
     end
   end
+    
+  if self.critFlag and self.enableMuzzleCritParticles then
+    animator.burstParticleEmitter("muzzleCrit")
+  end
 
   -- if crit was rolled, all projectiles fired inflict a crit hit
   for i = 1, nproj do

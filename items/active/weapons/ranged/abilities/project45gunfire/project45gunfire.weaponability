@@ -65,6 +65,9 @@
     // Audio settings
     "hollowSoundMult": 1, // affects volume of hollow sound
 
+    // Makes gun spawn particles when firing a projectile that crits
+    // "enableMuzzleCritParticles": true,
+
     // ____________________________________[ SECTION: Projectile Config ]____________________________________
     
     /*

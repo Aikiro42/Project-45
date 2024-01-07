@@ -21,10 +21,11 @@ end
 function update(dt)
 	if not (self.playerTarget and world.entityExists(self.playerTarget)) then
 		projectile.die()
+	else
+		local targetPos = vec2.add(world.entityPosition(self.playerTarget), {0, -0.375})
+		local myPos = mcontroller.position()
+		local dist = world.distance(targetPos, myPos)
+		if world.magnitude(targetPos, myPos) < 1 then projectile.die() end
+		mcontroller.approachVelocity(vec2.mul(vec2.norm(dist), self.targetSpeed), self.controlForce)	
 	end
-	local targetPos = vec2.add(world.entityPosition(self.playerTarget), {0, -0.375})
-	local myPos = mcontroller.position()
-	local dist = world.distance(targetPos, myPos)
-	if world.magnitude(targetPos, myPos) < 1 then projectile.die() end
-	mcontroller.approachVelocity(vec2.mul(vec2.norm(dist), self.targetSpeed), self.controlForce)
 end

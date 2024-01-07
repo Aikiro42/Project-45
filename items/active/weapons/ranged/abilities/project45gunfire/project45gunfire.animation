@@ -573,6 +573,19 @@
         {"particle": "project45muzzle"}
       ]
     },
+    "muzzleCrit" : {
+      "transformationGroups" : ["muzzle"],
+      "offsetRegion" : [0, 0, 0, 0],
+      "emissionRate" : 100,
+      "particles" : [ 
+        {"particle": "project45muzzlecrit"},
+        {"particle": "project45muzzlecrit"},
+        {"particle": "project45muzzlecrit"},
+        {"particle": "project45muzzlecrit"},
+        {"particle": "project45muzzlecrit"},
+        {"particle": "project45muzzlecrit"}
+      ]
+    },
     "muzzleSmoke" : {
       "transformationGroups" : ["muzzle"],
       "offsetRegion" : [0, 0, 0, 0],

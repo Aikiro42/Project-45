@@ -164,7 +164,7 @@
     "projectileType": "project45stdrocket",
     "hideMuzzleFlash": true,
     "resetChargeOnFire": true,
-    
+    "enableMuzzleCritParticles": true,
     "audibleEjection": true,
     "internalMag": true,
     "ejectMagOnEmpty": "ejecting",
