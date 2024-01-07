@@ -5,6 +5,7 @@
   "frameNumber" : 3,
   "lightColor" : [128, 128, 189],
   "pointLight" : true,
+  "piercing": true,
   "timeToLive": 0.5,
   "periodicActions" : [
     

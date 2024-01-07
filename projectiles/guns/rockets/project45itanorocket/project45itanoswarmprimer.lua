@@ -2,6 +2,9 @@ require "/scripts/vec2.lua"
 
 function init()
 	-- grab list of targets
+	self.totalSubProjectiles = 10
+	self.subProjectilePower = projectile.power()/self.totalSubProjectiles
+	projectile.setPower(0) -- prevent shockwave from dealing damage
 	self.targetList = {}
 	local detected = world.entityQuery(
 		mcontroller.position(),
@@ -23,10 +26,11 @@ function init()
 			action = "config",
 			file = "/projectiles/explosions/project45_stdexplosion/project45_baditanoexplosion.config"
 		})
+		projectile.die()
 		return
 	end
 
-	local totalProjectiles = 10
+	local totalProjectiles = self.totalSubProjectiles
 	local i = 1
 	while totalProjectiles > 0 do
 		world.spawnProjectile(
@@ -36,7 +40,7 @@ function init()
 			vec2.rotate({1, 0}, sb.nrand(0.1, mcontroller.rotation())),
 			true,
 			{
-				power = projectile.power(),
+				power = self.subProjectilePower,
 				targetEntityId = self.targetList[i]
 			}
 		)
