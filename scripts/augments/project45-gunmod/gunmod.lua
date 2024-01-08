@@ -128,9 +128,8 @@ function apply(input, override, augment)
             -- if augment modifies max ammo (only)
             -- and gun reloads entire ammo capacity
             -- modify bulletsPerReload the same amount the same way
-
-            local bpr = newPrimaryAbility.bulletsPerReload or oldPrimaryAbility.bulletsPerReload
-            local maxAmmo = newPrimaryAbility.maxAmmo or oldPrimaryAbility.maxAmmo
+            local maxAmmo = newPrimaryAbility.maxAmmo or oldPrimaryAbility.maxAmmo or 1
+            local bpr = newPrimaryAbility.bulletsPerReload or oldPrimaryAbility.bulletsPerReload or maxAmmo
             if bpr >= maxAmmo
             and not augment.primaryAbility.bulletsPerReload
             then
@@ -144,7 +143,7 @@ function apply(input, override, augment)
 
         if augment.primaryAbility.movementSpeedFactor then
             -- if movementSpeedFactor < 1 then reset it first
-            local oldmsf = newPrimaryAbility.movementSpeedFactor or oldPrimaryAbility.movementSpeedFactor
+            local oldmsf = newPrimaryAbility.movementSpeedFactor or oldPrimaryAbility.movementSpeedFactor or 1
             if oldmsf < 1 then
                 local afterOp = augment.primaryAbility.movementSpeedFactor
                 augment.primaryAbility.movementSpeedFactor = {{
@@ -157,7 +156,7 @@ function apply(input, override, augment)
 
         if augment.primaryAbility.jumpHeightFactor then
             -- if jumpHeightFactor < 1 then reset it first
-            local oldmsf = newPrimaryAbility.jumpHeightFactor or oldPrimaryAbility.jumpHeightFactor
+            local oldmsf = newPrimaryAbility.jumpHeightFactor or oldPrimaryAbility.jumpHeightFactor or 1
             if oldmsf < 1 then
                 local afterOp = augment.primaryAbility.jumpHeightFactor
                 augment.primaryAbility.jumpHeightFactor = {{
