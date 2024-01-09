@@ -1,6 +1,6 @@
 require "/scripts/util.lua"
 require "/scripts/vec2.lua"
-require "/items/active/weapons/weapon.lua"
+require "/items/active/weapons/project45neoweapon.lua"
 
 function init()
   activeItem.setCursor("/cursors/reticle0.cursor")

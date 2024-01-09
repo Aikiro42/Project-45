@@ -1,4 +1,4 @@
-require "/items/active/weapons/weapon.lua"
+require "/items/active/weapons/project45neoweapon.lua"
 require "/scripts/util.lua"
 require "/scripts/interp.lua"
 require "/scripts/poly.lua"

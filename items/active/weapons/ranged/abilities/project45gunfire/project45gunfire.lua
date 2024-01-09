@@ -1,7 +1,7 @@
 require "/scripts/util.lua"
 require "/scripts/interp.lua"
 require "/scripts/poly.lua"
-require "/items/active/weapons/weapon.lua"
+require "/items/active/weapons/project45neoweapon.lua"
 require "/scripts/project45/hitscanLib.lua"
 require "/scripts/project45/project45util.lua"
 
@@ -257,13 +257,13 @@ function Project45GunFire:init()
   and storage.ammo >= 0
   then
     -- self.weapon:setStance(self.stances.aimStance)
-    self:setStance(self.stances.aimStance)
+    self.weapon:setStance(self.stances.aimStance)
   else
     if storage.jamAmount > 0 then
       self:setState(self.jammed)
     end
     if storage.ammo < 0 then
-      self:setStance(self.stances.empty)
+      self.weapon:setStance(self.stances.empty)
     end
   end
   self:recoil(true, 1, 45, 0) -- you're bringing the gun up
@@ -323,6 +323,7 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
   self:renderModPositionDebug()
   self:updateLaser()
   self:updateCharge()
+  self:updateRecoil()
   self:updateStance()
   self:updateCycleTime()
   self:updateScreenShake()
@@ -443,7 +444,7 @@ function Project45GunFire:charging()
 end
 
 function Project45GunFire:jammed()
-  self:setStance(self.stances.jammed)
+  self.weapon:setStance(self.stances.jammed)
 end
 
 function Project45GunFire:firing()
@@ -468,7 +469,7 @@ function Project45GunFire:firing()
   animator.setAnimationState("gun", self.loopFiringAnimation and "firingLoop" or "firing")
 
   if self.stances.firing then
-    self:setStance(self.stances.firing)
+    self.weapon:setStance(self.stances.firing)
   end
 
   -- reset burst count if already max
@@ -576,7 +577,7 @@ function Project45GunFire:ejecting()
     end
     animator.setAnimationState("gun", "boltPulling")
     animator.playSound("boltPull")
-    self:setStance(self.stances.boltPull)
+    self.weapon:setStance(self.stances.boltPull)
   -- otherwise, the gun is either semiauto
   -- or not done bursting; we eject (faster animation)
   else
@@ -624,7 +625,7 @@ function Project45GunFire:ejecting()
     then
       self:ejectMag()
     else
-      self:setStance(self.stances.aimStance)
+      self.weapon:setStance(self.stances.aimStance)
     end
     self.isCocking = false
     self.isFiring = false
@@ -658,9 +659,9 @@ function Project45GunFire:feeding()
     animator.setAnimationState("bolt", "closed")
     self:updateChamberState("ready")
     self.isCocking = false
-    self:setStance(self.stances.slamFire or self.stances.boltPush)
+    self.weapon:setStance(self.stances.slamFire or self.stances.boltPush)
     util.wait(self.dt)
-    -- self:setStance(self.stances.boltPush, true, true)
+    -- self.weapon:setStance(self.stances.boltPush, true, true)
     if self.chargeTime + self.overchargeTime > 0 then
       self:setState(self.charging)
     else
@@ -668,7 +669,7 @@ function Project45GunFire:feeding()
     end
     return
   elseif self.manualFeed or self.isCocking then
-    self:setStance(self.stances.boltPush)
+    self.weapon:setStance(self.stances.boltPush)
   end
 
   -- otherwise, we wait
@@ -681,7 +682,7 @@ function Project45GunFire:feeding()
     util.wait(self.currentCycleTime/3)
   end
 
-  self:setStance(self.stances.aimStance)
+  self.weapon:setStance(self.stances.aimStance)
   
   animator.setAnimationState("bolt", "closed")
   if storage.ammo > 0 then
@@ -741,7 +742,7 @@ function Project45GunFire:reloading()
   if storage.ammo < 0 then storage.ammo = 0 end
   
   if not self.reloadOnEjectMag then
-    self:setStance(self.stances.reloading, true)
+    self.weapon:setStance(self.stances.reloading)
   end
 
   -- begin minigame
@@ -755,7 +756,7 @@ function Project45GunFire:reloading()
       if self.internalMag then
         animator.setAnimationState("magazine", "present") -- insert mag, hiding it from view
       end
-      self:setStance(self.stances.reloading, true)
+      self.weapon:setStance(self.stances.reloading)
       displayResetTimer = displayResetTime
     else
       displayResetTimer = math.max(0, displayResetTimer - self.dt)
@@ -798,7 +799,7 @@ function Project45GunFire:reloading()
       self.triggered = true
       
       -- update ammo
-      self:setStance(self.stances.loadRound, true)  -- player visually loads round
+      self.weapon:setStance(self.stances.loadRound)  -- player visually loads round
       local reloadedBullets = storage.ammo -- prevents energy overconsumption when reloaded bullets is greater than max ammo
       self:updateAmmo(self.bulletsPerReload)
       reloadedBullets = storage.ammo - reloadedBullets
@@ -826,7 +827,7 @@ function Project45GunFire:reloading()
   end
   animator.stopAllSounds("reloadLoop")
 
-  self:setStance(self.stances.reloaded, not self.reloadOnEjectMag)
+  self.weapon:setStance(self.stances.reloaded, not self.reloadOnEjectMag)
   if self.projectileFireSettings.resetProjectileIndexOnReload then
     storage.savedProjectileIndex = 1
   end
@@ -920,9 +921,9 @@ function Project45GunFire:unjamming()
   self:recoil(true, 0.5)
   animator.setAnimationState("gun", "unjamming") -- should transist back to being jammed
   animator.playSound("unjam")
-  self:setStance(self.stances.unjam, true)
+  self.weapon:setStance(self.stances.unjam)
   util.wait(self.cockTime/4)
-  self:setStance(self.stances.jammed)
+  self.weapon:setStance(self.stances.jammed)
 
   self:updateJamAmount(math.random() * -1)
   if storage.jamAmount <= 0 then
@@ -1159,8 +1160,7 @@ function Project45GunFire:recoil(down, mult, amount, recoverDelay)
   -- recoil (max defaults to 7.5 degrees, amount defaults to 1)
   if self.projectileKind ~= "summoned" then
     local recoilMaxDeg = self.recoilMaxDeg or 7.5
-    self.weapon.relativeWeaponRotation = math.min(self.weapon.relativeWeaponRotation, util.toRadians(recoilMaxDeg * crouchMult / 2)) + util.toRadians((amount or self.recoilAmount or 1) * mult/2)
-    self.weapon.relativeArmRotation = math.min(self.weapon.relativeArmRotation, util.toRadians(recoilMaxDeg * crouchMult / 2)) + util.toRadians((amount or self.recoilAmount or 1) * mult/2)
+    self.weapon.recoilAmount = math.min(self.weapon.recoilAmount, util.toRadians(recoilMaxDeg * crouchMult)) + util.toRadians((amount or self.recoilAmount or 1) * mult)
   end
   
   self.weapon.weaponOffset = {-0.125, 0}
@@ -1170,7 +1170,7 @@ function Project45GunFire:recoil(down, mult, amount, recoverDelay)
   if self.recoilUpOnly and self.projectileKind ~= "summoned" then
     inaccuracy = math.abs(inaccuracy)
   end
-  self.weapon.relativeWeaponRotation = self.weapon.relativeWeaponRotation + inaccuracy/2
+  self.weapon.recoilAmount = self.weapon.recoilAmount + inaccuracy/2
   
   -- recover delay (no recover delay by default)
   storage.stanceProgress = 0
@@ -1218,7 +1218,7 @@ function Project45GunFire:ejectMag()
     animator.playSound("ejectMag")
     animator.burstParticleEmitter("magazine")
   end
-  self:setStance(self.stances.empty)
+  self.weapon:setStance(self.stances.empty)
 
   if animator.animationState("chamber") == "ready" then
     storage.unejectedCasings = storage.unejectedCasings + (self.casingsPerShot or self.ammoPerShot)
@@ -1375,10 +1375,10 @@ function Project45GunFire:updateCharge()
     self.chargeFrame = util.clamp(math.ceil(self.chargeFrames * (self.chargeTimer / timeBasis)), 1, self.chargeFrames)
     animator.setGlobalTag("chargeFrame", self.chargeFrame)
     if self.chargeArmFrames then
-      self:setStance({
-        frontArmFrame = self.chargeArmFrames[math.max(1, self.chargeFrame)].frontArmFrame,
-        backArmFrame = self.chargeArmFrames[math.max(1, self.chargeFrame)].backArmFrame
-      }, nil, true)
+      self.weapon:setStance(sb.jsonMerge(self.stances.aimStance, {
+          frontArmFrame = self.chargeArmFrames[math.max(1, self.chargeFrame)].frontArmFrame,
+          backArmFrame = self.chargeArmFrames[math.max(1, self.chargeFrame)].backArmFrame
+        }))
       -- activeItem.setFrontArmFrame(self.chargeArmFrames[math.max(1, self.chargeFrame)].frontArmFrame)
       -- activeItem.setBackArmFrame(self.chargeArmFrames[math.max(1, self.chargeFrame)].backArmFrame)  
     end
@@ -1539,6 +1539,10 @@ function Project45GunFire:updateMuzzleFlash()
   end
 end
 
+function Project45GunFire:updateRecoil()
+  self.weapon.recoilAmount = interp.sin(storage.stanceProgress, self.weapon.recoilAmount, 0)
+end
+
 -- updates the weapon's stance
 -- interpolates the weapon's stance to the stance set via self.weapon:setStance()
 function Project45GunFire:updateStance()
@@ -1560,9 +1564,6 @@ function Project45GunFire:updateStance()
     interp.sin(storage.stanceProgress, offset_i[1], offset_o[1]),
     interp.sin(storage.stanceProgress, offset_i[2], offset_o[2])
   }
-  -- self.weapon.aimAngle, self.weapon.aimDirection = activeItem.aimAngleAndDirection(0, activeItem.ownerAimPosition())
-  self.weapon.relativeWeaponRotation = util.toRadians(interp.sin(storage.stanceProgress, math.deg(self.weapon.relativeWeaponRotation), self.weapon.stance.weaponRotation))
-  self.weapon.relativeArmRotation = util.toRadians(interp.sin(storage.stanceProgress, math.deg(self.weapon.relativeArmRotation), self.weapon.stance.armRotation))
   
   -- update stance progress
   storage.stanceProgress = math.min(1, storage.stanceProgress + self.dt / self.currentRecoverTime)
@@ -1885,89 +1886,6 @@ function Project45GunFire:loadGunState()
 end
 
 -- SECTION: HELPER FUNCTIONS
-
-function Project45GunFire:setStance(stance, snap, armsOnly)
-
-  if stance.disabled then return end
-
-  if not stance.validated then
-    stance.weaponRotation = stance.weaponRotation or 0
-    stance.armRotation = stance.armRotation or 0
-    stance.twoHanded = stance.twoHanded == nil and true or stance.twoHanded
-    stance.validated = true
-  end
-
-  stance = copy(stance)
-
-  if armsOnly then
-    self.weapon.stance.frontArmFrame = stance.frontArmFrame
-    self.weapon.stance.backArmFrame = stance.backArmFrame
-    activeItem.setFrontArmFrame(stance.frontArmFrame)
-    activeItem.setBackArmFrame(stance.backArmFrame)
-    return
-  end
-  
-  snap = snap or stance.lock or stance.snap
-  -- get old stance, plus rotations, for smooth stance transition
-  local oldStance = nil
-  if not snap and self.weapon.stance and not stance.lite then
-    oldStance = sb.jsonMerge(self.weapon.stance, {})
-    oldStance.weaponRotation = util.toDegrees(self.weapon.relativeWeaponRotation)
-    oldStance.armRotation = util.toDegrees(self.weapon.relativeArmRotation)
-  end
-  
-  -- set stance
-  self.stanceLocked = stance.lock
-  activeItem.setTwoHandedGrip(stance.twoHanded or false)
-
-  if not stance.lite
-  or not self.weapon.stance
-  then
-    self.weapon:setStance(stance)
-  else
-    self.weapon.stance = copy(self.weapon.stance)
-    for stateType, state in pairs(stance.animationStates or {}) do
-      animator.setAnimationState(stateType, state)
-    end
-  
-    for _, soundName in pairs(stance.playSounds or {}) do
-      animator.playSound(soundName)
-    end
-  
-    for _, particleEmitterName in pairs(stance.burstParticleEmitters or {}) do
-      animator.burstParticleEmitter(particleEmitterName)
-    end
-    self.weapon.stance.frontArmFrame = stance.frontArmFrame
-    self.weapon.stance.backArmFrame = stance.backArmFrame
-    activeItem.setFrontArmFrame(stance.frontArmFrame)
-    activeItem.setBackArmFrame(stance.backArmFrame)
-  end
-
-  -- flip weapon
-  --[[
-  if stance.flipWeapon then
-    animator.setGlobalTag("directives", "?flipy")
-  else
-    animator.setGlobalTag("directives", "")
-  end
-  --]]
-
-  -- reset weapon's rotations to those of old stance for smooth stance transition
-  if not snap and oldStance and not stance.lite then
-    self.weapon.relativeArmRotation = util.toRadians(oldStance.armRotation)
-    self.weapon.relativeWeaponRotation = util.toRadians(oldStance.weaponRotation)
-  end
-
-  -- function Project45GunFire:recoil(down, mult, amount, recoverDelay)
-  if stance.armRecoil then
-    self.weapon.relativeArmRotation = self.weapon.relativeArmRotation + util.toRadians(stance.armRecoil)
-  end
-  if stance.weaponRecoil then
-    self.weapon.relativeWeaponRotation = self.weapon.relativeWeaponRotation + util.toRadians(stance.weaponRecoil)
-  end
-
-  storage.stanceProgress = 0
-end
 
 --[[
 -- Chooses a random projectile from a weighted list of projectiles.

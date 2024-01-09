@@ -171,6 +171,7 @@
 
     "stances": {
       "aimStance": {
+        "allowRotate": true
       }
 
     }

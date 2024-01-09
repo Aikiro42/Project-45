@@ -451,7 +451,7 @@
       // stance while the gun has no mag
       "empty" : {
         "armRotation" : -15,
-        "weaponRotation" : 0,
+        "weaponRotation" : -15,
         "twoHanded" : true,
         "allowRotate" : false,
         "aimAngle": 0,
@@ -497,13 +497,6 @@
         "disabled": false,
         /*
         if true, stance isn't applied at all.
-        */
-        
-        "lock": false,
-        /*
-        if true, disables weapon/arm rotation updates entirely.
-        In essence, stance functions normally.
-        Certain stances are (technically) always locked: the "reloading" and "loadRound" stances.
         */
 
         "snap": false,
