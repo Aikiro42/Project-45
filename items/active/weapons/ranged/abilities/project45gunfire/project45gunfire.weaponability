@@ -36,12 +36,13 @@
       // ,"alwaysActive": false
     },
 
-    // Movement settings
     /*
-    "movementSpeedFactor": 1,
-    "jumpHeightFactor": 1,
-    "heavyWeapon": false,
+    Movement settings
     */
+    // "movementSpeedFactor": 1,
+    // "jumpHeightFactor": 1,
+    // "heavyWeapon": false, // forces wielder to walk if true
+    
 
     /*
     if true, disables the following:
@@ -65,8 +66,10 @@
     // Audio settings
     "hollowSoundMult": 1, // affects volume of hollow sound
 
-    // Makes gun spawn particles when firing a projectile that crits
-    // "enableMuzzleCritParticles": true,
+    /*
+    Makes gun spawn particles when firing a projectile that crits
+    */
+    // "enableMuzzleCritParticles": false,
 
     // ____________________________________[ SECTION: Projectile Config ]____________________________________
     
@@ -106,15 +109,16 @@
         "project45stdpoisonbullet",
         "project45dragonsbreath"
       ],
-    //*/
+    */
 
     "projectileParameters": {
 
     },
 
-
-    // settings for firing multiple types of projectiles
-    // only matters if `projectileType` is a list
+    /*
+    settings for firing multiple types of projectiles
+    only matters if `projectileType` is a list
+    */
     /*
     "projectileFireSettings": {
       "sequential": false,  // whether the projectiles are fired sequentially or randomly
@@ -125,12 +129,15 @@
     },
     */
 
-    // You can make the muzzle shoot an additional projectile this way.
     /*
-    "muzzleProjectileType": null,
+    You can make the muzzle shoot an additional projectile this way.
+    */
+    // "muzzleProjectileType": null,
+    /*
     "muzzleProjectileParameters": {
 
     },
+
     // Offset when firing muzzle projectiles; sometimes the firePosition is way back into the barrel
     // like in project45-neo-gaussrifle, so you'd want to move the muzzle projectile forward
     "muzzleProjectileOffset": [0, 0],
@@ -411,22 +418,7 @@
     // ____________________________________[ SECTION: Stances ]____________________________________
 
     "stances" : {
-
-      // SUSTAINED STANCES - These stances are constantly interpolated to
       
-      // initial stance when re-equipping the weapon
-      // OBSOLETE: Weapon is "recoiled" downwards first thing
-      /*
-      "idleneo" : {
-        "armRotation" : -45,
-        "weaponRotation" : 0,
-        "twoHanded" : true,
-        "allowRotate" : true,
-        "allowFlip" : true
-
-      },
-      */
-
       // stance while the gun is aimed
       "aimStance" : {
         "armRotation" : 0,
@@ -461,7 +453,6 @@
       },
 
       // stance taken while ejecting the mag
-      // this stance is also snapped to
       "ejectmag" : {
         "armRotation" : -30,
         "weaponRotation" : 5,
@@ -470,9 +461,6 @@
         "allowFlip" : false,
         "snap": true
       },
-
-      // SNAP STANCES - These stances will be snapped to briefly
-      // only arm and weapon rotations matter
 
       // stance snaps to this when unjamming
       "unjam" : {

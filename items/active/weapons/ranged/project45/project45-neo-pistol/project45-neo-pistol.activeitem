@@ -156,13 +156,13 @@
         "twoHanded": false
       },
       "reloaded" : {
-        "armRotation" : -15,
-        "weaponRotation" : 5,
+        "armRotation" : -45,
+        "weaponRotation" : 0,
         "frontArmFrame": "rotation",
         "twoHanded" : false,
         "allowRotate" : false,
-        "allowFlip" : false,
-        "snap": true
+        "allowFlip" : false
+        // ,"snap": true
       },
       "boltPull": {
         "twoHanded": false

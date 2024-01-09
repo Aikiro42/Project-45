@@ -256,12 +256,15 @@ function Weapon:setStance(stance)
   if stance.disabled then return end
   if self.stance == stance then return end
 
+  local snapWeapon = stance.snap or self.weaponAngularVelocity ~= 0
+  local snapArm = stance.snap or self.armAngularVelocity ~= 0
+
   self.newWeaponRotation = util.toRadians(stance.weaponRotation or 0)
   self.newArmRotation = util.toRadians(stance.armRotation or 0)
 
   -- snap if was rotating
-  self.oldWeaponRotation = (stance.snap or self.weaponAngularVelocity ~= 0) and self.newWeaponRotation or self.relativeWeaponRotation
-  self.oldArmRotation = (stance.snap or self.armAngularVelocity ~= 0) and self.newArmRotation or self.relativeArmRotation
+  self.oldWeaponRotation = snapWeapon and self.newWeaponRotation or self.relativeWeaponRotation
+  self.oldArmRotation = snapArm and self.newArmRotation or self.relativeArmRotation
   
   self.stance = stance
   self.stanceTransitionSpeedMult = stance.transitionSpeedMult or 4
@@ -270,17 +273,16 @@ function Weapon:setStance(stance)
   self.relativeWeaponRotationCenter = stance.weaponRotationCenter or {0, 0}
   
   self.armAngularVelocity = util.toRadians(stance.armAngularVelocity or 0)
-  if stance.snap then
-    -- snap arm rotation
-    self.relativeArmRotation = self.newArmRotation
-    self.oldArmRotation = self.newArmRotation
+  self.weaponAngularVelocity = util.toRadians(stance.weaponAngularVelocity or 0)
+
+  if snapWeapon then
+    self.oldWeaponRotation = self.newWeaponRotation
+    self.baseWeaponRotation = self.newWeaponRotation
   end
 
-  self.weaponAngularVelocity = util.toRadians(stance.weaponAngularVelocity or 0)
-  if stance.snap then
-    -- snap weapon rotation
-    self.relativeWeaponRotation = self.newWeaponRotation
-    self.oldWeaponRotation = self.newWeaponRotation
+  if snapArm then
+    self.oldArmRotation = self.newArmRotation
+    self.baseArmRotation = self.newArmRotation    
   end
 
   for stateType, state in pairs(stance.animationStates or {}) do
