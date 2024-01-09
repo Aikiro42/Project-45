@@ -216,19 +216,20 @@
         "twoHanded" : false,
         "allowRotate" : false,
         "aimAngle": 0,
-        "allowFlip" : false
-
+        "allowFlip" : false,
+        
         // "weaponOffset" : [0.25, 0.575],
-        // "frontArmFrame" : "run.2",
+        "frontArmFrame" : "rotation"
         // "backArmFrame" : "jump.3"
       },
 
       "reloaded" : {
         "armRotation" : 45,
-        "weaponRotation" : 15,
+        "weaponRotation" : 45,
         "twoHanded" : false,
         "allowRotate" : false,
-        "allowFlip" : false
+        "allowFlip" : false,
+        "frontArmFrame" : "rotation"
       },
       "loadRound": {
         "disabled": true

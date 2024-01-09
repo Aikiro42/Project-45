@@ -173,10 +173,12 @@
       "reloading" : {
         "armRotation" : -90,
         "twoHanded" : true,
-        "frontArmFrame": "run.5",
+        "frontArmFrame": "run.2",
         "allowRotate" : false,
         "aimAngle": 0,
-        "allowFlip" : false
+        "allowFlip" : false,
+        "weaponOffset": [-0.5, 0.2],
+        "backArmFrame": "swim.3"
       },
       "loadRound" : {
         "armRotation" : -90,
@@ -185,7 +187,8 @@
         "allowRotate" : false,
         "aimAngle": 0,
         "allowFlip" : false,
-        "frontArmFrame": "swim.3"
+        "frontArmFrame": "run.2",
+        "weaponOffset": [-0.5, 0.2]
       },
       "reloaded" : {
         "armRotation" : -90,
@@ -194,7 +197,8 @@
         "allowRotate" : false,
         "aimAngle": 0,
         "allowFlip" : false,
-        "frontArmFrame": "swim.3"
+        "weaponOffset": [-0.5, 0.2],
+        "frontArmFrame": "run.2"
       }
     }
     

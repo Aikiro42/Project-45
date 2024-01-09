@@ -20,7 +20,10 @@ function Project45GunFire:init()
 
   self.performanceMode = status.statusProperty("project45_performanceMode", false) or self.performanceMode
   self.hideMuzzleSmoke = self.performanceMode or self.hideMuzzleSmoke
-    
+  
+
+  self.recoilOffsetProgress = 1
+
   -- separate cock time and reload time
   -- self.reloadTime = self.reloadTime * 0.8
   self.reloadTimer = -1
@@ -94,7 +97,6 @@ function Project45GunFire:init()
 
   self.projectileFireSettings = self.projectileFireSettings or {}
   self.projectileFireSettings.batchFire = type(self.projectileType) == "table" and self.projectileFireSettings.batchFire
-
   -- let inaccuracy be a table
   if type(self.inaccuracy) ~= "table" then
     self.inaccuracy = {
@@ -324,7 +326,6 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
   self:updateLaser()
   self:updateCharge()
   self:updateRecoil()
-  self:updateStance()
   self:updateCycleTime()
   self:updateScreenShake()
   self:updateProjectileStack()
@@ -681,7 +682,7 @@ function Project45GunFire:feeding()
   else
     util.wait(self.currentCycleTime/3)
   end
-
+  
   self.weapon:setStance(self.stances.aimStance)
   
   animator.setAnimationState("bolt", "closed")
@@ -799,7 +800,9 @@ function Project45GunFire:reloading()
       self.triggered = true
       
       -- update ammo
-      self.weapon:setStance(self.stances.loadRound)  -- player visually loads round
+      if self.bulletsPerReload < self.maxAmmo then
+        self.weapon:setStance(self.stances.loadRound)  -- player visually loads round
+      end
       local reloadedBullets = storage.ammo -- prevents energy overconsumption when reloaded bullets is greater than max ammo
       self:updateAmmo(self.bulletsPerReload)
       reloadedBullets = storage.ammo - reloadedBullets
@@ -827,7 +830,7 @@ function Project45GunFire:reloading()
   end
   animator.stopAllSounds("reloadLoop")
 
-  self.weapon:setStance(self.stances.reloaded, not self.reloadOnEjectMag)
+  self.weapon:setStance(self.stances.reloaded)
   if self.projectileFireSettings.resetProjectileIndexOnReload then
     storage.savedProjectileIndex = 1
   end
@@ -1145,14 +1148,14 @@ end
 
 -- Kicks gun muzzle up and backward, shakes screen
 function Project45GunFire:recoil(down, mult, amount, recoverDelay)
+  if self.disableRecoil then return end
 
   self.projectileKind = self.projectileKind or "projectile"
 
   local mult = mult or self.recoilMult or 1
   
   -- makes it easier to aim directly downwards/upwards
-  mult = mult * math.abs(math.cos(activeItem.aimAngle(0, activeItem.ownerAimPosition())))
-  
+  local angleMult = math.abs(math.cos(activeItem.aimAngle(0, activeItem.ownerAimPosition())))
   mult = down and -mult or mult
   local crouchMult = mcontroller.crouching() and self.recoilCrouchMult or 1
   mult = mult * crouchMult
@@ -1160,7 +1163,8 @@ function Project45GunFire:recoil(down, mult, amount, recoverDelay)
   -- recoil (max defaults to 7.5 degrees, amount defaults to 1)
   if self.projectileKind ~= "summoned" then
     local recoilMaxDeg = self.recoilMaxDeg or 7.5
-    self.weapon.recoilAmount = math.min(self.weapon.recoilAmount, util.toRadians(recoilMaxDeg * crouchMult)) + util.toRadians((amount or self.recoilAmount or 1) * mult)
+    self.weapon.recoilAmount = math.min(self.weapon.recoilAmount, util.toRadians(recoilMaxDeg * crouchMult))
+      + util.toRadians((amount or self.recoilAmount or 1) * mult * angleMult)
   end
   
   self.weapon.weaponOffset = {-0.125, 0}
@@ -1170,10 +1174,10 @@ function Project45GunFire:recoil(down, mult, amount, recoverDelay)
   if self.recoilUpOnly and self.projectileKind ~= "summoned" then
     inaccuracy = math.abs(inaccuracy)
   end
-  self.weapon.recoilAmount = self.weapon.recoilAmount + inaccuracy/2
-  
+  self.weapon.recoilAmount = self.weapon.recoilAmount + inaccuracy
   -- recover delay (no recover delay by default)
   storage.stanceProgress = 0
+  self.recoilOffsetProgress = 0
   self.recoverDelayTimer = (recoverDelay or self.recoverDelay or self.fireTime or 0) * self.recoverMult
 end
 
@@ -1375,7 +1379,7 @@ function Project45GunFire:updateCharge()
     self.chargeFrame = util.clamp(math.ceil(self.chargeFrames * (self.chargeTimer / timeBasis)), 1, self.chargeFrames)
     animator.setGlobalTag("chargeFrame", self.chargeFrame)
     if self.chargeArmFrames then
-      self.weapon:setStance(sb.jsonMerge(self.stances.aimStance, {
+      self.weapon:setStance(sb.jsonMerge(self.weapon.stance, {
           frontArmFrame = self.chargeArmFrames[math.max(1, self.chargeFrame)].frontArmFrame,
           backArmFrame = self.chargeArmFrames[math.max(1, self.chargeFrame)].backArmFrame
         }))
@@ -1540,33 +1544,21 @@ function Project45GunFire:updateMuzzleFlash()
 end
 
 function Project45GunFire:updateRecoil()
-  self.weapon.recoilAmount = interp.sin(storage.stanceProgress, self.weapon.recoilAmount, 0)
-end
-
--- updates the weapon's stance
--- interpolates the weapon's stance to the stance set via self.weapon:setStance()
-function Project45GunFire:updateStance()
   
-  if self.weapon.stance == self.stances.reloading
-  or self.weapon.stance == self.stances.loadRound
-  or self.stanceLocked
-  then return end
-
-  if self.recoverDelayTimer > 0 then
-    self.recoverDelayTimer = self.recoverDelayTimer - self.dt
-    return
-  end
-
-  local offset_i = self.weapon.weaponOffset
   local offset_o = self.weapon.stance.weaponOffset or {0, 0}
 
   self.weapon.weaponOffset = {
-    interp.sin(storage.stanceProgress, offset_i[1], offset_o[1]),
-    interp.sin(storage.stanceProgress, offset_i[2], offset_o[2])
+    interp.sin(self.recoilOffsetProgress, -0.125, offset_o[1]),
+    interp.sin(self.recoilOffsetProgress, 0, offset_o[2])
   }
-  
-  -- update stance progress
-  storage.stanceProgress = math.min(1, storage.stanceProgress + self.dt / self.currentRecoverTime)
+  self.recoilOffsetProgress = math.min(1, self.recoilOffsetProgress + self.dt*8)
+
+  if self.recoverDelayTimer > 0 then
+    self.recoverDelayTimer = self.recoverDelayTimer - self.dt
+  else
+    self.weapon.recoilAmount = interp.sin(storage.stanceProgress, self.weapon.recoilAmount, 0)
+    storage.stanceProgress = math.min(1, storage.stanceProgress + self.dt / self.currentRecoverTime)
+  end
 
 end
 

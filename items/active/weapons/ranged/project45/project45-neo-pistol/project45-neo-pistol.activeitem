@@ -117,7 +117,7 @@
     "maxAmmo": 16,
     "bulletsPerReload": 16,
     "inaccuracy": 3,
-    "recoilAmount": 1,
+    "recoilAmount": 3,
     "recoilMaxDeg": 15,
     "recoverDelay": 0,
     "semi": true,
@@ -152,15 +152,17 @@
         "armRotation" : 45,
         "weaponRotation" : 0,
         "weaponAngularVelocity": 3600,
-        "twoHanded": false,
-        "lock": true
+        "frontArmFrame": "rotation",
+        "twoHanded": false
       },
       "reloaded" : {
-        "armRotation" : -90,
-        "weaponRotation" : 15,
+        "armRotation" : -15,
+        "weaponRotation" : 5,
+        "frontArmFrame": "rotation",
         "twoHanded" : false,
         "allowRotate" : false,
-        "allowFlip" : false
+        "allowFlip" : false,
+        "snap": true
       },
       "boltPull": {
         "twoHanded": false

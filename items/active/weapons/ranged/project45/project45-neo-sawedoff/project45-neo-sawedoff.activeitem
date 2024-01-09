@@ -173,7 +173,8 @@
         "frontArmFrame": "rotation",
         "backArmFrame": "rotation",
         "allowRotate": false,
-        "twoHanded": false
+        "twoHanded": false,
+        "snap": true
       },
       "boltPull": {
         "lite": true,

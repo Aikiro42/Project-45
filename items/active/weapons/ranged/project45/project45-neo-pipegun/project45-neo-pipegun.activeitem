@@ -144,6 +144,7 @@
     "projectileKind": "projectile",
     "reloadTime": 1,
     "spread": 5,
+    "postReloadDelay": 0.1,
 
     "manualFeed": true,
     "internalMag": true,
@@ -162,6 +163,32 @@
 
     "laser":{
       "enabled": false
+    },
+    
+    "stances": {
+      "empty": {
+        "armRotation" : 5,
+        "weaponRotation" : 5,
+        "twoHanded" : true,
+        "allowRotate" : false,
+        "allowFlip" : true,
+        "frontArmFrame" : "run.2",
+
+        // New Stance Parameters
+
+        "disabled": false,
+        /*
+        if true, stance isn't applied at all.
+        */
+
+        "snap": false
+        /*
+        if true, stance snaps immediately and doesn't smoothly transist from previous stance.
+        Certain stances always snap: the "unjam", "reloading" and "loadRound" stances.
+        Certain stances snap depending on certain conditions: "reloaded" snaps if "reloadOnEjectMag" is false.
+        */
+        
+      }
     }
   },
 

@@ -118,11 +118,11 @@
         "frontArmFrame" : "run.2"
       },
       "boltPull": {
-        "lite": true,
+        "armRotation": 0,
+        "weaponRotation": 0,
         "frontArmFrame" : "rotation"
       },
       "boltPush": {
-        "lock": true,
         "weaponRotation": -360,
         "armRotation": -30,
         "weaponAngularVelocity": 1800,
@@ -131,6 +131,7 @@
       
       "slamFire": {
         "frontArmFrame" : "run.2",
+        "twoHanded": true,
         "allowRotate": true,
         "allowFlip": true
       },

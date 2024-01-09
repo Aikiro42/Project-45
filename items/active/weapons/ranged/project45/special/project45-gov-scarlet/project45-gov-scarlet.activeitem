@@ -85,6 +85,9 @@
     "jamChances": [0, 0, 0, 0],
     "reloadRatingDamageMults": [0.1, 0.5, 1, 3],
     "inaccuracy": 2.5,
+
+    "disableRecoil": true,
+    
     "spread": 1,
     "maxAmmo": 20,
     "bulletsPerReload": 20,
@@ -99,23 +102,26 @@
     "stances": {
       
       "aimStance": {
-        "frontArmFrame" : "idle.4",
+        "frontArmFrame" : "jump.3",
         "backArmFrame" : "fall.1",
         "weaponRotation": 15,
         "lock": true,
         "allowRotate": false,
         "weaponOffset": [0, 0],
-        "aimAngle": 0
+        "aimAngle": 0,
+        "twoHanded": true,
+        "weaponRotationCenter": [-1.125, 0]
       },
       "empty": {
-        "frontArmFrame" : "idle.4",
+        "frontArmFrame" : "jump.3",
         "backArmFrame" : "fall.1",
         "weaponRotation": 15,
         "armRotation": 0,
         "lock": true,
         "allowRotate": false,
         "weaponOffset": [0, 0],
-        "aimAngle": 0
+        "aimAngle": 0,
+        "weaponRotationCenter": [-1.125, 0]
       },
       "ejectmag": {
         "frontArmFrame" : "idle.4",
@@ -162,12 +168,13 @@
         "weaponOffset": [-0.5, 0.5]
       },
       "firing": {
-        "frontArmFrame" : "idle.4",
+        "frontArmFrame" : "jump.3",
         "backArmFrame" : "swim.3",
         "weaponRotation": 30,
         "armRotation": 5,
         "lock": true,
         "allowRotate": false,
+        "twoHanded": true,
         "weaponRotationCenter": [-1.125, 0]
       }
 

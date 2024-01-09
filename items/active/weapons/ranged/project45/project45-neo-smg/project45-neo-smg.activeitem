@@ -87,10 +87,13 @@
 
     "semi": false,
     "burstCount": 1,
-    "inaccuracy": 1.5,
-    "recoilAmount": 0.5,
+    "inaccuracy": 1,
+    
+    "recoilAmount": 1,
     "recoilMaxDeg": 7.5,
-    // "recoverDelay": 0.05,
+    "recoverDelay": 0.5,
+    "recoverTime": 1,
+    
     "cycleTime": 0.005,
     "projectileKind": "projectile",
 

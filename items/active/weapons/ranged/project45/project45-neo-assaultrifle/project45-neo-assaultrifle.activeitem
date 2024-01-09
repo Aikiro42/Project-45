@@ -96,7 +96,7 @@
     "semi": true,
     "burstCount": 3,
     "spread": 1,
-    "inaccuracy": 2,
+    "inaccuracy": 1,
     "recoilAmount": 1,
     "recoilMaxDeg": 15,
     "recoverDelay": 0,

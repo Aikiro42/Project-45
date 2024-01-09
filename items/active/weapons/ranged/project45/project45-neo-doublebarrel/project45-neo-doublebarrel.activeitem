@@ -169,7 +169,8 @@
         "backArmFrame": "fall.1",
         "allowRotate": false,
         "weaponOffset": [-0.5, -0.5],
-        "twoHanded": true
+        "twoHanded": true,
+        "flip": true
       },
       "jammed" : {
         "weaponOffset": [-0.5, -0.75],

@@ -467,7 +467,8 @@
         "weaponRotation" : 5,
         "twoHanded" : true,
         "allowRotate" : false,
-        "allowFlip" : false
+        "allowFlip" : false,
+        "snap": true
       },
 
       // SNAP STANCES - These stances will be snapped to briefly
@@ -499,33 +500,12 @@
         if true, stance isn't applied at all.
         */
 
-        "snap": false,
+        "snap": false
         /*
         if true, stance snaps immediately and doesn't smoothly transist from previous stance.
         Certain stances always snap: the "unjam", "reloading" and "loadRound" stances.
         Certain stances snap depending on certain conditions: "reloaded" snaps if "reloadOnEjectMag" is false.
         */
-
-        "lite": false
-        /*
-        if true, does not use `self.weapon:setStance()`. Specifically:
-        - * Disallows self.weapon.stance to be set.
-        - Disallows rotations, angular velocities and the rotation center to be set.
-        - Disallows weapon offset to be set.
-        - Allows the front and back arm frames to be set.
-        - Allows sounds to be played
-        - Allows animation states to be set
-        - Allows particle emitters to burst
-        You can still specify animationStates, played sounds and bursted particle emitters.
-
-        * This weapon ability uses the stance saved on the weapon to allow for smooth interpolating
-        transitions between stances, thus necessitating a custom setStance() function. Despite that,
-        self.weapon:updateAim() is still used, so unexpected behavior can arise depending on how the stance
-        is designed.
-        Hence, creating a "lite" stance can allow correct recoil behavior, with some drawbacks:
-        see project45-neo-leveraction.
-        */
-
         
       },
 
