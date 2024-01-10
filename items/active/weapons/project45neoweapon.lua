@@ -1,21 +1,6 @@
 require "/scripts/util.lua"
 require "/scripts/interp.lua"
-
--- handles weapon stances, animations, and abilities
-Weapon = {}
-
-function Weapon:new(weaponConfig)
-  local newWeapon = weaponConfig or {}
-  newWeapon.damageLevelMultiplier = config.getParameter("damageLevelMultiplier", root.evalFunction("weaponDamageLevelMultiplier", config.getParameter("level", 1)))
-  newWeapon.elementalType = config.getParameter("elementalType")
-  newWeapon.muzzleOffset = config.getParameter("muzzleOffset") or {0,0}
-  newWeapon.aimOffset = config.getParameter("aimOffset") or (newWeapon.muzzleOffset[2] - 0.25) -- why is it off by 0.25? nobody knows!
-  newWeapon.abilities = {}
-  newWeapon.transformationGroups = {}
-  newWeapon.handGrip = config.getParameter("handGrip", "inside")
-  setmetatable(newWeapon, extend(self))
-  return newWeapon
-end
+require "/items/active/weapons/weapon.lua"
 
 function Weapon:init()
   self.attackTimer = 0
@@ -95,49 +80,6 @@ function Weapon:update(dt, fireMode, shiftHeld)
   self:clearDamageSources()
 end
 
-function Weapon:uninit()
-  for _,ability in pairs(self.abilities) do
-    if ability.uninit then
-      ability:uninit(true)
-    end
-  end
-end
-
-function Weapon:clearDamageSources()
-  if not self.damageWasSet and not self.damageCleared then
-    activeItem.setItemDamageSources({})
-    self.damageCleared = true
-  end
-
-  if not self.ownerDamageWasSet and not self.ownerDamageCleared then
-    activeItem.setDamageSources({})
-    self.ownerDamageCleared = true
-  end
-
-  self.damageWasSet = false
-  self.ownerDamageWasSet = false
-end
-
-function Weapon:setAbilityState(ability, state, ...)
-  self.currentAbility = ability
-  self.currentState = state
-  self.stateThread = coroutine.create(state)
-  local status, result = coroutine.resume(self.stateThread, ability, ...)
-  if not status then
-    error(result)
-  end
-end
-
-function Weapon:addAbility(newAbility)
-  newAbility.weapon = self
-  table.insert(self.abilities, newAbility)
-end
-
-function Weapon:addTransformationGroup(name, offset, rotation, rotationCenter)
-  self.transformationGroups = self.transformationGroups or {}
-  table.insert(self.transformationGroups, {name = name, offset = offset, rotation = rotation, rotationCenter = rotationCenter})
-end
-
 function Weapon:updateAim()
   for _,group in pairs(self.transformationGroups) do
     animator.resetTransformationGroup(group.name)
@@ -187,11 +129,7 @@ function Weapon:updateAim()
   activeItem.setBackArmFrame(self.stance.backArmFrame)
 end
 
-function Weapon:setOwnerDamage(damageConfig, damageArea, damageTimeout)
-  self.ownerDamageWasSet = true
-  self.ownerDamageCleared = false
-  activeItem.setDamageSources({ self:damageSource(damageConfig, damageArea, damageTimeout) })
-end
+function Weapon:setStance(stance)
 
 function Weapon:setOwnerDamageAreas(damageConfig, damageAreas, damageTimeout)
   self.ownerDamageWasSet = true
@@ -304,93 +242,4 @@ function Weapon:setStance(stance)
 
   self.stanceProgress = stance.snap and 1 or 0
 
-end
-
-function Weapon:isFrontHand()
-  return (activeItem.hand() == "primary") == (self.aimDirection < 0)
-end
-
-function Weapon:faceVector(vector)
-  return {vector[1] * self.aimDirection, vector[2]}
-end
-
--- Weapon abilities, state machines for weapon functionality
-
-WeaponAbility = {}
-
-function WeaponAbility:new(abilityConfig)
-  local newAbility = abilityConfig or {}
-  newAbility.stances = newAbility.stances or {}
-  setmetatable(newAbility, extend(self))
-  return newAbility
-end
-
-function WeaponAbility:update(dt, fireMode, shiftHeld)
-  self.dt, self.fireMode, self.shiftHeld = dt, fireMode, shiftHeld
-end
-
-function WeaponAbility:setState(state, ...)
-  self.weapon:setAbilityState(self, state, ...)
-end
-
-function getAbility(abilitySlot, abilityConfig)
-  for _, script in ipairs(abilityConfig.scripts) do
-    require(script)
-  end
-  local class = _ENV[abilityConfig.class]
-  abilityConfig.abilitySlot = abilitySlot
-  return class:new(abilityConfig)
-end
-
-function getPrimaryAbility()
-  local primaryAbilityConfig = config.getParameter("primaryAbility")
-  return getAbility("primary", primaryAbilityConfig)
-end
-
-function getAltAbility()
-  local altAbilityConfig = config.getParameter("altAbility")
-  if altAbilityConfig then
-    return getAbility("alt", altAbilityConfig)
-  end
-end
-
-function partDamageArea(partName, polyName)
-  return animator.partPoly(partName, polyName or "damageArea")
-end
-
-function damageRepeatGroup(mode)
-  mode = mode or ""
-  return activeItem.ownerEntityId() .. config.getParameter("itemName") .. activeItem.hand() .. mode
-end
-
-function knockbackMomentum(knockback, knockbackMode, aimAngle, aimDirection)
-  knockbackMode = knockbackMode or "aim"
-
-  if type(knockback) == "table" then
-    return knockback
-  end
-
-  if knockbackMode == "facing" then
-    return {aimDirection * knockback, 0}
-  elseif knockbackMode == "aim" then
-    local aimVector = vec2.rotate({knockback, 0}, aimAngle)
-    aimVector[1] = aimDirection * aimVector[1]
-    return aimVector
-  end
-  return knockback
-end
-
--- used for cross-hand communication while dual wielding
-function dwAimDirection()
-  if self and self.weapon then
-    return self.weapon.aimDirection
-  end
-end
-
-function dwDisallowFlip()
-  if self.weapon and self.weapon.stance then
-    return not self.weapon.stance.allowFlip
-  end
-
-  return false
 end
