@@ -3,7 +3,7 @@
   "price" : 1250,
   "maxStack" : 1,
   "rarity" : "Uncommon",
-  "description" : "Rip and tear until it's done.",
+  "description" : "Rip and tear... until it's done.",
   "shortdescription" : "Sawed-off Shotgun",
   "tooltipKind" : "project45gun",
   "gunArchetype": "shotgun",

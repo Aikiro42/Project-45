@@ -6,7 +6,7 @@
   "description" : "A zip gun that's particularly well-made.",
   "shortdescription" : "Pipe Gun",
   "tooltipKind" : "project45gun",
-  "gunArchetype": "pistol",
+  "gunArchetype": "antiMateriel",
   "category" : "pistol",
   "twoHanded" : true,
   "itemTags" : ["weapon","ranged","pistol"],
