@@ -131,66 +131,6 @@ end
 
 function Weapon:setStance(stance)
 
-function Weapon:setOwnerDamageAreas(damageConfig, damageAreas, damageTimeout)
-  self.ownerDamageWasSet = true
-  self.ownerDamageCleared = false
-  local damageSources = {}
-  for i, area in ipairs(damageAreas) do
-    table.insert(damageSources, self:damageSource(damageConfig, area, damageTimeout))
-  end
-  activeItem.setDamageSources(damageSources)
-end
-
-function Weapon:setDamage(damageConfig, damageArea, damageTimeout)
-  self.damageWasSet = true
-  self.damageCleared = false
-  activeItem.setItemDamageSources({ self:damageSource(damageConfig, damageArea, damageTimeout) })
-end
-
-function Weapon:setDamageAreas(damageConfig, damageAreas, damageTimeout)
-  self.damageWasSet = true
-  self.damageCleared = false
-  local damageSources = {}
-  for i, area in ipairs(damageAreas) do
-    table.insert(damageSources, self:damageSource(damageConfig, area, damageTimeout))
-  end
-  activeItem.setItemDamageSources(damageSources)
-end
-
-function Weapon:damageSource(damageConfig, damageArea, damageTimeout)
-  if damageArea then
-    local knockback = damageConfig.knockback
-    if knockback and damageConfig.knockbackDirectional ~= false then
-      knockback = knockbackMomentum(damageConfig.knockback, damageConfig.knockbackMode, self.aimAngle, self.aimDirection)
-    end
-    local damage = damageConfig.baseDamage * self.damageLevelMultiplier * activeItem.ownerPowerMultiplier()
-
-    local damageLine, damagePoly
-    if #damageArea == 2 then
-      damageLine = damageArea
-    else
-      damagePoly = damageArea
-    end
-
-    return {
-      poly = damagePoly,
-      line = damageLine,
-      damage = damage,
-      trackSourceEntity = damageConfig.trackSourceEntity,
-      sourceEntity = activeItem.ownerEntityId(),
-      team = activeItem.ownerTeam(),
-      damageSourceKind = damageConfig.damageSourceKind,
-      statusEffects = damageConfig.statusEffects,
-      knockback = knockback or 0,
-      rayCheck = true,
-      damageRepeatGroup = damageRepeatGroup(damageConfig.timeoutGroup),
-      damageRepeatTimeout = damageTimeout or damageConfig.timeout
-    }
-  end
-end
-
-function Weapon:setStance(stance)
-
   if stance.disabled then return end
   if self.stance == stance then return end
 
