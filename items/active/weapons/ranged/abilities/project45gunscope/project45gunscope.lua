@@ -192,13 +192,12 @@ function Project45GunFire:screenShake(amount, shakeTime, random)
   
   local source = mcontroller.position()
   local shake_dir = vec2.mul(self:aimVector(0), amount)
-  if random then vec2.rotate(shake_dir, 3.14 * math.random()) end
+  if random then
+    shake_dir = vec2.rotate(shake_dir, 3.14 * math.random())
+  end
 
   if storage.cameraProjectile and world.entityExists(storage.cameraProjectile) then
-    local source = world.entityPosition(storage.cameraProjectile)
-    sb.logInfo(sb.printJson(mcontroller.position()))
-    sb.logInfo(sb.printJson(source))
-    world.callScriptedEntity(storage.cameraProjectile, "jerk")
+    source = world.entityPosition(storage.cameraProjectile)
     self.screenShakeProjectile = world.spawnProjectile(
       "invisibleprojectile",
       vec2.add(source, shake_dir),
@@ -213,6 +212,7 @@ function Project45GunFire:screenShake(amount, shakeTime, random)
       }
     )
     activeItem.setCameraFocusEntity(self.screenShakeProjectile or storage.cameraProjectile)
+    world.callScriptedEntity(storage.cameraProjectile, "jerk")
   else
     local cam = world.spawnProjectile(
       "invisibleprojectile",
