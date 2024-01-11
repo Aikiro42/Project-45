@@ -246,7 +246,7 @@ function Project45GunFire:init()
   self.stances = self.stances or {}
   local finalAimStance = self.stances.aimStance or {}
   self.stances.aimStance = util.mergeTable(defaultAimStance, finalAimStance)
-
+  
   -- compatibility stances
   self.stances.idle = self.stances.aimStance
   self.stances.charge = self.stances.aimStance
@@ -254,21 +254,27 @@ function Project45GunFire:init()
   self.stances.cooldown = self.stances.aimStance
 
   self.recoverDelayTimer = 0
+    
+  local initStance = {
+    armRotation = -45,
+    snap = true
+  }
 
   if storage.jamAmount <= 0
   and storage.ammo >= 0
   then
-    -- self.weapon:setStance(self.stances.aimStance)
+    self.weapon:setStance(sb.jsonMerge(self.stances.aimStance, initStance))
     self.weapon:setStance(self.stances.aimStance)
   else
     if storage.jamAmount > 0 then
+      self.weapon:setStance(sb.jsonMerge(self.stances.jammed, initStance))
       self:setState(self.jammed)
     end
     if storage.ammo < 0 then
+      self.weapon:setStance(sb.jsonMerge(self.stances.empty, initStance))
       self.weapon:setStance(self.stances.empty)
     end
   end
-  self:recoil(true, 1, 45, 0) -- you're bringing the gun up
 
   self.debugModPositions = {}
   self.debugModPositions.base = config.getParameter("baseOffset", {0, 0})

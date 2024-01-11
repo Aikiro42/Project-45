@@ -134,8 +134,8 @@ function Weapon:setStance(stance)
   if stance.disabled then return end
   if self.stance == stance then return end
 
-  local snapWeapon = stance.snap or self.weaponAngularVelocity ~= 0
-  local snapArm = stance.snap or self.armAngularVelocity ~= 0
+  local snapWeapon = stance.snap or (self.weaponAngularVelocity and self.weaponAngularVelocity ~= 0)
+  local snapArm = stance.snap or (self.armAngularVelocity and self.armAngularVelocity ~= 0)
 
   self.newWeaponRotation = util.toRadians(stance.weaponRotation or 0)
   self.newArmRotation = util.toRadians(stance.armRotation or 0)
@@ -156,11 +156,13 @@ function Weapon:setStance(stance)
   if snapWeapon then
     self.oldWeaponRotation = self.newWeaponRotation
     self.baseWeaponRotation = self.newWeaponRotation
+    self.relativeWeaponRotation = self.baseWeaponRotation + self.recoilAmount/2
   end
 
   if snapArm then
     self.oldArmRotation = self.newArmRotation
-    self.baseArmRotation = self.newArmRotation    
+    self.baseArmRotation = self.newArmRotation
+    self.relativeArmRotation = self.baseArmRotation + self.recoilAmount/2
   end
 
   for stateType, state in pairs(stance.animationStates or {}) do
