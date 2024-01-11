@@ -161,10 +161,10 @@
     "breakAction": true,
     "slamFire": true,
 
-    "recoilAmount": 5, // amount of recoil per shot, in degrees; arm and weapon will rotate by half of this
-    // "recoilMaxDeg": 15, // the most the arm and weapon will rotate, in degrees.
+    "recoilAmount": 7, // amount of recoil per shot, in degrees; arm and weapon will rotate by half of this
+    "recoilMaxDeg": 15, // the most the arm and weapon will rotate, in degrees.
     "recoverDelay": 0.125,
-    "recoverTime": 1, // time it takes to recover aim completely, in seconds
+    "recoverTime": 2, // time it takes to recover aim completely, in seconds
 
     // "reloadTime": 10,
 
@@ -197,15 +197,6 @@
       },
       "empty": {
         "twoHanded": false
-      },
-      
-      // DELETEME:
-      "manualFeed": {
-        "armRotation" : 0,
-        "weaponRotation" : 1,
-        "twoHanded" : false,
-        "allowRotate" : false,
-        "allowFlip" : false
       },
 
       "reloading" : {

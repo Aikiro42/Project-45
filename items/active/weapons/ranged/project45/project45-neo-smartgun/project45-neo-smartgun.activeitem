@@ -109,9 +109,12 @@
     "bulletsPerReload": 40,
     "semi": false,
     "inaccuracy": 1.5,
+    "spread": 5,
+
     "recoilAmount": 1,
     "recoilMaxDeg": 7.5,
-    "recoverDelay": 0.05,
+    "recoverDelay": 0.125,
+    
     "cycleTime": 0.05,
     "jamChances": [0.5, 0.01, 0, 0],
     "screenShakeAmount": 0.1,

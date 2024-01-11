@@ -20,7 +20,7 @@ function Project45GunFire:init()
 
   self.performanceMode = status.statusProperty("project45_performanceMode", false) or self.performanceMode
   self.hideMuzzleSmoke = self.performanceMode or self.hideMuzzleSmoke
-  
+  self.startRecoil = 0
 
   self.recoilOffsetProgress = 1
 
@@ -169,7 +169,7 @@ function Project45GunFire:init()
 
   -- grab stored data
   self:loadGunState()
-  storage.stanceProgress = storage.stanceProgress or 0 -- stance progres is stored in storage so that other abilities may recoil the gun
+  storage.recoilProgress = storage.recoilProgress or 0 -- stance progress is stored in storage so that other abilities may recoil the gun
   self.reloadRatingDamage = self.reloadRatingDamageMults[storage.reloadRating]
 
   -- initialize timers
@@ -1176,7 +1176,8 @@ function Project45GunFire:recoil(down, mult, amount, recoverDelay)
   end
   self.weapon.recoilAmount = self.weapon.recoilAmount + inaccuracy
   -- recover delay (no recover delay by default)
-  storage.stanceProgress = 0
+  self.startRecoil = self.weapon.recoilAmount
+  storage.recoilProgress = 0
   self.recoilOffsetProgress = 0
   self.recoverDelayTimer = (recoverDelay or self.recoverDelay or self.fireTime or 0) * self.recoverMult
 end
@@ -1556,8 +1557,8 @@ function Project45GunFire:updateRecoil()
   if self.recoverDelayTimer > 0 then
     self.recoverDelayTimer = self.recoverDelayTimer - self.dt
   else
-    self.weapon.recoilAmount = interp.sin(storage.stanceProgress, self.weapon.recoilAmount, 0)
-    storage.stanceProgress = math.min(1, storage.stanceProgress + self.dt / self.currentRecoverTime)
+    self.weapon.recoilAmount = interp.sin(storage.recoilProgress, self.startRecoil, 0)
+    storage.recoilProgress = math.min(1, storage.recoilProgress + self.dt / self.currentRecoverTime)
   end
 
 end

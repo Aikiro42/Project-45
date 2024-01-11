@@ -128,7 +128,7 @@ function Project45GrenadeLauncher:recoil(down)
     self.weapon.relativeArmRotation = math.min(self.weapon.relativeArmRotation, util.toRadians(15 / 2)) + util.toRadians(7.5 * mult)
     self.weapon.weaponOffset = {-0.125, 0}
     self.weapon.relativeArmRotation = self.weapon.relativeArmRotation + util.toRadians(sb.nrand(1, 0) * 7.5)
-    storage.stanceProgress = 0  
+    storage.recoilProgress = 0  
     storage.aimProgress = 0
 end
 

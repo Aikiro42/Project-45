@@ -89,9 +89,9 @@
     "burstCount": 1,
     "inaccuracy": 1,
     
-    "recoilAmount": 1,
+    "recoilAmount": 0.5,
     "recoilMaxDeg": 7.5,
-    "recoverDelay": 0.5,
+    "recoverDelay": 0.125,
     "recoverTime": 1,
     
     "cycleTime": 0.005,

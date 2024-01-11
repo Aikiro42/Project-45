@@ -121,9 +121,9 @@
     "cycleTime": 0.1,
     "cockTime": 0.2,
     "projectileKind": "hitscan",
-    "projectileCount": 4,
+    "projectileCount": 6,
     "reloadTime": 0.5,
-    "spread": 5,
+    "spread": 3,
 
     /*
     "breakAction": true,
