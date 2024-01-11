@@ -135,9 +135,11 @@
   
     "stances":{
       "reloading": {
-        "armRotation": -5,
-        "weaponRotation": 0,
-        "frontArmFrame": "swim.3",
+        "armRotation" : -15,
+        "weaponRotation" : 30,
+        "frontArmFrame": "run.3",
+        "backArmFrame": "idle.1",
+        "weaponOffset": [-1, 0],
         "twoHanded": true
       },
       "loadRound": {
@@ -145,10 +147,30 @@
         "weaponRotation": -1,
         "frontArmFrame": "rotation"
       },
+      "boltPush": {
+        "armRotation" : 5,
+        "weaponRotation" : 0,
+        "twoHanded" : true,
+        "allowRotate" : false,
+        "allowFlip" : true,
+        "frontArmFrame" : "swim.3"
+      },
       "reloaded": {
-        "armRotation": -5,
-        "weaponRotation": -5,
-        "frontArmFrame": "rotation"
+        "armRotation" : -15,
+        "weaponRotation" : 30,
+        "frontArmFrame": "run.3",
+        "backArmFrame": "rotation",
+        "weaponOffset": [-1, 0]
+      },
+      "empty" : {
+        "armRotation" : -15,
+        "weaponRotation" : 30,
+        "twoHanded" : true,
+        "allowRotate" : false,
+        "aimAngle": 0,
+        "allowFlip" : true,
+        "frontArmFrame": "run.3",
+        "weaponOffset": [-1, 0]
       }
     }
   },

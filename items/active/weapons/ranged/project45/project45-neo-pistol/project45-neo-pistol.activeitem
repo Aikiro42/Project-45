@@ -162,7 +162,7 @@
         "twoHanded" : false,
         "allowRotate" : false,
         "allowFlip" : false
-        // ,"snap": true
+        ,"snap": true
       },
       "boltPull": {
         "twoHanded": false

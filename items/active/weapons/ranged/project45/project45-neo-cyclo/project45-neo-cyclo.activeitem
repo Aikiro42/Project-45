@@ -120,17 +120,16 @@
         "weaponRotation" : 0,
         "weaponAngularVelocity": 3600,
         "twoHanded": false,
-        "lock": true
-        // "weaponOffset" : [0.25, 0.575],
-        // "frontArmFrame" : "run.2",
-        // "backArmFrame" : "jump.3"
+        "frontArmFrame" : "rotation"
       },
       "reloaded" : {
-        "armRotation" : -90,
-        "weaponRotation" : 15,
+        "armRotation" : -45,
+        "weaponRotation" : 0,
         "twoHanded" : false,
         "allowRotate" : false,
-        "allowFlip" : false
+        "allowFlip" : false,
+        "frontArmFrame" : "rotation",
+        "snap": true
       },
       "boltPull": {
         "twoHanded": false

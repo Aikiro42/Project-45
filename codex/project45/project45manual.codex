@@ -56,14 +56,12 @@ Some weapons require to be charged before being able to fire them, and some cont
 
 The charge level of the weapon is indicated below the chamber indicator:
 
-- The ^#838383;gray^reset; zone is the charging region. The weapon ^#D93A3A;cannot fire*^reset; while the charge level is within this region.
+- If the bar is ^#838383;gray^reset;, the weapon is charging and ^#D93A3A;cannot be triggered to fire^reset.
 ",
 "# ^#E2C344;Charged Weapons^reset;
-- The ^#D93A3A;red^reset; zone is the ^#96cbe7;overcharge region^reset;. Projectiles fired by the weapon while the charge level is in this ^#96cbe7;deals up to 2x bonus damage^reset;. 
+- If the bar is ^#E2C344;yellow^reset; turning ^#D93A3A;red^reset;, the weapon is ^#96cbe7;overcharging^reset;. Projectiles fired by the weapon while the charge level is in this ^#96cbe7;deals up to 2x bonus damage^reset; at ^#D93A3A;full overcharge^reset;.
 
-- The white zone is the ^#E2C344;perfect charge region^reset;. Projectiles fired by the weapon while the charge level is in this region ^#E2C344;deals at least 2x bonus damage^reset;.
-
-^#838383;* except for some weapons, like the Cyclo.^reset;
+- If the bar is lit up, the charge is ^#E2C344;perfect^reset;; Projectiles fired by the weapon during perfect charge ^#E2C344;deals at least 2x bonus damage^reset;.
 "
 ,
 "# ^#E2C344;Misc Stats^reset;
