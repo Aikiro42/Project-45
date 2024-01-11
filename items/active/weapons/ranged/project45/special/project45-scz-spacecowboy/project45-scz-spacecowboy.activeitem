@@ -73,7 +73,8 @@
       "boltPull": ["/sfx/project45neosfx/special/spacecowboy/spacecowboy_boltpull.ogg"],
       "boltPush": ["/sfx/project45neosfx/special/spacecowboy/spacecowboy_boltpush.ogg"],
   
-      "fire" : ["/sfx/project45neosfx/special/spacecowboy/spacecowboy_fire.ogg"]
+      "fire" : ["/sfx/project45neosfx/special/spacecowboy/spacecowboy_fire.ogg"],
+      "firstFire" : ["/sfx/project45neosfx/fire/fire-sniper2.ogg"]  
     }
   },
 
@@ -86,6 +87,8 @@
     
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
+    "passiveDescription": "On Perfect Reload: First shot deals 2x damage.",
+    "passiveScript": "/items/active/weapons/ranged/project45/special/project45-scz-spacecowboy/spacecowboypassive.lua",
 
     "baseDamage": 50,
     "critChance": 0.25,

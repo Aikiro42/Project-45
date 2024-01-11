@@ -11,6 +11,11 @@
     "scripts" : ["/items/active/weapons/ranged/abilities/project45gunfire/project45gunfire.lua"],
     "class" : "Project45GunFire",
 
+    /*
+    Passive Script, if you want additional effects to your weapon
+    */
+    // "passiveScript": "/items/active/weapons/ranged/abilities/project45gunfire/samplepassive.lua",
+
     // ____________________________________[ SECTION: Stat Config ]____________________________________
 
     "baseDamage": 5,
@@ -18,8 +23,6 @@
     "reloadTime": 1,   // 80% actual reload time, 20% cocking time
     "critChance": 0.1,
     "critDamageMult": 1.5,
-
-    "lastShotDamageMult": 1,
 
     // ____________________________________[ SECTION: Misc Config ]____________________________________
 

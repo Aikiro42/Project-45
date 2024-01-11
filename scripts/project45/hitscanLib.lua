@@ -468,11 +468,21 @@ function hitscanLib:updateSummonAreaIndicator()
     return
   end
   activeItem.setScriptedAnimationParameter("primaryLaserEnabled", not self.performanceMode)
-  activeItem.setScriptedAnimationParameter("primarySummonArea", project45util.circle(
-    math.tan(util.toRadians((self.currentInaccuracy or 7.5) + (self.spread or 0.01))) * world.magnitude(activeItem.ownerAimPosition(), mcontroller.position())
-  ))
+  activeItem.setScriptedAnimationParameter("primarySummonArea", self:summonArea())
   activeItem.setScriptedAnimationParameter("muzzleObstructed", self:muzzleObstructed())
 end
+
+function hitscanLib:summonArea()
+  return project45util.circle(math.tan(util.toRadians((self.currentInaccuracy or 7.5) + (self.spread or 0.01))) * world.magnitude(activeItem.ownerAimPosition(), mcontroller.position()))
+end
+
+--[[
+function hitscanLib:summonAreaObstructed()
+  local x = world.polyCollision(self:summonArea())
+  sb.logInfo(sb.printJson(x))
+  return x
+end
+--]]
 
 function hitscanLib:summonPosition()
   local randRotate = math.random() * math.pi * 2

@@ -301,7 +301,6 @@ function build(directory, config, parameters, level, seed)
       -- high damage = base damage * best reload damage * last shot damage mult * overcharge mult
       local hiDamage = baseDamage
         * math.max(table.unpack(primaryAbility("reloadRatingDamageMults", {0,0,0,0})))
-        * primaryAbility("lastShotDamageMult", 1)
         * (primaryAbility("overchargeTime", 0) > 0 and (primaryAbility("perfectChargeDamageMult") or 2) or 1)
       
 
@@ -375,6 +374,13 @@ function build(directory, config, parameters, level, seed)
 
       local descriptionScore = 0
 
+      local passiveDesc = ""
+      if primaryAbility("passiveDescription") then
+        passiveDesc = primaryAbility("passiveDescription")
+        descriptionScore = descriptionScore + math.ceil((#passiveDesc)/18)
+        passiveDesc = project45util.colorText("#ffd495", passiveDesc) .. "\n"
+      end
+
       local heavyDesc = ""
       if primaryAbility("heavyWeapon", false) then
         descriptionScore = descriptionScore + 1
@@ -412,7 +418,7 @@ function build(directory, config, parameters, level, seed)
         end
       end
 
-      local finalDescription = heavyDesc .. chargeDesc .. overchargeDesc .. multishotDesc .. modListDesc -- .. config.description
+      local finalDescription = passiveDesc .. heavyDesc .. chargeDesc .. overchargeDesc .. multishotDesc .. modListDesc -- .. config.description
       finalDescription = finalDescription == "" and project45util.colorText("#777777", "No notable qualities.") or finalDescription
       
       descriptionScore = descriptionScore + math.ceil((#config.description)/18)

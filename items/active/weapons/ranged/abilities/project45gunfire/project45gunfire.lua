@@ -12,8 +12,33 @@ local BAD, OK, GOOD, PERFECT = 1, 2, 3, 4
 local reloadRatingList = {"BAD", "OK", "GOOD", "PERFECT"}
 
 Project45GunFire = WeaponAbility:new()
+Passive = {}
 
 function Project45GunFire:init()
+
+  if self.passiveScript then
+    require(self.passiveScript)
+  end
+
+  for _, f in ipairs({
+    "init",
+    "update",
+    "onFire",
+    "onEject",
+    "onFeed",
+    "onJam",
+    "onUnjam",
+    "onFullUnjam",
+    "onEjectMag",
+    "onReloadStart",
+    "onLoadRound",
+    "onReloadEnd",
+    "onCrit"
+  }) do
+    self[f .. "Passive"] = Passive[f] or function(...) end
+  end
+
+  self:initPassive()
 
   -- INITIALIZATIONS
   self.isFiring = false
@@ -321,6 +346,7 @@ end
 function Project45GunFire:update(dt, fireMode, shiftHeld)
 
   WeaponAbility.update(self, dt, fireMode, shiftHeld)
+  self:updatePassive(dt, fireMode, shiftHeld)
 
   -- update timers
   self.cooldownTimer = math.max(0, self.cooldownTimer - self.dt)
@@ -459,6 +485,9 @@ function Project45GunFire:firing()
   self.triggered = self.semi or storage.ammo == 0
 
   if self:jam() then return end
+
+  self:onFirePassive()
+
   -- don't fire when muzzle collides with terrain
   -- if not self.projectileParameters.hitscanIgnoresTerrain and world.lineTileCollision(mcontroller.position(), self:firePosition()) then
   if self:muzzleObstructed() then
@@ -563,6 +592,7 @@ end
 
 function Project45GunFire:ejecting()
 
+  self:onEjectPassive()
 
   if not self.ejectCasingsWithMag
   and self.ejectBeforeAnimation
@@ -640,6 +670,9 @@ function Project45GunFire:ejecting()
 end
 
 function Project45GunFire:feeding()
+
+  self:onFeedPassive()
+
   if (self.manualFeed                              -- if gun is cocked every shot
   and storage.burstCounter >= self.burstCount        -- and the gun is done bursting
   or self.reloadTimer >= 0)                         -- or the gun was just reloaded/is cocking
@@ -719,6 +752,8 @@ function Project45GunFire:feeding()
 end
 
 function Project45GunFire:reloading()
+
+  self:onReloadStartPassive()
 
   -- abort reload and click if energy is locked i.e. regenerating
   if status.resourceLocked("energy") then
@@ -807,6 +842,7 @@ function Project45GunFire:reloading()
       
       -- update ammo
       if self.bulletsPerReload < self.maxAmmo then
+        self:onLoadRoundPassive()
         self.weapon:setStance(self.stances.loadRound)  -- player visually loads round
       end
       local reloadedBullets = storage.ammo -- prevents energy overconsumption when reloaded bullets is greater than max ammo
@@ -844,6 +880,7 @@ function Project45GunFire:reloading()
   
   -- if there hasn't been any input, just load round
   if storage.ammo < self.maxAmmo and not energyDepletedFlag then
+    self:onLoadRoundPassive()
     sumRating = sumRating + 0.5 -- OK: 0.5
     reloads = reloads + 1 -- we did a reload
     animator.playSound("loadRound")
@@ -858,6 +895,8 @@ function Project45GunFire:reloading()
     status.overConsumeResource("energy", self.reloadCost * (reloadedBullets / self.maxAmmo))
   end
   
+  self:onReloadEndPassive()
+
   -- begin final reload evaluation
   --                     MAX AVERAGE
   -- |  BAD  |  OK  |  GOOD  ||  PERFECT  >
@@ -933,10 +972,12 @@ function Project45GunFire:unjamming()
   self.weapon:setStance(self.stances.unjam)
   util.wait(self.cockTime/4)
   self.weapon:setStance(self.stances.jammed)
+  self:onUnjamPassive()
 
   self:updateJamAmount(math.random() * -1)
   if storage.jamAmount <= 0 then
     -- animator.playSound("click")
+    self:onFullUnjamPassive()
     storage.reloadRating = OK
     activeItem.setScriptedAnimationParameter("reloadRating", reloadRatingList[OK])
     self.reloadTimer = self.reloadTime
@@ -952,6 +993,7 @@ end
 -- Returns true if the weapon successfully jammed.
 function Project45GunFire:jam()
   if project45util.diceroll(self.jamChances[storage.reloadRating]) then
+    self:onJamPassive()
 
     self:stopFireLoop()
     animator.playSound("jam")
@@ -1206,6 +1248,8 @@ end
 -- Ejects mag
 -- can immediately begin reloading minigame
 function Project45GunFire:ejectMag()
+
+  self:onEjectMagPassive()
 
   self.triggered = true
   storage.burstCounter = 0
@@ -1653,6 +1697,7 @@ function Project45GunFire:evalProjectileKind()
     activeItem.setScriptedAnimationParameter("beamColor", self.muzzleFlashColor)
   elseif self.projectileKind == "summoned" then
     
+    self.summonArea = hitscanLib.summonArea
     self.muzzlePosition = self.firePosition
     self.firePosition = hitscanLib.summonPosition
     GunFire.firePosition = hitscanLib.summonPosition
@@ -1666,7 +1711,7 @@ function Project45GunFire:evalProjectileKind()
       elseif self.summonedProjectileParameters.summonAnywhere then
         return world.pointTileCollision(activeItem.ownerAimPosition())
       end
-      return world.lineTileCollision(mcontroller.position(), activeItem.ownerAimPosition())      
+      return world.lineTileCollision(mcontroller.position(), activeItem.ownerAimPosition())
     end
   end
 
@@ -1714,6 +1759,7 @@ function Project45GunFire:crit()
 
   if project45util.diceroll(storage.currentCritChance - critTier, "Crit: ") then
     self.critFlag = true
+    self:onCritPassive()
     return math.max(1, baseCritDamageMult + (critTier > 0 and 1 or self.critDamageMult))
   else
     self.critFlag = critTier > 0
@@ -1725,14 +1771,13 @@ end
 function Project45GunFire:damagePerShot(noDLM)
 
   local critDmg = self:crit()
-  local lastShotDmg = (storage.ammo <= (self.ammoPerShot or 1) and self.lastShotDamageMult or 1)
   
   return self.baseDamage
   * (noDLM and 1 or config.getParameter("damageLevelMultiplier", 1))
   * self.chargeDamage -- up to 2x at full overcharge
   * self.reloadRatingDamage -- as low as 0.8 (bad), as high as 1.5 (perfect)
   * critDmg -- this way, rounds deal crit damage individually
-  * lastShotDmg
+  * (self.passiveDamageMult or 1) -- provides a way for passives to modify damage
   / self.projectileCount
 end
 
