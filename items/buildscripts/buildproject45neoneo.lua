@@ -323,7 +323,7 @@ function build(directory, config, parameters, level, seed)
       ]]--
       
       local actualCycleTime = primaryAbility("manualFeed", false)
-        and primaryAbility("cockTime", 0.1)
+        and primaryAbility("cockTime", 0.1) + primaryAbility("midCockDelay", 0)
         or primaryAbility("cycleTime", 0.1)
 
       local chargeTime = primaryAbility("chargeTime", 0)
