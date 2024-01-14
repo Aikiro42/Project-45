@@ -377,6 +377,7 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
   self.currentRecoverTime = self.recoverTime[movementState] * self.recoverMult
   activeItem.setCursor("/cursors/project45-neo-cursor-" .. movementState .. ".cursor")
 
+  -- manual reload
   if storage.reloadSignal then
     storage.reloadSignal = false
     if storage.ammo >= 0 and not self.triggered then
@@ -458,7 +459,7 @@ end
 
 -- SECTION: STATE FUNCTIONS
 
-function Project45GunFire:charging()
+function Project45GunFire:charging() -- state
   while self:triggering() do
 
     if (self.fireBeforeOvercharge and self.chargeTimer >= self.chargeTime)
@@ -476,17 +477,15 @@ function Project45GunFire:charging()
 
 end
 
-function Project45GunFire:jammed()
+function Project45GunFire:jammed() -- state
   self.weapon:setStance(self.stances.jammed)
 end
 
-function Project45GunFire:firing()
+function Project45GunFire:firing() -- state
   
   self.triggered = self.semi or storage.ammo == 0
 
   if self:jam() then return end
-
-  self:onFirePassive()
 
   -- don't fire when muzzle collides with terrain
   -- if not self.projectileParameters.hitscanIgnoresTerrain and world.lineTileCollision(mcontroller.position(), self:firePosition()) then
@@ -499,8 +498,9 @@ function Project45GunFire:firing()
     self:postFiringTransitionHandler()
     return
   end
-  
 
+  self:onFirePassive()
+  
   self.isFiring = true
   animator.setAnimationState("gun", self.loopFiringAnimation and "firingLoop" or "firing")
 
