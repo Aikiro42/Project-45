@@ -8,7 +8,7 @@
   "ability" : {
     "name" : "Reload",
     "type" : "project45gunfire",
-    "scripts" : ["/items/active/weapons/ranged/abilities/project45gunfire/project45gunfire.lua"],
+    "scripts" : ["/items/active/weapons/ranged/abilities/project45gunfire/project45gunfire2.lua"],
     "class" : "Project45GunFire",
 
     /*
