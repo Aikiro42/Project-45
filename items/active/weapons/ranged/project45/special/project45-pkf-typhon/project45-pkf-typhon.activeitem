@@ -227,9 +227,14 @@
     "chargeFrames": 1,
     "overchargeTime": 3,
     "dischargeTimeMult": 1,
-    "inaccuracy": 2.5, // affects arm movement as the trigger is pulled
+    "inaccuracy": 1, // affects arm movement as the trigger is pulled
     "maxAmmo": 100,
     "bulletsPerReload": 100,
+    
+    "recoilAmount": 2,
+    "recoilMaxDeg": 15,
+    "recoverDelay": 0,
+    "recoverTime": 0.8,
     // "chargeSmoke": false,
     "projectileCount": 1,
     "spread": 1,

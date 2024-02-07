@@ -14,6 +14,7 @@ function Project45GunScope:init()
   self.lockReticleTime = self.lockReticleTime or 0.2
   self.aimedCritChance = (storage.baseCritChance or 0) + (self.critChanceBonus or 0.5)
   self.screenShakeProjectile = nil
+  Project45GunFire.scopeScreenShakeMult = self.scopeScreenShakeMult
 end
 
 function Project45GunScope:update(dt, fireMode, shiftHeld)
@@ -190,30 +191,19 @@ function Project45GunFire:screenShake(amount, shakeTime, random)
   local amount = amount or self.currentScreenShake or 0.1
   if amount == 0 then return end
   
-  local source = mcontroller.position()
-  local shake_dir = vec2.mul(self:aimVector(0), amount)
-  if random then
-    shake_dir = vec2.rotate(shake_dir, 3.14 * math.random())
-  end
-
   if storage.cameraProjectile and world.entityExists(storage.cameraProjectile) then
-    source = world.entityPosition(storage.cameraProjectile)
-    self.screenShakeProjectile = world.spawnProjectile(
-      "invisibleprojectile",
-      vec2.add(source, shake_dir),
-      0,
-      {0, 0},
-      false,
-      {
-        power = 0,
-        -- timeToLive = math.max(0.125, amount or 0.125),
-        timeToLive = self.dt*8,
-        damageType = "NoDamage"
-      }
-    )
-    activeItem.setCameraFocusEntity(self.screenShakeProjectile or storage.cameraProjectile)
-    world.callScriptedEntity(storage.cameraProjectile, "jerk")
+  
+    sb.logInfo(self.scopeScreenShakeMult)
+    world.callScriptedEntity(storage.cameraProjectile, "jerk", amount * (self.scopeScreenShakeMult or 1))
+  
   else
+
+    local source = mcontroller.position()
+    local shake_dir = vec2.mul(self:aimVector(0), amount)
+    if random then
+      shake_dir = vec2.rotate(shake_dir, 3.14 * math.random())
+    end
+  
     local cam = world.spawnProjectile(
       "invisibleprojectile",
       vec2.add(source, shake_dir),

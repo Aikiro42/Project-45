@@ -152,16 +152,21 @@
     "baseDamage": 10,
     "maxAmmo": 100,
     "bulletsPerReload": 100,
-    "inaccuracy": 3,
+    "inaccuracy": 1,
     "semi": false,
     "manualFeed": false,
     "slamFire": false,
     "heavyWeapon": true,
-    
     "resetChargeOnFire": false,
     "chargeWhenObstructed": true,
     "maintainChargeOnEmpty": true,
-
+    
+    "recoilUpOnly": true,
+    "recoilMaxDeg": 30,
+    "recoilAmount": 0.25,
+    "recoverDelay": 0.25,
+    "recoverTime": 1.5,
+    
     "progressiveCharge": false,
     "cycleTime": [0.1, 0.001],
     "chargeFrames": 2,

@@ -63,9 +63,9 @@ function lerpToSource(source, progress)
     end
 end
 
-function jerk()
+function jerk(amount)
     local source = mcontroller.position()
-    local shake_dir = vec2.mul({0, 1}, -0.5)
+    local shake_dir = vec2.mul({0, 1}, -(amount or 0.5))
     shake_dir = vec2.rotate(shake_dir, 3.14 * sb.nrand(0.5 , 0.5))
     local newPos = vec2.add(source, shake_dir)
     mcontroller.setPosition(newPos)  

@@ -93,11 +93,11 @@
     "maxAmmo": 12,
     "bulletsPerReload": 12,
     "semi": false,
-    "inaccuracy": 2,
+    "inaccuracy": 1.5,
 
     "forceBoltPullWhenCocking": true,
 
-    "recoilAmount": 3,
+    "recoilAmount": 2,
     "recoilMaxDeg": 15,
     
     "recoverDelay": 0.125,
