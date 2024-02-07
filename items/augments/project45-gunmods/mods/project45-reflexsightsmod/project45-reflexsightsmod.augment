@@ -28,7 +28,7 @@
           "width": 0.1
         }
       },
-      "Inaccuracy": {
+      "inaccuracy": {
         "operation": "multiply",
         "value": 0.25
       },

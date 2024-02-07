@@ -116,16 +116,19 @@
     "reloadCost": 25,
     "maxAmmo": 16,
     "bulletsPerReload": 16,
-    "inaccuracy": 3,
+    "inaccuracy": [0.75, 1.5, 3, 4],
+    
     "recoilAmount": 3,
     "recoilMaxDeg": 15,
     "recoverDelay": 0,
+    "recoverTime": 0.65,
+    
     "semi": true,
     "cycleTime": 0.1,
     "projectileKind": "projectile",
 
     // "reloadTime": 10,
-
+    
     "laser":{
       "enabled": false
     },

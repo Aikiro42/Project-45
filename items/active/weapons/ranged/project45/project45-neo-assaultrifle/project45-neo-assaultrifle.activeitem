@@ -95,11 +95,14 @@
     "bulletsPerReload": 30,
     "semi": true,
     "burstCount": 3,
-    "spread": 1,
-    "inaccuracy": 1,
-    "recoilAmount": 1,
+    "spread": 0.5,
+    "inaccuracy": 0.5,
+    
+    "recoilAmount": 0.5,
     "recoilMaxDeg": 15,
-    "recoverDelay": 0,
+    "recoverDelay": 0.125,
+    "recoverTime": 1,
+    
     "cycleTime": 0.05,
     "fireTime": 0.25,
     "projectileKind": "projectile",

@@ -104,6 +104,6 @@ function Project45FlashLaser:aimVector()
   world.debugPoint(firePos, "cyan")
   world.debugPoint(basePos, "cyan")
   local aimVector = vec2.norm(world.distance(firePos, basePos))
-  aimVector = vec2.rotate(aimVector, sb.nrand((inaccuracy or 0), 0))
+  aimVector = vec2.rotate(aimVector, 0)
   return aimVector
 end

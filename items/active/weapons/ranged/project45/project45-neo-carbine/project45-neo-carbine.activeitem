@@ -39,7 +39,7 @@
 
     "sounds": {
       "fire" : [
-        "/sfx/project45neosfx/fire/fire-smg1.ogg"
+        "/sfx/project45neosfx/fire/fire-pistol1.ogg"
       ],
       "boltPull": [
         "/sfx/project45neosfx/boltpull/boltpull-rifle1.ogg"
@@ -113,9 +113,11 @@
     "semi": false,
     "burstCount": 1,
     "inaccuracy": 1,
-    "recoilAmount": 0.5,
-    "recoilMaxDeg": 5,
+
+    "recoilAmount": 1,
+    "recoilMaxDeg": 7.5,
     "recoverDelay": 0.05,
+    
     "cycleTime": 0.1,
     "projectileKind": "projectile",
     "laser":{

@@ -157,7 +157,7 @@
 
     "recoilAmount": 15, // amount of recoil per shot, in degrees; arm and weapon will rotate by half of this
     "recoilMaxDeg": 45, // the most the arm and weapon will rotate, in degrees.
-    "recoverTime": 5, // time it takes to recover aim completely, in seconds
+    "recoverTime": 1, // time it takes to recover aim completely, in seconds
 
     // "reloadTime": 10,
 

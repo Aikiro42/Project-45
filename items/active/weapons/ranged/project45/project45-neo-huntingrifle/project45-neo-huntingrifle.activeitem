@@ -61,9 +61,10 @@
 
     "sounds": {
       "ejectMag": [ "/sfx/project45neosfx/ejectcasing/ejectcasing-brass1.ogg" ],
-      "boltPull" : ["/sfx/project45neosfx/boltpull/boltpull-boltaction1.ogg"],
-      "boltPush" : ["/sfx/project45neosfx/boltpush/boltpush-boltaction1.ogg"],
-      "fire" : ["/sfx/project45neosfx/fire/fire-rifle2.ogg"]
+      "boltPull" : ["/sfx/project45neosfx/boltpull/boltpull-boltaction4.ogg"],
+      "boltPush" : ["/sfx/project45neosfx/boltpush/boltpush-boltaction4.ogg"],
+      "loadRound" : ["/sfx/project45neosfx/loadround/loadround-rifle2.ogg"],
+      "fire" : ["/sfx/project45neosfx/fire/fire-rifle4.ogg"]
     }
   },
 
@@ -91,10 +92,13 @@
     "baseDamage": 15.5,
     "maxAmmo": 10,
     "bulletsPerReload": 5,
-    "inaccuracy": 10,
+    "inaccuracy": 3,
+    
     "recoilAmount": 3,
     "recoilMaxDeg": 20,
     "recoverDelay": 0.05,
+    "recoverTime": 1,
+
     "semi": true,
     "cycleTime": 0.1,
     "cockTime": 0.4,

@@ -95,7 +95,7 @@
     "baseDamage": 20,
     "maxAmmo": 6,
     "bulletsPerReload": 1,
-    "inaccuracy": 4,
+    "inaccuracy": [1, 2, 4, 4],
     "spread": 1,
     "semi": true,
     "cycleTime": 0.2,
@@ -103,8 +103,12 @@
     "projectileKind": "projectile",
     "projectileCount": 5,
     "multishot": 1.2,
-    "recoilAmount": 6,
-    "maxRecoilDeg": 30,
+    
+    "recoilAmount": 3,
+    "maxRecoilDeg": 15,
+    "recoverDelay": 0.125,
+    "recoverTime": 0.8,
+
     "manualFeed": true,
     "internalMag": true,
     "ejectMagOnEmpty": "firing",
@@ -127,11 +131,15 @@
       },
       "boltPull": {
         "lite": true,
+        "armRotation": 0,
+        "weaponRotation": 0,
         "frontArmFrame": "run.3",
         "backArmFrame": "jump.2"
       },
       "boltPush": {
         "lite": true,
+        "armRotation": 0,
+        "weaponRotation": 0,
         "frontArmFrame": "run.3",
         "backArmFrame": "fall.1"
       },

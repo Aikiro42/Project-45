@@ -101,10 +101,10 @@
     "projectileKind": "projectile",
     "multishot": 1.2,
 
-    "recoilAmount": 5,
-    "recoilMaxDeg": 90,
-    "recoverDelay": 0.1,
-    "recoverTime": 2,
+    "recoilAmount": 3,
+    "recoilMaxDeg": 15,
+    "recoverDelay": 0.125,
+    "recoverTime": 0.7,
     
     "manualFeed": true,
     "internalMag": true,

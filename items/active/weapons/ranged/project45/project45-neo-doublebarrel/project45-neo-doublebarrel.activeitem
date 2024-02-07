@@ -109,7 +109,7 @@
     "baseDamage": 27,
     "maxAmmo": 2,
     "bulletsPerReload": 1,
-    "inaccuracy": 3,
+    "inaccuracy": [1, 2, 3, 4],
     "semi": true,
     "cycleTime": 0.1,
     "cockTime": 0.5,
@@ -127,7 +127,7 @@
     "recoilAmount": 7.5, // amount of recoil per shot, in degrees; arm and weapon will rotate by half of this
     "recoilMaxDeg": 15, // the most the arm and weapon will rotate, in degrees.
     "recoverDelay": 0.125,
-    "recoverTime": 2, // time it takes to recover aim completely, in seconds
+    "recoverTime": 0.8, // time it takes to recover aim completely, in seconds
     
     "stances":{
       "empty": {
