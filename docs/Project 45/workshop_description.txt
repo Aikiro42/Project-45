@@ -18,6 +18,13 @@ The weapons of this mod have the potential to become [b]overpowered[/b], which m
 [i](The mod author has made attempts to balance the mod around endgame, but the nature of the mod's modding system and gunfire mechanics make it extremely difficult.)[/i]
 [/quote]
 
+[quote=Aikiro42]
+[h1]Warning:[/h1]
+[b]This mod was not designed for multiplayer use.[/b]
+
+Should you do otherwise, though, remember to back up your saves and provide feedback regarding the co-op/PvP performance of this mod.
+[/quote]
+
 [img]https://i.imgur.com/617c7EM.png[/img]
 
 Project 45 features new weapons introducing new mechanics inspired from [url=https://store.steampowered.com/app/528230/SYNTHETIK_Legion_Rising/]Synthetik[/url] and [url=https://store.steampowered.com/app/230410/Warframe/]Warframe[/url], including but not limited to:
@@ -66,4 +73,15 @@ More information can be found in the in-mod [b]Project 45 Manual[/b] sold by the
 [*] [b][url=https://freesound.org/]Freesound[/url][/b], [b][url=https://www.youtube.com/@mgwsounddesign4838]MGW Sound Design[/url][/b], [b][url=https://www.youtube.com/@TenaciousTrilobite]Tenacious Trilobyte[/url][/b], [b][url=https://www.youtube.com/@mishas_guns]Misha's Guns[/url][/b], [b][url=https://www.youtube.com/@GunsOfTheWorld]Guns of the World[/url][/b] and other gun youtubers for sound effects and references
 [/list]
 
+[quote=Aikiro42]
+
+[h1]Developer's Notes:[/h1]
+
+After developing this mod for over a year, I'm finally releasing it to the steam workshop. This has been long overdue, and I have yet to fix stuff in my prior mod, [url=https://steamcommunity.com/sharedfiles/filedetails/?id=2858362793]Project 42[/url].
+
+I'm finally listing this in the workshop because my progress on this mod has stagnated, and I determined that the best thing for me to do to improve this mod further is to receive feedback from the community. Particularly, I'm concerned how well my mod functions in low-end systems, and if there are any edge cases that I missed.
+
+I hope y'all enjoyed this mod. I put my heart and soul into its development, and I learnt a lot while developing this mod; I'm excited to apply what I've learned on updating my previous mods and creating new ones.
+
 Check out the [url=https://github.com/Aikiro42/Project-45]Github page[/url]!
+[/quote]

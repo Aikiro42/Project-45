@@ -1,7 +1,7 @@
 [
     {
         "op": "add",
-        "path": "/project45guns",
+        "path": "/project45-spawnguns",
         "value": [
             "/spawnitem project45-neo-pipegun",
             "/spawnitem project45-neo-bow",
@@ -46,35 +46,28 @@
     },
     {
         "op": "add",
-        "path": "/punchy",
+        "path": "/project45-punchy",
         "value": [
             "/spawnmonster punchy"
         ]
     },
     {
         "op": "add",
-        "path": "/npunchyx",
-        "value": [
-            "/spawnnpc apex miniknogagent"
-        ]
-    },
-    {
-        "op": "add",
-        "path": "/npunchy1",
+        "path": "/project45-spawnenemy",
         "value": [
             "/spawnnpc human arenafighter"
         ]
     },
     {
         "op": "add",
-        "path": "/testgun",
+        "path": "/project45-spawntestgun",
         "value": [
             "/spawnitem project45-neo-custom-x"
         ]
     },
     {
         "op": "add",
-        "path": "/project45statmods",
+        "path": "/project45-givestatmods",
         "value": [
             "/spawnitem project45-damageaddmod 10",
             "/spawnitem project45-critchanceaddmod 10",
@@ -86,7 +79,7 @@
     },
     {
         "op": "add",
-        "path": "/artifactscans",
+        "path": "/project45-giveartifacts",
         "value": [
             // floran
             "/spawnitem championspeardisplay",
