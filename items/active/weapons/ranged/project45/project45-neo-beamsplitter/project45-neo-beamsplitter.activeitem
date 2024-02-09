@@ -60,7 +60,8 @@
       "muzzle",
       
       "receiver",
-      "material"
+      "material",
+      "magazine"
     ]
   },
 

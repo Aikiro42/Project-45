@@ -11,7 +11,7 @@
   },
   "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-gripmod/project45-gripmodicon.png",
   "description" : "Provides better handling of the gun, reducing recoil by a significant amount.",
-  "statInfo": "Recoil x0.75",
+  "statInfo": "Recoil x0.8",
   "shortdescription" : "Vertical Grip",
 
   "augment":{
@@ -22,7 +22,7 @@
     "primaryAbility": {
       "recoilMult": {
         "operation": "multiply",
-        "value": 0.75
+        "value": 0.8
       }
     },
 

@@ -193,7 +193,6 @@ function Project45GunFire:screenShake(amount, shakeTime, random)
   
   if storage.cameraProjectile and world.entityExists(storage.cameraProjectile) then
   
-    sb.logInfo(self.scopeScreenShakeMult)
     world.callScriptedEntity(storage.cameraProjectile, "jerk", amount * (self.scopeScreenShakeMult or 1))
   
   else

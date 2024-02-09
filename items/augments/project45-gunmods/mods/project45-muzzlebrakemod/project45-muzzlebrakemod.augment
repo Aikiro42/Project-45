@@ -11,7 +11,7 @@
   },
   "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-muzzlebrakemod/project45-muzzlebrakemodicon.png",
   "description" : "Makes exiting gas counteract the muzzle rise, reducing recoil.",
-  "statInfo": "Recoil x0.75",
+  "statInfo": "Recoil x0.8",
   "shortdescription" : "Muzzle Brake",
 
   "augment":{
@@ -21,7 +21,7 @@
     "primaryAbility": {
       "recoilMult": {
         "operation": "multiply",
-        "value": 0.75
+        "value": 0.8
       }
     },
     

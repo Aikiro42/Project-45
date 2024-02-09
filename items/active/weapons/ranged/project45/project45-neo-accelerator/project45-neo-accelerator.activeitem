@@ -31,7 +31,8 @@
       "muzzle",
       "underbarrel",
 
-      "material"
+      "material",
+      "magazine"
     ]
   },
 

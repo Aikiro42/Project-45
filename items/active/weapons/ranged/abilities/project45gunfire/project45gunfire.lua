@@ -45,7 +45,7 @@ function Project45GunFire:init()
 
   self.performanceMode = status.statusProperty("project45_performanceMode", false) or self.performanceMode
   self.hideMuzzleSmoke = self.performanceMode or self.hideMuzzleSmoke
-  self.startRecoil = 0
+  self.weapon.startRecoil = 0
 
   self.recoilOffsetProgress = 1
 
@@ -109,6 +109,7 @@ function Project45GunFire:init()
   self.slamFire = self.manualFeed and self.slamFire
 
   -- Let recoilMult affect recoilMaxDeg
+  sb.logInfo(string.format("Recoil Multiplier: %.2f",self.recoilMult))
   self.recoilMaxDeg = self.recoilMaxDeg * self.recoilMult
 
   -- only load rounds through bolt if gun has internal mag
@@ -1224,7 +1225,7 @@ function Project45GunFire:recoil(down, mult, amount, recoverDelay)
   end
   self.weapon.recoilAmount = self.weapon.recoilAmount + inaccuracy
   -- recover delay (no recover delay by default)
-  self.startRecoil = self.weapon.recoilAmount
+  self.weapon.startRecoil = self.weapon.recoilAmount
   storage.recoilProgress = 0
   self.recoilOffsetProgress = 0
   self.recoverDelayTimer = (recoverDelay or self.recoverDelay or self.fireTime or 0) * self.recoverMult
@@ -1595,9 +1596,9 @@ function Project45GunFire:updateMuzzleFlash()
 end
 
 function Project45GunFire:updateRecoil()
-  
-  local offset_o = self.weapon.stance.weaponOffset or {0, 0}
 
+  local offset_o = self.weapon.stance.weaponOffset or {0, 0}
+  
   self.weapon.weaponOffset = {
     interp.sin(self.recoilOffsetProgress, -0.125, offset_o[1]),
     interp.sin(self.recoilOffsetProgress, 0, offset_o[2])
@@ -1607,7 +1608,7 @@ function Project45GunFire:updateRecoil()
   if self.recoverDelayTimer > 0 then
     self.recoverDelayTimer = self.recoverDelayTimer - self.dt
   else
-    self.weapon.recoilAmount = interp.sin(storage.recoilProgress, self.startRecoil, 0)
+    self.weapon.recoilAmount = interp.sin(storage.recoilProgress, self.weapon.startRecoil, 0)
     storage.recoilProgress = math.min(1, storage.recoilProgress + self.dt / self.currentRecoverTime)
   end
 

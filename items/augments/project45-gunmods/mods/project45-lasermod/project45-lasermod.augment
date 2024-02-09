@@ -12,7 +12,7 @@
   "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-lasermod/project45-lasermodicon.png",
   "description" : "A laser that can't be turned off. It oddly never runs out of battery.",
   "technicalInfo": "Enables laser sight.",
-  "statInfo": "Inaccuracy x0.25\nRecoil x0.25",
+  "statInfo": "Inaccuracy x0.8\nRecoil x0.8",
   "shortdescription" : "Laser Beam",
 
   "augment":{
@@ -30,11 +30,11 @@
       },
       "inaccuracy": {
         "operation": "multiply",
-        "value": 0.25
+        "value": 0.8
       },  
       "recoilMult": {
         "operation": "multiply",
-        "value": 0.25
+        "value": 0.8
       }
     },
 

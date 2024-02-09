@@ -11,7 +11,7 @@
   },
   "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-silencermod/project45-silencermodicon.png",
   "description" : "Dissipates existing gas, reducing gunshot noise and recoil. Also hides muzzle flash.",
-  "statInfo": "Recoil x0.75",
+  "statInfo": "Recoil x0.9",
   "shortdescription" : "Silencer",
 
   "augment":{
@@ -36,7 +36,7 @@
       },
       "recoilMult": {
         "operation": "multiply",
-        "value": 0.75
+        "value": 0.9
       }
     },
 

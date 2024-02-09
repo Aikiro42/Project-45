@@ -64,7 +64,7 @@
       "ejectMag": ["/sfx/project45neosfx/ping.ogg"],
       "boltPull" : ["/sfx/project45neosfx/boltpull/boltpull-rifle2.ogg"],
       "boltPush" : ["/sfx/project45neosfx/boltpush/boltpush-rifle2.ogg"],
-      "fire" : ["/sfx/project45neosfx/fire/fire-rifle3.ogg"]
+      "fire" : ["/sfx/project45neosfx/fire/fire-rifle5.ogg"]
     }
   },
 

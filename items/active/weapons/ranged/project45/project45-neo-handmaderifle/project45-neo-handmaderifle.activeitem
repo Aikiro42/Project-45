@@ -47,7 +47,7 @@
 
   "project45GunModInfo":{
     "category": "ballistic",
-    "upgradeCapacity": 6,
+    "upgradeCapacity": 9,
     "incompatibleMods": [
       "project45-autofiremod"
     ],
@@ -60,12 +60,15 @@
       "shotgun"
     ],
     "acceptsModSlot": [
+      "rail",
+      "sights",
       "muzzle",
+      "underbarrel",
+      "stock",
       
       "material",
       "magazine",
-      "receiver",
-      "stock"
+      "receiver"
     ]
   },
 
@@ -74,6 +77,9 @@
   "ejectionPortOffset": [-0.625, 0.5625],
   "magazineOffset": [-0.625, -0.375],
 
+  "railOffset": [1, 0.25],
+  "sightsOffset": [-0.75, 0.75],
+  "underbarrelOffset": [0.5, 0.25],
   "stockOffset": [-1.5, 0.25],
 
   "debugPointColors": {

@@ -12,7 +12,7 @@
   "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-reflexsightsmod/project45-reflexsightsmodicon.png",
   "description" : "Attachment that exploits reflective properties to acquire targets faster.",
   "technicalInfo": "Enables laser sight.",
-  "statInfo": "Inaccuracy x0.25\nRecoil x0.25\nRecovery Time x0.25",
+  "statInfo": "Inaccuracy x0.8\nRecoil x0.8\nRecovery Time x0.25",
   "shortdescription" : "Reflex Sights",
 
   "augment":{
@@ -30,7 +30,7 @@
       },
       "inaccuracy": {
         "operation": "multiply",
-        "value": 0.25
+        "value": 0.8
       },
       "recoveryMult": {
         "operation": "multiply",
@@ -38,7 +38,7 @@
       },
       "recoilMult": {
         "operation": "multiply",
-        "value": 0.25
+        "value": 0.8
       }
     },
 
