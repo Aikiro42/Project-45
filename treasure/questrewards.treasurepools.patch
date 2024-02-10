@@ -1,0 +1,27 @@
+[
+  {
+      "op": "add",
+      "path": "/mediumValueQuestRewards/0/1/pool/-",
+      "value": {
+          "weight": 0.25,
+          "pool": "project45-enemy-drop"
+      }
+  },
+  {
+    "op": "add",
+    "path": "/highValueQuestRewards/0/1/pool/-",
+    "value": {
+        "weight": 0.25,
+        "pool": "project45-enemy-drop"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/killNpcsHiddenTreasure/0/1/pool/-",
+    "value": {
+        "weight": 0.25,
+        "pool": "project45-enemy-drop"
+    }
+  }
+  
+]

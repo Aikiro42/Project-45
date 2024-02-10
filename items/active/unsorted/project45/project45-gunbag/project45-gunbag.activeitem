@@ -30,10 +30,10 @@
   "fireOffset" : [1.0, 0.0],
 
   "gachaPools": {
-    "xssr": [2, "gacha-xssr"],
-    "ssr": [2, "gacha-ssr"],
-    "sr": [46, "gacha-sr"],
-    "r": [50, "gacha-r"]
+    "xssr": [2, "project45-gacha-xssr"],
+    "ssr": [2, "project45-gacha-ssr"],
+    "sr": [46, "project45-gacha-sr"],
+    "r": [50, "project45-gacha-r"]
   },
 
   "treasure" : {

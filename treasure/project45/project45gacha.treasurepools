@@ -1,5 +1,6 @@
 {
-  "gacha-r": [
+
+  "project45-gacha-r": [
     [0, {
       "pool" : [
         {"weight" : 0.34, "pool" : "project45-stats-r"},
@@ -11,7 +12,7 @@
     }]
   ],
   
-  "gacha-sr": [
+  "project45-gacha-sr": [
     [0, {
       "pool" : [
         {"weight" : 0.34, "pool" : "project45-stats-sr"},
@@ -23,7 +24,7 @@
     }]
   ],
   
-  "gacha-ssr": [
+  "project45-gacha-ssr": [
     [0, {
       "pool" : [
         {"weight" : 0.25, "pool" : "project45-guns-ssr"},
@@ -36,7 +37,7 @@
     }]
   ],
 
-  "gacha-xssr": [
+  "project45-gacha-xssr": [
     [0, {
       "pool" : [
         {"weight" : 0.50, "pool" : "project45-guns-xssr"},
@@ -45,5 +46,20 @@
       "poolRounds" : 1,
       "allowDuplication" : false
     }]
+  ],
+
+  
+  "project45-enemy-drop": [
+    [0, {
+      "pool" : [
+        {"weight" : 0.60, "pool" : "project45-gacha-r"},
+        {"weight" : 0.36, "pool" : "project45-gacha-sr"},
+        {"weight" : 0.02, "pool" : "project45-gacha-ssr"},
+        {"weight" : 0.02, "pool" : "project45-gacha-xssr"}
+      ],
+      "poolRounds" : 1,
+      "allowDuplication" : true
+    }]
   ]
+
 }
