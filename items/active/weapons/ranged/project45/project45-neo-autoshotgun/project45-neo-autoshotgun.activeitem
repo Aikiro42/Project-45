@@ -1,0 +1,129 @@
+{
+  "itemName" : "project45-neo-autoshotgun",
+  "price" : 5000,
+  "maxStack" : 1,
+  "rarity" : "Legendary",
+  "description" : "A redeveloped prototype of an obsolete shotgun design.",
+  "shortdescription" : "Automatic Shotgun",
+  "tooltipKind" : "project45gun",
+  "gunArchetype": "shotgun",
+  "category" : "shotgun",
+  "twoHanded" : true,
+  "itemTags" : ["weapon","ranged","shotgun"],
+  "level" : 1,
+  "muzzleFlashColor": [255, 255, 200],
+  "inventoryIcon" : "project45-neo-autoshotgun-icon.png",
+
+  "animationParts" : {
+    "middle" : "project45-neo-autoshotgun.png",
+    "middleFullbright" : "",
+    "charge": "",
+    "chargeFullbright": "",
+    "magazine": "project45-neo-autoshotgun-mag.png",
+    "magazineFullbright": ""
+  },
+
+  "animationCustom": {
+    "particleEmitters": {
+      "ejectionPort": {
+        "particles": [
+        ]
+      },
+      "magazine": {
+        "particles": [
+          {"particle": "project45autoshotgunmag"}
+        ]
+      }
+    },
+
+    "sounds": {
+      "fire" : [
+        "/sfx/project45neosfx/fire/fire-shotgun1.ogg"
+      ],
+      "boltPush": ["/sfx/project45neosfx/boltpush/boltpush-rifle1.ogg"],
+      "ejectMag": [ "/sfx/project45neosfx/ejectmag/ejectmag-heavy1.ogg" ],
+      "reloadEnd": [ "/sfx/project45neosfx/loadmag/loadmag-heavy2.ogg" ]
+    }
+  },
+
+  "project45GunModInfo":{
+    "category": "ballistic",
+    "upgradeCapacity": 9,
+    "incompatibleMods":[
+      "project45-autofiremod"
+    ],
+    "allowsConversion": [
+      "hitscan",
+      "summoned"
+    ],
+    "acceptsAmmoTypes":{
+      "ballistic": true
+    },
+    "acceptsAmmoArchetype": [
+      "shotgun"
+    ],
+    "acceptsModSlot": [
+      "rail",
+      "sights",
+      "muzzle",
+
+      "receiver",
+      "magazine",
+      "material"
+    ]
+  },
+
+  "baseOffset" : [0.25, 0.25],
+  "muzzleOffset" : [1.5, 0.25],
+  "ejectionPortOffset": [-1, -0.125],
+  "magazineOffset": [-1, -0.125],
+  
+  "railOffset": [0.625, -0.125],
+  "sightsOffset": [0.25, 0.8125],
+
+  "scripts" : ["/items/active/weapons/ranged/project45gunneo.lua"],
+    
+  "primaryAbilityType": "project45gunfire",
+  "primaryAbility": {
+    "reloadCost": 30,
+    "maxAmmo": 15,
+    "bulletsPerReload": 15,
+    "critChance": 0.225,
+    "critDamageMult": 2,
+    "semi": false,
+    "ejectCasingsWithMag": true,
+    "spread": 1.5,
+    "inaccuracy": 2,
+    "projectileCount": 4,
+    
+    "recoilAmount": 3,
+    "recoilMaxDeg": 30,
+    "recoverDelay": 0.1,
+    "recoverTime": 0.7,
+    
+    "cycleTime": 0.2,
+    "fireTime": 0.2,
+    "projectileKind": "projectile",
+    "stances": {
+      "empty": {
+        "weaponOffset": [0.5, 0],
+        "weaponRotation": 45,
+        "armRotation": -15,
+        "frontArmFrame": "jump.1"
+      },
+      "reloading": {
+        "weaponOffset": [0.5, 0],
+        "weaponRotation": 50,
+        "armRotation": -5
+      },
+      "reloaded": {
+        "weaponOffset": [0, 0],
+        "weaponRotation": 35,
+        "armRotation": -15,
+        "frontArmFrame": "swim.2"
+      }
+    }
+  },
+
+  "builder" : "/items/buildscripts/buildproject45neoneo.lua"
+}

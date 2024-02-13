@@ -33,6 +33,7 @@
         {"weight" : 1, "item" : "project45-neo-machinegun"},
         {"weight" : 1, "item" : "project45-neo-combatrifle"},
         {"weight" : 1, "item" : "project45-neo-grenadelauncher"},
+        {"weight" : 1, "item" : "project45-neo-autoshotgun"},
         {"weight" : 1, "item" : "project45-neo-sniper"},
 
         {"weight" : 1, "item" : "project45-neo-cyclo"},
