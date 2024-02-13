@@ -109,7 +109,6 @@ function Project45GunFire:init()
   self.slamFire = self.manualFeed and self.slamFire
 
   -- Let recoilMult affect recoilMaxDeg
-  sb.logInfo(string.format("Recoil Multiplier: %.2f",self.recoilMult))
   self.recoilMaxDeg = self.recoilMaxDeg * self.recoilMult
 
   -- only load rounds through bolt if gun has internal mag

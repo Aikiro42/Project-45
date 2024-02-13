@@ -7,7 +7,9 @@ The greatest minds of Letheia Corp. and The Miniknog Institute present to you: P
 [h1]How to Obtain[/h1]
 [list]
 [*]Craft the "Project 45 Gun Shop" with the [b]fully upgraded Inventor's Table[/b].
-[*]Purchase the "Project 45 Gun Shop" from the Shipyard Captain for 10,000 pixels
+[*]Purchase the "Project 45 Gun Shop" from the Shipyard Captain for 10,000 pixels.
+[*]Items can randomly drop from enemies.
+[*]Items can randomly be offered as quest rewards.
 [/list]
 [b]All Project 45 related items can be purchased from the gun shop.[/b]
 
