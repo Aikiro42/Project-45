@@ -3,7 +3,7 @@
   "price" : 2500,
   "rarity" : "Legendary",
   "tooltipKind" : "project45gunmod",
-  "category" : "Tool",
+  "category" : "eppAugment",
   "tooltipFields":{
     "subtitle": "Applied Utility",
     "objectImage": "/items/augments/project45-gunmods/util/project45-gunrepairkit/project45-gunrepairkit.png"
