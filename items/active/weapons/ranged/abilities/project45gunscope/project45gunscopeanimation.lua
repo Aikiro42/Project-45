@@ -6,26 +6,6 @@ function update()
 
     localAnimator.clearDrawables()
     localAnimator.clearLightSources()
-
-    -- laser
-    --[[
-    local laser = {}
-    laser.origin = animationConfig.animationParameter("laserOrigin")
-    laser.destination = animationConfig.animationParameter("laserDestination")
-    laser.color = animationConfig.animationParameter("altLaserColor")
-    laser.width = animationConfig.animationParameter("altLaserWidth") or animationConfig.animationParameter("laserWidth") or 0.2
-
-    if laser.origin and laser.destination and laser.color then
-    local laserLine = worldify(laser.origin, laser.destination)
-    localAnimator.addDrawable({
-        line = laserLine,
-        width = laser.width,
-        fullbright = true,
-        color = laser.color
-    }, "Player+1")
-    end
-    --]]
-
     renderLaser()
 end
 

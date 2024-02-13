@@ -33,39 +33,42 @@ function Project45FlashLaser:update(dt, fireMode, shiftHeld)
   WeaponAbility.update(self, dt, fireMode, shiftHeld)
 
   -- render laser
-  if (storage.state == FLASHLASER or storage.state == LASER) and not world.lineTileCollision(mcontroller.position(), self:firePosition()) then
+  if self.weapon.noReloadFlashLasers and (storage.ammo < 0 or self.weapon.reloadTimer >= 0) then
+    storage.altLaserEnabled = false
+    self:renderLaser(false, nil, nil)
+  elseif (storage.state == FLASHLASER or storage.state == LASER) and not world.lineTileCollision(mcontroller.position(), self:firePosition()) then
     local scanOrig = self:firePosition()
     local range = world.magnitude(scanOrig, activeItem.ownerAimPosition())
     local scanDest = vec2.add(scanOrig, vec2.mul(self:aimVector(), self.laserRange))
     scanDest = world.lineCollision(scanOrig, scanDest, {"Block", "Dynamic"}) or scanDest
     storage.altLaserEnabled = true
-    activeItem.setScriptedAnimationParameter("altLaserEnabled", true)
-    activeItem.setScriptedAnimationParameter("altLaserStart", scanOrig)
-    activeItem.setScriptedAnimationParameter("altLaserEnd", scanDest)
+    self:renderLaser(true, scanOrig, scanDest)
   elseif world.lineTileCollision(mcontroller.position(), self:firePosition()) then
     storage.altLaserEnabled = false
-    activeItem.setScriptedAnimationParameter("altLaserEnabled", false)
-    activeItem.setScriptedAnimationParameter("altLaserStart", nil)
-    activeItem.setScriptedAnimationParameter("altLaserEnd", nil)
+    self:renderLaser(false, nil, nil)
   end
 
+  -- render flashlight
+  if self.weapon.noReloadFlashLasers and (storage.ammo < 0 or self.weapon.reloadTimer >= 0) then
+    self:renderFlashlight(false)
+  elseif storage.state == FLASH or storage.state == FLASHLASER then
+    self:renderFlashlight(true)
+  end
+  
+  -- switch state
   if self.fireMode == "alt" and self.lastFireMode ~= "alt" then
     storage.state = (storage.state % 4) + 1
     animator.setAnimationState("project45flashlaser", self.flashLaserStates[storage.state])
     if storage.state == FLASH or storage.state == FLASHLASER then
-      animator.setLightActive("flashlight", true)
-      animator.setLightActive("flashlightSpread", true)
+      self:renderFlashlight(true)
       animator.playSound("flashlight")
     else
-      animator.setLightActive("flashlight", false)
-      animator.setLightActive("flashlightSpread", false)
+      self:renderFlashlight(false)
     end
         
     if not (storage.state == FLASHLASER or storage.state == LASER) then
       storage.altLaserEnabled = false
-      activeItem.setScriptedAnimationParameter("altLaserEnabled", false)
-      activeItem.setScriptedAnimationParameter("altLaserStart", nil)
-      activeItem.setScriptedAnimationParameter("altLaserEnd", nil)
+      self:renderLaser(false, nil, nil)
       activeItem.setScriptedAnimationParameter("altLaserColor", nil)
       activeItem.setScriptedAnimationParameter("altLaserWidth", nil)
     else
@@ -74,8 +77,26 @@ function Project45FlashLaser:update(dt, fireMode, shiftHeld)
       animator.playSound("laser")
     end
 
+    if storage.state == OFF then
+      animator.playSound("flashlight")
+    end
+
   end
   self.lastFireMode = fireMode
+end
+
+function Project45FlashLaser:renderFlashlight(flashlightOn)
+  if self.isFlashlightOn ~= flashlightOn then
+    animator.setLightActive("flashlight", flashlightOn)
+    animator.setLightActive("flashlightSpread", flashlightOn)
+    self.isFlashlightOn = flashlightOn
+  end
+end
+
+function Project45FlashLaser:renderLaser(enabled, laserStart, laserEnd)
+  activeItem.setScriptedAnimationParameter("altLaserEnabled", enabled)
+  activeItem.setScriptedAnimationParameter("altLaserStart", laserStart)
+  activeItem.setScriptedAnimationParameter("altLaserEnd", laserEnd)
 end
 
 function Project45FlashLaser:reset()

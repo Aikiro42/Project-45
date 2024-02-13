@@ -9,7 +9,7 @@ function Passive:update(dt, fireMode, shiftheld)
   -- Example passive: replenish ammo by half of maximum ammo every second
   --[[
   if self.passiveTimer <= 0
-  and self.reloadTimer < 0
+  and self.weapon.reloadTimer < 0
   and storage.ammo > 0 then
     local replenished = math.floor(self.maxAmmo/2)
     self:updateAmmo(replenished)

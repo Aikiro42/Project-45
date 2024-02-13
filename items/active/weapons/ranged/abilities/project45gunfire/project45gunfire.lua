@@ -44,6 +44,7 @@ function Project45GunFire:init()
   self.isFiring = false
 
   self.performanceMode = status.statusProperty("project45_performanceMode", false) or self.performanceMode
+  self.weapon.noReloadFlashLasers = status.statusProperty("project45_noReloadFlashLasers", true)
   self.hideMuzzleSmoke = self.performanceMode or self.hideMuzzleSmoke
   self.weapon.startRecoil = 0
 
@@ -51,7 +52,7 @@ function Project45GunFire:init()
 
   -- separate cock time and reload time
   -- self.reloadTime = self.reloadTime * 0.8
-  self.reloadTimer = -1
+  self.weapon.reloadTimer = -1
   activeItem.setScriptedAnimationParameter("reloadTimer", -1)
 
   -- initialize charge frame
@@ -392,7 +393,7 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
       else
         self:ejectMag()
       end
-    elseif self.reloadTimer < 0 then
+    elseif self.weapon.reloadTimer < 0 then
       self:setState(self.reloading)
     end
   end
@@ -606,7 +607,7 @@ function Project45GunFire:ejecting()
   -- pull the bolt (slower animation)
   if (self.manualFeed
   and storage.burstCounter >= self.burstCount
-  or self.reloadTimer >= 0)
+  or self.weapon.reloadTimer >= 0)
   or self.isCocking
   then
     if self.loadRoundsThroughBolt and storage.ammo <= 0 then
@@ -632,7 +633,7 @@ function Project45GunFire:ejecting()
   -- otherwise, the gun is semiauto or the gun isn't done bursting:
   -- we wait for the (half) cycle animation to end
   if (self.manualFeed and (storage.burstCounter >= self.burstCount))
-  or (self.reloadTimer >= 0)
+  or (self.weapon.reloadTimer >= 0)
   or self.isCocking
   then
     util.wait(self.cockTime/2)
@@ -675,7 +676,7 @@ function Project45GunFire:feeding()
 
   if (self.manualFeed                              -- if gun is cocked every shot
   and storage.burstCounter >= self.burstCount        -- and the gun is done bursting
-  or self.reloadTimer >= 0)                         -- or the gun was just reloaded/is cocking
+  or self.weapon.reloadTimer >= 0)                         -- or the gun was just reloaded/is cocking
   or self.isCocking
   then
 
@@ -692,7 +693,7 @@ function Project45GunFire:feeding()
   if self.slamFire
   and self.manualFeed
   and storage.ammo > 0
-  and self.reloadTimer < 0
+  and self.weapon.reloadTimer < 0
   and storage.burstCounter >= self.burstCount
   and self:triggering() then
     -- do this when slamfiring
@@ -714,7 +715,7 @@ function Project45GunFire:feeding()
 
   -- otherwise, we wait
   if (self.manualFeed and (storage.burstCounter >= self.burstCount))
-  or (self.reloadTimer >= 0)
+  or (self.weapon.reloadTimer >= 0)
   or self.isCocking
   then
     util.wait(self.cockTime/2)
@@ -738,16 +739,16 @@ function Project45GunFire:feeding()
     and self.projectileKind ~= "beam"
     and storage.burstCounter < self.burstCount
   )
-  and self.reloadTimer < 0
+  and self.weapon.reloadTimer < 0
   then
     self:setState(self.firing)
   end
 
   -- prevent triggering
-  self.triggered = self.semi or self.reloadTimer >= 0
+  self.triggered = self.semi or self.weapon.reloadTimer >= 0
   
-  self.reloadTimer = -1  -- mark end of reload
-  activeItem.setScriptedAnimationParameter("reloadTimer", self.reloadTimer)
+  self.weapon.reloadTimer = -1  -- mark end of reload
+  activeItem.setScriptedAnimationParameter("reloadTimer", self.weapon.reloadTimer)
   self.isFiring = false
 end
 
@@ -762,7 +763,7 @@ function Project45GunFire:reloading()
     return
   end
   
-  self.reloadTimer = 0 -- mark begin of reload
+  self.weapon.reloadTimer = 0 -- mark begin of reload
   animator.playSound("reloadStart") -- sound of mag being grabbed
   if self.breakAction and animator.animationState("gun") ~= "open" then
     animator.setAnimationState("gun", "open")
@@ -790,8 +791,8 @@ function Project45GunFire:reloading()
   -- begin minigame
   -- self.weapon:setStance(self.stances.reloading)
   animator.playSound("reloadLoop", -1)
-  while self.reloadTimer <= self.reloadTime do
-    activeItem.setScriptedAnimationParameter("reloadTimer", self.reloadTimer)
+  while self.weapon.reloadTimer <= self.reloadTime do
+    activeItem.setScriptedAnimationParameter("reloadTimer", self.weapon.reloadTimer)
 
     if displayResetTimer <= 0 and storage.ammo < self.maxAmmo then
       activeItem.setScriptedAnimationParameter("reloadRating", "")
@@ -858,7 +859,7 @@ function Project45GunFire:reloading()
 
       -- if mag isn't fully loaded, reset minigame
       if storage.ammo < self.maxAmmo then
-        self.reloadTimer = 0      
+        self.weapon.reloadTimer = 0      
       
       -- DISABLED FEATURE: A BIT TOO PUNISHING; THE DAMAGE DECREASE AND JAMS WILL SUFFICE
       -- if reload rating is not bad, prematurely end minigame
@@ -867,7 +868,7 @@ function Project45GunFire:reloading()
       else break end
       
     end
-    self.reloadTimer = self.reloadTimer + self.dt
+    self.weapon.reloadTimer = self.weapon.reloadTimer + self.dt
     coroutine.yield()
   end
   animator.stopAllSounds("reloadLoop")
@@ -980,7 +981,7 @@ function Project45GunFire:unjamming()
     self:onFullUnjamPassive()
     storage.reloadRating = OK
     activeItem.setScriptedAnimationParameter("reloadRating", reloadRatingList[OK])
-    self.reloadTimer = self.reloadTime
+    self.weapon.reloadTimer = self.reloadTime
     animator.setAnimationState("bolt", "closed")
     self:updateChamberState("filled")
     self:setState(self.cocking)
@@ -1339,7 +1340,7 @@ function Project45GunFire:updateCharge()
   if self:triggering()
   and not self.triggered
   and storage.jamAmount <= 0
-  and self.reloadTimer < 0
+  and self.weapon.reloadTimer < 0
   and (self.maintainChargeOnEmpty or storage.ammo > 0)
   and (self.chargeWhenObstructed or not self:muzzleObstructed())
   and (self.manualFeed and animator.animationState("chamber") == "ready" or not self.manualFeed)
@@ -1538,7 +1539,7 @@ function Project45GunFire:updateScreenShake()
   --[[
   and not self.triggered
   and storage.jamAmount <= 0
-  and self.reloadTimer < 0
+  and self.weapon.reloadTimer < 0
   and storage.ammo > 0
   and not self:muzzleObstructed()
   and (self.manualFeed and animator.animationState("chamber") == "ready" or not self.manualFeed)
@@ -1731,9 +1732,9 @@ end
 -- should only be called from the reloading state
 function Project45GunFire:reloadRating()
   -- perfect reload can be in a region outside good reload
-  if self.reloadTime * self.quickReloadTimeframe[2] <= self.reloadTimer and self.reloadTimer <= self.reloadTime * self.quickReloadTimeframe[3] then
+  if self.reloadTime * self.quickReloadTimeframe[2] <= self.weapon.reloadTimer and self.weapon.reloadTimer <= self.reloadTime * self.quickReloadTimeframe[3] then
     return PERFECT
-  elseif self.reloadTime * self.quickReloadTimeframe[1] <= self.reloadTimer and self.reloadTimer <= self.reloadTime * self.quickReloadTimeframe[4] then
+  elseif self.reloadTime * self.quickReloadTimeframe[1] <= self.weapon.reloadTimer and self.weapon.reloadTimer <= self.reloadTime * self.quickReloadTimeframe[4] then
     return GOOD
   else
     return BAD

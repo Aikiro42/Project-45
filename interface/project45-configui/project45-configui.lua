@@ -3,7 +3,8 @@ require "/scripts/project45/project45util.lua"
 	
 local invSettings = {
 	"useAmmoCounterImages",
-	"accurateBars"
+	"accurateBars",
+	"noReloadFlashLasers"
 }
 
 function promptRestart()
@@ -31,6 +32,15 @@ function togglePerformanceMode()
 	end
 
 	promptRestart()
+end
+
+function toggleNoReloadFlashLasers()
+	if not status.statusProperty("project45_performanceMode") then
+		status.setStatusProperty("project45_noReloadFlashLasers", widget.getChecked("btnNoReloadFlashLasers"))
+  	promptRestart()
+	else
+		widget.setChecked("btnNoReloadFlashLasers", false)
+	end
 end
 
 function toggleUseAmmoCounterImages()
