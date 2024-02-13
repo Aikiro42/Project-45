@@ -1,1 +1,13 @@
-2024-02-13
+# 2024-02-13
+## User-side:
+- Decreased effect of walking (2x to 1.5x) and being mobile (4x to 2x) on recover time
+- Decreased recoil (3 to 1.75 degrees) and inaccuracy ([0.75, 1.5, 3, 4] to [0.5, 1, 1.25, 1.5]) of pistol
+- Added option to disable flashlights and lasers on the weapon when no magazine or reloading; option is enabled by default
+- incorporated option effect to project45gunscope laser
+- Implemented option effect on primary laser
+- Corrected category and tags of some weapons (particularly assault and sniper rifles and unique weapons)
+## Mod-side
+- refactor project45flashlight code while incorporating option effect
+- moved self.reloadTimer variable to self.weapon.reloadTimer so that alt abilities can access it
+- removed comment in project45gunscope animation script
+- removed stray printline statement
