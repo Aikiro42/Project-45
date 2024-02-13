@@ -33,7 +33,7 @@ function Project45FlashLaser:update(dt, fireMode, shiftHeld)
   WeaponAbility.update(self, dt, fireMode, shiftHeld)
 
   -- render laser
-  if self.weapon.noReloadFlashLasers and (storage.ammo < 0 or self.weapon.reloadTimer >= 0) then
+  if not self.weapon.reloadFlashLasers and (storage.ammo < 0 or self.weapon.reloadTimer >= 0) then
     storage.altLaserEnabled = false
     self:renderLaser(false, nil, nil)
   elseif (storage.state == FLASHLASER or storage.state == LASER) and not world.lineTileCollision(mcontroller.position(), self:firePosition()) then
@@ -49,7 +49,7 @@ function Project45FlashLaser:update(dt, fireMode, shiftHeld)
   end
 
   -- render flashlight
-  if self.weapon.noReloadFlashLasers and (storage.ammo < 0 or self.weapon.reloadTimer >= 0) then
+  if not self.weapon.reloadFlashLasers and (storage.ammo < 0 or self.weapon.reloadTimer >= 0) then
     self:renderFlashlight(false)
   elseif storage.state == FLASH or storage.state == FLASHLASER then
     self:renderFlashlight(true)

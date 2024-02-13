@@ -442,7 +442,7 @@ end
 
 function hitscanLib:updateLaser()
   if not self.laser.enabled then return
-  elseif self.weapon.noReloadFlashLasers and (storage.ammo < 0 or self.weapon.reloadTimer >= 0) then
+  elseif not self.weapon.reloadFlashLasers and (storage.ammo < 0 or self.weapon.reloadTimer >= 0) then
     activeItem.setScriptedAnimationParameter("primaryLaserEnabled", false)
     return
   end

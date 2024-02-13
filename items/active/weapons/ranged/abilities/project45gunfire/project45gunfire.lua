@@ -44,7 +44,7 @@ function Project45GunFire:init()
   self.isFiring = false
 
   self.performanceMode = status.statusProperty("project45_performanceMode", false) or self.performanceMode
-  self.weapon.noReloadFlashLasers = status.statusProperty("project45_noReloadFlashLasers", true)
+  self.weapon.reloadFlashLasers = status.statusProperty("project45_reloadFlashLasers", false)
   self.hideMuzzleSmoke = self.performanceMode or self.hideMuzzleSmoke
   self.weapon.startRecoil = 0
 
