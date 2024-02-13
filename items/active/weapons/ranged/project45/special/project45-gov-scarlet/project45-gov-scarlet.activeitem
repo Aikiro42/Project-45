@@ -7,9 +7,9 @@
   "shortdescription" : "^#fdd14d;Fleetly Fading^reset;",
   "gunArchetype": "assaultRifle",
   "tooltipKind" : "project45gun",
-  "category" : "rifle",
+  "category" : "uniqueWeapon",
   "twoHanded" : true,
-  "itemTags" : ["weapon","ranged","rifle"],
+  "itemTags" : ["weapon","ranged","assaultrifle"],
   "level" : 1,
   "inventoryIcon" : "project45-gov-scarlet-icon.png",
 

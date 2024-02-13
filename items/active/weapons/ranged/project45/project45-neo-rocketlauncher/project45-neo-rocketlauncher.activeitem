@@ -7,7 +7,7 @@
   "shortdescription" : "Rocket Launcher",
   "gunArchetype": "rocketLauncher",
   "tooltipKind" : "project45gun",
-  "category" : "rocketlauncher",
+  "category" : "rocketLauncher",
   "twoHanded" : true,
   "itemTags" : ["weapon","ranged","rocketlauncher"],
   "level" : 1,

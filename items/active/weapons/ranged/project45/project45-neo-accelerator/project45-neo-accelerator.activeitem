@@ -7,9 +7,9 @@
   "shortdescription" : "Accelerator",
   "gunArchetype": "assaultRifle",
   "tooltipKind" : "project45gun",
-  "category" : "rifle",
+  "category" : "assaultRifle",
   "twoHanded" : true,
-  "itemTags" : ["weapon","ranged","rifle"],
+  "itemTags" : ["weapon","ranged","assaultrifle"],
   "level" : 1,
   "inventoryIcon" : "project45-neo-accelerator-icon.png",
 

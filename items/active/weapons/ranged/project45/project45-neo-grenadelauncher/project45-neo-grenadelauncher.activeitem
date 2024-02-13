@@ -7,7 +7,7 @@
   "shortdescription" : "Grenade Launcher",
   "tooltipKind" : "project45gun",
   "gunArchetype": "grenadeLauncher",
-  "category" : "grenadelauncher",
+  "category" : "grenadeLauncher",
   "twoHanded" : true,
   "itemTags" : ["weapon","ranged","grenadelauncher"],
   "level" : 1,
