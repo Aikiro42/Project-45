@@ -138,10 +138,10 @@ function Project45GunFire:init()
   -- make recoverTime a table
   if type(self.recoverTime) ~= "table" then
     self.recoverTime = {
-      mobile = self.recoverTime*4,  -- quadruple recover time while running
-      walking = self.recoverTime*2,  -- double recover time while walking
+      mobile = self.recoverTime*2,  -- double recover time while running
+      walking = self.recoverTime*1.5,  -- 1.5x recover time while walking
       stationary = self.recoverTime, -- standard recover time while standing
-      crouching = self.recoverTime/2 -- halfed recover time while crouching
+      crouching = self.recoverTime/2 -- halved recover time while crouching
     }
   end
   self.currentRecoverTime = self.recoverTime.mobile * self.recoverMult

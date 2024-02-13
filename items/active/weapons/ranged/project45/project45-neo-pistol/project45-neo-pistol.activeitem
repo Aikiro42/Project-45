@@ -116,9 +116,9 @@
     "reloadCost": 25,
     "maxAmmo": 16,
     "bulletsPerReload": 16,
-    "inaccuracy": [0.75, 1.5, 3, 4],
+    "inaccuracy": [0.5, 1, 1.25, 1.5],
     
-    "recoilAmount": 3,
+    "recoilAmount": 1.75,
     "recoilMaxDeg": 15,
     "recoverDelay": 0,
     "recoverTime": 0.65,
