@@ -11,3 +11,10 @@
 - moved self.reloadTimer variable to self.weapon.reloadTimer so that alt abilities can access it
 - removed comment in project45gunscope animation script
 - removed stray printline statement
+
+#2024-02-14
+[h2]User-side:[/h2]
+- Added expy of Pancor Jackhammer to gunshop and droptables
+- Improved silenced firing sfx
+[h2]Mod-side:[/h2]
+- Changed gun repair kit category to be usable with bk3k's inventory mod
