@@ -36,6 +36,14 @@ function build(directory, config, parameters, level, seed)
     end
   end
 
+  -- configure seed
+  local rng = nil
+  if parameters.seed or seed then
+    parameters.seed = configParameter("seed", seed or math.floor(math.random() * 2147483647))
+    -- sb.logInfo(string.format("Seed of %s: %d", config.itemName, parameters.seed))
+    rng = sb.makeRandomSource(parameters.seed)
+  end
+
   if level and not configParameter("fixedLevel", true) then
     parameters.level = level
   end
@@ -290,6 +298,26 @@ function build(directory, config, parameters, level, seed)
         local archetypeDamage = generalConfig.gunArchetypeDamages[config.gunArchetype]
         -- sb.logInfo(string.format("%s (%s): %s",config.shortdescription, config.gunArchetype, sb.printJson(archetypeDamage)))
         config.primaryAbility.baseDamage = archetypeDamage or config.primaryAbility.baseDamage
+      end
+
+      if rng and not parameters.isRandomized then
+
+        local boughtRandMult = parameters.bought and generalConfig.boughtRandBonusMult or 1
+
+        parameters.primaryAbility.baseDamage = primaryAbility("baseDamage", 0)
+          * (rng:randf(0, generalConfig.maxRandBonuses.baseDamage) * boughtRandMult + 1)
+        -- sb.logInfo(string.format("baseDamage of %s: %.2f", config.itemName, parameters.primaryAbility.baseDamage))
+
+        parameters.primaryAbility.critChance = primaryAbility("critChance", 0)
+          * (rng:randf(0, generalConfig.maxRandBonuses.critChance) * boughtRandMult + 1)
+        -- sb.logInfo(string.format("critChance of %s: %.2f", config.itemName, parameters.primaryAbility.critChance * 100))
+
+        parameters.primaryAbility.critDamageMult = primaryAbility("critDamageMult", 1)
+          * (rng:randf(0, generalConfig.maxRandBonuses.critDamageMult) * boughtRandMult + 1)
+        -- sb.logInfo(string.format("critDamageMult of %s: x%.2f", config.itemName, parameters.primaryAbility.critDamageMult))
+
+        parameters.isRandomized = true
+
       end
         
       -- damage per shot

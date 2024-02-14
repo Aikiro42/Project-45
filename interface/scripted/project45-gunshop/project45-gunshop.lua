@@ -32,7 +32,10 @@ function init()
     util = {}
   })
 
-  self.seededItems = set.new(config.getParameter("seededItems", {}))
+  self.seededItems = set.new(
+    config.getParameter("seededItems", {})
+  )
+  self.seededItems = set.union(self.seededItems, set.new(self.goods.guns))
   
   self.mode = "guns"
   widget.setSelectedOption("shopTabs", 1)
@@ -225,6 +228,7 @@ function purchase()
         if self.seededItems[selectedItem.name] then
           for i=1, count do
             local seed = math.floor(math.random() * 2147483647)
+            selectedItem.parameters.bought = true
             purchased = root.createItem(selectedItem, math.floor(math.random() * 10), seed)
             player.giveItem(purchased)
           end

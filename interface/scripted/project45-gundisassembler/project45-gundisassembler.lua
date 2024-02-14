@@ -16,6 +16,8 @@ end
 function disassemble()
   local input = widget.itemGridItems("itemGrid")[1]
   if not input then return end
+  local savedGunSeed = input.parameters.seed
+  local wasBought = input.parameters.bought
   if input.parameters then
     if input.parameters.project45GunModInfo and input.parameters.isModded then
 
@@ -38,14 +40,15 @@ function disassemble()
               player.giveItem({
                 name = "project45-wildcardstatmod",
                 parameters = {
-                  seed = savedSeed
+                  seed = savedSeed,
+                  bought = wasBought
                 }})  
             end
           end
         end
       end
         
-      player.giveItem(input.name)
+      player.giveItem({name = input.name, parameters = {seed = savedGunSeed}})
       world.sendEntityMessage(pane.containerEntityId(), "project45-clearGunDisassemblySlot")
     end
   end
