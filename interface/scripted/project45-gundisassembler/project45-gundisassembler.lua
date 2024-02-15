@@ -40,15 +40,14 @@ function disassemble()
               player.giveItem({
                 name = "project45-wildcardstatmod",
                 parameters = {
-                  seed = savedSeed,
-                  bought = wasBought
-                }})  
+                  seed = savedSeed
+                }})
             end
           end
         end
       end
         
-      player.giveItem({name = input.name, parameters = {seed = savedGunSeed}})
+      player.giveItem({name = input.name, parameters = {seed = savedGunSeed, bought = wasBought}})
       world.sendEntityMessage(pane.containerEntityId(), "project45-clearGunDisassemblySlot")
     end
   end
