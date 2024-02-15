@@ -15,6 +15,8 @@ function Weapon:init()
   self.baseArmRotation = 0
   self.baseWeaponRotation = 0
 
+  self.armFrameAnimations = true
+
   animator.setGlobalTag("elementalType", self.elementalType or "")
 
   for _,ability in pairs(self.abilities) do
@@ -125,8 +127,10 @@ function Weapon:updateAim()
 
   activeItem.setFacingDirection(self.aimDirection)
 
-  activeItem.setFrontArmFrame(self.stance.frontArmFrame)
-  activeItem.setBackArmFrame(self.stance.backArmFrame)
+  if self.armFrameAnimations then
+    activeItem.setFrontArmFrame(self.stance.frontArmFrame)
+    activeItem.setBackArmFrame(self.stance.backArmFrame)
+  end
 end
 
 function Weapon:setStance(stance)
@@ -177,8 +181,10 @@ function Weapon:setStance(stance)
     animator.burstParticleEmitter(particleEmitterName)
   end
 
-  activeItem.setFrontArmFrame(self.stance.frontArmFrame)
-  activeItem.setBackArmFrame(self.stance.backArmFrame)
+  if self.armFrameAnimations then
+    activeItem.setFrontArmFrame(self.stance.frontArmFrame)
+    activeItem.setBackArmFrame(self.stance.backArmFrame)
+  end
   activeItem.setTwoHandedGrip(stance.twoHanded or false)
   activeItem.setRecoil(stance.recoil == true)
 

@@ -4,7 +4,8 @@ require "/scripts/project45/project45util.lua"
 local invSettings = {
 	"useAmmoCounterImages",
 	"accurateBars",
-	"reloadFlashLasers"
+	"reloadFlashLasers",
+	"armFrameAnimations"
 }
 
 function promptRestart()
@@ -32,6 +33,15 @@ function togglePerformanceMode()
 	end
 
 	promptRestart()
+end
+
+function toggleArmFrameAnimations()
+	if not status.statusProperty("project45_performanceMode") then
+		status.setStatusProperty("project45_armFrameAnimations", widget.getChecked("btnArmFrameAnimations"))
+  	promptRestart()
+	else
+		widget.setChecked("btnArmFrameAnimations", false)
+	end
 end
 
 function toggleReloadFlashLasers()

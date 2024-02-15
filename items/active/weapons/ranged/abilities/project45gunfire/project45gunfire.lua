@@ -43,8 +43,9 @@ function Project45GunFire:init()
   -- INITIALIZATIONS
   self.isFiring = false
 
-  self.performanceMode = status.statusProperty("project45_performanceMode", false) or self.performanceMode
+  self.performanceMode = status.statusProperty("project45_performanceMode", self.performanceMode)
   self.weapon.reloadFlashLasers = status.statusProperty("project45_reloadFlashLasers", false)
+  self.weapon.armFrameAnimations = status.statusProperty("project45_armFrameAnimations", not self.performanceMode)
   self.hideMuzzleSmoke = self.performanceMode or self.hideMuzzleSmoke
   self.weapon.startRecoil = 0
 
@@ -156,7 +157,7 @@ function Project45GunFire:init()
     self.currentCycleTime = self.cycleTime
   end
 
-  if self.chargeArmFrames then
+  if self.chargeArmFrames and self.weapon.armFrameAnimations then
     self.chargeArmFrames[1].frontArmFrame = self.chargeArmFrames[1].frontArmFrame or self.stances.aimStance.frontArmFrame
     self.chargeArmFrames[1].backArmFrame = self.chargeArmFrames[1].backArmFrame or self.stances.aimStance.backArmFrame
     local i = 2;
@@ -267,10 +268,16 @@ function Project45GunFire:init()
     armRotation = 0,
     twoHanded = config.getParameter("twoHanded", false),
     allowRotate = true,
-    allowFlip = true
+    allowFlip = true,
+    frontArmFrame = "rotation",
+    backArmFrame = "rotation"
   }
   self.stances = self.stances or {}
   local finalAimStance = self.stances.aimStance or {}
+  if not self.weapon.armFrameAnimations then
+    finalAimStance.frontArmFrame = "rotation"
+    finalAimStance.backArmFrame = "rotation"
+  end
   self.stances.aimStance = util.mergeTable(defaultAimStance, finalAimStance)
   
   -- compatibility stances

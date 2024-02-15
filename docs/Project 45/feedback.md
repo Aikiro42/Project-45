@@ -1,7 +1,7 @@
 
 # Features
 
-- [ ] container7799: add all guns in treasure pools with random stats and random installed features (Partially pushed to github)
+- [ ] container7799: add all guns in treasure pools with random stats and random installed features; what about looting? gun shop is good but i like when game decide which gun i can use, like borderlands. and also want ammo as resource. (Partial implementation pushed to github)
 
 - [ ] Hisdearmother: Ammo mod for shotguns that would Increase damage by 2x and recoil by 3x would be funny. (Under deliberation)
 
@@ -13,7 +13,7 @@
 
 # Bugs
 
-- [ ] Sanshi: A good portion of weapon mods uses the running animations for the holding animations, and because of this, it makes certain species visually incompatible (e.g. avali), as it has different arm animations for its run cycle.
+- [ ] Sanshi: A good portion of weapon mods uses the running animations for the holding animations, and because of this, it makes certain species visually incompatible (e.g. avali), as it has different arm animations for its run cycle. (Partial fix pushed to github)
 
 - [ ] Azure: I recently discovered a bug that when I equipped my gun - AMR to be exact - with incendiary bullets and when dealing damage to a monster with incendiary bullets, the game crushed and a pop-up says: "Exception caught in client main-loop (StarException) Unknown damage definition with kind 'physical'. " it happens occasionally but as long as you keep triggering this mod, it becomes frequent. I might also subscribed other mods related with damage (I forgot the name, but I can still remember one of which it changed the elemental effects when hit, for example: you can frozen the enemy with ice elemental weapon) when I tested this. As so far with my reasoning, I could tell this crash has something to do with the incendiary bullets. (Enhanced Elemental Effects mod bug)
 
