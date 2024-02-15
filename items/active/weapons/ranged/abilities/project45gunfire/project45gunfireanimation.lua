@@ -680,7 +680,7 @@ function drawSummonArea(color, width)
   
   local i = 1
   while i < #circlePoly do
-    local segment = {circlePoly[i], circlePoly[i+1]}
+    local segment = worldify(circlePoly[i], circlePoly[i+1])
     localAnimator.addDrawable({
       line = segment,
       width = circleWidth,
