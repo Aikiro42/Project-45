@@ -58,7 +58,7 @@ function update(dt, fireMode, shiftHeld)
     -- give item
     animator.playSound(chosenPool)
     if player then
-      local treasure = root.createTreasure(self.gachaPools[chosenPool][2], 1, nil)
+      local treasure = root.createTreasure(self.gachaPools[chosenPool][2], 1, math.floor(math.random() * 2147483647))
       for _,item in pairs(treasure) do
         player.giveItem(item)
       end

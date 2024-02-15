@@ -37,11 +37,12 @@ function build(directory, config, parameters, level, seed)
   end
 
   -- configure seed
-  local rng = nil
+  local randStatBonus = 0
   if parameters.seed or seed then
     parameters.seed = configParameter("seed", seed or math.floor(math.random() * 2147483647))
     -- sb.logInfo(string.format("Seed of %s: %d", config.itemName, parameters.seed))
-    rng = sb.makeRandomSource(parameters.seed)
+    local rng = sb.makeRandomSource(parameters.seed)
+    randStatBonus = rng:randf(0, 1) * (parameters.bought and generalConfig.boughtRandBonusMult or 1)
   end
 
   if level and not configParameter("fixedLevel", true) then
@@ -300,21 +301,13 @@ function build(directory, config, parameters, level, seed)
         config.primaryAbility.baseDamage = archetypeDamage or config.primaryAbility.baseDamage
       end
 
-      if rng and not parameters.isRandomized then
+      -- generate random stats
+      if randStatBonus > 0 and not parameters.isRandomized then
 
-        local boughtRandMult = parameters.bought and generalConfig.boughtRandBonusMult or 1
-
-        parameters.primaryAbility.baseDamage = primaryAbility("baseDamage", 0)
-          * (rng:randf(0, generalConfig.maxRandBonuses.baseDamage) * boughtRandMult + 1)
-        -- sb.logInfo(string.format("baseDamage of %s: %.2f", config.itemName, parameters.primaryAbility.baseDamage))
-
-        parameters.primaryAbility.critChance = primaryAbility("critChance", 0)
-          * (rng:randf(0, generalConfig.maxRandBonuses.critChance) * boughtRandMult + 1)
-        -- sb.logInfo(string.format("critChance of %s: %.2f", config.itemName, parameters.primaryAbility.critChance * 100))
-
-        parameters.primaryAbility.critDamageMult = primaryAbility("critDamageMult", 1)
-          * (rng:randf(0, generalConfig.maxRandBonuses.critDamageMult) * boughtRandMult + 1)
-        -- sb.logInfo(string.format("critDamageMult of %s: x%.2f", config.itemName, parameters.primaryAbility.critDamageMult))
+        randStatBonus = randStatBonus
+        parameters.primaryAbility.baseDamage = primaryAbility("baseDamage", 0) * (generalConfig.maxRandBonuses.baseDamage * randStatBonus + 1)
+        parameters.primaryAbility.critChance = primaryAbility("critChance", 0) * (generalConfig.maxRandBonuses.critChance * randStatBonus + 1)
+        parameters.primaryAbility.critDamageMult = primaryAbility("critDamageMult", 1) * (generalConfig.maxRandBonuses.critDamageMult * randStatBonus + 1)
 
         parameters.isRandomized = true
 
@@ -401,6 +394,21 @@ function build(directory, config, parameters, level, seed)
       end
 
       local descriptionScore = 0
+      
+      local bonusDesc = ""
+      if randStatBonus > 0 and parameters.isRandomized then
+        bonusDesc = string.format("(%d%% Bonus)", math.floor(randStatBonus * 100))
+        descriptionScore = descriptionScore + math.ceil((#bonusDesc)/18)
+        local bonusColor = "#777777"
+        if randStatBonus > 0.75 then
+          bonusColor = "#fdd14d"
+        elseif randStatBonus > 0.5 then
+          bonusColor = "#d29ce7"
+        elseif randStatBonus > 0.25 then
+          bonusColor = "#60b8ea"
+        end
+        bonusDesc = project45util.colorText(bonusColor, bonusDesc) .. "\n"
+      end
 
       local passiveDesc = ""
       if primaryAbility("passiveDescription") then
@@ -446,7 +454,7 @@ function build(directory, config, parameters, level, seed)
         end
       end
 
-      local finalDescription = passiveDesc .. heavyDesc .. chargeDesc .. overchargeDesc .. multishotDesc .. modListDesc -- .. config.description
+      local finalDescription = bonusDesc .. passiveDesc .. heavyDesc .. chargeDesc .. overchargeDesc .. multishotDesc .. modListDesc -- .. config.description
       finalDescription = finalDescription == "" and project45util.colorText("#777777", "No notable qualities.") or finalDescription
       
       descriptionScore = descriptionScore + math.ceil((#config.description)/18)

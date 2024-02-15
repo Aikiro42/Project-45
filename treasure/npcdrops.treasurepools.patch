@@ -3,7 +3,7 @@
       "op": "add",
       "path": "/gangmemberTreasure/0/1/pool/-",
       "value": {
-          "weight": 0.25,
+          "weight": 0.5,
           "pool": "project45-enemy-drop"
       }
   },
@@ -11,7 +11,7 @@
       "op": "add",
       "path": "/banditTreasure/0/1/pool/-",
       "value": {
-          "weight": 0.25,
+          "weight": 0.5,
           "pool": "project45-enemy-drop"
       }
   },
@@ -19,7 +19,7 @@
       "op": "add",
       "path": "/templeguardtreasure/0/1/pool/-",
       "value": {
-          "weight": 0.25,
+          "weight": 0.5,
           "pool": "project45-enemy-drop"
       }
   },
@@ -27,7 +27,7 @@
       "op": "add",
       "path": "/hellguardtreasure/0/1/pool/-",
       "value": {
-          "weight": 0.25,
+          "weight": 0.5,
           "pool": "project45-enemy-drop"
       }
   },
@@ -35,7 +35,7 @@
       "op": "add",
       "path": "/bunkerguardtreasure/0/1/pool/-",
       "value": {
-          "weight": 0.25,
+          "weight": 0.5,
           "pool": "project45-enemy-drop"
       }
   },
@@ -43,7 +43,7 @@
       "op": "add",
       "path": "/castlelordtreasure/0/1/pool/-",
       "value": {
-          "weight": 0.25,
+          "weight": 0.5,
           "pool": "project45-enemy-drop"
       }
   },
@@ -51,7 +51,7 @@
       "op": "add",
       "path": "/castleguardtreasure/0/1/pool/-",
       "value": {
-          "weight": 0.25,
+          "weight": 0.5,
           "pool": "project45-enemy-drop"
       }
   },
@@ -59,7 +59,7 @@
       "op": "add",
       "path": "/floranwildhuntertreasure/0/1/pool/-",
       "value": {
-          "weight": 0.25,
+          "weight": 0.5,
           "pool": "project45-enemy-drop"
       }
   },
@@ -67,7 +67,7 @@
       "op": "add",
       "path": "/prisongunmantreasure/0/1/pool/-",
       "value": {
-          "weight": 0.25,
+          "weight": 0.5,
           "pool": "project45-enemy-drop"
       }
   },
@@ -75,7 +75,7 @@
       "op": "add",
       "path": "/prisonberserkertreasure/0/1/pool/-",
       "value": {
-          "weight": 0.25,
+          "weight": 0.5,
           "pool": "project45-enemy-drop"
       }
   },
@@ -83,7 +83,7 @@
       "op": "add",
       "path": "/prisonbruisertreasure/0/1/pool/-",
       "value": {
-          "weight": 0.25,
+          "weight": 0.5,
           "pool": "project45-enemy-drop"
       }
   },
@@ -91,7 +91,7 @@
       "op": "add",
       "path": "/airshipcaptaintreasure/1/1/pool/-",
       "value": {
-          "weight": 0.25,
+          "weight": 0.5,
           "pool": "project45-enemy-drop"
       }
   },
@@ -99,7 +99,7 @@
       "op": "add",
       "path": "/airshipcaptaintreasure/0/1/pool/-",
       "value": {
-          "weight": 0.25,
+          "weight": 0.5,
           "pool": "project45-enemy-drop"
       }
   },
@@ -107,7 +107,7 @@
       "op": "add",
       "path": "/airshipguardtreasure/0/1/pool/-",
       "value": {
-          "weight": 0.25,
+          "weight": 0.5,
           "pool": "project45-enemy-drop"
       }
   },
@@ -115,7 +115,7 @@
       "op": "add",
       "path": "/guardtreasure/0/1/pool/-",
       "value": {
-          "weight": 0.25,
+          "weight": 0.5,
           "pool": "project45-enemy-drop"
       }
   },
@@ -123,7 +123,7 @@
       "op": "add",
       "path": "/eyeguardtreasure/0/1/pool/-",
       "value": {
-          "weight": 0.25,
+          "weight": 0.5,
           "pool": "project45-enemy-drop"
       }
   },
@@ -131,7 +131,7 @@
       "op": "add",
       "path": "/shroomguardtreasure/0/1/pool/-",
       "value": {
-          "weight": 0.25,
+          "weight": 0.5,
           "pool": "project45-enemy-drop"
       }
   },
@@ -139,7 +139,7 @@
       "op": "add",
       "path": "/wizardtreasure/0/1/pool/-",
       "value": {
-          "weight": 0.25,
+          "weight": 0.5,
           "pool": "project45-enemy-drop"
       }
   },
@@ -147,7 +147,7 @@
       "op": "add",
       "path": "/villagertreasure/0/1/pool/-",
       "value": {
-          "weight": 0.25,
+          "weight": 0.5,
           "pool": "project45-enemy-drop"
       }
   }

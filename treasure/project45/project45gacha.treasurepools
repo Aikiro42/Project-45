@@ -52,13 +52,14 @@
   "project45-enemy-drop": [
     [0, {
       "pool" : [
+        {"weight" : 1, "item" : "project45-wildcardstatmod"},
         {"weight" : 0.60, "pool" : "project45-gacha-r"},
         {"weight" : 0.36, "pool" : "project45-gacha-sr"},
         {"weight" : 0.02, "pool" : "project45-gacha-ssr"},
         {"weight" : 0.02, "pool" : "project45-gacha-xssr"}
       ],
-      "poolRounds" : 1,
-      "allowDuplication" : true
+      "poolRounds" : 2,
+      "allowDuplication" : false
     }]
   ]
 
