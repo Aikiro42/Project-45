@@ -70,3 +70,46 @@ Some guns have a chance to jam when firing, especially when reloaded badly. When
 Modding weapons is similar to installing augments on EPPs. Whether you can install a mod on a weapon or not is largely dependent on both of their ^#d29ce7;Categories^reset; and associated ^#9da8af;Mod Slots^reset;. For ammo mods, their ^#EA9931;Archetype^reset; also matters. For stat mods, the weapon's remaining ^#95d1f3;Upgrade Capacity^reset; matters.
 
 If a mod is incompatible with a weapon, it will be indicated the next time you hold your weapon via red text that appears above the player character's head.
+
+# ^#E2C344;Stat Bonuses^reset;
+Weapons spawn with a seeded stat ^#96cbe7;bonus ratio^reset;.
+
+The weapons can have
+- up to a ^#ea9931;+60%^reset; bonus to their base damage,
+- up to a ^#f4988c;+100%^reset; bonus to their base critical chance, and
+- up to a ^#d93a3a;+30%^reset; bonus to their base critical damage multiplier.
+
+For example, if a weapon is indicated to bear a \"60% bonus\", this means that they get
+- 1 + ^#96cbe7;0.6^reset; * ^#ea9931;0.6^reset; = ^#ea9931;x1.36 multiplier to their base damage^reset;
+- 1 + ^#96cbe7;0.6^reset; * ^#f4988c;1^reset; = ^#f4988c;x1.6 multiplier to their base crit chance^reset;
+- 1 + ^#96cbe7;0.6^reset; * ^#d93a3a;0.3^reset; = ^#d93a3a;x1.18 multiplier to their base crit damage^reset;
+
+Items bought from the Project 45 Gun Shop can only have a maximum bonus ratio of ^#d93a3a;50%.^reset;
+
+# ^#E2C344;The Gun Bag^reset;
+Gun Bags provides a relatively affordable way to get various Project 45 items.
+
+They work like a reusable reward bag; the first time a Gun Bag is bought, they come with one free use.
+
+Gun Bags have the following odds:
+- a ^#96cbe7;50%^reset; chance to give a ^#96cbe7;Common or Rare item (R)^reset;,
+- a ^#cb44ff;46%^reset; chance to give a ^#cb44ff;Rare or higher rarity item (SR)^reset;,
+- a ^#ffffa7;2%^reset; chance to give an ^#ffffa7;Essential item (SSR)^reset;, and
+- a ^#fdd14d;2%^reset; chance to give ^#fdd14d;Unique Essential items (XSSR)^reset;.
+
+# ^#E2C344;Gun Bag Guarantees^reset;
+Gun Bags will guarantee you a ^#fdd14d;Unique (XSSR)^reset; item within the first 25 pulls. After that, it will guarantee you either a ^#fdd14d;Unique (XSSR)^reset; or ^#ffffa7;Essential (SSR)^reset; item within the next 25 pulls after.
+
+If you obtain an ^#ffffa7;Essential (SSR)^reset; item, you are guaranteed a ^#fdd14d;Unique (XSSR)^reset; item within the next 25 pulls.
+
+# ^#E2C344;(Quickbar) Mod Settings^reset;
+If you have Stardust Core/Lite or Quickbar Mini installed, you can change the following settings:
+- ^#EA9931;Performance Mode:^reset; If this setting is ticked,
+  - most particles (e.g. casings, smoke) will not be emitted,
+  - dynamic audio (hollow sounds, firing sound pitch changes) is disabled, and
+  - screenshake, magazine animations, and lasers are disabled
+- ^#EA9931;Render Bars Beside Cursor:^reset; If this setting is ticked, the reload bar and jam bar will be rendered beside the cursor.
+- ^#EA9931;Use Reload/Empty Images:^reset; If this setting is ticked, animated sprites will be used to indicate a reloading or empty gun, instead of 'R' and 'E'.
+  ^#D93A3A;- Enabling Performance Mode disables this setting.^reset;
+- ^#EA9931;Accurate Reload/Charge Bars:^reset; If this setting is ticked, drawables will be used to render both the reload ranges and arrow and the charge bar progress.
+  ^#D93A3A;- Enabling Performance Mode disables this setting.^reset;

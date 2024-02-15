@@ -18,3 +18,21 @@
 - Improved silenced firing sfx
 [h2]Mod-side:[/h2]
 - Changed gun repair kit category to be usable with bk3k's inventory mod
+
+#2024-02-15
+[h2]User-side:[/h2]
+- Guns now spawn with random stat bonuses, particularly to their base damage, crit chance and crit damage.
+- Added settings for maximum percent bonuses applied to gun stats, namely the base damage, critical chance and critical damage.
+- The stat bonus ratio is generated once and consistently applied to stats. e.g. a gun with 60% bonus will get a 60% bonus to its damage, crit chance and crit damage based on the max random stat values specified in the general config.
+- Added a 0.5x multiplier to the bonus received by guns bought from the gun shop
+- To more easily determine better guns, the bonus is formatted added to the final description.
+- Improved mod settings window
+- Added option to disable arm frame animations. Arms default to their rotation frames when switching stances (e.g. cocking, holding, reloading). Added for species compatibility, since some species restructure arm framesheets or animations.
+- Added wildcard stat mods to the npc droptables.
+- Increased the chance of project 45 items dropping from enemies.
+[h2]Mod-side:[/h2]
+- Changed the disassembler code to accomodate the new features
+- Changed gunshop code to accomodate the new features
+- Changed buildscript code to accomodate the new features
+- Made the gacha drop seeded items.
+
