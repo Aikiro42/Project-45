@@ -21,6 +21,16 @@ function apply(input, override, augment)
     local statList = input.parameters.statList or {nil} -- retrieve stat mods
     local upgradeCount = input.parameters.upgradeCount or 0
     local upgradeCapacity = modInfo.upgradeCapacity or -1
+
+    local configParameterStat = function(stat, default)
+        if output.parameters.primaryAbility[stat] ~= nil then
+            return output.parameters.primaryAbility[stat]
+        elseif output.config.primaryAbility[stat] ~= nil then
+            return output.config.primaryAbility[stat]
+        else
+            return default
+        end
+    end
     
     -- MOD INSTALLATION GATES
 
@@ -51,7 +61,7 @@ function apply(input, override, augment)
     -- Alter Damage Per Shot
     if augment.baseDamage then
 
-        statModifiers.baseDamage = statModifiers.baseDamage or {base = output.config.primaryAbility.baseDamage}
+        statModifiers.baseDamage = statModifiers.baseDamage or {base = configParameterStat("baseDamage")}
                 
         if augment.baseDamage.additive then
             statModifiers.baseDamage.additive =
@@ -79,11 +89,11 @@ function apply(input, override, augment)
     if augment.fireTime then
 
         statModifiers.fireTime = statModifiers.fireTime or {base = {
-            cockTime = output.config.primaryAbility.cockTime,
-            cycleTime = output.config.primaryAbility.cycleTime,
-            chargeTime = output.config.primaryAbility.chargeTime,
-            overchargeTime = output.config.primaryAbility.overchargeTime,
-            fireTime = output.config.primaryAbility.fireTime
+            cockTime = configParameterStat("cockTime"),
+            cycleTime = configParameterStat("cycleTime"),
+            chargeTime = configParameterStat("chargeTime"),
+            overchargeTime = configParameterStat("overchargeTime"),
+            fireTime = configParameterStat("fireTime")
         }}
         
         local newCockTime = statModifiers.fireTime.base.cockTime
@@ -215,7 +225,7 @@ function apply(input, override, augment)
     -- modify reload cost
     if augment.reloadCost then
 
-        statModifiers.reloadCost = statModifiers.reloadCost or {base=output.config.primaryAbility.reloadCost}
+        statModifiers.reloadCost = statModifiers.reloadCost or {base = configParameterStat("reloadCost")}
 
         if augment.reloadCost.additive then
             statModifiers.reloadCost.additive =
@@ -242,7 +252,7 @@ function apply(input, override, augment)
     -- modify crit chance
     if augment.critChance then
         
-        statModifiers.critChance = statModifiers.critChance or {base=output.config.primaryAbility.critChance}
+        statModifiers.critChance = statModifiers.critChance or {base=configParameterStat("critChance")}
 
         if augment.critChance.additive then
             statModifiers.critChance.additive =
@@ -266,7 +276,7 @@ function apply(input, override, augment)
     -- modify critDamage
     if augment.critDamage then
         
-        statModifiers.critDamage = statModifiers.critDamage or {base=output.config.primaryAbility.critDamageMult}
+        statModifiers.critDamage = statModifiers.critDamage or {base=configParameterStat("critDamageMult")}
 
         if augment.critDamage.additive then
             statModifiers.critDamage.additive =
