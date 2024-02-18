@@ -7,7 +7,7 @@
     "subtitle": "Stat Mod"
   },
   "modCategory" : "statMod",
-  "category" : "eppAugment",
+  "category" : "uniqueWeapon",
   "itemTags": ["weapon"],
   "inventoryIcon" : "/items/augments/project45-gunmods/stat/project45-critdamagemod/project45-critdamageaddmod.png",
   "description": "Increases Crit Damage by 0.1.",

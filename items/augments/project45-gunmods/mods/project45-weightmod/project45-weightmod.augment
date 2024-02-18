@@ -4,7 +4,7 @@
   "rarity" : "Uncommon",
   "tooltipKind" : "project45gunmod2",
   "modCategory" : "gunMod",
-  "category" : "eppAugment",
+  "category" : "uniqueWeapon",
   "itemTags": ["weapon"],
   "tooltipFields":{
     "subtitle": "Gun Mod",

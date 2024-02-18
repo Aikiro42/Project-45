@@ -7,7 +7,7 @@
     "subtitle": "Stat Mod"
   },
   "modCategory" : "statMod",
-  "category" : "eppAugment",
+  "category" : "uniqueWeapon",
   "itemTags": ["weapon"],
   "inventoryIcon" : "/items/augments/project45-gunmods/stat/project45-firetimemod/project45-firetimeaddmod.png",
   "description": "Decreases Fire Time by 2ms.",

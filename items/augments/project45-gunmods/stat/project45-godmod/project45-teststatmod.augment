@@ -7,7 +7,7 @@
     "subtitle": "Stat Mod"
   },
   "modCategory" : "statMod",
-  "category" : "eppAugment",
+  "category" : "uniqueWeapon",
   "inventoryIcon" : "/items/augments/project45-gunmods/stat/project45-godmod/project45-godmod.png",
   "statInfo" : "\nDamage*2+1\nfireTime*2-1\n(reloadCost/2)-1\ncritChance*2+1\ncritDamage*2+1",
   "description": "Mod used to test statmod.lua.",

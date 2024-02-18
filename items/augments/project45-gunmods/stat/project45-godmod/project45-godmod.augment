@@ -7,7 +7,7 @@
     "subtitle": "Stat Mod"
   },
   "modCategory" : "statMod",
-  "category" : "eppAugment",
+  "category" : "uniqueWeapon",
   "itemTags": ["weapon"],
   "inventoryIcon" : "/items/augments/project45-gunmods/stat/project45-godmod/project45-godmod.png",
   "statInfo" : "^#d29ce7;Damage +2x\nCrit Chance +100%\nCrit Damage +1\nFire Time +0.5d^reset;",

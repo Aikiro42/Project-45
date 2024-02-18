@@ -7,7 +7,7 @@
     "subtitle": "Stat Mod"
   },
   "modCategory" : "statMod",
-  "category" : "eppAugment",
+  "category" : "uniqueWeapon",
   "itemTags": ["weapon"],
   "inventoryIcon" : "/items/augments/project45-gunmods/stat/project45-reloadcostmod/project45-reloadcostaddmod.png",
   "description": "Decreases Reload Cost by 3 energy.",

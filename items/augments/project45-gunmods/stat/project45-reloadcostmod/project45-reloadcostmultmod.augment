@@ -7,7 +7,7 @@
     "subtitle": "Stat Mod"
   },
   "modCategory" : "statMod",
-  "category" : "eppAugment",
+  "category" : "uniqueWeapon",
   "itemTags": ["weapon"],
   "inventoryIcon" : "/items/augments/project45-gunmods/stat/project45-reloadcostmod/project45-reloadcostmultmod.png",
   "statInfo" : "^#9BBA3D;Reload Cost +0.2d^reset;",
