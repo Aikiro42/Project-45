@@ -455,7 +455,7 @@ function build(directory, config, parameters, level, seed)
       
       local modListDesc = ""
       if modList then
-        local exclude = set.new({"ability","rail","sights","muzzle","underbarrel","stock","ammoType"})
+        local exclude = set.new({"passive","ability","rail","sights","muzzle","underbarrel","stock","ammoType"})
         for modSlot, modKind in pairs(modList) do
           if not exclude[modSlot] and modKind[1] ~= "ability" then
             descriptionScore = descriptionScore + 1

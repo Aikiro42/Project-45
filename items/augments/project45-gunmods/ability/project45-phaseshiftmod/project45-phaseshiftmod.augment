@@ -22,8 +22,8 @@
     "slot": "rail",
     "altAbilityType" : "project45phaseshift",
     "overrideTwoHanded": true,
-    "twoHanded": true
-
+    "twoHanded": true,
+    "hasShiftAction": true
   },
 
   "scripts" : [ "/scripts/augments/project45-gunmod/abilitymod.lua" ],

@@ -20,7 +20,7 @@ function Project45GunFireReload:update(dt, fireMode, shiftHeld)
     and not self.triggered
     then
 
-        if status.resourcePositive("energy") then
+        if status.resourcePositive("energy") and not status.resourceLocked("energy") then
             storage.reloadSignal = true
         else
             animator.playSound("error")

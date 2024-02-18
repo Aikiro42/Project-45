@@ -161,6 +161,7 @@
       "pool" : [
         // COMMON
         {"weight" : 1, "item" : "project45-manualreloadmod"},
+        {"weight" : 1, "item" : "project45-shiftreloadmod"},
 
         // UNCOMMON
         {"weight" : 0.5, "item" : "project45-reflexsightsmod"},

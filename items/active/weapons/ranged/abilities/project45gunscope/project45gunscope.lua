@@ -26,7 +26,7 @@ function Project45GunScope:update(dt, fireMode, shiftHeld)
     activeItem.setScriptedAnimationParameter("altLaserColor", self.laserColor)
     activeItem.setScriptedAnimationParameter("altLaserWidth", self.laserWidth)
     storage.currentCritChance = self.aimedCritChance
-    if shiftHeld then
+    if shiftHeld and not self.weapon.overrideShiftAction then
       if self.shiftHeldTimer < 0 then
         self.shiftHeldTimer = 0
       end

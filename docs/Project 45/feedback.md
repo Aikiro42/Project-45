@@ -1,19 +1,7 @@
 
 # Features
 
-- [x] ~~container7799: add all guns in treasure pools with random stats and random installed features; what about looting? gun shop is good but i like when game decide which gun i can use, like borderlands. and also want ammo as resource.~~ (Partially implemented)
-
-- [x] ~~LostVandal: "I love these designs. I wish more weapon mods added stuff to loot pools though. I hate having to craft all the good stuff. Finding it feels so much more rewarding."~~ (Implemented) 
-
-- [x] ~~goblin with a fat ass: Would it be possible to turn off laser sights and whatnot while reloading? The handcannons are especially distracting with the beam spinning.~~ (Implemented)
-
-- [x] ~~At-Las OS: a drum fed shotgun would be pretty neat~~ (Implemented)
-
-- [ ] Ryu Ketsueki: I refer to some items as R, SR, SSR, and XSSR in the in-game manual codex, so maybe I could alter the buildscript and the item configs to use those rarities instead (Planned)
-
-- [ ] Ryu Ketsueki: Add a way for primary and alt abilities to more easily access the installed mods of the weapon (Planned)
-
-- [ ] Ryu Ketsueki: I wonder if it would be possible to put manual reload on Shift and make that mod available for all weapons and not only those which don't have an action on Right Shift
+## Under Deliberation
 
 - [ ] Hisdearmother: Ammo mod for shotguns that would Increase damage by 2x and recoil by 3x would be funny. (Under deliberation)
 
@@ -24,6 +12,26 @@
   - advanced wildcard (more affected stats)
   - mystical wildcard (costs essence. doesn't consume upgrade capacity. can change almost all parameters. completely random. can break weapon)
   (Under Deliberation)
+
+## Planning/Planned
+
+- [ ] Ryu Ketsueki: Add a way for primary and alt abilities to more easily access the installed mods of the weapon (Planned)
+
+- [ ] Ryu Ketsueki: I wonder if it would be possible to put manual reload on Shift and make that mod available for all weapons and not only those which don't have an action on Right Shift (Planning)
+
+## Pushed to Github
+
+- [ ] Ryu Ketsueki: I refer to some items as R, SR, SSR, and XSSR in the in-game manual codex, so maybe I could alter the buildscript and the item configs to use those rarities instead (Pushed to Github)
+
+## Completed
+
+- [x] ~~container7799: add all guns in treasure pools with random stats and random installed features; what about looting? gun shop is good but i like when game decide which gun i can use, like borderlands. and also want ammo as resource.~~ (Partially implemented)
+
+- [x] ~~LostVandal: "I love these designs. I wish more weapon mods added stuff to loot pools though. I hate having to craft all the good stuff. Finding it feels so much more rewarding."~~ (Implemented) 
+
+- [x] ~~goblin with a fat ass: Would it be possible to turn off laser sights and whatnot while reloading? The handcannons are especially distracting with the beam spinning.~~ (Implemented)
+
+- [x] ~~At-Las OS: a drum fed shotgun would be pretty neat~~ (Implemented)
 
 # Bugs
 

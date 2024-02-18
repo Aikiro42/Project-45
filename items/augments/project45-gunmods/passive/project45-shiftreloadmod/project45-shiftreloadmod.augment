@@ -1,0 +1,37 @@
+{
+  "itemName" : "project45-shiftreloadmod",
+  "price" : 1000,
+  "rarity" : "Common",
+  "tooltipKind" : "project45gunmod2",
+  "modCategory" : "passiveMod",
+  "category" : "uniqueWeapon",
+  "itemTags": ["weapon"],
+  "tooltipFields": {
+    "subtitle": "Passive Mod"
+  },
+  "inventoryIcon" : "/items/augments/project45-gunmods/passive/project45-shiftreloadmod/project45-shiftreloadmod.png",
+  "description" : "Enables you to manually reload your weapon. ^#d93a3a;Overrides crouch actions of ability mods.^reset;",
+  "technicalInfo": "- Tap crouch to eject the magazine or initiate reload.\n- Fire to do an active reload.",
+  "shortdescription" : "Shift Reload",
+  "archetype": "Passive Ability",
+  
+  "augment":{
+    "modName": "Shift Reload",
+    "upgradeCost": 0,
+    "category": "universal",
+    "slot": "passive",
+    "passiveScript" : "/items/augments/project45-gunmods/passive/project45-shiftreloadmod/project45-shiftreloadmod.lua",
+    "passiveParameters": {},
+    "passiveDescription": "Shift Reload",
+    "animationCustom": {
+      "sounds":{
+        "shiftReloadError": ["/sfx/interface/clickon_error.ogg"]
+      }
+    },
+    "hasShiftAction": true,
+    "overrideShiftAction": true
+  },
+
+  "scripts" : [ "/scripts/augments/project45-gunmod/passivemod.lua" ],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
+}

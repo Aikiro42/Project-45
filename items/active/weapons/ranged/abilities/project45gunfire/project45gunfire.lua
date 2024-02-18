@@ -37,7 +37,9 @@ function Project45GunFire:init()
   }) do
     self[f .. "Passive"] = Passive[f] or function(...) end
   end
-
+  
+  self.weapon.overrideShiftAction = self.overrideShiftAction
+  
   self:initPassive()
 
   -- INITIALIZATIONS

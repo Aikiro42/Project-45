@@ -22,7 +22,8 @@
     "slot": "sights",
     "altAbilityType" : "project45gunscope",
     "overrideTwoHanded": true,
-    "twoHanded": true
+    "twoHanded": true,
+    "hasShiftAction": true
   },
 
   "scripts" : [ "/scripts/augments/project45-gunmod/abilitymod.lua" ],

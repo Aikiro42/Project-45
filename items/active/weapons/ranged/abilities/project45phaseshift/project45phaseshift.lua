@@ -26,7 +26,7 @@ function Project45PhaseShift:update(dt, fireMode, shiftHeld)
         self.debugTimer = 0.5
     end
 
-    if shiftHeld then
+    if shiftHeld and not self.weapon.overrideShiftAction then
 
         -- start timer if not started already
         if self.shiftHeldTimer < 0 then self.shiftHeldTimer = 0 end

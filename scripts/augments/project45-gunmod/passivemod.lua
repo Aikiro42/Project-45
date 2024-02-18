@@ -10,8 +10,6 @@ local gunmod_apply = apply
 
 function apply(input)
 
-  -- do not install mod if the thing this mod is applied to isn't my gun
-  -- TODO: make this variable more unique
   local output = Item.new(input)
   local modInfo = sb.jsonMerge(output.config.project45GunModInfo, input.parameters.project45GunModInfo)
   if not modInfo then return end
@@ -35,19 +33,25 @@ function apply(input)
     local upgradeCost = augment.upgradeCost
     local upgradeCapacity, upgradeCount
 
-
     -- MOD INSTALLATION GATES
     
     -- Deny installation if slot is occupied
     if modSlots[augment.slot] then
-      sb.logError("(abilitymod.lua) Ability mod application failed: something already installed in slot")
+      sb.logError("(passivemod.lua) Passive mod application failed: something already installed in slot")
       return gunmodHelper.addMessage(input, project45util.capitalize(augment.slot) .. " mod slot occupied")
     end
 
-    -- Deny installation if ability is already installed
-    if modSlots.ability or input.parameters.altAbilityType or (output.config.altAbilityType or output.config.altAbility) then
-      sb.logError("(abilitymod.lua) Ability mod application failed: something already installed in ability")
-      return gunmodHelper.addMessage(input, "Weapon has ability")
+    -- Deny installation if passive script is already established
+    if modSlots.passive or input.parameters.primaryAbility.passiveScript
+    or output.config.primaryAbility.passiveScript then
+      sb.logError("(passivemod.lua) Passive mod application failed: something already installed as passive script")
+      return gunmodHelper.addMessage(input, "Weapon has passive")
+    end
+
+    -- Deny installation if shift action is already established and passive does not override it
+    if augment.hasShiftAction and input.parameters.hasShiftAction and not augment.overrideShiftAction then
+      sb.logError("(passivemod.lua) Passive mod application failed: something uses the shift button")
+      return gunmodHelper.addMessage(input, "Weapon shift action already utilized")
     end 
 
     -- Deny installation if upgrade capacity is maxed
@@ -121,39 +125,37 @@ function apply(input)
 
     -- MOD INSTALLATION PROCESS
 
-    -- prepare tables to alter primary ability
-    local oldPrimaryAbility = output.config.primaryAbility or {} -- retrieve old primary ability
-    local newPrimaryAbility = input.parameters.primaryAbility or {} -- retrieve modified primary ability
-    oldPrimaryAbility = sb.jsonMerge(oldPrimaryAbility, newPrimaryAbility) -- TESTME: merge new primary ability on old
-    
-    -- alter or set ability type if present
-    if augment.altAbilityType and input.parameters.altAbilityType ~= augment.altAbilityType then
-    
-      output:setInstanceValue("altAbilityType", augment.altAbilityType)
+    -- prepare to alter stats and the primary ability in general
+    local newPrimaryAbility = {}
 
-      if augment.overrideTwoHanded then
-        output:setInstanceValue("twoHanded", augment.twoHanded)
-      end
-      
-      -- merge ability parameters
-      if augment.altAbility then
-        output:setInstanceValue("altAbility", sb.jsonMerge(input.parameters.altAbility or {}, augment.altAbility))
-      end
-
+    -- Establish Passive Script
+    if augment.passiveScript then
+      newPrimaryAbility = sb.jsonMerge(newPrimaryAbility, { passiveScript = augment.passiveScript })
     end
 
-    -- establish whether shift action is used
-    output:setInstanceValue("hasShiftAction", augment.hasShiftAction)
+    -- Establish Passive Parameters
+    if augment.passiveParameters then
+      newPrimaryAbility = sb.jsonMerge(newPrimaryAbility, augment.passiveParameters)
+    end
+    newPrimaryAbility = sb.jsonMerge(newPrimaryAbility, {
+      overrideShiftAction = augment.overrideShiftAction,
+      passiveDescription = augment.passiveDescription
+    })
+    -- merge changes
+    output:setInstanceValue("primaryAbility", sb.jsonMerge(input.parameters.primaryAbility, newPrimaryAbility))
+    
+    -- merge in custom animations
+    output:setInstanceValue("animationCustom", sb.jsonMerge(input.parameters.animationCustom or {}, augment.animationCustom or {}))
 
     -- MODIFICATION POST-MORTEM
 
     -- add mod info to list of installed mods
-    modSlots.ability = {
-        "ability",
+    modSlots.passive = {
+        augment.passiveName or augment.modName or "Passive",
         config.getParameter("itemName")
     }
     modSlots[augment.slot] = {
-        "ability",
+        augment.passiveName or augment.modName or "Passive",
         config.getParameter("itemName")
     }
     
