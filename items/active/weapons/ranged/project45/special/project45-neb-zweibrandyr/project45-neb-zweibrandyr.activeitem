@@ -23,8 +23,7 @@
     ],
     "acceptsModSlot": [
       "rail",
-      "muzzle",
-      "underbarrel"
+      "muzzle"
     ]
   },
 
@@ -126,7 +125,6 @@
 
   "ejectionPortOffset": [-0.25, 0.625],
   "magazineOffset": [0.25, 0],
-  "underbarrelOffset": [1.75, -0.375],
 
   "scripts" : ["/items/active/weapons/ranged/project45gunneo.lua"],
     
