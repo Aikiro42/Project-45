@@ -3,6 +3,7 @@
   "price" : 50000,
   "maxStack" : 1,
   "rarity" : "Essential",
+  "isUnique": true,
   "description" : "A large plasma machine gun made out of ^#a8e6e2;nitrosteel^reset;.",
   "shortdescription" : "^#fdd14d;Typhon P45^reset;",
   "gunArchetype": "machineGun",

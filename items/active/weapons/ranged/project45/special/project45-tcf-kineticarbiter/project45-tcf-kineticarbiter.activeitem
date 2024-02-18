@@ -3,6 +3,7 @@
   "price" : 50000,
   "maxStack" : 1,
   "rarity" : "Essential",
+  "isUnique": true,
   "description" : "A railgun found in the forests of Fortuna III.",
   "shortdescription" : "^#fdd14d;Kinetic Arbiter^reset;",
   "tooltipKind" : "project45gun",

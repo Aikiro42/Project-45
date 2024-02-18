@@ -16,6 +16,15 @@ function build(directory, config, parameters, level, seed, wildcardStatInfo)
     "stock"
   })
 
+  local rarityConversions = {
+    common = project45util.colorText("#96cbe7", "R (Common)"),
+    uncommon = project45util.colorText("#96cbe7", "R (Uncommon)"),
+    rare = project45util.colorText("#d29ce7", "SR (Rare)"),
+    legendary = project45util.colorText("#d29ce7", "SR (Legendary)"),
+    essential = project45util.colorText("#ffffa7", "SSR (Essential)"),
+    unique = project45util.colorText("#f4988c", "XSSR (UNIQUE)")
+  }
+
   local statSlots = {
     baseDamage = "^#FF9000;Base Damage",
     fireTime = "^#FFD400;Fire Time",
@@ -26,7 +35,6 @@ function build(directory, config, parameters, level, seed, wildcardStatInfo)
     level = "^#a8e6e2;Level"
   }
 
-  --[[
   local configParameter = function(keyName, defaultValue)
     if parameters[keyName] ~= nil then
       return parameters[keyName]
@@ -36,7 +44,6 @@ function build(directory, config, parameters, level, seed, wildcardStatInfo)
       return defaultValue
     end
   end
-  --]]
 
   construct(config, "augment")
 
@@ -97,6 +104,8 @@ function build(directory, config, parameters, level, seed, wildcardStatInfo)
   if config.statInfo then
     config.tooltipFields.technicalLabel = config.tooltipFields.technicalLabel .. "^#b2e89d;" .. (wildcardStatInfo or config.statInfo) .. "^reset;\n"
   end
+
+  config.tooltipFields.rarityLabel = rarityConversions[configParameter("isUnique", false) and "unique" or string.lower(configParameter("rarity", "common"))]
 
   return config, parameters
 end

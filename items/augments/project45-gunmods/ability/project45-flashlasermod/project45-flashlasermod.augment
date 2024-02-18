@@ -1,7 +1,7 @@
 {
   "itemName" : "project45-flashlasermod",
   "price" : 7500,
-  "rarity" : "Essential",
+  "rarity" : "Legendary",
   "tooltipKind" : "project45gunmod2",
   "modCategory" : "abilityMod",
   "category": "uniqueWeapon",

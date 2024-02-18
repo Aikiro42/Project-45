@@ -70,6 +70,7 @@ More information can be found in the in-mod [b]Project 45 Manual[/b] sold by the
 [list]
 [*] [b]Nebulox[/b] for the gun sprites, weapon mod sprites, modding guidance, code snippets, art style and palette
 [*] [b]Silver Sokolova[/b] for testing, reviewing and providing feedback for the mod pre-release
+[*] [b]Ryu Ketsueki[/b] for testing the mod post-release
 [*] [b]Raizzy[/b] for the Zweibrandyr and part of its palette
 [*] [b]Nitrosteel[/b], [b]Silver Sokolova[/b], [b]clay eater (patman)[/b], [b]Chofranc[/b] and the rest of #mod-dev for helping out with concepts and general modding guidance
 [*] [b]Nitrosteel[/b] for the Powerstave, and Typhon and its respective assets

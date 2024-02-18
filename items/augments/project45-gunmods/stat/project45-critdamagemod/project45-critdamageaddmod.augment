@@ -1,7 +1,7 @@
 {
   "itemName" : "project45-critdamageaddmod",
   "price" : 2500,
-  "rarity" : "Legendary",
+  "rarity" : "Rare",
   "tooltipKind" : "project45gunmod2",
   "tooltipFields": {
     "subtitle": "Stat Mod"

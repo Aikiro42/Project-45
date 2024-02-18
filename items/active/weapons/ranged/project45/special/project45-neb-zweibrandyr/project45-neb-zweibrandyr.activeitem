@@ -3,6 +3,7 @@
   "price" : 50000,
   "maxStack" : 1,
   "rarity" : "Essential",
+  "isUnique": true,
   "description" : "A machine gun made out of ^#f4988c;raiizy^reset;-^#d29ce7;nebulox^reset; alloy.",
   "shortdescription" : "^#fdd14d;Zweibrandyr^reset;",
   "gunArchetype": "machineGun",

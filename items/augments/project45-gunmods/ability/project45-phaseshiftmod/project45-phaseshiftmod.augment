@@ -1,7 +1,8 @@
 {
   "itemName" : "project45-phaseshiftmod",
-  "price" : 15000,
+  "price" : 17500,
   "rarity" : "Essential",
+  "isUnique": true,
   "tooltipKind" : "project45gunmod2",
   "modCategory" : "abilityMod",
   "category" : "uniqueWeapon",

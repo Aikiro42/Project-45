@@ -8,6 +8,15 @@ require "/items/buildscripts/project45abilities.lua"
 function build(directory, config, parameters, level, seed)
   
   local generalConfig = root.assetJson("/configs/project45/project45_generalconfig.config")
+
+  local rarityConversions = {
+    common = project45util.colorText("#96cbe7", "R (Common)"),
+    uncommon = project45util.colorText("#96cbe7", "R (Uncommon)"),
+    rare = project45util.colorText("#d29ce7", "SR (Rare)"),
+    legendary = project45util.colorText("#d29ce7", "SR (Legendary)"),
+    essential = project45util.colorText("#ffffa7", "SSR (Essential)"),
+    unique = project45util.colorText("#f4988c", "XSSR (UNIQUE)")
+  }
   
   parameters = parameters or {}
   parameters.primaryAbility = parameters.primaryAbility or {}
@@ -252,6 +261,7 @@ function build(directory, config, parameters, level, seed)
     config.tooltipFields = config.tooltipFields or {}
     config.tooltipFields.subtitle = generalConfig.categoryStrings[config.project45GunModInfo.category or "Generic"] -- .. "^#D1D1D1;" .. config.gunArchetype or config.category
     config.tooltipFields.levelLabel = util.round(configParameter("level", 1), 1)
+    config.tooltipFields.rarityLabel = rarityConversions[configParameter("isUnique", false) and "unique" or string.lower(configParameter("rarity", "common"))]
 
     local modList = parameters.modSlots or config.modSlots or {}
     if config.project45GunModInfo then

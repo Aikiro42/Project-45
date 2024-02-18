@@ -1,7 +1,7 @@
 {
   "itemName" : "project45-damagemultmod",
   "price" : 5000,
-  "rarity" : "Legendary",
+  "rarity" : "Rare",
   "tooltipKind" : "project45gunmod2",
   "tooltipFields": {
     "subtitle": "Stat Mod"

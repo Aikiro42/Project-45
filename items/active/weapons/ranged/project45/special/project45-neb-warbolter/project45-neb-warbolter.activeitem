@@ -3,6 +3,7 @@
   "price" : 50000,
   "maxStack" : 1,
   "rarity" : "Essential",
+  "isUnique": true,
   "description" : "A gun that's oddly effective against Miniknog Zombies.",
   "shortdescription" : "^#fdd14d;Warbolter^reset;",
   "tooltipKind" : "project45gun",

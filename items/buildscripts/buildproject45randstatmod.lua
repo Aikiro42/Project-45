@@ -118,7 +118,9 @@ function build(directory, config, parameters, level, seed)
     
     config.archetype = project45util.capitalize(config.archetype)
     local basePrice = (parameters.price or config.price)
-    parameters.price = math.floor(rng:randf(basePrice/3, basePrice*3))
+    parameters.price = math.floor(rng:randf(basePrice/3, basePrice*3) * 0.1)
+  else
+    -- shop preview goes here
   end
 
   return unrandBuild(directory, config, parameters, level, seed, randomStatInfo)
@@ -130,9 +132,15 @@ function generateRandomStat(statVector, rng, truncate)
   end
   local stat = 0
   if type(statVector) == "table" then
-    stat = rng:randf(statVector[1], statVector[2])
+    local lo = math.min(statVector[1], statVector[2])
+    local hi = math.max(statVector[1], statVector[2])
+    stat = rng:randf(lo, hi)
   else
-    stat = rng:randf(0, statVector)
+    if statVector > 0 then
+      stat = rng:randf(0, statVector)
+    else
+      stat = rng:randf(statVector, 0)
+    end
   end
   if truncate then
     stat = project45util.truncatef(stat, truncate)

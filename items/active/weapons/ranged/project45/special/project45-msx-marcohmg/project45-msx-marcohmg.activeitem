@@ -3,6 +3,7 @@
   "price" : 50000,
   "maxStack" : 1,
   "rarity" : "Essential",
+  "isUnique": true,
   "description" : "A simple machine gun, effective against Big Ape's constructs.",
   "shortdescription" : "^#fdd14d;Marco's HMG^reset;",
   "tooltipKind" : "project45gun",
