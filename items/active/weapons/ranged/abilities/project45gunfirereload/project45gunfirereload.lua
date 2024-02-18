@@ -16,10 +16,11 @@ function Project45GunFireReload:update(dt, fireMode, shiftHeld)
     end
     
     if self.fireMode == "alt"
-    and not self.weapon.currentAbility
+    -- and not self.weapon.currentAbility
+    and (self.weapon.reloadTimer < 0 or self.weapon.isReloading)
     and not self.triggered
     then
-
+        
         if status.resourcePositive("energy") and not status.resourceLocked("energy") then
             storage.reloadSignal = true
         else
@@ -29,6 +30,7 @@ function Project45GunFireReload:update(dt, fireMode, shiftHeld)
         self.triggered = true
     else
         storage.reloadSignal = false
+        
     end
 
 end

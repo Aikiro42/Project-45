@@ -387,24 +387,23 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
   self.currentRecoverTime = self.recoverTime[movementState] * self.recoverMult
   activeItem.setCursor("/cursors/project45-neo-cursor-" .. movementState .. ".cursor")
 
-  -- manual reload
-  if storage.reloadSignal then
-    storage.reloadSignal = false
-    if storage.ammo >= 0 and not self.triggered then
-      if storage.jamAmount > 0 then
-        self:updateJamAmount(0, true)
-        self:openBolt(self.breakAction and storage.ammo or 0)
-      else
-        self:openBolt(self.breakAction and storage.ammo or math.min(storage.ammo, self.ammoPerShot))        
-      end
-      if self.internalMag then
+  -- manual/shift reload
+  if self:reloadTriggered() and not self.weapon.isReloading then
+      if storage.ammo >= 0 and not self.triggered then
+        if storage.jamAmount > 0 then
+          self:updateJamAmount(0, true)
+          self:openBolt(self.breakAction and storage.ammo or 0)
+        else
+          self:openBolt(self.breakAction and storage.ammo or math.min(storage.ammo, self.ammoPerShot))        
+        end
+        if self.internalMag then
+          self:setState(self.reloading)
+        else
+          self:ejectMag()
+        end  
+      elseif self.weapon.reloadTimer < 0 then
         self:setState(self.reloading)
-      else
-        self:ejectMag()
       end
-    elseif self.weapon.reloadTimer < 0 then
-      self:setState(self.reloading)
-    end
   end
 
   -- trigger i/o logic
@@ -801,6 +800,7 @@ function Project45GunFire:reloading()
   -- self.weapon:setStance(self.stances.reloading)
   animator.playSound("reloadLoop", -1)
   while self.weapon.reloadTimer <= self.reloadTime do
+    self.weapon.isReloading = true
     activeItem.setScriptedAnimationParameter("reloadTimer", self.weapon.reloadTimer)
 
     if displayResetTimer <= 0 and storage.ammo < self.maxAmmo then
@@ -816,8 +816,8 @@ function Project45GunFire:reloading()
     
     -- process left click
     -- do not process left click if (full) bad reload has been attempted
-    if self:triggering() and not self.triggered and storage.ammo < self.maxAmmo then
-      
+    if (self:reloadTriggered() or self:triggering() or self.endReloadSignal) and not self.triggered and storage.ammo < self.maxAmmo then
+      self.endReloadSignal = false
       -- audiovisual stuff; play load round if the mag isn't loaded in one go
       if self.bulletsPerReload < self.maxAmmo then animator.playSound("loadRound") end
       if self.internalMag then
@@ -863,6 +863,7 @@ function Project45GunFire:reloading()
       status.overConsumeResource("energy", self.reloadCost * (reloadedBullets / self.maxAmmo))
       if not status.resourcePositive("energy") then
         energyDepletedFlag = true
+        self.weapon.isReloading = false
         break
       end
 
@@ -874,12 +875,16 @@ function Project45GunFire:reloading()
       -- if reload rating is not bad, prematurely end minigame
       -- otherwise, player has to wait until end of reload time
       -- elseif reloadRating ~= BAD then break
-      else break end
+      else
+        self.weapon.isReloading = false
+        break
+      end
       
     end
     self.weapon.reloadTimer = self.weapon.reloadTimer + self.dt
     coroutine.yield()
   end
+  self.weapon.isReloading = false
   animator.stopAllSounds("reloadLoop")
 
   self.weapon:setStance(self.stances.reloaded)
@@ -940,7 +945,6 @@ function Project45GunFire:reloading()
   end
 
   self:setState(self.cocking)
-  
 end
 
 function Project45GunFire:cocking()
@@ -1794,6 +1798,13 @@ end
 -- Returns whether the left click is held
 function Project45GunFire:triggering()
   return self.fireMode == (self.activatingFireMode or self.abilitySlot)
+end
+
+-- Returns whether the left click is held
+function Project45GunFire:reloadTriggered()
+  local reloadSignal = storage.reloadSignal
+  storage.reloadSignal = false
+  return reloadSignal
 end
 
 function Project45GunFire:canTrigger()

@@ -11,7 +11,7 @@
   },
   "inventoryIcon" : "/items/augments/project45-gunmods/passive/project45-shiftreloadmod/project45-shiftreloadmod.png",
   "description" : "Enables you to manually reload your weapon. ^#d93a3a;Overrides crouch actions of ability mods.^reset;",
-  "technicalInfo": "- Tap crouch to eject the magazine or initiate reload.\n- Fire to do an active reload.",
+  "technicalInfo": "- Tap crouch (shift) to reload.",
   "shortdescription" : "Shift Reload",
   "archetype": "Passive Ability",
   

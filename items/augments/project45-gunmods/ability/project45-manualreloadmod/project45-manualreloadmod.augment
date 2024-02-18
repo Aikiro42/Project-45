@@ -11,7 +11,7 @@
   },
   "inventoryIcon" : "/items/augments/project45-gunmods/ability/project45-manualreloadmod/project45-manualreloadmod.png",
   "description" : "Enables you to manually reload your weapon.",
-  "technicalInfo": "- Right click to eject the magazine or initiate reload.\n- Fire to do an active reload.",
+  "technicalInfo": "- Right click to reload.",
   "shortdescription" : "Manual Reload",
   "archetype": "Active Ability",
   
