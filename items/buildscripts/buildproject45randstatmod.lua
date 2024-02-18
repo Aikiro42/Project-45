@@ -10,6 +10,16 @@ function build(directory, config, parameters, level, seed)
 
   parameters = parameters or {}
 
+  local configParameter = function(keyName, defaultValue)
+    if parameters[keyName] ~= nil then
+      return parameters[keyName]
+    elseif config[keyName] ~= nil then
+      return config[keyName]
+    else
+      return defaultValue
+    end
+  end
+
   local statSlots = {
     baseDamage = "^#FF9000;Base Damage",
     fireTime = "^#FFD400;Fire Time",
@@ -52,11 +62,18 @@ function build(directory, config, parameters, level, seed)
 
   local randomStatInfo = nil
 
+  -- generate seed if supposed to be seeded
+  -- and seed is not established
+  if not (parameters.noSeed or configParameter("seed", seed)) then
+    -- seeded but no parameters.seed nor argued seed; so generate seed here
+    parameters.seed = math.floor(math.random() * 2147483647)
+  end
+
   if config.modCategory == "statMod"
   and config.augment.randomStats
-  and (parameters.seed or seed) then
+  and configParameter("seed", seed) then
     
-    parameters.seed = parameters.seed or seed
+    parameters.seed = configParameter("seed", seed)
     
     local rng = sb.makeRandomSource(parameters.seed)
     
@@ -117,6 +134,7 @@ function build(directory, config, parameters, level, seed)
     end
     
     config.archetype = project45util.capitalize(config.archetype)
+    
     local basePrice = (parameters.price or config.price)
     parameters.price = math.floor(rng:randf(basePrice/3, basePrice*3) * 0.1)
   else

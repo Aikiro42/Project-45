@@ -45,10 +45,17 @@ function build(directory, config, parameters, level, seed)
     end
   end
 
+  -- generate seed if supposed to be seeded
+  -- and seed is not established
+  if not (parameters.noSeed or configParameter("seed", seed)) then
+    -- seeded but no parameters.seed nor argued seed; so generate seed here
+    parameters.seed = math.floor(math.random() * 2147483647)
+  end
+
   -- configure seed
   local randStatBonus = 0
-  if parameters.seed or seed then
-    parameters.seed = configParameter("seed", seed or math.floor(math.random() * 2147483647))
+  if configParameter("seed", seed) then
+    parameters.seed = configParameter("seed", seed)
     -- sb.logInfo(string.format("Seed of %s: %d", config.itemName, parameters.seed))
     local rng = sb.makeRandomSource(parameters.seed)
     randStatBonus = rng:randf(0, 1) * (parameters.bought and generalConfig.boughtRandBonusMult or 1)

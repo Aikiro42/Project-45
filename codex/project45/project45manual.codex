@@ -139,15 +139,15 @@ If a mod cannot be installed on a weapon, it will be indicated the next time you
 Weapons spawn with a seeded stat ^#96cbe7;bonus ratio^reset;.
 
 The weapons can have
-- up to a ^#ea9931;+60%^reset; bonus to their base damage,
-- up to a ^#f4988c;+100%^reset; bonus to their base critical chance, and
-- up to a ^#d93a3a;+30%^reset; bonus to their base critical damage multiplier.
+- up to a ^#ea9931;+12%^reset; bonus to their base damage,
+- up to a ^#f4988c;+20%^reset; bonus to their base critical chance, and
+- up to a ^#d93a3a;+6%^reset; bonus to their base critical damage multiplier.
 ",
 "# ^#E2C344;Stat Bonuses^reset;
 For example, if a weapon is indicated to bear a \"60% bonus\", this means that they get
-- 1 + ^#96cbe7;0.6^reset; * ^#ea9931;0.6^reset; = ^#ea9931;x1.36 multiplier to their base damage^reset;
-- 1 + ^#96cbe7;0.6^reset; * ^#f4988c;1^reset; = ^#f4988c;x1.6 multiplier to their base crit chance^reset;
-- 1 + ^#96cbe7;0.6^reset; * ^#d93a3a;0.3^reset; = ^#d93a3a;x1.18 multiplier to their base crit damage^reset;
+- 1 + ^#96cbe7;0.6^reset; * ^#ea9931;0.12^reset; = ^#ea9931;x1.072 multiplier to their base damage^reset;
+- 1 + ^#96cbe7;0.6^reset; * ^#f4988c;0.20^reset; = ^#f4988c;x1.120 multiplier to their base crit chance^reset;
+- 1 + ^#96cbe7;0.6^reset; * ^#d93a3a;0.06^reset; = ^#d93a3a;x1.036 multiplier to their base crit damage^reset;
 
 Items bought from the Project 45 Gun Shop can only have a maximum bonus ratio of ^#d93a3a;50%.^reset;
 ",

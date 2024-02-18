@@ -27,6 +27,10 @@ end
 
 ```
 
+- [ ] JamesonMDrago: A simple request not knowing how the system works: More attachments, and more attachment slots.
+  If it's simple enough I want to have enough customization to make my gun truly MY gun, not just the be-all end-all (At least until absolute min/maxing comes into play), but I want my AR, MG, etc, to reflect exactly how I want to play, whether it's extreme burst damage, a constant stream of inaccurate suppressive fire, a single sniper shot, or whatever other combo I can make, I'd like to have a gun which is something which I can well and truly call "my" personal weapon, that nobody else will use quite like I will.
+
+
 ## Planning/Planned
 
 ## Pushed to Github
@@ -63,7 +67,7 @@ end
 
 - [ ] DefinitelyNotScythe: Been testing out the weapons, I agree with JamesonMdragon, the mechanics are incredibly fun and the sound / visual designs are great, but I'd say some hard limits need to be implemented on varying damage stats or at the very least tone the damage down quite a bit on the higher end guns. Right now a high end gun with a decent mod setup can completely outclass the end game mods from most of the big gun mods, shellguard, knightfall, FU, etc.
 
-  One of them was 1389731840 pixels, and another I found had a value so high it caused an overflow and would result in -237832423462138761... too much to show up on screen lmao
+  (Regarding wildcard mods) One of them was 1389731840 pixels, and another I found had a value so high it caused an overflow and would result in -237832423462138761... too much to show up on screen lmao
 
   In a similar line, I noticed it's easy to hit incredibly high damage numbers, casually hitting the thousands per hit range on a basic pistol I was messing with. I'm not sure what you want to aim for, I know you do have the "cheats and god items" tag but in the description you mentioned trying to balance around "endgame" with a notice that things may become overpowered.
 

@@ -104,7 +104,10 @@ function populateItemList(forceRepop, mode, idle)
       if type(item) == "string" then
         item = {
           name = item,
-          count = 1
+          count = 1,
+          parameters= {
+            noSeed = true
+          }
         }
       else
         item.count = item.count or 1
@@ -215,6 +218,7 @@ function purchase()
     local listItem = string.format("%s.%s", self.itemList, self.selectedItem)
     local selectedData = widget.getData(listItem)
     local selectedItem = selectedData.item
+    selectedItem.parameters.noSeed = nil
 
     if selectedItem then
       --If we successfully consumed enough currency, give the new item to the player
