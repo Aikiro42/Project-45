@@ -8,6 +8,7 @@
   },
   "modCategory" : "statMod",
   "category" : "eppAugment",
+  "itemTags": ["weapon"],
   "inventoryIcon" : "/items/augments/project45-gunmods/stat/project45-firetimemod/project45-firetimemultmod.png",
   "description": "Increases Fire Time denominator by 0.2.",
   "statInfo" : "^#E2C344;Fire Time +0.2d^reset;",

@@ -5,6 +5,7 @@
   "tooltipKind" : "project45gunmod2",
   "modCategory" : "gunMod",
   "category" : "eppAugment",
+  "itemTags": ["weapon"],
   "tooltipFields":{
     "subtitle": "Gun Mod",
     "objectImage": "/items/augments/project45-gunmods/mods/project45-lasermod/project45-lasermod.png"

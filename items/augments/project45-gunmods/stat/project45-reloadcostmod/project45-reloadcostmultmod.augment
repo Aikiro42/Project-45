@@ -8,6 +8,7 @@
   },
   "modCategory" : "statMod",
   "category" : "eppAugment",
+  "itemTags": ["weapon"],
   "inventoryIcon" : "/items/augments/project45-gunmods/stat/project45-reloadcostmod/project45-reloadcostmultmod.png",
   "statInfo" : "^#9BBA3D;Reload Cost +0.2d^reset;",
   "description": "Increases Reload Cost denominator by 0.2.",

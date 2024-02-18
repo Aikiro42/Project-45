@@ -3,7 +3,7 @@
   "price" : 15000,
   "rarity" : "Essential",
   "tooltipKind" : "project45gunmod",
-  "category" : "Debug Tool",
+  "category" : "tool",
   "inventoryIcon" : "/items/augments/project45-gunmods/other/project45-logger.png",
   "description" : "Prints shit.",
   "shortdescription" : "DEBUG: Logger Tool",

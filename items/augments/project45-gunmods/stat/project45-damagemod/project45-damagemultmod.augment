@@ -8,6 +8,7 @@
   },
   "modCategory" : "statMod",
   "category" : "eppAugment",
+  "itemTags": ["weapon"],
   "inventoryIcon" : "/items/augments/project45-gunmods/stat/project45-damagemod/project45-damagemultmod.png",
   "description" : "Increases Base Damage by 15% of base.",
   "slot": "baseDamage",

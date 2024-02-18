@@ -5,6 +5,7 @@
   "tooltipKind" : "project45gunmod2",
   "modCategory" : "abilityMod",
   "category" : "eppAugment",
+  "itemTags": ["weapon"],
   "tooltipFields": {
     "subtitle": "Ability Mod",
     "objectImage": "/items/augments/project45-gunmods/ability/project45-phaseshiftmod/project45-phaseshiftmod.png"

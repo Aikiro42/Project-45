@@ -8,6 +8,7 @@
   },
   "modCategory" : "statMod",
   "category" : "eppAugment",
+  "itemTags": ["weapon"],
   "inventoryIcon" : "/items/augments/project45-gunmods/stat/project45-critchancemod/project45-critchancemultmod.png",
   "description": "Increases Crit Chance by 50% of base.",
   "statInfo" : "^#D93A3A;Crit Chance +0.5x^reset;",

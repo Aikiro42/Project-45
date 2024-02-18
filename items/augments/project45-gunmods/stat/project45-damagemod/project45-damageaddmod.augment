@@ -8,6 +8,7 @@
   },
   "modCategory" : "statMod",
   "category" : "eppAugment",
+  "itemTags": ["weapon"],
   "inventoryIcon" : "/items/augments/project45-gunmods/stat/project45-damagemod/project45-damageaddmod.png",
   "statInfo" : "^#EA9931;Base Damage +1^reset;",
   "description": "Increases Base Damage by 1.",

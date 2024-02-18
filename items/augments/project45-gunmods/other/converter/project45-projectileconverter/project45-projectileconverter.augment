@@ -5,6 +5,7 @@
   "tooltipKind" : "project45gunmod2",
   "modCategory" : "converterMod",
   "category" : "eppAugment",
+  "itemTags": ["weapon"],
   "tooltipFields": {
     "subtitle": "Converter Mod"
   },

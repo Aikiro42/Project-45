@@ -4,6 +4,7 @@
   "rarity" : "Legendary",
   "tooltipKind" : "project45gunmod",
   "category" : "Template abilityMod",
+  "itemTags": ["weapon"],
   "inventoryIcon" : "/items/augments/project45-gunmods/other/project45-templatemod/project45-templatemod.png",
   "description" : "Mod Template.",
   "shortdescription" : "Mod Template.",

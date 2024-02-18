@@ -4,6 +4,7 @@
   "rarity" : "Legendary",
   "tooltipKind" : "project45gunmod",
   "category" : "eppAugment",
+  "itemTags": ["weapon"],
   "tooltipFields":{
     "subtitle": "Applied Utility",
     "objectImage": "/items/augments/project45-gunmods/util/project45-gunrepairkit/project45-gunrepairkit.png"
