@@ -63,26 +63,25 @@ It's possible that may throw some people off since you have to use two buttons t
 
 ## Planning/Planned
 
-- [ ] JamesonMdrago: If you stack the right mods on the LMG (God mod included, no that's not a joke name), you can get 5 digits of DPS on a single target, to say nothing of getting a lucky wildcard to sell for ridiculous valuation, the efficiency of the guns, or other characteristics about the other guns.
-
-- [ ] JamesonMdrago: This is ontop of the fact that humanoid enemies drop so many guns and gun mods that it absolutely floods your inventory in a single visit.
-
-- [ ] JamesonMdrago: it absolutely needs a very hard balance pass, primarily with even early/mid game gun builds, primarily with guns that have a high RoF.
-
 - [ ] DefinitelyNotScythe: Been testing out the weapons, I agree with JamesonMdragon, the mechanics are incredibly fun and the sound / visual designs are great, but I'd say some hard limits need to be implemented on varying damage stats or at the very least tone the damage down quite a bit on the higher end guns. Right now a high end gun with a decent mod setup can completely outclass the end game mods from most of the big gun mods, shellguard, knightfall, FU, etc.
 
-  (Regarding wildcard mods) One of them was 1389731840 pixels, and another I found had a value so high it caused an overflow and would result in -237832423462138761... too much to show up on screen lmao
+## In Progress
 
-  In a similar line, I noticed it's easy to hit incredibly high damage numbers, casually hitting the thousands per hit range on a basic pistol I was messing with. I'm not sure what you want to aim for, I know you do have the "cheats and god items" tag but in the description you mentioned trying to balance around "endgame" with a notice that things may become overpowered.
+- [ ] JamesonMdrago: Balance early/mid game guns
 
-  But I imagine you are trying to aim for balance around the endgame of some of the common gun mods like shellguard or knightfall, in which case if you are, and if it's possible, I think implementing range limits on damage stats as well would be a good idea
+- [ ] JamesonMdrago: Balance high firerate guns
 
-  In addition to my previous comment, while I'm not sure, it *may* be possible that the mod **"Tougher Mobs with Better Loot!"** which increases loot rates and makes mobs in general harder, might be influencing the drops. I'm not sure if the wildcard stats are at all tied to rarity in the traditional sense, but I figured it could be worth mentioning just in case. I know the mods certainly seemed to drop quite a bit more often at the very least, but I never did any proper analysis
+- [ ] DefinitelyNotScythe: Balance around popula gun mods e.g. shellguard, knightfall, unbound; implement range limits on damage stats?
 
+- [ ] DefinitelyNotScythe: Easy to gain high damage with the pistol
+
+## Pushed to Github
 
 - [ ] Work_In_Progress: Great mod, but saying that it's breaking balance is an understatement, most of it is probably intentional but one thing that stood out for me is how mush money some wildcard mods can be sold for, in range from 200 to millions of pixels, which easily lets you get just stupid amounts of money.
 
-## Pushed to Github
+- [ ] JamesonMdrago: This is ontop of the fact that humanoid enemies drop so many guns and gun mods that it absolutely floods your inventory in a single visit.
+
+- [ ] DefinitelyNotScythe: (Regarding wildcard mods) One of them was 1389731840 pixels, and another I found had a value so high it caused an overflow and would result in -237832423462138761... too much to show up on screen lmao
 
 ## Partially Fixed
 
