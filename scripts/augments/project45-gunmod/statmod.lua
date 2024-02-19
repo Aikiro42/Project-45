@@ -194,21 +194,24 @@ function apply(input, override, augment)
             )
         )
         
-        newChargeTime = math.max(0, moddedStat(
-                newChargeTime,
-                chargeAdd,
-                statModifiers.fireTime.multiplicative,
-                true
+        if newChargeTime > 0 then
+            newChargeTime = math.max(0, moddedStat(
+                    newChargeTime,
+                    chargeAdd,
+                    statModifiers.fireTime.multiplicative,
+                    true
+                )
             )
-        )
-
-        newOverchargeTime = math.max(0, moddedStat(
-                newOverchargeTime,
-                overchargeAdd,
-                statModifiers.fireTime.multiplicative,
-                true
+        end
+        if newOverchargeTime > 0 then
+            newOverchargeTime = math.max(0, moddedStat(
+                    newOverchargeTime,
+                    overchargeAdd,
+                    statModifiers.fireTime.multiplicative,
+                    true
+                )
             )
-        )
+        end
 
 
         -- sb.logInfo(newOverchargeTime)

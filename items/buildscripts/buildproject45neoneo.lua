@@ -31,6 +31,33 @@ function build(directory, config, parameters, level, seed)
     end
   end
 
+  --[[ These functions work, but are unused in this script. TODO: Utilize me.
+  
+  local deepConfigParameterT = function(t, ...)
+    local retval = nil
+    for _,child in ipairs({...}) do
+      if t[child] then
+        retval = t[child]
+        t = t[child]
+      else
+        retval = nil
+        break
+      end
+    end
+    return retval
+  end
+
+  -- Lovechild of construct() and configParameter().
+  local deepConfigParameter = function(defaultValue, ...)
+    local retval = deepConfigParameterT(parameters, ...)
+    if retval ~= nil then return retval end
+    retval = deepConfigParameterT(config, ...)
+    if retval ~= nil then return retval end
+    return defaultValue
+  end
+
+  --]]
+
   local primaryAbility = function(keyName, defaultValue, set)
     if set then
       config.primaryAbility[keyName] = defaultValue
@@ -57,8 +84,12 @@ function build(directory, config, parameters, level, seed)
   if configParameter("seed", seed) then
     parameters.seed = configParameter("seed", seed)
     -- sb.logInfo(string.format("Seed of %s: %d", config.itemName, parameters.seed))
-    local rng = sb.makeRandomSource(parameters.seed)
-    randStatBonus = rng:randf(0, 1) * (parameters.bought and generalConfig.boughtRandBonusMult or 1)
+    if parameters.seed ~= 1301104 then
+      local rng = sb.makeRandomSource(parameters.seed)
+      randStatBonus = rng:randf(0, 1) * (parameters.bought and generalConfig.boughtRandBonusMult or 1)
+    else
+      randStatBonus = 1
+    end
   end
 
   if level and not configParameter("fixedLevel", true) then
@@ -315,9 +346,9 @@ function build(directory, config, parameters, level, seed)
       if config.gunArchetype then
         local archetypeDamage = generalConfig.gunArchetypeDamages[config.gunArchetype]
         -- sb.logInfo(string.format("%s (%s): %s",config.shortdescription, config.gunArchetype, sb.printJson(archetypeDamage)))
-        config.primaryAbility.baseDamage = archetypeDamage or config.primaryAbility.baseDamage
+        config.primaryAbility.baseDamage = (archetypeDamage or config.primaryAbility.baseDamage)
       end
-
+      config.primaryAbility.baseDamage = config.primaryAbility.baseDamage * configParameter("baseDamageMult", 1)
       -- generate random stats
       if randStatBonus > 0 and not parameters.isRandomized then
 

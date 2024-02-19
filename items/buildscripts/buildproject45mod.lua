@@ -3,10 +3,43 @@ require "/scripts/versioningutils.lua"
 require "/scripts/util.lua"
 require "/scripts/set.lua"
 
-function build(directory, config, parameters, level, seed, wildcardStatInfo)
+function build(directory, config, parameters, level, seed)
 
   parameters = parameters or {}
   config.tooltipFields = config.tooltipFields or {}
+
+  local configParameter = function(keyName, defaultValue)
+    if parameters[keyName] ~= nil then
+      return parameters[keyName]
+    elseif config[keyName] ~= nil then
+      return config[keyName]
+    else
+      return defaultValue
+    end
+  end
+
+  local deepConfigParameterT = function(t, ...)
+    local retval = nil
+    for _,child in ipairs({...}) do
+      if t[child] then
+        retval = t[child]
+        t = t[child]
+      else
+        retval = nil
+        break
+      end
+    end
+    return retval
+  end
+
+  -- Lovechild of construct() and configParameter().
+  local deepConfigParameter = function(defaultValue, ...)
+    local retval = deepConfigParameterT(parameters, ...)
+    if retval ~= nil then return retval end
+    retval = deepConfigParameterT(config, ...)
+    if retval ~= nil then return retval end
+    return defaultValue
+  end
 
   local extrinsicModSlots = set.new({
     "rail",
@@ -35,74 +68,73 @@ function build(directory, config, parameters, level, seed, wildcardStatInfo)
     level = "^#a8e6e2;Level"
   }
 
-  local configParameter = function(keyName, defaultValue)
-    if parameters[keyName] ~= nil then
-      return parameters[keyName]
-    elseif config[keyName] ~= nil then
-      return config[keyName]
-    else
-      return defaultValue
-    end
-  end
-
-  construct(config, "augment")
+  construct(config, "augment")  -- make sure config.augment exists
 
   -- if no set upgrade cost,
   -- extrinsic mods are free,
   -- intrinsic mods cost 1 upgrade capacity
-  if not config.augment.upgradeCost then
-    config.augment.upgradeCost = extrinsicModSlots[config.augment.slot or config.slot] and 0 or 1
+  if not deepConfigParameter(nil, "augment", "upgradeCost") then
+    config.augment.upgradeCost = extrinsicModSlots[deepConfigParameter(configParameter("slot"), "augment", "slot")] and 0 or 1
   end
 
-  config.tooltipFields.categoryLabel = root.assetJson("/configs/project45/project45_generalconfig.config:categoryStrings", {})[config.augment.category or "universal"] or ""
+  -- Change category label
+  config.tooltipFields.categoryLabel = root.assetJson("/configs/project45/project45_generalconfig.config:categoryStrings", {})[deepConfigParameter("universal", "augment", "category")] or ""
 
-  if config.modCategory == "ammoMod" or config.modCategory == "converterMod" then
+  -- Change slot label if ammo or converter mod
+  if configParameter("modCategory") == "ammoMod" or configParameter("modCategory") == "converterMod" then
     config.tooltipFields.slotLabel = "^#9da8af;Ammo"
-  
-  elseif config.modCategory == "statMod" then
+
+  -- Change slot label if stat mod
+  elseif configParameter("modCategory") == "statMod" then
     config.tooltipFields.slotTitleLabel = "Stat"
-    config.tooltipFields.slotLabel = statSlots[config.slot]
+    config.tooltipFields.slotLabel = statSlots[configParameter("slot")]
   
   else
     config.tooltipFields.slotLabel = "^#9da8af;" ..
-      project45util.capitalize(config.augment.slot or config.slot or "N/A")
+      project45util.capitalize(deepConfigParameter(configParameter("slot", "N/A"), "augment", "slot"))
   
   end
 
   config.tooltipFields.archetypeLabel = ""
-  if config.modCategory == "gunMod" then
+  if configParameter("modCategory") == "gunMod" then
     config.tooltipFields.archetypeTitleLabel = "Mod Type"
-    if not config.archetype then
-      if extrinsicModSlots[config.augment.slot or config.slot] then
+    if not configParameter("archetype") then
+      if extrinsicModSlots[deepConfigParameter(configParameter("slot"), "augment", "slot")] then
         config.tooltipFields.archetypeLabel = "^#ea9931;Extrinsic"
       else
         config.tooltipFields.archetypeLabel = "^#ea9931;Intrinsic"  
       end
     end    
-  elseif config.modCategory == "ammoMod" then
+  elseif configParameter("modCategory") == "ammoMod" then
       config.tooltipFields.archetypeTitleLabel = "Ammo Archetype"
-      config.tooltipFields.archetypeLabel = "^#ea9931;" .. project45util.capitalize(config.augment.archetype)
+      config.tooltipFields.archetypeLabel = "^#ea9931;" .. project45util.capitalize(deepConfigParameter("augment","archetype"))
   
   else
-    if config.modCategory == "abilityMod" then
+    if configParameter("modCategory") == "abilityMod" then
       config.tooltipFields.archetypeTitleLabel = "Ability Type"
-    elseif config.modCategory == "statMod" then
+    elseif configParameter("modCategory") == "statMod" then
       config.tooltipFields.archetypeTitleLabel = "Application"
     end
     config.tooltipFields.archetypeLabel = "^#ea9931;" .. (
-      project45util.capitalize(config.augment.archetype)
+      project45util.capitalize(deepConfigParameter("augment","archetype"))
       or config.archetype
       or "^#a0a0a0;N/A"
     )
   end
 
-  config.tooltipFields.technicalLabel = project45util.colorText("#777777", string.format("Upgrade Cost: %d\n", config.augment.upgradeCost))
+  -- Append upgrade cost (default 0)
+  config.tooltipFields.technicalLabel = project45util.colorText("#777777", string.format("Upgrade Cost: %d\n", deepConfigParameter(0, "augment", "upgradeCost")))
 
-  if config.technicalInfo then
-    config.tooltipFields.technicalLabel = config.tooltipFields.technicalLabel .. "^#ffd495;" .. config.technicalInfo .. "^reset;\n"
+  -- Append technical info
+  local techInfo = configParameter("technicalInfo")
+  if techInfo then
+    config.tooltipFields.technicalLabel = config.tooltipFields.technicalLabel .. "^#ffd495;" .. techInfo .. "^reset;\n"
   end
-  if config.statInfo then
-    config.tooltipFields.technicalLabel = config.tooltipFields.technicalLabel .. "^#b2e89d;" .. (wildcardStatInfo or config.statInfo) .. "^reset;\n"
+
+  -- Append stat info
+  local statInfo = configParameter("statInfo")
+  if statInfo then
+    config.tooltipFields.technicalLabel = config.tooltipFields.technicalLabel .. "^#b2e89d;" .. statInfo .. "^reset;\n"
   end
 
   config.tooltipFields.rarityLabel = rarityConversions[configParameter("isUnique", false) and "unique" or string.lower(configParameter("rarity", "common"))]

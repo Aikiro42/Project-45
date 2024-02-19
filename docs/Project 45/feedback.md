@@ -35,11 +35,15 @@ end
 
 ## Pushed to Github
 
-- [ ] Ryu Ketsueki: I wonder if it would be possible to put manual reload on Shift and make that mod available for all weapons and not only those which don't have an action on Right Shift (Pushed to Github)
-
 - [ ] Ryu Ketsueki: I refer to some items as R, SR, SSR, and XSSR in the in-game manual codex, so maybe I could alter the buildscript and the item configs to use those rarities instead (Pushed to Github)
 
+- [ ] Also, one thing I noticed that may seem confusing at first. Since now it is possible to have manual reload on shift, you can even start the reload with shift but it only recognizes Left Click to actually click on the bar to get a perfect reload and stuff
+It's possible that may throw some people off since you have to use two buttons to reload. Shift can be used to eject magazine, start reloading but can't complete the reload? If possible, can it be made so Shift also completes the reload in addition to the Left Click? (Pushed to Github)
+
+
 ## Tested
+
+- [ ] Ryu Ketsueki: I wonder if it would be possible to put manual reload on Shift and make that mod available for all weapons and not only those which don't have an action on Right Shift (Pushed to Github)
 
 ## Completed
 

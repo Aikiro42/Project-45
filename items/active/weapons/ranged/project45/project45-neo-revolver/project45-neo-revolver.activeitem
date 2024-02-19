@@ -143,8 +143,9 @@
     
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
-    "critChance": 0.25,
-    "critDamageMult": 1.3,
+    "baseDamageMult": 1.2,
+    "critChance": 0.4,
+    "critDamageMult": 1.55,
     "maxAmmo": 6,
     "bulletsPerReload": 1,
     "inaccuracy": 3,
