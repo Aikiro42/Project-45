@@ -35,6 +35,9 @@ end
 
 ## Pushed to Github
 
+- [ ] Orifan1 : also please dear god i hope the update changes the Cyclo's charge sound. idk why but my tinnitus pops off harder than it has ever popped off before when i use it. makes it really tempting to spawn something in as a replacement for it
+
+
 - [ ] Ryu Ketsueki: I refer to some items as R, SR, SSR, and XSSR in the in-game manual codex, so maybe I could alter the buildscript and the item configs to use those rarities instead (Pushed to Github)
 
 - [ ] Also, one thing I noticed that may seem confusing at first. Since now it is possible to have manual reload on shift, you can even start the reload with shift but it only recognizes Left Click to actually click on the bar to get a perfect reload and stuff

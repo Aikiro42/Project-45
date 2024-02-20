@@ -101,6 +101,7 @@
   - Additive fire time: [+100ms, -10ms]
   - Multiplicative fire time: [-2.0d, +0.2d]
     - Wildcards now have higher tendency to decrease fire rate
+- Update cyclo charge SFX.
 
 [h3]General Changes[/h3]
 - Made buildscripts generate a seed for the weapon if there is none. This effect is inhibited by the noSeed flag. Also improved code related to seed. This allows randomized guns and wildcard stat mods to be generated via /spawnitem.
