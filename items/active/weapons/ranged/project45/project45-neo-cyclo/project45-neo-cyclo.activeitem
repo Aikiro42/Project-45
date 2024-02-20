@@ -41,7 +41,9 @@
       "fireLoop": ["/sfx/gun/mech_beamdrill_loop.ogg"],
       "fireEnd": ["/sfx/gun/mech_beamdrill_winddown.ogg"],
       "hollow": [ ],
-      "chargeWhine" : ["/sfx/project45neosfx/chargewhine/chargewhine-01.ogg"]
+      // "chargeWhine" : ["/sfx/project45neosfx/chargewhine/chargewhine-02.ogg"],
+      // "chargeDrone" : ["/sfx/project45neosfx/chargedrone/chargedrone-05.ogg"]
+      "chargeWhine" : ["/sfx/project45neosfx/chargewhine/chargewhine-03.ogg"]
     }
   },
 
