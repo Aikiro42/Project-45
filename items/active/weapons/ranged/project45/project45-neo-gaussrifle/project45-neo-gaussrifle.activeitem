@@ -150,6 +150,7 @@
     "chargeFrames": 4,
     "chargeTime": 0.25,
     "overchargeTime": 0.25,
+    "chargeDamageMult": 2,
 
     "inaccuracy": 0.05, // affects arm movement as the trigger is pulled
     "recoilDelay": 0.25,

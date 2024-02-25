@@ -33,10 +33,11 @@ end
 
 ## Planning/Planned
 
+- [ ] additional sources of multishot pls?
+
 ## Pushed to Github
 
 - [ ] Orifan1 : also please dear god i hope the update changes the Cyclo's charge sound. idk why but my tinnitus pops off harder than it has ever popped off before when i use it. makes it really tempting to spawn something in as a replacement for it
-
 
 - [ ] Ryu Ketsueki: I refer to some items as R, SR, SSR, and XSSR in the in-game manual codex, so maybe I could alter the buildscript and the item configs to use those rarities instead (Pushed to Github)
 
@@ -63,6 +64,14 @@ It's possible that may throw some people off since you have to use two buttons t
 ## Under Deliberation
 
 - [ ] Azure: I recently discovered a bug that when I equipped my gun - AMR to be exact - with incendiary bullets and when dealing damage to a monster with incendiary bullets, the game crushed and a pop-up says: "Exception caught in client main-loop (StarException) Unknown damage definition with kind 'physical'. " it happens occasionally but as long as you keep triggering this mod, it becomes frequent. I might also subscribed other mods related with damage (I forgot the name, but I can still remember one of which it changed the elemental effects when hit, for example: you can frozen the enemy with ice elemental weapon) when I tested this. As so far with my reasoning, I could tell this crash has something to do with the incendiary bullets. (Enhanced Elemental Effects mod bug)
+
+- [ ] Whym: The Zwebyander can corrupt and cause a crash loop when holding it if you buff it too much? Works fine on singleplayer, but on multiplayer it will kick you to the main menu. Was messing around and put all god mods on it and the moment I clicked it kicked out. Only fixed it by quickly swapping to a different item in my hotbar (and later figured out you can just go into singleplayer and remove it before it breaks things)
+
+- [ ] Whym: Clicking the Mods menu in the shop will then cause all other menus in the vending machine to display the manual reload and only the manual reload in every tab. Simply avoiding the mods menu is fine, its only after clicking into mods that it happens and the bug corrects itself if you close and reopen the vending machine window, but the mods menu remains broken in multiplayer.
+
+- [ ] Whym: I also think god mods, all the stats are just missing (or have an extra digit?) In multiplayer
+
+- [ ] Orifan1, Whym: i gave the tinnitus pistol to a crewmate and now i can see where they are aiming. due to the ammo readout. Same thing with other players.
 
 ## Planning/Planned
 

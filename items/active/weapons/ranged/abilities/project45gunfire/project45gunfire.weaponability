@@ -366,10 +366,23 @@
 
     "overchargeTime": 0, // allows gun to deal up to 100% more damage, multiplicative to other bonuses
     
+    // Damage multiplier to the gun at full overcharge.
+    // Calculated via
+    //    1 + overchargeProgress * (chargeDamageMult - 1)
+    // Set to 1 by default if unspecified
+    // Will never go below 0 (but can go below 1, causing the gun to deal less damage at full overcharge)
+    "chargeDamageMult": 1.1,
+    
     // Perfect Charge parameters; only matters if overchargeTime > 0
     /*
-    "perfectChargeDamageMult": 2, // replaces current charge multiplier to damage; can never go below 2
+    
+    // replaces current charge multiplier to damage
+    // equal to chargeDamageMult by default
+    // set to the greatest value between itself, chargeDamageMult and 1
+    "perfectChargeDamageMult": 2,
+    
     "perfectChargeRange": [0.4, 0.6] // range of perfect charge; all values between 0 and 1 (i.e. percent)
+    
     */
 
     // time it takes for gun to hold charge before discharging

@@ -465,7 +465,7 @@ function renderChargeBar(offset, position, barColor, length, width, borderwidth)
   local chargeHexColorFunction = function(chargeTimer, chargeTime, overchargeTime, isPerfectCharge, asHex)
     local color
     if chargeTimer < chargeTime then
-      color = {128,128,128}
+      color = {75,75,150}
       return asHex and project45util.rgbToHex(color) or color
     end
     if isPerfectCharge then

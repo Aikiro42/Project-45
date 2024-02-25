@@ -119,7 +119,7 @@
     "inaccuracy": [5, 5, 5, 5],
     "semi": true,
     "cycleTime": 0.1,
-    "cockTime": 0.2,
+    "cockTime": 0.5,
     "projectileKind": "hitscan",
     "projectileCount": 6,
     "reloadTime": 0.5,

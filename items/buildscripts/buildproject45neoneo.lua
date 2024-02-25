@@ -349,6 +349,7 @@ function build(directory, config, parameters, level, seed)
         config.primaryAbility.baseDamage = (archetypeDamage or config.primaryAbility.baseDamage)
       end
       config.primaryAbility.baseDamage = config.primaryAbility.baseDamage * configParameter("baseDamageMult", 1)
+      
       -- generate random stats
       if randStatBonus > 0 and not parameters.isRandomized then
 
@@ -360,25 +361,7 @@ function build(directory, config, parameters, level, seed)
         parameters.isRandomized = true
 
       end
-        
-      -- damage per shot
-      -- recalculate
-      local baseDamage = primaryAbility("baseDamage", 0) * config.damageLevelMultiplier
-      -- low damage = base damage * worst reload damage
-      local loDamage = baseDamage
-        * math.min(table.unpack(primaryAbility("reloadRatingDamageMults", {0,0,0,0})))
-      -- high damage = base damage * best reload damage * last shot damage mult * overcharge mult
-      local hiDamage = baseDamage
-        * math.max(table.unpack(primaryAbility("reloadRatingDamageMults", {0,0,0,0})))
-        * (primaryAbility("overchargeTime", 0) > 0 and (primaryAbility("perfectChargeDamageMult") or 2) or 1)
-      
-
-      config.tooltipFields.damagePerShotLabel = project45util.colorText("#FF9000", util.round(loDamage, 1) .. " - " .. util.round(hiDamage, 1))
-      
-      if primaryAbility("debug") then
-        config.tooltipFields.damagePerShotLabel = project45util.colorText("#FF9000", primaryAbility("baseDamage", 0))
-      end
-      
+            
       --[[ fire time calculation:
 
       chargeTime* = chargeTime
@@ -407,6 +390,45 @@ function build(directory, config, parameters, level, seed)
       
       local loFireTime = actualCycleTime[1] + primaryAbility("fireTime", 0.1) + chargeTime
       local hiFireTime = actualCycleTime[2] + primaryAbility("fireTime", 0.1) + chargeTime
+      
+
+      local overrideBalanceMult = configParameter("overrideBalanceMult")
+      if overrideBalanceMult then -- override firetime-based damage multiplier; typically used in special/unique guns.
+        parameters.primaryAbility.fireTimeDamageMult = type(overrideBalanceMult) == "number" and overrideBalanceMult or 1
+      else -- firetime-based damage multiplier = < average calculated firetime > / < standard fire time (established in config) >
+        parameters.primaryAbility.fireTimeDamageMult = ((loFireTime + hiFireTime) / 2) / generalConfig.standardFireTime
+      end
+      
+      -- damage per shot
+      -- recalculate
+      local overchargeTime = primaryAbility("overchargeTime", 0)
+      local chargeDamageMult = primaryAbility("chargeDamageMult", 1)
+      local perfectChargeDamageMult = math.max(
+        primaryAbility("perfectChargeDamageMult", chargeDamageMult),
+        chargeDamageMult,
+        1
+      )
+
+      local baseDamage = primaryAbility("baseDamage", 0) * config.damageLevelMultiplier
+      -- low damage = base damage * worst reload damage ( * chargeDamageMult if it's less than 1)
+      local loDamage = baseDamage
+        * math.min(table.unpack(primaryAbility("reloadRatingDamageMults", {0,0,0,0})))
+        * ((overchargeTime > 0 and chargeDamageMult < 1) and chargeDamageMult or 1)
+        * parameters.primaryAbility.fireTimeDamageMult
+      
+        -- high damage = base damage * best reload damage * overcharge mult
+      local hiDamage = baseDamage
+        * math.max(table.unpack(primaryAbility("reloadRatingDamageMults", {0,0,0,0})))
+        * (overchargeTime > 0 and perfectChargeDamageMult or 1)
+        * parameters.primaryAbility.fireTimeDamageMult
+
+
+      config.tooltipFields.damagePerShotLabel = project45util.colorText("#FF9000", util.round(loDamage, 1) .. " - " .. util.round(hiDamage, 1))
+      
+      if primaryAbility("debug") then
+        config.tooltipFields.damagePerShotLabel = project45util.colorText("#FF9000", primaryAbility("baseDamage", 0))
+      end
+
       if loFireTime == hiFireTime then
         config.tooltipFields.fireTimeLabel = project45util.colorText("#FFD400", util.round(loFireTime*1000, 1) .. "ms")
       else
@@ -483,12 +505,48 @@ function build(directory, config, parameters, level, seed)
         descriptionScore = descriptionScore + 1
         chargeDesc = project45util.colorText("#FF5050", project45util.truncatef(primaryAbility("chargeTime", 0), 2) .. "s charge time.") .. "\n"
       end
-        
 
       local overchargeDesc = ""
-      if primaryAbility("overchargeTime", 0) > 0 then
+      if primaryAbility("overchargeTime", 0) > 0 and (chargeDamageMult ~= 1 or perfectChargeDamageMult ~= 1) then
+        
         descriptionScore = descriptionScore + 1
-        overchargeDesc = project45util.colorText("#9dc6f5", project45util.truncatef(primaryAbility("overchargeTime", 0), 2) .. "s overcharge.") .. "\n"
+        
+        local chargeDamageDesc = chargeDamageMult ~= 1
+          and project45util.colorText(
+            chargeDamageMult > 1 and "#9dc6f5"
+            or chargeDamageMult == 1 and "#A0A0A0"
+            or "#FF5050",
+            string.format("%.1fx", chargeDamageMult)
+          )
+          or ""
+        
+        local perfectChargeDamageDesc =
+          (perfectChargeDamageMult ~= 1 and perfectChargeDamageMult ~= chargeDamageMult)
+          and project45util.colorText(
+            perfectChargeDamageMult > 1 and "#ffffa7"
+            or "#FF5050",
+            string.format(chargeDamageMult ~= 1 and " (%.1fx)" or "%.1fx", perfectChargeDamageMult)
+          )
+          or ""
+
+        local descText = project45util.colorText(
+            (chargeDamageMult > 1 or perfectChargeDamageMult > 1) and "#9dc6f5" or "#FF5050",
+            chargeDamageMult ~= 1 and "O.C. dmg."
+            or perfectChargeDamageMult ~= chargeDamageMult and "P.C. dmg."
+          )
+
+        overchargeDesc = project45util.colorText(
+            (chargeDamageMult > 1 or perfectChargeDamageMult > 1) and "#9dc6f5" or "#FF5050",
+            string.format("%s%s %s\n", chargeDamageDesc, perfectChargeDamageDesc, descText)
+          )
+      end
+
+      local fireTimeDesc = ""
+      if parameters.primaryAbility.fireTimeDamageMult ~= 1 then
+        descriptionScore = descriptionScore + 1
+        fireTimeDesc = project45util.colorText(parameters.primaryAbility.fireTimeDamageMult > 1
+          and "#9dc6f5" or "#FF5050",
+          project45util.truncatef(parameters.primaryAbility.fireTimeDamageMult, 2) .. "x Dmg. Mod.") .. "\n"
       end
       
       local modListDesc = ""
@@ -502,7 +560,7 @@ function build(directory, config, parameters, level, seed)
         end
       end
 
-      local finalDescription = bonusDesc .. passiveDesc .. heavyDesc .. chargeDesc .. overchargeDesc .. multishotDesc .. modListDesc -- .. config.description
+      local finalDescription = bonusDesc .. passiveDesc .. heavyDesc .. chargeDesc .. overchargeDesc .. fireTimeDesc .. multishotDesc .. modListDesc -- .. config.description
       finalDescription = finalDescription == "" and project45util.colorText("#777777", "No notable qualities.") or finalDescription
       
       descriptionScore = descriptionScore + math.ceil((#config.description)/18)

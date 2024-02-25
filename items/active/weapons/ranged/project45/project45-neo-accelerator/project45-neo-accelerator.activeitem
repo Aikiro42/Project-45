@@ -102,6 +102,7 @@
     "chargeFrames": 5,
     "overchargeTime": 3,
     "dischargeTimeMult": 0.75,
+    "chargeDamageMult": 1,
     "progressiveCharge": true,
     "inaccuracy": 1, // affects arm movement as the trigger is pulled
     "spread": 0.01,

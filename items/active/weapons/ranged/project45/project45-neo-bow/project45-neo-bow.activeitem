@@ -163,6 +163,8 @@
     "reloadRatingDamageMults": [0.5, 1, 1.15, 1.5],
 
     "perfectChargeRange": [0.2, 0.5],
+    "chargeDamageMult": 1,
+    "perfectChargeDamageMult": 2,
 
     "hideMuzzleSmoke": true,
     "hideMuzzleFlash": true,

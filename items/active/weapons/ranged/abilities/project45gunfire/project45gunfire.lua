@@ -62,7 +62,8 @@ function Project45GunFire:init()
   self.chargeFrame = 1
 
   -- initialize charge damage
-  self.chargeDamage = 1
+  self.chargeDamageMult = math.max(self.chargeDamageMult or 1, 0)
+  self.currentChargeDamage = 1
 
   -- initialize burst counter
   storage.burstCounter = storage.burstCounter or self.burstCount
@@ -96,7 +97,11 @@ function Project45GunFire:init()
   self.fireBeforeOvercharge = not self.semi
 
   if self.perfectChargeRange then
-    self.perfectChargeDamageMult = math.max(2, (self.perfectChargeDamageMult or 2))
+    self.perfectChargeDamageMult = math.max(
+        self.perfectChargeDamageMult or self.chargeDamageMult,
+        self.chargeDamageMult,
+        1
+      )
   end
 
   -- self.resetChargeOnFire only matters if gun doesn't fire before overcharge
@@ -1394,11 +1399,11 @@ function Project45GunFire:updateCharge()
   -- update charge damage multiplier
   if self.overchargeTime > 0 then
     local progress = (self.chargeTimer - self.chargeTime) / self.overchargeTime
-    self.chargeDamage = 1 + progress
+    self.currentChargeDamage = 1 + progress * (self.chargeDamageMult - 1)
     if self.perfectChargeRange then
       self.perfectlyCharged = self.perfectChargeRange[1] <= progress and self.perfectChargeRange[2] >= progress
       if self.perfectlyCharged then
-        self.chargeDamage = self.perfectChargeDamageMult
+        self.currentChargeDamage = self.perfectChargeDamageMult
       end
     end
   end
@@ -1785,13 +1790,13 @@ end
 function Project45GunFire:damagePerShot(noDLM)
 
   local critDmg = self:crit()
-  
   return self.baseDamage
   * (noDLM and 1 or config.getParameter("damageLevelMultiplier", 1))
-  * self.chargeDamage -- up to 2x at full overcharge
+  * self.currentChargeDamage -- up to 2x at full overcharge
   * self.reloadRatingDamage -- as low as 0.8 (bad), as high as 1.5 (perfect)
   * critDmg -- this way, rounds deal crit damage individually
   * (self.passiveDamageMult or 1) -- provides a way for passives to modify damage
+  * self.fireTimeDamageMult
   / self.projectileCount
 end
 

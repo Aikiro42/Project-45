@@ -158,6 +158,7 @@
     "semi": true,
     "chargeFrames": 1,
     "overchargeTime": 0.5,
+    "chargeDamageMult": 1.25,
     "inaccuracy": 5, // affects arm movement as the trigger is pulled
     "maxAmmo": 1,
     "bulletsPerReload": 1,

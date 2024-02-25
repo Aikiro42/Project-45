@@ -152,6 +152,7 @@
     "semi": false,
     "chargeFrames": 4,
     "overchargeTime": 5,
+    "chargeDamageMult": 0.5,
     "dischargeTimeMult": 0.5,
     "progressiveCharge": true,
     "inaccuracy": 2.5, // affects arm movement as the trigger is pulled

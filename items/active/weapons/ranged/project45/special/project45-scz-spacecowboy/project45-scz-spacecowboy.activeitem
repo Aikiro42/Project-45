@@ -4,7 +4,7 @@
   "maxStack" : 1,
   "rarity" : "Essential",
   "isUnique": true,
-  "description" : "A railgun designed from blueprints found in a hazardous containment zone.",
+  "description" : "A railgun designed from blueprints found in a containment zone.",
   "shortdescription" : "^#fdd14d;Space Cowboy^reset;",
   "tooltipKind" : "project45gun",
   "gunArchetype": "antiMateriel",
@@ -87,11 +87,12 @@
   "scripts" : ["/items/active/weapons/ranged/project45gunneo.lua"],
     
   "primaryAbilityType": "project45gunfire",
+  "overrideBalanceMult": true,
   "primaryAbility": {
     "passiveDescription": "On Perfect Reload: First shot deals 2x damage.",
     "passiveScript": "/items/active/weapons/ranged/project45/special/project45-scz-spacecowboy/spacecowboypassive.lua",
 
-    "baseDamage": 50,
+    "baseDamageMult": 50,
     "critChance": 0.25,
     "critDamageMult": 3,
 

@@ -110,6 +110,7 @@
   - Changed rarities and reorganized drop table items to accomodate the change.
 
 [h3]Bugfixes[/h3]
+- Fixed incompatibility with TFox's Inventory mod.
 - Fixed bug where guns without charge times are given charge times if the fire time increase is high enough.
 - Fixed bug where wildcards' prices are updated every time they're rebuilt. No more golden goose wildcards.
 - Removed ability to install underbarrel mods on the zweibrandyr
