@@ -92,6 +92,17 @@
     "vAnchor": "top",
     "wrapWidth": 90
   },
+
+  "bonusRatioLabel": {
+    "type" : "label",
+    //"position" : [150, 120],
+    "position" : [180, 183.5],
+    "hAnchor" : "right",
+    "centered": true,
+    "wrapWidth" : 126,
+    "fontSize": 20,
+    "value": "100%"
+  },
   
   "upgradeCapacityTitleLabel": {
     "type" : "label",
@@ -119,6 +130,16 @@
     "wrapWidth" : 126,
     "value": "Damage per shot"
   },
+  /*
+  "balanceDamageMultLabel": {
+    "type" : "label",
+    "position" : [98, 88],
+    "hAnchor" : "right",
+    "centered": true,
+    "wrapWidth" : 126,
+    "value": "(x99.99)"
+  },
+  */
   "damagePerShotLabel" : {
     "type" : "label",
     "position" : [18, 78],

@@ -1796,7 +1796,7 @@ function Project45GunFire:damagePerShot(noDLM)
   * self.reloadRatingDamage -- as low as 0.8 (bad), as high as 1.5 (perfect)
   * critDmg -- this way, rounds deal crit damage individually
   * (self.passiveDamageMult or 1) -- provides a way for passives to modify damage
-  * self.fireTimeDamageMult
+  -- * self.balanceDamageMult
   / self.projectileCount
 end
 

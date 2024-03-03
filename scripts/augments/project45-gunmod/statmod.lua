@@ -91,12 +91,14 @@ function apply(input, override, augment)
         statModifiers.fireTime = statModifiers.fireTime or {base = {
             cockTime = configParameterStat("cockTime"),
             cycleTime = configParameterStat("cycleTime"),
+            midCockDelay = configParameterStat("midCockDelay", 0),
             chargeTime = configParameterStat("chargeTime"),
             overchargeTime = configParameterStat("overchargeTime"),
             fireTime = configParameterStat("fireTime")
         }}
         
         local newCockTime = statModifiers.fireTime.base.cockTime
+        local newMidCockDelay = statModifiers.fireTime.base.midCockDelay
         local newCycleTime = statModifiers.fireTime.base.cycleTime
         local newFireTime = statModifiers.fireTime.base.fireTime
 
@@ -104,7 +106,7 @@ function apply(input, override, augment)
         local newOverchargeTime = statModifiers.fireTime.base.overchargeTime
 
         local minFireTime = math.min(
-            root.assetJson("/configs/project45/project45_generalconfig.config:minimumFireTime", 0.001),
+            0.001,
             type(newCycleTime) == "table" and newCycleTime[1] or newCycleTime,
             newCockTime,
             newFireTime
@@ -134,8 +136,11 @@ function apply(input, override, augment)
 
         if statModifiers.fireTime.additive then
             local isSemi = output.config.semi
+            if input.parameters.semi ~= nil then
+                isSemi = input.parameters.semi
+            end
 
-            local distributedStats = (isSemi and newChargeTime > 0) and 3 or 2
+            local distributedStats = (isSemi and newChargeTime > 0) and 2 or 1
             
             fireTimeAdd = statModifiers.fireTime.additive / distributedStats
      
@@ -152,6 +157,7 @@ function apply(input, override, augment)
 
         end
 
+        -- modify cycle time to be at least minFiretime
         if type(newCycleTime) == "table" then
             newCycleTime = {
                 math.max(minFireTime, moddedStat(

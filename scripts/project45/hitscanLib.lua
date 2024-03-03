@@ -479,7 +479,7 @@ end
 --[[
 function hitscanLib:summonAreaObstructed()
   local x = world.polyCollision(self:summonArea())
-  sb.logInfo(sb.printJson(x))
+  -- sb.logInfo(sb.printJson(x))
   return x
 end
 --]]

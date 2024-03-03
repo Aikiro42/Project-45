@@ -84,11 +84,13 @@ function build(directory, config, parameters, level, seed)
   if configParameter("seed", seed) then
     parameters.seed = configParameter("seed", seed)
     -- sb.logInfo(string.format("Seed of %s: %d", config.itemName, parameters.seed))
-    if parameters.seed ~= 1301104 then
+    if parameters.seed == 1301104 then
+      randStatBonus = 1
+    elseif parameters.seed == 201911112 then
+      randStatBonus = 0
+    else
       local rng = sb.makeRandomSource(parameters.seed)
       randStatBonus = rng:randf(0, 1) * (parameters.bought and generalConfig.boughtRandBonusMult or 1)
-    else
-      randStatBonus = 1
     end
   end
 
@@ -151,7 +153,7 @@ function build(directory, config, parameters, level, seed)
 
   -- calculate damage level multiplier
   config.damageLevelMultiplier = root.evalFunction("weaponDamageLevelMultiplier", configParameter("level", 1)) * generalConfig.globalDamageMultiplier
-  
+
   -- palette swaps
   config.paletteSwaps = ""
   if config.palette then
@@ -351,31 +353,36 @@ function build(directory, config, parameters, level, seed)
       config.primaryAbility.baseDamage = config.primaryAbility.baseDamage * configParameter("baseDamageMult", 1)
       
       -- generate random stats
-      if randStatBonus > 0 and not parameters.isRandomized then
+      if randStatBonus > 0 and not configParameter("isRandomized") then
+        -- sb.logInfo(string.format("\t{%s} Base damage: %f", configParameter("itemName", ""), primaryAbility("baseDamage", 0)))
+        -- sb.logInfo(string.format("\t{%s} Base damage Multiplier: %f", configParameter("itemName", ""), (generalConfig.maxRandBonuses.baseDamage * randStatBonus + 1)))
 
-        randStatBonus = randStatBonus
         parameters.primaryAbility.baseDamage = primaryAbility("baseDamage", 0) * (generalConfig.maxRandBonuses.baseDamage * randStatBonus + 1)
         parameters.primaryAbility.critChance = primaryAbility("critChance", 0) * (generalConfig.maxRandBonuses.critChance * randStatBonus + 1)
         parameters.primaryAbility.critDamageMult = primaryAbility("critDamageMult", 1) * (generalConfig.maxRandBonuses.critDamageMult * randStatBonus + 1)
-
+        
+        -- sb.logInfo(string.format("\t{%s} Amped damage: %f", configParameter("itemName", ""), parameters.primaryAbility.baseDamage))
+        
         parameters.isRandomized = true
 
       end
-            
+      
+      -- sb.logInfo(string.format("{%s} Base damage: %f x %f = %f)", configParameter("itemName", ""), primaryAbility("baseDamage", 0), config.damageLevelMultiplier, primaryAbility("baseDamage", 0) * config.damageLevelMultiplier))
+
       --[[ fire time calculation:
 
       chargeTime* = chargeTime
       If gun is auto, chargeTime* = 0
 
       If gun is manualFeed:
-        fireTime* = cockTime + fireTime + chargeTime*
+        fireTime* = cockTime (+ midCockDelay) + fireTime + chargeTime*
       else:
         fireTime* = cycleTime + fireTime + chargeTime*
       
       ]]--
       
       local actualCycleTime = primaryAbility("manualFeed", false)
-        and primaryAbility("cockTime", 0.1) + primaryAbility("midCockDelay", 0)
+        and primaryAbility("midCockDelay", 0) + primaryAbility("cockTime", 0.1) / (primaryAbility("slamFire") and 2 or 1)
         or primaryAbility("cycleTime", 0.1)
 
       local chargeTime = primaryAbility("chargeTime", 0)
@@ -388,16 +395,30 @@ function build(directory, config, parameters, level, seed)
         chargeTime = 0
       end
       
-      local loFireTime = actualCycleTime[1] + primaryAbility("fireTime", 0.1) + chargeTime
-      local hiFireTime = actualCycleTime[2] + primaryAbility("fireTime", 0.1) + chargeTime
+      local loFireTime = math.max(actualCycleTime[1], primaryAbility("fireTime", 0.1)) + chargeTime
+      local hiFireTime = math.max(actualCycleTime[2], primaryAbility("fireTime", 0.1)) + chargeTime
       
-
+      --[[
       local overrideBalanceMult = configParameter("overrideBalanceMult")
-      if overrideBalanceMult then -- override firetime-based damage multiplier; typically used in special/unique guns.
-        parameters.primaryAbility.fireTimeDamageMult = type(overrideBalanceMult) == "number" and overrideBalanceMult or 1
-      else -- firetime-based damage multiplier = < average calculated firetime > / < standard fire time (established in config) >
-        parameters.primaryAbility.fireTimeDamageMult = ((loFireTime + hiFireTime) / 2) / generalConfig.standardFireTime
+      if overrideBalanceMult then -- override balance multiplier; typically used in special/unique guns.
+        parameters.primaryAbility.balanceDamageMult = type(overrideBalanceMult) == "number" and overrideBalanceMult or 1
+
+      elseif not primaryAbility("balanceDamageMult") then  -- balance multiplier
+        generalConfig.standardMaxAmmo = 16
+
+        -- fire time balance is average firetime / (standard fire time * burst count)
+        local fireTimeBalance = math.max(generalConfig.minimumFireTime, ((loFireTime + hiFireTime) / 2)) / (generalConfig.standardFireTime * primaryAbility("burstCount", 1))
+        
+        local maxAmmo = primaryAbility("maxAmmo", 1)
+        local ammoBalance = math.max(0, (generalConfig.standardMaxAmmo - maxAmmo) / (generalConfig.standardMaxAmmo - 1))
+        -- local reloadBalance = (maxAmmo - primaryAbility("bulletsPerReload", 1)) / maxAmmo
+        local reloadBalance = 0
+        
+        local firemodeBalance = primaryAbility("semi") and 0.75 or 0
+
+        parameters.primaryAbility.balanceDamageMult = fireTimeBalance + ammoBalance + reloadBalance + firemodeBalance
       end
+      --]]
       
       -- damage per shot
       -- recalculate
@@ -414,13 +435,13 @@ function build(directory, config, parameters, level, seed)
       local loDamage = baseDamage
         * math.min(table.unpack(primaryAbility("reloadRatingDamageMults", {0,0,0,0})))
         * ((overchargeTime > 0 and chargeDamageMult < 1) and chargeDamageMult or 1)
-        * parameters.primaryAbility.fireTimeDamageMult
+        -- * parameters.primaryAbility.balanceDamageMult
       
-        -- high damage = base damage * best reload damage * overcharge mult
+      -- high damage = base damage * best reload damage * overcharge mult
       local hiDamage = baseDamage
         * math.max(table.unpack(primaryAbility("reloadRatingDamageMults", {0,0,0,0})))
         * (overchargeTime > 0 and perfectChargeDamageMult or 1)
-        * parameters.primaryAbility.fireTimeDamageMult
+        -- * parameters.primaryAbility.balanceDamageMult
 
 
       config.tooltipFields.damagePerShotLabel = project45util.colorText("#FF9000", util.round(loDamage, 1) .. " - " .. util.round(hiDamage, 1))
@@ -463,12 +484,9 @@ function build(directory, config, parameters, level, seed)
         config.tooltipFields.critDamageLabel = project45util.colorText("#777777", util.round(critDamage, 1) .. "x")
       end
 
-      local descriptionScore = 0
-      
-      local bonusDesc = ""
+      config.tooltipFields.bonusRatioLabel = ""
       if randStatBonus > 0 and parameters.isRandomized then
-        bonusDesc = string.format("(%d%% Bonus)", math.floor(randStatBonus * 100))
-        descriptionScore = descriptionScore + math.ceil((#bonusDesc)/18)
+        local bonusDesc = string.format("%d%%", math.floor(randStatBonus * 100))
         local bonusColor = "#777777"
         if randStatBonus > 0.75 then
           bonusColor = "#fdd14d"
@@ -477,9 +495,11 @@ function build(directory, config, parameters, level, seed)
         elseif randStatBonus > 0.25 then
           bonusColor = "#60b8ea"
         end
-        bonusDesc = project45util.colorText(bonusColor, bonusDesc) .. "\n"
+        config.tooltipFields.bonusRatioLabel = project45util.colorText(bonusColor, bonusDesc) .. "\n"
       end
 
+      local descriptionScore = 0
+      
       local passiveDesc = ""
       if primaryAbility("passiveDescription") then
         passiveDesc = primaryAbility("passiveDescription")
@@ -531,8 +551,8 @@ function build(directory, config, parameters, level, seed)
 
         local descText = project45util.colorText(
             (chargeDamageMult > 1 or perfectChargeDamageMult > 1) and "#9dc6f5" or "#FF5050",
-            chargeDamageMult ~= 1 and "O.C. dmg."
-            or perfectChargeDamageMult ~= chargeDamageMult and "P.C. dmg."
+            chargeDamageMult ~= 1 and "Overcharge damage."
+            or perfectChargeDamageMult ~= chargeDamageMult and "Perfect charge dmg."
           )
 
         overchargeDesc = project45util.colorText(
@@ -541,13 +561,14 @@ function build(directory, config, parameters, level, seed)
           )
       end
 
-      local fireTimeDesc = ""
-      if parameters.primaryAbility.fireTimeDamageMult ~= 1 then
-        descriptionScore = descriptionScore + 1
-        fireTimeDesc = project45util.colorText(parameters.primaryAbility.fireTimeDamageMult > 1
+      --[[
+      config.tooltipFields.balanceDamageMultLabel = ""
+      if parameters.primaryAbility.balanceDamageMult ~= 1 then
+        config.tooltipFields.balanceDamageMultLabel = project45util.colorText(parameters.primaryAbility.balanceDamageMult > 1
           and "#9dc6f5" or "#FF5050",
-          project45util.truncatef(parameters.primaryAbility.fireTimeDamageMult, 2) .. "x Dmg. Mod.") .. "\n"
+          project45util.truncatef(parameters.primaryAbility.balanceDamageMult, 2) .. "x") .. "\n"
       end
+      --]]
       
       local modListDesc = ""
       if modList then
@@ -560,7 +581,7 @@ function build(directory, config, parameters, level, seed)
         end
       end
 
-      local finalDescription = bonusDesc .. passiveDesc .. heavyDesc .. chargeDesc .. overchargeDesc .. fireTimeDesc .. multishotDesc .. modListDesc -- .. config.description
+      local finalDescription = passiveDesc .. heavyDesc .. chargeDesc .. overchargeDesc .. multishotDesc .. modListDesc -- .. config.description
       finalDescription = finalDescription == "" and project45util.colorText("#777777", "No notable qualities.") or finalDescription
       
       descriptionScore = descriptionScore + math.ceil((#config.description)/18)
