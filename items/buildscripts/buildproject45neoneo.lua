@@ -350,7 +350,7 @@ function build(directory, config, parameters, level, seed)
         -- sb.logInfo(string.format("%s (%s): %s",config.shortdescription, config.gunArchetype, sb.printJson(archetypeDamage)))
         config.primaryAbility.baseDamage = (archetypeDamage or config.primaryAbility.baseDamage)
       end
-      config.primaryAbility.baseDamage = config.primaryAbility.baseDamage * configParameter("baseDamageMult", 1)
+      config.primaryAbility.baseDamage = config.primaryAbility.baseDamage * primaryAbility("baseDamageMultiplier", 1)
       
       -- generate random stats
       if randStatBonus > 0 and not configParameter("isRandomized") then
@@ -397,28 +397,28 @@ function build(directory, config, parameters, level, seed)
       
       local loFireTime = math.max(actualCycleTime[1], primaryAbility("fireTime", 0.1)) + chargeTime
       local hiFireTime = math.max(actualCycleTime[2], primaryAbility("fireTime", 0.1)) + chargeTime
-      
-      --[[
-      local overrideBalanceMult = configParameter("overrideBalanceMult")
-      if overrideBalanceMult then -- override balance multiplier; typically used in special/unique guns.
-        parameters.primaryAbility.balanceDamageMult = type(overrideBalanceMult) == "number" and overrideBalanceMult or 1
 
-      elseif not primaryAbility("balanceDamageMult") then  -- balance multiplier
-        generalConfig.standardMaxAmmo = 16
-
-        -- fire time balance is average firetime / (standard fire time * burst count)
-        local fireTimeBalance = math.max(generalConfig.minimumFireTime, ((loFireTime + hiFireTime) / 2)) / (generalConfig.standardFireTime * primaryAbility("burstCount", 1))
-        
+      local balanceDamageMult = configParameter("balanceDamageMult")
+      if not balanceDamageMult then  -- balance multiplier
+  
+        --[[
         local maxAmmo = primaryAbility("maxAmmo", 1)
         local ammoBalance = math.max(0, (generalConfig.standardMaxAmmo - maxAmmo) / (generalConfig.standardMaxAmmo - 1))
-        -- local reloadBalance = (maxAmmo - primaryAbility("bulletsPerReload", 1)) / maxAmmo
+        local reloadBalance = (maxAmmo - primaryAbility("bulletsPerReload", 1)) / maxAmmo
         local reloadBalance = 0
-        
         local firemodeBalance = primaryAbility("semi") and 0.75 or 0
-
-        parameters.primaryAbility.balanceDamageMult = fireTimeBalance + ammoBalance + reloadBalance + firemodeBalance
+  
+        --]]
+        
+        
+        -- fire time balance is average firetime / (standard fire time * burst count)
+        -- local fireTimeBalance = math.max(generalConfig.minimumFireTime, ((loFireTime + hiFireTime) / 2)) / (generalConfig.standardFireTime * primaryAbility("burstCount", 1))
+        local fireTimeBalance = 0.1 * (loFireTime + hiFireTime / 2) / generalConfig.minimumFireTime - 0.02
+        
+        balanceDamageMult = 1 + fireTimeBalance
+        
+        parameters.balanceDamageMult = balanceDamageMult
       end
-      --]]
       
       -- damage per shot
       -- recalculate
@@ -435,13 +435,11 @@ function build(directory, config, parameters, level, seed)
       local loDamage = baseDamage
         * math.min(table.unpack(primaryAbility("reloadRatingDamageMults", {0,0,0,0})))
         * ((overchargeTime > 0 and chargeDamageMult < 1) and chargeDamageMult or 1)
-        -- * parameters.primaryAbility.balanceDamageMult
       
       -- high damage = base damage * best reload damage * overcharge mult
       local hiDamage = baseDamage
         * math.max(table.unpack(primaryAbility("reloadRatingDamageMults", {0,0,0,0})))
         * (overchargeTime > 0 and perfectChargeDamageMult or 1)
-        -- * parameters.primaryAbility.balanceDamageMult
 
 
       config.tooltipFields.damagePerShotLabel = project45util.colorText("#FF9000", util.round(loDamage, 1) .. " - " .. util.round(hiDamage, 1))
@@ -485,8 +483,9 @@ function build(directory, config, parameters, level, seed)
       end
 
       config.tooltipFields.bonusRatioLabel = ""
+      config.tooltipFields.bonusRatioShadowLabel = ""
       if randStatBonus > 0 and parameters.isRandomized then
-        local bonusDesc = string.format("%d%%", math.floor(randStatBonus * 100))
+        local bonusDesc = string.format("^shadow;%d%%", math.floor(randStatBonus * 100))
         local bonusColor = "#777777"
         if randStatBonus > 0.75 then
           bonusColor = "#fdd14d"
@@ -495,7 +494,8 @@ function build(directory, config, parameters, level, seed)
         elseif randStatBonus > 0.25 then
           bonusColor = "#60b8ea"
         end
-        config.tooltipFields.bonusRatioLabel = project45util.colorText(bonusColor, bonusDesc) .. "\n"
+        config.tooltipFields.bonusRatioLabel = project45util.colorText(bonusColor, bonusDesc)
+        config.tooltipFields.bonusRatioShadowLabel = project45util.colorText("#a0a0a0", bonusDesc)
       end
 
       local descriptionScore = 0
@@ -561,14 +561,12 @@ function build(directory, config, parameters, level, seed)
           )
       end
 
-      --[[
       config.tooltipFields.balanceDamageMultLabel = ""
-      if parameters.primaryAbility.balanceDamageMult ~= 1 then
-        config.tooltipFields.balanceDamageMultLabel = project45util.colorText(parameters.primaryAbility.balanceDamageMult > 1
+      if balanceDamageMult ~= 1 then
+        config.tooltipFields.balanceDamageMultLabel = project45util.colorText(balanceDamageMult > 1
           and "#9dc6f5" or "#FF5050",
-          project45util.truncatef(parameters.primaryAbility.balanceDamageMult, 2) .. "x") .. "\n"
+          project45util.truncatef(balanceDamageMult, 2) .. "x") .. "\n"
       end
-      --]]
       
       local modListDesc = ""
       if modList then

@@ -147,7 +147,6 @@
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
     "reloadCost": 75,
-    "baseDamage": 7,
     "cycleTime": 0.05,
     "semi": false,
     "chargeFrames": 4,

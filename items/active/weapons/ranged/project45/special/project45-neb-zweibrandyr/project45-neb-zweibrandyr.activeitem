@@ -130,7 +130,6 @@
     
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
-    "baseDamage": 10,
     "projectileType": "project45frangiblebullet",
     "cycleTime": 0.1,
     "semi": false,

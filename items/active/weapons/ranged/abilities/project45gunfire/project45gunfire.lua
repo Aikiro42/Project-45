@@ -53,6 +53,8 @@ function Project45GunFire:init()
 
   self.recoilOffsetProgress = 1
 
+  self.balanceDamageMult = config.getParameter("balanceDamageMult", 1)
+
   -- separate cock time and reload time
   -- self.reloadTime = self.reloadTime * 0.8
   self.weapon.reloadTimer = -1
@@ -1796,6 +1798,7 @@ function Project45GunFire:damagePerShot(noDLM)
   * self.reloadRatingDamage -- as low as 0.8 (bad), as high as 1.5 (perfect)
   * critDmg -- this way, rounds deal crit damage individually
   * (self.passiveDamageMult or 1) -- provides a way for passives to modify damage
+  * (self.balanceDamageMult or 1)
   / self.projectileCount
 end
 

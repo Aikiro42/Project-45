@@ -128,18 +128,19 @@
     "hAnchor" : "left",
     "centered": true,
     "wrapWidth" : 126,
-    "value": "Damage per shot"
+    "value": "Dmg/Shot"
   },
-  /*
+  
   "balanceDamageMultLabel": {
     "type" : "label",
     "position" : [98, 88],
     "hAnchor" : "right",
     "centered": true,
     "wrapWidth" : 126,
-    "value": "(x99.99)"
+    "value": "(x999.999)"
   },
-  */
+  //*/
+
   "damagePerShotLabel" : {
     "type" : "label",
     "position" : [18, 78],

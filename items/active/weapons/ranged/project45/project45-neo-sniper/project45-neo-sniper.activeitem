@@ -89,7 +89,6 @@
     "reloadCost": 60,
     "critChance": 0.36,
     "critDamageMult": 2,
-    "baseDamage": 14,
     "maxAmmo": 12,
     "bulletsPerReload": 12,
     "semi": false,

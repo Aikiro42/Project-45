@@ -219,7 +219,6 @@
     
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
-    "baseDamage": 10,
     "projectileType": ["project45knightfallplasmabullet", "project45knightfallpiercingplasmabullet"],
     "cycleTime": 0.01,
     "multishot": 1.5,
