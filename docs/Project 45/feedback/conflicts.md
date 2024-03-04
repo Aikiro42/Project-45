@@ -1,0 +1,9 @@
+- [ ] `Azure`: Bug in **Enhanced Elemental Effects**: the fire status effect explosions are misconfigured and cause the game to crash.
+  > I recently discovered a bug that when I equipped my gun - AMR to be exact - with incendiary bullets and when dealing damage to a monster with incendiary bullets, the game crushed and a pop-up says: "Exception caught in client main-loop (StarException) Unknown damage definition with kind 'physical'. " it happens occasionally but as long as you keep triggering this mod, it becomes frequent. I might also subscribed other mods related with damage (I forgot the name, but I can still remember one of which it changed the elemental effects when hit, for example: you can frozen the enemy with ice elemental weapon) when I tested this. As so far with my reasoning, I could tell this crash has something to do with the incendiary bullets. (Enhanced Elemental Effects mod bug)
+
+- [x] ~~`Kampfbell`: bk3k's Inventory mismatch issue with some of the weapon like combat rifle in the wrong category making them not moddable. I'm not sure if you've fixed the particular issue, I'm still seeing it (re-bought and dropped the weapon) but from what I noticed most of two-handed weapon would fall under the general category, while one handed such as pistol, sawed-off shotgun, bow, and weapon mod falls under weapon & armor category on bk3k's inventory which makes the former not able to mount a mod.~~ (Fixed)
+
+
+- [ ] `LostVandal, 2024-02-22`: Incompatible with **Wildfire**
+
+- [ ] `DefinitelyNotScythe, thebigdaddyking4536, 2024-02-20`: Compatibility with **Weapon Retrofitting Station**
