@@ -103,7 +103,7 @@
     
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
-    "baseDamageMultiplier": 3,
+    "baseDamageMultiplier": 1.75,
     "critChance": 0.22,
     "critDamageMult": 1.65,
     "reloadCost": 10,

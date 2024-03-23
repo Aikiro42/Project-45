@@ -91,7 +91,7 @@
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
     "critDamageMult": 2,
-    "baseDamageMultiplier": 2.25,
+    "baseDamageMultiplier": 2,
     "maxAmmo": 20,
     "bulletsPerReload": 20,
     "semi": false,

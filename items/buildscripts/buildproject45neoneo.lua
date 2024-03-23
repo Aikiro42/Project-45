@@ -397,28 +397,29 @@ function build(directory, config, parameters, level, seed)
       
       local loFireTime = math.max(actualCycleTime[1], primaryAbility("fireTime", 0.1)) + chargeTime
       local hiFireTime = math.max(actualCycleTime[2], primaryAbility("fireTime", 0.1)) + chargeTime
+      --[[
 
-      local balanceDamageMult = configParameter("balanceDamageMult")
-      if not balanceDamageMult then  -- balance multiplier
+      local balanceDamageMult = configParameter("balanceDamageMult", 1)
+      if balanceDamageMult == 1 then  -- balance multiplier
   
-        --[[
+
         local maxAmmo = primaryAbility("maxAmmo", 1)
         local ammoBalance = math.max(0, (generalConfig.standardMaxAmmo - maxAmmo) / (generalConfig.standardMaxAmmo - 1))
         local reloadBalance = (maxAmmo - primaryAbility("bulletsPerReload", 1)) / maxAmmo
         local reloadBalance = 0
         local firemodeBalance = primaryAbility("semi") and 0.75 or 0
   
-        --]]
-        
-        
         -- fire time balance is average firetime / (standard fire time * burst count)
         -- local fireTimeBalance = math.max(generalConfig.minimumFireTime, ((loFireTime + hiFireTime) / 2)) / (generalConfig.standardFireTime * primaryAbility("burstCount", 1))
-        local fireTimeBalance = 0.1 * (loFireTime + hiFireTime / 2) / generalConfig.minimumFireTime - 0.02
-        
+        local fireTimeBalance = 0.01 * (loFireTime + hiFireTime / 2) / generalConfig.minimumFireTime - 0.02
         balanceDamageMult = 1 + fireTimeBalance
-        
         parameters.balanceDamageMult = balanceDamageMult
+        
+        parameters.balanceDamageMult = 1
+
       end
+      
+      --]]
       
       -- damage per shot
       -- recalculate
@@ -561,12 +562,16 @@ function build(directory, config, parameters, level, seed)
           )
       end
 
+      --[[
+
       config.tooltipFields.balanceDamageMultLabel = ""
       if balanceDamageMult ~= 1 then
         config.tooltipFields.balanceDamageMultLabel = project45util.colorText(balanceDamageMult > 1
           and "#9dc6f5" or "#FF5050",
           project45util.truncatef(balanceDamageMult, 2) .. "x") .. "\n"
       end
+      
+      --]]
       
       local modListDesc = ""
       if modList then

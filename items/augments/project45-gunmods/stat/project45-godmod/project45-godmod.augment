@@ -11,25 +11,25 @@
   "category" : "uniqueWeapon",
   "itemTags": ["weapon"],
   "inventoryIcon" : "/items/augments/project45-gunmods/stat/project45-godmod/project45-godmod.png",
-  "statInfo" : "^#d29ce7;Damage +0.2x\nCrit Chance +10%\nCrit Damage +0.12\nFire Time +0.08d^reset;",
+  "statInfo" : "^#d29ce7;Damage +0.4x\nCrit Chance +10%\nCrit Damage +0.12\nFire Time +0.08d^reset;",
   "description": "One mod to rule them all.",
   "slot": "multiple",
   "archetype": "Mixed",
   "shortdescription" : "^#fdd14d;The God Mod^reset;",
 
   "augment":{
-    "upgradeCost": 4,
+    "upgradeCost": 3,
     "baseDamage": {
-      "multiplicative": 1
+      "multiplicative": 0.4
     },
     "critChance": {
-      "additive": 0.25
-    },
-    "critDamage": {
       "additive": 0.10
     },
+    "critDamage": {
+      "additive": 0.12
+    },
     "fireTime": {
-      "multiplicative": 0.05
+      "multiplicative": 0.08
     }
   },
 
