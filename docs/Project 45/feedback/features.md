@@ -42,17 +42,17 @@ end
 
 ## Pushed to Github
 
-- [ ] `Orifan1` : also please dear god i hope the update changes the Cyclo's charge sound. idk why but my tinnitus pops off harder than it has ever popped off before when i use it. makes it really tempting to spawn something in as a replacement for it
-
-- [ ] `Ryu Ketsueki`: I refer to some items as R, SR, SSR, and XSSR in the in-game manual codex, so maybe I could alter the buildscript and the item configs to use those rarities instead (Pushed to Github)
-
-- [ ] `Ryu Ketsueki`: Also, one thing I noticed that may seem confusing at first. Since now it is possible to have manual reload on shift, you can even start the reload with shift but it only recognizes Left Click to actually click on the bar to get a perfect reload and stuff. It's possible that may throw some people off since you have to use two buttons to reload. Shift can be used to eject magazine, start reloading but can't complete the reload? If possible, can it be made so Shift also completes the reload in addition to the Left Click? (Pushed to Github)
-
 ## Tested
 
-- [ ] `Ryu Ketsueki`: I wonder if it would be possible to put manual reload on Shift and make that mod available for all weapons and not only those which don't have an action on Right Shift (Pushed to Github)
-
 ## Completed
+
+- [x] ~~`Ryu Ketsueki`: I wonder if it would be possible to put manual reload on Shift and make that mod available for all weapons and not only those which don't have an action on Right Shift (Pushed to Github)~~
+
+- [x] ~~`Ryu Ketsueki`: I refer to some items as R, SR, SSR, and XSSR in the in-game manual codex, so maybe I could alter the buildscript and the item configs to use those rarities instead (Pushed to Github)~~
+
+- [x] ~~`Ryu Ketsueki`: Also, one thing I noticed that may seem confusing at first. Since now it is possible to have manual reload on shift, you can even start the reload with shift but it only recognizes Left Click to actually click on the bar to get a perfect reload and stuff. It's possible that may throw some people off since you have to use two buttons to reload. Shift can be used to eject magazine, start reloading but can't complete the reload? If possible, can it be made so Shift also completes the reload in addition to the Left Click? (Pushed to Github)~~
+
+- [x] ~~`Orifan1` : also please dear god i hope the update changes the Cyclo's charge sound. idk why but my tinnitus pops off harder than it has ever popped off before when i use it. makes it really tempting to spawn something in as a replacement for it~~
 
 - [x] ~~`container7799`: add all guns in treasure pools with random stats and random installed features; what about looting? gun shop is good but i like when game decide which gun i can use, like borderlands. and also want ammo as resource.~~ (Partially implemented)
 

@@ -8,8 +8,8 @@
 
 - [ ] DefinitelyNotScythe: Easy to gain high damage with the pistol
 
-- [ ] Work_In_Progress: Great mod, but saying that it's breaking balance is an understatement, most of it is probably intentional but one thing that stood out for me is how mush money some wildcard mods can be sold for, in range from 200 to millions of pixels, which easily lets you get just stupid amounts of money.
+- [x] ~~Work_In_Progress: Great mod, but saying that it's breaking balance is an understatement, most of it is probably intentional but one thing that stood out for me is how mush money some wildcard mods can be sold for, in range from 200 to millions of pixels, which easily lets you get just stupid amounts of money.~~
 
-- [ ] JamesonMdrago: This is ontop of the fact that humanoid enemies drop so many guns and gun mods that it absolutely floods your inventory in a single visit.
+- [x] ~~JamesonMdrago: This is ontop of the fact that humanoid enemies drop so many guns and gun mods that it absolutely floods your inventory in a single visit.~~
 
-- [ ] DefinitelyNotScythe: (Regarding wildcard mods) One of them was 1389731840 pixels, and another I found had a value so high it caused an overflow and would result in -237832423462138761... too much to show up on screen lmao
+- [x] ~~DefinitelyNotScythe: (Regarding wildcard mods) One of them was 1389731840 pixels, and another I found had a value so high it caused an overflow and would result in -237832423462138761... too much to show up on screen lmao~~
