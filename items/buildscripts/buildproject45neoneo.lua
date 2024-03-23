@@ -84,9 +84,9 @@ function build(directory, config, parameters, level, seed)
   if configParameter("seed", seed) then
     parameters.seed = configParameter("seed", seed)
     -- sb.logInfo(string.format("Seed of %s: %d", config.itemName, parameters.seed))
-    if parameters.seed == 1301104 then
+    if parameters.seed == 69420 then
       randStatBonus = 1
-    elseif parameters.seed == 201911112 then
+    elseif parameters.seed == 42069 then
       randStatBonus = 0
     else
       local rng = sb.makeRandomSource(parameters.seed)
@@ -570,7 +570,7 @@ function build(directory, config, parameters, level, seed)
           and "#9dc6f5" or "#FF5050",
           project45util.truncatef(balanceDamageMult, 2) .. "x") .. "\n"
       end
-      
+
       --]]
       
       local modListDesc = ""
