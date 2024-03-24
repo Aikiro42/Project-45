@@ -1709,7 +1709,7 @@ function Project45GunFire:evalProjectileKind()
     self.hitscanParameters.hitscanBrightness = util.clamp(self.hitscanParameters.hitscanBrightness or 0, 0, 1)
     self.fireProjectile = hitscanLib.fireHitscan
     self.updateProjectileStack = hitscanLib.updateProjectileStack
-    self.hitscanParameters.hitscanColor = self.muzzleFlashColor
+    self.hitscanParameters.hitscanColor = self.hitscanParameters.hitscanColor or self.muzzleFlashColor
   elseif self.projectileKind == "beam" then
     self.muzzleProjectileFired = false
     self.firing = hitscanLib.fireBeam
@@ -1792,7 +1792,8 @@ end
 function Project45GunFire:damagePerShot(noDLM)
 
   local critDmg = self:crit()
-  return self.baseDamage
+
+  local finalDmg = self.baseDamage
   * (noDLM and 1 or config.getParameter("damageLevelMultiplier", 1))
   * self.currentChargeDamage -- up to 2x at full overcharge
   * self.reloadRatingDamage -- as low as 0.8 (bad), as high as 1.5 (perfect)
@@ -1800,6 +1801,19 @@ function Project45GunFire:damagePerShot(noDLM)
   * (self.passiveDamageMult or 1) -- provides a way for passives to modify damage
   -- * (self.balanceDamageMult or 1)
   / self.projectileCount
+
+    
+  sb.logInfo(string.format("Final Damage: %f", finalDmg * activeItem.ownerPowerMultiplier()))
+  sb.logInfo(string.format("\t %25s: %f", "Base Damage", self.baseDamage))
+  sb.logInfo(string.format("\t %25s: %f", "Damage Level Multiplier", (noDLM and 1 or config.getParameter("damageLevelMultiplier", 1))))
+  sb.logInfo(string.format("\t %25s: %f", "Charge Damage", self.chargeDamage))
+  sb.logInfo(string.format("\t %25s: %f", "Reload Rating Damage", self.reloadRatingDamage))
+  sb.logInfo(string.format("\t %25s: %f", "Crit Damage", critDmg))
+  sb.logInfo(string.format("\t %25s: %f", "Passive Damage Mult", (self.passiveDamageMult or 1)))
+  sb.logInfo(string.format("\t\t %25s: %f", "Projectile count", self.projectileCount))
+  sb.logInfo(string.format("\t\t %25s: (%f)", "Owner Power Multiplier", activeItem.ownerPowerMultiplier()))
+
+  return finalDmg
 end
 
 -- Returns whether the left click is held
