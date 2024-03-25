@@ -98,6 +98,8 @@ function Project45GunFire:init()
   -- Unless the gun continues firing until the gun is undercharged. (Should this be implemented?)
   self.fireBeforeOvercharge = not self.semi
 
+  self.closeBoltOnEmpty = not self.manualFeed and self.closeBoltOnEmpty
+
   if self.perfectChargeRange then
     self.perfectChargeDamageMult = math.max(
         self.perfectChargeDamageMult or self.chargeDamageMult,
@@ -666,7 +668,7 @@ function Project45GunFire:ejecting()
   self:updateChamberState("empty") -- empty chamber
 
   -- if gun has ammo, feed
-  if storage.ammo > 0 then
+  if storage.ammo > 0 or self.closeBoltOnEmpty then
     self:setState(self.feeding)
   
   -- otherwise, reset burst counter (set it to burstcount)
@@ -687,7 +689,9 @@ end
 
 function Project45GunFire:feeding()
 
-  self:onFeedPassive()
+  if storage.ammo > 0 then
+    self:onFeedPassive()
+  end
 
   if (self.manualFeed                              -- if gun is cocked every shot
   and storage.burstCounter >= self.burstCount        -- and the gun is done bursting
@@ -760,7 +764,7 @@ function Project45GunFire:feeding()
   end
 
   -- prevent triggering
-  self.triggered = self.semi or self.weapon.reloadTimer >= 0
+  self.triggered = self.semi or self.weapon.reloadTimer >= 0 or (self.closeBoltOnEmpty and storage.ammo <= 0)
   
   self.weapon.reloadTimer = -1  -- mark end of reload
   activeItem.setScriptedAnimationParameter("reloadTimer", self.weapon.reloadTimer)

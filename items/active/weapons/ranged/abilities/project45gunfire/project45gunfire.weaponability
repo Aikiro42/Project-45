@@ -242,7 +242,7 @@
     "ejectBeforeAnimation": true, // ejects casings before animationState is set to "ejecting"
     // "ejectCasingsAfterBurst": false, // ejects casings after burst is finished
     // "ejectCasingsWithMag": false, // for revolvers, etc.; casings are not ejected until magazine is ejected
-    
+    // "closeBoltOnEmpty": false, // closes bolt when magazine is empty
     /*
     if both <ejectMagOnEmpty> and <reloadOnEjectMag> are true, the gun will (almost) immediately begin reloading
     upon firing the last (set of) bullet(s).
