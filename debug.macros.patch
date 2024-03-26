@@ -1,6 +1,20 @@
 [
     {
         "op": "add",
+        "path": "/project45-test",
+        "value": [
+            "/spawnitem project45-neo-pistol 1 '{\"seed\": 69420}'",
+            "/spawnitem project45-neo-smg 1 '{\"seed\": 69420}'",
+            "/spawnitem project45-neo-smartgun 1 '{\"seed\": 69420}'",
+            "/spawnitem project45-neo-assaultrifle 1 '{\"seed\": 69420}'",
+            "/spawnitem project45-neo-machinegun 1 '{\"seed\": 69420}'",
+            "/spawnitem project45-neo-minigun 1 '{\"seed\": 69420}'",
+            "/spawnitem project45-neo-cyclo 1 '{\"seed\": 69420}'",
+            "/spawnitem project45-neo-flamethrower 1 '{\"seed\": 69420}'"
+        ]
+    },
+    {
+        "op": "add",
         "path": "/project45-spawnguns",
         "value": [
             "/spawnitem project45-neo-pipegun",
