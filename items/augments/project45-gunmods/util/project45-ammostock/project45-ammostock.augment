@@ -1,0 +1,18 @@
+{
+  "itemName" : "project45-ammostock",
+  "price" : 100,
+  "rarity" : "Common",
+  "tooltipKind" : "project45gunmod",
+  "category" : "upgradeComponent",
+  "tooltipFields":{
+    "subtitle": "Applied Utility",
+    "objectImage": "/items/augments/project45-gunmods/util/project45-ammostock/project45-ammostock.png"
+  },
+  "inventoryIcon" : "/items/augments/project45-gunmods/util/project45-ammostock/project45-ammostockicon.png",
+  "description" : "A box of surplus ammo. ^#e2c344;Contains 50 rounds.^reset;\nApply on a weapon to stock up to ^#e2c344;3x its max ammo capacity^reset;.",
+  
+  "shortdescription" : "Stock Ammo",
+  "ammo": 50,
+  
+  "scripts" : [ "/scripts/augments/project45-ammostock.lua" ]
+}

@@ -73,7 +73,7 @@ function update()
   barXOffset = hand == "primary" and -barXOffset or barXOffset
 
   renderAmmoNumber({horizontalOffset, 0}, reloadTimer >= 0)
-
+  renderStockAmmoNumber({horizontalOffset, 1}, reloadTimer >= 0)
   renderChamberIndicator({horizontalOffset, 0})
 
   renderLaser()
@@ -166,6 +166,20 @@ function renderAmmoNumber(offset, reloading)
       }, vec2.add(activeItemAnimation.ownerAimPosition(), offset))
     end
   end
+end
+
+function renderStockAmmoNumber(offset, reloading)
+  local stockAmmo = animationConfig.animationParameter("stockAmmo") or 0
+  if stockAmmo <= 0 then return end
+  localAnimator.spawnParticle({
+    type = "text",
+    text= "^shadow;" .. stockAmmo,
+    color = {128,128,128},
+    size = 0.5,
+    fullbright = true,
+    flippable = false,
+    layer = "front"
+  }, vec2.add(activeItemAnimation.ownerAimPosition(), offset))
 end
 
 function renderChamberIndicator(offset)

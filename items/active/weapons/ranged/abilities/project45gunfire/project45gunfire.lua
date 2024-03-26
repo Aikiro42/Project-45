@@ -10,6 +10,9 @@ require "/items/active/weapons/ranged/abilities/altfire.lua"
 
 local BAD, OK, GOOD, PERFECT = 1, 2, 3, 4
 local reloadRatingList = {"BAD", "OK", "GOOD", "PERFECT"}
+local ENERGY, AMMO = 0, 1  -- resource consumption modes
+
+local dps_debug = false
 
 Project45GunFire = WeaponAbility:new()
 Passive = {}
@@ -227,6 +230,7 @@ function Project45GunFire:init()
   activeItem.setScriptedAnimationParameter("reloadTimer", -1)
   activeItem.setScriptedAnimationParameter("chargeTimer", 0)
   activeItem.setScriptedAnimationParameter("ammo", storage.ammo)
+  activeItem.setScriptedAnimationParameter("stockAmmo", storage.stockAmmo)
   
   activeItem.setScriptedAnimationParameter("reloadTime", self.reloadTime)
   activeItem.setScriptedAnimationParameter("quickReloadTimeframe", self.quickReloadTimeframe)
@@ -776,12 +780,13 @@ function Project45GunFire:reloading()
   self:onReloadStartPassive()
 
   -- abort reload and click if energy is locked i.e. regenerating
-  if status.resourceLocked("energy") then
-    animator.playSound("click")
-    self.triggered = true
-    return
+  -- or if there is not enough stock ammo to reload
+  if status.resourceLocked("energy") and storage.stockAmmo <= 0 then
+      animator.playSound("click")
+      self.triggered = true
+      return
   end
-  
+    
   self.weapon.reloadTimer = 0 -- mark begin of reload
   animator.playSound("reloadStart") -- sound of mag being grabbed
   if self.breakAction and animator.animationState("gun") ~= "open" then
@@ -867,12 +872,17 @@ function Project45GunFire:reloading()
         self.weapon:setStance(self.stances.loadRound)  -- player visually loads round
       end
       local reloadedBullets = storage.ammo -- prevents energy overconsumption when reloaded bullets is greater than max ammo
-      self:updateAmmo(self.bulletsPerReload)
+      if status.resourceLocked("energy") then
+        self:updateAmmo(math.min(self.bulletsPerReload, storage.stockAmmo))
+      else
+        self:updateAmmo(self.bulletsPerReload)
+      end
       reloadedBullets = storage.ammo - reloadedBullets
 
       -- proportionally consume energy; break out of loop once out of energy
-      status.overConsumeResource("energy", self.reloadCost * (reloadedBullets / self.maxAmmo))
-      if not status.resourcePositive("energy") then
+      self:consumeEnergy(AMMO, reloadedBullets)
+
+      if status.resourceLocked("energy") and storage.stockAmmo <= 0 then
         energyDepletedFlag = true
         self.weapon.isReloading = false
         break
@@ -882,10 +892,15 @@ function Project45GunFire:reloading()
       if storage.ammo < self.maxAmmo then
         self.weapon.reloadTimer = 0      
       
+      --[[
+      
       -- DISABLED FEATURE: A BIT TOO PUNISHING; THE DAMAGE DECREASE AND JAMS WILL SUFFICE
       -- if reload rating is not bad, prematurely end minigame
       -- otherwise, player has to wait until end of reload time
-      -- elseif reloadRating ~= BAD then break
+      elseif reloadRating ~= BAD then break
+      
+      --]]
+
       else
         self.weapon.isReloading = false
         break
@@ -918,7 +933,7 @@ function Project45GunFire:reloading()
     reloadedBullets = storage.ammo - reloadedBullets
 
     -- proportionally consume energy; break out of loop once out of energy
-    status.overConsumeResource("energy", self.reloadCost * (reloadedBullets / self.maxAmmo))
+    self:consumeEnergy(AMMO, reloadedBullets)
   end
   
   self:onReloadEndPassive()
@@ -1312,6 +1327,9 @@ function Project45GunFire:ejectMag()
     self:updateChamberState("empty")
   end
 
+  if storage.ammo > 0 then
+    self:updateStockAmmo(storage.ammo)
+  end
   self:updateAmmo(-1, true)
   if self.resetChargeOnEject then
     self.chargeTimer = 0
@@ -1464,6 +1482,31 @@ function Project45GunFire:updateCharge()
     end
   end
 
+end
+
+function Project45GunFire:consumeEnergy(mode, amount)
+
+  local energyConsumed = 0
+  
+  if mode == ENERGY then
+    energyConsumed = amount
+
+  elseif mode == AMMO then
+    energyConsumed = self.reloadCost * (math.min(0, (storage.stockAmmo - amount)) / self.maxAmmo) * -1
+    self:updateStockAmmo(-amount)
+  end
+  
+  if not status.resourceLocked("energy") then
+    return status.overConsumeResource("energy", energyConsumed)
+  else
+    return false
+  end
+
+end
+
+function Project45GunFire:updateStockAmmo(delta, willReplace)
+  storage.stockAmmo = willReplace and delta or math.max(0, storage.stockAmmo + delta)
+  activeItem.setScriptedAnimationParameter("stockAmmo", storage.stockAmmo)
 end
 
 -- Updates the gun's ammo:
@@ -1806,16 +1849,17 @@ function Project45GunFire:damagePerShot(noDLM)
   -- * (self.balanceDamageMult or 1)
   / self.projectileCount
 
-    
-  sb.logInfo(string.format("Final Damage: %f", finalDmg * activeItem.ownerPowerMultiplier()))
-  sb.logInfo(string.format("\t %25s: %f", "Base Damage", self.baseDamage))
-  sb.logInfo(string.format("\t %25s: %f", "Damage Level Multiplier", (noDLM and 1 or config.getParameter("damageLevelMultiplier", 1))))
-  sb.logInfo(string.format("\t %25s: %f", "Charge Damage", self.currentChargeDamage))
-  sb.logInfo(string.format("\t %25s: %f", "Reload Rating Damage", self.reloadRatingDamage))
-  sb.logInfo(string.format("\t %25s: %f", "Crit Damage", critDmg))
-  sb.logInfo(string.format("\t %25s: %f", "Passive Damage Mult", (self.passiveDamageMult or 1)))
-  sb.logInfo(string.format("\t\t %25s: %f", "Projectile count", self.projectileCount))
-  sb.logInfo(string.format("\t\t %25s: (%f)", "Owner Power Multiplier", activeItem.ownerPowerMultiplier()))
+  if dps_debug then
+    sb.logInfo(string.format("Final Damage: %f", finalDmg * activeItem.ownerPowerMultiplier()))
+    sb.logInfo(string.format("\t %25s: %f", "Base Damage", self.baseDamage))
+    sb.logInfo(string.format("\t %25s: %f", "Damage Level Multiplier", (noDLM and 1 or config.getParameter("damageLevelMultiplier", 1))))
+    sb.logInfo(string.format("\t %25s: %f", "Charge Damage", self.currentChargeDamage))
+    sb.logInfo(string.format("\t %25s: %f", "Reload Rating Damage", self.reloadRatingDamage))
+    sb.logInfo(string.format("\t %25s: %f", "Crit Damage", critDmg))
+    sb.logInfo(string.format("\t %25s: %f", "Passive Damage Mult", (self.passiveDamageMult or 1)))
+    sb.logInfo(string.format("\t\t %25s: %f", "Projectile count", self.projectileCount))
+    sb.logInfo(string.format("\t\t %25s: (%f)", "Owner Power Multiplier", activeItem.ownerPowerMultiplier()))
+  end
 
   return finalDmg
 end
@@ -1919,6 +1963,7 @@ function Project45GunFire:saveGunState()
     bolt = animator.animationState("bolt"),
     gunAnimation = newGunAnimState[animator.animationState("gun")],
     ammo = storage.ammo,
+    stockAmmo = storage.stockAmmo or 0,
     reloadRating = storage.reloadRating,
     unejectedCasings = storage.unejectedCasings,
     jamAmount = storage.jamAmount,
@@ -1928,19 +1973,33 @@ function Project45GunFire:saveGunState()
   activeItem.setInstanceValue("savedGunState", gunState)
 end
 
-function Project45GunFire:loadGunState()
-
-  local loadedGunState = config.getParameter("savedGunState", {
+function Project45GunFire:validateState()
+  local loadedGunState = config.getParameter("savedGunState", {})
+  
+  local defaultGunState = {
     chamber = "empty",
     bolt = "open",
     gunAnimation = self.breakAction and "open" or "ejected",
     ammo = -1,
+    stockAmmo = 0,
     reloadRating = OK,
     unejectedCasings = 0,
     jamAmount = 0,
     savedProjectileIndex = 1,
     loadSuccess = false
-  })
+  }
+  
+  for k, v in pairs(defaultGunState) do
+    if loadedGunState[k] == nil then 
+      loadedGunState[k] = v
+    end
+  end
+  return loadedGunState
+end
+
+function Project45GunFire:loadGunState()
+
+  local loadedGunState = self:validateState()
 
   if not loadedGunState.loadSuccess then
     sb.logInfo("[PROJECT 45] WARNING: GUN STATE NOT LOADED")
@@ -1949,6 +2008,7 @@ function Project45GunFire:loadGunState()
   self:updateChamberState(loadedGunState.chamber)
     
   storage.ammo = storage.ammo or loadedGunState.ammo
+  storage.stockAmmo = storage.stockAmmo or loadedGunState.stockAmmo
   storage.savedProjectileIndex = storage.savedProjectileIndex or loadedGunState.savedProjectileIndex
 
   -- saved projectile index validation

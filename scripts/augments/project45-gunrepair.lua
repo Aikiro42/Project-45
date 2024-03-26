@@ -19,10 +19,6 @@ function apply(input)
     loadSuccess = false
   }
 
-  output:setInstanceValue("currentAmmo",input.parameters.primaryAbility and input.parameters.primaryAbility.maxAmmo or output.config.primaryAbility.maxAmmo)
-  output:setInstanceValue("currentReloadRating", "good")
-  output:setInstanceValue("currentJamAmount", 0)
-
   gunState.ammo = input.parameters.primaryAbility and input.parameters.primaryAbility.maxAmmo or output.config.primaryAbility.maxAmmo
   gunState.reloadRating = 3
   gunState.jamAmount = 0
