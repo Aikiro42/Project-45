@@ -1,3 +1,7 @@
+/*
+Credits: 343 Industries, Bungie, Creative Assembly, Ensemble Studios
+
+*/
 {
   "itemName" : "project45-hlo-maxx",
   "price" : 5000,
@@ -109,7 +113,7 @@
     "cycleTime": 0.1,
     "projectileKind": "projectile",
     "laser":{
-      "enabled": false
+      "enabled": true
     },
 
     "stances": {
