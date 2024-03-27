@@ -474,7 +474,7 @@ function renderChargeBar(offset, position, barColor, length, width, borderwidth)
 
   local chargeProgress = chargeTimer / (chargeTime + overchargeTime)
   local overchargeProgress = math.max(0, chargeTimer - chargeTime) / overchargeTime
-  local isPerfectCharge = perfectChargeRange[1] < overchargeProgress and overchargeProgress < perfectChargeRange[2]
+  local isPerfectCharge = perfectChargeRange[1] <= overchargeProgress and overchargeProgress <= perfectChargeRange[2]
 
   local chargeHexColorFunction = function(chargeTimer, chargeTime, overchargeTime, isPerfectCharge, asHex)
     local color
