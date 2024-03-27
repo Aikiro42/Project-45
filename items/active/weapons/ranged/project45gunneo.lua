@@ -22,6 +22,12 @@ function init()
     self.weapon:addAbility(secondaryAbility)
   end
 
+  local shiftAbility = getShiftAbility()
+  sb.logInfo(sb.printJson(shiftAbility))
+  if shiftAbility then
+    self.weapon:addAbility(shiftAbility)
+  end
+
   local generalConfig = root.assetJson("/configs/project45/project45_generalconfig.config")
 
   activeItem.setScriptedAnimationParameter("hand", activeItem.hand())

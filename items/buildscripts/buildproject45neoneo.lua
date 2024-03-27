@@ -123,10 +123,22 @@ function build(directory, config, parameters, level, seed)
   -- retrieve ability animation scripts
   local primaryAnimationScripts = setupAbility(config, parameters, "primary")
   local altAnimationScripts = setupAbility(config, parameters, "alt")
+  local shiftAnimationScripts = setupAbility(config, parameters, "shift")
+  
+  
+  -- append shift animation scripts
+  -- to altAnimationScripts
+  -- alt <- shift
+  for i, animationScript in ipairs(shiftAnimationScripts) do
+    if not project45util.isItemInList(altAnimationScripts, animationScript) then
+      table.insert(altAnimationScripts, animationScript)
+    end
+  end
 
   -- append config animation scripts
   -- to altAnimationScripts
   -- (if anything is appended, altAnimationScripts is usually empty)
+  -- alt <- shift <- config
   for i, animationScript in ipairs(config.animationScripts or {}) do
     if not project45util.isItemInList(altAnimationScripts, animationScript) then
       table.insert(altAnimationScripts, animationScript)
@@ -135,12 +147,14 @@ function build(directory, config, parameters, level, seed)
 
   -- append primary animation scripts
   -- to altAnimationScripts
+  -- alt <- shift <- config <- primary
   for i, animationScript in ipairs(primaryAnimationScripts) do
     if not project45util.isItemInList(altAnimationScripts, animationScript) then
       table.insert(altAnimationScripts, animationScript)
     end
   end
   
+  -- alt <- config <- primary
   config.animationScripts = altAnimationScripts
   
   -- elemental type and config (for alt ability)

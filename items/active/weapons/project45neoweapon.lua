@@ -191,3 +191,10 @@ function Weapon:setStance(stance)
   self.stanceProgress = stance.snap and 1 or 0
 
 end
+
+function getShiftAbility()
+  local shiftAbilityConfig = config.getParameter("shiftAbility")
+  if shiftAbilityConfig then
+    return getAbility("shift", shiftAbilityConfig)
+  end
+end
