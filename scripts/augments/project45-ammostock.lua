@@ -9,6 +9,8 @@ function apply(input)
   local modInfo = sb.jsonMerge(output.config.project45GunModInfo, input.parameters.project45GunModInfo)
   if not modInfo then return end
   
+  local maxStockAmmoMult = root.assetJson("/configs/project45/project45_generalconfig.config:maxStockAmmoMult")
+
   local gunState = input.parameters.savedGunState or {
     chamber = "empty",
     bolt = "closed",
@@ -23,9 +25,9 @@ function apply(input)
   local ammoAdd = config.getParameter("ammo", 0)
   
   local maxAmmo = (input.parameters.primaryAbility or {}).maxAmmo or (output.config.primaryAbility or {maxAmmo = ammoAdd}).maxAmmo or ammoAdd
-  if gunState.stockAmmo >= maxAmmo * 3 then return end
+  if gunState.stockAmmo >= maxAmmo * maxStockAmmoMult then return end
   
-  gunState.stockAmmo = math.min(maxAmmo * 3, gunState.stockAmmo + ammoAdd)
+  gunState.stockAmmo = math.min(maxAmmo * maxStockAmmoMult, gunState.stockAmmo + ammoAdd)
   output:setInstanceValue("savedGunState", gunState)
 
   return output
