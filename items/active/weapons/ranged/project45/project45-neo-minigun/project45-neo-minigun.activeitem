@@ -172,6 +172,8 @@
     "chargeTime": 1,
     "overchargeTime": 1,
 
+    "chargeDamageMult": 0.7,
+
     "dischargeTimeMult": 0.5,
     
     "projectileKind": "projectile",

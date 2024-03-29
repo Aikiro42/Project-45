@@ -25,10 +25,11 @@ function Passive:update(dt, fireMode, shiftheld)
       and not self.isFiring
       then
   
-          if status.resourcePositive("energy") and not status.resourceLocked("energy") then
-              storage.reloadSignal = true
+          if not status.resourceLocked("energy")
+          or storage.stockAmmo + math.max(storage.ammo, 0) > 0 then              
+            storage.reloadSignal = true
           else
-              animator.playSound("shiftReloadError")
+            animator.playSound("shiftReloadError")
           end
   
       else
