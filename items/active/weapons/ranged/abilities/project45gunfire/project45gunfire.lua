@@ -1160,7 +1160,8 @@ end
 function Project45GunFire:fireProjectile(projectileType, projectileParameters, inaccuracy, firePosition, projectileCount, aimVector, addOffset)
   local params = sb.jsonMerge(self.projectileKind == "summoned" and self.summonedProjectileParameters or self.projectileParameters, projectileParameters or {})
   params.power = self:damagePerShot()
-  params.powerMultiplier = activeItem.ownerPowerMultiplier()
+  -- params.powerMultiplier = activeItem.ownerPowerMultiplier()
+  params.powerMultiplier = 1
   params.speed = util.randomInRange(params.speed)
   local selectedProjectileType = nil
 
@@ -1745,6 +1746,8 @@ function Project45GunFire:evalProjectileKind()
           activeItem.setScriptedAnimationParameter("primaryLaserArcRenderTime", projectileConfig.timeToLive)
           activeItem.setScriptedAnimationParameter("primaryLaserArcGravMult", root.projectileGravityMultiplier(projectileType))
         end
+      else
+        self.weapon.damageSource = hitscanLib.alteredDamageSourceFunc
       end
     end
   
