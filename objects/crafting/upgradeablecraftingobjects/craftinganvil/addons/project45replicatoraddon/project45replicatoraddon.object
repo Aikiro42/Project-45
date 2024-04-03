@@ -1,0 +1,56 @@
+{
+  "objectName" : "project45replicatoraddon",
+  "colonyTags" : ["crafting"],
+  "rarity" : "Legendary",
+  "category" : "crafting",
+  "price" : 1250,
+  "description" : "A module that adds Project 45 miscellany to the replicator.",
+  "shortdescription" : "^orange;Project 45 Addon^white;",
+  "race" : "generic",
+
+  "apexDescription" : "How useful, this will add additional Project 45 combat equipment to the replicator.",
+  "avianDescription" : "I can use this to add extra equipment to the replicator.",
+  "floranDescription" : "Floran use thisss to add more thingss to replicator.",
+  "glitchDescription" : "Excited. Using this module will add additional Project 45 combat equipment to the replicator.",
+  "humanDescription" : "Using this adds extra Project 45 combat equipment to the replicator!",
+  "hylotlDescription" : "This useful module will add additional Project 45 combat equipment to the replicator.",
+  "novakidDescription" : "This handy ol' module will add even more to the replicator.",
+
+  "printable" : false,
+
+  "placementImage" : "project45replicatoraddonpreview.png",
+  "placementImagePosition" : [-24, -24],
+
+  "inventoryIcon" : "project45replicatoraddonicon.png",
+  "orientations" : [
+    {
+      "direction" : "left",
+      "image" : "project45replicatoraddon.png:<color>",
+
+      "imagePosition" : [-8, 0],
+
+      "spaces" : [ [-1, 0], [0, 0], [-1, 1], [0, 1], [-1, 2], [0, 2] ],
+
+      "fgAnchors" : [ [-1, -1], [0, -1] ],
+      "anchorMaterial" : "metamaterial:anviladdonbase"
+    }
+  ],
+
+  "forceFinishAnimationsInInit" : false,
+  "animation" : "/objects/crafting/upgradeablecraftingobjects/craftinganvil/addons/anviladdon.animation",
+  "animationPosition" : [-8, 0],
+  "animationParts" : {
+    "addon" : "project45replicatoraddon.png",
+    "addonfullbright" : "project45replicatoraddonfullbright.png"
+  },
+
+  "scripts" : [ "/scripts/objectaddons.lua", "/objects/crafting/upgradeablecraftingobjects/craftinganvil/addons/anviladdon.lua" ],
+
+  "addonConfig" : {
+    "isAddons" : [
+      {
+        "name" : "project45ReplicatorAddon"
+      }
+    ]
+  }
+}

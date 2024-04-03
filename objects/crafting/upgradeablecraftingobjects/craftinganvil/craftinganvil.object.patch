@@ -1,0 +1,29 @@
+[
+  {
+      "op": "add",
+      "path": "/upgradeStages/2/addonConfig/usesAddons/-",
+      "value": {
+          "name": "project45ReplicatorAddon",
+          "position": [
+              0,
+              3
+          ],
+          "addonData": {
+              "animationState": "project45replicator",
+              "interactData": {
+                  "paneLayoutOverride": {
+                      "windowtitle": {
+                          "title": "Gunsmith's Table",
+                          "icon": {
+                              "file": "/interface/crafting/project45replicatortable.png"
+                          }
+                      }
+                  },
+                  "filter": [
+                      "craftingproject45"
+                  ]
+              }
+          }
+      }
+  }
+]

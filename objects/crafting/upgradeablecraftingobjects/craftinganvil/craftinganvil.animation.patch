@@ -1,0 +1,78 @@
+[
+  {
+      "op": "add",
+      "path": "/lights/project45replicatorglow",
+      "value": {
+          "active": false,
+          "color": [
+              120,
+              65,
+              0
+          ],
+          "position": [
+              0,
+              2
+          ],
+          "flickerPeriod": 0.9,
+          "flickerMinIntensity": 0.75,
+          "flickerMaxIntensity": 0.8,
+          "flickerPeriodVariance": 0,
+          "flickerIntensityVariance": 0
+      }
+  },
+  {
+      "op": "add",
+      "path": "/animatedParts/parts/chassis/partStates/stage/project45replicator",
+      "value": {
+          "properties": {
+              "image": "craftinganvil3lit.png:<color>"
+          }
+      }
+  },
+  {
+      "op": "add",
+      "path": "/animatedParts/parts/lights/partStates/stage/project45replicator",
+      "value": {
+          "properties": {
+              "image": "craftinganvil3.png:<color>"
+          }
+      }
+  },
+  {
+      "op": "add",
+      "path": "/animatedParts/stateTypes/stage/states/manipulator/properties/lightsOff/-",
+      "value": "project45replicatorglow"
+  },
+  {
+      "op": "add",
+      "path": "/animatedParts/stateTypes/stage/states/separator/properties/lightsOff/-",
+      "value": "project45replicatorglow"
+  },
+  {
+      "op": "add",
+      "path": "/animatedParts/stateTypes/stage/states/accelerator/properties/lightsOff/-",
+      "value": "project45replicatorglow"
+  },
+  {
+      "op": "add",
+      "path": "/animatedParts/stateTypes/stage/states/craftinganvil3/properties/lightsOff/-",
+      "value": "project45replicatorglow"
+  },
+  {
+      "op": "add",
+      "path": "/animatedParts/stateTypes/stage/states/project45replicator",
+      "value": {
+          "properties": {
+              "lightsOff": [
+                  "replicatorglow",
+                  "acceleratorglow",
+                  "separatorglow",
+                  "manipulatorglow"
+              ],
+              "lightsOn": [
+                  "project45replicatorglow"
+              ]
+          }
+      }
+  }
+]
