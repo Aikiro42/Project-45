@@ -27,8 +27,6 @@ function hitscanLib:fireHitscan(projectileType)
       }
       
       local damageConfig = {
-        -- we included activeItem.ownerPowerMultiplier() in
-        -- self:damagePerShot() so we cancel it
         -- multiply nProjsOverflowMult to final damage to compensate for lost multishot
         baseDamage = finalDamage*nProjsOverflowMult,
         timeout = self.currentCycleTime,
