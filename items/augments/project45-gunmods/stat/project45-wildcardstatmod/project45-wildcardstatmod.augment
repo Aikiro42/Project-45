@@ -1,6 +1,6 @@
 {
   "itemName" : "project45-wildcardstatmod",
-  "price" : 1000,
+  "price" : 100,
   "rarity" : "Essential",
   "isUnique": true,
   "tooltipKind" : "project45gunmod2",
@@ -18,7 +18,7 @@
   "shortdescription" : "^#d29ce7;Wildcard Mod",
 
   "augment":{
-    "upgradeCost": 7,
+    "upgradeCost": 5,
     "randomStats": true,
     "baseDamage": {
       "additive": [-1, 3],
