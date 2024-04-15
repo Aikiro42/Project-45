@@ -26,7 +26,6 @@
 
   "project45GunModInfo": {
     "category": "ballistic",
-    "upgradeCapacity": 8,
     "allowsConversion": [
       "hitscan",
       "summoned"

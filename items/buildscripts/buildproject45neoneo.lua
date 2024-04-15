@@ -30,8 +30,6 @@ function build(directory, config, parameters, level, seed)
       return defaultValue
     end
   end
-
-  --[[ These functions work, but are unused in this script. TODO: Utilize me.
   
   local deepConfigParameterT = function(t, ...)
     local retval = nil
@@ -55,8 +53,6 @@ function build(directory, config, parameters, level, seed)
     if retval ~= nil then return retval end
     return defaultValue
   end
-
-  --]]
 
   local primaryAbility = function(keyName, defaultValue, set)
     if set then
@@ -102,7 +98,17 @@ function build(directory, config, parameters, level, seed)
   -- calculate mod capacity
   construct(config, "project45GunModInfo")
   construct(parameters, "project45GunModInfo")
-  parameters.project45GunModInfo.upgradeCapacity = (config.project45GunModInfo.upgradeCapacity or 0) + (currentLevel - 1)
+  local baseUpgradeCapacity = config.project45GunModInfo.upgradeCapacity
+    or 10 + #deepConfigParameter({},"project45GunModInfo", "acceptsModSlot")
+      + (
+          #deepConfigParameter({},"project45GunModInfo", "allowsConversion") +
+          #deepConfigParameter({},"project45GunModInfo", "acceptsAmmoArchetype") > 0
+          and 1 or 0
+        )
+
+  sb.logInfo("Base Upgrade Capacity of " .. configParameter("itemName","???") .. ": " .. baseUpgradeCapacity)
+
+  parameters.project45GunModInfo.upgradeCapacity = baseUpgradeCapacity + (currentLevel - 1)
   
   -- sb.logInfo(string.format("Generated %s", configParameter("itemName")))
 
@@ -337,17 +343,13 @@ function build(directory, config, parameters, level, seed)
     
     if config.primaryAbility then
       
-      if config.project45GunModInfo and config.project45GunModInfo.upgradeCapacity
-      then
-        if config.project45GunModInfo.upgradeCapacity > -1 then
-          local count = parameters.upgradeCount or 0
-          local max = parameters.project45GunModInfo.upgradeCapacity
-          config.tooltipFields.upgradeCapacityLabel = (count < max and "^#96cbe7;" or "^#777777;") .. (max - count) .. "/" .. max .. "^reset;"
-        else
-          config.tooltipFields.upgradeCapacityLabel = project45util.colorText("#96cbe7","Unlimited")
-        end
+      local upgradeCapacity = deepConfigParameter(nil, "project45GunModInfo", "upgradeCapacity")
+      if upgradeCapacity > -1 then
+        local count = parameters.upgradeCount or 0
+        local max = parameters.project45GunModInfo.upgradeCapacity
+        config.tooltipFields.upgradeCapacityLabel = (count < max and "^#96cbe7;" or "^#777777;") .. (max - count) .. "/" .. max .. "^reset;"
       else
-        config.tooltipFields.upgradeCapacityLabel = project45util.colorText("#777777", "0/0")
+        config.tooltipFields.upgradeCapacityLabel = project45util.colorText("#96cbe7","Unlimited")
       end
 
       -- recalculate baseDamage

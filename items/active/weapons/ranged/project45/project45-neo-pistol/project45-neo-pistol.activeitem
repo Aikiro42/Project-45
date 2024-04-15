@@ -76,7 +76,6 @@
 
   "project45GunModInfo":{
     "category": "ballistic",
-    "upgradeCapacity": 9,
     "allowsConversion": [
       "hitscan",
       "beam",
