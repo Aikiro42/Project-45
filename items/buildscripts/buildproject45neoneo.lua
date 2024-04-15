@@ -106,7 +106,6 @@ function build(directory, config, parameters, level, seed)
           and 1 or 0
         )
 
-  sb.logInfo("Base Upgrade Capacity of " .. configParameter("itemName","???") .. ": " .. baseUpgradeCapacity)
 
   parameters.project45GunModInfo.upgradeCapacity = baseUpgradeCapacity + (currentLevel - 1)
   
