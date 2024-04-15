@@ -69,7 +69,7 @@
       },
       "flashlight" : {
         "active" : false,
-        "position" : [-1.25, -0.5],
+        "position" : [0, 0],
         "transformationGroups" : ["muzzle"],
         "color" : [200, 200, 255],
         "pointLight" : true,
