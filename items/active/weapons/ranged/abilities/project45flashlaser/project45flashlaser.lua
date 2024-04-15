@@ -88,7 +88,7 @@ end
 function Project45FlashLaser:renderFlashlight(flashlightOn)
   if self.isFlashlightOn ~= flashlightOn then
     animator.setLightActive("flashlight", flashlightOn)
-    animator.setLightActive("flashlightSpread", flashlightOn)
+    -- animator.setLightActive("flashlightSpread", flashlightOn)
     self.isFlashlightOn = flashlightOn
   end
 end
@@ -103,11 +103,11 @@ function Project45FlashLaser:reset()
   storage.state = storage.state or OFF
   if storage.state == FLASH or storage.state == FLASHLASER then
     animator.setLightActive("flashlight", true)
-    animator.setLightActive("flashlightSpread", true)
+    -- animator.setLightActive("flashlightSpread", true)
     animator.playSound("flashlight")
   else
     animator.setLightActive("flashlight", false)
-    animator.setLightActive("flashlightSpread", false)
+    -- animator.setLightActive("flashlightSpread", false)
   end
 end
 

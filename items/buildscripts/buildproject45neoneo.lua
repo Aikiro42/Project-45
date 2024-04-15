@@ -262,21 +262,34 @@ function build(directory, config, parameters, level, seed)
 
   if config.primaryAbility then
 
+    local cycleTime = primaryAbility("cycleTime", 0.1)
+    if type(cycleTime) == "table" then
+      cycleTime = math.min(cycleTime[1], cycleTime[2])
+    end
+    
+    -- [[
     -- sync cycle animation
     local fireTimeRelatedStates = {
       "ejecting",
       "feeding"
     }
-    local cycleTime = primaryAbility("cycleTime", 0.1)
-    if type(cycleTime) == "table" then
-      cycleTime = math.min(cycleTime[1], cycleTime[2])
-    end
+    
     local stateCycleTime = cycleTime / (#fireTimeRelatedStates + (primaryAbility("loopFiringAnimation", false) and 0 or 1))
+
     for _, state in ipairs(fireTimeRelatedStates) do
       construct(config, "animationCustom", "animatedParts", "stateTypes", "gun", "states", state)
       config.animationCustom.animatedParts.stateTypes.gun.states[state].cycle = stateCycleTime
       -- sb.logInfo(config.animationCustom.animatedParts.stateTypes.gun.states[state].cycle)
     end
+    --]]
+    
+    --[[
+    local stateCycleTime = cycleTime / (primaryAbility("loopFiringAnimation", false) and 3 or 2)
+    construct(config, "animationCustom", "animatedParts", "stateTypes", "gun", "states", "ejecting")
+    config.animationCustom.animatedParts.stateTypes.gun.states.ejecting.cycle = stateCycleTime
+    construct(config, "animationCustom", "animatedParts", "stateTypes", "gun", "states", "feeding")
+    config.animationCustom.animatedParts.stateTypes.gun.states.feeding.cycle = stateCycleTime
+    --]]
 
     construct(config, "animationCustom", "animatedParts", "stateTypes", "gun", "states", "firing")
     config.animationCustom.animatedParts.stateTypes.gun.states.firing.cycle = primaryAbility("loopFiringAnimation", false) and cycleTime or stateCycleTime
