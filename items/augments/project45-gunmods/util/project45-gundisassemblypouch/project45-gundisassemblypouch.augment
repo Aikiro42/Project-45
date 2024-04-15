@@ -10,7 +10,7 @@
     "objectImage": "/items/augments/project45-gunmods/util/project45-gundisassemblypouch/project45-gundisassemblypouch.png"
   },
   "inventoryIcon" : "/items/active/unsorted/project45/project45-disassembledpouch/project45-disassembledpouch-icon.png",
-  "description" : "A one-time-use disassembly kit for your gun.",
+  "description" : "A portablized one-time-use disassembly kit for modded weapons.",
   "shortdescription" : "Gun Disassembly Pouch",
   "scripts" : [ "/scripts/augments/project45-gundisassembler.lua" ]
 }
