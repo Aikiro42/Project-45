@@ -159,6 +159,7 @@
     "resetChargeOnFire": false,
     "chargeWhenObstructed": true,
     "maintainChargeOnEmpty": true,
+    "closeBoltOnEmpty": true,
     
     "recoilUpOnly": true,
     "recoilMaxDeg": 30,

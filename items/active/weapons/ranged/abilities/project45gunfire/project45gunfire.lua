@@ -387,6 +387,14 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
   self:updateMovementControlModifiers()
   self:updateMuzzleFlash()
 
+  if self.mustEject
+  and animator.animationState("gun") ~= "ejecting"
+  and animator.animationState("gun") ~= "boltPulling" then
+    self.mustEject = false
+    self:discardCasings()
+    self.updateChamberState("empty")
+  end
+
   if not self.isFiring then
     if not self:triggering() then
       self.triggered = false
@@ -405,9 +413,11 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
       if storage.ammo >= 0 and not self.triggered then
         if storage.jamAmount > 0 then
           self:updateJamAmount(0, true)
-          self:openBolt(self.breakAction and storage.ammo or 0)
+          self:openBolt(self.breakAction and storage.ammo or 0,
+            false, self.breakAction, true, true)
         else
-          self:openBolt(self.breakAction and storage.ammo or math.min(storage.ammo, self.ammoPerShot))        
+          self:openBolt(self.breakAction and storage.ammo or math.min(storage.ammo, self.ammoPerShot),
+            false, self.breakAction, true, true)
         end
         if self.internalMag then
           self:setState(self.reloading)
@@ -448,11 +458,9 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
           end
       elseif storage.ammo == 0 and not self.triggered then
         if self.loadRoundsThroughBolt then
-          self:setState(self.ejecting)
-        else
-          self:ejectMag()
+          self:openBolt(animator.animationState("chamber") == "ready" and self.ammoPerShot, false, true, true, true)
         end
-
+        self:ejectMag()
       else
         if not self.triggered then
           self:setState(self.reloading)
@@ -616,11 +624,14 @@ function Project45GunFire:ejecting()
 
   self:onEjectPassive()
 
-  if not self.ejectCasingsWithMag
-  and self.ejectBeforeAnimation
-  then
-    self:discardCasings()
-    self:updateChamberState("empty") -- empty chamber
+  if not self.ejectCasingsWithMag then
+    
+    if not self.ejectAfterAnimation then
+      self:discardCasings()
+      self:updateChamberState("empty") -- empty chamber
+    else
+      self.mustEject = true
+    end
   end
 
   -- if gun is cocked per shot
@@ -650,7 +661,7 @@ function Project45GunFire:ejecting()
 
   -- if the gun is cocked per shot
   -- and the gun is done bursting,
-  -- we for the cock animation to end
+  -- we wait for the cock animation to end
   -- otherwise, the gun is semiauto or the gun isn't done bursting:
   -- we wait for the (half) cycle animation to end
   if (self.manualFeed and (storage.burstCounter >= self.burstCount))
@@ -658,15 +669,8 @@ function Project45GunFire:ejecting()
   or self.isCocking
   then
     util.wait(self.cockTime/2)
-    self.stanceLocked = false
   else
     util.wait(self.currentCycleTime/3)
-  end
-
-  if not self.ejectCasingsWithMag
-  and not self.ejectBeforeAnimation
-  then
-    self:discardCasings()
   end
 
   self:updateChamberState("empty") -- empty chamber
@@ -977,6 +981,7 @@ function Project45GunFire:cocking()
   self.cooldownTimer = self.fireTime
   self.isCocking = true
 
+  --[[
   if animator.animationState("bolt") == "closed"
   or self.forceBoltPullWhenCocking
   then
@@ -991,6 +996,13 @@ function Project45GunFire:cocking()
     animator.setAnimationState("bolt", "open")
     util.wait(self.cockTime/2)
   end
+  --]]
+
+  -- [[
+  self:openBolt(animator.animationState("chamber") == "ready" and self.ammoPerShot or 0, false, false, not self.ejectCasingsWithMag, true)
+  util.wait(self.cockTime/2)
+  
+  --]]
 
   if animator.animationState("bolt") == "open" then
     storage.burstCounter = self.burstCount
@@ -1271,19 +1283,52 @@ function Project45GunFire:recoil(down, mult, amount, recoverDelay)
   self.recoverDelayTimer = (recoverDelay or self.recoverDelay or self.fireTime or 0) * self.recoverMult
 end
 
-function Project45GunFire:openBolt(ammoDiscard, mute)
+function Project45GunFire:openBolt(ammoDiscard, mute, openGun, ejectCasings, manualOpen)
   ammoDiscard = ammoDiscard or 0
+  -- discard ammo and trigger onEjectPassive
   if ammoDiscard > 0 then
+    self:onEjectPassive()
     self:updateAmmo(-ammoDiscard)
     storage.unejectedCasings = storage.unejectedCasings + ammoDiscard
   end
-  if animator.animationState("bolt") ~= "open" then
-    animator.setAnimationState("bolt", "open")
-    animator.setAnimationState("gun", self.breakAction and "open" or "ejecting")
-    if not self.mute then animator.playSound("boltPull") end
+
+  if ejectCasings then
+    if not self.ejectAfterAnimation then
+      self:discardCasings()
+      self:updateChamberState("empty") -- empty chamber
+    else
+      self.mustEject = true
+    end
   end
-  self:discardCasings()
-  self:updateChamberState("empty")
+
+  -- If bolt is not open, animate
+  if animator.animationState("bolt") ~= "open" then
+
+    -- Screen shake if rounds are to be loaded through bolt
+    if self.loadRoundsThroughBolt and storage.ammo <= 0 then
+      self:screenShake(0.5)
+    end
+    
+    if animator.animationState("bolt") == "jammed" then
+      -- jammed animation state should visually be linekd to ejected
+      animator.setAnimationState("gun", "ejected")
+    else
+      -- opening the bolt opens the gun
+      animator.setAnimationState("gun", (openGun and self.breakAction and "open") or (manualOpen and "boltPulling") or "ejecting")
+    end
+    animator.setAnimationState("bolt", "open")
+
+    -- animate bolt pulling if not a break-action weapon
+    -- if it's a break-action but is a manual-feed, animate it anyway
+    -- TESTME:
+    if not self.breakAction or self.manualFeed then
+      self.weapon:setStance(self.stances.boltPull)
+    end
+
+    if not self.mute then animator.playSound("boltPull") end
+      
+  end
+
 end
 
 -- Ejects mag
@@ -1324,8 +1369,12 @@ function Project45GunFire:ejectMag()
   (self.breakAction and animator.animationState("chamber") == "filled") then
     -- if the mag is internal,
     -- discard any undiscarded casings instead
-    self:discardCasings()
-    self:updateChamberState("empty")
+    if not self.ejectAfterAnimation then
+      self:discardCasings()
+      self:updateChamberState("empty")
+    else
+      self.mustEject = true
+    end
   end
 
   if storage.ammo > 0 then
