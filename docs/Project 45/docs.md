@@ -430,7 +430,7 @@ Regarding `"summoned"` projectiles:
     // Reload and Magazine Config
 
     "audibleEjection": false, // if true, plays bolt pulling sound when ejecting casings
-    "ejectBeforeAnimation": true, // ejects casings before animationState is set to "ejecting"
+    "ejectAfterAnimation": true, // ejects casings before animationState is set to "ejecting"
     "ejectCasingsAfterBurst": false, // ejects casings after burst is finished
     "ejectCasingsWithMag": false, // for revolvers, etc.; casings are not ejected until magazine is ejected
     
