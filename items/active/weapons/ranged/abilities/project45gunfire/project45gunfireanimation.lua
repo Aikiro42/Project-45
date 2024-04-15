@@ -73,7 +73,6 @@ function update()
   barXOffset = hand == "primary" and -barXOffset or barXOffset
 
   renderAmmoNumber({horizontalOffset, 0}, reloadTimer >= 0)
-  renderStockAmmoNumber({horizontalOffset, 1}, reloadTimer >= 0)
   renderChamberIndicator({horizontalOffset, 0})
 
   renderLaser()
@@ -125,6 +124,7 @@ function renderAmmoNumber(offset, reloading)
   local ammo = animationConfig.animationParameter("ammo") or "?"
   local rating = animationConfig.animationParameter("reloadRating")
   local renderAmmoImage = animationConfig.animationParameter("useAmmoCounterImages")
+  local stockAmmoOffset = vec2.add(offset, {0, 1})
 
   if ammo >= 0 then
     localAnimator.spawnParticle({
@@ -139,6 +139,7 @@ function renderAmmoNumber(offset, reloading)
 
   else
     if renderAmmoImage then
+      stockAmmoOffset = vec2.add(offset, {0, 1.5})
       if reloading then
         localAnimator.addDrawable({
           image = "/items/active/weapons/ranged/abilities/project45gunfire/reloadindicator.png:reloading." .. animTable.ammo.frame,
@@ -166,6 +167,9 @@ function renderAmmoNumber(offset, reloading)
       }, vec2.add(activeItemAnimation.ownerAimPosition(), offset))
     end
   end
+
+  renderStockAmmoNumber(stockAmmoOffset, reloading)
+
 end
 
 function renderStockAmmoNumber(offset, reloading)
