@@ -1,0 +1,21 @@
+{
+  "kind" : "project45maxxmag",
+  "definition" : {
+    "type" : "textured",
+    "image" : "/particles/project45/magazines/special/project45maxxmag/project45maxxmag.png",
+    "fade" : 0.9,
+	"position" : [0, 0],
+	"size" : 1.0,
+    "initialVelocity" : [5, -10],
+    "finalVelocity" : [0, -60.0],
+    "approach" : [1, 60],
+    "timeToLive" : 2,
+    "layer" : "back",
+    "collidesForeground" : true,
+    "rotation": 0,
+	"variance" : {
+	  "angularVelocity" : 240,
+      "initialVelocity" : [2, 2]
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "itemName" : "project45-disassembledpouch",
+  "price" : 20000,
+  "level" : 1,
+  "maxStack" : 1,
+  "rarity" : "Essential",
+  "category" : "mysteriousReward",
+  "description" : "Left-click to retrieve the disassembled gun.",
+  "shortdescription" : "Disassembled Gun",
+  "twoHanded" : true,
+  "tooltipKind" : "project45disassembled",
+  "tooltipFields":{
+    "subtitle": "Disassembled Gun"
+  },
+
+  "inventoryIcon" : "project45-disassembledpouch-icon.png",
+  "animation" : "project45-disassembledpouch.animation",
+  
+  "animationCustom" : { },
+  "scripts" : ["project45-disassembledpouch.lua"],
+  "fireTime" : 0.1,
+  "fireOffset" : [1.0, 0.0],
+
+  "builder" : "/items/buildscripts/buildproject45disassembledpouch.lua"
+
+}

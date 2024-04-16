@@ -1,0 +1,16 @@
+{
+  "itemName" : "project45-gundisassemblypouch",
+  "price" : 2500,
+  "rarity" : "essential",
+  "tooltipKind" : "project45gunmod",
+  "category" : "uniqueWeapon",
+  "itemTags": ["weapon"],
+  "tooltipFields":{
+    "subtitle": "Applied Utility",
+    "objectImage": "/items/augments/project45-gunmods/util/project45-gundisassemblypouch/project45-gundisassemblypouch.png"
+  },
+  "inventoryIcon" : "/items/active/unsorted/project45/project45-disassembledpouch/project45-disassembledpouch-icon.png",
+  "description" : "A portablized one-time-use Gun Disassembly Kit for modded weapons.",
+  "shortdescription" : "Portable G.D.K.",
+  "scripts" : [ "/scripts/augments/project45-gundisassembler.lua" ]
+}

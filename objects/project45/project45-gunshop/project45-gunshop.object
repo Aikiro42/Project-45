@@ -128,7 +128,8 @@
         "project45-scz-spacecowboy",
         "project45-gov-fleetlyfading",
         "project45-tcf-kineticarbiter",
-        "project45-pkf-typhon"
+        "project45-pkf-typhon",
+        "project45-hlo-maxx"
 
       ],
       "mods": [
@@ -241,6 +242,7 @@
       "util": [
         "project45manual-codex",
         "project45-gundisassembler",
+        "project45-gundisassemblypouch",
         "project45-gunrepairkit",
         "project45-ammostock",
 
