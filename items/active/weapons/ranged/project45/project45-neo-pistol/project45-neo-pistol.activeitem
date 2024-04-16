@@ -9,7 +9,7 @@
   "gunArchetype": "pistol",
   "category" : "pistol",
   "twoHanded" : false,
-  "itemTags" : ["weapon","ranged","pistol","upgradeableWeapon"],
+  "itemTags" : ["weapon","ranged","pistol"],
   "level" : 1,
   "muzzleFlashColor": [255, 255, 200],
   "inventoryIcon" : "project45-neo-pistol-icon.png",
