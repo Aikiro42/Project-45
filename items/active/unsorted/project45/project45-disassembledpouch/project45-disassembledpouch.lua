@@ -41,6 +41,8 @@ function update(dt, fireMode, shiftHeld)
     sb.logInfo(sb.printJson(self.disassembledItems, 1))
     -- give item
     if player then
+      local gun = config.getParameter("gunItem")
+      if gun then player.giveItem(gun) end
       for _, item in pairs(self.disassembledItems) do
         player.giveItem(item)
       end

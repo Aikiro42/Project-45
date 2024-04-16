@@ -1,0 +1,271 @@
+{
+  "background" : {
+    "type" : "background",
+    "fileHeader" : "/interface/tooltips/project45gun/project45gun-tooltipheader.png",
+    "fileBody" : "/interface/tooltips/project45disassembled/project45disassembled-tooltipbody.png",
+    "fileFooter" : "/interface/tooltips/project45gun/project45gun-tooltipfooter.png"
+  },
+  
+  "objectImage" : {
+    "type" : "image",
+    "position" : [80, 147],
+    "file" : "",
+    "centered" : true,
+    "maxSize" : [138, 51],
+    "minSize" : [138, 51]
+  },
+
+  "sightsImage": {
+    "type" : "image",
+    "position" : [163, 167],
+    "file" : "/interface/tooltips/project45gun/project45gun-cannotmod.png",
+    "centered" : true,
+    "maxSize" : [15, 15],
+    "minSize" : [15, 15]
+  },
+
+  "railImage": {
+    "type" : "image",
+    "position" : [183, 167],
+    "file" : "/interface/tooltips/project45gun/project45gun-cannotmod.png",
+    "centered" : true,
+    "maxSize" : [15, 15],
+    "minSize" : [15, 15]
+  },
+
+  "muzzleImage": {
+    "type" : "image",
+    "position" : [163, 147],
+    "file" : "/interface/tooltips/project45gun/project45gun-cannotmod.png",
+    "centered" : true,
+    "maxSize" : [15, 15],
+    "minSize" : [15, 15]
+  },
+
+  "underbarrelImage": {
+    "type" : "image",
+    "position" : [183, 147],
+    "file" : "/interface/tooltips/project45gun/project45gun-cannotmod.png",
+    "centered" : true,
+    "maxSize" : [15, 15],
+    "minSize" : [15, 15]
+  },
+
+  "stockImage": {
+    "type" : "image",
+    "position" : [163, 127],
+    "file" : "/interface/tooltips/project45gun/project45gun-cannotmod.png",
+    "centered" : true,
+    "maxSize" : [15, 15],
+    "minSize" : [15, 15]
+  },
+
+  "ammoTypeImage": {
+    "type" : "image",
+    "position" : [183, 127],
+    "file" : "/interface/tooltips/project45gun/project45gun-cannotmod.png",
+    "centered" : true,
+    "maxSize" : [15, 15],
+    "minSize" : [15, 15]
+  },
+
+  /*
+  "altAbilityTitleLabel" : {
+    "type" : "label",
+    "position" : [102, 89],
+    "hAnchor" : "left",
+    "value": "Special:"
+  },
+  */
+  "altAbilityLabel" : {
+    "type" : "label",
+    "value": "Lorem Ipsum Dolor",
+    "position" : [192, 108],
+    "hAnchor" : "right",
+    "centered" : true,
+    "wrapWidth" : 126
+  },
+
+  "descriptionLabel": {
+    "type": "label",
+    "position": [102, 106],
+    "hAnchor": "left",
+    "vAnchor": "top",
+    "wrapWidth": 90
+  },
+
+  "itemCountLabel": {
+    "type" : "label",
+    //"position" : [150, 120],
+    "position" : [180, 183.5],
+    "hAnchor" : "right",
+    "centered": true,
+    "wrapWidth" : 126,
+    "fontSize": 20,
+    "value": "69420"
+  },
+  
+  "surplusAmmoLabel": {
+    "type" : "label",
+    "position" : [26, 98],
+    "hAnchor" : "left",
+    "centered": true,
+    "wrapWidth" : 126,
+    "value": "69420"
+  },
+
+  // Level Count
+  "addLevelCountLabel": {
+    "type" : "label",
+    "position" : [26, 88],
+    "hAnchor" : "left",
+    "centered": true,
+    "wrapWidth" : 126,
+    "value": "99"
+  },
+
+  "maxLevelCountLabel": {
+    "type" : "label",
+    "position" : [26, 78],
+    "hAnchor" : "left",
+    "centered": true,
+    "wrapWidth" : 126,
+    "value": "99"
+  },
+
+  // Damage Count
+  "addDamageCountLabel": {
+    "type" : "label",
+    "position" : [72, 88],
+    "hAnchor" : "left",
+    "centered": true,
+    "wrapWidth" : 126,
+    "value": "00"
+  },
+
+  "multDamageCountLabel": {
+    "type" : "label",
+    "position" : [72, 78],
+    "hAnchor" : "left",
+    "centered": true,
+    "wrapWidth" : 126,
+    "value": "00"
+  },
+
+  // Reload Cost Count
+  "addReloadCostCountLabel": {
+    "type" : "label",
+    "position" : [26, 68],
+    "hAnchor" : "left",
+    "centered": true,
+    "wrapWidth" : 126,
+    "value": "99"
+  },
+
+  "multReloadCostCountLabel": {
+    "type" : "label",
+    "position" : [26, 58],
+    "hAnchor" : "left",
+    "centered": true,
+    "wrapWidth" : 126,
+    "value": "99"
+  },
+
+  // Fire Time Count
+  "addFireTimeCountLabel": {
+    "type" : "label",
+    "position" : [72, 68],
+    "hAnchor" : "left",
+    "centered": true,
+    "wrapWidth" : 126,
+    "value": "00"
+  },
+
+  "multFireTimeCountLabel": {
+    "type" : "label",
+    "position" : [72, 58],
+    "hAnchor" : "left",
+    "centered": true,
+    "wrapWidth" : 126,
+    "value": "00"
+  },
+
+  // Crit Chance Count
+  "addCritChanceCountLabel": {
+    "type" : "label",
+    "position" : [26, 48],
+    "hAnchor" : "left",
+    "centered": true,
+    "wrapWidth" : 126,
+    "value": "99"
+  },
+
+  "multCritChanceCountLabel": {
+    "type" : "label",
+    "position" : [26, 38],
+    "hAnchor" : "left",
+    "centered": true,
+    "wrapWidth" : 126,
+    "value": "99"
+  },
+
+  // Crit Damage Count
+  "addCritDamageCountLabel": {
+    "type" : "label",
+    "position" : [72, 48],
+    "hAnchor" : "left",
+    "centered": true,
+    "wrapWidth" : 126,
+    "value": "00"
+  },
+
+  "multCritDamageCountLabel": {
+    "type" : "label",
+    "position" : [72, 38],
+    "hAnchor" : "left",
+    "centered": true,
+    "wrapWidth" : 126,
+    "value": "00"
+  },
+
+  // God Mod Count
+  "godModCountLabel": {
+    "type" : "label",
+    "position" : [26, 28],
+    "hAnchor" : "left",
+    "centered": true,
+    "wrapWidth" : 126,
+    "value": "00"
+  },  
+
+  // Wildcard Mod Count
+  "wildcardModCountLabel": {
+    "type" : "label",
+    "position" : [72, 28],
+    "hAnchor" : "left",
+    "centered": true,
+    "wrapWidth" : 126,
+    "value": "00"
+  },  
+
+  "moneyIcon" : {
+    "type" : "image",
+    "position" : [189, 3.5],
+    "file" : "/interface/project45-gunshop/pixels.png"
+  },
+  "priceLabel" : {
+    "type" : "label",
+    "position" : [187, 6],
+    "hAnchor" : "right",
+    "vAnchor": "mid",
+    "value" : "tree"
+  },
+  "rarityLabel" : {
+    "type" : "label",
+    "position" : [18, 6],
+    "hAnchor" : "left",
+    "vAnchor": "mid",
+    "centered" : true,
+    "wrapWidth" : 126
+  }
+}

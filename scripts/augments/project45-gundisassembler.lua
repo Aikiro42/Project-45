@@ -55,9 +55,17 @@ function apply(input)
           }})
       end
 
-      table.insert(disassembledItems, {name = input.name, parameters = {seed = savedGunSeed, bought = wasBought}})
-
       local output = Item.new({name="project45-disassembledpouch", count=1, parameters={}})
+      local gun = root.itemConfig(input)
+      local gunConfig = gun.config
+      local tooltipFields = {
+        subtitle = "Disassembled Gun",
+        objectImage = gun.directory .. gunConfig.inventoryIcon
+      }
+      output:setInstanceValue("gunItem", {name = input.name, parameters = {seed = savedGunSeed, bought = wasBought}})
+      output:setInstanceValue("shortdescription", gunConfig.shortdescription)
+      output:setInstanceValue("tooltipFields", tooltipFields)
+      output:setInstanceValue("rarity", gunConfig.rarity)
       output:setInstanceValue("disassembledItems", disassembledItems)
 
       return output

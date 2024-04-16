@@ -8,7 +8,10 @@
   "description" : "Left-click to retrieve the disassembled gun.",
   "shortdescription" : "Disassembled Gun",
   "twoHanded" : true,
-  "tooltipKind" : "project45gun",
+  "tooltipKind" : "project45disassembled",
+  "tooltipFields":{
+    "subtitle": "Disassembled Gun"
+  },
 
   "inventoryIcon" : "project45-disassembledpouch-icon.png",
   "animation" : "project45-disassembledpouch.animation",
