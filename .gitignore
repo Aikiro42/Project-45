@@ -4,3 +4,4 @@ npcs/threats/*.*
 items/active/weapons/ranged/gunfire.lua
 items/active/weapons/ranged/beamfire.lua
 items/active/weapons/ranged/abilities/altfire.lua
+interface/scripted/weaponupgrade/weaponupgradegui.lua
