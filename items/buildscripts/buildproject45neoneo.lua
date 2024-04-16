@@ -72,6 +72,13 @@ function build(directory, config, parameters, level, seed)
     end
   end
 
+  -- upgradeable weapon
+  if parameters.upgradeParameters then
+    local newItemTags = configParameter("itemTags", {})
+    table.insert(newItemTags, "upgradeableWeapon")
+    parameters.itemTags = newItemTags
+  end
+
   -- generate seed if supposed to be seeded
   -- and seed is not established
   if not (parameters.noSeed or configParameter("seed", seed)) then

@@ -1,0 +1,21 @@
+{
+  "itemName" : "project45-essentialgunoil",
+  "price" : 10000,
+  "rarity" : "Essential",
+  "tooltipKind" : "project45gunmod",
+  "category" : "uniqueWeapon",
+  "itemTags": ["weapon"],
+  "tooltipFields":{
+    "subtitle": "Applied Utility",
+    "objectImage": "/items/augments/project45-gunmods/util/project45-essentialgunoil/project45-essentialgunoil.png"
+  },
+  "inventoryIcon" : "/items/augments/project45-gunmods/util/project45-essentialgunoil/project45-essentialgunoilicon.png",
+  "description" : "Allows your weapon to be upgraded in an Upgrade Anvil. ^#f4988c;Disassemble your weapon after applying.^reset;",
+  "shortdescription" : "Essential Gun Oil",
+  "augment": {
+    "upgradeParameters": {
+      "seed": 69420
+    }
+  },
+  "scripts" : [ "/scripts/augments/project45-generic.lua" ]
+}
