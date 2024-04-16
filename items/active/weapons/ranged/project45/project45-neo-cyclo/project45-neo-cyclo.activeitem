@@ -49,7 +49,7 @@
 
   "project45GunModInfo":{
     "category": "energy",
-    "upgradeCapacity": 6,
+    
     "allowsConversion": [
       "projectile",
       "beam",

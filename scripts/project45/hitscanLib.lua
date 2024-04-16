@@ -27,8 +27,6 @@ function hitscanLib:fireHitscan(projectileType)
       }
       
       local damageConfig = {
-        -- we included activeItem.ownerPowerMultiplier() in
-        -- self:damagePerShot() so we cancel it
         -- multiply nProjsOverflowMult to final damage to compensate for lost multishot
         baseDamage = finalDamage*nProjsOverflowMult,
         timeout = self.currentCycleTime,
@@ -494,4 +492,37 @@ end
 
 function hitscanLib:summonVector()
   return vec2.norm(world.distance(self:firePosition(), activeItem.ownerAimPosition()))
+end
+
+-- serves as a replacement for Weapon:damageSource
+function hitscanLib:alteredDamageSourceFunc(damageConfig, damageArea, damageTimeout)
+  if damageArea then
+    local knockback = damageConfig.knockback
+    if knockback and damageConfig.knockbackDirectional ~= false then
+      knockback = knockbackMomentum(damageConfig.knockback, damageConfig.knockbackMode, self.aimAngle, self.aimDirection)
+    end
+    local damage = damageConfig.baseDamage * self.damageLevelMultiplier
+
+    local damageLine, damagePoly
+    if #damageArea == 2 then
+      damageLine = damageArea
+    else
+      damagePoly = damageArea
+    end
+
+    return {
+      poly = damagePoly,
+      line = damageLine,
+      damage = damage,
+      trackSourceEntity = damageConfig.trackSourceEntity,
+      sourceEntity = activeItem.ownerEntityId(),
+      team = activeItem.ownerTeam(),
+      damageSourceKind = damageConfig.damageSourceKind,
+      statusEffects = damageConfig.statusEffects,
+      knockback = knockback or 0,
+      rayCheck = true,
+      damageRepeatGroup = damageRepeatGroup(damageConfig.timeoutGroup),
+      damageRepeatTimeout = damageTimeout or damageConfig.timeout
+    }
+  end
 end

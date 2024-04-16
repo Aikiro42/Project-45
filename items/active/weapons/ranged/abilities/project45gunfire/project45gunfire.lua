@@ -1172,7 +1172,8 @@ end
 function Project45GunFire:fireProjectile(projectileType, projectileParameters, inaccuracy, firePosition, projectileCount, aimVector, addOffset)
   local params = sb.jsonMerge(self.projectileKind == "summoned" and self.summonedProjectileParameters or self.projectileParameters, projectileParameters or {})
   params.power = self:damagePerShot()
-  params.powerMultiplier = activeItem.ownerPowerMultiplier()
+  -- params.powerMultiplier = activeItem.ownerPowerMultiplier()
+  params.powerMultiplier = 1
   params.speed = util.randomInRange(params.speed)
   local selectedProjectileType = nil
 
@@ -1794,6 +1795,8 @@ function Project45GunFire:evalProjectileKind()
           activeItem.setScriptedAnimationParameter("primaryLaserArcRenderTime", projectileConfig.timeToLive)
           activeItem.setScriptedAnimationParameter("primaryLaserArcGravMult", root.projectileGravityMultiplier(projectileType))
         end
+      else
+        self.weapon.damageSource = hitscanLib.alteredDamageSourceFunc
       end
     end
   
@@ -1899,7 +1902,7 @@ function Project45GunFire:damagePerShot(noDLM)
   / self.projectileCount
 
   if dps_debug then
-    sb.logInfo(string.format("Final Damage: %f", finalDmg * activeItem.ownerPowerMultiplier()))
+    sb.logInfo(string.format("Final Damage: %f", finalDmg))
     sb.logInfo(string.format("\t %25s: %f", "Base Damage", self.baseDamage))
     sb.logInfo(string.format("\t %25s: %f", "Damage Level Multiplier", (noDLM and 1 or config.getParameter("damageLevelMultiplier", 1))))
     sb.logInfo(string.format("\t %25s: %f", "Charge Damage", self.currentChargeDamage))
@@ -1907,7 +1910,6 @@ function Project45GunFire:damagePerShot(noDLM)
     sb.logInfo(string.format("\t %25s: %f", "Crit Damage", critDmg))
     sb.logInfo(string.format("\t %25s: %f", "Passive Damage Mult", (self.passiveDamageMult or 1)))
     sb.logInfo(string.format("\t\t %25s: %f", "Projectile count", self.projectileCount))
-    sb.logInfo(string.format("\t\t %25s: (%f)", "Owner Power Multiplier", activeItem.ownerPowerMultiplier()))
   end
 
   return finalDmg

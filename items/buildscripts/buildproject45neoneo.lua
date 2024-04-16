@@ -30,8 +30,6 @@ function build(directory, config, parameters, level, seed)
       return defaultValue
     end
   end
-
-  --[[ These functions work, but are unused in this script. TODO: Utilize me.
   
   local deepConfigParameterT = function(t, ...)
     local retval = nil
@@ -55,8 +53,6 @@ function build(directory, config, parameters, level, seed)
     if retval ~= nil then return retval end
     return defaultValue
   end
-
-  --]]
 
   local primaryAbility = function(keyName, defaultValue, set)
     if set then
@@ -97,15 +93,26 @@ function build(directory, config, parameters, level, seed)
   if level and not configParameter("fixedLevel", true) then
     parameters.level = level
   end
+  local currentLevel = configParameter("level", 1)
+
   -- calculate mod capacity
   construct(config, "project45GunModInfo")
   construct(parameters, "project45GunModInfo")
-  parameters.project45GunModInfo.upgradeCapacity = (config.project45GunModInfo.upgradeCapacity or 0) + (configParameter("level", 1) - 1)
+  local baseUpgradeCapacity = config.project45GunModInfo.upgradeCapacity
+    or 10 + #deepConfigParameter({},"project45GunModInfo", "acceptsModSlot")
+      + (
+          #deepConfigParameter({},"project45GunModInfo", "allowsConversion") +
+          #deepConfigParameter({},"project45GunModInfo", "acceptsAmmoArchetype") > 0
+          and 1 or 0
+        )
+
+
+  parameters.project45GunModInfo.upgradeCapacity = baseUpgradeCapacity + (currentLevel - 1)
   
   -- sb.logInfo(string.format("Generated %s", configParameter("itemName")))
 
   -- recalculate rarity
-  local rarityLevel = configParameter("level", 1)/10
+  local rarityLevel = currentLevel/10
   local levelRarityAssoc = {"Common", "Uncommon", "Rare", "Legendary", "Essential"}
   local rarityLevelAssoc = {Essential=1,Legendary=0.8,Rare=0.6,Uncommon=0.4,Common=0.2}
   if rarityLevelAssoc[configParameter("rarity", "Common")] < rarityLevel then
@@ -114,9 +121,13 @@ function build(directory, config, parameters, level, seed)
 
   parameters.shortdescription = configParameter("shortdescription", "?")
   parameters.project45GunModInfo = configParameter("project45GunModInfo")
-  
-  if configParameter("level", 1) >= 10 then
+
+  if currentLevel >= 10 then
     parameters.shortdescription = config.shortdescription .. " ^yellow;^reset;"
+  elseif currentLevel > 1 then
+    local maxUpgradeLevel = root.assetJson("/interface/scripted/weaponupgrade/weaponupgradegui.config:upgradeLevel")
+    local levelColor = currentLevel < maxUpgradeLevel and "^#96cbe7;" or "^yellow;"
+    parameters.shortdescription = config.shortdescription .. string.format(" %sT%d^reset;", levelColor, currentLevel)
   end
 
 
@@ -152,7 +163,7 @@ function build(directory, config, parameters, level, seed)
   end
 
   -- calculate damage level multiplier
-  config.damageLevelMultiplier = root.evalFunction("weaponDamageLevelMultiplier", configParameter("level", 1)) * generalConfig.globalDamageMultiplier
+  config.damageLevelMultiplier = root.evalFunction("weaponDamageLevelMultiplier", currentLevel) * generalConfig.globalDamageMultiplier
 
   -- palette swaps
   config.paletteSwaps = ""
@@ -313,7 +324,7 @@ function build(directory, config, parameters, level, seed)
   if config.tooltipKind == "project45gun" then
     config.tooltipFields = config.tooltipFields or {}
     config.tooltipFields.subtitle = generalConfig.categoryStrings[config.project45GunModInfo.category or "Generic"] -- .. "^#D1D1D1;" .. config.gunArchetype or config.category
-    config.tooltipFields.levelLabel = util.round(configParameter("level", 1), 1)
+    config.tooltipFields.levelLabel = util.round(currentLevel, 1)
     config.tooltipFields.rarityLabel = rarityConversions[configParameter("isUnique", false) and "unique" or string.lower(configParameter("rarity", "common"))]
 
     local modList = parameters.modSlots or config.modSlots or {}
@@ -344,17 +355,13 @@ function build(directory, config, parameters, level, seed)
     
     if config.primaryAbility then
       
-      if config.project45GunModInfo and config.project45GunModInfo.upgradeCapacity
-      then
-        if config.project45GunModInfo.upgradeCapacity > -1 then
-          local count = parameters.upgradeCount or 0
-          local max = parameters.project45GunModInfo.upgradeCapacity
-          config.tooltipFields.upgradeCapacityLabel = (count < max and "^#96cbe7;" or "^#777777;") .. (max - count) .. "/" .. max .. "^reset;"
-        else
-          config.tooltipFields.upgradeCapacityLabel = project45util.colorText("#96cbe7","Unlimited")
-        end
+      local upgradeCapacity = deepConfigParameter(nil, "project45GunModInfo", "upgradeCapacity")
+      if upgradeCapacity > -1 then
+        local count = parameters.upgradeCount or 0
+        local max = parameters.project45GunModInfo.upgradeCapacity
+        config.tooltipFields.upgradeCapacityLabel = (count < max and "^#96cbe7;" or "^#777777;") .. (max - count) .. "/" .. max .. "^reset;"
       else
-        config.tooltipFields.upgradeCapacityLabel = project45util.colorText("#777777", "0/0")
+        config.tooltipFields.upgradeCapacityLabel = project45util.colorText("#96cbe7","Unlimited")
       end
 
       -- recalculate baseDamage
@@ -622,7 +629,7 @@ function build(directory, config, parameters, level, seed)
 
   -- set price
   -- should this be handled elsewhere?
-  config.price = (config.price or 0) * root.evalFunction("itemLevelPriceMultiplier", configParameter("level", 1))
+  config.price = (config.price or 0) * root.evalFunction("itemLevelPriceMultiplier", currentLevel)
   parameters.price = config.price -- needed for gunshop
 
   return config, parameters
