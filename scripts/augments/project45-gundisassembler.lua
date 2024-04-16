@@ -7,6 +7,7 @@ function apply(input)
 
     local savedGunSeed = input.parameters.seed
     local wasBought = input.parameters.bought  
+    local savedUpgradeParameters = input.parameters.upgradeParameters
 
     if input.parameters.project45GunModInfo and input.parameters.isModded then
 
@@ -62,7 +63,7 @@ function apply(input)
         subtitle = "Disassembled Gun",
         objectImage = gun.directory .. gunConfig.inventoryIcon
       }
-      output:setInstanceValue("gunItem", {name = input.name, parameters = {seed = savedGunSeed, bought = wasBought}})
+      output:setInstanceValue("gunItem", {name = input.name, parameters = {upgradeParameters = savedUpgradeParameters, seed = savedGunSeed, bought = wasBought}})
       output:setInstanceValue("shortdescription", gunConfig.shortdescription)
       output:setInstanceValue("tooltipFields", tooltipFields)
       output:setInstanceValue("rarity", gunConfig.rarity)

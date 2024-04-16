@@ -18,6 +18,7 @@ function disassemble()
   if not input then return end
   local savedGunSeed = input.parameters.seed
   local wasBought = input.parameters.bought
+  local savedUpgradeParameters = input.parameters.upgradeParameters
   if input.parameters then
     if input.parameters.project45GunModInfo and input.parameters.isModded then
 
@@ -62,7 +63,7 @@ function disassemble()
           }})
       end
         
-      player.giveItem({name = input.name, parameters = {seed = savedGunSeed, bought = wasBought}})
+      player.giveItem({name = input.name, parameters = {upgradeParameters = savedUpgradeParameters, seed = savedGunSeed, bought = wasBought}})
       world.sendEntityMessage(pane.containerEntityId(), "project45-clearGunDisassemblySlot")
     end
   end
