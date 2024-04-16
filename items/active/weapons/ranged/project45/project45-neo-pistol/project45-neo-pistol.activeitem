@@ -14,13 +14,6 @@
   "muzzleFlashColor": [255, 255, 200],
   "inventoryIcon" : "project45-neo-pistol-icon.png",
   
-  // Can be upgradeable, given they are not leveled until T6.
-  // Requires reassembly to update random stats.
-  "upgradeParameters" : {
-    "seed": 69420,
-    "isModded": true
-  },
-  
   "animationParts" : {
     "middle" : "project45-neo-pistol.png",
     "middleFullbright" : "",
