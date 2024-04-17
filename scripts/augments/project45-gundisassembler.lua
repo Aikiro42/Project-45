@@ -69,7 +69,7 @@ function apply(input)
       output:setInstanceValue("rarity", gunConfig.rarity)
       output:setInstanceValue("disassembledItems", disassembledItems)
 
-      return output
+      return output, config.getParameter("consume") == false and 0 or 1
 
 
     end
