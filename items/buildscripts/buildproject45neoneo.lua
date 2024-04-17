@@ -395,8 +395,6 @@ function build(directory, config, parameters, level, seed)
       local loFireTime = math.max(actualCycleTime[1], primaryAbility("fireTime", 0.1)) + chargeTime
       local hiFireTime = math.max(actualCycleTime[2], primaryAbility("fireTime", 0.1)) + chargeTime
 
-      local statsGenerated = configParameter("statsGenerated")
-
       -- get DPS from gun archetype
       if config.gunArchetype then
         local archetypeDps = generalConfig.gunArchetypeDamages[config.gunArchetype]
