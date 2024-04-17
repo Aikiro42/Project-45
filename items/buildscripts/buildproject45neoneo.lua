@@ -53,7 +53,9 @@ function build(directory, config, parameters, level, seed)
     if retval ~= nil then return retval end
     return defaultValue
   end
+  --]]
 
+  -- TODO: get rid of me
   local primaryAbility = function(keyName, defaultValue, set)
     if set then
       config.primaryAbility[keyName] = defaultValue
@@ -363,34 +365,9 @@ function build(directory, config, parameters, level, seed)
       else
         config.tooltipFields.upgradeCapacityLabel = project45util.colorText("#96cbe7","Unlimited")
       end
-
-      -- recalculate baseDamage
-      if config.gunArchetype then
-        local archetypeDamage = generalConfig.gunArchetypeDamages[config.gunArchetype]
-        -- sb.logInfo(string.format("%s (%s): %s",config.shortdescription, config.gunArchetype, sb.printJson(archetypeDamage)))
-        config.primaryAbility.baseDamage = (archetypeDamage or config.primaryAbility.baseDamage)
-      end
-      config.primaryAbility.baseDamage = config.primaryAbility.baseDamage * primaryAbility("baseDamageMultiplier", 1)
       
-      -- generate random stats
-      if randStatBonus > 0 and not configParameter("isRandomized") then
-        -- sb.logInfo(string.format("\t{%s} Base damage: %f", configParameter("itemName", ""), primaryAbility("baseDamage", 0)))
-        -- sb.logInfo(string.format("\t{%s} Base damage Multiplier: %f", configParameter("itemName", ""), (generalConfig.maxRandBonuses.baseDamage * randStatBonus + 1)))
-
-        parameters.primaryAbility.baseDamage = primaryAbility("baseDamage", 0) * (generalConfig.maxRandBonuses.baseDamage * randStatBonus + 1)
-        parameters.primaryAbility.critChance = primaryAbility("critChance", 0) * (generalConfig.maxRandBonuses.critChance * randStatBonus + 1)
-        parameters.primaryAbility.critDamageMult = primaryAbility("critDamageMult", 1) * (generalConfig.maxRandBonuses.critDamageMult * randStatBonus + 1)
-        
-        -- sb.logInfo(string.format("\t{%s} Amped damage: %f", configParameter("itemName", ""), parameters.primaryAbility.baseDamage))
-        
-        parameters.isRandomized = true
-
-      end
+      --[[
       
-      -- sb.logInfo(string.format("{%s} Base damage: %f x %f = %f)", configParameter("itemName", ""), primaryAbility("baseDamage", 0), config.damageLevelMultiplier, primaryAbility("baseDamage", 0) * config.damageLevelMultiplier))
-
-      --[[ fire time calculation:
-
       chargeTime* = chargeTime
       If gun is auto, chargeTime* = 0
 
@@ -399,7 +376,7 @@ function build(directory, config, parameters, level, seed)
       else:
         fireTime* = cycleTime + fireTime + chargeTime*
       
-      ]]--
+      --]]
       
       local actualCycleTime = primaryAbility("manualFeed", false)
         and primaryAbility("midCockDelay", 0) + primaryAbility("cockTime", 0.1) / (primaryAbility("slamFire") and 2 or 1)
@@ -417,32 +394,82 @@ function build(directory, config, parameters, level, seed)
       
       local loFireTime = math.max(actualCycleTime[1], primaryAbility("fireTime", 0.1)) + chargeTime
       local hiFireTime = math.max(actualCycleTime[2], primaryAbility("fireTime", 0.1)) + chargeTime
-      --[[
 
-      local balanceDamageMult = configParameter("balanceDamageMult", 1)
-      if balanceDamageMult == 1 then  -- balance multiplier
-  
+      local statsGenerated = configParameter("statsGenerated")
 
-        local maxAmmo = primaryAbility("maxAmmo", 1)
-        local ammoBalance = math.max(0, (generalConfig.standardMaxAmmo - maxAmmo) / (generalConfig.standardMaxAmmo - 1))
-        local reloadBalance = (maxAmmo - primaryAbility("bulletsPerReload", 1)) / maxAmmo
-        local reloadBalance = 0
-        local firemodeBalance = primaryAbility("semi") and 0.75 or 0
-  
-        -- fire time balance is average firetime / (standard fire time * burst count)
-        -- local fireTimeBalance = math.max(generalConfig.minimumFireTime, ((loFireTime + hiFireTime) / 2)) / (generalConfig.standardFireTime * primaryAbility("burstCount", 1))
-        local fireTimeBalance = 0.01 * (loFireTime + hiFireTime / 2) / generalConfig.minimumFireTime - 0.02
-        balanceDamageMult = 1 + fireTimeBalance
-        parameters.balanceDamageMult = balanceDamageMult
+      -- get DPS from gun archetype
+      if config.gunArchetype then
+        local archetypeDps = generalConfig.gunArchetypeDamages[config.gunArchetype]
+        config.primaryAbility.baseDps = (archetypeDps or config.primaryAbility.baseDamage)
+      end
+
+      -- convert DPS to Base Damage
+      local baseDps = config.primaryAbility.baseDps
+      if baseDps then
         
-        parameters.balanceDamageMult = 1
+        -- AVERAGE FIRE TIME
+        -- get midpoint of low and high firetime
+        local dpsFiretime = math.max(loFireTime + hiFireTime / 2, generalConfig.minimumFireTime)
+        if config.primaryAbility.semi then
+          dpsFiretime = dpsFiretime + math.max(0.16, config.primaryAbility.fireTime)
+        end
+        
+        -- EXPECTED CRIT DAMAGE MULTIPLIER
+        -- get crit stats
+        local critChance = config.primaryAbility.critChance or 0
+        local critDamage = config.primaryAbility.critDamageMult or 1
+
+        -- calculate crit and non-crit damage (multiplier)
+        local critTier = math.floor(critChance)
+        local baseCritDamageMult = critTier > 0 and (critDamage + critTier - 1) or 0
+        critDamage = math.max(1, baseCritDamageMult + (critTier > 0 and 1 or critDamage))
+        local nCritDamage = math.max(1, baseCritDamageMult)
+        
+        -- restrict critChance within [0, 1]
+        critChance = critChance - critTier
+        local nCritChance = 1 - critChance
+
+        -- calculate expected crit damage (multiplier)
+        local expectedCritDamage = nCritChance * nCritDamage + critChance * critDamage
+
+        -- AVERAGE CHARGE DAMAGE MULTIPLIER
+        -- (exclude perfect charge damage)
+        local averageChargeDamageMult = 1
+        if config.primaryAbility.overchargeTime > 0 then
+          averageChargeDamageMult = (
+            (config.primaryAbility.chargeDamageMult or 1)
+            + (config.primaryAbility.perfectChargeDamageMult or 1)
+            + 1
+          ) / 3
+        end
+
+        -- AVERAGE RELOAD RATING MULTIPLIER
+        local reloadMultArr = config.primaryAbility.reloadRatingDamageMults or {1, 1, 1, 1}
+        local reloadMult = 0
+        for i=1, #reloadMultArr do
+          reloadMult = reloadMult + reloadMultArr[i]
+        end
+        reloadMult = reloadMult / #reloadMultArr
+
+        -- FINAL: BASE DAMAGE
+        config.primaryAbility.baseDamage = baseDps * dpsFiretime / (reloadMult * expectedCritDamage * averageChargeDamageMult)
 
       end
+
+      -- TESTME: is config.primaryAbility.baseDamage a number by this point?
+      config.primaryAbility.baseDamage = config.primaryAbility.baseDamage * primaryAbility("baseDamageMultiplier", 1)
       
-      --]]
-      
-      -- damage per shot
-      -- recalculate
+      -- generate random stats
+      -- Apply Random Stat Bonuses AFTER damage calculation
+      -- these are _bonus_ stats, after all
+      if randStatBonus > 0 and not configParameter("isRandomized") then
+        parameters.primaryAbility.baseDamage = primaryAbility("baseDamage", 0) * (generalConfig.maxRandBonuses.baseDamage * randStatBonus + 1)
+        parameters.primaryAbility.critChance = primaryAbility("critChance", 0) * (generalConfig.maxRandBonuses.critChance * randStatBonus + 1)
+        parameters.primaryAbility.critDamageMult = primaryAbility("critDamageMult", 1) * (generalConfig.maxRandBonuses.critDamageMult * randStatBonus + 1)
+        parameters.isRandomized = true
+      end
+
+      -- get charge-related numbers for calculation of displayed stat
       local overchargeTime = primaryAbility("overchargeTime", 0)
       local chargeDamageMult = primaryAbility("chargeDamageMult", 1)
       local perfectChargeDamageMult = math.max(
