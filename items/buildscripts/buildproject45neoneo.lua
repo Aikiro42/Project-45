@@ -110,11 +110,19 @@ function build(directory, config, parameters, level, seed)
   end
   local currentLevel = configParameter("level", 1)
 
-  -- calculate mod capacity
   construct(config, "project45GunModInfo")
   construct(parameters, "project45GunModInfo")
+  
+  -- calculate mod capacity
+  local gunmodCapacity = 0
+  local visualMods = set.new({"rail", "sights", "muzzle", "underbarrel", "stock"})
+  for _, k in ipairs(deepConfigParameter({},"project45GunModInfo", "acceptsModSlot")) do
+    if not visualMods[k] then
+      gunmodCapacity = gunmodCapacity + 1
+    end
+  end
   local baseUpgradeCapacity = config.project45GunModInfo.upgradeCapacity
-    or 10 + #deepConfigParameter({},"project45GunModInfo", "acceptsModSlot")
+    or 10 + gunmodCapacity
       + (
           #deepConfigParameter({},"project45GunModInfo", "allowsConversion") +
           #deepConfigParameter({},"project45GunModInfo", "acceptsAmmoArchetype") > 0
@@ -421,9 +429,21 @@ function build(directory, config, parameters, level, seed)
         -- AVERAGE FIRE TIME
         -- get midpoint of low and high firetime
         local dpsFiretime = math.max(loFireTime + hiFireTime / 2, generalConfig.minimumFireTime)
-        if config.primaryAbility.semi then
+        if config.primaryAbility.semi then -- add average human seconds per click
           dpsFiretime = dpsFiretime + math.max(0.16, config.primaryAbility.fireTime)
         end
+        if config.primaryAbility.manualFeed then -- add another average human seconds per click
+          dpsFiretime = dpsFiretime + math.max(0.16, config.primaryAbility.fireTime)
+        end
+        if config.primaryAbility.burstCount > 1 then
+          dpsFiretime = dpsFiretime / config.primaryAbility.burstCount
+        end
+        -- reloads after every shot
+        --[[
+        if config.primaryAbility.ammoPerShot >= config.primaryAbility.maxAmmo then
+          dpsFiretime = dpsFiretime + config.primaryAbility.reloadTime/2 
+        end
+        --]]
         
         -- EXPECTED CRIT DAMAGE MULTIPLIER
         -- get crit stats
