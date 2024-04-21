@@ -51,14 +51,9 @@ function disassemble()
       local stockAmmo = (input.parameters.savedGunState or {stockAmmo = 0}).stockAmmo or 0
       local currentAmmo = math.max(0, (input.parameters.savedGunState or {ammo = 0}).ammo or 0)
       if stockAmmo + currentAmmo > 0 then
-        local desc = string.format(
-          "A box of surplus ammo. ^#e2c344;Contains %d rounds.^reset;\nApply on a weapon to stock up to ^#e2c344;6x its max ammo capacity^reset;.",
-          stockAmmo + currentAmmo
-        )
         player.giveItem({
           name = "project45-ammostock",
           parameters = {
-            description = desc,
             ammo = stockAmmo + currentAmmo
           }})
       end
