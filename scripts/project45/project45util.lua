@@ -1,5 +1,28 @@
 project45util = {}
 
+function project45util.split(str, sep)  
+  sep = sep or "%s"
+  local t = {}
+  for str in string.gmatch(str, "([^"..sep.."]+)") do
+    table.insert(t, str)
+  end
+  return t
+end
+
+-- @return 2 if major version different
+-- @return 1 if minor version different
+-- @return 0 otherwise
+function project45util.compareVersions(old, new)
+  local oldV = project45util.split(old, '.')
+  local newV = project45util.split(new, '.')
+  
+  -- major
+  if oldV[1] ~= newV[1] then return false end
+  
+  -- minor
+  if oldV[2] ~= newV[2] then return false end
+end
+
 function project45util.truncatei(n, places)
   local ten = 10 ^ places
   return math.floor(n / ten) * ten
