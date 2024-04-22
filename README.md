@@ -27,6 +27,7 @@
 
 - [ ] Rework Gunmod Application System (G.A.S.)
 - [ ] Portable Gun Disassembly Kit
+- [ ] Version Control System for Weapons to avoid necessitating wipes
 
 ### Abilities:
 - [ ] Drone
