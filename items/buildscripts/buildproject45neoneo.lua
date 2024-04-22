@@ -75,6 +75,7 @@ function build(directory, config, parameters, level, seed)
   -- if a weapon is supposed to be upgradeable according to the config
   -- then it's the programmer's responsibility to add the "upgradeableWeapon" itemTag
   if parameters.upgradeParameters then
+    config.upgradeParameters = parameters.upgradeParameters
     local newItemTags = configParameter("itemTags", {})
     if not set.new(newItemTags)["upgradeableWeapon"] then
       table.insert(newItemTags, "upgradeableWeapon")
@@ -91,7 +92,7 @@ function build(directory, config, parameters, level, seed)
   end
 
   -- configure seed
-  local randStatBonus = 0
+  local randStatBonus = parameters.randStatBonus or 0
   if configParameter("seed", seed) then
     parameters.seed = configParameter("seed", seed)
     -- sb.logInfo(string.format("Seed of %s: %d", config.itemName, parameters.seed))
@@ -103,6 +104,15 @@ function build(directory, config, parameters, level, seed)
       local rng = sb.makeRandomSource(parameters.seed)
       randStatBonus = rng:randf(0, 1) * (parameters.bought and generalConfig.boughtRandBonusMult or 1)
     end
+
+    if parameters.randStatBonus == nil then
+      parameters.randStatBonus = randStatBonus
+    end
+
+    if parameters.randStatBonus ~= randStatBonus then
+      parameters.requireRebuild = true
+    end
+
   end
 
   if level and not configParameter("fixedLevel", true) then
@@ -487,8 +497,7 @@ function build(directory, config, parameters, level, seed)
 
       end
 
-      -- TESTME: is config.primaryAbility.baseDamage a number by this point?
-      config.primaryAbility.baseDamage = config.primaryAbility.baseDamage * primaryAbility("baseDamageMultiplier", 1)
+      config.primaryAbility.baseDamage = (config.primaryAbility.baseDamage or 0) * primaryAbility("baseDamageMultiplier", 1)
       
       -- generate random stats
       -- Apply Random Stat Bonuses AFTER damage calculation
@@ -564,7 +573,7 @@ function build(directory, config, parameters, level, seed)
       config.tooltipFields.bonusRatioLabel = ""
       config.tooltipFields.bonusRatioShadowLabel = ""
       if randStatBonus > 0 and parameters.isRandomized then
-        local bonusDesc = string.format("^shadow;%d%%", math.floor(randStatBonus * 100))
+        local bonusDesc = parameters.randStatBonus == randStatBonus and string.format("^shadow;%d%%", math.floor(randStatBonus * 100)) or "^shadow;??%"
         local bonusColor = "#777777"
         if randStatBonus > 0.75 then
           bonusColor = "#fdd14d"

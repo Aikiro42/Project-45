@@ -31,7 +31,7 @@
       "gun" : {
         "properties" : {
           "centered" : true,
-          "image" : "project45-disassembledpouch-icon.png",
+          "image" : "project45-disassembledguncase-icon.png",
           "offset" : [0.0, 0.0]
         }
       }

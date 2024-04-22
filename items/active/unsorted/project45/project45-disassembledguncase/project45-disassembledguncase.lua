@@ -38,7 +38,6 @@ function update(dt, fireMode, shiftHeld)
 
   if storage.firing and animator.animationState("firing") == "off" then
     item.consume(1)
-    sb.logInfo(sb.printJson(self.disassembledItems, 1))
     -- give item
     if player then
       local gun = config.getParameter("gunItem")
