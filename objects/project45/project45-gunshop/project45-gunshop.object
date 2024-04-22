@@ -242,6 +242,7 @@
       "util": [
         "project45manual-codex",
         "project45-gundisassembler",
+        "project45-gunseller",
         "project45-gundisassemblypouch",
         "project45-gunrepairkit",
         "project45-ammostock",
