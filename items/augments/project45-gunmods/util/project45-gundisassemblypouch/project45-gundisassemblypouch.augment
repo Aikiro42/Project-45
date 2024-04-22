@@ -12,6 +12,6 @@
   "inventoryIcon" : "/items/active/unsorted/project45/project45-disassembledpouch/project45-disassembledpouch-icon.png",
   "description" : "A portablized one-time-use Gun Disassembly Kit for modded weapons.",
   "shortdescription" : "Portable G.D.K.",
-  "consume": true,
+  "consume": false,
   "scripts" : [ "/scripts/augments/project45-gundisassembler.lua" ]
 }

@@ -12,14 +12,12 @@ function apply(input)
 
     local ammoStockLimit = root.assetJson("/configs/project45/project45_generalconfig.config:ammoStockLimit", 300)
     local oldAmmo = output:instanceValue("ammo")
-    local addAmmo = config.getParameter("ammo", 0)
+    local addAmmo = config.getParameter("ammo", ammoStockLimit)
     
     -- do not stack if subject is at limit
     if oldAmmo >= ammoStockLimit then return end
     -- do not apply if stacking results to 300 and more, and added is more than old
     if addAmmo + oldAmmo > ammoStockLimit and addAmmo > oldAmmo then return end
-
-
     local newAmmo = oldAmmo + addAmmo
     newAmmo = math.min(ammoStockLimit, newAmmo)
     output:setInstanceValue("ammo", newAmmo)
