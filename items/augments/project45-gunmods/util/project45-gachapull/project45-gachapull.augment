@@ -8,7 +8,7 @@
     "subtitle": "Applied Utility"
   },
   "inventoryIcon" : "/items/augments/project45-gunmods/util/project45-gachapull/project45-gachapull.png",
-  "description" : "A one-time-use key for opening the ever-replenishing Gun Bag.",
-  "shortdescription" : "Gun Bag Key",
+  "description" : "A one-time-use key for opening the ever-replenishing ^#d29ce7;Gacha Bag^reset;.",
+  "shortdescription" : "Gacha Key",
   "scripts" : [ "/scripts/augments/project45-gachapull.lua" ]
 }

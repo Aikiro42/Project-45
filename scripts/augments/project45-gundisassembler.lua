@@ -49,7 +49,7 @@ function apply(input)
           }})
       end
 
-      local output = Item.new({name="project45-disassembledpouch", count=1, parameters={}})
+      local output = Item.new({name="project45-disassembledguncase", count=1, parameters={}})
       local gun = root.itemConfig(input)
       local gunConfig = gun.config
 
