@@ -5,7 +5,12 @@ function build(directory, config, parameters, level, seed)
   local ammoStockMaxDescriptionFormat = root.assetJson("/configs/project45/project45_generalconfig.config:ammoStockMaxDescriptionFormat")
   local ammoStockLimit = root.assetJson("/configs/project45/project45_generalconfig.config:ammoStockLimit", 300)
   
-  local ammo = parameters.ammo or config.ammo or ammoStockLimit
+  local ammo = parameters.ammo or config.ammo
+  if not ammo then
+    sb.logInfo("fuck you")
+    config.ammo = ammoStockLimit/2
+    ammo = config.ammo
+  end
   
   if ammo < ammoStockLimit then
     parameters.description = string.format(
