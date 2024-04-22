@@ -1,0 +1,17 @@
+{
+  "itemName" : "project45-portablegdk",
+  "price" : 100,
+  "rarity" : "essential",
+  "tooltipKind" : "project45gunmod",
+  "category" : "uniqueWeapon",
+  "itemTags": ["weapon"],
+  "tooltipFields":{
+    "subtitle": "Applied Utility",
+    "objectImage": "/items/augments/project45-gunmods/util/project45-portablegdk/project45-portablegdk.png"
+  },
+  "inventoryIcon" : "/items/active/unsorted/project45/project45-disassembledguncase/project45-disassembledguncase-icon.png",
+  "description" : "A portablized Gun Disassembly Kit. ^#FF9000;Apply on modified Project 45 weapons to disassemble them.^reset;",
+  "shortdescription" : "Portable G.D.K.",
+  "consume": true,
+  "scripts" : [ "/scripts/augments/project45-gundisassembler.lua" ]
+}

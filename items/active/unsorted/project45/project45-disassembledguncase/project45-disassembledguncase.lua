@@ -42,9 +42,36 @@ function update(dt, fireMode, shiftHeld)
     -- give item
     if player then
       local gun = config.getParameter("gunItem")
-      if gun then player.giveItem(gun) end
-      for _, item in pairs(self.disassembledItems) do
-        player.giveItem(item)
+      if gun and self.disassembledItems then
+        player.giveItem(gun)
+        for _, item in pairs(self.disassembledItems) do
+          player.giveItem(item)
+        end
+        
+      else
+        local gachaPools = {
+          xssr = {2, "project45-gacha-xssr"},
+          ssr = {2, "project45-gacha-ssr"},
+          sr = {46, "project45-gacha-sr"},
+          r = {50, "project45-gacha-r"}
+        }
+        local totalTickets = 0
+        for _, gachaPool in pairs(gachaPools) do
+          totalTickets = totalTickets + gachaPool[1]
+        end
+        local rng = math.random(0, totalTickets)
+        local chosenPool = "xssr"
+        for poolKey, gachaPool in pairs(gachaPools) do
+          if rng < gachaPool[1] then
+            chosenPool = poolKey
+            break
+          end
+        end
+        local treasure = root.createTreasure(self.gachaPools[chosenPool][2], 1, math.floor(math.random() * 2147483647))
+        for _,item in pairs(treasure) do
+          player.giveItem(item)
+        end
+
       end
     end
     storage.firing = false

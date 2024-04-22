@@ -1,19 +1,24 @@
 {
-  "itemName" : "project45-gunbag",
+  "itemName" : "project45-gachabag",
   "price" : 20000,
   "level" : 1,
   "maxStack" : 1,
   "rarity" : "Essential",
   "category" : "mysteriousReward",
-  "description" : "Contains a random item. Oddly replenishes and locks every time after it's closed.",
-  "shortdescription" : "^#f4988c;(!)^reset; Gacha Bag",
+  "description" : "A replenishing, auto-locking Gun Case. ^#eab3db;Add pulls by applying Gacha Keys.^reset;",
+  "shortdescription" : "Gacha Bag",
   "twoHanded" : true,
+  "tooltipKind": "container",
 
-  "inventoryIcon" : "project45-gunbag-icon.png",
-  "animation" : "project45-gunbag.animation",
+  "tooltipFields": {
+    "objectImage": "/items/active/unsorted/project45/project45-gachabag/project45-gachabag.png"
+  },
+
+  "inventoryIcon" : "project45-gachabag-icon.png",
+  "animation" : "project45-gachabag.animation",
   
   "animationScripts": [
-    "/items/active/unsorted/project45/project45-gunbag/project45-gunbaganimation.lua"
+    "/items/active/unsorted/project45/project45-gachabag/project45-gachabaganimation.lua"
   ],
   
   "animationCustom" : {
@@ -24,7 +29,7 @@
       "r": [ ]
     }
   },
-  "scripts" : ["project45-gunbag.lua"],
+  "scripts" : ["project45-gachabag.lua"],
   "hardPity": 25,
   "fireTime" : 0.1,
   "fireOffset" : [1.0, 0.0],

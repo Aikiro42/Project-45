@@ -5,7 +5,7 @@ require "/scripts/async.lua"
 
 function apply(input)
 
-  if input.name == "project45-gunbag" then
+  if input.name == "project45-gunbag" or input.name == "project45-gachabag" then
     local output = Item.new(input)
     local pullsAdd = config.getParameter("pullsAdd", 1)
     output:setInstanceValue("pulls", (input.parameters.pulls or 1) + pullsAdd)
