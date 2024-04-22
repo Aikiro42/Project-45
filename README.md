@@ -1,3 +1,5 @@
+<img src="docs/Project 45/repository-structure.png" />
+
 # TODO:
 
 - Fix flamethrower sounds
