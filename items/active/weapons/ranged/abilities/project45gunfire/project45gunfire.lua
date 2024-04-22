@@ -1556,6 +1556,7 @@ end
 
 function Project45GunFire:updateStockAmmo(delta, willReplace)
   storage.stockAmmo = willReplace and delta or math.max(0, storage.stockAmmo + delta)
+  self.weapon.stockAmmoDamageMult = 1 + (storage.stockAmmo * 0.1 / self.maxAmmo * 3)
   activeItem.setScriptedAnimationParameter("stockAmmo", storage.stockAmmo)
 end
 
@@ -1898,6 +1899,7 @@ function Project45GunFire:damagePerShot(noDLM)
   * self.reloadRatingDamage -- as low as 0.8 (bad), as high as 1.5 (perfect)
   * critDmg -- this way, rounds deal crit damage individually
   * (self.passiveDamageMult or 1) -- provides a way for passives to modify damage
+  * self.weapon.stockAmmoDamageMult
   -- * (self.balanceDamageMult or 1)
   / self.projectileCount
 
@@ -2059,7 +2061,10 @@ function Project45GunFire:loadGunState()
   self:updateChamberState(loadedGunState.chamber)
     
   storage.ammo = storage.ammo or loadedGunState.ammo
+  
   storage.stockAmmo = storage.stockAmmo or loadedGunState.stockAmmo
+  self.weapon.stockAmmoDamageMult = 1 + (storage.stockAmmo * 0.1 / self.maxAmmo * 3)
+
   storage.savedProjectileIndex = storage.savedProjectileIndex or loadedGunState.savedProjectileIndex
 
   -- saved projectile index validation
