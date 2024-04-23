@@ -12,7 +12,7 @@
   },
   "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-customnockmod/project45-customnockmodicon.png",
   "description": "A custom nock that allows you to quickly fire multiple arrows in succession.",
-  "statInfo": "Ammo Capacity +3",
+  "statInfo": "Max Ammo +3",
   "shortdescription" : "Custom Nock",
    
 
@@ -20,10 +20,9 @@
     "modName": "Custom Nock",
     "category": "ballistic",
     "slot": "bowstring",
-    "primaryAbility": {
+    "stat": {
       "maxAmmo": {
-        "operation": "add",
-        "value": 3
+        "additive": 3
       }
     }
   },

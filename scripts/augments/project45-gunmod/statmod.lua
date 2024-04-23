@@ -212,7 +212,8 @@ function apply(output, augment)
   -- SECTION: GENERAL CHANGES
 
   for stat, op in pairs(augment) do
-
+    
+    -- individual stats
     if statList[stat] and not isStatGroup[stat] then
 
       local restricted = isRestrictedStat[stat] or isRestrictedGroup[statGroup[stat] or "???"]
@@ -277,6 +278,8 @@ function apply(output, augment)
         newPrimaryAbility = sb.jsonMerge(newPrimaryAbility, mod)
  
       end
+    elseif isStatGroup[stat] then
+      
     end
 
   end

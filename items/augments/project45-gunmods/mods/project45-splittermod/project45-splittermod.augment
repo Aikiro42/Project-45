@@ -1,62 +1,42 @@
 {
-  "itemName" : "project45-splittermod",
-  "price" : 12500,
-  "rarity" : "Legendary",
-  "tooltipKind" : "project45gunmod2",
-  "modCategory" : "gunMod",
-  "category" : "uniqueWeapon",
+  "itemName": "project45-splittermod",
+  "price": 12500,
+  "rarity": "Legendary",
+  "tooltipKind": "project45gunmod2",
+  "modCategory": "gunMod",
+  "category": "uniqueWeapon",
   "itemTags": ["weapon"],
-  "tooltipFields":{
+  "tooltipFields": {
     "subtitle": "Gun Mod",
     "objectImage": "/items/augments/project45-gunmods/mods/project45-splittermod/project45-splittermod.png"
   },
-  "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-splittermod/project45-splittermodicon.png",
-  "description" : "A muzzle implement that splits energy rays without affecting their intensity.",
+  "inventoryIcon": "/items/augments/project45-gunmods/mods/project45-splittermod/project45-splittermodicon.png",
+  "description": "A muzzle implement that splits energy rays without affecting their intensity.",
   "statInfo": "Multishot +2\nSpread: 1 deg.",
-  "shortdescription" : "Splitter",
+  "shortdescription": "Splitter",
 
-  "augment":{
+  "augment": {
     "modName": "Converger",
     "category": "energy",
-    "slot": "muzzle",
-    "muzzleOffset": [0.125, 0],
-    "primaryAbility": {
+    "stat": {
       "multishot": {
-        "operation": "add",
-        "value": 2
+        "additive": 2
       },
       "spread": {
-        "operation": "replace",
-        "value": 1
+        "rebase": 1
       }
     },
-    
-    "sprite": {
-      "zLevel": 5,
-      "image": "/items/augments/project45-gunmods/mods/project45-splittermod/project45-splittermodsprite.png",
-      "offset": [-0.125, -0.125]
+    "gun": {
+      "slot": "muzzle",
+      "muzzleOffset": [0.125, 0],
+      "sprite": {
+        "zLevel": 5,
+        "image": "/items/augments/project45-gunmods/mods/project45-splittermod/project45-splittermodsprite.png",
+        "offset": [-0.125, -0.125]
+      }
     }
-
-    /*
-    ,"animationCustom": {
-      "animatedParts" : { "parts" : {
-        "muzzle" : {
-          "properties" : {
-            "zLevel" : 5,
-            "centered" : true,
-            "offset" : [0.375, -0.125],
-            "transformationGroups" : ["muzzle"],
-            "image" : "/items/augments/project45-gunmods/mods/project45-muzzlebrakemod/project45-muzzlebrakemodsprite.png<directives>"
-          }
-        }}}
-    }
-    */
-    
   },
 
-
-   
-
-  "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
+  "scripts": ["/scripts/augments/project45-gunmod/apply.lua"],
   "builder": "/items/buildscripts/buildproject45mod.lua"
 }

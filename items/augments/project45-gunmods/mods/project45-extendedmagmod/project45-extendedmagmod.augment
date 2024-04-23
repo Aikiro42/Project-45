@@ -19,10 +19,9 @@
     "modName": "Extended Magazines",
     "category": "ballistic",
     "slot": "magazine",
-    "primaryAbility": {
+    "stat": {
       "maxAmmo": {
-        "operation": "multiply",
-        "value": 2
+        "multiplicative": 1
       }
     }
   },

@@ -1,54 +1,55 @@
 {
-  "itemName" : "project45-bowstabilizermod",
-  "price" : 5000,
-  "rarity" : "Rare",
-  "tooltipKind" : "project45gunmod2",
-  "modCategory" : "gunMod",
-  "category" : "uniqueWeapon",
+  "itemName": "project45-bowstabilizermod",
+  "price": 5000,
+  "rarity": "Rare",
+  "tooltipKind": "project45gunmod2",
+  "modCategory": "gunMod",
+  "category": "uniqueWeapon",
   "itemTags": ["weapon"],
-  "tooltipFields":{
+  "tooltipFields": {
     "subtitle": "Gun Mod",
     "objectImage": "/items/augments/project45-gunmods/mods/project45-bowstabilizermod/project45-bowstabilizermod.png"
   },
-  "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-bowstabilizermod/project45-bowstabilizermodicon.png",
-  "description" : "A long rod that prevents incessant motion. Comes with a nifty laser!",
-  "statInfo": "Spread x0.1\nRecoil x0.1",
+  "inventoryIcon": "/items/augments/project45-gunmods/mods/project45-bowstabilizermod/project45-bowstabilizermodicon.png",
+  "description": "A long rod that prevents incessant motion. Comes with a nifty laser!",
+  "statInfo": "Spread -0.9x\nRecoil -0.9x",
   "technicalInfo": "Enables laser sight.",
-  "shortdescription" : "Bow Stabilizer",
+  "shortdescription": "Bow Stabilizer",
 
-  "augment":{
+  "augment": {
     "modName": "Bow Stabilizer",
     "category": "universal",
     "compatibleWeapons": ["project45-neo-bow"],
     "exclusiveCompatibility": true,
     "slot": "rail",
-    "primaryAbility": {
-      "laser": {
-        "operation": "replace",
-        "value": {
-          "enabled": true,
-          "color": [255, 0, 0, 200],
-          "width": 0.2
-        }
-      },
+    "stat": {
       "spread": {
-        "operation": "multiply",
-        "value": 0.1
-      },  
+        "multiplicative": -0.9
+      },
       "recoilMult": {
-        "operation": "multiply",
-        "value": 0.1
+        "multiplicative": -0.9
       }
     },
+    "gun": {
+      "primaryAbility": {
+        "laser": {
+          "operation": "replace",
+          "value": {
+            "enabled": true,
+            "color": [255, 0, 0, 200],
+            "width": 0.2
+          }
+        }
+      },
 
-    "sprite": {
-      "zLevel" : 5,
-      "centered" : true,
-      "image" : "/items/augments/project45-gunmods/mods/project45-bowstabilizermod/project45-bowstabilizermodsprite.png<directives>",
-      "offset": [0.5, 0]
-    }
+      "sprite": {
+        "zLevel": 5,
+        "centered": true,
+        "image": "/items/augments/project45-gunmods/mods/project45-bowstabilizermod/project45-bowstabilizermodsprite.png<directives>",
+        "offset": [0.5, 0]
+      }
 
-    /*
+      /*
 
     ,"animationCustom": {
       "animatedParts" : { "parts" : {
@@ -63,11 +64,9 @@
     }
 
     */
+    }
   },
 
-
-   
-
-  "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
+  "scripts": ["/scripts/augments/project45-gunmod/apply.lua"],
   "builder": "/items/buildscripts/buildproject45mod.lua"
 }

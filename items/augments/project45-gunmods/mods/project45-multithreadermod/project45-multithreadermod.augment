@@ -21,32 +21,28 @@
     "modName": "Multithreader",
     "category": "energy",
     "slot": "receiver",
-    "primaryAbility": {
-      /*
-      "projectileKind": {
-        "operation": "replace",
-        "value": "hitscan"
-      },
-      */
-      "semi": {
-        "operation": "replace",
-        "value": false
-      },
-      "manualFeed": {
-        "operation": "replace",
-        "value": false
-      },
-      "autoFireAfterCharge": {
-        "operation": "replace",
-        "value": true
-      },
+    "gun": {
+      "primaryAbility": {
+        "semi": {
+          "operation": "replace",
+          "value": false
+        },
+        "manualFeed": {
+          "operation": "replace",
+          "value": false
+        },
+        "autoFireAfterCharge": {
+          "operation": "replace",
+          "value": true
+        }
+      }
+    },
+    "stat": {
       "burstCount": {
-        "operation": "replace",
-        "value": 1
+        "rebase": 1
       },
       "fireTime": {
-        "operation": "replace",
-        "value": 0.1
+        "rebase": 0.1
       }
     }
   },
