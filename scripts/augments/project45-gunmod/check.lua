@@ -215,8 +215,8 @@ end
 function Checker:checkAmmo()
   if not self.compatible then
     local acceptedArchetype = set.new(self.modInfo.acceptsAmmoArchetype)
-    if self.augment.archetype ~= "universal" and not acceptedArchetype["universal"] and
-        not acceptedArchetype[self.augment.archetype] then
+    if self.augment.ammo.archetype ~= "universal" and not acceptedArchetype["universal"] and
+        not acceptedArchetype[self.augment.ammo.archetype] then
       self:addError("Ammo archetype mismatch")
       self.checked = false
       return false

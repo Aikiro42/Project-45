@@ -15,16 +15,18 @@
   "technicalInfo" : "Fires grenades that burst into flames on impact.",
   "shortdescription" : "Thermite Grenades",
 
-  "conversion": "projectile",
   "augment":{
     "modName": "Thermite Grenades",
     "category": "ballistic",
-    "archetype": "grenade",
+    "conversion": "projectile",
+    "ammo": {
+      "archetype": "grenade",
 
-    "projectileType": "project45thermitegrenade",
-    "projectileParameters": {
-      "speed": 50,
-      "bounces": 0
+      "projectileType": "project45thermitegrenade",
+      "projectileParameters": {
+        "speed": 50,
+        "bounces": 0
+      }
     }
   
   },

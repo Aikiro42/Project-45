@@ -15,10 +15,11 @@
   "technicalInfo": "Fires a beam that deals fire damage.",
   "shortdescription" : "Fire Beam",
 
-  "conversion": "beam",
   "augment":{
     "modName": "Fire Beam",
     "category": "energy",
+    "conversion": "beam",
+    "ammo":{
     "archetype": "beam",
     
     "muzzleFlashColor": [234,153,49],
@@ -33,6 +34,7 @@
       "fireStart": ["/sfx/gun/mech_beamsniper_fire1.ogg"],
       "fireLoop": ["/sfx/gun/mech_beamdrill_loop.ogg"],
       "fireEnd": ["/sfx/gun/mech_beamdrill_winddown.ogg"]
+    }
     }
   },
 

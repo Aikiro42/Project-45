@@ -15,12 +15,14 @@
   "technicalInfo": "Ammo mod for testing projectiles.",
   "shortdescription" : "Test Projectiles",
 
-  "conversion": "projectile",
   "augment":{
     "modName": "Incendiary Bullets",
     "category": "universal",
+    "conversion": "projectile",
+    "ammo":{
     "archetype": "universal",
     "projectileType": "project45itanorocket"
+    }
   },
 
 

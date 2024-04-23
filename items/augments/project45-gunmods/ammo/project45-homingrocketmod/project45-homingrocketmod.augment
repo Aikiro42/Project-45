@@ -15,14 +15,16 @@
   "technicalInfo" : "Fires small rockets that home in on enemies.",
   "shortdescription" : "Homing Rockets",
   
-  "conversion": "projectile",
   "augment":{
     "modName": "Homing Rockets",
     "category": "ballistic",
+    "conversion": "projectile",
+    "ammo":{
     "archetype": "rocket",
     "projectileType": "project45homingrocket",
     "projectileParameters": {
       "bounces": 0
+    }
     }
   },
 

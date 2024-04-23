@@ -15,12 +15,14 @@
   "technicalInfo": "Fires projectiles that have a 50% chance of leeching health.",
   "shortdescription" : "Sanguine Bullets",
 
-  "conversion": "projectile",
   "augment":{
     "modName": "Sanguine Bullets",
     "category": "ballistic",
-    "archetype": "bullet",
-    "projectileType": "project45healingbullet"
+    "conversion": "projectile",
+    "ammo": {
+      "archetype": "bullet",
+      "projectileType": "project45healingbullet"
+    }
   },
 
   "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],

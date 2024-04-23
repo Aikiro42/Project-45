@@ -15,13 +15,14 @@
   "technicalInfo": "Fires projectiles that poisons the enemy while dealing poison damage.",
   "shortdescription" : "Toxic Arrows",
 
-  "conversion": "projectile",
   "augment":{
     "modName": "Toxic Arrows",
     "category": "ballistic",
-    "archetype": "arrow",
-
-    "projectileType": "project45stdpoisonarrow"
+    "conversion": "projectile",
+    "ammo": {
+      "archetype": "arrow",
+      "projectileType": "project45stdpoisonarrow"
+    }
     
   },
 

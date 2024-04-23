@@ -15,12 +15,14 @@
   "technicalInfo" : "Fires multiple small rockets that home in on multiple enemies.",
   "shortdescription" : "Itano Rockets",
   
-  "conversion": "projectile",
   "augment":{
     "modName": "Itano Rockets",
     "category": "ballistic",
+    "conversion": "projectile",
+    "ammo": {
     "archetype": "rocket",
     "projectileType": "project45itanorocket"
+    }
   },
 
    
