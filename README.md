@@ -65,10 +65,10 @@
   - Advanced Wildcard (requires G.A.S. Rework)
 
 ### Guns
-- ~~M249 SAW~~
-- Plasma Launcher
-- Energy Grenade Launcher
-- Autocannon
+- [ ] ~~M249 SAW~~
+- [ ] Plasma Launcher
+- [ ] Energy Grenade Launcher
+- [x] Autocannon
 
 ## Multiplayer
 - [ ] Zweibrandyr crashes when buffed?
