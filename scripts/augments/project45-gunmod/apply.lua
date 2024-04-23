@@ -31,6 +31,7 @@ function apply(input)
 
   -- SECTION: CHECKS
   checker:check()
+
   if checker.augment.ability then
     checker:checkAbility()
   end
@@ -43,7 +44,7 @@ function apply(input)
   if checker.augment.stat then
     checker:checkStat()
   end
-  if not checker:check() then
+  if not checker.checked then
     return checker:getErrorOutputItem(), 0
   end
 
@@ -61,7 +62,7 @@ function apply(input)
             "hasShiftAction": bool
         }
         --]]
-    checker.output = applyAbilitymod(checker.output:descriptor(), checker.augment.ability)
+    checker.output = applyAbilitymod(checker.output, checker.augment.ability)
     newModSlots.ability = {checker.augment.modName, config.getParameter("itemName")}
   end
 
@@ -101,7 +102,7 @@ function apply(input)
             "enableAmmoArchetypes": string[]
         }
         --]]
-    checker.output = applyGunmod(checker.output:descriptor(), checker.augment.gun)
+    checker.output = applyGunmod(checker.output, checker.augment.gun)
   end
 
   if checker.augment.conversion and checker.conversionNecessary then
@@ -140,8 +141,6 @@ function apply(input)
         sound<string>: paths<string[]>,
         ...
       }
-
-      
     }
     --]]
     checker.output = applyAmmomod(checker.output, checker.augment.ammo)
@@ -150,7 +149,16 @@ function apply(input)
   end
 
   if checker.augment.passive then
-    checker.output = applyPassivemod(checker.output:descriptor(), checker.augment.passive)
+    --[[
+    "passive": {
+      "passiveScript": absolute_path<string>,
+      "passiveParameters": {json}
+      "overrideShiftAction": bool,
+      "passiveDescription": string,
+      "animationCustom": {json},
+    }
+    --]]
+    checker.output = applyPassivemod(checker.output, checker.augment.passive)
     newModSlots.passive = {checker.augment.modName, config.getParameter("itemName")}
   end
 

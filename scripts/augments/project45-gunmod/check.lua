@@ -207,6 +207,25 @@ function Checker:checkAmmo()
 end
 
 function Checker:checkPassive()
+
+  -- Deny installation if passive script is already established
+  if self.modSlots.passive or self.output:instanceValue("primaryAbility", {}).passiveScript then
+    self:addError("Passive already present")
+    self.checked = false
+    return false
+  end
+
+  -- Deny installation if shift action is already established and passive does not override it
+  if self.augment.passive.hasShiftAction and self.output:instanceValue("hasShiftAction") and not self.augment.passive.overrideShiftAction then
+    self:addError("Shift action already utilized")
+    self.checked = false
+    return false
+  end
+
+  self.checked = self.checked and true
+  return true
+  
 end
+
 function Checker:checkStat()
 end
