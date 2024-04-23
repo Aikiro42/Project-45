@@ -169,6 +169,7 @@ function apply(input)
       "randomStats": bool,
       
       stat<string>: {
+        "rebase": number
         "additive": float,
         "multiplicative": float
       }

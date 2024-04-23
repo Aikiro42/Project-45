@@ -103,14 +103,15 @@ function apply(output, augment)
         end
       end
 
-      local protectedParameters = {"baseDamage", "cockTime", "cycleTime", "chargeTime", "overchargeTime", "fireTime",
-                                 "reloadCost", "critChance", "critDamageMult", "jumpHeightFactor",
-                                 "movementSpeedFactor", "maxAmmo", "bulletsPerReload"}
+      -- FIXME: Protect Parameters!
+      -- [[
+      local protectedParameters = root.assetJson("/configs/project45/project45_statmod.config:statDefaults")
       -- protect gun from getting their stats modified directly
-      for _, param in ipairs(protectedParameters) do
+      for param, _ in pairs(protectedParameters) do
         augment.primaryAbility[param] = nil
       end
       augment.level = nil
+      --]]
 
       -- GENERAL MODIFICATION
       -- generate new primaryAbility table
