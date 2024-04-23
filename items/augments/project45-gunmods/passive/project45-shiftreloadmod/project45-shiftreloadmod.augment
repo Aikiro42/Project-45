@@ -32,6 +32,6 @@
     "overrideShiftAction": true
   },
 
-  "scripts" : [ "/scripts/augments/project45-gunmod/passivemod.lua" ],
+  "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
   "builder": "/items/buildscripts/buildproject45mod.lua"
 }
