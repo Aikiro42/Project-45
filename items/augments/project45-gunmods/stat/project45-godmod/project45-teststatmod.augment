@@ -39,7 +39,7 @@
     }
   },
 
-  "scripts" : [ "/scripts/augments/project45-gunmod/statmod.lua" ],
+  "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
   "builder": "/items/buildscripts/buildproject45mod.lua"
 
 }
