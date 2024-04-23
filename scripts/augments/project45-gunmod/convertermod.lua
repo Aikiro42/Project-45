@@ -11,78 +11,24 @@ local plurals = {
   summoned = "summoned projectiles"
 }
 
-function apply(input, override, augment)
+function apply(output, augment)
 
-  local conversion = config.getParameter("conversion", "null" --[[invalidation]])
-  local output = Item.new(input)
-  local modInfo = sb.jsonMerge(output.config.project45GunModInfo, input.parameters.project45GunModInfo)
+  local conversion = augment
+  local input = output:descriptor()
+  local modInfo = output:instanceValue("project45GunModInfo")
 
-  local primaryAbility = sb.jsonMerge(output.config.primaryAbility or {}, input.parameters.primaryAbility or {})
+  -- local primaryAbility = sb.jsonMerge(output.config.primaryAbility or {}, input.parameters.primaryAbility or {})
+  local primaryAbility = output:instanceValue("primaryAbility", {})
   local newPrimaryAbility = input.parameters.primaryAbility or {}
   local modSlots = input.parameters.modSlots or {}
 
-  -- CONVERSION GATES
-
-  -- check if not called from ammomod
-  if not override then
-    
-    -- Do not proceed if mod slot is occupied
-    if modSlots.ammoType then
-      sb.logError("(convertermod.lua) Conversion not applied; ammo/conversion mod is installed.")
-      return gunmodHelper.addMessage(input, "Ammo mod slot occupied"), 0
-    end
-
-    -- Do not proceed if conversion is to same type
-    if primaryAbility.projectileKind == conversion then
-      sb.logError("(convertermod.lua) Conversion not applied; gun already fires " .. conversion)
-      return gunmodHelper.addMessage(input, "Gun already fires " .. plurals[conversion]), 0
-    end  
-
-    local upgradeCost = augment and augment.upgradeCost or config.getParameter("upgradeCost")
-    local upgradeCapacity, upgradeCount
-
-    -- Do not proceed if upgrade capacity not enough
-    if upgradeCost then
-      upgradeCount = input.parameters.upgradeCount or 0
-      upgradeCapacity = modInfo.upgradeCapacity or -1
-      if upgradeCapacity > -1 and upgradeCount + upgradeCost > upgradeCapacity then
-        sb.logError("(convertermod.lua) Converter mod application failed: Not Enough Upgrade Capacity")
-        return gunmodHelper.addMessage(input, "Not Enough Upgrade Capacity"), 0
-      end
-    end
-  
-  end
-
-  -- Do not proceed if gun doesn't allow conversion
-  construct(output, "config", "project45GunModInfo")
-  local whitelist = set.new(output.config.project45GunModInfo.allowsConversion or {})
-  if not whitelist[conversion] then
-    sb.logError("(convertermod.lua) Conversion not applied; gun does not allow " .. conversion .. " conversion.")
-    return gunmodHelper.addMessage(input, "Incompatible converter mod: " .. config.getParameter("shortdescription")), 0
-  end
-
-  -- Do not proceed if gun already fires projectile kind
-  local projectileKind = input.parameters.primaryAbility.projectileKind or output.config.primaryAbility.projectileKind
-  if not projectileKind == conversion then
-    sb.logError("(convertermod.lua) Conversion not applied; Gun already fires " .. plurals[conversion])
-    return gunmodHelper.addMessage(input, "Gun already fires " .. plurals[conversion]), 0
-  end
-  
-
-  -- Do not proceed if conversion is invalid
-  if not set.new({"projectile", "hitscan", "beam", "summoned"})[conversion] then
-    sb.logError("(convertermod.lua) Invalid projectileKind: " .. conversion)
-    return gunmodHelper.addMessage(input, "ERROR: INVALID CONVERSION, CHECK AUGMENT - " .. config.getParameter("shortdescription")), 0
-  end
-
   -- CONVERSION PROCESS
-
 
   local animationCustom = sb.jsonMerge(output.config.animationCustom or {}, input.parameters.animationCustom or {})
   local newAnimationCustom = input.parameters.animationCustom or {}
   local oldProjectileKind = primaryAbility.projectileKind
   local gunCategory = output.config.project45GunModInfo.category
-  newPrimaryAbility.projectileKind = conversion  -- conversion must be a valid projectile kind
+  newPrimaryAbility.projectileKind = conversion -- conversion must be a valid projectile kind
 
   -- Conversion balance changes
   --[[
@@ -104,10 +50,10 @@ function apply(input, override, augment)
   local conversionConfig = root.assetJson("/configs/project45/project45_conversionmod.config")
 
   if conversion == "beam" then
-    
+
     -- multiply by damageConversionFactor if converting to beam
     newPrimaryAbility.baseDamage = (primaryAbility.baseDamage or 5) * conversionConfig.damageConversionFactor
-    
+
     -- change sounds reminiscent to that of generic beam
     construct(newAnimationCustom, "sounds")
     local defaultBeamSounds = conversionConfig.defaultBeamSounds
@@ -118,28 +64,30 @@ function apply(input, override, augment)
   else
 
     -- projectile-hitscan relationship
-    if oldProjectileKind == "projectile"
-    and conversion == "hitscan" then
+    if oldProjectileKind == "projectile" and conversion == "hitscan" then
       -- multiply by damageConversionFactor from projectile to hitscan
       newPrimaryAbility.baseDamage = (primaryAbility.baseDamage or 5) * conversionConfig.damageConversionFactor
-    elseif (oldProjectileKind == "hitscan" or oldProjectileKind == "beam")
-    and conversion == "projectile" then
+    elseif (oldProjectileKind == "hitscan" or oldProjectileKind == "beam") and conversion == "projectile" then
       -- divide by damageConversionFactor from hitscan/beam to projectile
       newPrimaryAbility.baseDamage = (primaryAbility.baseDamage or 5) / conversionConfig.damageConversionFactor
     end
 
     if conversion == "summoned" then
-      newPrimaryAbility.baseDamage = (primaryAbility.baseDamage or 5) * conversionConfig.damageConversionFactor * conversionConfig.summonedDamageMultiplier
+      newPrimaryAbility.baseDamage = (primaryAbility.baseDamage or 5) * conversionConfig.damageConversionFactor *
+                                         conversionConfig.summonedDamageMultiplier
     end
 
     if oldProjectileKind == "summoned" then
-      newPrimaryAbility.baseDamage = (primaryAbility.baseDamage or 5) / (conversionConfig.damageConversionFactor * conversionConfig.summonedDamageMultiplier)
+      newPrimaryAbility.baseDamage = (primaryAbility.baseDamage or 5) /
+                                         (conversionConfig.damageConversionFactor *
+                                             conversionConfig.summonedDamageMultiplier)
     end
-    
+
     -- widen spread if converting from beam
     if oldProjectileKind == "beam" then
       construct(newPrimaryAbility, "beamParameters")
-      newPrimaryAbility.spread = (primaryAbility.beamParameters.beamWidth or 5) / conversionConfig.projectileSpreadDividend
+      newPrimaryAbility.spread = (primaryAbility.beamParameters.beamWidth or 5) /
+                                     conversionConfig.projectileSpreadDividend
     end
 
     -- SOUND CHANGES
@@ -167,27 +115,11 @@ function apply(input, override, augment)
         newAnimationCustom.sounds.fire = conversionConfig.defaultFireSounds.default
       end
     end
-    
+
   end
 
   output:setInstanceValue("primaryAbility", newPrimaryAbility)
   output:setInstanceValue("animationCustom", newAnimationCustom)
-  
-  -- set instance values if not called from ammomod.lua
-  -- otherwise, ammomod.lua is responsible for this
-  if not override then
-    modSlots.ammoType = {
-      config.getParameter("shortdescription"),
-      config.getParameter("itemName"),
-      config.getParameter("inventoryIcon")
-    }  
-    output:setInstanceValue("modSlots", modSlots)
-    if upgradeCost then
-      output:setInstanceValue("upgradeCount", upgradeCount + upgradeCost)
-    end
-  end
 
-  output:setInstanceValue("isModded", true)
-
-  return (override and output or output:descriptor()), 1
+  return output
 end
