@@ -47,7 +47,21 @@ function apply(input)
 
     local newModSlots = sb.jsonMerge({}, checker.modSlots) -- deep copy
 
-    if checker.augment.gun then        
+    if checker.augment.ability then
+        --[[
+        "ability": {
+            "altAbilityType": string,
+            "overrideTwoHanded": bool,
+            "twoHanded": bool,
+            "altAbility": {json},
+            "hasShiftAction": bool
+        }
+        --]]
+        checker.output = applyAbilitymod(checker.output:descriptor(), checker.augment.ability)
+        newModSlots.ability = {checker.augment.modName, config.getParameter("itemName")}
+    end
+
+    if checker.augment.gun then
         --[[
         "gun": {
             "primaryAbility": {
@@ -84,20 +98,6 @@ function apply(input)
         }
         --]]
         checker.output = applyGunmod(checker.output:descriptor(), checker.augment.gun)
-    end
-
-    if checker.augment.ability then
-        --[[
-        "ability": {
-            "altAbilityType": string,
-            "overrideTwoHanded": bool,
-            "twoHanded": bool,
-            "altAbility": {json},
-            "hasShiftAction": bool
-        }
-        --]]
-        checker.output = applyAbilitymod(checker.output:descriptor(), checker.augment.ability)
-        newModSlots.ability = {checker.augment.modName, config.getParameter("itemName")}
     end
 
     if checker.augment.ammo then
