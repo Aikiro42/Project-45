@@ -22,40 +22,52 @@
     "upgradeCost": 1,
     "category": "universal",
     "slot": "sights",
-    "altAbilityType" : "project45gunscope",
-    "overrideTwoHanded": true,
-    "twoHanded": true,
-    "hasShiftAction": true,
-    "primaryAbility": {
-      "inaccuracy": {
-        "operation": "multiply",
-        "value": 0.8
+    "ability": {
+      "altAbilityType" : "project45gunscope",
+      "overrideTwoHanded": true,
+      "twoHanded": true,
+      "hasShiftAction": true,
+      
+      "altAbility": {
+        "reticleProjectile": "project45hightechcamera"
       },
-      "recoilMult": {
-        "operation": "multiply",
-        "value": 0.8
-      }
-    },
 
-    "altAbility": {
-      "reticleProjectile": "project45hightechcamera"
-    },
-
-    "animationCustom": {
-      "animatedParts":{
-        "parts":{
-          "sights": {
-            "properties": {
-              "image" : "/items/augments/project45-gunmods/ability/project45-supergunscopemod/project45-supergunscopemodsprite.png<directives>"
+      "animationCustom": {
+        "animatedParts":{
+          "parts":{
+            "sights": {
+              "properties": {
+                "image" : "/items/augments/project45-gunmods/ability/project45-supergunscopemod/project45-supergunscopemodsprite.png<directives>"
+              }
             }
           }
         }
       }
+    },
+
+    "stat": {
+      "inaccuracy": {
+        "multiplicative": -0.2
+      }
+        
+      /*
+      "primaryAbility": {
+        "inaccuracy": {
+          "operation": "multiply",
+          "value": 0.8
+        },
+        "recoilMult": {
+          "operation": "multiply",
+          "value": 0.8
+        }
+      },
+      */
+
     }
 
   },
 
-  "scripts" : [ "/scripts/augments/project45-gunmod/abilitymod.lua" ],
+  "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
   "builder": "/items/buildscripts/buildproject45mod.lua"
 
 }

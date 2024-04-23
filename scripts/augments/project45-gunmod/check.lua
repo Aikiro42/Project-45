@@ -11,6 +11,9 @@ function Checker:new(input, augmentConfig)
   self.config = augmentConfig
   self.modInfo = self.output:instanceValue("project45GunModInfo")
   self.augment = self.config.getParameter("augment")
+
+  self.augment.cost = self.augment.cost or 0
+
   self.statList = self.output:instanceValue("statList", {nil})
   self.statList.wildcards = self.statList.wildcards or {}
 
@@ -120,7 +123,7 @@ function Checker:check()
   end
 
   -- Bad if capacity is not enough
-  local upgradeCost = augment.cost or 1
+  local upgradeCost = augment.cost
   local upgradeCapacity = modInfo.upgradeCapacity or -1
   local upgradeCount = output:instanceValue("upgradeCount", 0)
   if upgradeCapacity >= 0 then

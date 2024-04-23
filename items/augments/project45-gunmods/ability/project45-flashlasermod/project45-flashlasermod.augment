@@ -19,11 +19,13 @@
   "augment":{
     "category": "universal",
     "slot": "rail",
-    "altAbilityType" : "project45flashlaser",
-    "overrideTwoHanded": true,
-    "twoHanded": true
+    "ability": {
+      "altAbilityType" : "project45flashlaser",
+      "overrideTwoHanded": true,
+      "twoHanded": true
+    }
   },
 
-  "scripts" : [ "/scripts/augments/project45-gunmod/abilitymod.lua" ],
+  "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
   "builder": "/items/buildscripts/buildproject45mod.lua"
 }
