@@ -11,6 +11,8 @@ function Checker:new(input, augmentConfig)
   self.config = augmentConfig
   self.modInfo = self.output:instanceValue("project45GunModInfo")
   self.augment = self.config.getParameter("augment")
+  self.statList = self.output:instanceValue("statList", {nil})
+  self.statList.wildcards = self.statList.wildcards or {}
 
   -- conversion and projectileKind must be equal
   if not self.augment.conversion and (self.augment.ammo or {}).projectileKind then
@@ -21,6 +23,16 @@ function Checker:new(input, augmentConfig)
     self.logError("Conversion and ammo projectileKind are NOT equal")
     self.checked = false
   end
+
+  -- validate augment slot
+  if not self.augment.slot then
+    if self.augment.gun then self.augment.slot = "unknown"
+    elseif self.augment.ability then self.augment.slot = "ability"
+    elseif self.augment.conversion or self.augment.ammo then self.augment.slot = "ammo"
+    elseif self.augment.passive then self.augment.slot = "passive"
+    else self.augment.slot = "stat" end
+  end
+  
   
 end
 
@@ -76,19 +88,24 @@ function Checker:check()
   set.insert(acceptsModSlot, "ability")
   set.insert(acceptsModSlot, "passive")
   set.insert(acceptsModSlot, "intrinsic")
+  set.insert(acceptsModSlot, "stat")
   if not acceptsModSlot[augment.slot] then
     self:addError(string.format("Weapon does not accept %s mods", augment.slot))
     self.checked = false
   end
 
-  -- Bad weapon if RELEVANT slots are occupied
+  -- Bad weapon if specified slot is occupied
   local modSlots = self.modSlots
   if modSlots[augment.slot] then
-    return
+    -- modSlots["stat"] should ALWAYS return false
+    self:addError(string.format("%s slot occupied", augment.slot))
+    self.checked = false
   end
+
+  -- Bad weapon if relevant slots are occupied
   if (augment.ability and modSlots.ability) or (augment.passive and modSlots.passive) or
       ((augment.ammo or augment.conversion) and modSlots.ammoType) then
-    local occupiedSlot = augment.slot
+    local occupiedSlot = ""
     if modSlots.ability then
       occupiedSlot = occupiedSlot + ", ability"
     end
@@ -228,4 +245,11 @@ function Checker:checkPassive()
 end
 
 function Checker:checkStat()
+  
+  if self.augment.stat.level and (output:instanceValue("level", 1)) >= 10 then
+    self:addError("Weapon at max level")
+    self.checked = false
+    return false
+  end
+
 end

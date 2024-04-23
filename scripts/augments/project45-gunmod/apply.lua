@@ -130,6 +130,7 @@ function apply(input)
       
       "beamParameters": {json}
 
+      // WARNING: THESE CAN BE MODIFIED IN THE STAT APPLICATION
       "multishot": float,
       "projectileCount": int,
       "spread": float,
@@ -163,7 +164,28 @@ function apply(input)
   end
 
   if checker.augment.stat then
-    checker.output = applyStatmod(checker.output:descriptor(), checker.augment.stat)
+    --[[
+    "stat": {
+      "randomStats": bool,
+      
+      stat<string>: {
+        "additive": float,
+        "multiplicative": float
+      }
+      ...
+    }
+    --]]
+
+    checker.output = applyStatmod(checker.output, checker.augment.stat)
+
+    -- count stat if not wildcard
+    if not checker.augment.stat.randomStats then
+      checker.statList[config.getParameter("itemName")] = (checker.statList[config.getParameter("itemName")] or 0) + 1
+    else
+      local retrievedSeed = config.getParameter("seed")
+      table.insert(checker.statList.wildcards, retrievedSeed)
+    end
+    checker.output:setInstanceValue("statList", checker.statList)
   end
 
   -- MODIFICATION POST-MORTEM
@@ -176,8 +198,8 @@ function apply(input)
     table.insert(newModSlots[checker.augment.slot], config.getParameter("inventoryIcon"))
   end
 
-  checker.output:setInstanceValue("modSlots", modSlots)
-  checker.output:setInstanceValue("upgradeCount", upgradeCount + upgradeCost)
+  checker.output:setInstanceValue("modSlots", newModSlots)
+  checker.output:setInstanceValue("upgradeCount", checker.output:instanceValue("upgradeCount", 0) + self.augment.cost)
   checker.output:setInstanceValue("isModded", true)
 
   return checker.output:descriptor(), 1

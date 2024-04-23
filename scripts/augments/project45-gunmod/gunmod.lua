@@ -103,11 +103,11 @@ function apply(output, augment)
         end
       end
 
-      local statModParameters = {"baseDamage", "cockTime", "cycleTime", "chargeTime", "overchargeTime", "fireTime",
+      local protectedParameters = {"baseDamage", "cockTime", "cycleTime", "chargeTime", "overchargeTime", "fireTime",
                                  "reloadCost", "critChance", "critDamageMult", "jumpHeightFactor",
-                                 "movementSpeedFactor", "maxAmmo"}
+                                 "movementSpeedFactor", "maxAmmo", "bulletsPerReload"}
       -- protect gun from getting their stats modified directly
-      for _, param in ipairs(statModParameters) do
+      for _, param in ipairs(protectedParameters) do
         augment.primaryAbility[param] = nil
       end
       augment.level = nil

@@ -20,7 +20,7 @@
 
     "baseDamage": 5,
     "reloadCost": 50,
-    "reloadTime": 1,   // 80% actual reload time, 20% cocking time
+    "reloadTime": 1,   // 80% actual reload time, 20% cocking time -- TESTME: Verify!
     "critChance": 0.1,
     "critDamageMult": 1.5,
 
