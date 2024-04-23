@@ -70,7 +70,7 @@ function build(directory, config, parameters, level, seed)
   and not parameters.augment
   and configParameter("seed", seed) then
     
-    construct(parameters, "augment")
+    construct(parameters, "augment", "stat")
 
     -- generate random source
     parameters.seed = configParameter("seed", seed)
@@ -83,22 +83,22 @@ function build(directory, config, parameters, level, seed)
 
     -- begin stat generation process
     for _, statName in ipairs(statNames) do
-      if config.augment[statName] then -- generate stat if it exists
+      if config.augment.stat[statName] then -- generate stat if it exists
 
         -- indicate if it modifies multiple stats or not
         parameters.slot = parameters.slot and "multiple" or statName 
 
         -- choose a random operation
         local opName = "additive"
-        if  config.augment[statName].additive
-        and config.augment[statName].multiplicative then
+        if  config.augment.stat[statName].additive
+        and config.augment.stat[statName].multiplicative then
           opName = rng:randb() and "additive" or "multiplicative"
         else
-          opName = not config.augment[statName].additive and "multiplicative" or opName
+          opName = not config.augment.stat[statName].additive and "multiplicative" or opName
         end
 
         -- generate random stat if operation was chosen successfully
-        if config.augment[statName][opName] then
+        if config.augment.stat[statName][opName] then
 
           -- indicate if it does exclusively additive/multiplicative ops or both
           if parameters.archetype then
@@ -108,12 +108,12 @@ function build(directory, config, parameters, level, seed)
           end
 
           -- generate stat if statname and opname exists, truncate to 3 decimal places
-          construct(parameters.augment, statName, opName)
-          parameters.augment[statName][opName] = generateRandomStat(config.augment[statName][opName], rng, 3)
-          parameters.augment[statName][opName == "additive" and "multiplicative" or "additive"] = 0
+          construct(parameters.augment, "stat", statName, opName)
+          parameters.stat.augment[statName][opName] = generateRandomStat(config.augment[statName][opName], rng, 3)
+          parameters.stat.augment[statName][opName == "additive" and "multiplicative" or "additive"] = 0
           
           -- modify tooltip field info
-          local statValue = parameters.augment[statName][opName]
+          local statValue = parameters.stat.augment[statName][opName]
           if statValue then
             statValue = statValue * (opName == "additive" and additiveStatDescMults[statName] or 1)
             local operand = statValue > 0 and "+" or ""

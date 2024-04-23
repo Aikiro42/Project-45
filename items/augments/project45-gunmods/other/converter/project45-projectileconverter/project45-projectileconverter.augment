@@ -12,8 +12,10 @@
   "inventoryIcon" : "/items/augments/project45-gunmods/other/converter/project45-projectileconverter/project45-projectileconverter.png",
   "description" : "Converts bullets fired to projectile ones.",
   "shortdescription" : "Projectile Conversion",
-
-  "conversion": "projectile",
+  
+  "augment": {
+    "conversion": "projectile"
+  },
 
    
 

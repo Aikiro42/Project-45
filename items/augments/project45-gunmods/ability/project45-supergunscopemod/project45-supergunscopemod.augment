@@ -19,7 +19,7 @@
   "archetype": "Active Ability",
 
   "augment":{
-    "upgradeCost": 1,
+    "cost": 1,
     "category": "universal",
     "slot": "sights",
     "ability": {

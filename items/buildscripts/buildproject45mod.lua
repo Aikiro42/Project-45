@@ -74,7 +74,7 @@ function build(directory, config, parameters, level, seed)
   -- extrinsic mods are free,
   -- intrinsic mods cost 1 upgrade capacity
   if not deepConfigParameter(nil, "augment", "upgradeCost") then
-    config.augment.upgradeCost = extrinsicModSlots[deepConfigParameter(configParameter("slot"), "augment", "slot")] and 0 or 1
+    config.augment.cost = extrinsicModSlots[deepConfigParameter(configParameter("slot"), "augment", "slot")] and 0 or 1
   end
 
   -- Change category label

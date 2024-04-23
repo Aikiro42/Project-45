@@ -16,11 +16,11 @@
   "archetype": "Additive",
   "shortdescription" : "^#D93A3A;Crit Chance (+)",
 
-  "augment":{
+  "augment":{"stat":{
     "critChance": {
       "additive": 0.05
     }
-  },
+  }},
 
   "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
   "builder": "/items/buildscripts/buildproject45mod.lua"

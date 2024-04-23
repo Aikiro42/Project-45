@@ -16,8 +16,11 @@
   "slot": "baseDamage",
   "archetype": "Additive",
   "augment":{
-    "baseDamage": {
-      "additive": 0.2
+    "cost": 1,
+    "stat":{
+      "baseDamage": {
+        "additive": 0.2
+      }
     }
   },
 

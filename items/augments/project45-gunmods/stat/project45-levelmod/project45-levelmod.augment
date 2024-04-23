@@ -18,8 +18,10 @@
   "shortdescription" : "^#a8e6e2;Level Upgrade",
 
   "augment":{
-    "upgradeCost": 0,
-    "level": 1
+    "cost": 0,
+    "stat":{
+      "level": 1
+    }
   },
 
   "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],

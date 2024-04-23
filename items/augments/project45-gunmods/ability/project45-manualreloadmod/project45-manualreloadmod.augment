@@ -16,7 +16,7 @@
   "archetype": "Active Ability",
   
   "augment":{
-    "upgradeCost": 0,
+    "cost": 0,
     "category": "universal",
     "slot": "intrinsic",
     "ability": {

@@ -17,9 +17,11 @@
   "shortdescription" : "^#EA9931;Base Damage (*)",
 
   "augment":{
-    "upgradeCost": 2,
-    "baseDamage": {
-      "multiplicative": 0.3
+    "cost": 2,
+    "stat":{
+      "baseDamage": {
+        "multiplicative": 0.3
+      }
     }
   },
 

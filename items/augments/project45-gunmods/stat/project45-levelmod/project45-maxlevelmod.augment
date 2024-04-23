@@ -19,8 +19,10 @@
   "shortdescription" : "^#a8e6e2;Max Level Upgrade",
 
   "augment":{
-    "upgradeCost": 0,
-    "level": 10
+    "cost": 0,
+    "stat": {
+      "level": 10
+    }
   },
 
   "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],

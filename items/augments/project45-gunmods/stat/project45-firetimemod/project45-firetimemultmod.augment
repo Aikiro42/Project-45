@@ -16,9 +16,11 @@
   "archetype": "Multiplicative",
   "shortdescription" : "^#E2C344;Fire Time (*)",
   "augment":{
-    "upgradeCost": 2,
-    "fireTime": {
-      "multiplicative": 0.2
+    "cost": 2,
+    "stat": {
+      "fireTime": {
+        "multiplicative": 0.2
+      }
     }
   },
 

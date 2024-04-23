@@ -16,7 +16,7 @@
   "shortdescription" : "Test statMod",
 
   "augment":{
-    "upgradeCost": 5,
+    "cost": 5,
     "baseDamage": {
       "additive": 1,
       "multiplicative": 1

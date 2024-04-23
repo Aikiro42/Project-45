@@ -16,9 +16,11 @@
   "archetype": "Additive",
   "shortdescription" : "^#E2C344;Fire Time (+)",
   "augment":{
-    "upgradeCost": 1,
-    "fireTime": {
-      "additive": -0.01
+    "cost": 1,
+    "stat":{
+      "fireTime": {
+        "additive": -0.01
+      }
     }
   },
 

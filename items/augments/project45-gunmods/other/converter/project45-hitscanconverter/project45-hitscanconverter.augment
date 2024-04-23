@@ -12,12 +12,12 @@
   "inventoryIcon" : "/items/augments/project45-gunmods/other/converter/project45-hitscanconverter/project45-hitscanconverter.png",
   "description" : "Converts bullets fired to hitscan ones.",
   "shortdescription" : "Hitscan Conversion",
-
-  "conversion": "hitscan",
-  "upgradeCost": 3,
-
+  
+  "augment": {
+    "cost": 3,
+    "conversion": "hitscan"
+  },
    
-
   "scripts" : [ "/scripts/augments/project45-gunmod/convertermod.lua" ],
   
   "technicalInfo": "Affects damage per shot.\nMay be rejected by some weapons.",

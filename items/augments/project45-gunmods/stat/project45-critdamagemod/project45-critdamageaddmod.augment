@@ -16,11 +16,11 @@
   "archetype": "Additive",
   "shortdescription" : "^#D93A3A;Crit Damage (+)",
 
-  "augment":{
-    "critDamage": {
+  "augment":{"stat":{
+    "critDamageMult": {
       "additive": 0.1
     }
-  },
+  }},
 
   "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
   "builder": "/items/buildscripts/buildproject45mod.lua"

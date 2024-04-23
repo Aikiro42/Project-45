@@ -18,18 +18,20 @@
   "shortdescription" : "^#fdd14d;The God Mod^reset;",
 
   "augment":{
-    "upgradeCost": 3,
-    "baseDamage": {
-      "multiplicative": 0.4
-    },
-    "critChance": {
-      "additive": 0.10
-    },
-    "critDamage": {
-      "additive": 0.12
-    },
-    "fireTime": {
-      "multiplicative": 0.08
+    "cost": 3,
+    "stat": {
+      "baseDamage": {
+        "multiplicative": 0.4
+      },
+      "critChance": {
+        "additive": 0.10
+      },
+      "critDamage": {
+        "additive": 0.12
+      },
+      "fireTime": {
+        "multiplicative": 0.08
+      }
     }
   },
 

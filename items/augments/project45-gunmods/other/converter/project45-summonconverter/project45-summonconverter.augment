@@ -13,8 +13,10 @@
   "description" : "Converts bullets fired to summoned ones.",
   "shortdescription" : "Summon Conversion",
 
-  "conversion": "summoned",
-  "upgradeCost": 3,
+  "augment": {
+    "conversion": "summoned",
+    "cost": 3
+  },
 
    
 

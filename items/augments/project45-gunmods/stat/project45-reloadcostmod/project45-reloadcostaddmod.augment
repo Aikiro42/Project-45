@@ -17,8 +17,11 @@
   "shortdescription" : "^#9BBA3D;Reload Cost (+)",
 
   "augment":{
-    "reloadCost": {
-      "additive": -3
+    "cost": 1,
+    "stat": {
+      "reloadCost": {
+        "additive": -3
+      }
     }
   },
 
