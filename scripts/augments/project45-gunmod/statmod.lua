@@ -62,10 +62,10 @@ function apply(output, augment)
     if savedBaseStat == nil then
       -- base stat not saved; retrieve from item
       if isConfigStat[stat] then -- retrieve strictly from config
-        return (output.config.primaryAbility or {})[stat] or statList[stat] or default
+        return (output.config.primaryAbility or {})[stat] or statList[stat]
       end
       -- retrieve from parameters or config
-      return output:instanceValue("primaryAbility", {})[stat] or statList[stat] or default
+      return output:instanceValue("primaryAbility", {})[stat] or statList[stat]
     else
       -- base stat saved, retrieve it
       return savedBaseStat
@@ -90,24 +90,24 @@ function apply(output, augment)
 
   end
 
+  -- Alter fireTime (stat)
+  if augment.fireTimeStat and augment.fireTimeStat.rebase then
+    statModifiers.fireTime = statModifiers.fireTime or {
+      base = {}
+    }
+    statModifiers.fireTime.base.fireTimeStat = augment.fireTimeStat.rebase
+    
+    -- to be REALLY safe,
+    augment.fireTimeStat = nil
+  end
+
   -- Alter general Fire Rate
   if augment.fireTime then
-
-    local fireTimeStats = {
-      "cockTime",
-      "cycleTime",
-      "midCockDelay",
-      "chargeTime",
-      "overchargeTime",
-      "fireTime"
-    }
 
     statModifiers.fireTime = statModifiers.fireTime or {
       base = {}
     }
-    for _, fireTimeStat in ipairs(fireTimeStats) do
-      -- baseStat() should retrieve the saved values if present
-      -- fireTimeStats should have default stats saved in the config
+    for _, fireTimeStat in ipairs(groupStats.firetime) do
       statModifiers.fireTime.base[fireTimeStat] = baseStat(fireTimeStat)
     end
 

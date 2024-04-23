@@ -1,50 +1,51 @@
 {
-  "itemName" : "project45-autofiremod",
-  "price" : 8000,
-  "rarity" : "Legendary",
-  "tooltipKind" : "project45gunmod2",
-  "modCategory" : "gunMod",
-  "category" : "uniqueWeapon",
+  "itemName": "project45-autofiremod",
+  "price": 8000,
+  "rarity": "Legendary",
+  "tooltipKind": "project45gunmod2",
+  "modCategory": "gunMod",
+  "category": "uniqueWeapon",
   "itemTags": ["weapon"],
-  "tooltipFields":{
+  "tooltipFields": {
     "subtitle": "Gun Mod",
     "objectImage": "/items/augments/project45-gunmods/mods/project45-autofiremod/project45-autofiremod.png"
   },
-  "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-autofiremod/project45-autofiremodicon.png",
+  "inventoryIcon": "/items/augments/project45-gunmods/mods/project45-autofiremod/project45-autofiremodicon.png",
   "description": "Turns semi/burst weapons full auto. Just don't tell the UATF you installed this gun mod.",
-  "technicalInfo" : "Manual-feed weapons auto-feed.\nCharge weapons automatically fire when fully charged.",
+  "technicalInfo": "Manual-feed weapons auto-feed.\nCharge weapons automatically fire when fully charged.",
   "statInfo": "Trigger time: 0.1s",
-  "shortdescription" : "Automatic Receiver",
-   
+  "shortdescription": "Automatic Receiver",
 
   "augment": {
     "modName": "Automatic Receiver",
     "category": "ballistic",
     "slot": "receiver",
-    "primaryAbility": {
-      "semi": {
-        "operation": "replace",
-        "value": false
-      },
-      "manualFeed": {
-        "operation": "replace",
-        "value": false
-      },
-      "autoFireAfterCharge": {
-        "operation": "replace",
-        "value": true
-      },
+    "gun": {
+      "primaryAbility": {
+        "semi": {
+          "operation": "replace",
+          "value": false
+        },
+        "manualFeed": {
+          "operation": "replace",
+          "value": false
+        },
+        "autoFireAfterCharge": {
+          "operation": "replace",
+          "value": true
+        }
+      }
+    },
+    "stat": {
       "burstCount": {
-        "operation": "replace",
-        "value": 1
+        "rebase": 1
       },
-      "fireTime": {
-        "operation": "replace",
-        "value": 0.1
+      "fireTimeStat": {
+        "rebase": 0.1
       }
     }
   },
 
-  "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
+  "scripts": ["/scripts/augments/project45-gunmod/apply.lua"],
   "builder": "/items/buildscripts/buildproject45mod.lua"
 }
