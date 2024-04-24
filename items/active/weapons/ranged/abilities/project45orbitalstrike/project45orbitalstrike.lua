@@ -12,7 +12,12 @@ function Project45OrbitalStrike:init()
 
   self.cooldownTime = self.cooldownTime or 0.1
   self.projectileCount = self.projectileCount or 10
-  self.cooldownTimer = self.cooldownTime
+  storage.cooldownTimer = storage.cooldownTimer or self.cooldownTime
+  if storage.cooldownTimer > 0 then
+    animator.setSoundVolume("loading", 0.4, 0)
+    animator.playSound("loading", -1)
+  end
+
   
   self.laserTick = false
   self.laserTickTime = self.laserTickTime or 0.05
@@ -38,7 +43,17 @@ end
 function Project45OrbitalStrike:update(dt, fireMode, shiftHeld)
   WeaponAbility.update(self, dt, fireMode, shiftHeld)
 
-  self.cooldownTimer = math.max(0, self.cooldownTimer - self.dt)
+  storage.cooldownTimer = math.max(0, storage.cooldownTimer - self.dt)
+
+  if storage.cooldownTimer <= 0 and animator.animationState("project45orbitalstrike") ~= "ready" then
+    animator.stopAllSounds("loading")
+    animator.playSound("ready")
+    animator.setAnimationState("project45orbitalstrike", "ready")
+  elseif storage.cooldownTimer > 0 and animator.animationState("project45orbitalstrike") ~= "cooldown" then
+    animator.playSound("loading", -1)
+    animator.setAnimationState("project45orbitalstrike", "cooldown")
+  end
+  
   if self.tagTimer < 0 then
     if self.audioMode ~= 0 then
       self.audioMode = 0
@@ -63,10 +78,10 @@ function Project45OrbitalStrike:update(dt, fireMode, shiftHeld)
 
   if self.fireMode == "alt"
   and not self.weapon.currentAbility
-  and self.cooldownTimer == 0
+  and storage.cooldownTimer == 0
+  and status.resource("energy") > 0
   and not self.isFiring then
     self:setState(self.tagging)    
-    self.cooldownTimer = self.cooldownTime
     self.isFiring = true
   end
 
@@ -81,11 +96,12 @@ function Project45OrbitalStrike:tagging()
     self.tagTimer = math.min(self.lockOnTime, self.tagTimer + self.dt)
     tagProgress = self.tagTimer / self.lockOnTime
 
+    --[[
     if tagProgress == 1 and not locked then
       animator.playSound("locked")
       locked = true
     end
-    
+    --]]
     self.strikeCoords = self:getStrikeCoords()
     
     -- draw visuals
@@ -98,15 +114,17 @@ function Project45OrbitalStrike:tagging()
   self:clearLaser()
   self:clearOrbitalLaser()
   
-  if self.tagTimer >= self.lockOnTime then
+  if self.tagTimer >= self.lockOnTime and status.overConsumeResource("energy", self.energyCost) then
     animator.playSound("locked")
     self:fire()
+  else
+    animator.playSound("error")
   end
 
     
   self.tagTimer = -1
   self.isFiring = false  
-  self.cooldownTimer = self.cooldownTime
+  storage.cooldownTimer = self.cooldownTime
 
 
   return

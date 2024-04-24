@@ -294,7 +294,5 @@
     }
   },
 
-  "altAbilityType": "project45orbitalstrike",
-
   "builder" : "/items/buildscripts/buildproject45neoneo.lua"
 }
