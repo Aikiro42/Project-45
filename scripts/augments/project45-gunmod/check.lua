@@ -288,7 +288,7 @@ end
 
 function Checker:checkStat()
   
-  if self.augment.stat.level and (output:instanceValue("level", 1)) >= 10 then
+  if self.augment.stat.level and (self.output:instanceValue("level", 1)) >= 10 then
     self:addError("Weapon at max level")
     self.checked = false
     return false

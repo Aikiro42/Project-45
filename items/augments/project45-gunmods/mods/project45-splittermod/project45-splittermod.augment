@@ -18,6 +18,7 @@
   "augment": {
     "modName": "Converger",
     "category": "energy",
+    "slot": "muzzle",
     "stat": {
       "multishot": {
         "additive": 2
@@ -27,7 +28,6 @@
       }
     },
     "gun": {
-      "slot": "muzzle",
       "muzzleOffset": [0.125, 0],
       "sprite": {
         "zLevel": 5,

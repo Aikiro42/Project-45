@@ -66,7 +66,7 @@ function build(directory, config, parameters, level, seed)
   end
 
   if config.modCategory == "statMod"
-  and config.augment.randomStats
+  and config.augment.stat.randomStats
   and not parameters.augment
   and configParameter("seed", seed) then
     
@@ -74,6 +74,7 @@ function build(directory, config, parameters, level, seed)
 
     -- generate random source
     parameters.seed = configParameter("seed", seed)
+    
     local rng = sb.makeRandomSource(parameters.seed)
     
     -- prepare tooltip information
@@ -109,11 +110,11 @@ function build(directory, config, parameters, level, seed)
 
           -- generate stat if statname and opname exists, truncate to 3 decimal places
           construct(parameters.augment, "stat", statName, opName)
-          parameters.stat.augment[statName][opName] = generateRandomStat(config.augment[statName][opName], rng, 3)
-          parameters.stat.augment[statName][opName == "additive" and "multiplicative" or "additive"] = 0
+          parameters.augment.stat[statName][opName] = generateRandomStat(config.augment.stat[statName][opName], rng, 3)
+          parameters.augment.stat[statName][opName == "additive" and "multiplicative" or "additive"] = 0
           
           -- modify tooltip field info
-          local statValue = parameters.stat.augment[statName][opName]
+          local statValue = parameters.augment.stat[statName][opName]
           if statValue then
             statValue = statValue * (opName == "additive" and additiveStatDescMults[statName] or 1)
             local operand = statValue > 0 and "+" or ""
@@ -145,7 +146,7 @@ function build(directory, config, parameters, level, seed)
       parameters.price = math.floor(rng:randf(basePrice/3, basePrice*3) * 0.1)
     end
   end
-
+  parameters.shortdescription = string.format("%s%s", config.shortdescription, parameters.seed and (" #" .. parameters.seed) or "")
   return unrandBuild(directory, config, parameters, level, seed)
 end
 

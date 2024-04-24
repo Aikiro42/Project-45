@@ -11,8 +11,9 @@
     "objectImage": "/items/augments/project45-gunmods/mods/project45-multithreadermod/project45-multithreadermod.png"
   },
   "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-multithreadermod/project45-multithreadermodicon.png",
-  "description": "Turns semi/burst weapons full auto. Just don't tell the UATF you installed this gun mod.",
+  "description": "Turns semi/burst energy weapons full auto. It's hard on the ammo capacitor.",
   "technicalInfo" : "Manual-feed weapons auto-feed.\nCharge weapons automatically fire when fully charged.",
+  "statInfo": "Max Ammo x0.5",
   "shortdescription" : "Multithreader",
 
    
@@ -38,6 +39,9 @@
       }
     },
     "stat": {
+      "maxAmmo": {
+        "multiplicative": -0.5
+      },
       "burstCount": {
         "rebase": 1
       },

@@ -123,7 +123,7 @@ function build(directory, config, parameters, level, seed)
   end
 
   -- Append upgrade cost (default 0)
-  config.tooltipFields.technicalLabel = project45util.colorText("#777777", string.format("Upgrade Cost: %d\n", deepConfigParameter(0, "augment", "upgradeCost")))
+  config.tooltipFields.technicalLabel = project45util.colorText("#777777", string.format("Upgrade Cost: %d\n", deepConfigParameter(0, "augment", "cost")))
 
   -- Append technical info
   local techInfo = configParameter("technicalInfo")

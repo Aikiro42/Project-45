@@ -84,7 +84,8 @@ function apply(input)
     "stat": {json}
   }
   --]]
-  if checker.augment.pureStatMod then
+  local pureStatMod = checker.augment.pureStatMod or config.getParameter("modCategory") == "statMod"
+  if pureStatMod then
     checker.augment.ability = nil
     checker.augment.gun = nil
     checker.augment.conversion = nil
@@ -231,7 +232,7 @@ function apply(input)
     checker.output = applyStatmod(checker.output, checker.augment.stat)
 
     -- count stat if not wildcard
-    if checker.augment.pureStatMod then
+    if pureStatMod then
       if not checker.augment.stat.randomStats then
         checker.statList[config.getParameter("itemName")] = (checker.statList[config.getParameter("itemName")] or 0) + 1
       else
@@ -246,7 +247,7 @@ function apply(input)
   -- add mod info to list of installed mods
 
   -- if modslot is occupied then somewhere along the line it's already been tracked
-  if not newModSlots[checker.augment.slot] then
+  if not newModSlots[checker.augment.slot] and not pureStatMod then
     newModSlots[checker.augment.slot] = {checker.augment.modName, config.getParameter("itemName")}
   end
 
