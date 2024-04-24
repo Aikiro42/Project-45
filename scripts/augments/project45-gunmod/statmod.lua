@@ -94,19 +94,37 @@ function apply(output, augment)
     statModifiers.fireTime = statModifiers.fireTime or {
       base = {}
     }
-    statModifiers.fireTime.base.fireTimeStat = augment.fireTimeStat.rebase
+    statModifiers.fireTime.base.fireTime = augment.fireTimeStat.rebase
+
+    -- prompt change
+    augment.fireTime = augment.fireTime or {}
 
     -- to be REALLY safe,
     augment.fireTimeStat = nil
+
+  end
+  
+  -- Alter cycleTime (stat)
+  if augment.cycleTime and augment.cycleTime.rebase then
+    statModifiers.fireTime = statModifiers.fireTime or {
+      base = {}
+    }
+    statModifiers.fireTime.base.cycleTime = augment.cycleTime.rebase
+
+    -- prompt change
+    augment.fireTime = augment.fireTime or {}
+
+    -- to be REALLY safe,
+    augment.cycleTime = nil
+
   end
 
   -- Alter general Fire Rate
   if augment.fireTime then
-
     statModifiers.fireTime = statModifiers.fireTime or {
       base = {}
     }
-    for _, fireTimeStat in ipairs(groupStats.firetime) do
+    for _, fireTimeStat in ipairs(groupStats.fireTime) do
       statModifiers.fireTime.base[fireTimeStat] = baseStat(fireTimeStat)
     end
 
@@ -189,7 +207,6 @@ function apply(output, augment)
           statModifiers.fireTime.multiplicative, true))
     end
 
-    -- sb.logInfo(newOverchargeTime)
     newPrimaryAbility = sb.jsonMerge(newPrimaryAbility, {
       cockTime = newCockTime,
       cycleTime = newCycleTime,
@@ -212,8 +229,6 @@ function apply(output, augment)
 
   for stat, op in pairs(augment) do
 
-    sb.logInfo(string.format("Detected %s", stat))
-
     local restricted = isRestrictedStat[stat] or isRestrictedGroup[statGroup[stat] or "???"]
 
     -- individual stats
@@ -224,14 +239,11 @@ function apply(output, augment)
 
         -- can only rebase restricted stats
         if op.rebase then
-          sb.logInfo(string.format("Rebasing stat %s...", stat))
           statModifiers[stat] = statModifiers[stat] or {}
           statModifiers[stat].base = op.rebase
         end
 
         if not restricted then
-
-          sb.logInfo(string.format("Modifying stat %s...", stat))
           
           -- initialize statModifiers entry as necessary
           statModifiers[stat] = statModifiers[stat] or {base=baseStat(stat)}
@@ -265,7 +277,6 @@ function apply(output, augment)
         
         -- can only rebase restricted stats
         if op.rebase then
-          sb.logInfo(string.format("Rebasing group stat %s (%s)...", stat, statGroup[stat]))
           statModifiers[statGroup[stat]] = statModifiers[statGroup[stat]] or {
             base = {}
           }
@@ -274,8 +285,6 @@ function apply(output, augment)
 
         if not restricted then
           
-          sb.logInfo(string.format("Modifying group %s...", stat))
-
           -- initialize statModifiers entry as necessary
           statModifiers[statGroup[stat]] = statModifiers[statGroup[stat]] or {
             base = {}

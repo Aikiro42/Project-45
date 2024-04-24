@@ -41,7 +41,13 @@
         "rebase": 1
       },
       "fireTimeStat": {
+        "rebase": 0.01
+      },
+      "cycleTime": {
         "rebase": 0.1
+      },
+      "fireTime": {
+        "additive": 0.01
       }
     }
   },
