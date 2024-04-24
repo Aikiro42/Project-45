@@ -697,7 +697,7 @@ function build(directory, config, parameters, level, seed)
   -- set price
   -- should this be handled elsewhere?
   config.price = (config.price or 0) * root.evalFunction("itemLevelPriceMultiplier", currentLevel)
-  parameters.price = config.price -- needed for gunshop
+  parameters.price = config.price + (parameters.moddedPrice or 0) -- needed for gunshop
 
   return config, parameters
 end

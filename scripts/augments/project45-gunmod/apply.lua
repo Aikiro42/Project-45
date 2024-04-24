@@ -94,6 +94,7 @@ function apply(input)
   end
   local newModSlots = sb.jsonMerge({}, checker.modSlots) -- deep copy
   local passiveSlot = checker.augment.slot or "passive"
+  local priceAdd = config.getParameter("price", 0)
   if checker.augment.ability then
     --[[
         "ability": {
@@ -256,6 +257,7 @@ function apply(input)
     table.insert(newModSlots[checker.augment.slot], config.getParameter("inventoryIcon"))
   end
 
+  checker.output:setInstanceValue("moddedPrice", checker.output:instanceValue("moddedPrice", 0) + priceAdd)
   checker.output:setInstanceValue("modSlots", newModSlots)
   checker.output:setInstanceValue("upgradeCount", checker.output:instanceValue("upgradeCount", 0) + checker.augment.cost)
   checker.output:setInstanceValue("isModded", true)
