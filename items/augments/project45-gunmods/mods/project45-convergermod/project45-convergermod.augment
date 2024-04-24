@@ -12,7 +12,7 @@
   },
   "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-convergermod/project45-convergermodicon.png",
   "description" : "A muzzle implement that concentrates energy rays, but gives shots a bit more kick.",
-  "statInfo": "Recoil +0.5x\nProjectile Count: 1\nSpread: -0.99x",
+  "statInfo": "Recoil +10 deg.\nProjectile Count: 1\nSpread: -0.99x\nBase Damage +0.25",
   "shortdescription" : "Converger",
 
   "augment":{
@@ -27,7 +27,10 @@
         "multiplicative": -0.99
       },
       "recoilAmount": {
-        "multiplicative": 0.5
+        "additive": 10
+      },
+      "baseDamage": {
+        "additive": 0.25
       }
     },
     "gun": {
