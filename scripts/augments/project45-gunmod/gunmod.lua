@@ -16,7 +16,7 @@ function apply(output, augment)
     -- prepare tables to alter primary ability
     local oldPrimaryAbility = output.config.primaryAbility or {} -- retrieve old primary ability
     local newPrimaryAbility = input.parameters.primaryAbility or {} -- retrieve modified primary ability
-    oldPrimaryAbility = output:instanceValue("primaryAbility", {})
+    oldPrimaryAbility = sb.jsonMerge(oldPrimaryAbility, newPrimaryAbility)
 
     -- replace general primaryability parameters
     -- using json patch-esque operations

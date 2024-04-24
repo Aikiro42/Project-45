@@ -8,7 +8,6 @@ require "/scripts/project45/project45util.lua"
 function apply(output, augment)
 
   local input = output:descriptor()
-  local modInfo = output:instanceValue("project45GunModInfo")
 
   if augment then
 

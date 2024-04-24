@@ -15,7 +15,6 @@ function apply(output, augment)
 
   local conversion = augment
   local input = output:descriptor()
-  local modInfo = output:instanceValue("project45GunModInfo")
 
   -- local primaryAbility = sb.jsonMerge(output.config.primaryAbility or {}, input.parameters.primaryAbility or {})
   local primaryAbility = output:instanceValue("primaryAbility", {})

@@ -10,7 +10,6 @@ local convertermod_apply = apply
 function apply(output, augment)
 
   local input = output:descriptor()
-  local modInfo = output:instanceValue("project45GunModInfo")
 
   if augment then
 
