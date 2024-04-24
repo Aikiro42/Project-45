@@ -64,6 +64,8 @@ function apply(input)
   -- SECTION: APPLICATION
 
   local newModSlots = sb.jsonMerge({}, checker.modSlots) -- deep copy
+  local pureStatMod = true
+  local passiveSlot = "passive"
 
   if checker.augment.ability then
     --[[
@@ -77,6 +79,8 @@ function apply(input)
         --]]
     checker.output = applyAbilitymod(checker.output, checker.augment.ability)
     newModSlots.ability = {checker.augment.modName, config.getParameter("itemName")}
+    pureStatMod = false
+    passiveSlot = checker.augment.slot
   end
 
   if checker.augment.gun then
@@ -117,6 +121,8 @@ function apply(input)
         --]]
     checker.augment.gun.slot = checker.augment.slot -- needed for sprite
     checker.output = applyGunmod(checker.output, checker.augment.gun)
+    pureStatMod = false
+    passiveSlot = checker.augment.slot
   end
 
   if checker.augment.conversion and checker.conversionNecessary then
@@ -128,6 +134,8 @@ function apply(input)
       newModSlots.ammoType = {checker.augment.modName, config.getParameter("itemName"),
       config.getParameter("tooltipFields", {}).objectImage or config.getParameter("inventoryIcon")}  
     end
+    pureStatMod = false
+    passiveSlot = checker.augment.slot
   end
 
   if checker.augment.ammo then
@@ -164,6 +172,8 @@ function apply(input)
       config.getParameter("itemName"),
       config.getParameter("tooltipFields", {}).objectImage or config.getParameter("inventoryIcon")
     }
+    pureStatMod = false
+    passiveSlot = checker.augment.slot
   end
 
   if checker.augment.passive then
@@ -177,7 +187,10 @@ function apply(input)
     }
     --]]
     checker.output = applyPassivemod(checker.output, checker.augment.passive)
-    newModSlots.passive = {checker.augment.modName, config.getParameter("itemName")}
+    if not newModSlots[passiveSlot] then
+      newModSlots[passiveSlot] = {checker.augment.modName, config.getParameter("itemName")}
+    end
+    pureStatMod = false
   end
 
   if checker.augment.stat then
@@ -197,7 +210,7 @@ function apply(input)
     checker.output = applyStatmod(checker.output, checker.augment.stat)
 
     -- count stat if not wildcard
-    if not checker.augment.pureStatMod then
+    if pureStatMod then
       if not checker.augment.stat.randomStats then
         checker.statList[config.getParameter("itemName")] = (checker.statList[config.getParameter("itemName")] or 0) + 1
       else

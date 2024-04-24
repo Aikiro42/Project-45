@@ -37,15 +37,6 @@ function Checker:new(input, augmentConfig)
   -- validate category
   self.augment.category = self.augment.category or "universal"
 
-  -- validate stat mod tracker
-  if self.augment.stat then
-    self.augment.pureStatMod = not self.augment.ability and true
-    self.augment.pureStatMod = not self.augment.gun and true
-    self.augment.pureStatMod = not self.augment.conversion and true
-    self.augment.pureStatMod = not self.augment.ammo and true
-    self.augment.pureStatMod = not self.augment.passive and true
-  end
-
   -- conversion and projectileKind must be equal
   local conversion = self.augment.conversion
   local projectileKind = (self.augment.ammo or {}).projectileKind
@@ -180,13 +171,16 @@ function Checker:check()
     end
   end
 
-  self.checked = true
+  if self.checked == nil then
+    self.checked = true
+  else
+    self.checked = self.checked and true
+  end
 
   return self.checked
 
 end
 
--- TODO:
 function Checker:checkAbility()
   if self.modSlots.ability then
     self:addError(string.format("Ability slot occupied"))
@@ -272,12 +266,6 @@ function Checker:checkAmmo()
 end
 
 function Checker:checkPassive()
-
-  if self.modSlots.ammoType then
-    self:addError(string.format("Passive slot occupied"))
-    self.checked = false
-    return false
-  end
 
   -- Deny installation if passive script is already established
   if self.modSlots.passive or self.output:instanceValue("primaryAbility", {}).passiveScript then

@@ -23,7 +23,7 @@ function apply(output, augment)
 
     -- Establish Passive Parameters
     if augment.passiveParameters then
-      newPrimaryAbility = sb.jsonMerge(newPrimaryAbility, augment.passiveParameters)
+      newPrimaryAbility = sb.jsonMerge(newPrimaryAbility, {passiveParameters = augment.passiveParameters})
     end
     newPrimaryAbility = sb.jsonMerge(newPrimaryAbility, {
       overrideShiftAction = augment.overrideShiftAction,
