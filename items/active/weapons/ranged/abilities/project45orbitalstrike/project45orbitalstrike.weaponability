@@ -1,6 +1,15 @@
 {
   "animationCustom": {
     "animatedParts": {
+      "stateTypes": {
+        "project45orbitalstrike" : {
+          "default" : "cooldown",
+          "states" : {
+            "cooldown" : {},
+            "ready" : {}
+          }
+        }
+      },
       "parts": {
         "rail": {
           "properties": {
@@ -15,8 +24,22 @@
             "zLevel": 6,
             "centered": true,
             "transformationGroups": ["weapon"],
-            "fullbright": true,
-            "image": "/items/active/weapons/ranged/abilities/project45orbitalstrike/project45orbitalstrikefullbright.png<directives>"
+            "fullbright": true
+          },
+          "partStates": {
+            "project45orbitalstrike" : {
+
+              "cooldown" : {
+                "properties" : {
+                  "image" : ""
+                }
+              },
+              "ready" : {
+                "properties" : {
+                  "image": "/items/active/weapons/ranged/abilities/project45orbitalstrike/project45orbitalstrikefullbright.png<directives>"
+                }
+              }
+            }
           }
         }
       }
@@ -24,10 +47,13 @@
 
     "sounds": {
       "ping": ["/sfx/interface/sniper_mark_pitch1.ogg"],
-      "lockPing": ["/sfx/objects/redalert2.ogg"],
+      "lockPing": ["/sfx/interface/rocket_lockon.ogg"],
+      "ready" : [ "/sfx/interface/nav_panning_loop.ogg" ],
+      "loading": [ "/sfx/interface/nav_scanning_single.ogg" ],
 
       // https://freesound.org/people/KIZILSUNGUR/sounds/70299/
-      "locked": ["/sfx/project45neosfx/sonar.ogg"]
+      "locked": ["/sfx/project45neosfx/sonar.ogg"],
+      "error": ["/sfx/interface/clickon_error.ogg"]
     }
   },
 
@@ -42,6 +68,9 @@
       "/items/active/weapons/ranged/abilities/project45orbitalstrike/project45orbitalstrike.lua"
     ],
     "class": "Project45OrbitalStrike",
+
+    "cooldownTime": 10,
+    "energyCost": 200,
 
     // range that the strike hits
     "orbitalRadius": 20,
