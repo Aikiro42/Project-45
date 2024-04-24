@@ -15,7 +15,7 @@ function apply(output, augment)
     -- alter or set ability type if present
     if augment.altAbilityType and output:instanceValue("altAbilityType") ~= augment.altAbilityType then
 
-      output:setInstanceValue("altAbilityType", augment.ability.altAbilityType)
+      output:setInstanceValue("altAbilityType", augment.altAbilityType)
 
       if augment.overrideTwoHanded then
         output:setInstanceValue("twoHanded", augment.twoHanded)

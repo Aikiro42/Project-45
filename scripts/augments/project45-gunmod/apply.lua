@@ -3,13 +3,13 @@ require "/scripts/util.lua"
 require "/scripts/vec2.lua"
 require "/scripts/set.lua"
 require "/scripts/project45/project45util.lua"
+require "/scripts/augments/project45-gunmod/check.lua"
 
 require "/scripts/augments/project45-gunmod/gunmod.lua"
 applyGunmod = apply
 
 require "/scripts/augments/project45-gunmod/abilitymod.lua"
 applyAbilitymod = apply
-
 
 require "/scripts/augments/project45-gunmod/convertermod.lua"
 applyConversion = apply
@@ -32,22 +32,35 @@ function apply(input)
   -- SECTION: CHECKS
   checker:check()
 
-  if checker.augment.ability then
+  if checker.augment.ability and checker.checked then
     checker:checkAbility()
+    sb.logInfo("abilityChecked")
   end
-  if checker.augment.conversion then
+  if checker.augment.conversion and checker.checked then
     checker:checkConversion()
+    sb.logInfo("conversion")
+
   end
-  if checker.augment.ammo then
+  if checker.augment.ammo and checker.checked then
     checker:checkAmmo()
+    sb.logInfo("ammo")
+
   end
-  if checker.augment.stat then
+  if checker.augment.passive and checker.checked then
+    checker:checkPassive()
+    sb.logInfo("passive")
+
+  end
+
+  if checker.augment.stat and checker.checked then
     checker:checkStat()
+    sb.logInfo("stat")
+
   end
+
   if not checker.checked then
     return checker:getErrorOutputItem(), 0
   end
-
   -- SECTION: APPLICATION
 
   local newModSlots = sb.jsonMerge({}, checker.modSlots) -- deep copy
@@ -102,6 +115,7 @@ function apply(input)
             "enableAmmoArchetypes": string[]
         }
         --]]
+    checker.augment.gun.slot = checker.augment.slot -- needed for sprite
     checker.output = applyGunmod(checker.output, checker.augment.gun)
   end
 
@@ -145,8 +159,11 @@ function apply(input)
     }
     --]]
     checker.output = applyAmmomod(checker.output, checker.augment.ammo)
-    newModSlots.ammoType = {checker.augment.modName, config.getParameter("itemName"),
-    config.getParameter("tooltipFields", {}).objectImage or config.getParameter("inventoryIcon")}
+    newModSlots.ammoType = {
+      checker.augment.modName,
+      config.getParameter("itemName"),
+      config.getParameter("tooltipFields", {}).objectImage or config.getParameter("inventoryIcon")
+    }
   end
 
   if checker.augment.passive then
@@ -176,23 +193,28 @@ function apply(input)
       ...
     }
     --]]
-
+    
     checker.output = applyStatmod(checker.output, checker.augment.stat)
 
     -- count stat if not wildcard
-    if not checker.augment.stat.randomStats then
-      checker.statList[config.getParameter("itemName")] = (checker.statList[config.getParameter("itemName")] or 0) + 1
-    else
-      local retrievedSeed = config.getParameter("seed")
-      table.insert(checker.statList.wildcards, retrievedSeed)
+    if not checker.augment.pureStatMod then
+      if not checker.augment.stat.randomStats then
+        checker.statList[config.getParameter("itemName")] = (checker.statList[config.getParameter("itemName")] or 0) + 1
+      else
+        local retrievedSeed = config.getParameter("seed")
+        table.insert(checker.statList.wildcards, retrievedSeed)
+      end
+      checker.output:setInstanceValue("statList", checker.statList)
     end
-    checker.output:setInstanceValue("statList", checker.statList)
   end
 
   -- MODIFICATION POST-MORTEM
   -- add mod info to list of installed mods
 
-  newModSlots[checker.augment.slot] = {checker.augment.modName, config.getParameter("itemName")}
+  -- if modslot is occupied then somewhere along the line it's already been tracked
+  if not newModSlots[checker.augment.slot] then
+    newModSlots[checker.augment.slot] = {checker.augment.modName, config.getParameter("itemName")}
+  end
 
   local needImage = set.new({"rail", "sights", "underbarrel", "muzzle", "stock"})
   if needImage[checker.augment.slot] then
@@ -200,7 +222,7 @@ function apply(input)
   end
 
   checker.output:setInstanceValue("modSlots", newModSlots)
-  checker.output:setInstanceValue("upgradeCount", checker.output:instanceValue("upgradeCount", 0) + self.augment.cost)
+  checker.output:setInstanceValue("upgradeCount", checker.output:instanceValue("upgradeCount", 0) + checker.augment.cost)
   checker.output:setInstanceValue("isModded", true)
 
   return checker.output:descriptor(), 1

@@ -18,7 +18,7 @@
     "conversion": "hitscan"
   },
    
-  "scripts" : [ "/scripts/augments/project45-gunmod/convertermod.lua" ],
+  "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
   
   "technicalInfo": "Affects damage per shot.\nMay be rejected by some weapons.",
   "archetype": "Converter",

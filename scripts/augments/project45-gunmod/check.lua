@@ -2,41 +2,70 @@ require "/scripts/augments/item.lua"
 require "/scripts/set.lua"
 require "/scripts/util.lua"
 
+function print(...)
+  sb.logInfo(...)
+end
+function json(...)
+  return sb.printJson(...)
+end
+
 Checker = {}
 
 function Checker:new(input, augmentConfig)
   self.input = input
   self.output = Item.new(input)
+
+  self.output.primaryAbility = sb.jsonMerge(self.output.config.primaryAbility, self.output.parameters.primaryAbility or {})
+
   self.modSlots = self.output:instanceValue("modSlots", {})
   self.config = augmentConfig
-  self.modInfo = self.output:instanceValue("project45GunModInfo")
-  self.augment = self.config.getParameter("augment")
-
-  self.augment.cost = self.augment.cost or 0
-
+  self.modInfo = sb.jsonMerge(self.output.config.project45GunModInfo, self.output:instanceValue("project45GunModInfo"))  
+  
   self.statList = self.output:instanceValue("statList", {nil})
   self.statList.wildcards = self.statList.wildcards or {}
 
+  self.augment = self.config.getParameter("augment")
+
+  -- SECTION: VALIDATIONS
+  
+  -- validate modName
+  self.augment.modName = self.augment.modName or self.config.getParameter("shortdescription")
+
+  -- validate cost
+  self.augment.cost = self.augment.cost or 0
+
+  -- validate category
+  self.augment.category = self.augment.category or "universal"
+
+  -- validate stat mod tracker
+  if self.augment.stat then
+    self.augment.pureStatMod = not self.augment.ability and true
+    self.augment.pureStatMod = not self.augment.gun and true
+    self.augment.pureStatMod = not self.augment.conversion and true
+    self.augment.pureStatMod = not self.augment.ammo and true
+    self.augment.pureStatMod = not self.augment.passive and true
+  end
+
   -- conversion and projectileKind must be equal
-  if not self.augment.conversion and (self.augment.ammo or {}).projectileKind then
-    self.augment.conversion = self.augment.ammo.projectileKind
-  elseif self.augment.ammo and not self.augment.ammo.projectileKind and self.augment.conversion then
-    self.augment.ammo.projectileKind = self.augment.conversion
-  elseif self.augment.conversion == (self.augment.ammo or {}).projectileKind then
-    self.logError("Conversion and ammo projectileKind are NOT equal")
-    self.checked = false
+  local conversion = self.augment.conversion
+  local projectileKind = (self.augment.ammo or {}).projectileKind
+
+  if projectileKind and not conversion then
+    self.augment.conversion = projectileKind
+  elseif conversion and (self.augment.ammo and not projectileKind) then
+    self.augment.ammo.projectileKind = conversion
   end
 
   -- validate augment slot
   if not self.augment.slot then
     if self.augment.gun then self.augment.slot = "unknown"
     elseif self.augment.ability then self.augment.slot = "ability"
-    elseif self.augment.conversion or self.augment.ammo then self.augment.slot = "ammo"
+    elseif self.augment.conversion or self.augment.ammo then self.augment.slot = "ammoType"
     elseif self.augment.passive then self.augment.slot = "passive"
     else self.augment.slot = "stat" end
   end
   
-  
+  return self
 end
 
 function Checker:addError(error)
@@ -72,6 +101,7 @@ function Checker:check()
 
   -- Bad weapon if modInfo absent
   local modInfo = self.modInfo
+
   if not modInfo then
     self:addError('Missing "project45GunModInfo" field on weapon')
     self.checked = false
@@ -87,11 +117,12 @@ function Checker:check()
   end
 
   -- Bad if weapon does not accept mod slot
-  local acceptsModSlot = modInfo.acceptsModSlot or {}
+  local acceptsModSlot = set.new(modInfo.acceptsModSlot or {})
   set.insert(acceptsModSlot, "ability")
   set.insert(acceptsModSlot, "passive")
   set.insert(acceptsModSlot, "intrinsic")
   set.insert(acceptsModSlot, "stat")
+  set.insert(acceptsModSlot, "ammoType")
   if not acceptsModSlot[augment.slot] then
     self:addError(string.format("Weapon does not accept %s mods", augment.slot))
     self.checked = false
@@ -102,23 +133,6 @@ function Checker:check()
   if modSlots[augment.slot] then
     -- modSlots["stat"] should ALWAYS return false
     self:addError(string.format("%s slot occupied", augment.slot))
-    self.checked = false
-  end
-
-  -- Bad weapon if relevant slots are occupied
-  if (augment.ability and modSlots.ability) or (augment.passive and modSlots.passive) or
-      ((augment.ammo or augment.conversion) and modSlots.ammoType) then
-    local occupiedSlot = ""
-    if modSlots.ability then
-      occupiedSlot = occupiedSlot + ", ability"
-    end
-    if modSlots.passive then
-      occupiedSlot = occupiedSlot + ", passive"
-    end
-    if modSlots.ammoType then
-      occupiedSlot = occupiedSlot + ", ammoType"
-    end
-    self:addError(string.format("%s slot occupied", occupiedSlot))
     self.checked = false
   end
 
@@ -166,7 +180,7 @@ function Checker:check()
     end
   end
 
-  self.checked = self.checked and true
+  self.checked = true
 
   return self.checked
 
@@ -174,19 +188,43 @@ end
 
 -- TODO:
 function Checker:checkAbility()
+  if self.modSlots.ability then
+    self:addError(string.format("Ability slot occupied"))
+    self.checked = false
+    return false
+  end
+
+  if self.output:instanceValue("altAbility")
+  or self.output:instanceValue("altAbilityType")
+  then
+    self:addError(string.format("Weapon has ability"))
+    self.checked = false
+    return false
+  end
+
+  self.checked = self.checked and true
+  return true
 end
+
 function Checker:checkConversion()
 
+  if self.modSlots.ammoType then
+    self:addError(string.format("Ammo slot occupied"))
+    self.checked = false
+    return false
+  end
+
   -- Check if conversion is necessary
-  local projectileKind = self.output:instanceValue("primaryAbility", {}).projectileKind
-  self.conversionNecessary = projectileKind and projectileKind ~= self.augment.conversion
-  if not (self.augment.conversion or self.conversionNecessary) then
+  self.conversionNecessary = self.output.primaryAbility.projectileKind ~= self.augment.conversion
+  print(json(self.augment.ammo or self.conversionNecessary, 1))
+  if self.augment.ammo and not self.conversionNecessary then
     self.checked = self.checked and true
     return true
   end
 
   -- Bad if conversion is to same type
-  if self.output:instanceValue("primaryAbility", {}).projectileKind == self.augment.conversion then
+  local projectileKind = self.output.config.primaryAbility.projectileKind 
+  if projectileKind == self.augment.conversion then
     self:addError(string.format("Weapon already fires %s", self.augment.conversion))
     self.checked = false
     return false
@@ -213,6 +251,13 @@ function Checker:checkConversion()
 end
 
 function Checker:checkAmmo()
+
+  if self.modSlots.ammoType then
+    self:addError(string.format("Ammo slot occupied"))
+    self.checked = false
+    return false
+  end
+
   if not self.compatible then
     local acceptedArchetype = set.new(self.modInfo.acceptsAmmoArchetype)
     if self.augment.ammo.archetype ~= "universal" and not acceptedArchetype["universal"] and
@@ -227,6 +272,12 @@ function Checker:checkAmmo()
 end
 
 function Checker:checkPassive()
+
+  if self.modSlots.ammoType then
+    self:addError(string.format("Passive slot occupied"))
+    self.checked = false
+    return false
+  end
 
   -- Deny installation if passive script is already established
   if self.modSlots.passive or self.output:instanceValue("primaryAbility", {}).passiveScript then

@@ -15,7 +15,7 @@ function apply(output, augment)
   end
 
   local statModifiers = output:instanceValue("statModifiers", {})
-  
+
   local statConfig = root.assetJson("/configs/project45/project45_statmod.config")
 
   local newPrimaryAbility = {}
@@ -30,8 +30,7 @@ function apply(output, augment)
   local isIntegerStat = set.new(statConfig.integerStats or {})
   local isBadStat = set.new(statConfig.badStat or {})
   local isStatGroup = set.new(statConfig.statGroups or {})
-  
-  
+
   -- stat properties
   local statGroup = statConfig.statGroupAssignments or {}
   local statBounds = statConfig.statBounds or {}
@@ -96,7 +95,7 @@ function apply(output, augment)
       base = {}
     }
     statModifiers.fireTime.base.fireTimeStat = augment.fireTimeStat.rebase
-    
+
     -- to be REALLY safe,
     augment.fireTimeStat = nil
   end
@@ -212,58 +211,43 @@ function apply(output, augment)
   -- SECTION: GENERAL CHANGES
 
   for stat, op in pairs(augment) do
-    
+
+    sb.logInfo(string.format("Detected %s", stat))
+
+    local restricted = isRestrictedStat[stat] or isRestrictedGroup[statGroup[stat] or "???"]
+
     -- individual stats
-    if statList[stat] and not isStatGroup[stat] then
+    if statList[stat] then
 
-      local restricted = isRestrictedStat[stat] or isRestrictedGroup[statGroup[stat] or "???"]
-      
-      -- can only rebase restricted stats
-      if op.rebase then
-        if statGroup[stat] then
-          statModifiers[statGroup[stat]] = statModifiers[statGroup[stat]] or {base={}}
-          statModifiers[statGroup[stat]].base[stat] = op.rebase
-        else
-          statModifiers[stat] = statModifiers[stat] or {base=op.rebase}
+      if not isStatGroup[stat] -- not a group name
+      and not statGroup[stat] then -- is individual stat
+
+        -- can only rebase restricted stats
+        if op.rebase then
+          sb.logInfo(string.format("Rebasing stat %s...", stat))
+          statModifiers[stat] = statModifiers[stat] or {}
+          statModifiers[stat].base = op.rebase
         end
-      end
-      
-      if not restricted then
-      
-        -- initialize statModifier entry
-        if statGroup[stat] then
-          statModifiers[statGroup[stat]] = statModifiers[statGroup[stat]] or {base={}}
-          for _, groupStat in ipairs(groupStats[statGroup[stat]]) do
-            statModifiers[statGroup[stat]].base[groupStat] = baseStat(groupStat)
-          end
-        else
+
+        if not restricted then
+
+          sb.logInfo(string.format("Modifying stat %s...", stat))
+          
+          -- initialize statModifiers entry as necessary
           statModifiers[stat] = statModifiers[stat] or {base=baseStat(stat)}
-        end
-      
-        -- initialize mod table
-        local mod = {}
-        
-        -- update modifiers
-        if op.additive then
-          statModifiers[statGroup[stat] or stat].additive = (statModifiers[statGroup[stat] or stat].additive or 0) + op.additive
-        end        
-        if op.multiplicative then
-          statModifiers[statGroup[stat] or stat].multiplicative = (statModifiers[statGroup[stat] or stat].multiplicative or 1) + op.multiplicative
-        end
 
-        -- calculate values
-        if statGroup[stat] then
-          for baseStat, baseValue in pairs(statModifiers[statGroup[stat]].base) do
-            mod[baseStat] = moddedStat(
-              baseValue,
-              statModifiers[statGroup[stat]].additive,
-              statModifiers[statGroup[stat]].multiplicative,
-              isBadStat[baseStat],
-              isIntegerStat[baseStat],
-              statBounds[baseStat]
-            )
+          -- initialize mod table
+          local mod = {}
+
+          -- update modifiers
+          if op.additive then
+            statModifiers[stat].additive = (statModifiers[stat].additive or 0) + op.additive
           end
-        else
+
+          if op.multiplicative then
+            statModifiers[stat].multiplicative = (statModifiers[stat].multiplicative or 1) + op.multiplicative
+          end
+
           mod[stat] = moddedStat(
             statModifiers[stat].base,
             statModifiers[stat].additive,
@@ -272,14 +256,59 @@ function apply(output, augment)
             isIntegerStat[stat],
             statBounds[stat]
           )
+          -- apply values
+          newPrimaryAbility = sb.jsonMerge(newPrimaryAbility, mod)
+
         end
 
-        -- apply values
-        newPrimaryAbility = sb.jsonMerge(newPrimaryAbility, mod)
- 
+      elseif statGroup[stat] then
+        
+        -- can only rebase restricted stats
+        if op.rebase then
+          sb.logInfo(string.format("Rebasing group stat %s (%s)...", stat, statGroup[stat]))
+          statModifiers[statGroup[stat]] = statModifiers[statGroup[stat]] or {
+            base = {}
+          }
+          statModifiers[statGroup[stat]].base[stat] = op.rebase
+        end
+
+        if not restricted then
+          
+          sb.logInfo(string.format("Modifying group %s...", stat))
+
+          -- initialize statModifiers entry as necessary
+          statModifiers[statGroup[stat]] = statModifiers[statGroup[stat]] or {
+            base = {}
+          }
+          for _, groupStat in ipairs(groupStats[statGroup[stat]]) do
+            statModifiers[statGroup[stat]].base[groupStat] = baseStat(groupStat)
+          end
+
+
+          local mod = {}
+
+          -- update modifiers
+          if op.additive then
+            statModifiers[statGroup[stat]].additive =
+                (statModifiers[statGroup[stat]].additive or 0) + op.additive
+          end
+
+          if op.multiplicative then
+            statModifiers[statGroup[stat]].multiplicative =
+                (statModifiers[statGroup[stat]].multiplicative or 1) + op.multiplicative
+          end
+
+          for baseStat, baseValue in pairs(statModifiers[statGroup[stat]].base) do
+            mod[baseStat] = moddedStat(baseValue, statModifiers[statGroup[stat]].additive,
+                statModifiers[statGroup[stat]].multiplicative, isBadStat[baseStat], isIntegerStat[baseStat],
+                statBounds[baseStat])
+          end
+
+          newPrimaryAbility = sb.jsonMerge(newPrimaryAbility, mod)
+
+        end
+
       end
-    elseif isStatGroup[stat] then
-      
     end
 
   end
@@ -319,7 +348,7 @@ function moddedStat(base, additive, multiplicative, isDiv, isInt, bounds)
   if isInt then
     return math.ceil(result)
   end
-  
+
   return result
 
 end
