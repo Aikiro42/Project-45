@@ -26,6 +26,7 @@ function Project45GunFire:init()
   for _, f in ipairs({
     "init",
     "update",
+    "uninit",
     "onFire",
     "onEject",
     "onFeed",
@@ -482,6 +483,7 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
 end
 
 function Project45GunFire:uninit()
+  self:uninitPassive()
   self:saveGunState()
   activeItem.setScriptedAnimationParameter("beamLine", nil)
   activeItem.setScriptedAnimationParameter("projectileStack", nil)

@@ -1,5 +1,5 @@
 {
-  "itemName" : "project45-weightmod",
+  "itemName" : "project45-aegisaltmod",
   "price" : 3000,
   "rarity" : "Uncommon",
   "tooltipKind" : "project45gunmod2",
@@ -8,17 +8,24 @@
   "itemTags": ["weapon"],
   "tooltipFields":{
     "subtitle": "Gun Mod",
-    "objectImage": "/items/augments/project45-gunmods/mods/project45-weightmod/project45-weightmod.png"
+    "objectImage": "/items/augments/project45-gunmods/mods/project45-aegisaltmod/project45-aegisaltmod.png"
   },
-  "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-weightmod/project45-weightmodicon.png",
+  "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-aegisaltmod/project45-aegisaltmodicon.png",
   "description" : "Replacement parts made from a lightweight alloy.",
   "statInfo": "Heavy: Removes mobility penalties.\nMobility +0.15x",
-  "shortdescription" : "^#d93a3a;(!)^reset; Aegisalt Alloy Parts",
+  "shortdescription" : "Aegisalt Alloy Parts",
 
   "augment":{
-    "modName": "^#d93a3a;(!)^reset; Aegisalt Alloy Parts",
+    "modName": "Aegisalt Alloy Parts",
     "category": "universal",
     "slot": "material",
+    "passive": {
+      "passiveScript" : "/items/augments/project45-gunmods/mods/project45-aegisaltmod/project45-aegisaltmod.lua",
+      "passiveParameters": {
+        "validArmor": []
+      },
+      "passiveDescription": "Accelerator armor increases damage by 10% a piece."
+    },
     "stat": {
       "movementSpeedFactor": {
         "multiplicative": 0.15
