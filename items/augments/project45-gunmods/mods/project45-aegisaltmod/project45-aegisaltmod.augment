@@ -12,6 +12,7 @@
   },
   "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-aegisaltmod/project45-aegisaltmodicon.png",
   "description" : "Replacement parts made from a lightweight alloy.",
+  "technicalInfo": "Base Damage +0.05x per Accelerator Armor.",
   "statInfo": "Heavy: Removes mobility penalties.\nMobility +0.15x",
   "shortdescription" : "Aegisalt Alloy Parts",
 
@@ -22,9 +23,10 @@
     "passive": {
       "passiveScript" : "/items/augments/project45-gunmods/mods/project45-aegisaltmod/project45-aegisaltmod.lua",
       "passiveParameters": {
-        "validArmor": []
+        "validArmor": [],  // Automatically generataed
+        "pieceDamage": 0.05
       },
-      "passiveDescription": "Accelerator armor increases damage by 10% a piece."
+      "passiveDescription": "Base Damage +0.05x per Accelerator Armor."
     },
     "stat": {
       "movementSpeedFactor": {
