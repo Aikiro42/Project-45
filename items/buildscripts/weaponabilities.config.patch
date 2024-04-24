@@ -36,6 +36,11 @@
     },
     {
         "op": "add",
+        "path": "/project45orbitalstrike",
+        "value": "/items/active/weapons/ranged/abilities/project45orbitalstrike/project45orbitalstrike.weaponability"
+    },
+    {
+        "op": "add",
         "path": "/project45mlgnoscope",
         "value": "/items/active/weapons/ranged/abilities/project45mlgnoscope/project45mlgnoscope.weaponability"
     },
