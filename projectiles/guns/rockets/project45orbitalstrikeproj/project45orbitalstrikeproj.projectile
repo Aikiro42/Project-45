@@ -1,0 +1,34 @@
+{
+  "projectileName" : "project45orbitalstrikeproj",
+  "image" : "project45orbitalstrikeproj.png",
+  "scripts": ["/projectiles/guns/rockets/project45orbitalstrikeproj/project45orbitalstrikeproj.lua"],
+  "animationCycle" : 1,
+  "timeToLive" : 10,
+  "frameNumber" : 1,
+  "speed" : 150,
+  "orientationLocked" : true,
+  "damagePoly" : [ [-46, -5], [-46, 5], [46, 5], [46, -5] ],
+  "animationLoops" : true,
+  "piercing" : true,
+  "movementSettings": {
+    "collisionEnabled": false
+  },
+  "ignoreTerrain": true,
+  "bounces" : -1,
+  "flippable" : true,
+  "damageKind" : "broadsword",
+  "emitters" : [ ],
+  "fullbright" : false,
+  "statusEffects" : [],
+  "knockback" : 10,
+  "knockbackDirectional" : true,
+  "persistentAudio" : "/sfx/project45neosfx/chargedrone/chargedrone-03.ogg",
+  "actionOnReap" : [
+    {
+      "action" : "config",
+      "file" : "/projectiles/guns/rockets/project45orbitalstrikeproj/project45orbitalstrikeproj.config"
+    }
+  ],
+  "damageTeam" : { "type" : "indiscriminate" }
+
+}
