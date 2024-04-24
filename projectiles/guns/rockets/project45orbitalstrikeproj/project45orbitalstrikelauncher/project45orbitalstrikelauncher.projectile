@@ -1,0 +1,13 @@
+{
+  "projectileName" : "project45orbitalstrikelauncher",
+  "image" : "project45orbitalstrikelauncher.png",
+  "scripts": ["/projectiles/guns/rockets/project45orbitalstrikeproj/project45orbitalstrikelauncher/project45orbitalstrikelauncher.lua"],
+  "frameNumber" : 1,
+  "speed" : 0,
+  "timeToLive": 3,
+  "damagePoly" : [ [-1, 1], [-1, -1], [1, -1], [1, 1]],
+  "animationLoops" : false,
+  "flippable" : true,
+  "damageTeam" : { "type" : "indiscriminate" },
+  "damageKind" : "default"
+}

@@ -1,0 +1,64 @@
+{
+  "animationCustom": {
+    "animatedParts": {
+      "parts": {
+        "rail": {
+          "properties": {
+            "zLevel": 5,
+            "centered": true,
+            "transformationGroups": ["weapon"],
+            "image": "/items/active/weapons/ranged/abilities/project45orbitalstrike/project45orbitalstrike.png<directives>"
+          }
+        },
+        "railFullbright": {
+          "properties": {
+            "zLevel": 6,
+            "centered": true,
+            "transformationGroups": ["weapon"],
+            "fullbright": true,
+            "image": "/items/active/weapons/ranged/abilities/project45orbitalstrike/project45orbitalstrikefullbright.png<directives>"
+          }
+        }
+      }
+    },
+
+    "sounds": {
+      "ping": ["/sfx/interface/sniper_mark_pitch1.ogg"],
+      "lockPing": ["/sfx/objects/redalert2.ogg"],
+
+      // https://freesound.org/people/KIZILSUNGUR/sounds/70299/
+      "locked": ["/sfx/project45neosfx/sonar.ogg"]
+    }
+  },
+
+  "animationScripts": [
+    "/items/active/weapons/ranged/abilities/project45orbitalstrike/project45orbitalstrikeanimation.lua"
+  ],
+
+  "ability": {
+    "name": "Orbital Strike",
+    "type": "project45orbitalstrike",
+    "scripts": [
+      "/items/active/weapons/ranged/abilities/project45orbitalstrike/project45orbitalstrike.lua"
+    ],
+    "class": "Project45OrbitalStrike",
+
+    // range that the strike hits
+    "orbitalRadius": 20,
+    
+    "strikeHeight": 50,
+    // time to lock on in seconds
+    "lockOnTime": 1,
+    
+    "launcherCount": 5,
+    "launcherTimeToLive": 3,
+    "launcherFireTime": 0.5,
+
+    "projectileType": "project45orbitalstrikeproj",
+    "projectileParameters": {},
+    "deviation": 1, // deviation in degrees
+
+    "dummy": false
+
+  }
+}
