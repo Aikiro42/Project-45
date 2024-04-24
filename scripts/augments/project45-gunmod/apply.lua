@@ -63,10 +63,36 @@ function apply(input)
   end
   -- SECTION: APPLICATION
 
-  local newModSlots = sb.jsonMerge({}, checker.modSlots) -- deep copy
-  local pureStatMod = true
-  local passiveSlot = "passive"
+  --[[
+  "augment": {
+    "modName": string (optional),
+    "incompatibleWeapons": string[] (optional),
+    "compatibleWeapons": string[] (optional),
+    "exclusiveCompatibility": bool (optional),
+    "category": "universal" | "ballistic" | "energy" | "experimental"
+    "slot": string,
+    "cost": int,
+    "pureStatMod": bool (optional), // dictates how the mod is logged; invalidates all mod fields but "stat" if true
 
+
+    // all fields optional
+    "ability": {json},
+    "gun": {json},
+    "conversion": string,
+    "ammo": {json},
+    "passive": {json}
+    "stat": {json}
+  }
+  --]]
+  if checker.augment.pureStatMod then
+    checker.augment.ability = nil
+    checker.augment.gun = nil
+    checker.augment.conversion = nil
+    checker.augment.ammo = nil
+    checker.augment.passive = nil
+  end
+  local newModSlots = sb.jsonMerge({}, checker.modSlots) -- deep copy
+  local passiveSlot = checker.augment.slot or "passive"
   if checker.augment.ability then
     --[[
         "ability": {
@@ -79,7 +105,6 @@ function apply(input)
         --]]
     checker.output = applyAbilitymod(checker.output, checker.augment.ability)
     newModSlots.ability = {checker.augment.modName, config.getParameter("itemName")}
-    pureStatMod = false
     passiveSlot = checker.augment.slot
   end
 
@@ -121,7 +146,6 @@ function apply(input)
         --]]
     checker.augment.gun.slot = checker.augment.slot -- needed for sprite
     checker.output = applyGunmod(checker.output, checker.augment.gun)
-    pureStatMod = false
     passiveSlot = checker.augment.slot
   end
 
@@ -134,7 +158,6 @@ function apply(input)
       newModSlots.ammoType = {checker.augment.modName, config.getParameter("itemName"),
       config.getParameter("tooltipFields", {}).objectImage or config.getParameter("inventoryIcon")}  
     end
-    pureStatMod = false
     passiveSlot = checker.augment.slot
   end
 
@@ -172,7 +195,6 @@ function apply(input)
       config.getParameter("itemName"),
       config.getParameter("tooltipFields", {}).objectImage or config.getParameter("inventoryIcon")
     }
-    pureStatMod = false
     passiveSlot = checker.augment.slot
   end
 
@@ -190,7 +212,6 @@ function apply(input)
     if not newModSlots[passiveSlot] then
       newModSlots[passiveSlot] = {checker.augment.modName, config.getParameter("itemName")}
     end
-    pureStatMod = false
   end
 
   if checker.augment.stat then
@@ -210,7 +231,7 @@ function apply(input)
     checker.output = applyStatmod(checker.output, checker.augment.stat)
 
     -- count stat if not wildcard
-    if pureStatMod then
+    if checker.augment.pureStatMod then
       if not checker.augment.stat.randomStats then
         checker.statList[config.getParameter("itemName")] = (checker.statList[config.getParameter("itemName")] or 0) + 1
       else

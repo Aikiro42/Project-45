@@ -16,7 +16,9 @@
   "archetype": "Additive",
   "shortdescription" : "^#D93A3A;Crit Chance (+)",
 
-  "augment":{"stat":{
+  "augment":{
+    "pureStatMod": true,
+    "stat":{
     "critChance": {
       "additive": 0.05
     }

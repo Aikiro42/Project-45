@@ -30,6 +30,7 @@
     "acceptsModSlot": [
       "stock",
       "sights",
+      "magazine",
 
       "material"
     ],

@@ -20,6 +20,8 @@
 
   "augment":{
     "cost": 0,
+    "pureStatMod": true,
+    
     "stat": {
       "level": 10
     }

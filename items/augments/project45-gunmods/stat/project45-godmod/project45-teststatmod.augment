@@ -17,6 +17,8 @@
 
   "augment":{
     "cost": 5,
+    "pureStatMod": true,
+    
     "baseDamage": {
       "additive": 1,
       "multiplicative": 1

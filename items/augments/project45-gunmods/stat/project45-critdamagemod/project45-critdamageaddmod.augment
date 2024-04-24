@@ -16,7 +16,9 @@
   "archetype": "Additive",
   "shortdescription" : "^#D93A3A;Crit Damage (+)",
 
-  "augment":{"stat":{
+  "augment":{
+    "pureStatMod": true,
+    "stat":{
     "critDamageMult": {
       "additive": 0.1
     }

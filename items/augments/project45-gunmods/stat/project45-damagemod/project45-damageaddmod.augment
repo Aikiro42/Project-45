@@ -17,6 +17,8 @@
   "archetype": "Additive",
   "augment":{
     "cost": 1,
+    "pureStatMod": true,
+    
     "stat":{
       "baseDamage": {
         "additive": 0.2

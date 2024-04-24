@@ -17,6 +17,8 @@
   "shortdescription" : "^#E2C344;Fire Time (*)",
   "augment":{
     "cost": 2,
+    "pureStatMod": true,
+    
     "stat": {
       "fireTime": {
         "multiplicative": 0.2

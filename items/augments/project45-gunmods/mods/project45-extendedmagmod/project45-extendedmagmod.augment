@@ -19,6 +19,10 @@
     "modName": "Extended Magazines",
     "category": "ballistic",
     "slot": "magazine",
+    "incompatibleWeapons": [
+      "project45-neo-sawedoff",
+      "project45-neo-doublebarrel"
+    ],
     "stat": {
       "maxAmmo": {
         "multiplicative": 1

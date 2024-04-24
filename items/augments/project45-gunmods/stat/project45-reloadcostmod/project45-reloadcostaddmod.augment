@@ -18,6 +18,8 @@
 
   "augment":{
     "cost": 1,
+    "pureStatMod": true,
+    
     "stat": {
       "reloadCost": {
         "additive": -3

@@ -28,7 +28,8 @@
       "shotgun"
     ],
     "acceptsModSlot": [      
-      "material"
+      "material",
+      "magazine"
     ],
     "flipSlot": [
     ]

@@ -18,6 +18,8 @@
 
   "augment":{
     "cost": 2,
+    "pureStatMod": true,
+    
     "stat":{
       "critChance": {
         "multiplicative": 0.5

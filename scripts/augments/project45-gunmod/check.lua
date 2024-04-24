@@ -161,7 +161,7 @@ function Checker:check()
   if not compatible then
     -- Bad if mod has exclusive compatibility and is incompatible with weapon
     if augment.exclusiveCompatibility then
-      self:addError(string.format("Weapon incompatible with mod"))
+      self:addError(string.format("Mod incompatible with weapon"))
       self.checked = false
 
       -- Bad if non-universal mod and weapon don't share the same category
