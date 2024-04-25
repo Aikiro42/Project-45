@@ -1814,7 +1814,10 @@ function Project45GunFire:evalProjectileKind()
     self.hitscanParameters.hitscanColor = self.hitscanParameters.hitscanColor or self.muzzleFlashColor
   elseif self.projectileKind == "beam" then
     self.muzzleProjectileFired = false
-    self.firing = hitscanLib.fireBeam
+    self.firing = self.beamParameters.chain and hitscanLib.fireChainBeam or hitscanLib.fireBeam
+    if self.beamParameters.chain then
+      self.chainScan = hitscanLib.chainScan
+    end
     self.updateProjectileStack = hitscanLib.updateProjectileStack
     self.beamParameters.beamColor = self.muzzleFlashColor
     activeItem.setScriptedAnimationParameter("beamColor", self.muzzleFlashColor)

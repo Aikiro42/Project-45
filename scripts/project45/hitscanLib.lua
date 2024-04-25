@@ -7,6 +7,218 @@ hitscanLib = {}
 
 local modConfig = root.assetJson("/configs/project45/project45_generalconfig.config")
 
+function hitscanLib:fireChainBeam()
+  if world.lineTileCollision(mcontroller.position(), self:firePosition()) then return end
+
+  self:startFireLoop()
+  if storage.ammo > 0 then
+    self:recoil(false, 0.1)
+    self:screenShake(self.currentScreenShake * 4)
+  end
+
+  animator.setAnimationState("gun", "firingLoop")
+
+  local beamDamageConfig = sb.jsonMerge(self.beamParameters.beamDamageConfig)
+
+  local recoilTimer = 0
+  local beamTimeout = self.currentCycleTime
+  local ammoConsumeTimer = beamTimeout
+  local consumedAmmo = false
+
+  local originalStatusEffects = sb.jsonMerge(beamDamageConfig.statusEffects)
+
+  local debug_punchthrough = 3
+  local chainScanResults, chain, hitEntityIds, chainWorldLines, chainDamageAreas
+  
+  -- loop to maintain beam fire
+  while ((self.chargeTime + self.overchargeTime <= 0 or not self.semi)
+  and self:triggering()
+  or (
+    not self:triggering()
+    and self.chargeTimer > 0
+    and self.semi
+  ))
+  and (not self.beamParameters.consumeAmmoOverTime or storage.ammo > 0)
+  and not world.lineTileCollision(mcontroller.position(), self:firePosition())
+  do
+
+    self.isFiring = true
+    -- TODO: make parameters dymamic
+    chainScanResults = self:chainScan(100, false, debug_punchthrough, false)
+    chain = chainScanResults[1]
+    hitEntityIds = chainScanResults[2]
+    chainWorldLines = {}
+    chainDamageAreas = {}
+    for i=2, #chain do
+      table.insert(chainWorldLines, {chain[i-1], chain[i]})
+      table.insert(chainDamageAreas, 
+        {
+          vec2.sub(chain[i-1], mcontroller.position()),
+          vec2.sub(chain[i], mcontroller.position())
+        }
+      )
+    end  
+
+    if ammoConsumeTimer >= beamTimeout then
+
+      if self:jam() then break end
+      
+      ammoConsumeTimer = 0
+      if self.beamParameters.consumeAmmoOverTime or not consumedAmmo then
+        self:updateAmmo(-self.ammoPerShot)
+        storage.unejectedCasings = storage.unejectedCasings + math.min(storage.ammo, self.ammoPerShot)
+        consumedAmmo = true
+      end
+
+      -- update charge damage multiplier
+      if self.overchargeTime > 0 then
+        self.chargeDamageMult = 1 + (self.chargeTimer - self.chargeTime)/self.overchargeTime
+      end
+
+      -- update base damage accordingly
+      local multishot = self.projectileCount * self:rollMultishot()
+      beamDamageConfig.baseDamage = self:damagePerShot(true) * multishot
+    
+      if self.critFlag then
+        if self.enableMuzzleCritParticles then
+          animator.burstParticleEmitter("muzzleCrit")
+        end
+        beamDamageConfig.statusEffects = sb.jsonMerge(beamDamageConfig.statusEffects, { "project45critdamaged" })
+        self.critFlag = false
+      else
+        beamDamageConfig.statusEffects = sb.jsonMerge(originalStatusEffects)
+      end
+      -- generate damage source lines
+      -- coordinates are based off mcontroller position
+      self.weapon.ownerDamageWasSet = true
+      self.weapon.ownerDamageCleared = false
+      local finalDamageSources = {}
+      for _, chainDamageArea in ipairs(chainDamageAreas) do
+        table.insert(finalDamageSources, self.weapon:damageSource(beamDamageConfig, chainDamageArea))
+      end
+      activeItem.setDamageSources(finalDamageSources)
+
+    else
+      self.weapon:setDamage()
+    end
+
+    -- VFX
+
+    self:muzzleFlash(true)
+    
+    recoilTimer = recoilTimer + self.dt
+    if recoilTimer >= 0.1 then
+      self:screenShake(self.currentScreenShake, 0.01)
+      recoilTimer = 0
+    end
+    self:recoil(false, self.recoilMult * 0.1)
+
+    --vfx
+
+    local life = self.hitscanParameters.hitscanFadeTime or 0.5
+    for _, chainLine in ipairs(chainWorldLines) do
+      local fuzz = (0.5 + 0.5 * math.random())
+      local innerFuzz = (0.5 + 0.5 * math.random())
+      table.insert(self.projectileStack, {
+        width = self.beamParameters.beamWidth * fuzz,
+        origin = chainLine[1],
+        destination = chainLine[2],
+        lifetime = life,
+        maxLifetime = life,
+        color = self.beamParameters.beamColor
+      })
+
+      if self.beamParameters.beamInnerWidth > 0 then
+        table.insert(self.projectileStack, {
+          width = self.beamParameters.beamInnerWidth * innerFuzz,
+          origin = chainLine[1],
+          destination = chainLine[2],
+          lifetime = life,
+          maxLifetime = life,
+          color = {255,255,255}
+        })
+      end   
+    end
+
+    -- hitscan vfx
+    local hitscanActionsOnReap = {
+      {
+        action="loop",
+        count=6,
+        body={
+          {
+            action="particle",
+            specification={
+              type="ember",
+              size=1,
+              color=self.beamParameters.beamColor or {255, 255, 200, 255},
+              light=self.beamParameters.beamColor or {65, 65, 51},
+              fullbright=true,
+              destructionTime=0.2,
+              destructionAction="shrink",
+              fade=0.9,
+              initialVelocity={0, 5},
+              finalVelocity={0, -50},
+              approach={0, 30},
+              timeToLive=0,
+              layer="middle",
+              variance={
+                position={0.25, 0.25},
+                size=0.5,
+                initialVelocity={10, 10},
+                timeToLive=0.2
+              }
+            }
+          }
+        }
+      }
+    }
+
+    for k=2, #chain do
+      world.spawnProjectile(
+        "invisibleprojectile",
+        chain[k],
+        activeItem.ownerEntityId(),
+        {0, 1},
+        false,
+        {
+          damageType = "NoDamage",
+          power = 0,
+          timeToLive = 0,
+          actionOnReap = hitscanActionsOnReap
+        }
+      )
+    end
+
+    ammoConsumeTimer = ammoConsumeTimer + self.dt
+
+    coroutine.yield()
+  end
+
+  self:stopFireLoop()
+
+  self.isFiring = false
+  self.muzzleProjectileFired = false
+
+  hitreg = self:hitscan(true)
+  beamEnd = hitreg[2]
+  animator.setAnimationState("gun", "firing")
+
+  activeItem.setScriptedAnimationParameter("beamLine", nil)
+  
+  if not self.alwaysMaintainCharge and self.resetChargeOnFire then self.chargeTimer = 0 end
+  
+  if self.beamParameters.ejectCasingsOnBeamEnd then
+    self:setState(self.ejecting)
+  else
+    if storage.ammo <= 0 then
+      self.triggered = true
+      animator.setAnimationState("chamber", "filled")
+    end
+  end
+  
+end
+
 function hitscanLib:fireChain()
   -- TODO: make chainScan arguments dynamic
   local debug_punchthrough = 3
@@ -65,6 +277,8 @@ function hitscanLib:fireChain()
     end
     activeItem.setDamageSources(finalDamageSources)
   
+    --vfx
+
     local life = self.hitscanParameters.hitscanFadeTime or 0.5
     for _, chainScanInfo in ipairs(chainScanInfos) do
       
@@ -123,6 +337,7 @@ function hitscanLib:fireChain()
       }
     }
 
+    -- actionsOnHit
     for i, a in ipairs(self.hitscanParameters.hitscanActionOnHit) do
       table.insert(hitscanActionsOnReap, a)
     end
