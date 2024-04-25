@@ -1,10 +1,203 @@
 require "/scripts/util.lua"
 require "/scripts/interp.lua"
 require "/scripts/poly.lua"
+require "/scripts/set.lua"
 
 hitscanLib = {}
 
 local modConfig = root.assetJson("/configs/project45/project45_generalconfig.config")
+
+function hitscanLib:fireChain()
+  -- TODO: make chainScan arguments dynamic
+  local debug_punchthrough = 3
+  local chainScanResults = self:chainScan(100, false, debug_punchthrough, false)
+  local chain = chainScanResults[1]
+  local hitEntityIds = chainScanResults[2]
+  -- chain projectiles only fire one chain
+  local nProjs = self.projectileCount * self:rollMultishot()
+  local finalDamage = self:damagePerShot(true) * nProjs
+
+  local chainScanInfos = {}
+  
+  -- get damage source (line) information
+  for i=2, #chain do
+
+      local damageArea = {
+        vec2.sub(chain[i-1], mcontroller.position()),
+        vec2.sub(chain[i], mcontroller.position())
+      }
+
+      local hitEntityId = hitEntityIds[i-1]
+      
+      local damageConfig = {
+        -- multiply nProjsOverflowMult to final damage to compensate for lost multishot
+        baseDamage = finalDamage,
+        timeout = self.currentCycleTime,
+      }
+      damageConfig = sb.jsonMerge(damageConfig, self.hitscanParameters.hitscanDamageConfig or {})
+      if self.critFlag then 
+        if self.enableMuzzleCritParticles then
+          animator.burstParticleEmitter("muzzleCrit")
+        end
+        damageConfig.statusEffects = sb.jsonMerge(damageConfig.statusEffects, {"project45critdamaged"})
+        self.critFlag = false
+      end
+      damageConfig.timeoutGroup = "project45projectile" .. i
+
+      table.insert(chainScanInfos, {
+          damageConfig,
+          damageArea,
+          {chain[i-1], chain[i], hitEntityId},
+          finalDamage
+        }
+      )
+
+    end
+    --]]
+
+    -- generate damage source lines
+    -- coordinates are based off mcontroller position
+    self.weapon.ownerDamageWasSet = true
+    self.weapon.ownerDamageCleared = false
+    local finalDamageSources = {}
+    for _, chainScanInfo in ipairs(chainScanInfos) do
+      table.insert(finalDamageSources, self.weapon:damageSource(chainScanInfo[1], chainScanInfo[2]))
+    end
+    activeItem.setDamageSources(finalDamageSources)
+  
+    local life = self.hitscanParameters.hitscanFadeTime or 0.5
+    for _, chainScanInfo in ipairs(chainScanInfos) do
+      
+      table.insert(self.projectileStack, {
+        width = self.hitscanParameters.hitscanWidth,
+        origin = chainScanInfo[3][1],
+        destination = chainScanInfo[3][2],
+        lifetime = life,
+        maxLifetime = life,
+        color = self.hitscanParameters.hitscanColor
+      })
+
+      if self.hitscanParameters.hitscanBrightness > 0 then
+        table.insert(self.projectileStack, {
+          width = self.hitscanParameters.hitscanWidth * self.hitscanParameters.hitscanBrightness,
+          origin = chainScanInfo[3][1],
+          destination = chainScanInfo[3][2],
+          lifetime = life,
+          maxLifetime = life,
+          color = {255,255,255}
+        })
+      end   
+    end
+
+    -- hitscan vfx
+    local hitscanActionsOnReap = {
+      {
+        action="loop",
+        count=6,
+        body={
+          {
+            action="particle",
+            specification={
+              type="ember",
+              size=1,
+              color=self.hitscanParameters.hitscanColor or {255, 255, 200, 255},
+              light={65, 65, 51},
+              fullbright=true,
+              destructionTime=0.2,
+              destructionAction="shrink",
+              fade=0.9,
+              initialVelocity={0, 5},
+              finalVelocity={0, -50},
+              approach={0, 30},
+              timeToLive=0,
+              layer="middle",
+              variance={
+                position={0.25, 0.25},
+                size=0.5,
+                initialVelocity={10, 10},
+                timeToLive=0.2
+              }
+            }
+          }
+        }
+      }
+    }
+
+    for i, a in ipairs(self.hitscanParameters.hitscanActionOnHit) do
+      table.insert(hitscanActionsOnReap, a)
+    end
+    
+    for _, chainScanInfo in ipairs(chainScanInfos) do
+      world.spawnProjectile(
+        "invisibleprojectile",
+        chainScanInfo[3][2],
+        activeItem.ownerEntityId(),
+        self:aimVector(3.14),
+        false,
+        {
+          damageType = "NoDamage",
+          power = chainScanInfo[4],
+          timeToLive = 0,
+          actionOnReap = hitscanActionsOnReap
+        }
+      )
+    end
+
+end
+
+function hitscanLib:chainScan(scanLength, ignoresTerrain, punchThrough, scanUntilCursor)
+    local firstHit = self:hitscan(true, 0, scanLength, ignoresTerrain, 0, scanUntilCursor, 0, self:firePosition(), true)
+    local chainScanLengthLimit = scanLength / 2
+    local chain = {firstHit[1], firstHit[2]}
+    local firstHitEntityIds = firstHit[3]
+    
+    if #firstHitEntityIds <= 0 then
+      return {chain, {}}
+    end
+    
+    local chainEntityIds = {firstHitEntityIds[1]}
+    local alreadyHit = set.new(chainEntityIds)
+
+    for i=1, punchThrough do
+
+      local nextEntityIdCandidates = world.entityQuery(chain[#chain], scanLength, {
+        withoutEntityId = entity.id(),
+        includedTypes = {"monster", "npc", "player"},
+        order = "nearest"
+      })
+
+      if #nextEntityIdCandidates < 2 then break end
+
+      local nextEntityId = nil
+      for j=1, #nextEntityIdCandidates do
+        if not alreadyHit[nextEntityIdCandidates[j]] then
+          nextEntityId = nextEntityIdCandidates[j]
+          break
+        end
+      end
+      
+      if not nextEntityId then break end
+      
+      local nextPosition = world.entityPosition(nextEntityId)
+
+      chainScanLengthLimit = chainScanLengthLimit - world.magnitude(chain[#chain], nextPosition)
+      sb.logInfo(chainScanLengthLimit)
+      if chainScanLengthLimit <= 0 then break end
+
+      table.insert(chainEntityIds, nextEntityId)
+      alreadyHit[nextEntityId] = true
+      table.insert(chain, nextPosition)
+      
+    end
+
+    if #chain - 1 ~= #chainEntityIds then
+      sb.logError("ERROR: CHAIN DOES NOT CORRESPOND TO HIT ENTITIES")
+      makeJesusTakeWheel()
+    end
+
+    return {chain, chainEntityIds}
+
+end
 
 -- replaces fireProjectile
 function hitscanLib:fireHitscan(projectileType)
@@ -363,79 +556,88 @@ function hitscanLib:fireBeam()
 end
 
 -- Utility function that scans for an entity to damage.
-function hitscanLib:hitscan(isLaser, degAdd)
+-- @return {hitscan_line_origin, hitscan_line_destination, entity_id[]}
+function hitscanLib:hitscan(isLaser, degAdd, scanLength, ignoresTerrain, punchThrough, scanUntilCursor, spread, hitscanLineOrigin, chain)
 
-  local scanLength, ignoresTerrain, punchThrough
-
+  -- initialize hitscan parameters
   if self.projectileKind ~= "projectile" then
-    scanLength = self[self.projectileKind .. "Parameters"].range or 100
-    ignoresTerrain = self[self.projectileKind .. "Parameters"].ignoresTerrain
-    
-    punchThrough = self[self.projectileKind .. "Parameters"].punchThrough
+
+    scanLength = scanLength or self[self.projectileKind .. "Parameters"].range or 100
     
     if self.chargeTime + self.overchargeTime > 0
     and self.chargeTimer >= self.chargeTime + self.overchargeTime
     then
-      punchThrough = self[self.projectileKind .. "Parameters"].fullChargePunchThrough
-      ignoresTerrain = self[self.projectileKind .. "Parameters"].ignoresTerrainOnFullCharge
+      punchThrough = punchThrough or self[self.projectileKind .. "Parameters"].fullChargePunchThrough or 0
+      ignoresTerrain = ignoresTerrain ~= nil and ignoresTerrain or self[self.projectileKind .. "Parameters"].ignoresTerrainOnFullCharge
+    else
+      punchThrough = punchThrough or self[self.projectileKind .. "Parameters"].punchThrough or 0
+      ignoresTerrain = ignoresTerrain ~= nil and ignoresTerrain or self[self.projectileKind .. "Parameters"].ignoresTerrain
     end
 
   else
-    scanLength = self.laser.range or 100
-    ignoresTerrain = false
-    punchThrough = 0
+
+    scanLength = scanLength or 100
+    punchThrough = punchThrough or 0
 
   end
 
-  local scanOrig = self:firePosition()
-  if self.laser.renderUntilCursor then
-    scanLength = math.min(world.magnitude(scanOrig, activeItem.ownerAimPosition()), scanLength)
+  -- if chain is truthy i.e. the hitscan is for the initial hit of a chain, then punchthrough is set to 0
+  punchThrough = chain and 0 or punchThrough
+
+  -- establish origin and scan length
+  hitscanLineOrigin = hitscanLineOrigin or self:firePosition()
+  if scanUntilCursor then
+    scanLength = math.min(world.magnitude(hitscanLineOrigin, activeItem.ownerAimPosition()), scanLength)
   end
 
-  local scanDest = vec2.add(scanOrig, vec2.mul(self:aimVector(isLaser and 0 or self.spread, degAdd or 0), scanLength))
-  local fullScanDest = not ignoresTerrain and world.lineCollision(scanOrig, scanDest, {"Block", "Dynamic"}) or scanDest
+  -- using scan length and origin, determine hitscan endpoint
+  local hitscanLineDestination = vec2.add(hitscanLineOrigin, vec2.mul(self:aimVector(spread or self.spread or 0, degAdd or 0), scanLength))
+  local fullHitscanLineDestination = not ignoresTerrain and world.lineCollision(hitscanLineOrigin, hitscanLineDestination, {"Block", "Dynamic"}) or hitscanLineDestination
+  -- chain: {"targeted" | "spread" | nil}
 
-  punchThrough = punchThrough or 0
-
-  -- hitreg
-  local hitId = world.entityLineQuery(scanOrig, fullScanDest, {
+  local hitEntityIds
+  hitEntityIds = world.entityLineQuery(hitscanLineOrigin, fullHitscanLineDestination, {
     withoutEntityId = entity.id(),
     includedTypes = {"monster", "npc", "player"},
     order = "nearest"
   })
 
-  local eid = {}
+  local damagedEntityIds = {}
   local penetrated = 0
-
+  
   -- if entities are hit,
-  if #hitId > 0 then
-    -- for each entity hti
-    for i, id in ipairs(hitId) do
+  if #hitEntityIds > 0 then
+    -- for each entity hit
+    for i, id in ipairs(hitEntityIds) do
       if world.entityCanDamage(entity.id(), id)
       and world.entityDamageTeam(id) ~= "ghostly" -- prevents from hitting those annoying floaty things
       then
-        -- let scan destination be location of entity and correct it
-        local aimAngle = vec2.angle(world.distance(scanDest, scanOrig))
-        local entityAngle = vec2.angle(world.distance(world.entityPosition(id), scanOrig))
-        local rotation = aimAngle - entityAngle
-        
-        scanDest = vec2.rotate(world.distance(world.entityPosition(id), scanOrig), rotation)
-        scanDest = vec2.add(scanDest, scanOrig)
+        -- let hitscan line destination be location of entity
+        if chain then
+          hitscanLineDestination = world.entityPosition(id)
+          table.insert(damagedEntityIds, id)
+        else
 
-        table.insert(eid, id)
+          -- if regular hitscan, correct the destination
+          local aimAngle = vec2.angle(world.distance(hitscanLineDestination, hitscanLineOrigin))
+          local entityAngle = vec2.angle(world.distance(world.entityPosition(id), hitscanLineOrigin))
+          local rotation = aimAngle - entityAngle
+          
+          hitscanLineDestination = vec2.rotate(world.distance(world.entityPosition(id), hitscanLineOrigin), rotation)
+          hitscanLineDestination = vec2.add(hitscanLineDestination, hitscanLineOrigin)
 
+          table.insert(damagedEntityIds, id)
+
+        end
         penetrated = penetrated + 1
-
         if penetrated > (punchThrough) then break end
       end
     end
   end
 
-  if penetrated <= punchThrough then scanDest = fullScanDest end
-  
-  -- world.debugLine(scanOrig, scanDest, {255,0,255})
+  if penetrated <= punchThrough then hitscanLineDestination = fullHitscanLineDestination end
 
-  return {scanOrig, scanDest, eid}
+  return {hitscanLineOrigin, hitscanLineDestination, damagedEntityIds}
 end
 
 function hitscanLib:updateLaser()
@@ -445,7 +647,15 @@ function hitscanLib:updateLaser()
     return
   end
   if not self:muzzleObstructed() then
-    local laser = self:hitscan(true)
+    local laser = self:hitscan(
+      true,
+      nil,
+      self.laser.range,
+      nil,
+      nil,
+      self.laser.renderUntilCursor,
+      0
+    )
     activeItem.setScriptedAnimationParameter("primaryLaserEnabled", not self.performanceMode)
     activeItem.setScriptedAnimationParameter("primaryLaserStart", laser[1])
     activeItem.setScriptedAnimationParameter("primaryLaserEnd", laser[2])
