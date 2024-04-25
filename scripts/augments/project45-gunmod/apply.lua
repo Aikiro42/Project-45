@@ -34,28 +34,19 @@ function apply(input)
 
   if checker.augment.ability and checker.checked then
     checker:checkAbility()
-    sb.logInfo("abilityChecked")
   end
   if checker.augment.conversion and checker.checked then
     checker:checkConversion()
-    sb.logInfo("conversion")
-
   end
   if checker.augment.ammo and checker.checked then
     checker:checkAmmo()
-    sb.logInfo("ammo")
-
   end
   if checker.augment.passive and checker.checked then
     checker:checkPassive()
-    sb.logInfo("passive")
-
   end
-
-  if checker.augment.stat and checker.checked then
+  if (checker.augment.conversion or checker.augment.stat) and checker.checked then
+    -- Conversion mods may bring about stat rebases
     checker:checkStat()
-    sb.logInfo("stat")
-
   end
 
   if not checker.checked then
@@ -155,7 +146,13 @@ function apply(input)
     --[[
     "conversion": string
     --]]
-    checker.output = applyConversion(checker.output, checker.augment.conversion)
+    local conversionStatAugment = {}
+    checker.output, conversionStatAugment = applyConversion(checker.output, checker.augment.conversion)
+    
+    if conversionStatAugment then
+      checker.augment.stat = sb.jsonMerge(conversionStatAugment, checker.augment.stat or {})
+    end
+
     if not checker.augment.ammo then
       newModSlots.ammoType = {checker.augment.modName, config.getParameter("itemName"),
       config.getParameter("tooltipFields", {}).objectImage or config.getParameter("inventoryIcon")}  

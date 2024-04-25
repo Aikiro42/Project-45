@@ -90,11 +90,18 @@ function apply(output, augment)
   end
 
   -- Alter fireTime (stat)
-  if augment.fireTimeStat and augment.fireTimeStat.rebase then
+  if augment.fireTimeStat then
     statModifiers.fireTime = statModifiers.fireTime or {
       base = {}
     }
-    statModifiers.fireTime.base.fireTime = augment.fireTimeStat.rebase
+    
+    if augment.fireTimeStat.rebase then
+      statModifiers.fireTime.base.fireTime = augment.fireTimeStat.rebase
+    end
+    
+    if augment.fireTimeStat.rebaseMult then
+      statModifiers.fireTime.base.fireTime = baseStat("fireTime") * augment.fireTimeStat.rebaseMult
+    end
 
     -- prompt change
     augment.fireTime = augment.fireTime or {}
@@ -105,11 +112,18 @@ function apply(output, augment)
   end
   
   -- Alter cycleTime (stat)
-  if augment.cycleTime and augment.cycleTime.rebase then
+  if augment.cycleTime then
     statModifiers.fireTime = statModifiers.fireTime or {
       base = {}
     }
-    statModifiers.fireTime.base.cycleTime = augment.cycleTime.rebase
+
+    if augment.cycleTime.rebase then
+      statModifiers.fireTime.base.cycleTime = augment.cycleTime.rebase
+    end
+
+    if augment.cycleTime.rebaseMult then
+      statModifiers.fireTime.base.cycleTime = baseStat("cycleTime") * augment.cycleTime.rebaseMult
+    end
 
     -- prompt change
     augment.fireTime = augment.fireTime or {}
@@ -237,11 +251,17 @@ function apply(output, augment)
       if not isStatGroup[stat] -- not a group name
       and not statGroup[stat] then -- is individual stat
 
+        statModifiers[stat] = statModifiers[stat] or {}
+
         -- can only rebase restricted stats
         if op.rebase then
-          statModifiers[stat] = statModifiers[stat] or {}
           statModifiers[stat].base = op.rebase
         end
+
+        if op.rebaseMult then
+          statModifiers[stat].base = baseStat(stat) * op.rebaseMult
+        end
+
 
         if not restricted then
           
@@ -281,6 +301,10 @@ function apply(output, augment)
             base = {}
           }
           statModifiers[statGroup[stat]].base[stat] = op.rebase
+        end
+
+        if op.rebaseMult then
+          statModifiers[statGroup[stat]].base[stat] = baseStat(stat) * op.rebaseMult
         end
 
         if not restricted then

@@ -33,6 +33,12 @@ function apply(output, augment)
                                   "hitscanParameters", "beamParameters", "summonedProjectileParameters",
                                   "hideMuzzleFlash", "hideMuzzleSmoke"}
     for _, v in ipairs(specificSettingsList) do
+      local hitscanParam = {hitscanParameters=1, beamParameters=1}
+      if hitscanParam[v] and augment[v] then
+        if augment[v].chain == nil then
+          augment[v].chain = newPrimaryAbility[v].chain
+        end
+      end
       newPrimaryAbility[v] = augment[v]
     end
 

@@ -20,6 +20,7 @@ function apply(output, augment)
   local primaryAbility = output:instanceValue("primaryAbility", {})
   local newPrimaryAbility = input.parameters.primaryAbility or {}
   local modSlots = input.parameters.modSlots or {}
+  local statAugment = {}
 
   -- CONVERSION PROCESS
 
@@ -48,10 +49,13 @@ function apply(output, augment)
 
   local conversionConfig = root.assetJson("/configs/project45/project45_conversionmod.config")
 
+  -- conversion to beam
   if conversion == "beam" then
 
     -- multiply by damageConversionFactor if converting to beam
-    newPrimaryAbility.baseDamage = (primaryAbility.baseDamage or 5) * conversionConfig.damageConversionFactor
+    statAugment.baseDamage = statAugment.baseDamage or {}
+    statAugment.baseDamage.rebaseMult = conversionConfig.damageConversionFactor
+    -- newPrimaryAbility.baseDamage = (primaryAbility.baseDamage or 5) * conversionConfig.damageConversionFactor
 
     -- change sounds reminiscent to that of generic beam
     construct(newAnimationCustom, "sounds")
@@ -60,33 +64,44 @@ function apply(output, augment)
     newAnimationCustom.sounds.fireLoop = defaultBeamSounds.fireLoop
     newAnimationCustom.sounds.fireEnd = defaultBeamSounds.fireEnd
 
+  -- conversion to anything BUT beam
   else
 
-    -- projectile-hitscan relationship
+    -- conversion from projectile to hitscan
     if oldProjectileKind == "projectile" and conversion == "hitscan" then
       -- multiply by damageConversionFactor from projectile to hitscan
-      newPrimaryAbility.baseDamage = (primaryAbility.baseDamage or 5) * conversionConfig.damageConversionFactor
+      -- newPrimaryAbility.baseDamage = (primaryAbility.baseDamage or 5) * conversionConfig.damageConversionFactor
+      statAugment.baseDamage = statAugment.baseDamage or {}
+      statAugment.baseDamage.rebaseMult = conversionConfig.damageConversionFactor
+    
+    -- conversion from hitscan/beam to projectile
     elseif (oldProjectileKind == "hitscan" or oldProjectileKind == "beam") and conversion == "projectile" then
       -- divide by damageConversionFactor from hitscan/beam to projectile
-      newPrimaryAbility.baseDamage = (primaryAbility.baseDamage or 5) / conversionConfig.damageConversionFactor
+      -- newPrimaryAbility.baseDamage = (primaryAbility.baseDamage or 5) / conversionConfig.damageConversionFactor
+      statAugment.baseDamage = statAugment.baseDamage or {}
+      statAugment.baseDamage.rebaseMult = 1 / conversionConfig.damageConversionFactor
     end
 
+    -- conversion to summoned
     if conversion == "summoned" then
-      newPrimaryAbility.baseDamage = (primaryAbility.baseDamage or 5) * conversionConfig.damageConversionFactor *
-                                         conversionConfig.summonedDamageMultiplier
+      statAugment.baseDamage = statAugment.baseDamage or {}
+      statAugment.baseDamage.rebaseMult = conversionConfig.damageConversionFactor * conversionConfig.summonedDamageMultiplier
+      -- newPrimaryAbility.baseDamage = (primaryAbility.baseDamage or 5) * conversionConfig.damageConversionFactor * conversionConfig.summonedDamageMultiplier
     end
 
+    -- conversion from sommunied
     if oldProjectileKind == "summoned" then
-      newPrimaryAbility.baseDamage = (primaryAbility.baseDamage or 5) /
-                                         (conversionConfig.damageConversionFactor *
-                                             conversionConfig.summonedDamageMultiplier)
+      statAugment.baseDamage = statAugment.baseDamage or {}
+      statAugment.baseDamage.rebaseMult = 1 / (conversionConfig.damageConversionFactor * conversionConfig.summonedDamageMultiplier)
+      -- newPrimaryAbility.baseDamage = (primaryAbility.baseDamage or 5) / (conversionConfig.damageConversionFactor * conversionConfig.summonedDamageMultiplier)
     end
 
-    -- widen spread if converting from beam
+    -- converting from beam; widen spread as this may be set to a negiligible value
     if oldProjectileKind == "beam" then
       construct(newPrimaryAbility, "beamParameters")
-      newPrimaryAbility.spread = (primaryAbility.beamParameters.beamWidth or 5) /
-                                     conversionConfig.projectileSpreadDividend
+      statAugment.spread = statAugment.spread or {}
+      statAugment.spread.rebaseMult = 1 / conversionConfig.projectileSpreadDividend
+      -- newPrimaryAbility.spread = (primaryAbility.beamParameters.beamWidth or 5) / conversionConfig.projectileSpreadDividend
     end
 
     -- SOUND CHANGES
@@ -120,5 +135,5 @@ function apply(output, augment)
   output:setInstanceValue("primaryAbility", newPrimaryAbility)
   output:setInstanceValue("animationCustom", newAnimationCustom)
 
-  return output
+  return output, statAugment
 end
