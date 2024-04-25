@@ -6,7 +6,7 @@
   "animation": "/items/active/weapons/ranged/abilities/project45gunfire/project45gunfire.animation",
 
   "ability" : {
-    "name" : "Reload",
+    "name" : "_Project45GunFire_",
     "type" : "project45gunfire",
     "scripts" : ["/items/active/weapons/ranged/abilities/project45gunfire/project45gunfire.lua"],
     "class" : "Project45GunFire",

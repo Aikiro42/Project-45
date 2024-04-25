@@ -51,6 +51,11 @@
     },
     {
         "op": "add",
+        "path": "/project45gunfireswitch",
+        "value": "/items/active/weapons/ranged/abilities/project45gunfireswitch/project45gunfireswitch.weaponability"
+    },
+    {
+        "op": "add",
         "path": "/project45tester",
         "value": "/items/active/weapons/ranged/abilities/project45tester/project45tester.weaponability"
     }
