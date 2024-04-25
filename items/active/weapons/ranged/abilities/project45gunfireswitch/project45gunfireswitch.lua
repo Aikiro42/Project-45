@@ -17,6 +17,7 @@ function Project45GunFireSwitch:init()
   -- initialize mode setting
   self.modeIndex = 0
   self.modes[0] = {}
+  self.nilParams = {nil}
   
 end
 
@@ -32,7 +33,11 @@ function Project45GunFireSwitch:update(dt, fireMode, shiftHeld)
     -- triggered; switch modes
     animator.playSound("click")
     self.modeIndex = (self.modeIndex + 1) % (#self.modes + 1)
-    self:switch(self.modes[self.modeIndex])
+    if self.modeIndex ~= 0 then
+      self:switch(self.modes[self.modeIndex])      
+    else
+      self:switch()
+    end
     self.triggered = true
   end
 
@@ -42,17 +47,21 @@ end
 function Project45GunFireSwitch:switch(altConfig)
   if not altConfig then
     util.mergeTable(self.weapon.abilities[self.abilityIndex], self.modes[0])
+    for _, nilParam in ipairs(self.nilParams) do
+      self.weapon.abilities[self.abilityIndex][nilParam] = nil
+    end
     return
   end
   
   for param, _ in pairs(altConfig) do
     if self.modes[0][param] == nil then
       local val = self.weapon.abilities[self.abilityIndex][param]
-      sb.logInfo(string.format("%s: %s", param, sb.print(val, 1)))
-      if type(val) == "table" then
+      if val == nil then
+        table.insert(self.nilParams, param)  
+      elseif type(val) == "table" then
         self.modes[0][param] = sb.jsonMerge({}, val)
       else
-        self.modes[0][param] = val or false -- nil is a falsy value
+        self.modes[0][param] = val
       end
     end
   end
