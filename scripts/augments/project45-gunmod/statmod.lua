@@ -62,9 +62,11 @@ function apply(output, augment)
       -- base stat not saved; retrieve from item
       if isConfigStat[stat] then -- retrieve strictly from config
         return (output.config.primaryAbility or {})[stat] or statList[stat]
+      else
+        local primaryAbility = sb.jsonMerge(output.config.primaryAbility or {}, output.parameters.primaryAbility or {})
+        -- retrieve from parameters or config
+        return primaryAbility[stat] or statList[stat]
       end
-      -- retrieve from parameters or config
-      return output:instanceValue("primaryAbility", {})[stat] or statList[stat]
     else
       -- base stat saved, retrieve it
       return savedBaseStat
@@ -251,7 +253,11 @@ function apply(output, augment)
       if not isStatGroup[stat] -- not a group name
       and not statGroup[stat] then -- is individual stat
 
-        statModifiers[stat] = statModifiers[stat] or {}
+        statModifiers[stat] = statModifiers[stat] or {
+            base = baseStat(stat),
+            additive = 0,
+            multiplicative = 1
+        }
 
         -- can only rebase restricted stats
         if op.rebase then
@@ -265,9 +271,6 @@ function apply(output, augment)
 
         if not restricted then
           
-          -- initialize statModifiers entry as necessary
-          statModifiers[stat] = statModifiers[stat] or {base=baseStat(stat)}
-
           -- initialize mod table
           local mod = {}
 
@@ -293,47 +296,46 @@ function apply(output, augment)
 
         end
 
-      elseif statGroup[stat] then
-        
-        -- can only rebase restricted stats
-        if op.rebase then
-          statModifiers[statGroup[stat]] = statModifiers[statGroup[stat]] or {
-            base = {}
-          }
-          statModifiers[statGroup[stat]].base[stat] = op.rebase
+      else
+
+        local group = isStatGroup[stat] and stat or statGroup[stat]
+
+        statModifiers[group] = statModifiers[group] or {
+          base = {},
+          additive = 0,
+          multiplicative = 1
+        }
+        for _, groupStat in ipairs(groupStats[group]) do
+          statModifiers[group].base[groupStat] = baseStat(groupStat)
         end
 
-        if op.rebaseMult then
-          statModifiers[statGroup[stat]].base[stat] = baseStat(stat) * op.rebaseMult
+        -- can only rebase restricted stats, or individual stats in a group
+        if op.rebase and not isStatGroup[stat] then
+          statModifiers[group].base[stat] = op.rebase
         end
 
-        if not restricted then
-          
-          -- initialize statModifiers entry as necessary
-          statModifiers[statGroup[stat]] = statModifiers[statGroup[stat]] or {
-            base = {}
-          }
-          for _, groupStat in ipairs(groupStats[statGroup[stat]]) do
-            statModifiers[statGroup[stat]].base[groupStat] = baseStat(groupStat)
-          end
+        if op.rebaseMult and not isStatGroup[stat] then
+          statModifiers[group].base[stat] = baseStat(stat) * op.rebaseMult
+        end
 
+        if not restricted and isStatGroup[stat] then
 
           local mod = {}
 
           -- update modifiers
           if op.additive then
-            statModifiers[statGroup[stat]].additive =
-                (statModifiers[statGroup[stat]].additive or 0) + op.additive
+            statModifiers[group].additive =
+                (statModifiers[group].additive or 0) + op.additive
           end
 
           if op.multiplicative then
-            statModifiers[statGroup[stat]].multiplicative =
-                (statModifiers[statGroup[stat]].multiplicative or 1) + op.multiplicative
+            statModifiers[group].multiplicative =
+                (statModifiers[group].multiplicative or 1) + op.multiplicative
           end
 
-          for baseStat, baseValue in pairs(statModifiers[statGroup[stat]].base) do
-            mod[baseStat] = moddedStat(baseValue, statModifiers[statGroup[stat]].additive,
-                statModifiers[statGroup[stat]].multiplicative, isBadStat[baseStat], isIntegerStat[baseStat],
+          for baseStat, baseValue in pairs(statModifiers[group].base) do
+            mod[baseStat] = moddedStat(baseValue, statModifiers[group].additive,
+                statModifiers[group].multiplicative, isBadStat[baseStat], isIntegerStat[baseStat],
                 statBounds[baseStat])
           end
 
