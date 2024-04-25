@@ -10,6 +10,17 @@ local modConfig = root.assetJson("/configs/project45/project45_generalconfig.con
 function hitscanLib:fireChainBeam()
   if world.lineTileCollision(mcontroller.position(), self:firePosition()) then return end
 
+  
+  local punchThrough = self.beamParameters.punchThrough or 0
+  local ignoresTerrain = self.beamParameters.ignoresTerrain
+
+  if self.chargeTime + self.overchargeTime > 0
+  and self.chargeTimer >= self.chargeTime + self.overchargeTime
+  then
+    punchThrough = self.beamParameters.fullChargePunchThrough or punchThrough
+    ignoresTerrain = self.beamParameters.ignoresTerrainOnFullCharge or ignoresTerrain
+  end
+
   self:startFireLoop()
   if storage.ammo > 0 then
     self:recoil(false, 0.1)
@@ -27,7 +38,6 @@ function hitscanLib:fireChainBeam()
 
   local originalStatusEffects = sb.jsonMerge(beamDamageConfig.statusEffects)
 
-  local debug_punchthrough = 3
   local chainScanResults, chain, hitEntityIds, chainWorldLines, chainDamageAreas
   
   -- loop to maintain beam fire
@@ -44,7 +54,7 @@ function hitscanLib:fireChainBeam()
 
     self.isFiring = true
     -- TODO: make parameters dymamic
-    chainScanResults = self:chainScan(100, false, debug_punchthrough, false)
+    chainScanResults = self:chainScan(self.beamParameters.range, ignoresTerrain, punchThrough, self.beamParameters.scanUntilCursor)
     chain = chainScanResults[1]
     hitEntityIds = chainScanResults[2]
     chainWorldLines = {}
@@ -200,8 +210,6 @@ function hitscanLib:fireChainBeam()
   self.isFiring = false
   self.muzzleProjectileFired = false
 
-  hitreg = self:hitscan(true)
-  beamEnd = hitreg[2]
   animator.setAnimationState("gun", "firing")
 
   activeItem.setScriptedAnimationParameter("beamLine", nil)
@@ -221,8 +229,18 @@ end
 
 function hitscanLib:fireChain()
   -- TODO: make chainScan arguments dynamic
-  local debug_punchthrough = 3
-  local chainScanResults = self:chainScan(100, false, debug_punchthrough, false)
+  
+  local punchThrough = self.hitscanParameters.punchThrough or 0
+  local ignoresTerrain = self.hitscanParameters.ignoresTerrain
+
+  if self.chargeTime + self.overchargeTime > 0
+  and self.chargeTimer >= self.chargeTime + self.overchargeTime
+  then
+    punchThrough = self.hitscanParameters.fullChargePunchThrough or punchThrough
+    ignoresTerrain = self.hitscanParameters.ignoresTerrainOnFullCharge or ignoresTerrain
+  end
+  
+  local chainScanResults = self:chainScan(self.hitscanParameters.range, ignoresTerrain, punchThrough, self.hitscanParameters.scanUntilCursor)
   local chain = chainScanResults[1]
   local hitEntityIds = chainScanResults[2]
   -- chain projectiles only fire one chain
@@ -421,6 +439,17 @@ function hitscanLib:fireHitscan(projectileType)
     -- hitreg[1] is where the bullet trail emanates,
     -- hitreg[2] is where the bullet trail terminates
 
+        
+    local punchThrough = self.hitscanParameters.punchThrough or 0
+    local ignoresTerrain = self.hitscanParameters.ignoresTerrain
+
+    if self.chargeTime + self.overchargeTime > 0
+    and self.chargeTimer >= self.chargeTime + self.overchargeTime
+    then
+      punchThrough = self.hitscanParameters.fullChargePunchThrough or punchThrough
+      ignoresTerrain = self.hitscanParameters.ignoresTerrainOnFullCharge or ignoresTerrain
+    end
+
     local hitscanInfos = {}
     local finalDamage = self:damagePerShot(true)
     local nProjs = self.projectileCount * self:rollMultishot()
@@ -428,7 +457,7 @@ function hitscanLib:fireHitscan(projectileType)
     -- get damage source (line) information
     for i=1, math.min(modConfig.hitscanProjectileLimit, nProjs) do
 
-      local hitReg = self:hitscan(false)
+      local hitReg = self:hitscan(false, nil, self.hitscanParameters.range, ignoresTerrain, punchThrough, self.hitscanParameters.scanUntilCursor)
       local damageArea = {
         vec2.sub(hitReg[1], mcontroller.position()),
         vec2.sub(hitReg[2], mcontroller.position())
@@ -577,7 +606,17 @@ end
 
 function hitscanLib:fireBeam()
     if world.lineTileCollision(mcontroller.position(), self:firePosition()) then return end
-  
+    
+    local punchThrough = self.beamParameters.punchThrough or 0
+    local ignoresTerrain = self.beamParameters.ignoresTerrain
+
+    if self.chargeTime + self.overchargeTime > 0
+    and self.chargeTimer >= self.chargeTime + self.overchargeTime
+    then
+      punchThrough = self.beamParameters.fullChargePunchThrough or punchThrough
+      ignoresTerrain = self.beamParameters.ignoresTerrainOnFullCharge or ignoresTerrain
+    end
+
     self:startFireLoop()
     if storage.ammo > 0 then
       self:recoil(false, 0.1)
@@ -613,7 +652,7 @@ function hitscanLib:fireBeam()
 
       self.isFiring = true
   
-      hitreg = self:hitscan(true)
+      hitreg = self:hitscan(true, nil, self.beamParameters.range, ignoresTerrain, punchThrough, self.beamParameters.scanUntilCursor)
       beamStart = hitreg[1]
       beamEnd = hitreg[2]
   
@@ -742,7 +781,7 @@ function hitscanLib:fireBeam()
     self.isFiring = false
     self.muzzleProjectileFired = false
 
-    hitreg = self:hitscan(true)
+    hitreg = self:hitscan(true, nil, self.beamParameters.range, ignoresTerrain, punchThrough, self.beamParameters.scanUntilCursor)
     beamEnd = hitreg[2]
 
     table.insert(self.projectileStack, {
@@ -775,26 +814,8 @@ end
 function hitscanLib:hitscan(isLaser, degAdd, scanLength, ignoresTerrain, punchThrough, scanUntilCursor, spread, hitscanLineOrigin, chain)
 
   -- initialize hitscan parameters
-  if self.projectileKind ~= "projectile" then
-
-    scanLength = scanLength or self[self.projectileKind .. "Parameters"].range or 100
-    
-    if self.chargeTime + self.overchargeTime > 0
-    and self.chargeTimer >= self.chargeTime + self.overchargeTime
-    then
-      punchThrough = punchThrough or self[self.projectileKind .. "Parameters"].fullChargePunchThrough or 0
-      ignoresTerrain = ignoresTerrain ~= nil and ignoresTerrain or self[self.projectileKind .. "Parameters"].ignoresTerrainOnFullCharge
-    else
-      punchThrough = punchThrough or self[self.projectileKind .. "Parameters"].punchThrough or 0
-      ignoresTerrain = ignoresTerrain ~= nil and ignoresTerrain or self[self.projectileKind .. "Parameters"].ignoresTerrain
-    end
-
-  else
-
-    scanLength = scanLength or 100
-    punchThrough = punchThrough or 0
-
-  end
+  scanLength = scanLength or 100
+  punchThrough = punchThrough or 0
 
   -- if chain is truthy i.e. the hitscan is for the initial hit of a chain, then punchthrough is set to 0
   punchThrough = chain and 0 or punchThrough
