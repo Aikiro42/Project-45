@@ -182,6 +182,7 @@
       // baseDamage is calculated by self:damagePerShot() * crit / activeItem.ownerPowerMultiplier()
       // but can be overridden; it's recommended that it shouldn't be overridden
       // "hitscanBrightness": 0, // % width of white line inside visual hitscan line, max 1 (equal width)
+      // "scanUntilCursor": false
       "hitscanDamageConfig": {
         "damageKind": "physical",
         "statusEffects": []
@@ -216,6 +217,7 @@
         "knockback" : 2,
         "timeout": 0.1
       },
+      // "scanUntilCursor": false
       
       // if true, consumes ammo over time.
       // Otherwise, will only consume ammo every time the beam starts
