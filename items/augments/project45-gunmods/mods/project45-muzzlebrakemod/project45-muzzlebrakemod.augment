@@ -28,7 +28,7 @@
       "sprite": {
         "zLevel": 5,
         "image": "/items/augments/project45-gunmods/mods/project45-muzzlebrakemod/project45-muzzlebrakemodsprite.png",
-        "offset": [0.25, -0.125]
+        "offset": [0.25, -0.0625]
       }
     }
     
