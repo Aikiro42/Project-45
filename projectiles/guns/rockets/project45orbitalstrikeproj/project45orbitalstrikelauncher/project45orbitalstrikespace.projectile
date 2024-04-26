@@ -1,0 +1,18 @@
+{
+  "projectileName" : "project45orbitalstrikespace",
+  "timeToLive": 0,
+  "actionOnReap": [
+    {
+      "action" : "config",
+      "file" : "/projectiles/guns/rockets/project45orbitalstrikeproj/project45orbitalstrikeproj.config"
+    }
+  ],
+  "image" : "project45orbitalstrikelauncher.png",
+  "frameNumber" : 1,
+  "speed" : 0,
+  "damagePoly" : [ [-1, 1], [-1, -1], [1, -1], [1, 1]],
+  "animationLoops" : false,
+  "flippable" : true,
+  "damageTeam" : { "type" : "indiscriminate" },
+  "damageKind" : "default"
+}

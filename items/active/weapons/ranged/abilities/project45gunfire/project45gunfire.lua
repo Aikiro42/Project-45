@@ -134,6 +134,17 @@ function Project45GunFire:init()
   self.bulletsPerReload = math.max(1, self.bulletsPerReload)
   self.muzzleSmokeTime = self.muzzleSmokeTime or 1.5
 
+  -- ammo recharge
+  self.hasRechargingAmmo = self.ammoRechargeDelay or self.ammoRechargeTime
+  if self.hasRechargingAmmo then
+    self.ammoRechargeDelayTime = math.max(0, self.ammoRechargeDelayTime or 0)
+    self.ammoRechargeTime = math.max(0, self.ammoRechargeTime or 0)
+    self.ammoRechargeDelayTimer = self.ammoRechargeDelayTime
+    self._ammoRechargeTime = self.ammoRechargeTime / self.maxAmmo
+    self.ammoRechargeTimer = 0
+  end
+
+
   -- always enable laser if debug is on
   self.laser.enabled = self.debug or self.laser.enabled
 
@@ -381,6 +392,7 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
   self:renderModPositionDebug()
   self:updateLaser()
   self:updateCharge()
+  self:updateAmmoRecharge()
   self:updateRecoil()
   self:updateCycleTime()
   self:updateScreenShake()
@@ -516,6 +528,7 @@ end
 function Project45GunFire:firing() -- state
   
   self.triggered = self.semi or storage.ammo == 0
+  self.ammoRechargeDelayTimer = self.ammoRechargeDelayTime
 
   if self:jam() then return end
 
@@ -1423,6 +1436,27 @@ function Project45GunFire:screenShake(amount, shakeTime, random)
 end
 
 -- SECTION:  UPDATE FUNCTIONS
+
+function Project45GunFire:updateAmmoRecharge()
+  if not self.hasRechargingAmmo then return end
+  
+  if self.ammoRechargeDelayTimer <= 0
+  and storage.ammo > 0
+  and storage.ammo <= self.maxAmmo
+  and storage.jamAmount <= 0
+  and self.weapon.reloadTimer < 0 then
+    self.ammoRechargeTimer = math.max(0, self.ammoRechargeTimer - self.dt)
+    if self.ammoRechargeTimer <= 0 then
+      self:updateAmmo(1)
+      self.ammoRechargeTimer = self._ammoRechargeTime
+    end
+  else
+    self.ammoRechargeDelayTimer = math.max(0, self.ammoRechargeDelayTimer - self.dt)  
+    self.ammoRechargeTimer = self._ammoRechargeTime
+  end
+
+end
+
 
 -- Updates the charge of the gun
 -- This is supposed to be called every tick in `Project45GunFire:update()`

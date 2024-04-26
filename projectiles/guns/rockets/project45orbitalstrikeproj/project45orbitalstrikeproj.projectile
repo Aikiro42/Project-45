@@ -7,7 +7,8 @@
   "frameNumber" : 1,
   "speed" : 150,
   "orientationLocked" : true,
-  "damagePoly" : [ [-46, -5], [-46, 5], [46, 5], [46, -5] ],
+  "damagePoly" : [ [-33, -3], [-33, 3], [33, 3], [33, -3] ],
+  "collisionPoly": [ [-33, -3], [-33, 3], [33, 3], [33, -3] ],
   "animationLoops" : true,
   "piercing" : true,
   "movementSettings": {
@@ -29,6 +30,13 @@
       "file" : "/projectiles/guns/rockets/project45orbitalstrikeproj/project45orbitalstrikeproj.config"
     }
   ],
+  "actionOnCollision": [
+    {
+      "action" : "config",
+      "file" : "/projectiles/guns/rockets/project45orbitalstrikeproj/project45orbitalstrikeprojpierce.config"
+    }
+  ],
+  "maxCollisions": 10,
   "damageTeam" : { "type" : "indiscriminate" }
 
 }

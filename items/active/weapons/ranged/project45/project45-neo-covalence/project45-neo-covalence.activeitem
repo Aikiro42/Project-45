@@ -1,0 +1,164 @@
+{
+  "itemName" : "project45-neo-covalence",
+  "price" : 2500,
+  "maxStack" : 1,
+  "rarity" : "Legendary",
+  "description" : "Fires a beam that seeks its next target.",
+  "shortdescription" : "Covalence",
+  "tooltipKind" : "project45gun",
+  "gunArchetype": "beam",
+  "category" : "smg",
+  "twoHanded" : false,
+  "itemTags" : ["weapon","ranged","pistol"],
+  "level" : 1,
+  "muzzleFlashColor": [170, 154, 255],
+  "inventoryIcon" : "project45-neo-covalence-icon.png",
+
+  "animationParts" : {
+    "middle" : "project45-neo-covalence.png",
+    "middleFullbright" : "project45-neo-covalence-fullbright.png",
+    "charge": "",
+    "chargeFullbright": "",
+    "magazine": "project45-neo-covalence-mag.png",
+    "magazineFullbright": ""
+  },
+
+  "animationCustom": {
+    "particleEmitters": {
+      "ejectionPort": {
+        "particles": [
+        ]
+      },
+      "magazine": {
+        "particles": [
+          {"particle": "project45energygunmag"}
+        ]
+      }
+    },
+
+    "sounds": {
+      "fireStart": ["/sfx/gun/mech_beamsniper_fire1.ogg"],
+      "fireLoop": ["/sfx/gun/mech_beamdrill_loop.ogg"],
+      "fireEnd": ["/sfx/gun/mech_beamdrill_winddown.ogg"],
+      "hollow": [ ],
+      // "chargeWhine" : ["/sfx/project45neosfx/chargewhine/chargewhine-02.ogg"],
+      // "chargeDrone" : ["/sfx/project45neosfx/chargedrone/chargedrone-05.ogg"]
+      "chargeWhine" : ["/sfx/project45neosfx/chargewhine/chargewhine-02.ogg"]
+    }
+  },
+
+  "project45GunModInfo":{
+    "category": "energy",
+    
+    "allowsConversion": [
+      "projectile",
+      "beam",
+      "hitscan",
+      "summoned"
+    ],
+    "acceptsAmmoArchetype": [
+      "beam",
+      "laser"
+    ],
+    "acceptsModSlot": [
+      "muzzle",
+      "receiver",
+      
+      "material",
+      "receiver",
+      "magazine"
+    ]
+  },
+
+  "baseOffset" : [0.5, 0.25],
+  "muzzleOffset" : [1, 0.25],
+  "ejectionPortOffset": [-0.25, 0.5],
+  "magazineOffset": [0, 0],
+
+  "scripts" : ["/items/active/weapons/ranged/project45gunneo.lua"],
+    
+  "primaryAbilityType": "project45gunfire",
+  "primaryAbility": {
+    "reloadCost": 35,
+    "critChance": 0.3,
+    "maxAmmo": 100,
+    "ammoRechargeDelayTime": 0.5,
+    "ammoRechargeTime": 10,
+    "bulletsPerReload": 100,
+    "inaccuracy": 3,
+    "recoilAmount": 0.5,
+    "recoilMaxDeg": 5,
+    "recoverDelay": 0,
+    "semi": true,
+    "cycleTime": 0.01,
+    "projectileKind": "beam",
+    "screenShakeAmount": 0.25,
+
+    // "reloadTime": 10,
+
+    "laser":{
+      "enabled": false
+    },
+
+    "beamParameters": {
+      "chain": true,
+      "beamColor": [170, 154, 255]
+    },
+
+    "hitscanParameters": {
+      "chain": true
+    },
+  
+    "stances":{
+      "idleneo": {
+        "twoHanded": false
+      },
+      "aim": {
+        "twoHanded": false
+      },
+      "empty": {
+        "twoHanded": false
+      },
+      "ejectmag" : {
+        "armRotation" : -45,
+        "weaponRotation" : 45,
+        "twoHanded" : false,
+        "allowRotate" : false,
+        "allowFlip" : false
+      },
+      "reloading" : {
+        "armRotation" : 45,
+        "weaponRotation" : 0,
+        "weaponAngularVelocity": 3600,
+        "twoHanded": false,
+        "frontArmFrame" : "rotation"
+      },
+      "reloaded" : {
+        "armRotation" : -45,
+        "weaponRotation" : 0,
+        "twoHanded" : false,
+        "allowRotate" : false,
+        "allowFlip" : false,
+        "frontArmFrame" : "rotation",
+        "snap": true
+      },
+      "boltPull": {
+        "twoHanded": false
+      },
+      "boltPush": {
+        "twoHanded": false
+      },
+      "jammed": {
+        "twoHanded": false
+      },
+      "unjam": {
+        "armRotation": -45,
+        "weaponRotation": -5,
+        "frontArmFrame": "rotation",
+        "twoHanded": false      
+      }
+    }
+  },
+
+  "builder" : "/items/buildscripts/buildproject45neoneo.lua"
+}
