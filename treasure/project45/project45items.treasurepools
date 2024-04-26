@@ -33,6 +33,7 @@
         {"weight" : 1, "item" : "project45-neo-carbine"},
         {"weight" : 1, "item" : "project45-neo-servicerifle"},
         {"weight" : 1, "item" : "project45-neo-cyclo"},
+        {"weight" : 1, "item" : "project45-neo-covalence"},
         {"weight" : 1, "item" : "project45-neo-beamsplitter"},
 
 
@@ -65,6 +66,7 @@
         {"weight" : 1, "item" : "project45-neo-minigun"},
         {"weight" : 1, "item" : "project45-neo-powerstave"},
         {"weight" : 1, "item" : "project45-neo-flamethrower"},
+        {"weight" : 1, "item" : "project45-neo-autocannon"},
         {"weight" : 1, "item" : "project45-neo-gaussrifle"}
       ],
       "poolRounds" : 1,
@@ -171,7 +173,6 @@
         {"weight" : 0.5, "item" : "project45-overampmod"},
         {"weight" : 0.5, "item" : "project45-customnockmod"},
         {"weight" : 0.5, "item" : "project45-gripmod"},
-        {"weight" : 0.5, "item" : "project45-weightmod"},
         {"weight" : 0.5, "item" : "project45-stockmod"}
 
       ],
@@ -190,6 +191,7 @@
         {"weight" : 1, "item" : "project45-silencermod"},
         {"weight" : 1, "item" : "project45-extendedbarrelmod"},
         {"weight" : 1, "item" : "project45-convergermod"},
+        {"weight" : 1, "item" : "project45-aegisaltmod"},
 
         // LEGENDARY
         {"weight" : 0.5, "item" : "project45-flashlasermod"},
@@ -223,7 +225,8 @@
         // UNIQUE
         {"weight" : 1, "item" : "project45-mlgscopemod"},
         {"weight" : 1, "item" : "project45-phaseshiftmod"},
-        {"weight" : 1, "item" : "project45-supergunscopemod"}
+        {"weight" : 1, "item" : "project45-supergunscopemod"},
+        {"weight" : 1, "item" : "project45-orbitaltranspondermod"}
       ],
       "poolRounds" : 1,
       "allowDuplication" : false
