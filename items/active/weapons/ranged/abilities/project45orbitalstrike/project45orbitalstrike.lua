@@ -8,7 +8,16 @@ Project45OrbitalStrike = WeaponAbility:new()
 
 function Project45OrbitalStrike:init()
   self.strikeHeight = self.strikeHeight or 50
+  self.minimumUsableWorldHeightRatio = self.minimumUsableWorldHeightRatio or 1/6
+  self.minimumUsableHeight = self.minimumUsableHeight or world.size()[2] * self.minimumUsableWorldHeightRatio
+
+  if mcontroller.position()[2] < self.minimumUsableHeight then
+    animator.playSound("error")
+  end
+
   activeItem.setScriptedAnimationParameter("strikeHeight", self.strikeHeight)
+  
+  self.gravThreshold = 0
 
   self.cooldownTime = self.cooldownTime or 0.1
   self.projectileCount = self.projectileCount or 10
@@ -18,6 +27,7 @@ function Project45OrbitalStrike:init()
     animator.playSound("loading", -1)
   end
 
+  self.spaceProjectileType = self.spaceProjectileType or "project45orbitalstrikespace"
   
   self.laserTick = false
   self.laserTickTime = self.laserTickTime or 0.05
@@ -40,8 +50,16 @@ function Project45OrbitalStrike:init()
 
 end
 
+function Project45OrbitalStrike:triggering()
+  return self.fireMode == (self.activatingFireMode or self.abilitySlot)
+end
+
 function Project45OrbitalStrike:update(dt, fireMode, shiftHeld)
   WeaponAbility.update(self, dt, fireMode, shiftHeld)
+
+  if not self:triggering() then
+    self.isFiring = false
+  end
 
   storage.cooldownTimer = math.max(0, storage.cooldownTimer - self.dt)
 
@@ -76,15 +94,23 @@ function Project45OrbitalStrike:update(dt, fireMode, shiftHeld)
     end
   end
 
-  if self.fireMode == "alt"
-  and not self.weapon.currentAbility
-  and storage.cooldownTimer == 0
-  and status.resource("energy") > 0
-  and not self.isFiring then
-    self:setState(self.tagging)    
-    self.isFiring = true
+  if self:triggering() and not self.isFiring then
+    if not self.weapon.currentAbility
+    and storage.cooldownTimer == 0
+    and status.resource("energy") > 0
+    then
+      self:setState(self.tagging)    
+      self.isFiring = true
+    else
+      animator.playSound("error")
+      self.isFiring = true
+    end
   end
 
+end
+
+function Project45OrbitalStrike:validCoords(coords)
+  return coords[2] >= self.minimumUsableHeight or world.gravity(coords) <= self.gravThreshold
 end
 
 function Project45OrbitalStrike:tagging()
@@ -105,8 +131,13 @@ function Project45OrbitalStrike:tagging()
     self.strikeCoords = self:getStrikeCoords()
     
     -- draw visuals
-    self:drawLaser(self.strikeCoords, 0.5 + tagProgress * self.orbitalRadius * 8, tagProgress >= 1, {255,128,0,64})
-    self:drawOrbitalLaser(self.orbitalRadius * (1 - tagProgress), self.orbitalLaserWidth * (1 -tagProgress) + 1, tagProgress * 255)
+    if self:validCoords(self.strikeCoords) then
+      self:drawLaser(self.strikeCoords, 0.5 + tagProgress * self.orbitalRadius * 8, tagProgress >= 1, {255,128,0,64})
+      self:drawOrbitalLaser(self.orbitalRadius * (1 - tagProgress), self.orbitalLaserWidth * (1 -tagProgress) + 1, tagProgress * 255)
+    else
+      self:clearLaser()
+      self:clearOrbitalLaser()
+    end
     
     coroutine.yield()
   end
@@ -114,23 +145,25 @@ function Project45OrbitalStrike:tagging()
   self:clearLaser()
   self:clearOrbitalLaser()
   
-  if self.tagTimer >= self.lockOnTime and status.overConsumeResource("energy", self.energyCost) then
+  if self.tagTimer >= self.lockOnTime and status.overConsumeResource("energy", self.energyCost)
+  and self:validCoords(self.strikeCoords)
+  then
     animator.playSound("locked")
     self:fire()
+    storage.cooldownTimer = self.cooldownTime
   else
     animator.playSound("error")
   end
-
-    
+  
   self.tagTimer = -1
-  self.isFiring = false  
-  storage.cooldownTimer = self.cooldownTime
-
+  self.isFiring = false
 
   return
 end
 
 function Project45OrbitalStrike:fire()
+  local hasGrav = world.gravity(self.strikeCoords) > self.gravThreshold
+  local noGravY = activeItem.ownerAimPosition()[2]
   local stepx = self.orbitalRadius/self.launcherCount
   for i=0, self.launcherCount do
     -- local randMagnitude = self.orbitalRadius
@@ -145,22 +178,23 @@ function Project45OrbitalStrike:fire()
       {0, 0},
       false,
       {
-        timeToLive = self.launcherTimeToLive + 1.5
+        timeToLive = self.launcherTimeToLive + 1
       }
     )
 
+    local launcherSpawnPoint = {x, hasGrav and y or noGravY}
     world.spawnProjectile(
       "project45orbitalstrikelauncher",
-      {x, y},
+      launcherSpawnPoint,
       activeItem.ownerEntityId(),
-      {0, -1},
+      {0, hasGrav and -1 or 1},
       false,
       {
         timeToLive = self.launcherTimeToLive,
         periodicProjectile = {
-          frequency = self.launcherFireTime,
-          deviation = self.deviation,
-          projectileType = self.projectileType,
+          frequency = self.launcherFireTime * (hasGrav and 1 or sb.nrand(0.1, self.launcherFireTime) * 2),
+          deviation = hasGrav and self.deviation or util.toRadians(365),
+          projectileType = hasGrav and self.projectileType or self.spaceProjectileType,
           projectileParameters = sb.jsonMerge(self.projectileParameters, {power=activeItem.ownerPowerMultiplier() * 120, deathHeight=deathHeight})
         }
       }
@@ -175,9 +209,14 @@ function Project45OrbitalStrike:uninit()
 end
 
 function Project45OrbitalStrike:getStrikeCoords()
+
   local scanOrig = activeItem.ownerAimPosition()
   local scanDest = vec2.add(scanOrig, {0, -self.strikeHeight})
   local strikeCoords = world.lineCollision(scanOrig, scanDest, {"Block", "Dynamic"}) or scanDest
+  
+  if world.gravity(strikeCoords) <= self.gravThreshold then
+    strikeCoords = activeItem.ownerAimPosition()
+  end
   activeItem.setScriptedAnimationParameter("strikeCoordY", strikeCoords[2])
   return strikeCoords
 end
