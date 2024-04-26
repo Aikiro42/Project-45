@@ -23,56 +23,6 @@ function apply(output, augment)
     if augment.primaryAbility then
 
       -- ADJUST SPECIAL CASES FIRST
-      -- TODO: move to stat apply
-      --[[
-            if augment.primaryAbility.maxAmmo then
-                -- if augment modifies max ammo (only)
-                -- and gun reloads entire ammo capacity
-                -- modify bulletsPerReload the same amount the same way
-                local maxAmmo = newPrimaryAbility.maxAmmo or oldPrimaryAbility.maxAmmo or 1
-                local bpr = newPrimaryAbility.bulletsPerReload or oldPrimaryAbility.bulletsPerReload or maxAmmo
-                if bpr >= maxAmmo and not augment.primaryAbility.bulletsPerReload then
-                    augment.primaryAbility.bulletsPerReload = {
-                        operation = augment.primaryAbility.maxAmmo.operation,
-                        value = augment.primaryAbility.maxAmmo.value
-                    }
-                end
-
-            end
-            --]]
-
-      -- TODO: move to stat apply
-      --[[
-            if augment.primaryAbility.movementSpeedFactor then
-                -- if movementSpeedFactor < 1 then reset it first
-                local oldmsf = newPrimaryAbility.movementSpeedFactor or oldPrimaryAbility.movementSpeedFactor or 1
-                if oldmsf < 1 then
-                    local afterOp = augment.primaryAbility.movementSpeedFactor
-                    augment.primaryAbility.movementSpeedFactor = {{
-                        operation = "replace",
-                        value = 1
-                    }}
-                    table.insert(augment.primaryAbility.movementSpeedFactor, afterOp)
-                end
-            end
-            --]]
-
-      -- TODO: move to stat apply
-      --[[
-            if augment.primaryAbility.jumpHeightFactor then
-                -- if jumpHeightFactor < 1 then reset it first
-                local oldmsf = newPrimaryAbility.jumpHeightFactor or oldPrimaryAbility.jumpHeightFactor or 1
-                if oldmsf < 1 then
-                    local afterOp = augment.primaryAbility.jumpHeightFactor
-                    augment.primaryAbility.jumpHeightFactor = {{
-                        operation = "replace",
-                        value = 1
-                    }}
-                    table.insert(augment.primaryAbility.jumpHeightFactor, afterOp)
-                end
-            end
-            --]]
-
       if augment.primaryAbility.laser then
         -- if laser is enabled
         -- merge laser config on top of primaryAbility
@@ -103,15 +53,12 @@ function apply(output, augment)
         end
       end
 
-      -- FIXME: Protect Parameters!
-      -- [[
       local protectedParameters = root.assetJson("/configs/project45/project45_statmod.config:statDefaults")
       -- protect gun from getting their stats modified directly
       for param, _ in pairs(protectedParameters) do
         augment.primaryAbility[param] = nil
       end
       augment.level = nil
-      --]]
 
       -- GENERAL MODIFICATION
       -- generate new primaryAbility table

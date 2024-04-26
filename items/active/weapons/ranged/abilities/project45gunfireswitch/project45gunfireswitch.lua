@@ -66,8 +66,6 @@ function Project45GunFireSwitch:switch(altConfig)
     end
   end
   util.mergeTable(self.weapon.abilities[self.abilityIndex], altConfig)
-  sb.logInfo(self.modeIndex)
-  sb.logInfo(sb.printJson(self.weapon.abilities[self.abilityIndex].manualFeed))
   -- self.weapon.forceReset = true
 end
 

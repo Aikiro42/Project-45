@@ -45,14 +45,6 @@ function Project45MLGNoScope:update(dt, fireMode, shiftHeld)
 
     end
 
-
-    --[[
-    if self.logTimer > 0 then
-        -- sb.logInfo(sb.printJson(self.bonusDamage))
-        self.logTimer = self.logTimer - self.dt
-    end
-    --]]
-
 end
 
 function Project45MLGNoScope:getAimAngle()

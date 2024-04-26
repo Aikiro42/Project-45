@@ -210,7 +210,6 @@ function Checker:checkConversion()
 
   -- Check if conversion is necessary
   self.conversionNecessary = self.output.primaryAbility.projectileKind ~= self.augment.conversion
-  print(json(self.augment.ammo or self.conversionNecessary, 1))
   if self.augment.ammo and not self.conversionNecessary then
     self.checked = self.checked and true
     return true
