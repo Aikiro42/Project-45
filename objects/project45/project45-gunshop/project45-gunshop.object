@@ -115,6 +115,7 @@
         
         // Energy Guns
         "project45-neo-cyclo",
+        "project45-neo-covalence",
         "project45-neo-accelerator",
         "project45-neo-beamsplitter",
         "project45-neo-beamgun",

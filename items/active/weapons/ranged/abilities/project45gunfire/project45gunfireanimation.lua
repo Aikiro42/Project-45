@@ -81,6 +81,7 @@ function update()
   renderChargeBar({horizontalOffset, animationConfig.animationParameter("performanceMode") and -1 or -1.75})
   renderHitscanTrails()
   renderBeam()
+  renderBeamChain()
 
 end
 
@@ -592,6 +593,50 @@ function renderHitscanTrails()
         fullbright = true,
         color = projectile.color or {0, 0, 0}
       }, "Player-1")
+    end
+  end
+end
+
+function renderBeamChain()
+  local beamChain = animationConfig.animationParameter("beamChain", {nil})
+  if #beamChain < 2 then return end
+
+  local beamChainColor = animationConfig.animationParameter("beamChainColor", {255,0,255})
+  local beamChainWidth = animationConfig.animationParameter("beamChainWidth", 2)
+  local beamChainInnerWidth = animationConfig.animationParameter("beamChainInnerWidth", 1)
+  for i=2,#beamChain do
+    local segment = worldify(beamChain[i-1], beamChain[i])
+    localAnimator.addDrawable({
+      line = segment,
+      width = beamChainWidth + sb.nrand(beamFuzz, 0),
+      fullbright = true,
+      color = beamChainColor
+    }, "Player-1")
+    localAnimator.addDrawable({
+      line = segment,
+      width = beamChainInnerWidth + sb.nrand(beamFuzz, 0),
+      fullbright = true,
+      color = {255,255,255}
+    }, "Player-1")
+
+    -- collision light
+    localAnimator.addLightSource({
+      position = beamChain[i],
+      color = beamChainColor,
+      pointLight = true,
+      pointBeam = 0,
+    })
+
+    -- collision impact sparks
+    localAnimator.spawnParticle(
+      "project45beamendsmoke",
+      beamChain[i+1]
+    )
+    for i = 1, 3 do
+      localAnimator.spawnParticle(
+        "project45beamendspark",
+        beamChain[i+1]
+      )
     end
   end
 end

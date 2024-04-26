@@ -38,8 +38,11 @@ function hitscanLib:fireChainBeam()
 
   local originalStatusEffects = sb.jsonMerge(beamDamageConfig.statusEffects)
 
-  local chainScanResults, chain, hitEntityIds, chainWorldLines, chainDamageAreas
-  
+  local chainScanResults, chain, hitEntityIds, chainWorldLines, chainDamageAreas  
+  activeItem.setScriptedAnimationParameter("beamChainColor", self.beamParameters.beamColor)
+  activeItem.setScriptedAnimationParameter("beamInnerWidth", self.beamParameters.beamInnerWidth)
+  activeItem.setScriptedAnimationParameter("beamWidth", self.beamParameters.beamWidth)
+
   -- loop to maintain beam fire
   while ((self.chargeTime + self.overchargeTime <= 0 or not self.semi)
   and self:triggering()
@@ -53,9 +56,11 @@ function hitscanLib:fireChainBeam()
   do
 
     self.isFiring = true
+    self.ammoRechargeDelayTimer = self.ammoRechargeDelayTime
     -- TODO: make parameters dymamic
     chainScanResults = self:chainScan(self.beamParameters.range, ignoresTerrain, punchThrough, self.beamParameters.scanUntilCursor)
     chain = chainScanResults[1]
+    activeItem.setScriptedAnimationParameter("beamChain", chain)
     hitEntityIds = chainScanResults[2]
     chainWorldLines = {}
     chainDamageAreas = {}
@@ -87,7 +92,7 @@ function hitscanLib:fireChainBeam()
 
       -- update base damage accordingly
       local multishot = self.projectileCount * self:rollMultishot()
-      beamDamageConfig.baseDamage = self:damagePerShot(true) * multishot
+      beamDamageConfig.baseDamage = self:damagePerShot(true) * multishot / math.max(1, #hitEntityIds)
     
       if self.critFlag then
         if self.enableMuzzleCritParticles then
@@ -126,6 +131,8 @@ function hitscanLib:fireChainBeam()
     --vfx
 
     local life = self.hitscanParameters.hitscanFadeTime or 0.5
+
+    --[[
     for _, chainLine in ipairs(chainWorldLines) do
       local fuzz = (0.5 + 0.5 * math.random())
       local innerFuzz = (0.5 + 0.5 * math.random())
@@ -149,6 +156,7 @@ function hitscanLib:fireChainBeam()
         })
       end   
     end
+    --]]
 
     -- hitscan vfx
     local hitscanActionsOnReap = {
@@ -209,7 +217,17 @@ function hitscanLib:fireChainBeam()
 
   self.isFiring = false
   self.muzzleProjectileFired = false
-
+  activeItem.setScriptedAnimationParameter("beamChain", {nil})
+  for i=2, #chain do
+    table.insert(self.projectileStack, {
+      width = self.beamParameters.beamWidth,
+      origin = chain[i-1],
+      destination = chain[i],
+      lifetime = 0.1,
+      maxLifetime = 0.1,
+      color = {255,255,255}
+    })
+  end
   animator.setAnimationState("gun", "firing")
 
   activeItem.setScriptedAnimationParameter("beamLine", nil)
@@ -230,6 +248,7 @@ end
 function hitscanLib:fireChain()
   -- TODO: make chainScan arguments dynamic
   
+  
   local punchThrough = self.hitscanParameters.punchThrough or 0
   local ignoresTerrain = self.hitscanParameters.ignoresTerrain
 
@@ -239,7 +258,9 @@ function hitscanLib:fireChain()
     punchThrough = self.hitscanParameters.fullChargePunchThrough or punchThrough
     ignoresTerrain = self.hitscanParameters.ignoresTerrainOnFullCharge or ignoresTerrain
   end
-  
+
+  self.ammoRechargeDelayTimer = self.ammoRechargeDelayTime
+
   local chainScanResults = self:chainScan(self.hitscanParameters.range, ignoresTerrain, punchThrough, self.hitscanParameters.scanUntilCursor)
   local chain = chainScanResults[1]
   local hitEntityIds = chainScanResults[2]
@@ -261,7 +282,7 @@ function hitscanLib:fireChain()
       
       local damageConfig = {
         -- multiply nProjsOverflowMult to final damage to compensate for lost multishot
-        baseDamage = finalDamage,
+        baseDamage = finalDamage / math.max(1, hitEntityIds),
         timeout = self.currentCycleTime,
       }
       damageConfig = sb.jsonMerge(damageConfig, self.hitscanParameters.hitscanDamageConfig or {})
@@ -414,7 +435,6 @@ function hitscanLib:chainScan(scanLength, ignoresTerrain, punchThrough, scanUnti
       local nextPosition = world.entityPosition(nextEntityId)
 
       chainScanLengthLimit = chainScanLengthLimit - world.magnitude(chain[#chain], nextPosition)
-      sb.logInfo(chainScanLengthLimit)
       if chainScanLengthLimit <= 0 then break end
 
       table.insert(chainEntityIds, nextEntityId)
