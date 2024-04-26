@@ -69,8 +69,8 @@
     ],
     "class": "Project45OrbitalStrike",
 
-    "cooldownTime": 10,
-    "energyCost": 200,
+    "cooldownTime": 3,
+    "energyCost": 300,
 
     // range that the strike hits
     "orbitalRadius": 20,
@@ -84,10 +84,13 @@
     "launcherFireTime": 0.5,
 
     "projectileType": "project45orbitalstrikeproj",
+    "spaceProjectileType": "project45orbitalstrikespace",
     "projectileParameters": {},
     "deviation": 1, // deviation in degrees
 
-    "dummy": false
+
+    "gravThreshold": 0,
+    "minimumUsableWorldHeightRatio": 0.125  // 1/8 of world height away from bottom
 
   }
 }
