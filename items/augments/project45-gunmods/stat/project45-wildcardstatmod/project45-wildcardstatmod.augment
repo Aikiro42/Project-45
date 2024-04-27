@@ -39,7 +39,7 @@
         "additive": [-4, 3],
         "multiplicative": [-0.2, 0.4]
       },
-      "fireTime": {
+      "fireTimeGroup": {
         "additive": [-0.01, 0.1],
         "multiplicative": [-2, 0.2]
       }

@@ -40,13 +40,13 @@
       "burstCount": {
         "rebase": 1
       },
-      "fireTimeStat": {
+      "fireTime": {
         "rebase": 0.01
       },
       "cycleTime": {
         "rebase": 0.1
       },
-      "fireTime": {
+      "fireTimeGroup": {
         "additive": 0.01
       }
     }

@@ -20,7 +20,7 @@
     "pureStatMod": true,
     
     "stat": {
-      "fireTime": {
+      "fireTimeGroup": {
         "multiplicative": 0.2
       }
     }

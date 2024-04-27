@@ -31,7 +31,7 @@
       "critDamage": {
         "additive": 0.12
       },
-      "fireTime": {
+      "fireTimeGroup": {
         "multiplicative": 0.08
       }
     }

@@ -32,6 +32,7 @@ function apply(output, augment)
   local isStatGroup = set.new(statConfig.statGroups or {})
 
   -- stat properties
+  local statAlias = statConfig.statAliases or {}
   local statGroup = statConfig.statGroupAssignments or {}
   local isGroupMember = statGroup -- for readability
   local statBounds = statConfig.statBounds or {}
@@ -46,32 +47,31 @@ function apply(output, augment)
     end
   end
 
-  -- retrieves the base value of a stat
+  -- Retrieves the base value of a stat in the following order until it gets a numerical value:
+  -- 1. from the respective `statModifiers` entry of the stat
+  -- 2. from the `statDefaults` dictionary in `statmod.config`
+  -- @param stat: string
+  -- * can either be a member or individual stat/alias
   local baseStat = function(stat)
+    stat = statAlias[stat] or stat
 
-    local savedBaseStat = nil
+    if isStatGroup[stat] then
+      sb.logError("(statmod.lua) BASE STAT OF GROUP WAS QUERIED")
+      return nil
+    end
 
+    local saved = nil
     if isGroupMember[stat] then
-      savedBaseStat = (statModifiers[statGroup[stat]] or {
-        base = {}
-      }).base[stat]
+      saved = (statModifiers[statGroup[stat]] or {base={}}).base[stat]
     else
-      savedBaseStat = (statModifiers[stat] or {}).base
+      saved = statModifiers[stat].base
     end
 
-    if savedBaseStat == nil then
-      -- base stat not saved; retrieve from item
-      if isConfigStat[stat] then -- retrieve strictly from config
-        return (output.config.primaryAbility or {})[stat] or statList[stat]
-      else
-        local primaryAbility = sb.jsonMerge(output.config.primaryAbility or {}, output.parameters.primaryAbility or {})
-        -- retrieve from parameters or config
-        return primaryAbility[stat] or statList[stat]
-      end
-    else
-      -- base stat saved, retrieve it
-      return savedBaseStat
+    if not statList[stat] then
+      sb.logError("(statmod.lua) UNREGISTERED STAT QUERIED")
     end
+
+    return saved or statList[stat]
 
   end
 
@@ -80,10 +80,14 @@ function apply(output, augment)
   if augment.maxAmmo then
 
     statModifiers.maxAmmo = statModifiers.maxAmmo or {
-      base = baseStat("maxAmmo")
+      base = baseStat("maxAmmo"),
+      additive = 0,
+      multiplicative = 1
     }
     statModifiers.bulletsPerReload = statModifiers.bulletsPerReload or {
-      base = baseStat("bulletsPerReload")
+      base = baseStat("bulletsPerReload"),
+      additive = 0,
+      multiplicative = 1
     }
 
     if statModifiers.bulletsPerReload.base >= statModifiers.maxAmmo.base and not augment.bulletsPerReload then
@@ -92,92 +96,81 @@ function apply(output, augment)
 
   end
 
-  -- Alter fireTime (stat)
-  if augment.fireTimeStat then
-    statModifiers.fireTime = statModifiers.fireTime or {
-      base = {}
-    }
-    
-    if augment.fireTimeStat.rebase then
-      statModifiers.fireTime.base.fireTime = augment.fireTimeStat.rebase
-    end
-    
-    if augment.fireTimeStat.rebaseMult then
-      statModifiers.fireTime.base.fireTime = baseStat("fireTime") * augment.fireTimeStat.rebaseMult
-    end
+  -- individual fireTimeGroup stats
+  for _, fireTimeGroupStat in groupStats.fireTimeGroup do
+    if augment[fireTimeGroupStat] then
 
-    -- prompt change
-    augment.fireTime = augment.fireTime or {}
+      statModifiers.fireTimeGroup = statModifiers.fireTimeGroup or {
+        base = {},
+        additive = 0,
+        multiplicative = 1
+      }
 
-    -- to be REALLY safe,
-    augment.fireTimeStat = nil
+      -- fireTimeGroup stats don't have their member entries in statModifiers because of the nature of their recalculation
 
-  end
+      statModifiers.fireTimeGroup.base[fireTimeGroupStat] = statModifiers.fireTimeGroup.base[fireTimeGroupStat] or baseStat(fireTimeGroupStat)
   
-  -- Alter cycleTime (stat)
-  if augment.cycleTime then
-    statModifiers.fireTime = statModifiers.fireTime or {
-      base = {}
-    }
+      if augment[fireTimeGroupStat].rebase then
+        statModifiers.fireTimeGroup.base[fireTimeGroupStat] = augment[fireTimeGroupStat].rebase
+      end
+      if augment[fireTimeGroupStat].rebaseMult then
+        statModifiers.fireTimeGroup.base[fireTimeGroupStat] = statModifiers.fireTimeGroup.base[fireTimeGroupStat] * augment[fireTimeGroupStat].rebaseMult
+      end
+  
+      -- prompt recalculation
+      augment.fireTimeGroup = augment.fireTimeGroup or {}
 
-    if augment.cycleTime.rebase then
-      statModifiers.fireTime.base.cycleTime = augment.cycleTime.rebase
-    end
-
-    if augment.cycleTime.rebaseMult then
-      statModifiers.fireTime.base.cycleTime = baseStat("cycleTime") * augment.cycleTime.rebaseMult
-    end
-
-    -- prompt change
-    augment.fireTime = augment.fireTime or {}
-
-    -- to be REALLY safe,
-    augment.cycleTime = nil
-
+      -- clear entry to prevent general case from covering this
+      augment[fireTimeGroupStat] = nil
+  
+    end  
   end
 
-  -- Alter general Fire Rate
-  if augment.fireTime then
-    statModifiers.fireTime = statModifiers.fireTime or {
-      base = {}
+  
+  -- Alter general Fire Time
+  if augment.fireTimeGroup then
+    statModifiers.fireTimeGroup = statModifiers.fireTimeGroup or {
+      base = {},
+      additive = 0,
+      multiplicative = 1
     }
-    for _, fireTimeStat in ipairs(groupStats.fireTime) do
-      statModifiers.fireTime.base[fireTimeStat] = baseStat(fireTimeStat)
+    for _, fireTimeStat in ipairs(groupStats.fireTimeGroup) do
+      statModifiers.fireTimeGroup.base[fireTimeStat] = baseStat(fireTimeStat)
     end
 
-    local newCockTime = statModifiers.fireTime.base.cockTime
-    local newMidCockDelay = statModifiers.fireTime.base.midCockDelay
-    local newCycleTime = statModifiers.fireTime.base.cycleTime
-    local newFireTime = statModifiers.fireTime.base.fireTime
+    local newCockTime = statModifiers.fireTimeGroup.base.cockTime
+    local newMidCockDelay = statModifiers.fireTimeGroup.base.midCockDelay
+    local newCycleTime = statModifiers.fireTimeGroup.base.cycleTime
+    local newFireTime = statModifiers.fireTimeGroup.base.fireTime
 
-    local newChargeTime = statModifiers.fireTime.base.chargeTime
-    local newOverchargeTime = statModifiers.fireTime.base.overchargeTime
+    local newChargeTime = statModifiers.fireTimeGroup.base.chargeTime
+    local newOverchargeTime = statModifiers.fireTimeGroup.base.overchargeTime
 
     local minFireTime = math.min(0.001, type(newCycleTime) == "table" and newCycleTime[1] or newCycleTime, newCockTime,
         newFireTime)
 
-    if augment.fireTime.additive then
-      statModifiers.fireTime.additive = (statModifiers.fireTime.additive or 0) + augment.fireTime.additive
+    if augment.fireTimeGroup.additive then
+      statModifiers.fireTimeGroup.additive = (statModifiers.fireTimeGroup.additive or 0) + augment.fireTime.additive
     end
 
-    if augment.fireTime.multiplicative then
-      statModifiers.fireTime.multiplicative = (statModifiers.fireTime.multiplicative or 1) +
+    if augment.fireTimeGroup.multiplicative then
+      statModifiers.fireTimeGroup.multiplicative = (statModifiers.fireTimeGroup.multiplicative or 1) +
                                                   augment.fireTime.multiplicative
     end
 
     --[[
-        Recall: calculation of displayed fire time
-        If gun is manualFeed:
-            fireTime* = cockTime + fireTime + chargeTime
-        else:
-            fireTime* = cycleTime + fireTime + chargeTime
-        --]]
+    Recall: calculation of displayed fire time
+    If gun is manualFeed:
+        fireTime* = cockTime + fireTime + chargeTime
+    else:
+        fireTime* = cycleTime + fireTime + chargeTime
+    --]]
 
     -- apply fireTime modifiers
 
     local fireTimeAdd, chargeAdd, overchargeAdd
 
-    if statModifiers.fireTime.additive then
+    if statModifiers.fireTimeGroup.additive then
       local isSemi = output.config.semi
       if input.parameters.semi ~= nil then
         isSemi = input.parameters.semi
@@ -185,11 +178,11 @@ function apply(output, augment)
 
       local distributedStats = (isSemi and newChargeTime > 0) and 2 or 1
 
-      fireTimeAdd = statModifiers.fireTime.additive / distributedStats
+      fireTimeAdd = statModifiers.fireTimeGroup.additive / distributedStats
 
       chargeAdd = fireTimeAdd
       if newChargeTime > 0 and not isSemi then
-        chargeAdd = statModifiers.fireTime.additive
+        chargeAdd = statModifiers.fireTimeGroup.additive
       end
 
       -- ensures that same amount of time will be spent overcharging
@@ -203,25 +196,25 @@ function apply(output, augment)
     -- modify cycle time to be at least minFiretime
     if type(newCycleTime) == "table" then
       newCycleTime = {math.max(minFireTime,
-          getModifiedStat(newCycleTime[1], fireTimeAdd, statModifiers.fireTime.multiplicative, true)),
+          getModifiedStat(newCycleTime[1], fireTimeAdd, statModifiers.fireTimeGroup.multiplicative, true)),
                       math.max(minFireTime,
-          getModifiedStat(newCycleTime[2], fireTimeAdd, statModifiers.fireTime.multiplicative, true))}
+          getModifiedStat(newCycleTime[2], fireTimeAdd, statModifiers.fireTimeGroup.multiplicative, true))}
     else
       newCycleTime = math.max(minFireTime,
-          getModifiedStat(newCycleTime, fireTimeAdd, statModifiers.fireTime.multiplicative, true))
+          getModifiedStat(newCycleTime, fireTimeAdd, statModifiers.fireTimeGroup.multiplicative, true))
     end
 
     newCockTime = math.max(minFireTime,
-        getModifiedStat(newCockTime, fireTimeAdd, statModifiers.fireTime.multiplicative, true))
+        getModifiedStat(newCockTime, fireTimeAdd, statModifiers.fireTimeGroup.multiplicative, true))
     newFireTime = math.max(minFireTime,
-        getModifiedStat(newFireTime, fireTimeAdd, statModifiers.fireTime.multiplicative, true))
+        getModifiedStat(newFireTime, fireTimeAdd, statModifiers.fireTimeGroup.multiplicative, true))
 
     if newChargeTime > 0 then
-      newChargeTime = math.max(0, getModifiedStat(newChargeTime, chargeAdd, statModifiers.fireTime.multiplicative, true))
+      newChargeTime = math.max(0, getModifiedStat(newChargeTime, chargeAdd, statModifiers.fireTimeGroup.multiplicative, true))
     end
     if newOverchargeTime > 0 then
       newOverchargeTime = math.max(0, getModifiedStat(newOverchargeTime, overchargeAdd,
-          statModifiers.fireTime.multiplicative, true))
+          statModifiers.fireTimeGroup.multiplicative, true))
     end
 
     newPrimaryAbility = sb.jsonMerge(newPrimaryAbility, {
@@ -232,134 +225,165 @@ function apply(output, augment)
       fireTime = newFireTime
     })
 
-    -- to be REALLY safe,
-    augment.fireTime = nil
+    -- to be REALLY safe, nullify fireTime modification after processing
+    augment.fireTimeGroup = nil
 
   end
 
   -- Alter level
   if augment.level then
     output:setInstanceValue("level", math.min(10, (input.parameters.level or output.config.level) + augment.level))
+    augment.level = nil
   end
 
   -- SECTION: GENERAL CHANGES
 
-  local updateStatModifiers = function(stat, rebase, rebaseMult, additive, multiplicative)
-    -- do not modify stat if it is not a group nor is it a valid stat
-    -- (stat groups usually don't share the same name as stats except for fireTime apparently)
+  -- Recalculates final stat set in the primaryAbility parameters.
+  -- @param stat: {StatGroup|StatAlias|Stat}<string>
+  -- * can be the name of a group of stats, an alias of a stat, or the stat itself
+  local recalculateStat = function(stat)
+
+    stat = statAlias[stat] or stat
     if not (statList[stat] and isStatGroup[stat]) then return end
 
+    -- to merge onto newPrimaryAbility
     local primaryAbilityMod = {}
-    
-    -- group or pure individual stat
-    if isStatGroup[stat] or not isGroupMember[stat] then
-      
-      -- initialize statModifiers entry
-      statModifiers[stat] = statModifiers[stat] or {
-        base = isStatGroup[stat] and {} or baseStat(stat),
-        additive = 0,
-        multiplicative = 1
-      }
-      
-      -- initialize entry of group
-      if isStatGroup[stat] then
-        for _, substat in ipairs(groupStats[stat]) do
-          statModifiers[stat].base[substat] = baseStat(substat)
-        end
-      end
-      
-      -- rebase/rebaseMult if pure individual
-      if not isGroupMember[stat] then
-        if rebase then
-          statModifiers[stat].base = rebase
-        end
-        if rebaseMult then
-          statModifiers[stat].base = baseStat(stat) * rebaseMult
-        end
-      end
 
-      if additive then
-        statModifiers[stat].additive = (statModifiers[stat].additive or 0) + additive
-      end
-      if multiplicative then
-        statModifiers[stat].multiplicative = (statModifiers[stat].multiplicative or 1) + multiplicative
-      end
+    -- group
+    if isStatGroup[stat] or isGroupMember[stat] then
+      
+      local group = isStatGroup[stat] and stat or statGroup[stat]
 
-      if isStatGroup[stat] then
-        for substat, subStatBase in ipairs(statModifiers[stat].base) do
-          primaryAbilityMod[substat] = getModifiedStat(
-            subStatBase,
-            statModifiers[stat].additive,
-            statModifiers[stat].multiplicative,
-            isBadStat[substat],
-            isIntegerStat[substat],
-            statBounds[substat]
-          )
-        end
-      elseif isGroupMember[stat] then  -- defensive programming baby
-        primaryAbilityMod[stat] = getModifiedStat(
-          statModifiers[stat].base,
-          statModifiers[stat].additive,
-          statModifiers[stat].multiplicative,
-          isBadStat[stat],
-          isIntegerStat[stat],
-          statBounds[stat]
-        )
-      end
-      
-    -- group member stat
-    else
-      
-      -- initialize statModifiers entry
-      local group = statGroup[stat]
+      -- initialize group entry
+      -- THIS SHOULD'VE BEEN INITIALIZED ALREADY
+      -- THIS SHOULD ONLY BE INITIALIZED ONCE SOMEWHERE
+      --[[
       statModifiers[group] = statModifiers[group] or {
         base = {},
         additive = 0,
         multiplicative = 1
       }
-      statModifiers[group].base[stat] = baseStat(stat) -- should return the same value if it exists
+      for _, substat in ipairs(groupStats[group]) do
+        statModifiers[group].base[substat] = baseStat(substat)
+      end
+
+      -- initialize member stat entry
+      if isGroupMember[stat] then
+        statModifiers[stat] = statModifiers[stat] or {
+          additive = 0,
+          multiplicative = 0
+        }
+        if statModifiers[stat].base then sb.logWarn("(statmod.lua) MEMBER STAT ENTRY HAS BASE VALUE") end
+      end
+      --]]
+
+      -- begin group recalculation
+      for substat, substatBaseValue in pairs(statModifiers[group].base) do
+        -- get member stat entry modifications
+        local substatAdditive = (statModifiers[substat] or {additive=0}).additive
+        local substatMultiplicative = (statModifiers[substat] or {multiplicative=0}).multiplicative
+        -- apply group modification + member modification
+        primaryAbilityMod[substat] = getModifiedStat(
+          substatBaseValue,
+          statModifiers[group].additive or 0 + substatAdditive,
+          statModifiers[group].multiplicative or 0 + substatMultiplicative,
+          isBadStat[substat],
+          isIntegerStat[substat],
+          statBounds[substat]
+        )
+      end
+
+    -- individual
+    else
+      -- initialize
       statModifiers[stat] = statModifiers[stat] or {
+        base = baseStat(stat),
         additive = 0,
-        multiplicative = 0
+        multiplicative = 1
       }
-
-      if rebase then
-        statModifiers[group].base[stat] = rebase
-      end
-
-      if rebaseMult then
-        statModifiers[group].base[stat] = baseStat(stat) * rebaseMult
-      end
-
-      if additive then
-        statModifiers[stat].additive = (statModifiers[stat].additive or 0) + additive
-      end
-
-      if multiplicative then
-        statModifiers[stat].multiplicative = (statModifiers[stat].multiplicative or 0) + multiplicative
-      end
-
-      local totalAdditive = (statModifiers[group].additive or 0) + (statModifiers[stat].additive or 0)
-      local totalMultiplicative = (statModifiers[group].totalMultiplicative or 1) + (statModifiers[stat].totalMultiplicative or 0)
-
+      
+      -- recalculate
       primaryAbilityMod[stat] = getModifiedStat(
-        baseStat(stat),
-        totalAdditive,
-        totalMultiplicative,
+        statModifiers[stat].base,
+        statModifiers[stat].additive,
+        statModifiers[stat].multiplicative,
         isBadStat[stat],
         isIntegerStat[stat],
         statBounds[stat]
       )
-
     end
 
+    -- apply recalculation
     newPrimaryAbility = sb.jsonMerge(newPrimaryAbility, primaryAbilityMod)
 
   end
+  
+  -- Updates the statModifier entry of a `stat`.
+  -- @param stat: {StatGroup|StatAlias|Stat}<string>
+  -- * can be the name of a group of stats, an alias of a stat, or the stat itself
+  -- @param rebase: number
+  -- * the new base value of `stat`.
+  -- * does not apply to groups
+  -- @param rebaseMult: number
+  -- * factor by which the base value of `stat` will be multiplied.
+  -- * does not apply to groups
+  -- @param additive: number
+  -- @param multiplicative: number
+  local updateStatModifiers = function(stat, rebase, rebaseMult, additive, multiplicative)
 
-  local recalculateStat = function()
+    stat = statAlias[stat] or stat
+    if not (statList[stat] and isStatGroup[stat]) then return end
+
+    local group = isStatGroup[stat] and stat or statGroup[stat]
+    
+    -- initialize group entry
+    if group then
+      statModifiers[group] = statModifiers[group] or {
+        base = {},
+        additive = 0,
+        multiplicative = 1
+      }
+      for _, substat in ipairs(groupStats[group]) do
+        statModifiers[group].base[substat] = baseStat(substat)
+      end
+    end
+
+    -- initialize member/individual entry
+    if not isStatGroup[stat] then
+
+      if isGroupMember[stat] then
+        statModifiers[stat] = statModifiers[stat] or {
+          additive = 0,
+          multiplicative = 0
+        }
+      else
+        statModifiers[stat] = statModifiers[stat] or {
+          base = baseStat(stat),
+          additive = 0,
+          multiplicative = 1
+        }
+      end
+
+      -- rebase, rebaseMult on member/individual stats only
+      if group then
+        statModifiers[group].base[stat] = (rebase or baseStat(stat)) * (rebaseMult or 1)
+      else
+        statModifiers[stat].base = (rebase or baseStat(stat)) * (rebaseMult or 1)
+      end
+
+    end
+
+    -- additive, multiplicative
+    statModifiers[group or stat].additive =
+      (statModifiers[group or stat].additive or 0) + (additive or 0)
+    statModifiers[group or stat].multiplicative =
+      (statModifiers[group or stat].multiplicative or (isGroupMember[stat] and 0 or 1)) + (multiplicative or 0)
+  
+    recalculateStat(stat)
+
   end
 
+  -- Actual general case handling
   for stat, op in pairs(augment) do
 
     local restricted = false
@@ -372,11 +396,16 @@ function apply(output, augment)
     end
 
     if restricted then
-      -- FIXME: it doesn't really make sense to allow REBASING of restricted stat/groups
-      updateStatModifiers(stat, op.rebase, op.rebaseMult, nil, nil)
+      -- restricting stats and statGroups only allow rebasing
+      -- and rebase multiplication due to special cases
+      -- e.g. fireTime is calculated according to weapon parameters
+      updateStatModifiers(stat, op.rebase, op.rebaseMult, nil, nil) --> will recalculateStat
     else
-      updateStatModifiers(stat, op.rebase, op.rebaseMult, op.additive, op.multiplicative)
+      updateStatModifiers(stat, op.rebase, op.rebaseMult, op.additive, op.multiplicative) --> will recalculateStat
     end
+
+    -- after doing operation, nullify augment.stat
+    augment[stat] = nil
 
   end
 
