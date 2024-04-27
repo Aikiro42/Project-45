@@ -64,7 +64,7 @@ function apply(output, augment)
     if isGroupMember[stat] then
       saved = (statModifiers[statGroup[stat]] or {base={}}).base[stat]
     else
-      saved = statModifiers[stat].base
+      saved = (statModifiers[stat] or {}).base
     end
 
     if not statList[stat] then
@@ -97,7 +97,7 @@ function apply(output, augment)
   end
 
   -- individual fireTimeGroup stats
-  for _, fireTimeGroupStat in groupStats.fireTimeGroup do
+  for _, fireTimeGroupStat in ipairs(groupStats.fireTimeGroup) do
     if augment[fireTimeGroupStat] then
 
       statModifiers.fireTimeGroup = statModifiers.fireTimeGroup or {
@@ -244,7 +244,7 @@ function apply(output, augment)
   local recalculateStat = function(stat)
 
     stat = statAlias[stat] or stat
-    if not (statList[stat] and isStatGroup[stat]) then return end
+    if not (statList[stat] or isStatGroup[stat]) then return newPrimaryAbility end
 
     -- to merge onto newPrimaryAbility
     local primaryAbilityMod = {}
@@ -253,29 +253,6 @@ function apply(output, augment)
     if isStatGroup[stat] or isGroupMember[stat] then
       
       local group = isStatGroup[stat] and stat or statGroup[stat]
-
-      -- initialize group entry
-      -- THIS SHOULD'VE BEEN INITIALIZED ALREADY
-      -- THIS SHOULD ONLY BE INITIALIZED ONCE SOMEWHERE
-      --[[
-      statModifiers[group] = statModifiers[group] or {
-        base = {},
-        additive = 0,
-        multiplicative = 1
-      }
-      for _, substat in ipairs(groupStats[group]) do
-        statModifiers[group].base[substat] = baseStat(substat)
-      end
-
-      -- initialize member stat entry
-      if isGroupMember[stat] then
-        statModifiers[stat] = statModifiers[stat] or {
-          additive = 0,
-          multiplicative = 0
-        }
-        if statModifiers[stat].base then sb.logWarn("(statmod.lua) MEMBER STAT ENTRY HAS BASE VALUE") end
-      end
-      --]]
 
       -- begin group recalculation
       for substat, substatBaseValue in pairs(statModifiers[group].base) do
@@ -316,6 +293,8 @@ function apply(output, augment)
     -- apply recalculation
     newPrimaryAbility = sb.jsonMerge(newPrimaryAbility, primaryAbilityMod)
 
+    return newPrimaryAbility
+
   end
   
   -- Updates the statModifier entry of a `stat`.
@@ -332,7 +311,7 @@ function apply(output, augment)
   local updateStatModifiers = function(stat, rebase, rebaseMult, additive, multiplicative)
 
     stat = statAlias[stat] or stat
-    if not (statList[stat] and isStatGroup[stat]) then return end
+    if not (statList[stat] or isStatGroup[stat]) then return statModifiers end
 
     local group = isStatGroup[stat] and stat or statGroup[stat]
     
@@ -378,30 +357,34 @@ function apply(output, augment)
       (statModifiers[group or stat].additive or 0) + (additive or 0)
     statModifiers[group or stat].multiplicative =
       (statModifiers[group or stat].multiplicative or (isGroupMember[stat] and 0 or 1)) + (multiplicative or 0)
-  
-    recalculateStat(stat)
+    
+    newPrimaryAbility = recalculateStat(stat)
+
+    return statModifiers, newPrimaryAbility
 
   end
 
   -- Actual general case handling
   for stat, op in pairs(augment) do
 
-    local restricted = false
-    if isGroupMember[stat] then
-      restricted = isRestrictedGroup[statGroup[stat]]
-    elseif isStatGroup[stat] then
-      restricted = isRestrictedGroup[stat]
-    else
-      restricted = isRestrictedStat[stat]
-    end
+    local actualStat = statAlias[stat] or stat
 
+    local restricted = false
+    if isGroupMember[actualStat] then
+      restricted = isRestrictedGroup[statGroup[actualStat]]
+    elseif isStatGroup[actualStat] then
+      restricted = isRestrictedGroup[actualStat]
+    else
+      restricted = isRestrictedStat[actualStat]
+    end
+    
     if restricted then
       -- restricting stats and statGroups only allow rebasing
       -- and rebase multiplication due to special cases
       -- e.g. fireTime is calculated according to weapon parameters
-      updateStatModifiers(stat, op.rebase, op.rebaseMult, nil, nil) --> will recalculateStat
+      statModifiers, newPrimaryAbility = updateStatModifiers(stat, op.rebase, op.rebaseMult, nil, nil) --> will recalculateStat
     else
-      updateStatModifiers(stat, op.rebase, op.rebaseMult, op.additive, op.multiplicative) --> will recalculateStat
+      statModifiers, newPrimaryAbility = updateStatModifiers(stat, op.rebase, op.rebaseMult, op.additive, op.multiplicative) --> will recalculateStat
     end
 
     -- after doing operation, nullify augment.stat
