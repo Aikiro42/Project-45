@@ -245,8 +245,9 @@ function apply(output, augment)
   -- SECTION: GENERAL CHANGES
 
   local updateStatModifiers = function(stat, rebase, rebaseMult, additive, multiplicative)
-    -- do not modify stats not tracked by config
-    if not statList[stat] then return end
+    -- do not modify stat if it is not a group nor is it a valid stat
+    -- (stat groups usually don't share the same name as stats except for fireTime apparently)
+    if not (statList[stat] and isStatGroup[stat]) then return end
 
     local primaryAbilityMod = {}
     
