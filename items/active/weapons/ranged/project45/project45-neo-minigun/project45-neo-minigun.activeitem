@@ -16,7 +16,7 @@
 
   "project45GunModInfo": {
     "category": "ballistic",
-    "upgradeCapacity": 6,
+    
     "allowsConversion": [
       "hitscan",
       "summoned",
@@ -159,6 +159,7 @@
     "resetChargeOnFire": false,
     "chargeWhenObstructed": true,
     "maintainChargeOnEmpty": true,
+    "closeBoltOnEmpty": true,
     
     "recoilUpOnly": true,
     "recoilMaxDeg": 30,

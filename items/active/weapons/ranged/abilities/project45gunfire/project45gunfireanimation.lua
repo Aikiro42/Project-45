@@ -73,7 +73,6 @@ function update()
   barXOffset = hand == "primary" and -barXOffset or barXOffset
 
   renderAmmoNumber({horizontalOffset, 0}, reloadTimer >= 0)
-  renderStockAmmoNumber({horizontalOffset, 1}, reloadTimer >= 0)
   renderChamberIndicator({horizontalOffset, 0})
 
   renderLaser()
@@ -82,6 +81,7 @@ function update()
   renderChargeBar({horizontalOffset, animationConfig.animationParameter("performanceMode") and -1 or -1.75})
   renderHitscanTrails()
   renderBeam()
+  renderBeamChain()
 
 end
 
@@ -125,6 +125,7 @@ function renderAmmoNumber(offset, reloading)
   local ammo = animationConfig.animationParameter("ammo") or "?"
   local rating = animationConfig.animationParameter("reloadRating")
   local renderAmmoImage = animationConfig.animationParameter("useAmmoCounterImages")
+  local stockAmmoOffset = vec2.add(offset, {0, 1})
 
   if ammo >= 0 then
     localAnimator.spawnParticle({
@@ -139,6 +140,7 @@ function renderAmmoNumber(offset, reloading)
 
   else
     if renderAmmoImage then
+      stockAmmoOffset = vec2.add(offset, {0, 1.5})
       if reloading then
         localAnimator.addDrawable({
           image = "/items/active/weapons/ranged/abilities/project45gunfire/reloadindicator.png:reloading." .. animTable.ammo.frame,
@@ -166,6 +168,9 @@ function renderAmmoNumber(offset, reloading)
       }, vec2.add(activeItemAnimation.ownerAimPosition(), offset))
     end
   end
+
+  renderStockAmmoNumber(stockAmmoOffset, reloading)
+
 end
 
 function renderStockAmmoNumber(offset, reloading)
@@ -588,6 +593,50 @@ function renderHitscanTrails()
         fullbright = true,
         color = projectile.color or {0, 0, 0}
       }, "Player-1")
+    end
+  end
+end
+
+function renderBeamChain()
+  local beamChain = animationConfig.animationParameter("beamChain", {nil})
+  if #beamChain < 2 then return end
+
+  local beamChainColor = animationConfig.animationParameter("beamChainColor", {255,0,255})
+  local beamChainWidth = animationConfig.animationParameter("beamChainWidth", 2)
+  local beamChainInnerWidth = animationConfig.animationParameter("beamChainInnerWidth", 1)
+  for i=2,#beamChain do
+    local segment = worldify(beamChain[i-1], beamChain[i])
+    localAnimator.addDrawable({
+      line = segment,
+      width = beamChainWidth + sb.nrand(beamFuzz, 0),
+      fullbright = true,
+      color = beamChainColor
+    }, "Player-1")
+    localAnimator.addDrawable({
+      line = segment,
+      width = beamChainInnerWidth + sb.nrand(beamFuzz, 0),
+      fullbright = true,
+      color = {255,255,255}
+    }, "Player-1")
+
+    -- collision light
+    localAnimator.addLightSource({
+      position = beamChain[i],
+      color = beamChainColor,
+      pointLight = true,
+      pointBeam = 0,
+    })
+
+    -- collision impact sparks
+    localAnimator.spawnParticle(
+      "project45beamendsmoke",
+      beamChain[i+1]
+    )
+    for i = 1, 3 do
+      localAnimator.spawnParticle(
+        "project45beamendspark",
+        beamChain[i+1]
+      )
     end
   end
 end

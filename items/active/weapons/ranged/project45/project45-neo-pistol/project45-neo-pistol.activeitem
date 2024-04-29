@@ -13,7 +13,7 @@
   "level" : 1,
   "muzzleFlashColor": [255, 255, 200],
   "inventoryIcon" : "project45-neo-pistol-icon.png",
-
+  
   "animationParts" : {
     "middle" : "project45-neo-pistol.png",
     "middleFullbright" : "",
@@ -69,7 +69,6 @@
 
   "project45GunModInfo":{
     "category": "ballistic",
-    "upgradeCapacity": 9,
     "allowsConversion": [
       "hitscan",
       "beam",

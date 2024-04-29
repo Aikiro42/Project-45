@@ -1,0 +1,28 @@
+{
+
+  "animationCustom": {
+    "sounds":{
+      "click": ["/sfx/project45neosfx/click/click-03.ogg"]
+    }
+  },
+
+  "ability" : {
+      "name" : "Switch Mode",
+      "type" : "project45gunfireswitch",
+      "scripts" : ["/items/active/weapons/ranged/abilities/project45gunfireswitch/project45gunfireswitch.lua"],
+      "class" : "Project45GunFireSwitch",
+
+      "modes": [
+        // autofire; can vary
+        {
+          "burstCount": 1,
+          "semi": true,
+          "manualFeed": true,
+          "fireTime": 0.1,
+          "maxAmmo": 1,
+          "projectileType": "project45stdgrenade"
+        }
+      ]
+  }
+}
+  

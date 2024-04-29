@@ -36,6 +36,11 @@
     },
     {
         "op": "add",
+        "path": "/project45orbitalstrike",
+        "value": "/items/active/weapons/ranged/abilities/project45orbitalstrike/project45orbitalstrike.weaponability"
+    },
+    {
+        "op": "add",
         "path": "/project45mlgnoscope",
         "value": "/items/active/weapons/ranged/abilities/project45mlgnoscope/project45mlgnoscope.weaponability"
     },
@@ -43,6 +48,11 @@
         "op": "add",
         "path": "/project45gunfirereload",
         "value": "/items/active/weapons/ranged/abilities/project45gunfirereload/project45gunfirereload.weaponability"
+    },
+    {
+        "op": "add",
+        "path": "/project45gunfireswitch",
+        "value": "/items/active/weapons/ranged/abilities/project45gunfireswitch/project45gunfireswitch.weaponability"
     },
     {
         "op": "add",

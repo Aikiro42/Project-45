@@ -6,7 +6,7 @@
   "animation": "/items/active/weapons/ranged/abilities/project45gunfire/project45gunfire.animation",
 
   "ability" : {
-    "name" : "Reload",
+    "name" : "_Project45GunFire_",
     "type" : "project45gunfire",
     "scripts" : ["/items/active/weapons/ranged/abilities/project45gunfire/project45gunfire.lua"],
     "class" : "Project45GunFire",
@@ -182,6 +182,7 @@
       // baseDamage is calculated by self:damagePerShot() * crit / activeItem.ownerPowerMultiplier()
       // but can be overridden; it's recommended that it shouldn't be overridden
       // "hitscanBrightness": 0, // % width of white line inside visual hitscan line, max 1 (equal width)
+      // "scanUntilCursor": false
       "hitscanDamageConfig": {
         "damageKind": "physical",
         "statusEffects": []
@@ -216,6 +217,7 @@
         "knockback" : 2,
         "timeout": 0.1
       },
+      // "scanUntilCursor": false
       
       // if true, consumes ammo over time.
       // Otherwise, will only consume ammo every time the beam starts
@@ -239,7 +241,7 @@
     // Reload and Magazine Config
 
     // "audibleEjection": false, // if true, plays bolt pulling sound when ejecting casings
-    "ejectBeforeAnimation": true, // ejects casings before animationState is set to "ejecting"
+    // "ejectAfterAnimation": true, // ejects casings before animationState is set to "ejecting"
     // "ejectCasingsAfterBurst": false, // ejects casings after burst is finished
     // "ejectCasingsWithMag": false, // for revolvers, etc.; casings are not ejected until magazine is ejected
     // "closeBoltOnEmpty": false, // closes bolt when magazine is empty
@@ -260,7 +262,10 @@
     // "ejectMagOnReload": false, // ejects mag every (active) reload, like loading a strip and discarding the metal
     
     // "internalMag": false, // whether the "magazine" is a strip or a clip (makes magazine invisible)
-    // "loadRoundsThroughBolt": false, // whether the bolt must be opened before doing the reload sequence.
+    
+    // whether the bolt must be opened before doing the reload sequence.
+    // If internalMag is falsy, this is forced to become false.
+    // "loadRoundsThroughBolt": false,
 
     // "postReloadDelay": null, // float; time to wait before cocking in seconds, cockTime/8 by default
     

@@ -5,7 +5,7 @@
   "rarity" : "Essential",
   "isUnique": true,
   "description" : "A katana forged from Godesium. Found in a raptured planet.",
-  "shortdescription" : "^#fdd14d;Fleetly Fading^reset;",
+  "shortdescription" : "^#e15349;(!)^reset; ^#fdd14d;Fleetly Fading^reset;",
   "gunArchetype": "assaultRifle",
   "tooltipKind" : "project45gun",
   "category" : "uniqueWeapon",
@@ -85,7 +85,12 @@
     "semi": false,
     "hideMuzzleFlash": true,
     "hideMuzzleSmoke": true,
-    "breakAction": true,
+    
+    "internalMag": true,
+    "closeBoltOnEmpty": true,
+    "loadRoundsThroughBolt": true,
+    "reloadOnEjectMag": true,
+    
     "jamChances": [0, 0, 0, 0],
     "reloadRatingDamageMults": [0.8, 1, 1.25, 1.5],
     "inaccuracy": 2.5,
@@ -96,7 +101,6 @@
     "maxAmmo": 20,
     "bulletsPerReload": 20,
     "reloadTime": 2.30,
-    "ejectMagOnEmpty": "firing",
 
     "laser": {
       "enabled": true,

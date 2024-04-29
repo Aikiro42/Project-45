@@ -133,6 +133,17 @@ function Project45GunFire:init()
   self.bulletsPerReload = math.max(1, self.bulletsPerReload)
   self.muzzleSmokeTime = self.muzzleSmokeTime or 1.5
 
+  -- ammo recharge
+  self.hasRechargingAmmo = self.ammoRechargeDelay or self.ammoRechargeTime
+  if self.hasRechargingAmmo then
+    self.ammoRechargeDelayTime = math.max(0, self.ammoRechargeDelayTime or 0)
+    self.ammoRechargeTime = math.max(0, self.ammoRechargeTime or 0)
+    self.ammoRechargeDelayTimer = self.ammoRechargeDelayTime
+    self._ammoRechargeTime = self.ammoRechargeTime / self.maxAmmo
+    self.ammoRechargeTimer = 0
+  end
+
+
   -- always enable laser if debug is on
   self.laser.enabled = self.debug or self.laser.enabled
 
@@ -380,12 +391,21 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
   self:renderModPositionDebug()
   self:updateLaser()
   self:updateCharge()
+  self:updateAmmoRecharge()
   self:updateRecoil()
   self:updateCycleTime()
   self:updateScreenShake()
   self:updateProjectileStack()
   self:updateMovementControlModifiers()
   self:updateMuzzleFlash()
+
+  if self.mustEject
+  and animator.animationState("gun") ~= "ejecting"
+  and animator.animationState("gun") ~= "boltPulling" then
+    self.mustEject = false
+    self:discardCasings()
+    self.updateChamberState("empty")
+  end
 
   if not self.isFiring then
     if not self:triggering() then
@@ -405,9 +425,11 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
       if storage.ammo >= 0 and not self.triggered then
         if storage.jamAmount > 0 then
           self:updateJamAmount(0, true)
-          self:openBolt(self.breakAction and storage.ammo or 0)
+          self:openBolt(self.breakAction and storage.ammo or 0,
+            false, self.breakAction, true, true)
         else
-          self:openBolt(self.breakAction and storage.ammo or math.min(storage.ammo, self.ammoPerShot))        
+          self:openBolt(self.breakAction and storage.ammo or math.min(storage.ammo, self.ammoPerShot),
+            false, self.breakAction, true, true)
         end
         if self.internalMag then
           self:setState(self.reloading)
@@ -448,11 +470,9 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
           end
       elseif storage.ammo == 0 and not self.triggered then
         if self.loadRoundsThroughBolt then
-          self:setState(self.ejecting)
-        else
-          self:ejectMag()
+          self:openBolt(animator.animationState("chamber") == "ready" and self.ammoPerShot, false, true, true, true)
         end
-
+        self:ejectMag()
       else
         if not self.triggered then
           self:setState(self.reloading)
@@ -506,6 +526,7 @@ end
 function Project45GunFire:firing() -- state
   
   self.triggered = self.semi or storage.ammo == 0
+  self.ammoRechargeDelayTimer = self.ammoRechargeDelayTime
 
   if self:jam() then return end
 
@@ -616,11 +637,14 @@ function Project45GunFire:ejecting()
 
   self:onEjectPassive()
 
-  if not self.ejectCasingsWithMag
-  and self.ejectBeforeAnimation
-  then
-    self:discardCasings()
-    self:updateChamberState("empty") -- empty chamber
+  if not self.ejectCasingsWithMag then
+    
+    if not self.ejectAfterAnimation then
+      self:discardCasings()
+      self:updateChamberState("empty") -- empty chamber
+    else
+      self.mustEject = true
+    end
   end
 
   -- if gun is cocked per shot
@@ -650,7 +674,7 @@ function Project45GunFire:ejecting()
 
   -- if the gun is cocked per shot
   -- and the gun is done bursting,
-  -- we for the cock animation to end
+  -- we wait for the cock animation to end
   -- otherwise, the gun is semiauto or the gun isn't done bursting:
   -- we wait for the (half) cycle animation to end
   if (self.manualFeed and (storage.burstCounter >= self.burstCount))
@@ -658,15 +682,8 @@ function Project45GunFire:ejecting()
   or self.isCocking
   then
     util.wait(self.cockTime/2)
-    self.stanceLocked = false
   else
     util.wait(self.currentCycleTime/3)
-  end
-
-  if not self.ejectCasingsWithMag
-  and not self.ejectBeforeAnimation
-  then
-    self:discardCasings()
   end
 
   self:updateChamberState("empty") -- empty chamber
@@ -977,6 +994,7 @@ function Project45GunFire:cocking()
   self.cooldownTimer = self.fireTime
   self.isCocking = true
 
+  --[[
   if animator.animationState("bolt") == "closed"
   or self.forceBoltPullWhenCocking
   then
@@ -991,6 +1009,13 @@ function Project45GunFire:cocking()
     animator.setAnimationState("bolt", "open")
     util.wait(self.cockTime/2)
   end
+  --]]
+
+  -- [[
+  self:openBolt(animator.animationState("chamber") == "ready" and self.ammoPerShot or 0, false, false, not self.ejectCasingsWithMag, true)
+  util.wait(self.cockTime/2)
+  
+  --]]
 
   if animator.animationState("bolt") == "open" then
     storage.burstCounter = self.burstCount
@@ -1160,7 +1185,8 @@ end
 function Project45GunFire:fireProjectile(projectileType, projectileParameters, inaccuracy, firePosition, projectileCount, aimVector, addOffset)
   local params = sb.jsonMerge(self.projectileKind == "summoned" and self.summonedProjectileParameters or self.projectileParameters, projectileParameters or {})
   params.power = self:damagePerShot()
-  params.powerMultiplier = activeItem.ownerPowerMultiplier()
+  -- params.powerMultiplier = activeItem.ownerPowerMultiplier()
+  params.powerMultiplier = 1
   params.speed = util.randomInRange(params.speed)
   local selectedProjectileType = nil
 
@@ -1270,19 +1296,52 @@ function Project45GunFire:recoil(down, mult, amount, recoverDelay)
   self.recoverDelayTimer = (recoverDelay or self.recoverDelay or self.fireTime or 0) * self.recoverMult
 end
 
-function Project45GunFire:openBolt(ammoDiscard, mute)
+function Project45GunFire:openBolt(ammoDiscard, mute, openGun, ejectCasings, manualOpen)
   ammoDiscard = ammoDiscard or 0
+  -- discard ammo and trigger onEjectPassive
   if ammoDiscard > 0 then
+    self:onEjectPassive()
     self:updateAmmo(-ammoDiscard)
     storage.unejectedCasings = storage.unejectedCasings + ammoDiscard
   end
-  if animator.animationState("bolt") ~= "open" then
-    animator.setAnimationState("bolt", "open")
-    animator.setAnimationState("gun", self.breakAction and "open" or "ejecting")
-    if not self.mute then animator.playSound("boltPull") end
+
+  if ejectCasings then
+    if not self.ejectAfterAnimation then
+      self:discardCasings()
+      self:updateChamberState("empty") -- empty chamber
+    else
+      self.mustEject = true
+    end
   end
-  self:discardCasings()
-  self:updateChamberState("empty")
+
+  -- If bolt is not open, animate
+  if animator.animationState("bolt") ~= "open" then
+
+    -- Screen shake if rounds are to be loaded through bolt
+    if self.loadRoundsThroughBolt and storage.ammo <= 0 then
+      self:screenShake(0.5)
+    end
+    
+    if animator.animationState("bolt") == "jammed" then
+      -- jammed animation state should visually be linekd to ejected
+      animator.setAnimationState("gun", "ejected")
+    else
+      -- opening the bolt opens the gun
+      animator.setAnimationState("gun", (openGun and self.breakAction and "open") or (manualOpen and "boltPulling") or "ejecting")
+    end
+    animator.setAnimationState("bolt", "open")
+
+    -- animate bolt pulling if not a break-action weapon
+    -- if it's a break-action but is a manual-feed, animate it anyway
+    -- TESTME:
+    if not self.breakAction or self.manualFeed then
+      self.weapon:setStance(self.stances.boltPull)
+    end
+
+    if not self.mute then animator.playSound("boltPull") end
+      
+  end
+
 end
 
 -- Ejects mag
@@ -1323,8 +1382,12 @@ function Project45GunFire:ejectMag()
   (self.breakAction and animator.animationState("chamber") == "filled") then
     -- if the mag is internal,
     -- discard any undiscarded casings instead
-    self:discardCasings()
-    self:updateChamberState("empty")
+    if not self.ejectAfterAnimation then
+      self:discardCasings()
+      self:updateChamberState("empty")
+    else
+      self.mustEject = true
+    end
   end
 
   if storage.ammo > 0 then
@@ -1371,6 +1434,27 @@ function Project45GunFire:screenShake(amount, shakeTime, random)
 end
 
 -- SECTION:  UPDATE FUNCTIONS
+
+function Project45GunFire:updateAmmoRecharge()
+  if not self.hasRechargingAmmo then return end
+  
+  if self.ammoRechargeDelayTimer <= 0
+  and storage.ammo > 0
+  and storage.ammo <= self.maxAmmo
+  and storage.jamAmount <= 0
+  and self.weapon.reloadTimer < 0 then
+    self.ammoRechargeTimer = math.max(0, self.ammoRechargeTimer - self.dt)
+    if self.ammoRechargeTimer <= 0 then
+      self:updateAmmo(1)
+      self.ammoRechargeTimer = self._ammoRechargeTime
+    end
+  else
+    self.ammoRechargeDelayTimer = math.max(0, self.ammoRechargeDelayTimer - self.dt)  
+    self.ammoRechargeTimer = self._ammoRechargeTime
+  end
+
+end
+
 
 -- Updates the charge of the gun
 -- This is supposed to be called every tick in `Project45GunFire:update()`
@@ -1506,6 +1590,7 @@ end
 
 function Project45GunFire:updateStockAmmo(delta, willReplace)
   storage.stockAmmo = willReplace and delta or math.max(0, storage.stockAmmo + delta)
+  self.weapon.stockAmmoDamageMult = 1 + (storage.stockAmmo * 0.1 / self.maxAmmo * 3)
   activeItem.setScriptedAnimationParameter("stockAmmo", storage.stockAmmo)
 end
 
@@ -1745,6 +1830,8 @@ function Project45GunFire:evalProjectileKind()
           activeItem.setScriptedAnimationParameter("primaryLaserArcRenderTime", projectileConfig.timeToLive)
           activeItem.setScriptedAnimationParameter("primaryLaserArcGravMult", root.projectileGravityMultiplier(projectileType))
         end
+      else
+        self.weapon.damageSource = hitscanLib.alteredDamageSourceFunc
       end
     end
   
@@ -1754,12 +1841,18 @@ function Project45GunFire:evalProjectileKind()
   self.updateProjectileStack = function() end
   if self.projectileKind == "hitscan" then
     self.hitscanParameters.hitscanBrightness = util.clamp(self.hitscanParameters.hitscanBrightness or 0, 0, 1)
-    self.fireProjectile = hitscanLib.fireHitscan
+    self.fireProjectile = self.hitscanParameters.chain and hitscanLib.fireChain or hitscanLib.fireHitscan
+    if self.hitscanParameters.chain then
+      self.chainScan = hitscanLib.chainScan
+    end
     self.updateProjectileStack = hitscanLib.updateProjectileStack
     self.hitscanParameters.hitscanColor = self.hitscanParameters.hitscanColor or self.muzzleFlashColor
   elseif self.projectileKind == "beam" then
     self.muzzleProjectileFired = false
-    self.firing = hitscanLib.fireBeam
+    self.firing = self.beamParameters.chain and hitscanLib.fireChainBeam or hitscanLib.fireBeam
+    if self.beamParameters.chain then
+      self.chainScan = hitscanLib.chainScan
+    end
     self.updateProjectileStack = hitscanLib.updateProjectileStack
     self.beamParameters.beamColor = self.muzzleFlashColor
     activeItem.setScriptedAnimationParameter("beamColor", self.muzzleFlashColor)
@@ -1846,11 +1939,12 @@ function Project45GunFire:damagePerShot(noDLM)
   * self.reloadRatingDamage -- as low as 0.8 (bad), as high as 1.5 (perfect)
   * critDmg -- this way, rounds deal crit damage individually
   * (self.passiveDamageMult or 1) -- provides a way for passives to modify damage
+  * self.weapon.stockAmmoDamageMult
   -- * (self.balanceDamageMult or 1)
   / self.projectileCount
 
   if dps_debug then
-    sb.logInfo(string.format("Final Damage: %f", finalDmg * activeItem.ownerPowerMultiplier()))
+    sb.logInfo(string.format("Final Damage: %f", finalDmg))
     sb.logInfo(string.format("\t %25s: %f", "Base Damage", self.baseDamage))
     sb.logInfo(string.format("\t %25s: %f", "Damage Level Multiplier", (noDLM and 1 or config.getParameter("damageLevelMultiplier", 1))))
     sb.logInfo(string.format("\t %25s: %f", "Charge Damage", self.currentChargeDamage))
@@ -1858,7 +1952,6 @@ function Project45GunFire:damagePerShot(noDLM)
     sb.logInfo(string.format("\t %25s: %f", "Crit Damage", critDmg))
     sb.logInfo(string.format("\t %25s: %f", "Passive Damage Mult", (self.passiveDamageMult or 1)))
     sb.logInfo(string.format("\t\t %25s: %f", "Projectile count", self.projectileCount))
-    sb.logInfo(string.format("\t\t %25s: (%f)", "Owner Power Multiplier", activeItem.ownerPowerMultiplier()))
   end
 
   return finalDmg
@@ -2008,7 +2101,10 @@ function Project45GunFire:loadGunState()
   self:updateChamberState(loadedGunState.chamber)
     
   storage.ammo = storage.ammo or loadedGunState.ammo
+  
   storage.stockAmmo = storage.stockAmmo or loadedGunState.stockAmmo
+  self.weapon.stockAmmoDamageMult = 1 + (storage.stockAmmo * 0.1 / self.maxAmmo * 3)
+
   storage.savedProjectileIndex = storage.savedProjectileIndex or loadedGunState.savedProjectileIndex
 
   -- saved projectile index validation

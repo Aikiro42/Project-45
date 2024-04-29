@@ -1,3 +1,14 @@
+# YYYY-MM-DD (v0.99.X.0)
+[h2]User-side:[/h2]
+
+[h3]New features[/h3]
+[h3]Balance Changes[/h3]
+[h3]General Changes[/h3]
+[h3]Bugfixes[/h3]
+
+[h2]Mod-side:[/h2]
+
+
 # 2024-02-13
 ## User-side:
 - Decreased effect of walking (2x to 1.5x) and being mobile (4x to 2x) on recover time
@@ -131,3 +142,223 @@
 - An isUnique field is added to weapon configs determines whether an item's rarity is displayed as XSSR.
 - Changed weapon mods' categories from `eppAugment` to `uniqueWeapon`
 - Added "weapon" itemTag to all weapon mods, including the gun repair kit
+
+
+# 2024-02-13
+## User-side:
+- Decreased effect of walking (2x to 1.5x) and being mobile (4x to 2x) on recover time
+- Decreased recoil (3 to 1.75 degrees) and inaccuracy ([0.75, 1.5, 3, 4] to [0.5, 1, 1.25, 1.5]) of pistol
+- Added option to disable flashlights and lasers on the weapon when no magazine or reloading; option is enabled by default
+- incorporated option effect to project45gunscope laser
+- Implemented option effect on primary laser
+- Corrected category and tags of some weapons (particularly assault and sniper rifles and unique weapons)
+## Mod-side
+- refactor project45flashlight code while incorporating option effect
+- moved self.reloadTimer variable to self.weapon.reloadTimer so that alt abilities can access it
+- removed comment in project45gunscope animation script
+- removed stray printline statement
+
+#2024-02-14
+[h2]User-side:[/h2]
+- Added expy of Pancor Jackhammer to gunshop and droptables
+- Improved silenced firing sfx
+[h2]Mod-side:[/h2]
+- Changed gun repair kit category to be usable with bk3k's inventory mod
+
+#2024-02-15
+[h2]User-side:[/h2]
+- Guns now spawn with random stat bonuses, particularly to their base damage, crit chance and crit damage.
+- Added settings for maximum percent bonuses applied to gun stats, namely the base damage, critical chance and critical damage.
+- The stat bonus ratio is generated once and consistently applied to stats. e.g. a gun with 60% bonus will get a 60% bonus to its damage, crit chance and crit damage based on the max random stat values specified in the general config.
+- Added a 0.5x multiplier to the bonus received by guns bought from the gun shop
+- To more easily determine better guns, the bonus is formatted added to the final description.
+- Improved mod settings window
+- Added option to disable arm frame animations. Arms default to their rotation frames when switching stances (e.g. cocking, holding, reloading). Added for species compatibility, since some species restructure arm framesheets or animations.
+- Added wildcard stat mods to the npc droptables.
+- Increased the chance of project 45 items dropping from enemies.
+[h2]Mod-side:[/h2]
+- Changed the disassembler code to accomodate the new features
+- Changed gunshop code to accomodate the new features
+- Changed buildscript code to accomodate the new features
+- Made the gacha drop seeded items.
+
+#2024-02-19
+[h2]User-side:[/h2]
+
+[h3]New features[/h3]
+- Added the first passive mod, Shift Reload, which allows users to reload their weapons via shift while not taking up the ability mod slot.
+- You can now execute active reloads via right click (manual) or crouch (shift) if you have either mod installed.
+  - Updated descriptions of manual reload and shift reload mods in accordance with the change.
+
+[h3]Balance Changes[/h3]
+- Decreased randomized price of wildcard mods by 90%. They are still bought for 1000 pixels, but should never sell for above 300 pixels.
+- Moved wildcard stat mod drops to the XSSR stat mod drop table.
+- Increased weight of project 45 item reward pool drop chance from 0.25 to 0.3.
+- Decreased weight of project 45 item enemy drop chance from 0.5 to 0.1.
+  - Decreased enemy drop rolls from 2 to 1.
+  - Removed guaranteed(?) wildcard stat mod drops from enemies.
+- Changed drop category weight distributions. R's, SR's, SSR's and XSSR's now have a roughly equal chance of dropping either a gun, a gun mod or a stat mod.
+- Changed weights of Uncommons and Legendaries in their respective drop tables; compared to Commons/Rares' drop weight of 1, items of these rarities now have a drop weight of 0.5.
+- Nerfed maximum possible gun bonus multipliers by 80%.
+  - Updated codex to reflect bonus multiplier nerf.
+- Changed gun archetype baseline damages:
+  - Pistols: decreased from 1.25 to 1
+  - SMGs: decreased from 1 to 0.3
+  - Bows: decreased from 3 to 2.7
+  - Shotguns: decreased from 4 to 3
+  - Revolvers: increased from 1.5 to 1.75
+  - Rifles: decreased from 2.5 to 1.25
+  - Assault rifles: decreased from 2 to 0.4
+  - DMRs: decreased from 3 to 2
+  - Snipers: decreased from 3.5 to 2.8
+  - Machine guns: decreased from 3 to 0.45
+  - Anti-materiels: decreased from 5 to 3
+  - Grenade Launchers: decreased from 5 to 2.7
+  - Rocket Launchers: decreased from 4.5 to 2.7
+  - Beams: decreased from 1.5 to 0.8
+  - Magic: decreased from 5 to 0.8
+  - Flamethrowers: decreased from 2 to 0.35
+- Added baseline damage multipliers to weapons:
+  - Accelerator: 0.9x
+  - AMR: 1.05x
+  - Assault Rifle: 1.25x
+  - Autoshotgun: 0.8x
+  - Combat Rifle: 1.2x
+  - Revolver: 1.2x
+- Established crit chance and crit multiplier of handcannons to 10% and 1.2x respectively
+- Increased crit chance of the revolver from 25% to 40%
+- Increased crit damage multiplier of the revolver from 1.3 to 1.55
+- Increased crit chance of the smartgun from 15% to 75%
+- Established crit chance and damage of the SMG to 60% and 2.5x respectively.
+- Decreased god mod stats:
+  - Base damage bonus decreased from +2x to +0.2x
+  - Crit chance bonus decreased from +100% to +10%.
+  - Crit damage bonus decreased from +1 to +0.12
+  - Firetime bonus decreased from +0.5d to +0.08d
+- Changed wildcard stat mod ranges
+  - Additive base damage: [-1, +3]
+  - Multiplicative base damage: [-0.15x, +0.45x]
+  - Additive crit chance: [-5%, +15%]
+  - Multiplicative crit chance: [-0.5x, +1.5x]
+  - Additive crit damage: [-0.1, +0.3]
+  - Multiplicative crit damage: [-0.15x, +0.45x]
+  - Additive reload cost: [+3, -4]
+  - Multiplicative reload cost: [-0.2d, +0.4d]
+  - Additive fire time: [+100ms, -10ms]
+  - Multiplicative fire time: [-2.0d, +0.2d]
+    - Wildcards now have higher tendency to decrease fire rate
+- Update cyclo charge SFX.
+
+[h3]General Changes[/h3]
+- Made buildscripts generate a seed for the weapon if there is none. This effect is inhibited by the noSeed flag. Also improved code related to seed. This allows randomized guns and wildcard stat mods to be generated via /spawnitem.
+- Manual reload does not activate if energy resource is locked anymore.
+- Made changes to displayed rarity; Commons and Uncommons are displayed as R, Rares and Legendaries are displayed as SR, Essentials are displayed as SSR or XSSR.
+  - Changed rarities and reorganized drop table items to accomodate the change.
+
+[h3]Bugfixes[/h3]
+- Fixed incompatibility with TFox's Inventory mod.
+- Fixed bug where guns without charge times are given charge times if the fire time increase is high enough.
+- Fixed bug where wildcards' prices are updated every time they're rebuilt. No more golden goose wildcards.
+- Removed ability to install underbarrel mods on the zweibrandyr
+- Fix base stats reverting to their non-bonus value when applying stat mods.
+- Fix disassembler removing the "bought" flag from guns.
+
+[h2]Mod-side:[/h2]
+- Removed unused baseDamage config of handmaderifle
+- Refactor weapon mod buildscripts; parameter settings should now properly precede config settings
+- Added secret seed that gives 100% bonus to guns for debugging purposes.
+- Refactored random stat mod buildscript.
+  - Wildcards do not regenerate parameters every time it's (re)built anymore
+  - Wildcards' parameters are modified instead of their configs now.
+- Implemented shift action override
+- Made project45gunscope and project45phaseshift affected by shift action override
+- Update gunscope mod augments to indicate whether they have shift actions or none
+- Implemented passive mod application script.
+- An isUnique field is added to weapon configs determines whether an item's rarity is displayed as XSSR.
+- Changed weapon mods' categories from `eppAugment` to `uniqueWeapon`
+- Added "weapon" itemTag to all weapon mods, including the gun repair kit
+
+# 2024-03-23 (v0.99.6.0)
+[h2]User-side:[/h2]
+
+[h3]New features[/h3]
+- Implemented chargeDamageMult and perfectChargeDamageMult. Weapons can now have differing overcharge and perfect charge damage multipliers.
+- Added specific charge damage and perfect charge damage multipliers to the following guns:
+  - Compound Bow (1x overcharge, 2x perfect charge)
+  - Gauss Rifle (2x overcharge)
+  - Machine Gun (0.5x overcharge)
+  - Rocket Launcher (1.25x overcharge)
+  - Accelerator (1x overcharge) (i.e. no damage change when overcharged)
+- Added stock ammo. Stock ammo is a way to preserve your energy during gunfights.
+  - You can replenish your weapon's stocked ammo by applying the "Stock Ammo" applied utility to the respective weapon.
+  - A weapon's stocked ammo serves as a substitute for energy when it comes to reloading.
+  - You can now reload weapons while your energy is resource-locked, as long as the weapon has stocked ammo.
+  - Reloading while the weapon's stocked ammo is less than the amount normally loaded per reload consumes all of the remaining stocked ammo and finishes the reload sequence.
+  - Disassembling a weapon with stocked ammo yields a "Stock Ammo" item that gives the respective amount of leftover ammo (stocked + in magazine).
+  - You can now eject your magazine while your energy is locked, given you've installed mods that (or use guns that) that allow you to eject your magazine.
+
+
+[h3]Balance Changes[/h3]
+- Changed gun archetype base damage values:
+  - SMG decreased from 0.3 to 0.2
+  - Assault rifle decreased from 0.4 to 0.25
+  - Machine gun decreased from 0.45 to 0.3
+  - Flamethrower increased from 0.35 to 0.2
+  - Shotgun decreased from 3 to 2.125
+  - Bow decreased from 2.7 to 2
+  - Rifle increased from 1.25 to 1.5
+  - DMR decreased from 2 to 1.75
+  - Sniper decreased from 2.8 to 2
+  - Grenade & Rocket launchers decreased from 2.7 to 2.25
+  - Beam decreased from 0.8 to 0.5
+  - Magic increased from 0.8 to 1
+- Rebalanced some base damage multipliers:
+  - Nerfed multiplier of Accelerator from 0.9 to 0.8
+  - Buffed multiplier of AMR from 1.05 to 1.1
+  - Nerfed multiplier of Combat Rifle from 2.25 to 2
+  - Nerfed multiplier of Double Barrel from 3 to 1.75
+  - Nerfed multiplier of Revolver from 1.6 to 1.5
+  - Nerfed multiplier of Sawed-off from 3 to 1.7
+- Rebalanced some guns:
+  - Nerfed overcharge damage multiplier of minigun from 1.1 to 0.7
+  - Nerfed Crit Damage of SMG from 2.5 to 2.1
+  - Increased cock time of Sawed-off Shotgun
+  - Decreased cycle time of Smart Gun (indirect nerf)
+- Rebalanced some mods:
+  - Nerfed additive damage mod from +1 to +0.2.
+  - Buffed multiplicative damage mod from +15% to +50%.
+  - Increased God Mod multiplicative base damage from +20% to +40%/
+
+[h3]General Changes[/h3]
+- Changed color of charged progress bar when undercharged
+- Added bonus ratio level to tooltip, separated from description.
+- Mid-cock delay is now factored in when applying firetime stat mods
+
+[h3]Bugfixes[/h3]
+- Effect of Firetime stat mods should now be consistent with semicharge weapons.
+- Fixed bug where the charge indicator does not light up when the gun is fully overcharged and the perfect charge range goes up to 100% charge.
+
+[h2]Mod-side:[/h2]
+[h3]New features[/h3]
+- Established standard fire time and max ammo in config, for use in future balancing attempts.
+- Established minimum fire time in config, for use in future balancing attempts.
+- Added documentation of new charge damage features to weaponability as comments
+- Added two secret seeds that give weapons a 0% and 100% bonus.
+- Added sabot shell bulletcase particles
+- mod: added flag for verbose damage output log
+- Add macro for spawning control (100% bonus) weapons for testing
+- Modders can now set whether their gun closes its bolt when firing the last round or not. This is overridden to `false` if the gun is manual-fed.
+
+[h3]Bugfixes[/h3]
+- fix hitscanParameters.hitscanColor not affecting color of hitscan projectiles
+
+[h3]General Changes[/h3]
+- Update metadata
+- Update changelog
+- Update feedback checklist
+- Added validator for gun state.
+- Added (commented) snippet for disabling energy regen now that stock ammo is implemented
+
+[h3]Minor changes[/h3]
+- Commented out some printlines to more easily identify non-commented printlines in vs code.
+- Removed legacy code from project45-gunrepair.lua

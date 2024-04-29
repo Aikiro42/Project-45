@@ -109,11 +109,13 @@
         "project45-neo-grenadelauncher",
         "project45-neo-rocketlauncher",
         "project45-neo-minigun",
+        "project45-neo-autocannon",
         "project45-neo-flamethrower",
         "project45-neo-gaussrifle",
         
         // Energy Guns
         "project45-neo-cyclo",
+        "project45-neo-covalence",
         "project45-neo-accelerator",
         "project45-neo-beamsplitter",
         "project45-neo-beamgun",
@@ -126,9 +128,10 @@
         "project45-neb-magmaspitter",
         "project45-msx-marcohmg",
         "project45-scz-spacecowboy",
-        "project45-gov-scarlet",
+        "project45-gov-fleetlyfading",
         "project45-tcf-kineticarbiter",
-        "project45-pkf-typhon"
+        "project45-pkf-typhon",
+        "project45-hlo-maxx"
 
       ],
       "mods": [
@@ -241,10 +244,14 @@
       "util": [
         "project45manual-codex",
         "project45-gundisassembler",
+        "project45-gunseller",
+
+        "project45-portablegdk",
         "project45-gunrepairkit",
         "project45-ammostock",
+        "project45-essentialgunoil",
 
-        "project45-gunbag",        
+        "project45-gachabag",
         "project45-gachapull",
         "project45-gachapull10",
         

@@ -1,0 +1,54 @@
+{
+  "objectName" : "project45-gunseller",
+  "rarity" : "Essential",
+  "description" : "Contribute to Project 45 by providing materials and prototypes. ^#d29ce7;Sells items for full price.^reset;",
+  "shortdescription" : "^#FF9000;Reimburser^reset;",
+  "race" : "generic",
+  "category" : "shippingContainer",
+  "price" : 5000,
+  "objectType" : "container",
+  "printable" : false,
+
+  "apexDescription" : "A healthy campfire. I could cook some food using it.",
+  "avianDescription" : "A campfire. It's useful for very basic cooking.",
+  "floranDescription" : "Floran hate flames, but likesss to cook. Cooking leadss to eating.",
+  "glitchDescription" : "Informed. Heating meat with fire is a basic form of cooking.",
+  "humanDescription" : "I've always enjoyed watching the flames of a campfire dance.",
+  "hylotlDescription" : "A campfire, I enjoy the simplicity of flame-cooked food.",
+  "novakidDescription" : "A toasty campfire for cookin'. What more d'ya need?",
+
+
+  "scripts": ["/objects/scripts/project45-gunseller.lua"],
+  "scriptDelta": 5,
+
+  "openSounds" : [ "/sfx/objects/miningchest_open.ogg" ],
+  "closeSounds" : [ "/sfx/objects/miningchest_close.ogg" ],
+  "slotCount" : 40,
+  "uiConfig" : "/interface/scripted/project45-gunseller/project45-gunseller.config",
+  "frameCooldown" : 16,
+  "autoCloseCooldown" : 3600,
+
+  "inventoryIcon" : "project45-gunsellericon.png",
+  "orientations" : [
+    {
+      "imageLayers" : [
+        { "image" : "project45-gunseller.png:default.<key>"}
+      ],
+      "direction" : "left",
+      "imagePosition" : [-8, 0],
+      "spaces" : [[-1, 0], [0, 0], [-1, 1], [0, 1], [-1, 2], [0, 2]],
+      "anchors" : [ "bottom" ]
+    },
+    {
+      "imageLayers" : [
+        { "image" : "project45-gunseller.png:default.<key>"}
+      ],
+      "direction" : "right",
+      "flipImages" : true,
+      "imagePosition" : [-8, 0],
+      "spaces" : [[-1, 0], [0, 0], [-1, 1], [0, 1], [-1, 2], [0, 2]],
+      "anchors" : [ "bottom" ]
+    }
+  ]
+
+}
