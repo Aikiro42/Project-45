@@ -7,7 +7,8 @@ require "/items/buildscripts/project45abilities.lua"
 
 function build(directory, config, parameters, level, seed)
   
-  local generalConfig = root.assetJson("/configs/project45/project45_generalconfig.config")
+  local generalConfig = root.assetJson("/configs/project45/project45_general.config")
+  local generalTooltipConfig = root.assetJson("/configs/project45/project45_generaltooltip.config")
 
   local rarityConversions = {
     common = project45util.colorText("#96cbe7", "R (Common)"),
@@ -356,7 +357,7 @@ function build(directory, config, parameters, level, seed)
   -- populate tooltip fields
   if config.tooltipKind == "project45gun" then
     config.tooltipFields = config.tooltipFields or {}
-    config.tooltipFields.subtitle = generalConfig.categoryStrings[config.project45GunModInfo.category or "Generic"] -- .. "^#D1D1D1;" .. config.gunArchetype or config.category
+    config.tooltipFields.subtitle = generalTooltipConfig.categoryStrings[config.project45GunModInfo.category or "Generic"] -- .. "^#D1D1D1;" .. config.gunArchetype or config.category
     config.tooltipFields.levelLabel = util.round(currentLevel, 1)
     config.tooltipFields.rarityLabel = rarityConversions[configParameter("isUnique", false) and "unique" or string.lower(configParameter("rarity", "common"))]
 

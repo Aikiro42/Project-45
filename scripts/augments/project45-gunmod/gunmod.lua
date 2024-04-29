@@ -53,7 +53,7 @@ function apply(output, augment)
         end
       end
 
-      local protectedParameters = root.assetJson("/configs/project45/project45_statmod.config:statDefaults")
+      local protectedParameters = root.assetJson("/configs/project45/project45_generalstat.config:statDefaults")
       -- protect gun from getting their stats modified directly
       for param, _ in pairs(protectedParameters) do
         augment.primaryAbility[param] = nil

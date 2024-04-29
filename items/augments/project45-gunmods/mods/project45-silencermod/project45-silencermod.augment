@@ -21,7 +21,6 @@
     "slot": "muzzle",
     "stat": {
       "recoilMult": {
-        "operation": "multiply",
         "multiplicative": -0.1
       }
     },

@@ -16,7 +16,7 @@ function apply(output, augment)
 
   local statModifiers = output:instanceValue("statModifiers", {})
 
-  local statConfig = root.assetJson("/configs/project45/project45_statmod.config")
+  local statConfig = root.assetJson("/configs/project45/project45_generalstat.config")
 
   local newPrimaryAbility = {}
 
@@ -28,7 +28,8 @@ function apply(output, augment)
   local isConfigStat = set.new(statConfig.configStats or {})
   local isRestrictedGroup = set.new(statConfig.restrictedGroups or {})
   local isIntegerStat = set.new(statConfig.integerStats or {})
-  local isBadStat = set.new(statConfig.badStat or {})
+  local isBadStat = set.new(statConfig.badStats or {})
+  local isBadGroup = set.new(statConfig.badGroups or {})
   local isStatGroup = set.new(statConfig.statGroups or {})
 
   -- stat properties
@@ -71,7 +72,9 @@ function apply(output, augment)
       sb.logError("(statmod.lua) UNREGISTERED STAT QUERIED")
     end
 
-    return saved or statList[stat]
+    local configPrimaryAbility = sb.jsonMerge(output.config.primaryAbility, output.parameters.primaryAbility)
+
+    return saved or configPrimaryAbility[stat] or statList[stat]
 
   end
 

@@ -49,19 +49,6 @@
       "inaccuracy": {
         "multiplicative": -0.2
       }
-        
-      /*
-      "primaryAbility": {
-        "inaccuracy": {
-          "operation": "multiply",
-          "value": 0.8
-        },
-        "recoilMult": {
-          "operation": "multiply",
-          "value": 0.8
-        }
-      },
-      */
 
     }
 

@@ -182,6 +182,13 @@ function Checker:check()
 end
 
 function Checker:checkAbility()
+    
+  if not self.augment.ability then
+    -- nothing to check
+    self.checked = self.checked and true
+    return true
+  end
+
   if self.modSlots.ability then
     self:addError(string.format("Ability slot occupied"))
     self.checked = false
@@ -201,6 +208,12 @@ function Checker:checkAbility()
 end
 
 function Checker:checkConversion()
+  
+  if not self.augment.conversion then
+    -- nothing to check
+    self.checked = self.checked and true
+    return true
+  end
 
   if self.modSlots.ammoType then
     self:addError(string.format("Ammo slot occupied"))
@@ -244,6 +257,12 @@ function Checker:checkConversion()
 end
 
 function Checker:checkAmmo()
+  
+  if not self.augment.ammo then
+    -- nothing to check
+    self.checked = self.checked and true
+    return true
+  end
 
   if self.modSlots.ammoType then
     self:addError(string.format("Ammo slot occupied"))
@@ -287,6 +306,12 @@ end
 
 function Checker:checkStat()
   
+  if not self.augment.stat then
+    -- nothing to check
+    self.checked = self.checked and true
+    return true
+  end
+
   if self.augment.stat.level and (self.output:instanceValue("level", 1)) >= 10 then
     self:addError("Weapon at max level")
     self.checked = false

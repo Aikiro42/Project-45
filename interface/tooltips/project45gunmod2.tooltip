@@ -1,9 +1,9 @@
 {
   "background" : {
     "type" : "background",
-    "fileHeader" : "/interface/tooltips/project45mod/project45mod-tooltipheader.png",
-    "fileBody" : "/interface/tooltips/project45mod/project45mod-tooltipbody.png",
-    "fileFooter" : "/interface/tooltips/project45mod/project45mod-tooltipfooter.png"
+    "fileHeader" : "/interface/tooltips/project45gunmod2/project45gunmod2-tooltipheader.png",
+    "fileBody" : "/interface/tooltips/project45gunmod2/project45gunmod2-tooltipbody.png",
+    "fileFooter" : "/interface/tooltips/project45gunmod2/project45gunmod2-tooltipfooter.png"
   },
 
   "objectImage" : {
@@ -13,6 +13,17 @@
     "centered" : true,
     "maxSize" : [90, 63],
     "minSize" : [90, 63]
+  },
+  
+  "upgradeCostLabel": {
+    "type" : "label",
+    "position" : [286, 189],
+    "hAnchor" : "right",
+    "vAnchor": "mid",
+    "fontSize": 9,
+    "centered": true,
+    "wrapWidth" : 126,
+    "value": "COST: 99"
   },
 
   "categoryTitleLabel": {
@@ -101,6 +112,126 @@
     "wrapWidth" : 85,
     "value" : "Apply to weapon\n with right-click.",
     "color" : "#D66E18"
+  },
+
+  "statsTitleLabel": {
+    "type" : "label",
+    "position" : [242, 159],
+    "hAnchor" : "mid",
+    "centered": true,
+    "wrapWidth" : 85,
+    "value": "^#A8E6E2;[  STATS  ]"
+  },
+
+  "stat1TitleLabel": {
+    "type" : "label",
+    "position" : [202, 149],
+    "hAnchor" : "left",
+    "wrapWidth" : 85,
+    "value": "^#7e7e7e;--"
+  },
+  "stat1Label": {
+    "type" : "label",
+    "position" : [283, 139],
+    "hAnchor" : "right",
+    "wrapWidth" : 38,
+    "value": "^#7e7e7e;--"
+  },
+  
+  "stat2TitleLabel": {
+    "position": [202, 129],
+    "value": "^#7e7e7e;--",
+    "type": "label",
+    "hAnchor" : "left",
+    "wrapWidth" : 85
+  },
+  
+  "stat2Label": {
+    "position": [283, 119],
+    "value": "^#7e7e7e;--",
+    "type": "label",
+    "hAnchor" : "right",
+    "wrapWidth" : 85
+  },
+  
+  "stat3TitleLabel": {
+    "position": [202, 109],
+    "value": "^#7e7e7e;--",
+    "type": "label",
+    "hAnchor" : "left",
+    "wrapWidth" : 85
+  },
+  
+  "stat3Label": {
+    "position": [283, 99],
+    "value": "^#7e7e7e;--",
+    "type": "label",
+    "hAnchor" : "right",
+    "wrapWidth" : 85
+  },
+  
+  "stat4TitleLabel": {
+    "position": [202, 89],
+    "value": "^#7e7e7e;--",
+    "type": "label",
+    "hAnchor" : "left",
+    "wrapWidth" : 85
+  },
+  
+  "stat4Label": {
+    "position": [283, 79],
+    "value": "^#7e7e7e;--",
+    "type": "label",
+    "hAnchor" : "right",
+    "wrapWidth" : 85
+  },
+  
+  "stat5TitleLabel": {
+    "position": [202, 69],
+    "value": "^#7e7e7e;--",
+    "type": "label",
+    "hAnchor" : "left",
+    "wrapWidth" : 85
+  },
+  
+  "stat5Label": {
+    "position": [283, 59],
+    "value": "^#7e7e7e;--",
+    "type": "label",
+    "hAnchor" : "right",
+    "wrapWidth" : 85
+  },
+  
+  "stat6TitleLabel": {
+    "position": [202, 49],
+    "value": "^#7e7e7e;--",
+    "type": "label",
+    "hAnchor" : "left",
+    "wrapWidth" : 85
+  },
+  
+  "stat6Label": {
+    "position": [283, 39],
+    "value": "^#7e7e7e;--",
+    "type": "label",
+    "hAnchor" : "right",
+    "wrapWidth" : 85
+  },
+  
+  "stat7TitleLabel": {
+    "position": [202, 29],
+    "value": "^#7e7e7e;--",
+    "type": "label",
+    "hAnchor" : "left",
+    "wrapWidth" : 85
+  },
+  
+  "stat7Label": {
+    "position": [283, 19],
+    "value": "^#7e7e7e;--",
+    "type": "label",
+    "hAnchor" : "right",
+    "wrapWidth" : 85
   },
   
   "rarityLabel" : {

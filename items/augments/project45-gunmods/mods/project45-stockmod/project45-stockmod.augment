@@ -21,7 +21,6 @@
     "slot": "stock",
     "stat": {
       "recoilMult": {
-        "operation": "multiply",
         "multiplicative": -0.5
       }
     },

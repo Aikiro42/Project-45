@@ -22,7 +22,7 @@ function init()
     self.weapon:addAbility(secondaryAbility)
   end
 
-  local generalConfig = root.assetJson("/configs/project45/project45_generalconfig.config")
+  local generalConfig = root.assetJson("/configs/project45/project45_general.config")
 
   activeItem.setScriptedAnimationParameter("hand", activeItem.hand())
 

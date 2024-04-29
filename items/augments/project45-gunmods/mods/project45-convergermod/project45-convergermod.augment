@@ -40,14 +40,6 @@
           "operation": "replace",
           "value": 1
         },
-        "spread": {
-          "operation": "multiply",
-          "value": 0.01
-        },
-        "recoilMult": {
-          "operation": "multiply",
-          "value": 1.5
-        },
         "hitscanParameters":{
           "operation": "merge",
           "value": {

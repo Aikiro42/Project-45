@@ -5,7 +5,7 @@ require "/scripts/set.lua"
 
 hitscanLib = {}
 
-local modConfig = root.assetJson("/configs/project45/project45_generalconfig.config")
+local modConfig = root.assetJson("/configs/project45/project45_general.config")
 
 function hitscanLib:fireChainBeam()
   if world.lineTileCollision(mcontroller.position(), self:firePosition()) then return end
