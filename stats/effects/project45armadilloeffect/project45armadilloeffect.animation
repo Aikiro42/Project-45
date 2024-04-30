@@ -1,0 +1,72 @@
+{
+  "animatedParts" : {
+    "stateTypes" : {
+      "shield" : {
+        "default" : "activating",
+        "states" : {
+          "inactive" : {},
+          "activating" : {
+            "frames" : 21,
+            "cycle" : 1,
+            "mode" : "transition",
+            "transition" : "active"
+          },
+          "deactivating" : {
+            "frames" : 3,
+            "cycle" : 0.3,
+            "mode" : "transition",
+            "transition" : "inactive"
+          },
+          "active" : {}
+        }
+      }
+    },
+    "parts" : {
+      "shieldPart" : {
+        "properties" : {
+          "zLevel" : 0
+        },
+        "partStates" : {
+          "shield" : {
+            "activating" : {
+              "properties" : {
+                "image" : "project45armadilloeffect.png:activating.<frame>",
+                "fullbright": true
+              }
+            },
+            "deactivating" : {
+              "properties" : {
+                "image" : "project45armadilloeffect.png:deactivating.<frame>",
+                "fullbright": true
+              }
+            },
+            "active" : {
+              "properties" : {
+                "image" : "project45armadilloeffect.png:activating.21",
+                "fullbright": true
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "sounds": {
+    "activate": ["/sfx/project45neosfx/stat/project45armadilloeffect.ogg"]
+  },
+  "particleEmitters" : {
+    "fireAura" : {
+      "active" : true,
+      "emissionRate" : 15,
+      "offsetRegion" : [-3.0, -3.0, 3.0, 3.0],
+      "particles" : [
+        { "particle" : "project45armadillospark1"},
+        { "particle" : "project45armadillospark1"},
+        { "particle" : "project45armadillospark1"},
+        { "particle" : "project45armadillospark1"},
+        { "particle" : "project45armadillospark1"},
+        { "particle" : "project45armadillospark1"}
+      ]
+    }
+  }
+}
