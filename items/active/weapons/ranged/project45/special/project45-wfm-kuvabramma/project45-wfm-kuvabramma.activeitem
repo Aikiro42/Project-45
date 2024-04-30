@@ -44,14 +44,26 @@
     },
 
     "sounds": {
-      "fire" : [ "/sfx/project45neosfx/fire/fire-bow1.ogg" ],
-      "perfectChargeFire": [ "/sfx/projectiles/spinning_throw.ogg" ],
-      "chargeStart": ["/sfx/gun/bow_draw1.ogg"],
+      "fire" : [
+        "/sfx/project45neosfx/special/kuvabramma/GrnBowShotA.ogg",
+        "/sfx/project45neosfx/special/kuvabramma/GrnBowShotB.ogg",
+        "/sfx/project45neosfx/special/kuvabramma/GrnBowShotC.ogg"
+      ],
+      "perfectChargeFire": [ ],
+      "chargeStart": [
+        "/sfx/project45neosfx/special/kuvabramma/GrnBowDrawA.ogg",
+        "/sfx/project45neosfx/special/kuvabramma/GrnBowDrawB.ogg",
+        "/sfx/project45neosfx/special/kuvabramma/GrnBowDrawC.ogg"
+      ],
       "chargeDrone": ["/sfx/project45neosfx/chargedrone/chargedrone-bow1.ogg"],
       "boltPull" : [ ],
       "boltPush" : [ ],
       "ejectMag": [],
-      "reloadEnd": ["/sfx/project45neosfx/loadmag/loadmag-bow1.ogg"],
+      "reloadEnd": [
+        "/sfx/project45neosfx/special/kuvabramma/GrnBowLatchA.ogg",
+        "/sfx/project45neosfx/special/kuvabramma/GrnBowLatchB.ogg",
+        "/sfx/project45neosfx/special/kuvabramma/GrnBowLatchC.ogg"
+      ],
       "loadRound": [],
       "badReload": [],
   
@@ -113,7 +125,7 @@
     "bulletsPerReload": 1,
     "semi": true,
     "dischargeTimeMult": 4,
-    "projectileType": "project45stdarrow",
+    "projectileType": "project45brammaarrow",
 
     "spread": 3,
     "reloadTime": 0.5,
