@@ -38,6 +38,14 @@
       },
       "overrideTwoHanded": true,
       "twoHanded": true
+    },
+    "stat": {
+      "recoverDelay": {
+        "rebaseMult": 1.1
+      },
+      "recoverTime": {
+        "rebaseMult": 1.1
+      }
     }
 
   },

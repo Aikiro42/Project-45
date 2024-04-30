@@ -25,6 +25,12 @@
       },
       "jumpHeightFactor": {
         "multiplicative": 0.15
+      },
+      "recoverTime": {
+        "rebaseMult": 0.8
+      },
+      "recoilAmount": {
+        "rebaseMult": 1.1
       }
     },
     "gun":{

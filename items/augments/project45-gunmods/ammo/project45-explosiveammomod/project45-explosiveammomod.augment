@@ -21,7 +21,6 @@
     "conversion": "projectile",
     "ammo": {
       "archetype": "bullet",
-
       "projectileType": "project45explosivebullet"
     }
   },

@@ -228,7 +228,9 @@ function build(directory, config, parameters, level, seed)
   -- Append technical info
   local techInfo = configParameter("technicalInfo")
   if techInfo then
-    config.tooltipFields.technicalLabel = "^#ffd495;" .. techInfo .. "^reset;\n"
+    config.tooltipFields.technicalLabel = project45util.colorText("#ffd495",techInfo)
+  else
+    config.tooltipFields.technicalLabel = project45util.colorText("#a0a0a0","No technical info.")
   end
   
   config.tooltipFields.rarityLabel = rarityConversions[configParameter("isUnique", false) and "unique" or string.lower(configParameter("rarity", "common"))]

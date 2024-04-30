@@ -21,8 +21,6 @@
     "conversion": "hitscan",
     "ammo": {
       "archetype": "laser",
-      "spread": 0.5,
-      "projectileCount": 1,
       "muzzleFlashColor": [210, 156, 231],
       "hitscanParameters": {
         "hitscanColor": [210, 156, 231],
@@ -42,6 +40,11 @@
         "fireStart": ["/assetmissing.wav"],
         "fireLoop": ["/assetmissing.wav"],
         "fireEnd": ["/assetmissing.wav"]
+      }
+    },
+    "stat": {
+      "spread": {
+        "rebaseMult": 0.7
       }
     }
   },

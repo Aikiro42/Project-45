@@ -24,13 +24,13 @@
         "rebase": 1
       },
       "spread": {
-        "multiplicative": -0.99
+        "rebase": 0.1
       },
       "recoilAmount": {
         "additive": 10
       },
       "baseDamage": {
-        "additive": 0.25
+        "rebaseMult": 1.01
       }
     },
     "gun": {

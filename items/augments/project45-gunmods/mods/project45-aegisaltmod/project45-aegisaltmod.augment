@@ -29,10 +29,7 @@
       "passiveDescription": "Base Damage +0.05x per Accelerator Armor."
     },
     "stat": {
-      "movementSpeedFactor": {
-        "multiplicative": 0.15
-      },
-      "jumpHeightFactor": {
+      "mobility": {
         "multiplicative": 0.15
       }
     },

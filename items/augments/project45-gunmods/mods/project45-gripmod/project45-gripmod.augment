@@ -22,7 +22,7 @@
     "incompatibleWeapons": ["project45-neo-bow"],
     "stat": {
       "recoilMult": {
-        "multiplicative": -0.2
+        "rebaseMult": 0.8
       }
     },
     "gun": {

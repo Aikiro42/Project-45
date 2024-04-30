@@ -23,6 +23,20 @@
       "altAbilityType" : "project45flashlaser",
       "overrideTwoHanded": true,
       "twoHanded": true
+    },
+    "stat": {
+      "recoverDelay": {
+        "rebaseMult": 0.8
+      },
+      "recoverTime": {
+        "rebaseMult": 0.8
+      },
+      "inaccuracy": {
+        "rebaseMult": 0.8
+      },
+      "recoilAmount": {
+        "rebaseMult": 0.8
+      }
     }
   },
 

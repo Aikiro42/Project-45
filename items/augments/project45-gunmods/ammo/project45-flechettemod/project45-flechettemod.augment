@@ -22,11 +22,16 @@
     "conversion": "projectile",
     "ammo": {
       "archetype": "shotgun",
-
-      "multishot": 1.1,
-      "projectileCount": 5,
       "projectileParameters": {
         "piercing": true
+      }
+    },
+    "stat": {
+      "multishot": {
+        "rebaseMult": 1.1
+      },
+      "projectileCount": {
+        "rebaseMult": 5
       }
     }
   },

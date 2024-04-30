@@ -12,7 +12,7 @@
   },
   "inventoryIcon" : "/items/augments/project45-gunmods/ability/project45-orbitaltranspondermod/project45-orbitaltranspondermodicon.png",
   "description" : "A small transponder to request ordinance. Just point and click.",
-  "technicalInfo": "Right-click to summon an orbital strike.",
+  "technicalInfo": "Right-click to summon an orbital strike.\nEnables laser.",
   "shortdescription" : "Orbital Transponder",
   "archetype": "Active Ability",
 

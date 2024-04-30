@@ -20,8 +20,11 @@
     "category": "ballistic",
     "slot": "muzzle",
     "stat": {
-      "recoilMult": {
-        "multiplicative": -0.1
+      "recoilAmount": {
+        "rebaseMult": 1.1
+      },
+      "critChance": {
+        "rebaseMult": 1.5
       }
     },
     "gun": {

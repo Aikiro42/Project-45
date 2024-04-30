@@ -84,11 +84,13 @@ function apply(output, augment)
 
     statModifiers.maxAmmo = statModifiers.maxAmmo or {
       base = baseStat("maxAmmo"),
+      baseMult = 1,
       additive = 0,
       multiplicative = 1
     }
     statModifiers.bulletsPerReload = statModifiers.bulletsPerReload or {
       base = baseStat("bulletsPerReload"),
+      baseMult = 1,
       additive = 0,
       multiplicative = 1
     }
@@ -105,6 +107,7 @@ function apply(output, augment)
 
       statModifiers.fireTimeGroup = statModifiers.fireTimeGroup or {
         base = {},
+        baseMult = {},
         additive = 0,
         multiplicative = 1
       }
@@ -116,8 +119,10 @@ function apply(output, augment)
       if augment[fireTimeGroupStat].rebase then
         statModifiers.fireTimeGroup.base[fireTimeGroupStat] = augment[fireTimeGroupStat].rebase
       end
+
       if augment[fireTimeGroupStat].rebaseMult then
-        statModifiers.fireTimeGroup.base[fireTimeGroupStat] = statModifiers.fireTimeGroup.base[fireTimeGroupStat] * augment[fireTimeGroupStat].rebaseMult
+        statModifiers.fireTimeGroup.baseMult[fireTimeGroupStat] = math.max(0, (statModifiers.fireTimeGroup.baseMult[fireTimeGroupStat] or 1) * augment[fireTimeGroupStat].rebaseMult)
+        statModifiers.fireTimeGroup.base[fireTimeGroupStat] = statModifiers.fireTimeGroup.base[fireTimeGroupStat] * statModifiers.fireTimeGroup.baseMult[fireTimeGroupStat]
       end
   
       -- prompt recalculation
@@ -134,11 +139,13 @@ function apply(output, augment)
   if augment.fireTimeGroup then
     statModifiers.fireTimeGroup = statModifiers.fireTimeGroup or {
       base = {},
+      baseMult = {},
       additive = 0,
       multiplicative = 1
     }
     for _, fireTimeStat in ipairs(groupStats.fireTimeGroup) do
       statModifiers.fireTimeGroup.base[fireTimeStat] = baseStat(fireTimeStat)
+      statModifiers.fireTimeGroup.baseMult[fireTimeStat] = statModifiers.fireTimeGroup.baseMult[fireTimeStat] or 1
     end
 
     local newCockTime = statModifiers.fireTimeGroup.base.cockTime
@@ -153,12 +160,12 @@ function apply(output, augment)
         newFireTime)
 
     if augment.fireTimeGroup.additive then
-      statModifiers.fireTimeGroup.additive = (statModifiers.fireTimeGroup.additive or 0) + augment.fireTime.additive
+      statModifiers.fireTimeGroup.additive = (statModifiers.fireTimeGroup.additive or 0) + augment.fireTimeGroup.additive
     end
 
     if augment.fireTimeGroup.multiplicative then
       statModifiers.fireTimeGroup.multiplicative = (statModifiers.fireTimeGroup.multiplicative or 1) +
-                                                  augment.fireTime.multiplicative
+                                                  augment.fireTimeGroup.multiplicative
     end
 
     --[[
@@ -278,6 +285,7 @@ function apply(output, augment)
       -- initialize
       statModifiers[stat] = statModifiers[stat] or {
         base = baseStat(stat),
+        baseMult = 1,
         additive = 0,
         multiplicative = 1
       }
@@ -322,11 +330,13 @@ function apply(output, augment)
     if group then
       statModifiers[group] = statModifiers[group] or {
         base = {},
+        baseMult = {},
         additive = 0,
         multiplicative = 1
       }
       for _, substat in ipairs(groupStats[group]) do
         statModifiers[group].base[substat] = baseStat(substat)
+        statModifiers[group].baseMult[substat] = statModifiers[group].baseMult[substat] or 1
       end
     end
 
@@ -341,6 +351,7 @@ function apply(output, augment)
       else
         statModifiers[stat] = statModifiers[stat] or {
           base = baseStat(stat),
+          baseMult = 1,
           additive = 0,
           multiplicative = 1
         }
@@ -348,9 +359,11 @@ function apply(output, augment)
 
       -- rebase, rebaseMult on member/individual stats only
       if group then
-        statModifiers[group].base[stat] = (rebase or baseStat(stat)) * (rebaseMult or 1)
+        statModifiers[group].baseMult[stat] = (statModifiers[group].baseMult[stat] or 1) * (rebaseMult or 1)
+        statModifiers[group].base[stat] = (rebase or baseStat(stat)) * statModifiers[group].baseMult[stat]
       else
-        statModifiers[stat].base = (rebase or baseStat(stat)) * (rebaseMult or 1)
+        statModifiers[stat].baseMult = (statModifiers[stat].baseMult or 1) * (rebaseMult or 1)
+        statModifiers[stat].base = (rebase or baseStat(stat)) * statModifiers[stat].baseMult
       end
 
     end

@@ -41,10 +41,10 @@
         "rebase": 1
       },
       "fireTime": {
-        "rebase": 0.01
+        "rebaseMult": 0.5
       },
       "cycleTime": {
-        "rebase": 0.1
+        "rebaseMult": 0.5
       },
       "fireTimeGroup": {
         "additive": 0.01

@@ -22,13 +22,16 @@
     "slot": "sights",
     "stat": {
       "inaccuracy": {
-        "multiplicative": -0.2
+        "rebaseMult": 0.8
       },
-      "recoilMult": {
-        "multiplicative": -0.2
+      "recoilAmount": {
+        "rebaseMult": 0.8
       },
       "recoverTime": {
-        "multiplicative": -0.75
+        "rebaseMult": 0.8
+      },
+      "recoverDelay": {
+        "rebaseMult": 0.25
       }
     },
     "gun": {

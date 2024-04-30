@@ -22,8 +22,12 @@
     "conversion": "projectile",
     "ammo": {
       "archetype": "shotgun",
-      "projectileCount": 5,
       "projectileType": "project45dragonsbreath"
+    },
+    "stat": {
+      "projectileCount": {
+        "rebase": 5
+      }
     }
   },
 

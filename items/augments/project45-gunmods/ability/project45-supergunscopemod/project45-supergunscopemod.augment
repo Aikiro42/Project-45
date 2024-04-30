@@ -13,7 +13,7 @@
   },
   "inventoryIcon" : "/items/augments/project45-gunmods/ability/project45-supergunscopemod/project45-supergunscopemodicon.png",
   "description" : "A high-tech scope mod equipped with gyrostabilizers that help manage recoil and accuracy.",
-  "technicalInfo": "Works similar to the Scope Mod.",
+  "technicalInfo": "- Hold RClick to aim.\n- Move cursor to move crosshairs.\n- Tap crouch to lock scope.\n+50% Crit Chance when aiming.",
   "statInfo": "Recoil x0.8\nInaccuracy x0.8\nCrit Chance +50% when aiming",
   "shortdescription" : "Hi-tech Scope",
   "archetype": "Active Ability",
@@ -46,8 +46,17 @@
     },
 
     "stat": {
+      "recoverDelay": {
+        "rebaseMult": 0.9
+      },
+      "recoverTime": {
+        "rebaseMult": 1.1
+      },
       "inaccuracy": {
-        "multiplicative": -0.2
+        "rebaseMult": 0.5
+      },
+      "recoilAmount": {
+        "rebaseMult": 0.5
       }
 
     }

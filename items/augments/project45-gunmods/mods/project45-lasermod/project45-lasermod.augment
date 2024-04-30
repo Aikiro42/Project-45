@@ -22,10 +22,10 @@
     "slot": "rail",
     "stat": {
       "inaccuracy": {
-        "multiplicative": -0.2
+        "rebaseMult": 0.8
       },
-      "recoilMult": {
-        "multiplicative": -0.2
+      "recoilAmount": {
+        "rebaseMult": 0.8
       }
     },
     "gun": {

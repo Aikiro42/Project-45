@@ -22,16 +22,16 @@
     "slot": "bowstring",
     "stat": {
       "multishot": {
-        "additive": 3
+        "rebase": 4
       },
       "maxAmmo": {
-        "additive": 3
+        "rebase": 4
       },
       "ammoPerShot": {
-        "additive": 3
+        "rebase": 4
       },
       "spread": {
-        "multiplicative": -0.5
+        "rebaseMult": 2
       }
     }
   },
