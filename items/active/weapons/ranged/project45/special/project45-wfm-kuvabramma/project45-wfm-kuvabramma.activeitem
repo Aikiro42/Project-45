@@ -1,0 +1,167 @@
+{
+  "itemName" : "project45-wfm-kuvabramma",
+  "price" : 3000,
+  "maxStack" : 1,
+  "rarity" : "Essential",
+  "description" : "A popular greatbow among the frames of war.",
+  "shortdescription" : "Kuva Bramma",
+  "isUnique": true,
+  "tooltipKind" : "project45gun",
+  "gunArchetype": "grenadeLauncher",
+  "category" : "bow",
+  "twoHanded" : true,
+  "itemTags" : ["weapon","ranged","bow"],
+  "level" : 1,
+  "muzzleFlashColor": [255, 255, 255],
+  "inventoryIcon" : "project45-wfm-kuvabramma-icon.png",
+
+  "project45GunModInfo": {
+    "category": "experimental",
+    "allowsConversion": [],
+    "acceptsModSlot": [],
+    "acceptsAmmoArchetype": []
+  },
+
+  "animationParts" : {
+    "middle" : "",
+    "middleFullbright" : "",
+    "charge": "project45-wfm-kuvabramma.png",
+    "chargeFullbright": "project45-wfm-kuvabramma-fullbright.png",
+    "magazine": "",
+    "magazineFullbright": ""
+  },
+
+  "animationCustom": {
+    "particleEmitters": {
+      "ejectionPort": {
+        "particles": [
+        ]
+      },
+      "magazine": {
+        "particles": [
+        ]
+      }
+    },
+
+    "sounds": {
+      "fire" : [ "/sfx/project45neosfx/fire/fire-bow1.ogg" ],
+      "perfectChargeFire": [ "/sfx/projectiles/spinning_throw.ogg" ],
+      "chargeStart": ["/sfx/gun/bow_draw1.ogg"],
+      "chargeDrone": ["/sfx/project45neosfx/chargedrone/chargedrone-bow1.ogg"],
+      "boltPull" : [ ],
+      "boltPush" : [ ],
+      "ejectMag": [],
+      "reloadEnd": ["/sfx/project45neosfx/loadmag/loadmag-bow1.ogg"],
+      "loadRound": [],
+      "badReload": [],
+  
+      // plays when there is an active reload and the red indicator is over the purple zone
+      "goodReload": [],
+  
+      // plays when there is an active reload and the red indicator is over the pink zone
+      "perfectReload": []
+  
+    },
+    "animatedParts": {
+      "parts":{
+        "charge":{
+          "partStates":{
+            "charge":{
+              "off": {
+                "properties": {
+                  "image": "<partImage>:fired.1"
+                }
+              }
+            }
+          }
+        }
+      },
+      "stateTypes": {
+        "charge":{
+          "states":{
+            "charging":{
+              "frames": 5
+            }
+          }
+        },
+        "gun": {
+          "states":{
+          }
+        }
+      }
+    }
+  },
+
+  "baseOffset" : [1.25, 0.25],
+  "muzzleOffset" : [0, 0],
+  "ejectionPortOffset": [-0.25, 0.5],
+  "magazineOffset": [-1, 0.25],
+
+  "railOffset": [0, -0.5],
+  "sightsOffset": [0.5, 0.75],
+  "underbarrelOffset": [0.5, 0],
+
+  "scripts" : ["/items/active/weapons/ranged/project45gunneo.lua"],
+    
+  "primaryAbilityType": "project45gunfire",
+  "primaryAbility": {
+
+    "critChance": 0.2,
+    "critDamageMult": 2.5,
+    "reloadCost": 50,
+    "maxAmmo": 1,
+    "bulletsPerReload": 1,
+    "semi": true,
+    "dischargeTimeMult": 4,
+    "projectileType": "project45stdarrow",
+
+    "spread": 3,
+    "reloadTime": 0.5,
+    "quickReloadTimeframe": [0, 0.6, 0.8, 0.8], // [ good% [ perfect% ] good% ] of <reloadTime>
+    "resetChargeOnFire": true,
+    "reloadOnEjectMag": true,
+    "chargeFrames": 5,
+    "ejectMagOnEmpty": "firing",
+
+    "hideGunWhenCharging": true,
+
+    "chargeArm": "front", // relative, facing right
+    // ["rotation", "swim.2", "swim.2", "swim.2", "swimIdle.1", "swimIdle.1"],
+    "chargeArmFrames": [
+      {
+        "frontArmFrame": "rotation"
+      },
+      {
+        "frontArmFrame": "swim.2"
+      },
+      {
+        "frontArmFrame": "swim.2"
+      },
+      {
+        "frontArmFrame": "swimIdle.1"
+      },
+      {
+        "frontArmFrame": "swim.1"
+      }
+    ],
+    "chargeTime": 1.4,
+    "overchargeTime": 0,
+    "animateBeforeOvercharge": true,
+    "jamChances": [0, 0, 0, 0],
+    "reloadRatingDamageMults": [0.5, 1, 1.15, 1.5],
+
+    "hideMuzzleSmoke": true,
+    "hideMuzzleFlash": true,
+
+    // "reloadTime": 10,
+
+    "stances": {
+      "aimStance": {
+        "allowRotate": true
+      }
+
+    }
+  },
+
+  "builder" : "/items/buildscripts/buildproject45neoneo.lua"
+}
