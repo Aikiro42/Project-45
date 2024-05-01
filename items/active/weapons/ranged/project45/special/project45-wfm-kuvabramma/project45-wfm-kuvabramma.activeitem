@@ -18,7 +18,9 @@
   "project45GunModInfo": {
     "category": "experimental",
     "allowsConversion": [],
-    "acceptsModSlot": [],
+    "acceptsModSlot": [
+      "bowstring"
+    ],
     "acceptsAmmoArchetype": []
   },
 
@@ -129,24 +131,25 @@
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
 
-    "critChance": 0.2,
-    "critDamageMult": 2.5,
-    "reloadCost": 50,
+    "critChance": 0.35,
+    "critDamageMult": 2.1,
+    "reloadCost": 100,
     "maxAmmo": 1,
     "bulletsPerReload": 1,
     "semi": true,
     "dischargeTimeMult": 4,
     "projectileType": "project45brammaarrow",
 
-    "spread": 3,
-    "reloadTime": 0.5,
+    "spread": 4,
+    "recoilAmount": 0.1,
+    "inaccuracy": 0.1,
+    "reloadTime": 0.6,
     "quickReloadTimeframe": [0, 0.6, 0.8, 0.8], // [ good% [ perfect% ] good% ] of <reloadTime>
     "resetChargeOnFire": true,
     "reloadOnEjectMag": true,
     "chargeFrames": 5,
     "ejectMagOnEmpty": "firing",
     "dischargeDelayTime": 0.1,
-
     "laser": {
       "enabled": true
     },
@@ -177,7 +180,7 @@
     "cockTime": 0.1,
     "animateBeforeOvercharge": true,
     "jamChances": [0, 0, 0, 0],
-    "reloadRatingDamageMults": [0.5, 1, 1.15, 1.5],
+    "reloadRatingDamageMults": [0.5, 1, 1.15, 1.20],
 
     "hideMuzzleSmoke": true,
     "hideMuzzleFlash": true,
