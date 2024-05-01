@@ -86,6 +86,17 @@
               }
             }
           }
+        },
+        "chargeFullbright":{
+          "partStates":{
+            "charge":{
+              "off": {
+                "properties": {
+                  "image": "<partImage>:fired.1"
+                }
+              }
+            }
+          }
         }
       },
       "stateTypes": {
@@ -105,7 +116,7 @@
   },
 
   "baseOffset" : [1.25, 0.25],
-  "muzzleOffset" : [0, 0],
+  "muzzleOffset" : [0.75, 0.125],
   "ejectionPortOffset": [-0.25, 0.5],
   "magazineOffset": [-1, 0.25],
 
@@ -134,6 +145,11 @@
     "reloadOnEjectMag": true,
     "chargeFrames": 5,
     "ejectMagOnEmpty": "firing",
+    "dischargeDelayTime": 0.1,
+
+    "laser": {
+      "enabled": true
+    },
 
     "hideGunWhenCharging": true,
 
@@ -156,8 +172,9 @@
         "frontArmFrame": "swim.1"
       }
     ],
-    "chargeTime": 1.4,
+    "chargeTime": 0.4,
     "overchargeTime": 0,
+    "cockTime": 0.1,
     "animateBeforeOvercharge": true,
     "jamChances": [0, 0, 0, 0],
     "reloadRatingDamageMults": [0.5, 1, 1.15, 1.5],

@@ -13,7 +13,7 @@
   "piercing": false,
   "statusEffects" : [ ],
   "power" : 5.0,
-  "speed" : 100,
+  "speed" : 80,
   "knockback" : 5,
   "collisionPoly": [
     [-8.5, 0],
@@ -73,7 +73,7 @@
     },
     {
       "action" : "config",
-      "file" : "/projectiles/explosions/project45_stdexplosion/project45_stdexplosion.config"
+      "file" : "/projectiles/explosions/project45_stdexplosion/project45_brammaexplosion.config"
     },
     {
       "action" : "loop",
