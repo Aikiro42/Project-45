@@ -46,6 +46,11 @@
     },
     {
         "op": "add",
+        "path": "/project45armadillo",
+        "value": "/items/active/weapons/ranged/abilities/project45armadillo/project45armadillo.weaponability"
+    },
+    {
+        "op": "add",
         "path": "/project45gunfirereload",
         "value": "/items/active/weapons/ranged/abilities/project45gunfirereload/project45gunfirereload.weaponability"
     },

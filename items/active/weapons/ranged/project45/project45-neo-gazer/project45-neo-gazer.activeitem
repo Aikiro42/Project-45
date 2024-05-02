@@ -103,7 +103,8 @@
 
     "hitscanParameters": {
       "chain": true,
-      "hitscanWidth": 3
+      "hitscanWidth": 3,
+      "punchThrough": 3
     },
 
     "beamParameters": {

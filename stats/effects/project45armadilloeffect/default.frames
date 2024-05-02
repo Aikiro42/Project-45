@@ -1,0 +1,12 @@
+{
+  "frameGrid" : {
+    "size" : [64, 64],
+    "dimensions" : [7, 4],
+    "names" : [
+      ["activating.1","activating.2","activating.3","activating.4","activating.5","activating.6","activating.7"],
+      ["activating.8","activating.9","activating.10","activating.11","activating.12","activating.13","activating.14"],
+      ["activating.15","activating.16","activating.17","activating.18","activating.19","activating.20","activating.21"],
+      ["deactivating.1","deactivating.2","deactivating.3", null, null, null, null]
+    ]
+  }
+}
