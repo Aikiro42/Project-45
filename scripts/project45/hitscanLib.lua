@@ -282,7 +282,7 @@ function hitscanLib:fireChain()
       
       local damageConfig = {
         -- multiply nProjsOverflowMult to final damage to compensate for lost multishot
-        baseDamage = finalDamage / math.max(1, hitEntityIds),
+        baseDamage = finalDamage / math.max(1, #hitEntityIds),
         timeout = self.currentCycleTime,
       }
       damageConfig = sb.jsonMerge(damageConfig, self.hitscanParameters.hitscanDamageConfig or {})

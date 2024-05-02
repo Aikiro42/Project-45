@@ -1,0 +1,199 @@
+{
+  "itemName" : "project45-wfm-kuvabramma",
+  "price" : 3000,
+  "maxStack" : 1,
+  "rarity" : "Essential",
+  "description" : "A popular greatbow among the frames of war.",
+  "shortdescription" : "Kuva Bramma",
+  "isUnique": true,
+  "tooltipKind" : "project45gun",
+  "gunArchetype": "grenadeLauncher",
+  "category" : "bow",
+  "twoHanded" : true,
+  "itemTags" : ["weapon","ranged","bow"],
+  "level" : 1,
+  "muzzleFlashColor": [255, 255, 255],
+  "inventoryIcon" : "project45-wfm-kuvabramma-icon.png",
+
+  "project45GunModInfo": {
+    "category": "experimental",
+    "allowsConversion": [],
+    "acceptsModSlot": [
+      "bowstring"
+    ],
+    "acceptsAmmoArchetype": []
+  },
+
+  "animationParts" : {
+    "middle" : "",
+    "middleFullbright" : "",
+    "charge": "project45-wfm-kuvabramma.png",
+    "chargeFullbright": "project45-wfm-kuvabramma-fullbright.png",
+    "magazine": "",
+    "magazineFullbright": ""
+  },
+
+  "animationCustom": {
+    "particleEmitters": {
+      "ejectionPort": {
+        "particles": [
+        ]
+      },
+      "magazine": {
+        "particles": [
+        ]
+      }
+    },
+
+    "sounds": {
+      "fire" : [
+        "/sfx/project45neosfx/special/kuvabramma/GrnBowShotA.ogg",
+        "/sfx/project45neosfx/special/kuvabramma/GrnBowShotB.ogg",
+        "/sfx/project45neosfx/special/kuvabramma/GrnBowShotC.ogg"
+      ],
+      "perfectChargeFire": [ ],
+      "chargeStart": [
+        "/sfx/project45neosfx/special/kuvabramma/GrnBowDrawA.ogg",
+        "/sfx/project45neosfx/special/kuvabramma/GrnBowDrawB.ogg",
+        "/sfx/project45neosfx/special/kuvabramma/GrnBowDrawC.ogg"
+      ],
+      "chargeDrone": ["/sfx/project45neosfx/chargedrone/chargedrone-bow1.ogg"],
+      "boltPull" : [ ],
+      "boltPush" : [ ],
+      "ejectMag": [],
+      "reloadEnd": [
+        "/sfx/project45neosfx/special/kuvabramma/GrnBowLatchA.ogg",
+        "/sfx/project45neosfx/special/kuvabramma/GrnBowLatchB.ogg",
+        "/sfx/project45neosfx/special/kuvabramma/GrnBowLatchC.ogg"
+      ],
+      "loadRound": [],
+      "badReload": [],
+  
+      // plays when there is an active reload and the red indicator is over the purple zone
+      "goodReload": [],
+  
+      // plays when there is an active reload and the red indicator is over the pink zone
+      "perfectReload": []
+  
+    },
+    "animatedParts": {
+      "parts":{
+        "charge":{
+          "partStates":{
+            "charge":{
+              "off": {
+                "properties": {
+                  "image": "<partImage>:fired.1"
+                }
+              }
+            }
+          }
+        },
+        "chargeFullbright":{
+          "partStates":{
+            "charge":{
+              "off": {
+                "properties": {
+                  "image": "<partImage>:fired.1"
+                }
+              }
+            }
+          }
+        }
+      },
+      "stateTypes": {
+        "charge":{
+          "states":{
+            "charging":{
+              "frames": 5
+            }
+          }
+        },
+        "gun": {
+          "states":{
+          }
+        }
+      }
+    }
+  },
+
+  "baseOffset" : [1.25, 0.25],
+  "muzzleOffset" : [0.75, 0.125],
+  "ejectionPortOffset": [-0.25, 0.5],
+  "magazineOffset": [-1, 0.25],
+
+  "railOffset": [0, -0.5],
+  "sightsOffset": [0.5, 0.75],
+  "underbarrelOffset": [0.5, 0],
+
+  "scripts" : ["/items/active/weapons/ranged/project45gunneo.lua"],
+    
+  "primaryAbilityType": "project45gunfire",
+  "primaryAbility": {
+
+    "critChance": 0.35,
+    "critDamageMult": 2.1,
+    "reloadCost": 100,
+    "maxAmmo": 1,
+    "bulletsPerReload": 1,
+    "semi": true,
+    "dischargeTimeMult": 4,
+    "projectileType": "project45brammaarrow",
+
+    "spread": 4,
+    "recoilAmount": 0.1,
+    "inaccuracy": 0.1,
+    "reloadTime": 0.6,
+    "quickReloadTimeframe": [0, 0.6, 0.8, 0.8], // [ good% [ perfect% ] good% ] of <reloadTime>
+    "resetChargeOnFire": true,
+    "reloadOnEjectMag": true,
+    "chargeFrames": 5,
+    "ejectMagOnEmpty": "firing",
+    "dischargeDelayTime": 0.1,
+    "laser": {
+      "enabled": true
+    },
+
+    "hideGunWhenCharging": true,
+
+    "chargeArm": "front", // relative, facing right
+    // ["rotation", "swim.2", "swim.2", "swim.2", "swimIdle.1", "swimIdle.1"],
+    "chargeArmFrames": [
+      {
+        "frontArmFrame": "rotation"
+      },
+      {
+        "frontArmFrame": "swim.2"
+      },
+      {
+        "frontArmFrame": "swim.2"
+      },
+      {
+        "frontArmFrame": "swimIdle.1"
+      },
+      {
+        "frontArmFrame": "swim.1"
+      }
+    ],
+    "chargeTime": 0.4,
+    "overchargeTime": 0,
+    "cockTime": 0.1,
+    "animateBeforeOvercharge": true,
+    "jamChances": [0, 0, 0, 0],
+    "reloadRatingDamageMults": [0.5, 1, 1.15, 1.20],
+
+    "hideMuzzleSmoke": true,
+    "hideMuzzleFlash": true,
+
+    // "reloadTime": 10,
+
+    "stances": {
+      "aimStance": {
+        "allowRotate": true
+      }
+
+    }
+  },
+
+  "builder" : "/items/buildscripts/buildproject45neoneo.lua"
+}

@@ -1,0 +1,14 @@
+{
+  "name" : "project45armadilloeffect",
+  "defaultDuration" : 1,
+  "label" : "Armadillo Shield",
+  "icon" : "/stats/effects/project45armadilloeffect/project45armadilloeffecticon.png",
+
+  "scripts" : [
+    "project45armadilloeffect.lua"
+  ],
+  "effectConfig" : {
+  },
+
+  "animationConfig" : "project45armadilloeffect.animation"
+}
