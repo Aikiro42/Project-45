@@ -288,8 +288,17 @@
     // ____________________________________[ SECTION: Accuracy and Recoil Config ] ____________________________________
 
     // standard deviation of random arm movement as the gun recoils (in degrees, not radians)
-    // note that this deviation is eliminated if the player crouches
-    "inaccuracy": 3, 
+    "inaccuracy": 3,
+    /*
+    // value multiplied to inaccuracy depending on movement state
+    "inaccuracyMults:" {
+      "mobile": 2,
+      "walking": 1,
+      "stationary": 0.5,
+      "crouching": 0.25
+    }
+    */
+
     // "recoilUpOnly": false, // forces inaccuracy to cause the weapon to go upwards only
     "recoilAmount": 0.5, // amount of recoil per shot, in degrees; arm and weapon will rotate by half of this
     "recoilMaxDeg": 5, // the most the arm and weapon will rotate, in degrees.

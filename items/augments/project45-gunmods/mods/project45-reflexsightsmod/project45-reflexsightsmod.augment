@@ -21,10 +21,9 @@
     "category": "universal",
     "slot": "sights",
     "stat": {
-      /*"inaccuracy": {
+      "inaccuracy": {
         "rebaseMult": 0.8
       },
-      */
       "recoilAmount": {
         "rebaseMult": 0.8
       },

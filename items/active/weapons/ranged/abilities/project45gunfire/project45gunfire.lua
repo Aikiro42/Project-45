@@ -150,16 +150,21 @@ function Project45GunFire:init()
 
   self.projectileFireSettings = self.projectileFireSettings or {}
   self.projectileFireSettings.batchFire = type(self.projectileType) == "table" and self.projectileFireSettings.batchFire
-  -- let inaccuracy be a table
-  if type(self.inaccuracy) ~= "table" then
-    self.inaccuracy = {
-      mobile = self.inaccuracy*2,  -- double inaccuracy while running
-      walking = self.inaccuracy,  -- standard inaccuracy while walking
-      stationary = self.inaccuracy/2, -- halved inaccuracy while standing
-      crouching = self.inaccuracy/4 -- quartered inaccuracy while crouching
-    }
-  end
-  self.currentInaccuracy = self.inaccuracy.mobile
+  
+  self.inaccuracyMults = self.inaccuracyMults or {
+    mobile = 1.25,
+    walking = 1,
+    stationary = 0.75,
+    crouching = 0.5
+  }
+  self.inaccuracyValues = {
+    mobile = self.inaccuracy * self.inaccuracyMults.mobile,
+    walking = self.inaccuracy * self.inaccuracyMults.walking,
+    stationary = self.inaccuracy * self.inaccuracyMults.stationary,
+    crouching = self.inaccuracy * self.inaccuracyMults.crouching,
+  }
+  self.currentInaccuracy = self.inaccuracyValues.mobile
+
   activeItem.setCursor("/cursors/project45-neo-cursor-mobile.cursor")
 
   -- make recoverTime a table
@@ -417,7 +422,7 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
   
   -- accuracy settings
   local movementState = self:getMovementState()
-  self.currentInaccuracy = self.inaccuracy[movementState]
+  self.currentInaccuracy = self.inaccuracyValues[movementState]
   self.currentRecoverTime = self.recoverTime[movementState] * self.recoverMult
   activeItem.setCursor("/cursors/project45-neo-cursor-" .. movementState .. ".cursor")
 
