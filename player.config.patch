@@ -1,3 +1,8 @@
 [
-    { "op" : "add", "path" : "/defaultBlueprints/tier1/-", "value" : { "item" : "project45-gunshop" } }
+    { "op" : "add", "path" : "/defaultBlueprints/tier1/-", "value" : { "item" : "project45-gunshop" } },
+    {
+        "op": "add",
+        "path": "/deploymentConfig/scripts/-",
+        "value": "/scripts/project45/project45deployment.lua"
+    }
 ]
