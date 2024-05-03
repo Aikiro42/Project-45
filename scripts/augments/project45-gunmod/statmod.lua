@@ -49,8 +49,9 @@ function apply(output, augment)
   end
 
   -- Retrieves the base value of a stat in the following order until it gets a numerical value:
-  -- 1. from the respective `statModifiers` entry of the stat
-  -- 2. from the `statDefaults` dictionary in `statmod.config`
+  -- 1. from the respective `statModifiers` entry of the stat (either in the base table of a group or the base field of an individual entry)
+  -- 2. from the weapon's config
+  -- 3. from the `statDefaults` dictionary in `statmod.config`
   -- @param stat: string
   -- * can either be a member or individual stat/alias
   local baseStat = function(stat)
@@ -68,14 +69,47 @@ function apply(output, augment)
       saved = (statModifiers[stat] or {}).base
     end
 
+    if saved then return saved end
+
     if not statList[stat] then
       sb.logError("(statmod.lua) UNREGISTERED STAT QUERIED")
     end
 
     local configPrimaryAbility = sb.jsonMerge(output.config.primaryAbility, output.parameters.primaryAbility)
 
-    return saved or configPrimaryAbility[stat] or statList[stat]
+    return configPrimaryAbility[stat] or statList[stat]
 
+  end
+
+  -- Recalculates the final base value of a given stat.
+  -- Also initializes the individual/member entry of a stat, particularly its baseOrig and baseMult fields.
+  -- WARNING: Must be called before any stat calculation
+  local updateBase = function(stat, rebase, rebaseMult)
+    if isStatGroup[stat] then
+      sb.logError("Attempted to recalculate base of group.")
+      return nil
+    end
+    -- initalize stat entry
+    statModifiers[stat] = statModifiers[stat] or {
+      baseOrig = baseStat(stat),
+      baseMult = 1,
+      additive = 0,
+      multiplicative = statGroup[stat] and 0 or 1
+    }
+    statModifiers[stat].baseOrig = rebase or statModifiers[stat].baseOrig or baseStat(stat)
+    statModifiers[stat].baseMult = (statModifiers.baseMult or 1) * (rebaseMult or 1)
+    
+    local recalculatedBase = statModifiers[stat].baseOrig * statModifiers[stat].baseMult
+    if statGroup[stat] then
+      -- if stat is member, replace base value in group
+      statModifiers[statGroup[stat]].base[stat] = recalculatedBase
+    else
+      -- if stat is individual, replace its base value
+      statModifiers[stat].base = recalculatedBase
+    end
+
+    -- return recalculated value just in case it's needed
+    return recalculatedBase
   end
 
   -- SECTION: SPECIAL STAT CASES
@@ -84,12 +118,14 @@ function apply(output, augment)
 
     statModifiers.maxAmmo = statModifiers.maxAmmo or {
       base = baseStat("maxAmmo"),
+      baseOrig = baseStat("maxAmmo"),
       baseMult = 1,
       additive = 0,
       multiplicative = 1
     }
     statModifiers.bulletsPerReload = statModifiers.bulletsPerReload or {
       base = baseStat("bulletsPerReload"),
+      baseOrig = baseStat("bulletsPerReload"),
       baseMult = 1,
       additive = 0,
       multiplicative = 1
@@ -107,24 +143,14 @@ function apply(output, augment)
 
       statModifiers.fireTimeGroup = statModifiers.fireTimeGroup or {
         base = {},
-        baseMult = {},
         additive = 0,
         multiplicative = 1
       }
 
-      -- fireTimeGroup stats don't have their member entries in statModifiers because of the nature of their recalculation
-
       statModifiers.fireTimeGroup.base[fireTimeGroupStat] = statModifiers.fireTimeGroup.base[fireTimeGroupStat] or baseStat(fireTimeGroupStat)
-  
-      if augment[fireTimeGroupStat].rebase then
-        statModifiers.fireTimeGroup.base[fireTimeGroupStat] = augment[fireTimeGroupStat].rebase
-      end
-
-      if augment[fireTimeGroupStat].rebaseMult then
-        statModifiers.fireTimeGroup.baseMult[fireTimeGroupStat] = math.max(0, (statModifiers.fireTimeGroup.baseMult[fireTimeGroupStat] or 1) * augment[fireTimeGroupStat].rebaseMult)
-        statModifiers.fireTimeGroup.base[fireTimeGroupStat] = statModifiers.fireTimeGroup.base[fireTimeGroupStat] * statModifiers.fireTimeGroup.baseMult[fireTimeGroupStat]
-      end
-  
+      
+      updateBase(fireTimeGroupStat, augment[fireTimeGroupStat].rebase, augment[fireTimeGroupStat].rebaseMult)
+        
       -- prompt recalculation
       augment.fireTimeGroup = augment.fireTimeGroup or {}
 
@@ -139,13 +165,11 @@ function apply(output, augment)
   if augment.fireTimeGroup then
     statModifiers.fireTimeGroup = statModifiers.fireTimeGroup or {
       base = {},
-      baseMult = {},
       additive = 0,
       multiplicative = 1
     }
     for _, fireTimeStat in ipairs(groupStats.fireTimeGroup) do
       statModifiers.fireTimeGroup.base[fireTimeStat] = baseStat(fireTimeStat)
-      statModifiers.fireTimeGroup.baseMult[fireTimeStat] = statModifiers.fireTimeGroup.baseMult[fireTimeStat] or 1
     end
 
     local newCockTime = statModifiers.fireTimeGroup.base.cockTime
@@ -285,6 +309,7 @@ function apply(output, augment)
       -- initialize
       statModifiers[stat] = statModifiers[stat] or {
         base = baseStat(stat),
+        baseOrig = baseStat(stat),
         baseMult = 1,
         additive = 0,
         multiplicative = 1
@@ -326,45 +351,39 @@ function apply(output, augment)
 
     local group = isStatGroup[stat] and stat or statGroup[stat]
     
-    -- initialize group entry
+    -- if provided stat is actually a group, initialize group entry
     if group then
       statModifiers[group] = statModifiers[group] or {
         base = {},
-        baseMult = {},
         additive = 0,
         multiplicative = 1
       }
       for _, substat in ipairs(groupStats[group]) do
         statModifiers[group].base[substat] = baseStat(substat)
-        statModifiers[group].baseMult[substat] = statModifiers[group].baseMult[substat] or 1
       end
     end
 
-    -- initialize member/individual entry
+    -- otherwise, initialize member/individual entry of given stat
     if not isStatGroup[stat] then
 
       if isGroupMember[stat] then
         statModifiers[stat] = statModifiers[stat] or {
+          baseOrig = baseStat(stat),
+          baseMult = 1,
           additive = 0,
           multiplicative = 0
         }
       else
         statModifiers[stat] = statModifiers[stat] or {
           base = baseStat(stat),
+          baseOrig = baseStat(stat),
           baseMult = 1,
           additive = 0,
           multiplicative = 1
         }
       end
 
-      -- rebase, rebaseMult on member/individual stats only
-      if group then
-        statModifiers[group].baseMult[stat] = (statModifiers[group].baseMult[stat] or 1) * (rebaseMult or 1)
-        statModifiers[group].base[stat] = (rebase or baseStat(stat)) * statModifiers[group].baseMult[stat]
-      else
-        statModifiers[stat].baseMult = (statModifiers[stat].baseMult or 1) * (rebaseMult or 1)
-        statModifiers[stat].base = (rebase or baseStat(stat)) * statModifiers[stat].baseMult
-      end
+      updateBase(stat, rebase, rebaseMult)
 
     end
 

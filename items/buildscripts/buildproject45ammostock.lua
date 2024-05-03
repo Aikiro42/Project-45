@@ -7,7 +7,6 @@ function build(directory, config, parameters, level, seed)
   
   local ammo = parameters.ammo or config.ammo
   if not ammo then
-    sb.logInfo("fuck you")
     config.ammo = ammoStockLimit/2
     ammo = config.ammo
   end

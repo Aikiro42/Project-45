@@ -52,9 +52,11 @@
       "recoverTime": {
         "rebaseMult": 1.1
       },
-      "inaccuracy": {
+      
+      /*"inaccuracy": {
         "rebaseMult": 0.5
       },
+      */
       "recoilAmount": {
         "rebaseMult": 0.5
       }

@@ -241,7 +241,7 @@ function build(directory, config, parameters, level, seed)
   local specialField = set.new({"level", "pureStatMod", "randomStats"})
   local isRandomStats = deepConfigParameter(false, "augment", "stat", "randomStats")
   local registeredRandomStats = {}
-  sb.logInfo(configParameter("itemName"))
+
   for stat, op in pairs(deepConfigParameter({}, "augment", "stat")) do
     if not specialField[stat] then
       for mod, val in pairs(op) do
