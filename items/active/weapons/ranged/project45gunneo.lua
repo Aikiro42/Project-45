@@ -28,14 +28,14 @@ function init()
 
   local userSettings = {
     "renderBarsAtCursor",
-    "useAmmoCounterImages",
-    "accurateBars"
+    "useAmmoCounterImages"
+    -- ,"accurateBars"
   }
 
   for _, setting in ipairs(userSettings) do
     activeItem.setScriptedAnimationParameter(
       setting,
-      status.statusProperty("project45_" .. setting,
+      (player and player.getProperty or status.statusProperty)("project45_" .. setting,
       generalConfig[setting])
     )
   end

@@ -35,7 +35,6 @@ function init()
   synthethikmechanics_altInit()
   messagesToRender = animationConfig.animationParameter("project45GunFireMessages")
   renderBarsAtCursor = animationConfig.animationParameter("renderBarsAtCursor")
-  accurateBars = animationConfig.animationParameter("accurateBars")
   runAnimUpdateScript = runAnimUpdateScript or animationConfig.animationParameter("useAmmoCounterImages")
 end
 

@@ -14,13 +14,19 @@ function init()
 
   self.debugTimer = 0
   self.toPrint = {}
+
   self.gunStatus = {}
+  self.gunInfo = {}
 
   message.setHandler("updateProject45UIField", function(messageName, isLocalEntity, statusKey, statusValue)
     self.gunStatus[statusKey] = statusValue
   end)
 
-  message.setHandler("updateProject45UI", function(messageName, isLocalEntity, gunStatus)
+  message.setHandler("initProject45UI", function(messageName, isLocalEntity, gunInfo)
+    self.gunInfo = gunInfo
+  end)
+
+  message.setHandler("updateProject45UI", function(messageName, isLocalEntity, gunStatus, reset)
     self.gunStatus = sb.jsonMerge(self.gunStatus or {}, gunStatus)
   end)
 
@@ -47,19 +53,19 @@ function update(dt)
   
   if not wieldsProject45Weapon() then
     self.gunStatus = {}
-  elseif not self.gunStatus.uiInitialized then
+  elseif not self.gunInfo.uiInitialized then
     world.sendEntityMessage(entity.id(), "induceInitProject45UI")
   end
   
-  local ammoOffset = self.gunStatus.uiElementOffset or {0, 0}
+  local ammoOffset = self.gunInfo.uiElementOffset or {0, 0}
   local isReloading = (self.gunStatus.reloadTimer or -1) >= 0
   local jamAmount = self.gunStatus.jamAmount or 0
   local reloadProgress
 
   if isReloading or jamAmount > 0 then
-    ammoOffset = vec2.add(ammoOffset, self.gunStatus.uiElementOffset)
+    ammoOffset = vec2.add(ammoOffset, self.gunInfo.uiElementOffset)
     if isReloading then
-      reloadProgress = (self.gunStatus.reloadTimer or 0) / (self.gunStatus.reloadTime or 1)
+      reloadProgress = (self.gunStatus.reloadTimer or 0) / (self.gunInfo.reloadTime or 1)
     end
   end
 
@@ -69,6 +75,7 @@ function update(dt)
     vec2.add(ammoOffset, {0, 1}),
     self.gunStatus.stockAmmo or 0
   )
+
   renderAmmoCounter(
     self.gunStatus.uiPosition,
     ammoOffset,
@@ -76,37 +83,39 @@ function update(dt)
     currentAmmo,
     isReloading
   )
+
   renderChamberIndicator(
     self.gunStatus.uiPosition,
     vec2.add(ammoOffset, {0, -1}),
     self.gunStatus.chamberState
   )
+
   renderChargeBar(
     self.gunStatus.uiPosition,
     vec2.add(ammoOffset, {0, -1.75}),
-    self.gunStatus.chargeTime,
-    self.gunStatus.overchargeTime,
-    self.gunStatus.perfectChargeRange,
+    self.gunInfo.chargeTime,
+    self.gunInfo.overchargeTime,
+    self.gunInfo.perfectChargeRange,
     self.gunStatus.chargeTimer
   )
 
   if isReloading then
     renderReloadRatingText(
       self.gunStatus.uiPosition,
-      vec2.add(self.gunStatus.uiElementOffset, {0, 2.5}),
+      vec2.add(self.gunInfo.uiElementOffset, {0, 2.5}),
       self.gunStatus.reloadRating
     )
     renderReloadBarImages(
       self.gunStatus.uiPosition,
-      self.gunStatus.uiElementOffset,
-      self.gunStatus.reloadTimeframe,
+      self.gunInfo.uiElementOffset,
+      self.gunInfo.reloadTimeframe,
       reloadProgress,
       self.gunStatus.reloadRating
-    )  
+    )
   elseif jamAmount > 0 then
     renderJamBar(
       self.gunStatus.uiPosition,
-      self.gunStatus.uiElementOffset,
+      self.gunInfo.uiElementOffset,
       jamAmount
     )
   end

@@ -53,9 +53,9 @@ function Project45GunFire:init()
   -- INITIALIZATIONS
   self.isFiring = false
 
-  self.performanceMode = status.statusProperty("project45_performanceMode", self.performanceMode)
-  self.weapon.reloadFlashLasers = status.statusProperty("project45_reloadFlashLasers", false)
-  self.weapon.armFrameAnimations = status.statusProperty("project45_armFrameAnimations", not self.performanceMode)
+  self.performanceMode = (player and player.getProperty or status.statusProperty)("project45_performanceMode", self.performanceMode)
+  self.weapon.reloadFlashLasers = (player and player.getProperty or status.statusProperty)("project45_reloadFlashLasers", false)
+  self.weapon.armFrameAnimations = (player and player.getProperty or status.statusProperty)("project45_armFrameAnimations", not self.performanceMode)
   self.hideMuzzleSmoke = self.performanceMode or self.hideMuzzleSmoke
   self.weapon.startRecoil = 0
 
@@ -511,8 +511,8 @@ function Project45GunFire:initUI()
 
   local userSettings = {
     "renderBarsAtCursor",
-    "useAmmoCounterImages",
-    "accurateBars"
+    "useAmmoCounterImages"
+    -- ,"accurateBars"
   }
 
   self.modSettings = {}
@@ -520,15 +520,11 @@ function Project45GunFire:initUI()
     self.modSettings[setting] = status.statusProperty("project45_" .. setting, generalConfig[setting])
   end
   
-  world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UI", {
+  world.sendEntityMessage(activeItem.ownerEntityId(), "initProject45UI", {
     
     modSettings = self.modSettings,
-    currentAmmo = storage.ammo,
-    stockAmmo = storage.stockAmmo,
     uiElementOffset = activeItem.hand() == "primary" and {-2, 0} or {2, 0},
 
-    reloadRating = reloadRatingList[storage.reloadRating],
-    
     reloadTime = self.reloadTime,
     reloadTimeFrame = self.quickReloadTimeframe,
 
@@ -536,6 +532,12 @@ function Project45GunFire:initUI()
     overchargeTime = self.overchargeTime,
     perfectChargeRange = self.perfectChargeRange
 
+  })
+
+  world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UI", {
+    currentAmmo = storage.ammo,
+    stockAmmo = storage.stockAmmo,
+    reloadRating = reloadRatingList[storage.reloadRating],
   })
 
   self:updateUI()
