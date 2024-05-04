@@ -183,3 +183,7 @@ function project45util.moreVividColor(color1, color2)
   table.insert(chosen, alpha)
   return chosen
 end
+
+function project45util.charat(s, i)
+  return string.sub(s, i, i)
+end

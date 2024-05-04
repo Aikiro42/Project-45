@@ -19,6 +19,10 @@ Passive = {}
 
 function Project45GunFire:init()
 
+  message.setHandler("induceInitProject45UI", function(messageName, isLocalEntity)
+    self:initUI()
+  end)
+
   if self.passiveScript then
     require(self.passiveScript)
   end
@@ -349,6 +353,8 @@ function Project45GunFire:init()
   self.debugModPositions.stock = config.getParameter("stockOffset", {0, 0})
 
   animator.playSound("init")
+  
+  self:initUI()
 
 end
 
@@ -395,6 +401,7 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
 
   -- update relevant stuff
   self:renderModPositionDebug()
+  self:updateUI()
   self:updateLaser()
   self:updateCharge()
   self:updateAmmoRecharge()
@@ -499,9 +506,52 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
 
 end
 
+function Project45GunFire:initUI()
+  local generalConfig = root.assetJson("/configs/project45/project45_general.config")
+
+  local userSettings = {
+    "renderBarsAtCursor",
+    "useAmmoCounterImages",
+    "accurateBars"
+  }
+
+  self.modSettings = {}
+  for _, setting in ipairs(userSettings) do
+    self.modSettings[setting] = status.statusProperty("project45_" .. setting, generalConfig[setting])
+  end
+  world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UI", "modSettings", self.modSettings)
+
+  world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UI", "currentAmmo", storage.ammo)
+  world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UI", "stockAmmo", storage.stockAmmo)
+
+  world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UI", "uiElementOffset",
+  activeItem.hand() == "primary"
+  and {-2, 0}
+  or {2, 0}
+  )
+  
+  world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UI", "reloadRating", reloadRatingList[storage.reloadRating])
+  world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UI", "uiInitialized", true)
+  world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UI", "reloadTime", self.reloadTime)
+  world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UI", "reloadTimeframe", self.quickReloadTimeframe)
+
+  self:updateUI()
+end
+
+function Project45GunFire:updateUI()
+  world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UI", "uiPosition",
+    self.modSettings.renderBarsAtCursor
+    and world.distance(activeItem.ownerAimPosition(), mcontroller.position())
+    or {0, 0}
+  )
+  world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UI", "reloadTimer", self.weapon.reloadTimer)
+
+end
+
 function Project45GunFire:uninit()
   self:uninitPassive()
   self:saveGunState()
+  -- world.sendEntityMessage(activeItem.ownerEntityId(), "clearProject45UI")
   activeItem.setScriptedAnimationParameter("beamLine", nil)
   activeItem.setScriptedAnimationParameter("projectileStack", nil)
 end
@@ -844,7 +894,7 @@ function Project45GunFire:reloading()
     activeItem.setScriptedAnimationParameter("reloadTimer", self.weapon.reloadTimer)
 
     if displayResetTimer <= 0 and storage.ammo < self.maxAmmo then
-      activeItem.setScriptedAnimationParameter("reloadRating", "")
+      self:updateReloadRating(OK)
       if self.internalMag then
         animator.setAnimationState("magazine", "present") -- insert mag, hiding it from view
       end
@@ -872,7 +922,7 @@ function Project45GunFire:reloading()
       
       -- get this reload's reloadRating
       local reloadRating = self:reloadRating()
-      activeItem.setScriptedAnimationParameter("reloadRating", reloadRatingList[reloadRating])
+      self:updateReloadRating(reloadRating)
       
       -- add rating to sum
       -- BAD: 0
@@ -979,8 +1029,8 @@ function Project45GunFire:reloading()
   if self.bulletsPerReload < self.maxAmmo and finalReloadRating == PERFECT then
     animator.playSound("perfectReload")
   end
-  storage.reloadRating = finalReloadRating
-  activeItem.setScriptedAnimationParameter("reloadRating", reloadRatingList[finalReloadRating])
+  self:updateReloadRating(finalReloadRating)
+
   self.reloadRatingDamage = self.reloadRatingDamageMults[storage.reloadRating]
   animator.playSound("reloadEnd")  -- sound of magazine inserted
 
@@ -1050,8 +1100,7 @@ function Project45GunFire:unjamming()
   if storage.jamAmount <= 0 then
     -- animator.playSound("click")
     self:onFullUnjamPassive()
-    storage.reloadRating = OK
-    activeItem.setScriptedAnimationParameter("reloadRating", reloadRatingList[OK])
+    self:updateReloadRating(OK)
     self.weapon.reloadTimer = self.reloadTime
     animator.setAnimationState("bolt", "closed")
     self:updateChamberState("filled")
@@ -1599,6 +1648,7 @@ function Project45GunFire:updateStockAmmo(delta, willReplace)
   storage.stockAmmo = willReplace and delta or math.max(0, storage.stockAmmo + delta)
   self.weapon.stockAmmoDamageMult = 1 + (storage.stockAmmo * 0.1 / self.maxAmmo * 3)
   activeItem.setScriptedAnimationParameter("stockAmmo", storage.stockAmmo)
+  world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UI", "stockAmmo", storage.stockAmmo)
 end
 
 -- Updates the gun's ammo:
@@ -1618,11 +1668,19 @@ function Project45GunFire:updateAmmo(delta, willReplace)
   -- update visual info
   self:updateMagVisuals()
   activeItem.setScriptedAnimationParameter("ammo", storage.ammo)
+  world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UI", "currentAmmo", storage.ammo)
+end
+
+function Project45GunFire:updateReloadRating(newReloadRating)
+  storage.reloadRating = newReloadRating
+  world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UI", "reloadRating", reloadRatingList[newReloadRating])
+  activeItem.setScriptedAnimationParameter("reloadRating", reloadRatingList[newReloadRating])
 end
 
 function Project45GunFire:updateChamberState(newChamberState)
   if newChamberState then animator.setAnimationState("chamber", newChamberState) end
   activeItem.setScriptedAnimationParameter("primaryChamberState", animator.animationState("chamber"))
+  world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UI", "chamberState", animator.animationState("chamber"))
 end
 
 function Project45GunFire:updateMagVisuals()

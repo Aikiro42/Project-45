@@ -71,19 +71,22 @@ function build(directory, config, parameters, level, seed)
     end
   end
 
-  -- upgradeable weapon
-  -- we're not using configParameter because this should only apply to making weapons upgradeable
-  -- if a weapon is supposed to be upgradeable according to the config
-  -- then it's the programmer's responsibility to add the "upgradeableWeapon" itemTag
+  -- update item tags
+  local currentItemTags = configParameter("itemTags", {})
+
   if parameters.upgradeParameters then
-    config.upgradeParameters = parameters.upgradeParameters
-    local newItemTags = configParameter("itemTags", {})
-    if not set.new(newItemTags)["upgradeableWeapon"] then
-      table.insert(newItemTags, "upgradeableWeapon")
-      config.itemTags = newItemTags
+    config.upgradeParameters = sb.jsonMerge(config.upgradeParameters or {}, parameters.upgradeParameters)
+    if not set.new(currentItemTags)["upgradeableWeapon"] then
+      table.insert(currentItemTags, "upgradeableWeapon")
     end
-    -- sb.logInfo(configParameter("itemName") .. " upgradeable")
   end
+
+  if not set.new(currentItemTags)["project45"] then
+    table.insert(currentItemTags, "project45")
+  end
+
+  config.itemTags = currentItemTags
+
 
   -- generate seed if supposed to be seeded
   -- and seed is not established
