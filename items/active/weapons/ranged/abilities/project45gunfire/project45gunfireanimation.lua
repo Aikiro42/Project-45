@@ -74,11 +74,11 @@ function update()
 
   -- renderAmmoNumber({horizontalOffset, 0}, reloadTimer >= 0)
   -- renderChamberIndicator({horizontalOffset, 0})
-
-  renderLaser()
   -- renderReloadBar({horizontalOffset + (renderBarsAtCursor and 0 or barXOffset), 0})
   -- renderJamBar({horizontalOffset + (renderBarsAtCursor and 0 or barXOffset), 0})
   -- renderChargeBar({horizontalOffset, animationConfig.animationParameter("performanceMode") and -1 or -1.75})
+  
+  renderLaser()
   renderHitscanTrails()
   renderBeam()
   renderBeamChain()

@@ -16,8 +16,12 @@ function init()
   self.toPrint = {}
   self.gunStatus = {}
 
-  message.setHandler("updateProject45UI", function(messageName, isLocalEntity, statusKey, statusValue)
+  message.setHandler("updateProject45UIField", function(messageName, isLocalEntity, statusKey, statusValue)
     self.gunStatus[statusKey] = statusValue
+  end)
+
+  message.setHandler("updateProject45UI", function(messageName, isLocalEntity, gunStatus)
+    self.gunStatus = sb.jsonMerge(self.gunStatus or {}, gunStatus)
   end)
 
   message.setHandler("clearProject45UI", function(messageName, isLocalEntity)
@@ -76,6 +80,14 @@ function update(dt)
     self.gunStatus.uiPosition,
     vec2.add(ammoOffset, {0, -1}),
     self.gunStatus.chamberState
+  )
+  renderChargeBar(
+    self.gunStatus.uiPosition,
+    vec2.add(ammoOffset, {0, -1.75}),
+    self.gunStatus.chargeTime,
+    self.gunStatus.overchargeTime,
+    self.gunStatus.perfectChargeRange,
+    self.gunStatus.chargeTimer
   )
 
   if isReloading then
@@ -309,13 +321,95 @@ function renderJamBar(uiPosition, offset, jamAmount)
   
 end
 
-function renderChargeBar(uiPosition, offset, chargeTime, overchargeTime, perfectChargeTime, chargeTimer)
+function renderChargeBar(uiPosition, offset, chargeTime, overchargeTime, perfectChargeRange, chargeTimer)
   if not uiPosition then return end
   if not chargeTimer then return end
+  if chargeTimer <= 0 then return end
   chargeTime = chargeTime or 0
   overchargeTime = overchargeTime or 0
   if chargeTime + overchargeTime <= 0 then return end
-  perfectChargeTime = perfectChargeTime or {0, 0}
+  perfectChargeRange = perfectChargeRange or {-1, -1}
+
+  local fadeMult = 32
+  -- colors
+
+  local chargingColor = {0,0,0}
+  local chargedColor = {255,255,0}
+
+  local perfectChargeColor = {255, 128, 0}
+  local overchargeColor = {255, 0, 0}
+  local perfectOverchargeColor = {128, 0, 255}
+
+  local perfectChargeRangeColor = {0, 255, 255}
+
+  local overallProgress = util.clamp(fadeMult * chargeTimer / (chargeTime + overchargeTime), 0, 1)
+  
+  local overchargeProgress = overchargeTime <= 0 and 0 or util.clamp((chargeTimer - chargeTime) / overchargeTime, 0, 1)
+  local isPerfectCharge = perfectChargeRange[1] <= overchargeProgress and overchargeProgress <= perfectChargeRange[2]
+
+  local basePosition = vec2.add(uiPosition, offset)
+  
+  -- base
+  localAnimator.addDrawable({
+    image = isPerfectCharge
+    and "/scripts/project45/ui/chargebar-perfect.png"
+    or "/scripts/project45/ui/chargebar-base.png"
+    .. string.format("?multiply=FFFFFF%02X", math.ceil(255*overallProgress)),
+    position = basePosition,
+    color = {255,255,255},
+    fullbright = true,
+  }, "Overlay")
+
+  -- charge bar
+  local chargeProgress = chargeTime <= 0 and 1 or math.min(1, chargeTimer/chargeTime)
+  local chargeColor = project45util.gradient(chargingColor, chargedColor, chargeProgress)
+  local chargeBarPosition = vec2.add(basePosition, {-0.5 + chargeProgress/2, 0})
+  localAnimator.addDrawable({
+    image = "/scripts/project45/ui/chargebar.png"
+    .. string.format("?multiply=FFFFFF%02X", math.ceil(255*overallProgress)),
+    position = chargeBarPosition,
+    transformation = {
+      {chargeProgress, 0, 0},
+      {0, 1, 0},
+      {0, 0, 1},
+    },
+    color = isPerfectCharge and perfectChargeColor or chargeColor,
+    fullbright = true,
+  }, "Overlay")
+
+  -- overcharge bar
+  if overchargeTime > 0 then
+
+    if overchargeProgress > 0 and perfectChargeRange[1] > 0 and perfectChargeRange[2] > 0 then
+      localAnimator.addDrawable({
+        image = "/scripts/project45/ui/chargebar.png"
+        .. string.format("?multiply=FFFFFF%02X", math.ceil(255*overallProgress)),
+        position = vec2.add(basePosition, {-0.5 + (perfectChargeRange[1] + perfectChargeRange[2])/2 , 0}),
+        transformation = {
+          {perfectChargeRange[2] - perfectChargeRange[1], 0, 0},
+          {0, 1, 0},
+          {0, 0, 1},
+        },
+        color = perfectChargeRangeColor,
+        fullbright = true,
+      }, "Overlay")  
+    end
+
+    local overchargeBarPosition = vec2.add(basePosition, {-0.5 + overchargeProgress/2, 0})
+    localAnimator.addDrawable({
+      image = "/scripts/project45/ui/chargebar.png"
+      .. string.format("?multiply=FFFFFF%02X", math.ceil(255*overallProgress)),
+      position = overchargeBarPosition,
+      transformation = {
+        {overchargeProgress, 0, 0},
+        {0, 1, 0},
+        {0, 0, 1},
+      },
+      color = isPerfectCharge and perfectOverchargeColor or overchargeColor,
+      fullbright = true,
+    }, "Overlay")
+  end
+
   
 end
 

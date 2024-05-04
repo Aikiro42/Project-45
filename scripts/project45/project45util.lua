@@ -187,3 +187,12 @@ end
 function project45util.charat(s, i)
   return string.sub(s, i, i)
 end
+
+-- https://stackoverflow.com/a/22649247
+function project45util.gradient(color1, color2, progress)
+  return {
+    math.ceil(color1[1] + progress * (color2[1] - color1[1])),
+    math.ceil(color1[2] + progress * (color2[2] - color1[2])),
+    math.ceil(color1[3] + progress * (color2[3] - color1[3]))
+  }
+end

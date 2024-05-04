@@ -519,32 +519,43 @@ function Project45GunFire:initUI()
   for _, setting in ipairs(userSettings) do
     self.modSettings[setting] = status.statusProperty("project45_" .. setting, generalConfig[setting])
   end
-  world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UI", "modSettings", self.modSettings)
-
-  world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UI", "currentAmmo", storage.ammo)
-  world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UI", "stockAmmo", storage.stockAmmo)
-
-  world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UI", "uiElementOffset",
-  activeItem.hand() == "primary"
-  and {-2, 0}
-  or {2, 0}
-  )
   
-  world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UI", "reloadRating", reloadRatingList[storage.reloadRating])
-  world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UI", "uiInitialized", true)
-  world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UI", "reloadTime", self.reloadTime)
-  world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UI", "reloadTimeframe", self.quickReloadTimeframe)
+  world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UI", {
+    
+    modSettings = self.modSettings,
+    currentAmmo = storage.ammo,
+    stockAmmo = storage.stockAmmo,
+    uiElementOffset = activeItem.hand() == "primary" and {-2, 0} or {2, 0},
+
+    reloadRating = reloadRatingList[storage.reloadRating],
+    
+    reloadTime = self.reloadTime,
+    reloadTimeFrame = self.quickReloadTimeframe,
+
+    chargeTime = self.chargeTime,
+    overchargeTime = self.overchargeTime,
+    perfectChargeRange = self.perfectChargeRange
+
+  })
 
   self:updateUI()
 end
 
 function Project45GunFire:updateUI()
-  world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UI", "uiPosition",
+
+  world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UI", {
+    uiPosition = self.modSettings.renderBarsAtCursor and world.distance(activeItem.ownerAimPosition(), mcontroller.position()) or {0, 0},
+    reloadTimer = self.weapon.reloadTimer
+  })
+
+  --[[
+  world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UIField", "uiPosition",
     self.modSettings.renderBarsAtCursor
     and world.distance(activeItem.ownerAimPosition(), mcontroller.position())
     or {0, 0}
   )
-  world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UI", "reloadTimer", self.weapon.reloadTimer)
+  world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UIField", "reloadTimer", self.weapon.reloadTimer)
+  --]]
 
 end
 
@@ -1544,7 +1555,7 @@ function Project45GunFire:updateCharge()
     end
   end
   activeItem.setScriptedAnimationParameter("chargeTimer", self.chargeTimer)
-  world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UI", "chargeTimer", self.chargeTimer)
+  world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UIField", "chargeTimer", self.chargeTimer)
 
   if self.chargeTimer <= 0 then
     if animator.animationState("charge") == "charging"
@@ -1649,7 +1660,7 @@ function Project45GunFire:updateStockAmmo(delta, willReplace)
   storage.stockAmmo = willReplace and delta or math.max(0, storage.stockAmmo + delta)
   self.weapon.stockAmmoDamageMult = 1 + (storage.stockAmmo * 0.1 / self.maxAmmo * 3)
   activeItem.setScriptedAnimationParameter("stockAmmo", storage.stockAmmo)
-  world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UI", "stockAmmo", storage.stockAmmo)
+  world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UIField", "stockAmmo", storage.stockAmmo)
 end
 
 -- Updates the gun's ammo:
@@ -1669,19 +1680,19 @@ function Project45GunFire:updateAmmo(delta, willReplace)
   -- update visual info
   self:updateMagVisuals()
   activeItem.setScriptedAnimationParameter("ammo", storage.ammo)
-  world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UI", "currentAmmo", storage.ammo)
+  world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UIField", "currentAmmo", storage.ammo)
 end
 
 function Project45GunFire:updateReloadRating(newReloadRating)
   storage.reloadRating = newReloadRating
-  world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UI", "reloadRating", reloadRatingList[newReloadRating])
+  world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UIField", "reloadRating", reloadRatingList[newReloadRating])
   activeItem.setScriptedAnimationParameter("reloadRating", reloadRatingList[newReloadRating])
 end
 
 function Project45GunFire:updateChamberState(newChamberState)
   if newChamberState then animator.setAnimationState("chamber", newChamberState) end
   activeItem.setScriptedAnimationParameter("primaryChamberState", animator.animationState("chamber"))
-  world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UI", "chamberState", animator.animationState("chamber"))
+  world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UIField", "chamberState", animator.animationState("chamber"))
 end
 
 function Project45GunFire:updateMagVisuals()
@@ -1722,7 +1733,7 @@ end
 function Project45GunFire:updateJamAmount(delta, set)
   storage.jamAmount = set and delta or util.clamp(storage.jamAmount + delta, 0, 1)
   activeItem.setScriptedAnimationParameter("jamAmount", storage.jamAmount)
-  world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UI", "jamAmount", storage.jamAmount)
+  world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UIField", "jamAmount", storage.jamAmount)
 end
 
 function Project45GunFire:updateCycleTime()
