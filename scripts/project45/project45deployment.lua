@@ -427,13 +427,15 @@ function renderText(position, str, scale, doShadow, color, charSpacing)
   
   scale = scale or 1
   
+  local finalScale = scale * 0.4
+
   -- enable shadow by default
   if doShadow == nil then
     doShadow = true
   end
     
-  local charWidth = 5 * scale
-  charSpacing = (charSpacing or 0) *scale
+  local charWidth = 11 * finalScale
+  charSpacing = (charSpacing or 0) *finalScale
 
   local textOffset = { charWidth/16 - (str:len() * (charWidth + charSpacing))/(2*8), 0}
   
@@ -443,11 +445,11 @@ function renderText(position, str, scale, doShadow, color, charSpacing)
     local chr = string.upper(string.sub(str, i, i))
     if doShadow then-- shadow
       localAnimator.addDrawable({
-        image = "/scripts/project45/ui/font.png:" .. chr,
+        image = "/scripts/project45/ui/bender-light.png:" .. chr,
         position = vec2.add(leftPosition, {0.05, -0.05}),
         transformation = {
-          {scale, 0, 0},
-          {0, scale, 0},
+          {finalScale, 0, 0},
+          {0, finalScale, 0},
           {0, 0, 1}
         },
         color = {0,0,0},
@@ -457,11 +459,11 @@ function renderText(position, str, scale, doShadow, color, charSpacing)
     
     -- text
     localAnimator.addDrawable({
-      image = "/scripts/project45/ui/font.png:" .. chr,
+      image = "/scripts/project45/ui/bender-light.png:" .. chr,
       position = leftPosition,
       transformation = {
-        {scale, 0, 0},
-        {0, scale, 0},
+        {finalScale, 0, 0},
+        {0, finalScale, 0},
         {0, 0, 1}
       },
       color = color,
