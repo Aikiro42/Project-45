@@ -95,7 +95,13 @@
     "reloadCost": 35,
     "maxAmmo": 6,
     "bulletsPerReload": 1,
-    "inaccuracy": [1, 2, 4, 4],
+    "inaccuracy": 2,
+    "inaccuracyMults": {
+      "mobile": 1.5,
+      "walking": 1.25,
+      "stationary": 1,
+      "crouching": 0.5
+    },
     "spread": 1,
     "semi": true,
     "cycleTime": 0.2,

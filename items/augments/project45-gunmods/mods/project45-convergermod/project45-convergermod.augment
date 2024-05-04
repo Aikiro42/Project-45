@@ -30,7 +30,7 @@
         "additive": 10
       },
       "baseDamage": {
-        "rebaseMult": 1.01
+        "rebaseMult": 1.1
       }
     },
     "gun": {
