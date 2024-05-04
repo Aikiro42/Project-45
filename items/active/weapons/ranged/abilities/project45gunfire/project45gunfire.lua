@@ -1544,6 +1544,7 @@ function Project45GunFire:updateCharge()
     end
   end
   activeItem.setScriptedAnimationParameter("chargeTimer", self.chargeTimer)
+  world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UI", "chargeTimer", self.chargeTimer)
 
   if self.chargeTimer <= 0 then
     if animator.animationState("charge") == "charging"
@@ -1721,6 +1722,7 @@ end
 function Project45GunFire:updateJamAmount(delta, set)
   storage.jamAmount = set and delta or util.clamp(storage.jamAmount + delta, 0, 1)
   activeItem.setScriptedAnimationParameter("jamAmount", storage.jamAmount)
+  world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UI", "jamAmount", storage.jamAmount)
 end
 
 function Project45GunFire:updateCycleTime()

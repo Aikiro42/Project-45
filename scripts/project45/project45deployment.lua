@@ -49,11 +49,14 @@ function update(dt)
   
   local ammoOffset = self.gunStatus.uiElementOffset or {0, 0}
   local isReloading = (self.gunStatus.reloadTimer or -1) >= 0
+  local jamAmount = self.gunStatus.jamAmount or 0
   local reloadProgress
 
-  if isReloading then
-    reloadProgress = (self.gunStatus.reloadTimer or 0) / (self.gunStatus.reloadTime or 1)
+  if isReloading or jamAmount > 0 then
     ammoOffset = vec2.add(ammoOffset, self.gunStatus.uiElementOffset)
+    if isReloading then
+      reloadProgress = (self.gunStatus.reloadTimer or 0) / (self.gunStatus.reloadTime or 1)
+    end
   end
 
   local currentAmmo = self.gunStatus.currentAmmo or 0
@@ -81,23 +84,19 @@ function update(dt)
       vec2.add(self.gunStatus.uiElementOffset, {0, 2.5}),
       self.gunStatus.reloadRating
     )
-    if (self.modSettings or {}).accurateBars then
-      renderReloadBars(
-        self.gunStatus.uiPosition,
-        self.gunStatus.uiElementOffset,
-        self.gunStatus.reloadTimeframe,
-        reloadProgress,
-        self.gunStatus.reloadRating
-      )
-    else
-      renderReloadBarImages(
-        self.gunStatus.uiPosition,
-        self.gunStatus.uiElementOffset,
-        self.gunStatus.reloadTimeframe,
-        reloadProgress,
-        self.gunStatus.reloadRating
-      )  
-    end
+    renderReloadBarImages(
+      self.gunStatus.uiPosition,
+      self.gunStatus.uiElementOffset,
+      self.gunStatus.reloadTimeframe,
+      reloadProgress,
+      self.gunStatus.reloadRating
+    )  
+  elseif jamAmount > 0 then
+    renderJamBar(
+      self.gunStatus.uiPosition,
+      self.gunStatus.uiElementOffset,
+      jamAmount
+    )
   end
   --]]
   
@@ -245,9 +244,14 @@ function renderReloadBarImages(uiPosition, offset, reloadTimeframe, reloadProgre
   local goodY = (reloadTimeframe[1] + reloadTimeframe[4]) / 2
   local goodScale = reloadTimeframe[4] - reloadTimeframe[1]
   localAnimator.addDrawable({
-    image = "/scripts/project45/ui/reloadbar.png:goodrange?multiply=" .. project45util.rgbToHex({106, 34, 132}) .. "FF?scalenearest=1;" .. goodScale,
+    image = "/scripts/project45/ui/reloadbar.png:goodrange" .. string.format("?multiply=%sFF", project45util.rgbToHex({106, 34, 132})),
     position = vec2.add(basePosition, {0, (-0.5 + goodY)*4}),
     color = {255,255,255},
+    transformation = {
+      {1, 0, 0},
+      {0, goodScale, 0},
+      {0, 0, 1}
+    },
     fullbright = true,
   }, "Overlay")
 
@@ -255,11 +259,15 @@ function renderReloadBarImages(uiPosition, offset, reloadTimeframe, reloadProgre
   local perfectY = (reloadTimeframe[2] + reloadTimeframe[3]) / 2
   local perfectScale = reloadTimeframe[3] - reloadTimeframe[2]
   localAnimator.addDrawable({
-    image = "/scripts/project45/ui/reloadbar.png:goodrange?multiply="
-    .. project45util.rgbToHex({210, 156, 231})
-    .. "FF?scalenearest=1;" .. perfectScale,
+    image = "/scripts/project45/ui/reloadbar.png:goodrange"
+    .. string.format("?multiply=%sFF", project45util.rgbToHex({210, 156, 231})),
     position = vec2.add(basePosition, {0, (-0.5 + perfectY)*4}),
     color = {255,255,255},
+    transformation = {
+      {1, 0, 0},
+      {0, perfectScale, 0},
+      {0, 0, 1}
+    },
     fullbright = true,
   }, "Overlay")
 
@@ -271,6 +279,44 @@ function renderReloadBarImages(uiPosition, offset, reloadTimeframe, reloadProgre
     fullbright = true,
   }, "Overlay")
 
+end
+
+function renderJamBar(uiPosition, offset, jamAmount)
+  if not uiPosition then return end
+  jamAmount = jamAmount or 0
+  if jamAmount <= 0 then return end
+  
+  -- base
+  localAnimator.addDrawable({
+    image = "/scripts/project45/ui/jambar-base.png",
+    position = vec2.add(uiPosition, offset),
+    color = {255,255,255},
+    fullbright = true,
+  }, "Overlay")
+
+  -- bar
+  localAnimator.addDrawable({
+    image = "/scripts/project45/ui/jambar.png",
+    position = vec2.add(uiPosition, offset),
+    color = {255,255,255},
+    transformation = {
+      {1, 0, 0},
+      {0, jamAmount, 0},
+      {0, 0, 1}
+    },
+    fullbright = true,
+  }, "Overlay")
+  
+end
+
+function renderChargeBar(uiPosition, offset, chargeTime, overchargeTime, perfectChargeTime, chargeTimer)
+  if not uiPosition then return end
+  if not chargeTimer then return end
+  chargeTime = chargeTime or 0
+  overchargeTime = overchargeTime or 0
+  if chargeTime + overchargeTime <= 0 then return end
+  perfectChargeTime = perfectChargeTime or {0, 0}
+  
 end
 
 function renderText(position, str, scale, doShadow, color, charSpacing)
