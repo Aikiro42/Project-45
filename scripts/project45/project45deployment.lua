@@ -62,8 +62,10 @@ function update(dt)
   local jamAmount = self.gunStatus.jamAmount or 0
   local reloadProgress
 
-  if isReloading or jamAmount > 0 then
-    ammoOffset = vec2.add(ammoOffset, self.gunInfo.uiElementOffset)
+  if (isReloading or jamAmount > 0) then
+    if (self.gunInfo.modSettings or {}).renderBarsAtCursor then
+      ammoOffset = vec2.add(ammoOffset, self.gunInfo.uiElementOffset)
+    end
     if isReloading then
       reloadProgress = (self.gunStatus.reloadTimer or 0) / (self.gunInfo.reloadTime or 1)
     end
@@ -71,13 +73,13 @@ function update(dt)
 
   local currentAmmo = self.gunStatus.currentAmmo or 0
   renderStockAmmoCounter(
-    self.gunStatus.uiPosition,
+    self.gunStatus.aimPosition,
     vec2.add(ammoOffset, {0, 1}),
     self.gunStatus.stockAmmo or 0
   )
 
   renderAmmoCounter(
-    self.gunStatus.uiPosition,
+    self.gunStatus.aimPosition,
     ammoOffset,
     currentAmmo < 0 and "OK" or self.gunStatus.reloadRating or "BAD",
     currentAmmo,
@@ -85,13 +87,13 @@ function update(dt)
   )
 
   renderChamberIndicator(
-    self.gunStatus.uiPosition,
+    self.gunStatus.aimPosition,
     vec2.add(ammoOffset, {0, -1}),
     self.gunStatus.chamberState
   )
 
   renderChargeBar(
-    self.gunStatus.uiPosition,
+    self.gunStatus.aimPosition,
     vec2.add(ammoOffset, {0, -1.75}),
     self.gunInfo.chargeTime,
     self.gunInfo.overchargeTime,
@@ -105,7 +107,7 @@ function update(dt)
       vec2.add(self.gunInfo.uiElementOffset, {0, 2.5}),
       self.gunStatus.reloadRating
     )
-    renderReloadBarImages(
+    renderReloadBar(
       self.gunStatus.uiPosition,
       self.gunInfo.uiElementOffset,
       self.gunInfo.reloadTimeframe,
@@ -232,7 +234,7 @@ function renderReloadBars(uiPosition, offset, reloadTimeframe, reloadProgress, r
 
 end
 
-function renderReloadBarImages(uiPosition, offset, reloadTimeframe, reloadProgress, reloadRating)
+function renderReloadBar(uiPosition, offset, reloadTimeframe, reloadProgress, reloadRating)
   if not uiPosition then return end
   if not reloadProgress then return end
   offset = offset or {0, 0}
@@ -265,9 +267,9 @@ function renderReloadBarImages(uiPosition, offset, reloadTimeframe, reloadProgre
   local goodY = (reloadTimeframe[1] + reloadTimeframe[4]) / 2
   local goodScale = reloadTimeframe[4] - reloadTimeframe[1]
   localAnimator.addDrawable({
-    image = "/scripts/project45/ui/reloadbar.png:goodrange" .. string.format("?multiply=%sFF", project45util.rgbToHex({106, 34, 132})),
+    image = "/scripts/project45/ui/reloadbar.png:goodrange",
     position = vec2.add(basePosition, {0, (-0.5 + goodY)*4}),
-    color = {255,255,255},
+    color = {106, 34, 132},
     transformation = {
       {1, 0, 0},
       {0, goodScale, 0},
@@ -280,10 +282,10 @@ function renderReloadBarImages(uiPosition, offset, reloadTimeframe, reloadProgre
   local perfectY = (reloadTimeframe[2] + reloadTimeframe[3]) / 2
   local perfectScale = reloadTimeframe[3] - reloadTimeframe[2]
   localAnimator.addDrawable({
-    image = "/scripts/project45/ui/reloadbar.png:goodrange"
-    .. string.format("?multiply=%sFF", project45util.rgbToHex({210, 156, 231})),
+    image = "/scripts/project45/ui/reloadbar.png:perfectrange",
+    -- .. string.format("?multiply=%sFF", project45util.rgbToHex({210, 156, 231})),
     position = vec2.add(basePosition, {0, (-0.5 + perfectY)*4}),
-    color = {255,255,255},
+    color = {210, 156, 231},
     transformation = {
       {1, 0, 0},
       {0, perfectScale, 0},
@@ -297,6 +299,11 @@ function renderReloadBarImages(uiPosition, offset, reloadTimeframe, reloadProgre
     image = "/scripts/project45/ui/reloadbar-arrow.png",
     position = vec2.add(basePosition, {0, (-0.5 + reloadProgress)*4}),
     color = {255,255,255},
+    transformation = {
+      {0.8, 0, 0},
+      {0, 0.75, 0},
+      {0 ,0 ,1}
+    },
     fullbright = true,
   }, "Overlay")
 

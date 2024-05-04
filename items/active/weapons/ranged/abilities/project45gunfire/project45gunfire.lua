@@ -503,7 +503,7 @@ function Project45GunFire:initUI()
 
   self.modSettings = {}
   for _, setting in ipairs(userSettings) do
-    self.modSettings[setting] = status.statusProperty("project45_" .. setting, generalConfig[setting])
+    self.modSettings[setting] = (player and player.getProperty or status.statusProperty)("project45_" .. setting, generalConfig[setting])
   end
   
   world.sendEntityMessage(activeItem.ownerEntityId(), "initProject45UI", {
@@ -512,7 +512,7 @@ function Project45GunFire:initUI()
     uiElementOffset = activeItem.hand() == "primary" and {-2, 0} or {2, 0},
 
     reloadTime = self.reloadTime,
-    reloadTimeFrame = self.quickReloadTimeframe,
+    reloadTimeframe = self.quickReloadTimeframe,
 
     chargeTime = self.chargeTime,
     overchargeTime = self.overchargeTime,
@@ -530,9 +530,10 @@ function Project45GunFire:initUI()
 end
 
 function Project45GunFire:updateUI()
-
+  local aimPosition = world.distance(activeItem.ownerAimPosition(), mcontroller.position())
   world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UI", {
-    uiPosition = self.modSettings.renderBarsAtCursor and world.distance(activeItem.ownerAimPosition(), mcontroller.position()) or {0, 0},
+    aimPosition = aimPosition,
+    uiPosition = self.modSettings.renderBarsAtCursor and aimPosition or {0, 0},
     reloadTimer = self.weapon.reloadTimer
   })
 
