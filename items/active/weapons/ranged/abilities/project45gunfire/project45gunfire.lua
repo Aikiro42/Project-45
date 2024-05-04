@@ -65,8 +65,7 @@ function Project45GunFire:init()
 
   -- separate cock time and reload time
   -- self.reloadTime = self.reloadTime * 0.8
-  self.weapon.reloadTimer = -1
-  activeItem.setScriptedAnimationParameter("reloadTimer", -1)
+  self:updateReloadTimer(-1, true)
 
   -- initialize charge frame
   self.chargeFrame = 1
@@ -247,19 +246,6 @@ function Project45GunFire:init()
   -- animator.setSoundVolume("ejectCasing", 0.8)
   
   activeItem.setScriptedAnimationParameter("performanceMode", self.performanceMode)
-
-  activeItem.setScriptedAnimationParameter("reloadTimer", -1)
-  activeItem.setScriptedAnimationParameter("chargeTimer", 0)
-  activeItem.setScriptedAnimationParameter("ammo", storage.ammo)
-  activeItem.setScriptedAnimationParameter("stockAmmo", storage.stockAmmo)
-  
-  activeItem.setScriptedAnimationParameter("reloadTime", self.reloadTime)
-  activeItem.setScriptedAnimationParameter("quickReloadTimeframe", self.quickReloadTimeframe)
-
-  activeItem.setScriptedAnimationParameter("chargeTime", self.chargeTime)
-  activeItem.setScriptedAnimationParameter("overchargeTime", self.overchargeTime)
-  activeItem.setScriptedAnimationParameter("perfectChargeRange", self.perfectChargeRange)
-
   
   -- Add functions used by this primaryAbility to altAbility
   GunFire.recoil = self.recoil
@@ -857,7 +843,7 @@ function Project45GunFire:feeding()
   -- prevent triggering
   self.triggered = self.semi or self.weapon.reloadTimer >= 0 or (self.closeBoltOnEmpty and storage.ammo <= 0)
   
-  self.weapon.reloadTimer = -1  -- mark end of reload
+  self:updateReloadTimer(-1, true)  -- mark end of reload
   activeItem.setScriptedAnimationParameter("reloadTimer", self.weapon.reloadTimer)
   self.isFiring = false
 end
@@ -874,7 +860,7 @@ function Project45GunFire:reloading()
       return
   end
     
-  self.weapon.reloadTimer = 0 -- mark begin of reload
+  self:updateReloadTimer(0, true) -- mark begin of reload
   animator.playSound("reloadStart") -- sound of mag being grabbed
   if self.breakAction and animator.animationState("gun") ~= "open" then
     animator.setAnimationState("gun", "open")
@@ -977,7 +963,7 @@ function Project45GunFire:reloading()
 
       -- if mag isn't fully loaded, reset minigame
       if storage.ammo < self.maxAmmo then
-        self.weapon.reloadTimer = 0      
+        self:updateReloadTimer(0, true)
       
       --[[
       
@@ -994,7 +980,7 @@ function Project45GunFire:reloading()
       end
       
     end
-    self.weapon.reloadTimer = self.weapon.reloadTimer + self.dt
+    self:updateReloadTimer(self.dt)
     coroutine.yield()
   end
   self.weapon.isReloading = false
@@ -1114,7 +1100,6 @@ function Project45GunFire:unjamming()
     -- animator.playSound("click")
     self:onFullUnjamPassive()
     self:updateReloadRating(OK)
-    self.weapon.reloadTimer = self.reloadTime
     animator.setAnimationState("bolt", "closed")
     self:updateChamberState("filled")
     self:setState(self.cocking)
@@ -1556,7 +1541,7 @@ function Project45GunFire:updateCharge()
       self.dischargeDelayTimer = math.max(0, self.dischargeDelayTimer - self.dt)
     end
   end
-  activeItem.setScriptedAnimationParameter("chargeTimer", self.chargeTimer)
+
   world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UIField", "chargeTimer", self.chargeTimer)
 
   if self.chargeTimer <= 0 then
@@ -1661,7 +1646,6 @@ end
 function Project45GunFire:updateStockAmmo(delta, willReplace)
   storage.stockAmmo = willReplace and delta or math.max(0, storage.stockAmmo + delta)
   self.weapon.stockAmmoDamageMult = 1 + (storage.stockAmmo * 0.1 / self.maxAmmo * 3)
-  activeItem.setScriptedAnimationParameter("stockAmmo", storage.stockAmmo)
   world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UIField", "stockAmmo", storage.stockAmmo)
 end
 
@@ -1674,26 +1658,29 @@ function Project45GunFire:updateAmmo(delta, willReplace)
 
   if not self.maxAmmo then
     storage.ammo = math.max(0, storage.ammo + delta)
-    activeItem.setScriptedAnimationParameter("ammo", storage.ammo)
+    world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UIField", "currentAmmo", storage.ammo)
     return
   end
   
   storage.ammo = willReplace and delta or util.clamp(storage.ammo + delta, 0, self.maxAmmo)
   -- update visual info
   self:updateMagVisuals()
-  activeItem.setScriptedAnimationParameter("ammo", storage.ammo)
   world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UIField", "currentAmmo", storage.ammo)
 end
 
 function Project45GunFire:updateReloadRating(newReloadRating)
   storage.reloadRating = newReloadRating
   world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UIField", "reloadRating", reloadRatingList[newReloadRating])
-  activeItem.setScriptedAnimationParameter("reloadRating", reloadRatingList[newReloadRating])
+end
+
+function Project45GunFire:updateReloadTimer(delta, willReplace)
+  self.weapon.reloadTimer = willReplace and delta or self.weapon.reloadTimer + delta
+  world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UIField", "reloadTimer", self.weapon.reloadTimer)
 end
 
 function Project45GunFire:updateChamberState(newChamberState)
   if newChamberState then animator.setAnimationState("chamber", newChamberState) end
-  activeItem.setScriptedAnimationParameter("primaryChamberState", animator.animationState("chamber"))
+  -- TESTME: need primaryChamberState?
   world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UIField", "chamberState", animator.animationState("chamber"))
 end
 
@@ -1734,7 +1721,6 @@ end
 -- Amount is clamped between 0 and 1.
 function Project45GunFire:updateJamAmount(delta, set)
   storage.jamAmount = set and delta or util.clamp(storage.jamAmount + delta, 0, 1)
-  activeItem.setScriptedAnimationParameter("jamAmount", storage.jamAmount)
   world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UIField", "jamAmount", storage.jamAmount)
 end
 
@@ -2194,11 +2180,9 @@ function Project45GunFire:loadGunState()
   end
 
   storage.reloadRating = storage.reloadRating or loadedGunState.reloadRating
-  activeItem.setScriptedAnimationParameter("reloadRating", reloadRatingList[storage.reloadRating])
   storage.unejectedCasings = storage.unejectedCasings or loadedGunState.unejectedCasings
   
   storage.jamAmount = storage.jamAmount or loadedGunState.jamAmount
-  activeItem.setScriptedAnimationParameter("jamAmount", storage.jamAmount)
   animator.setAnimationState("bolt", loadedGunState.bolt)
   
   if loadedGunState.bolt == "open" then
