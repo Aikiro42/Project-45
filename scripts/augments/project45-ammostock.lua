@@ -8,7 +8,10 @@ function apply(input)
   local output = Item.new(input)
 
   if output:instanceValue("itemName") == "project45-ammostock" then
-    if input.count > 1 then return end  -- do not stack on a stack of stock ammo
+    if output.count > 1 then
+      output:setInstanceValue("ammo", output:instanceValue("ammo") * output.count)
+      output.count = 1
+    end
 
     local ammoStockLimit = root.assetJson("/configs/project45/project45_general.config:ammoStockLimit", 300)
     local oldAmmo = output:instanceValue("ammo")
