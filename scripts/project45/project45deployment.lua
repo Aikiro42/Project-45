@@ -1,6 +1,7 @@
 require "/scripts/vec2.lua"
 require "/scripts/set.lua"
 require "/scripts/project45/project45util.lua"
+require "/scripts/project45/project45animator.lua"
 
 project45deployment_initOld = init
 project45deployment_updateOld = update
@@ -14,9 +15,9 @@ function init()
 
   self.debugTimer = 0
   self.toPrint = {}
-
   self.gunStatus = {}
   self.gunInfo = {}
+  self.animator = Project45Animator:new(2)
 
   message.setHandler("updateProject45UIField", function(messageName, isLocalEntity, statusKey, statusValue)
     self.gunStatus[statusKey] = statusValue
@@ -39,6 +40,10 @@ function init()
 end
 
 function update(dt)
+
+  localAnimator.clearDrawables()
+  localAnimator.clearLightSources()
+  
   project45deployment_updateOld(dt)
 
   if self.debugTimer <= 0 then
@@ -71,6 +76,8 @@ function update(dt)
     end
   end
 
+  self.animator:update(dt)
+
   local currentAmmo = self.gunStatus.currentAmmo or 0
   renderStockAmmoCounter(
     self.gunStatus.aimPosition,
@@ -86,11 +93,13 @@ function update(dt)
     isReloading
   )
 
-  renderChamberIndicator(
-    self.gunStatus.aimPosition,
-    vec2.add(ammoOffset, {0, -1}),
-    self.gunStatus.chamberState
-  )
+  if not (self.gunInfo.modSettings or {}).performanceMode then
+    renderChamberIndicator(
+      self.gunStatus.aimPosition,
+      vec2.add(ammoOffset, {0, -1}),
+      self.gunStatus.chamberState
+    )
+  end
 
   renderChargeBar(
     self.gunStatus.aimPosition,
@@ -144,9 +153,52 @@ function renderAmmoCounter(uiPosition, offset, reloadRating, ammo, isReloading)
   ammo = ammo or 0
   offset = offset or {0, 0}
 
-  if ammo < 0 then ammo = "E" end
-  if isReloading then ammo = "R" end
+  local ammoCounterImageScale = 0.75
 
+  if ammo < 0 then
+    if self.gunInfo.modSettings.useAmmoCounterImages then
+      self.animator:render(
+        {
+          image="/scripts/project45/ui/reloadindicator.png:empty.<frame>",
+          position = vec2.add(uiPosition, offset),
+          color = {255,255,255},
+          transformation = {
+            {ammoCounterImageScale, 0, 0},
+            {0, ammoCounterImageScale, 0},
+            {0, 0, 1}
+          },
+          fullbright = true
+        },
+        2, "Overlay"
+      )
+      ammo = ""
+    else
+      ammo = "E"
+    end
+  end
+
+  if isReloading and ammo <= 0 then
+    if self.gunInfo.modSettings.useAmmoCounterImages then
+      self.animator:render(
+        {
+          image="/scripts/project45/ui/reloadindicator.png:reloading.<frame>",
+          position = vec2.add(uiPosition, offset),
+          color = {255,255,255},
+          transformation = {
+            {ammoCounterImageScale, 0, 0},
+            {0, ammoCounterImageScale, 0},
+            {0, 0, 1}
+          },
+          fullbright = true
+        },
+        2, "Overlay"
+      )
+      ammo = ""
+    else
+      ammo = "R"
+    end
+  end
+  
   renderText(
     vec2.add(uiPosition, offset),
     tostring(ammo),
@@ -155,6 +207,7 @@ function renderAmmoCounter(uiPosition, offset, reloadRating, ammo, isReloading)
     reloadRatingColors[reloadRating or "BAD"],
     -0.5
   )
+
 end
 
 function renderStockAmmoCounter(uiPosition, offset, stockAmmo)
@@ -431,6 +484,10 @@ end
 
 function renderText(position, str, scale, doShadow, color, charSpacing)
   if not position then return end
+  if not str then return end
+  if type(str) ~= "string" then
+    str = tostring(str)
+  end
   
   scale = scale or 1
   
