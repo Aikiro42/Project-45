@@ -245,10 +245,10 @@ function renderReloadRatingText(uiPosition, offset, reloadRating)
   if not uiPosition then return end
 
   local colors = {
-    PERFECT = {255, 241, 191},
-    GOOD = {191, 255, 255},
+    PERFECT = {255, 200, 0},
+    GOOD = {150, 203, 231},
     OK = {255,255,255},
-    BAD = {255, 127, 127}
+    BAD = {217, 58, 58}
   }
 
   renderText(
