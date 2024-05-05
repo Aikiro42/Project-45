@@ -62,6 +62,7 @@ function update(dt)
     world.sendEntityMessage(entity.id(), "induceInitProject45UI")
   end
   
+  local performanceMode = (self.gunInfo.modSettings or {}).performanceMode
   local ammoOffset = self.gunInfo.uiElementOffset or {0, 0}
   local isReloading = (self.gunStatus.reloadTimer or -1) >= 0
   local jamAmount = self.gunStatus.jamAmount or 0
@@ -76,7 +77,9 @@ function update(dt)
     end
   end
 
-  self.animator:update(dt)
+  if not performanceMode then
+    self.animator:update(dt)
+  end
 
   local currentAmmo = self.gunStatus.currentAmmo or 0
   renderStockAmmoCounter(
@@ -93,7 +96,7 @@ function update(dt)
     isReloading
   )
 
-  if not (self.gunInfo.modSettings or {}).performanceMode then
+  if not performanceMode then
     renderChamberIndicator(
       self.gunStatus.aimPosition,
       vec2.add(ammoOffset, {0, -1}),
@@ -103,7 +106,7 @@ function update(dt)
 
   renderChargeBar(
     self.gunStatus.aimPosition,
-    vec2.add(ammoOffset, {0, -1.75}),
+    vec2.add(ammoOffset, {0, performanceMode and -1 or -1.75}),
     self.gunInfo.chargeTime,
     self.gunInfo.overchargeTime,
     self.gunInfo.perfectChargeRange,
@@ -111,11 +114,13 @@ function update(dt)
   )
 
   if isReloading then
-    renderReloadRatingText(
-      self.gunStatus.uiPosition,
-      vec2.add(self.gunInfo.uiElementOffset, {0, 2.5}),
-      self.gunStatus.reloadRating
-    )
+    if not (self.gunInfo.modSettings or {}).performanceMode then
+      renderReloadRatingText(
+        self.gunStatus.uiPosition,
+        vec2.add(self.gunInfo.uiElementOffset, {0, 2.5}),
+        self.gunStatus.reloadRating
+      )
+    end
     renderReloadBar(
       self.gunStatus.uiPosition,
       self.gunInfo.uiElementOffset,

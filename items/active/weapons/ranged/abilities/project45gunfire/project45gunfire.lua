@@ -501,7 +501,9 @@ function Project45GunFire:initUI()
     -- ,"accurateBars"
   }
 
-  self.modSettings = {}
+  self.modSettings = {
+    performanceMode = self.performanceMode
+  }
   for _, setting in ipairs(userSettings) do
     self.modSettings[setting] = (player and player.getProperty or status.statusProperty)("project45_" .. setting, generalConfig[setting])
   end
