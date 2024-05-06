@@ -36,7 +36,7 @@ function apply(output, augment)
       local hitscanParam = {hitscanParameters=1, beamParameters=1}
       if hitscanParam[v] and augment[v] then
         if augment[v].chain == nil then
-          augment[v].chain = newPrimaryAbility[v].chain
+          augment[v].chain = (newPrimaryAbility[v] or {}).chain
         end
       end
       newPrimaryAbility[v] = augment[v]

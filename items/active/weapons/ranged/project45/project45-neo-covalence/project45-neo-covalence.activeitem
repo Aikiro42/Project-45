@@ -71,7 +71,7 @@
   },
 
   "baseOffset" : [0.5, 0.25],
-  "muzzleOffset" : [1, 0.25],
+  "muzzleOffset" : [1.25, 0.25],
   "ejectionPortOffset": [-0.25, 0.5],
   "magazineOffset": [0, 0],
 

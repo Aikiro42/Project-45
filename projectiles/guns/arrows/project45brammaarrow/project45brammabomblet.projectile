@@ -12,6 +12,36 @@
     {
       "action" : "config",
       "file" : "/projectiles/explosions/project45_stdexplosion/project45_stdsmallexplosion.config"
+    },
+    {
+      "action" : "loop",
+      "count" : 6,
+      "body" : [
+        {
+          "action" : "particle",
+          "specification" : {
+            "type" : "ember",
+            "size" : 1,
+            "color" : [255, 255, 255, 255],
+            "light" : [234, 153, 49],
+            "fullbright" : true,
+            "destructionTime" : 0.2,
+            "destructionAction" : "fade",
+            "fade" : 0.9,
+            "initialVelocity" : [0, 5],
+            "finalVelocity" : [0, -50],
+            "approach" : [0, 30],
+            "timeToLive" : 0,
+            "layer" : "middle",
+            "variance" : {
+              "position" : [0.25, 0.25],
+              "size" : 0.5,
+              "initialVelocity" : [10, 10],
+              "timeToLive" : 0.2
+            }
+          }
+        }
+      ]
     }
   ],
   "statusEffects" : [ ],

@@ -4,7 +4,7 @@
   "maxStack" : 1,
   "rarity" : "Essential",
   "description" : "A popular greatbow among the frames of war.",
-  "shortdescription" : "Kuva Bramma",
+  "shortdescription" : "^#fdd14d;Kuva Bramma^reset;",
   "isUnique": true,
   "tooltipKind" : "project45gun",
   "gunArchetype": "grenadeLauncher",
