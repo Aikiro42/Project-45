@@ -8,7 +8,7 @@
   "tooltipKind" : "project45gun",
   "gunArchetype": "beam",
   "category" : "smg",
-  "twoHanded" : false,
+  "twoHanded" : true,
   "itemTags" : ["weapon","ranged","pistol"],
   "level" : 1,
   "muzzleFlashColor": [170, 154, 255],
@@ -62,16 +62,19 @@
     ],
     "acceptsModSlot": [
       "muzzle",
+      "sights",
+      "rail",
       "receiver",
       
       "material",
-      "receiver",
       "magazine"
     ]
   },
 
-  "baseOffset" : [0.5, 0.25],
+  "baseOffset" : [0.125, 0.25],
   "muzzleOffset" : [1.25, 0.25],
+  "sightsOffset": [0.625, 1.125],
+  "railOffset": [0.125, 0.125],
   "ejectionPortOffset": [-0.25, 0.5],
   "magazineOffset": [0, 0],
 
@@ -110,52 +113,24 @@
     },
   
     "stances":{
-      "idleneo": {
-        "twoHanded": false
-      },
-      "aim": {
-        "twoHanded": false
-      },
-      "empty": {
-        "twoHanded": false
-      },
       "ejectmag" : {
         "armRotation" : -45,
-        "weaponRotation" : 45,
-        "twoHanded" : false,
-        "allowRotate" : false,
-        "allowFlip" : false
+        "weaponRotation" : 45
       },
       "reloading" : {
-        "armRotation" : 45,
-        "weaponRotation" : 0,
-        "weaponAngularVelocity": 3600,
-        "twoHanded": false,
-        "frontArmFrame" : "rotation"
+        "armRotation" : 0,
+        "weaponRotation" : 15,
+        "twoHanded": false
       },
       "reloaded" : {
-        "armRotation" : -45,
-        "weaponRotation" : 0,
-        "twoHanded" : false,
-        "allowRotate" : false,
-        "allowFlip" : false,
-        "frontArmFrame" : "rotation",
-        "snap": true
-      },
-      "boltPull": {
-        "twoHanded": false
-      },
-      "boltPush": {
-        "twoHanded": false
-      },
-      "jammed": {
-        "twoHanded": false
+        "armRotation" : -20,
+        "weaponRotation" : 20,
+        "weaponOffset": [0.25, 0]
       },
       "unjam": {
-        "armRotation": -45,
-        "weaponRotation": -5,
-        "frontArmFrame": "rotation",
-        "twoHanded": false      
+        "armRotation": -5,
+        "weaponRotation": 5,
+        "frontArmFrame" : "run.2"
       }
     }
   },
