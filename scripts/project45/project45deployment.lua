@@ -15,24 +15,40 @@ function init()
 
   self.debugTimer = 0
   self.toPrint = {}
-  self.gunStatus = {}
-  self.gunInfo = {}
-  self.animator = Project45Animator:new(2)
+  self.gunStatusL = {}
+  self.gunStatusR = {}
+  self.gunInfoL = {}
+  self.gunInfoR = {}
+  self.animatorL = Project45Animator:new(2)
+  self.animatorR = Project45Animator:new(2)
 
-  message.setHandler("updateProject45UIField", function(messageName, isLocalEntity, statusKey, statusValue)
-    self.gunStatus[statusKey] = statusValue
+  message.setHandler("updateProject45UIFieldL", function(messageName, isLocalEntity, statusKey, statusValue)
+    self.gunStatusL[statusKey] = statusValue
+  end)
+  message.setHandler("updateProject45UIFieldR", function(messageName, isLocalEntity, statusKey, statusValue)
+    self.gunStatusR[statusKey] = statusValue
   end)
 
-  message.setHandler("initProject45UI", function(messageName, isLocalEntity, gunInfo)
-    self.gunInfo = gunInfo
+  message.setHandler("initProject45UIL", function(messageName, isLocalEntity, gunInfo)
+    self.gunInfoL = gunInfo
   end)
 
-  message.setHandler("updateProject45UI", function(messageName, isLocalEntity, gunStatus, reset)
-    self.gunStatus = sb.jsonMerge(self.gunStatus or {}, gunStatus)
+  message.setHandler("initProject45UIR", function(messageName, isLocalEntity, gunInfo)
+    self.gunInfoR = gunInfo
   end)
 
-  message.setHandler("clearProject45UI", function(messageName, isLocalEntity)
-    self.gunStatus = {}
+  message.setHandler("updateProject45UIL", function(messageName, isLocalEntity, gunStatus, reset)
+    self.gunStatusL = sb.jsonMerge(self.gunStatusL or {}, gunStatus)
+  end)
+  message.setHandler("updateProject45UIR", function(messageName, isLocalEntity, gunStatus, reset)
+    self.gunStatusR = sb.jsonMerge(self.gunStatusR or {}, gunStatus)
+  end)
+
+  message.setHandler("clearProject45UIL", function(messageName, isLocalEntity)
+    self.gunStatusL = {}
+  end)
+  message.setHandler("clearProject45UIR", function(messageName, isLocalEntity)
+    self.gunStatusR = {}
   end)
 
   world.sendEntityMessage(entity.id(), "induceInitProject45UI")
@@ -55,83 +71,89 @@ function update(dt)
 
   -- DELETEME: random shit here
 
-  
-  if not wieldsProject45Weapon() then
-    self.gunStatus = {}
-  elseif not self.gunInfo.uiInitialized then
-    world.sendEntityMessage(entity.id(), "induceInitProject45UI")
+  renderSide(dt, "L")
+  renderSide(dt, "R")
+end
+
+function renderSide(dt, side)
+
+  if not wieldsProject45Weapon(side) then
+    self["gunStatus" .. side] = {}
+  elseif not self["gunInfo" .. side].uiInitialized then
+    world.sendEntityMessage(entity.id(), "induceInitProject45UI" .. side)
   end
   
-  local performanceMode = (self.gunInfo.modSettings or {}).performanceMode
-  local ammoOffset = self.gunInfo.uiElementOffset or {0, 0}
-  local isReloading = (self.gunStatus.reloadTimer or -1) >= 0
-  local jamAmount = self.gunStatus.jamAmount or 0
+  local performanceMode = (self["gunInfo" .. side].modSettings or {}).performanceMode
+  local ammoOffset = self["gunInfo" .. side].uiElementOffset or {0, 0}
+  local isReloading = (self["gunStatus" .. side].reloadTimer or -1) >= 0
+  local jamAmount = self["gunStatus" .. side].jamAmount or 0
   local reloadProgress
 
   if (isReloading or jamAmount > 0) then
-    if (self.gunInfo.modSettings or {}).renderBarsAtCursor then
-      ammoOffset = vec2.add(ammoOffset, self.gunInfo.uiElementOffset)
+    if (self["gunInfo" .. side].modSettings or {}).renderBarsAtCursor then
+      ammoOffset = vec2.add(ammoOffset, self["gunInfo" .. side].uiElementOffset)
     end
     if isReloading then
-      reloadProgress = (self.gunStatus.reloadTimer or 0) / (self.gunInfo.reloadTime or 1)
+      reloadProgress = (self["gunStatus" .. side].reloadTimer or 0) / (self["gunInfo" .. side].reloadTime or 1)
     end
   end
 
   if not performanceMode then
-    self.animator:update(dt)
+    self["animator" .. side]:update(dt)
   end
 
-  local currentAmmo = self.gunStatus.currentAmmo or 0
+  local currentAmmo = self["gunStatus" .. side].currentAmmo or 0
   renderStockAmmoCounter(
-    self.gunStatus.aimPosition,
+    self["gunStatus" .. side].aimPosition,
     vec2.add(ammoOffset, {0, 1}),
-    self.gunStatus.stockAmmo or 0
+    self["gunStatus" .. side].stockAmmo or 0
   )
 
   renderAmmoCounter(
-    self.gunStatus.aimPosition,
+    self["gunStatus" .. side].aimPosition,
     ammoOffset,
-    currentAmmo < 0 and "OK" or self.gunStatus.reloadRating or "BAD",
+    currentAmmo < 0 and "OK" or self["gunStatus" .. side].reloadRating or "BAD",
     currentAmmo,
-    isReloading
+    isReloading,
+    side
   )
 
   if not performanceMode then
     renderChamberIndicator(
-      self.gunStatus.aimPosition,
+      self["gunStatus" .. side].aimPosition,
       vec2.add(ammoOffset, {0, -1}),
-      self.gunStatus.chamberState
+      self["gunStatus" .. side].chamberState
     )
   end
 
   renderChargeBar(
-    self.gunStatus.aimPosition,
+    self["gunStatus" .. side].aimPosition,
     vec2.add(ammoOffset, {0, performanceMode and -1 or -1.75}),
-    self.gunInfo.chargeTime,
-    self.gunInfo.overchargeTime,
-    self.gunInfo.perfectChargeRange,
-    self.gunStatus.chargeTimer
+    self["gunInfo" .. side].chargeTime,
+    self["gunInfo" .. side].overchargeTime,
+    self["gunInfo" .. side].perfectChargeRange,
+    self["gunStatus" .. side].chargeTimer
   )
 
   if isReloading then
-    if not (self.gunInfo.modSettings or {}).performanceMode then
+    if not (self["gunInfo" .. side].modSettings or {}).performanceMode then
       renderReloadRatingText(
-        self.gunStatus.uiPosition,
-        vec2.add(self.gunInfo.uiElementOffset, {0, 2.5}),
-        self.gunStatus.reloadRating
+        self["gunStatus" .. side].uiPosition,
+        vec2.add(self["gunInfo" .. side].uiElementOffset, {0, 2.5}),
+        self["gunStatus" .. side].reloadRating
       )
     end
     renderReloadBar(
-      self.gunStatus.uiPosition,
-      self.gunInfo.uiElementOffset,
-      self.gunInfo.reloadTimeframe,
+      self["gunStatus" .. side].uiPosition,
+      self["gunInfo" .. side].uiElementOffset,
+      self["gunInfo" .. side].reloadTimeframe,
       reloadProgress,
-      self.gunStatus.reloadRating
+      self["gunStatus" .. side].reloadRating
     )
   elseif jamAmount > 0 then
     renderJamBar(
-      self.gunStatus.uiPosition,
-      self.gunInfo.uiElementOffset,
+      self["gunStatus" .. side].uiPosition,
+      self["gunInfo" .. side].uiElementOffset,
       jamAmount
     )
   end
@@ -139,13 +161,17 @@ function update(dt)
   
 end
 
-function wieldsProject45Weapon()
-  local primaryTags = set.new(player.primaryHandItemTags() or {})
-  local altTags = set.new(player.altHandItemTags() or {})
-  return primaryTags.project45 or altTags.project45
+function wieldsProject45Weapon(side)
+  if side == "L" then
+    local primaryTags = set.new(player.primaryHandItemTags() or {})
+    return primaryTags.project45  
+  else
+    local altTags = set.new(player.altHandItemTags() or {})
+    return altTags.project45
+  end
 end
 
-function renderAmmoCounter(uiPosition, offset, reloadRating, ammo, isReloading)
+function renderAmmoCounter(uiPosition, offset, reloadRating, ammo, isReloading, side)
 
   local reloadRatingColors = {
     PERFECT = {255, 241, 191},
@@ -159,10 +185,12 @@ function renderAmmoCounter(uiPosition, offset, reloadRating, ammo, isReloading)
   offset = offset or {0, 0}
 
   local ammoCounterImageScale = 0.75
+  local displayedAmmo = ammo
 
   if ammo < 0 then
-    if self.gunInfo.modSettings.useAmmoCounterImages then
-      self.animator:render(
+    if self["gunInfo" .. side].modSettings.useAmmoCounterImages then
+      sb.logInfo("render empty " .. side)
+      self["animator" .. side]:render(
         {
           image="/scripts/project45/ui/reloadindicator.png:empty.<frame>",
           position = vec2.add(uiPosition, offset),
@@ -176,15 +204,16 @@ function renderAmmoCounter(uiPosition, offset, reloadRating, ammo, isReloading)
         },
         2, "Overlay"
       )
-      ammo = ""
+      displayedAmmo = ""
     else
-      ammo = "E"
+      displayedAmmo = "E"
     end
   end
 
   if isReloading and ammo <= 0 then
-    if self.gunInfo.modSettings.useAmmoCounterImages then
-      self.animator:render(
+    if self["gunInfo" .. side].modSettings.useAmmoCounterImages then
+      sb.logInfo("render reloading " .. side)
+      self["animator" .. side]:render(
         {
           image="/scripts/project45/ui/reloadindicator.png:reloading.<frame>",
           position = vec2.add(uiPosition, offset),
@@ -198,15 +227,15 @@ function renderAmmoCounter(uiPosition, offset, reloadRating, ammo, isReloading)
         },
         2, "Overlay"
       )
-      ammo = ""
+      displayedAmmo = ""
     else
-      ammo = "R"
+      displayedAmmo = "R"
     end
   end
   
   renderText(
     vec2.add(uiPosition, offset),
-    tostring(ammo),
+    displayedAmmo,
     1.125,
     true,
     reloadRatingColors[reloadRating or "BAD"],
