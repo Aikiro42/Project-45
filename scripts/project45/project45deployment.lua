@@ -76,11 +76,11 @@ function update(dt)
 end
 
 function renderSide(dt, side)
-    
-  if not wieldsProject45WeaponL() then
+
+  if not wieldsProject45Weapon(side) then
     self["gunStatus" .. side] = {}
   elseif not self["gunInfo" .. side].uiInitialized then
-    world.sendEntityMessage(entity.id(), "induceInitProject45UIL")
+    world.sendEntityMessage(entity.id(), "induceInitProject45UI" .. side)
   end
   
   local performanceMode = (self["gunInfo" .. side].modSettings or {}).performanceMode
@@ -161,14 +161,14 @@ function renderSide(dt, side)
   
 end
 
-function wieldsProject45WeaponL()
-  local primaryTags = set.new(player.primaryHandItemTags() or {})
-  return primaryTags.project45
-end
-
-function wieldsProject45WeaponR()
-  local altTags = set.new(player.altHandItemTags() or {})
-  return altTags.project45
+function wieldsProject45Weapon(side)
+  if side == "L" then
+    local primaryTags = set.new(player.primaryHandItemTags() or {})
+    return primaryTags.project45  
+  else
+    local altTags = set.new(player.altHandItemTags() or {})
+    return altTags.project45
+  end
 end
 
 function renderAmmoCounter(uiPosition, offset, reloadRating, ammo, isReloading, side)
