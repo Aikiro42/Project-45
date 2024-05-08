@@ -76,7 +76,7 @@ function update(dt)
 end
 
 function renderSide(dt, side)
-
+  
   if not wieldsProject45Weapon(side) then
     self["gunStatus" .. side] = {}
   elseif not self["gunInfo" .. side].uiInitialized then
@@ -189,7 +189,6 @@ function renderAmmoCounter(uiPosition, offset, reloadRating, ammo, isReloading, 
 
   if ammo < 0 then
     if self["gunInfo" .. side].modSettings.useAmmoCounterImages then
-      sb.logInfo("render empty " .. side)
       self["animator" .. side]:render(
         {
           image="/scripts/project45/ui/reloadindicator.png:empty.<frame>",
@@ -212,7 +211,6 @@ function renderAmmoCounter(uiPosition, offset, reloadRating, ammo, isReloading, 
 
   if isReloading and ammo <= 0 then
     if self["gunInfo" .. side].modSettings.useAmmoCounterImages then
-      sb.logInfo("render reloading " .. side)
       self["animator" .. side]:render(
         {
           image="/scripts/project45/ui/reloadindicator.png:reloading.<frame>",
@@ -260,8 +258,21 @@ end
 
 function renderChamberIndicator(uiPosition, offset, chamberState)
   if not uiPosition then return end
+  if not chamberState then return end
+
+  if not set.new({"ready", "filled", "empty"})[chamberState] then
+    renderText(
+      vec2.add(uiPosition, offset),
+      chamberState,
+      0.8,
+      true,
+      {255,255,255},
+      -0,5
+    )
+    return
+  end
+
   offset = offset or {0, 0}
-  chamberState = chamberState or "empty"
   localAnimator.addDrawable({
     image = "/scripts/project45/ui/chamber.png:" .. chamberState,
     position = vec2.add(uiPosition, offset),
