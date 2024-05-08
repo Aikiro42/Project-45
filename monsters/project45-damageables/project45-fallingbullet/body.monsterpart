@@ -1,0 +1,9 @@
+{
+  "name" : "project45-fallingbullet",
+  "category" : "project45-fallingbullet",
+  "type" : "body",
+
+  "frames" : {
+    "body" : "project45-fallingbullet.png"
+  }
+}
