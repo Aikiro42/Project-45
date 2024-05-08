@@ -7,6 +7,7 @@
   "category" : "mysteriousReward",
   "description" : "Call in a random item.",
   "shortdescription" : "Supply Transponder",
+  "tags": ["project45"],
   "twoHanded" : false,
 
   "inventoryIcon" : "project45-supplytransponder.png",
