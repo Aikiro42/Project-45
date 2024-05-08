@@ -179,6 +179,6 @@
 
 	"sounds" : {
 		"aggroHop" : [ ],
-		"deathPuff" : [ ]
+		"deathPuff" : [ "/sfx/objects/essencechest_open3.ogg" ]
 	}
 }

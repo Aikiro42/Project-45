@@ -57,9 +57,9 @@
 
     "aggressive" : false,
 
-    "bodyMaterialKind" : "robotic",
+    "bodyMaterialKind" : "wooden",
 
-    "knockoutTime" : 0.3,
+    "knockoutTime" : 0,
     "knockoutAnimationStates" : {
       "damage" : "stunned"
     },
@@ -68,7 +68,7 @@
 
     "statusSettings" : {
       "statusProperties" : {
-        "targetMaterialKind" : "robotic"
+        "targetMaterialKind" : "wooden"
       },
 
       "appliesEnvironmentStatusEffects" : false,

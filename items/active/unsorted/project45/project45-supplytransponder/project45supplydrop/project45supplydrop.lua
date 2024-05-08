@@ -6,6 +6,17 @@ require "/scripts/project45/hitscanLib.lua"
 Project45SupplyDrop = WeaponAbility:new()
 
 function Project45SupplyDrop:init()
+  
+  message.setHandler("induceInitProject45UIL", function(messageName, isLocalEntity)
+    if activeItem.hand() == "primary" then
+      self:initUI()
+    end
+  end)
+  message.setHandler("induceInitProject45UIR", function(messageName, isLocalEntity)
+    if activeItem.hand() == "alt" then
+      self:initUI()
+    end
+  end)
 
   self.strikeHeight = self.strikeHeight or 50
   self.gravThreshold = self.gravThreshold or 0
@@ -36,6 +47,8 @@ function Project45SupplyDrop:init()
   self.gradientColors["project45supplydropproj-sr"] = {164, 81, 196, 64}
   self.gradientColors["project45supplydropproj-r"] = {85, 136, 212, 64}
 
+  self.infoSide = activeItem.hand() == "primary" and "L" or "R"
+
   self.tagTimer = 0
 
   self.soundMode = 0
@@ -43,24 +56,46 @@ function Project45SupplyDrop:init()
   self.laserFlashTime = self.laserFlashTime or 0.01
   self.laserFlashTimer = self.laserFlashTime
   
-  --[[
-  self.weapon:setStance({
-    armRotation = 0,
-    weaponRotation = 0,
+  self:initUI()
+  self:setStance({
+    armRotation = util.toRadians(-90),
     allowFlip = true,
-    allowRotate = true
+    allowRotate = false
   })
-  --]]
 
+end
+
+function Project45SupplyDrop:initUI()
+  world.sendEntityMessage(activeItem.ownerEntityId(), "initProject45UI" .. self.infoSide, {
+    modSettings = {},
+    uiElementOffset = activeItem.hand() == "primary" and {-2, 0} or {2, 0},
+  })
+
+  world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UI" .. self.infoSide, {
+    currentAmmo = self.pulls,
+    stockAmmo = 0,
+    reloadRating = "ok",
+    chamberState = "Pulls"
+  })
 end
 
 function Project45SupplyDrop:triggering()
   return self.fireMode == (self.activatingFireMode or self.abilitySlot)
 end
 
+function Project45SupplyDrop:updateUI()
+  local aimPosition = world.distance(activeItem.ownerAimPosition(), mcontroller.position())
+  world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UI" .. self.infoSide, {
+    aimPosition = aimPosition,
+    uiPosition = aimPosition
+  })
+end
+
 function Project45SupplyDrop:update(dt, fireMode, shiftHeld)
   WeaponAbility.update(self, dt, fireMode, shiftHeld)
 
+  self:updateStance()  
+  self:updateUI()
 
   if self.soundMode == 0 then
     animator.stopAllSounds("ping")
@@ -128,7 +163,11 @@ function Project45SupplyDrop:tagging()
 
   local tagProgress = 0
   local locked = false
-  
+  self:setStance({
+    armRotation = 0,
+    allowFlip = true,
+    allowRotate = true
+  })
   self.soundMode = 1
   local lockedIn = false
   while self:triggering() do
@@ -157,6 +196,11 @@ function Project45SupplyDrop:tagging()
     
     coroutine.yield()
   end
+  self:setStance({
+    armRotation = util.toRadians(-90),
+    allowFlip = true,
+    allowRotate = false
+  })
 
   self:clearLaser()
 
@@ -171,6 +215,20 @@ function Project45SupplyDrop:tagging()
   self.isFiring = false
 
   return
+end
+
+function Project45SupplyDrop:updateStance()
+  self.stance = self.stance or {}
+  self.stance.armRotation = self.stance.armRotation or 0
+  self.stance.weaponRotation = self.stance.weaponRotation or 0
+  local aimAngle, aimDirection = activeItem.aimAngleAndDirection(0, activeItem.ownerAimPosition())
+
+  activeItem.setArmAngle(self.stance.allowRotate and aimAngle or 0 + self.stance.armRotation)
+  activeItem.setFacingDirection(self.stance.allowFlip and aimDirection or 1)
+
+end
+function Project45SupplyDrop:setStance(stance)
+  self.stance = stance
 end
 
 function Project45SupplyDrop:updateDrop()
@@ -190,6 +248,7 @@ end
 
 function Project45SupplyDrop:consumePull()
   self.pulls = self.pulls - 1
+  world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UIField" .. self.infoSide, "currentAmmo", self.pulls)
 end
 
 function Project45SupplyDrop:fire()

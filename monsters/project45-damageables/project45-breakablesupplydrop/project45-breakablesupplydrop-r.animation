@@ -176,6 +176,7 @@
 
 	"sounds" : {
 		"aggroHop" : [ ],
-		"deathPuff" : [ ]
+		"deathPuff" : [ ],
+		"deathFade" : [ "/sfx/npc/boss/guardian_death_fade.ogg" ]
 	}
 }
