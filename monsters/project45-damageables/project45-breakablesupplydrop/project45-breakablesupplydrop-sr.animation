@@ -123,6 +123,16 @@
 	},
 
 	"particleEmitters" : {
+		"rarityIndicator" : {
+			"active" : true,
+			"emissionRate" : 50,
+			"particles" : [
+				{"particle" : "project45gachasr"},
+				{"particle" : "project45gachasr"},
+				{"particle" : "project45gachasr"}
+			]
+		},
+
 		"spindust" : {
 			"emissionRate" : 15,
 			"offsetRegion" : [ -0.0, -2.25, 0.0, -2.25 ],

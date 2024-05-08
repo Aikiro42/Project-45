@@ -61,6 +61,11 @@
     },
     {
         "op": "add",
+        "path": "/project45supplydrop",
+        "value": "/items/active/unsorted/project45/project45-supplytransponder/project45supplydrop/project45supplydrop.weaponability"
+    },
+    {
+        "op": "add",
         "path": "/project45tester",
         "value": "/items/active/weapons/ranged/abilities/project45tester/project45tester.weaponability"
     }

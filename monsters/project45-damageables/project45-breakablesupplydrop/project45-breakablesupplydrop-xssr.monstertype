@@ -1,12 +1,14 @@
 {
-  "type" : "project45-fallingbullet",
+  "type" : "project45-breakablesupplydrop-xssr",
 
-  "categories" : [ "project45-fallingbullet" ],
+  "categories" : [ "project45-breakablesupplydrop" ],
   "parts" : [ "body" ],
 
-  "animation" : "project45-fallingbullet.animation",
+  "animation" : "project45-breakablesupplydrop-xssr.animation",
 
-  "dropPools" : [ { "default" : "empty" } ],
+  "dropPools" : [ {
+    "default" : "project45-gacha-xssr"
+  } ],
 
   "baseParameters" : {
     "scripts" : [
@@ -40,7 +42,7 @@
     "movementSettings" : {
       "collisionPoly" : [ [0.25, 2], [0.25, 0], [-0.25, 0], [-0.25, 2] ],
 
-      "mass" : 1.0,
+      "mass" : 1000.0,
       "walkSpeed" : 0,
       "runSpeed" : 0,
 
@@ -83,7 +85,7 @@
           "baseValue" : 0.25
         },
         "knockbackThreshold" : {
-          "baseValue" : 0
+          "baseValue" : 99999999
         },
         "maxHealth" : {
           "baseValue" : 1
