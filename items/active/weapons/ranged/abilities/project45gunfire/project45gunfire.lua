@@ -19,17 +19,6 @@ Passive = {}
 
 function Project45GunFire:init()
 
-  message.setHandler("induceInitProject45UIL", function(messageName, isLocalEntity)
-    if activeItem.hand() == "primary" then
-      self:initUI()
-    end
-  end)
-  message.setHandler("induceInitProject45UIR", function(messageName, isLocalEntity)
-    if activeItem.hand() == "alt" then
-      self:initUI()
-    end
-  end)
-
   if self.passiveScript then
     require(self.passiveScript)
   end
@@ -347,7 +336,7 @@ function Project45GunFire:init()
   self.debugModPositions.stock = config.getParameter("stockOffset", {0, 0})
 
   animator.playSound("init")
-  
+
   self:initUI()
 
 end
@@ -501,6 +490,7 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
 end
 
 function Project45GunFire:initUI()
+
   local generalConfig = root.assetJson("/configs/project45/project45_general.config")
 
   local userSettings = {
@@ -515,8 +505,9 @@ function Project45GunFire:initUI()
   for _, setting in ipairs(userSettings) do
     self.modSettings[setting] = (player and player.getProperty or status.statusProperty)("project45_" .. setting, generalConfig[setting])
   end
-  world.sendEntityMessage(activeItem.ownerEntityId(), "initProject45UI" .. self.infoSide, {
-    
+
+  self.uiInfo = {
+    uiInitialized = true,
     modSettings = self.modSettings,
     uiElementOffset = activeItem.hand() == "primary" and {-2, 0} or {2, 0},
 
@@ -526,22 +517,21 @@ function Project45GunFire:initUI()
     chargeTime = self.chargeTime,
     overchargeTime = self.overchargeTime,
     perfectChargeRange = self.perfectChargeRange
+  }
 
-  })
+end
 
+function Project45GunFire:updateUI()
+  world.sendEntityMessage(activeItem.ownerEntityId(), "initProject45UI" .. self.infoSide, self.uiInfo)
+  
+  local aimPosition = world.distance(activeItem.ownerAimPosition(), mcontroller.position())
+  
   world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UI" .. self.infoSide, {
     currentAmmo = storage.ammo,
     stockAmmo = storage.stockAmmo,
     reloadRating = reloadRatingList[storage.reloadRating],
-  })
+    chamberState = animator.animationState("chamber"),
 
-  self:updateUI()
-end
-
-function Project45GunFire:updateUI()
-
-  local aimPosition = world.distance(activeItem.ownerAimPosition(), mcontroller.position())
-  world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UI" .. self.infoSide, {
     aimPosition = aimPosition,
     uiPosition = self.modSettings.renderBarsAtCursor and aimPosition or {0, 0},
     reloadTimer = self.weapon.reloadTimer

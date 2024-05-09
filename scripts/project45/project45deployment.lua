@@ -44,15 +44,6 @@ function init()
     self.gunStatusR = sb.jsonMerge(self.gunStatusR or {}, gunStatus)
   end)
 
-  message.setHandler("clearProject45UIL", function(messageName, isLocalEntity)
-    self.gunStatusL = {}
-  end)
-  message.setHandler("clearProject45UIR", function(messageName, isLocalEntity)
-    self.gunStatusR = {}
-  end)
-
-  world.sendEntityMessage(entity.id(), "induceInitProject45UI")
-
 end
 
 function update(dt)
@@ -79,8 +70,8 @@ function renderSide(dt, side)
   
   if not wieldsProject45Weapon(side) then
     self["gunStatus" .. side] = {}
-  elseif not self["gunInfo" .. side].uiInitialized then
-    world.sendEntityMessage(entity.id(), "induceInitProject45UI" .. side)
+    self["gunInfo" .. side] = {}
+    return
   end
   
   local performanceMode = (self["gunInfo" .. side].modSettings or {}).performanceMode
