@@ -14,5 +14,8 @@
   "scripts" : ["/items/active/weapons/ranged/gun.lua"],
   
   "primaryAbilityType": "project45supplydrop",
+  "primaryAbility": {
+    "hardPity": 25
+  },
   "builder" : "/items/buildscripts/buildunrandweapon.lua"
 }

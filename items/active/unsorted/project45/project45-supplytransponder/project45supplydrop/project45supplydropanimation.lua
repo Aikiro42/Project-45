@@ -36,6 +36,14 @@ function update()
       color = laserColor
     }, "Overlay")
 
+    
+    local groundParticles = animationConfig.animationParameter("dropGroundParticles")
+    if groundParticles then
+      for _, particle in ipairs(groundParticles) do
+        localAnimator.spawnParticle(particle, {sb.nrand(1, laserEnd[1]), laserEnd[2]})
+      end
+    end
+
   end
 
 end

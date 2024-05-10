@@ -4,7 +4,7 @@
   "categories" : [ "project45-breakablesupplydrop" ],
   "parts" : [ "body" ],
 
-  "animation" : "project45-breakablesupplydrop-r.animation",
+  "animation" : "project45-breakablesupplydrop.animation",
 
   "dropPools" : [ {
     "default" : "project45-gacha-r"
@@ -14,6 +14,23 @@
     "scripts" : [
       "/monsters/monster.lua"
     ],
+
+    "animationCustom": {
+      "particleEmitters": {
+        "rarityIndicator" : {
+          "active" : true,
+          "emissionRate" : 50,
+          "particles" : [
+            {"particle" : "project45gachar"},
+            {"particle" : "project45gachar"},
+            {"particle" : "project45gachar"}
+          ]
+        }    
+      },
+      "sounds": {
+        "deathPuff" : [ ]
+      }
+    },
 
     "behavior" : "monster",
 	  "deathBehavior" : "monster-death",

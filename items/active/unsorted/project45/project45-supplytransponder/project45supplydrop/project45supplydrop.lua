@@ -6,17 +6,6 @@ require "/scripts/project45/hitscanLib.lua"
 Project45SupplyDrop = WeaponAbility:new()
 
 function Project45SupplyDrop:init()
-  
-  message.setHandler("induceInitProject45UIL", function(messageName, isLocalEntity)
-    if activeItem.hand() == "primary" then
-      self:initUI()
-    end
-  end)
-  message.setHandler("induceInitProject45UIR", function(messageName, isLocalEntity)
-    if activeItem.hand() == "alt" then
-      self:initUI()
-    end
-  end)
 
   self.strikeHeight = self.strikeHeight or 50
   self.gravThreshold = self.gravThreshold or 0
@@ -29,23 +18,34 @@ function Project45SupplyDrop:init()
   }
 
   self.lockOnTime = self.lockOnTime or 0.5
+  self.hardPity = self.hardPity or 5
 
-  self.pity = config.getParameter("pity", 0)
+  self.pity = math.min(config.getParameter("pity", 0), self.hardPity)
   self.pulls = config.getParameter("pulls", 10)
-  self.nextDrop = config.getParameter("nextDrop", self:rollDrop())
-  self.hardPity = self.hardPity or 25
+  self.guarantee = config.getParameter("guarantee", 1)
+  
+  self.nextDrop = config.getParameter("nextDrop")
+  if not self.nextDrop then
+    self.nextDrop = self:rollDrop()
+  end
 
   self.laserColors = {}
-  self.laserColors["project45supplydropproj-xssr"] = {234, 153, 49}
+  self.laserColors["project45supplydropproj-xssr"] = {255, 255, 255}
   self.laserColors["project45supplydropproj-ssr"] = {226, 195, 68}
   self.laserColors["project45supplydropproj-sr"] = {164, 81, 196}
   self.laserColors["project45supplydropproj-r"] = {85, 136, 212}
   
   self.gradientColors = {}
-  self.gradientColors["project45supplydropproj-xssr"] = {234, 153, 49, 64}
+  self.gradientColors["project45supplydropproj-xssr"] = {217, 58, 58, 64}
   self.gradientColors["project45supplydropproj-ssr"] = {226, 195, 68, 64}
   self.gradientColors["project45supplydropproj-sr"] = {164, 81, 196, 64}
   self.gradientColors["project45supplydropproj-r"] = {85, 136, 212, 64}
+
+  self.groundParticles = {}
+  self.groundParticles["project45supplydropproj-xssr"] = {"project45gacharisexssr-1", "project45gacharisexssr-2"}
+  self.groundParticles["project45supplydropproj-ssr"] = {"project45gacharisessr"}
+  self.groundParticles["project45supplydropproj-sr"] = {"project45gacharisesr"}
+  self.groundParticles["project45supplydropproj-r"] = {"project45gachariser"}
 
   self.infoSide = activeItem.hand() == "primary" and "L" or "R"
 
@@ -56,7 +56,6 @@ function Project45SupplyDrop:init()
   self.laserFlashTime = self.laserFlashTime or 0.01
   self.laserFlashTimer = self.laserFlashTime
   
-  self:initUI()
   self:setStance({
     armRotation = util.toRadians(-90),
     allowFlip = true,
@@ -65,36 +64,31 @@ function Project45SupplyDrop:init()
 
 end
 
-function Project45SupplyDrop:initUI()
-  world.sendEntityMessage(activeItem.ownerEntityId(), "initProject45UI" .. self.infoSide, {
-    modSettings = {},
-    uiElementOffset = activeItem.hand() == "primary" and {-2, 0} or {2, 0},
-  })
-
-  world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UI" .. self.infoSide, {
-    currentAmmo = self.pulls,
-    stockAmmo = 0,
-    reloadRating = "ok",
-    chamberState = "Pulls"
-  })
-end
-
 function Project45SupplyDrop:triggering()
   return self.fireMode == (self.activatingFireMode or self.abilitySlot)
 end
 
 function Project45SupplyDrop:updateUI()
+  world.sendEntityMessage(activeItem.ownerEntityId(), "initProject45UI" .. self.infoSide, {
+    modSettings = {},
+    uiElementOffset = activeItem.hand() == "primary" and {-2, 0} or {2, 0},
+  })
+
   local aimPosition = world.distance(activeItem.ownerAimPosition(), mcontroller.position())
   world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UI" .. self.infoSide, {
     aimPosition = aimPosition,
-    uiPosition = aimPosition
+    uiPosition = aimPosition,
+    currentAmmo = ((self.hardPity - self.pity + 1) % (self.hardPity + 1)),
+    stockAmmo = self.pulls,
+    reloadRating = self.pulls <= 0 and "BAD" or (self.guarantee == 1 and "PERFECT" or "GOOD"),
+    chamberState = "pity"
   })
 end
 
 function Project45SupplyDrop:update(dt, fireMode, shiftHeld)
   WeaponAbility.update(self, dt, fireMode, shiftHeld)
 
-  self:updateStance()  
+  self:updateStance()
   self:updateUI()
 
   if self.soundMode == 0 then
@@ -129,28 +123,40 @@ function Project45SupplyDrop:update(dt, fireMode, shiftHeld)
 end
 
 function Project45SupplyDrop:rollDrop()
-
+  sb.logInfo("is guarantee? " .. self.guarantee)  
   local dice = math.random()
-  local odds = 0
-
   if self.pity >= self.hardPity then
-    animator.playSound("lockPing")
     self.pity = 0
-    odds = 0.5
-    if odds <= 0.5 then 
+    if self.guarantee == 1 then
+      self.guarantee = 0
+      sb.logInfo("Get guaranteed XSSR")
       return "project45supplydropproj-xssr"
     else
-      return "project45supplydropproj-ssr"
+      if dice <= 0.5 then
+        sb.logInfo("Won 50/50 @ pity!")
+        return "project45supplydropproj-xssr"
+      else
+        self.guarantee = 1
+        sb.logInfo("Lost 50/50 @ pity...")
+        return "project45supplydropproj-ssr"
+      end
     end
   end
-
+  
+  local odds = 0
+  self.pity = self.pity + 1
   for _, rarity in ipairs({"xssr", "ssr", "sr", "r"}) do
     if dice <= odds + self.dropChances[rarity] then
       if rarity == "xssr" or rarity == "ssr" then
-        animator.playSound("lockPing")
+        if self.guarantee == 1 then
+          self.guarantee = 0
+          sb.logInfo("Got guaranteed pre-pity!")
+          rarity = "xssr"
+        elseif rarity == "ssr" then
+          sb.logInfo("Lost 50/50 pre-pity...")
+          self.guarantee = 1
+        end
         self.pity = 0
-      else
-        self.pity = self.pity + 1
       end
       return "project45supplydropproj-" .. rarity
     end
@@ -191,6 +197,7 @@ function Project45SupplyDrop:tagging()
       self.strikeCoords,
       self.laserColors[self.nextDrop],
       self.gradientColors[self.nextDrop],
+      self.groundParticles[self.nextDrop],
       tagProgress * 16
     )
     
@@ -246,11 +253,6 @@ function Project45SupplyDrop:updateLaserFlash()
   end
 end
 
-function Project45SupplyDrop:consumePull()
-  self.pulls = self.pulls - 1
-  world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UIField" .. self.infoSide, "currentAmmo", self.pulls)
-end
-
 function Project45SupplyDrop:fire()
   local hasGrav = world.gravity(self.strikeCoords) > self.gravThreshold
   local noGravY = activeItem.ownerAimPosition()[2]
@@ -292,13 +294,14 @@ function Project45SupplyDrop:fire()
       }
     }
   )
-  self:consumePull()
+  self.pulls = self.pulls - 1
 end
 
 function Project45SupplyDrop:uninit()
   activeItem.setInstanceValue("pity", self.pity)
   activeItem.setInstanceValue("pulls", self.pulls)
   activeItem.setInstanceValue("nextDrop", self.nextDrop)
+  activeItem.setInstanceValue("guarantee", self.guarantee)
 end
 
 function Project45SupplyDrop:getStrikeCoords()
@@ -321,13 +324,14 @@ function Project45SupplyDrop:clearLaser()
   activeItem.setScriptedAnimationParameter("dropLaserEnd", nil)
 end
 
-function Project45SupplyDrop:drawLaser(coords, color, gradientColor, gradientWidth)
+function Project45SupplyDrop:drawLaser(coords, color, gradientColor, groundParticles, gradientWidth)
   if not coords
   or not self.renderLaser
   then self:clearLaser() return end
   activeItem.setScriptedAnimationParameter("dropLaserStart", vec2.add(coords, {0, self.strikeHeight}))
   activeItem.setScriptedAnimationParameter("dropLaserEnd", coords)
   activeItem.setScriptedAnimationParameter("dropLaserColor", color or {255, 0, 0})
+  activeItem.setScriptedAnimationParameter("dropGroundParticles", groundParticles)
   activeItem.setScriptedAnimationParameter("dropGradientColor", gradientColor or {255, 128, 0, 64})
   activeItem.setScriptedAnimationParameter("dropGradientWidth", gradientWidth or 16)
 end

@@ -4,7 +4,7 @@
   "categories" : [ "project45-breakablesupplydrop" ],
   "parts" : [ "body" ],
 
-  "animation" : "project45-breakablesupplydrop-xssr.animation",
+  "animation" : "project45-breakablesupplydrop.animation",
 
   "dropPools" : [ {
     "default" : "project45-gacha-xssr"
@@ -14,6 +14,26 @@
     "scripts" : [
       "/monsters/monster.lua"
     ],
+
+    "animationCustom": {
+      "particleEmitters": {
+        "rarityIndicator" : {
+          "active" : true,
+          "emissionRate" : 100,
+          "particles" : [
+            {"particle" : "project45gachaxssr"},
+            {"particle" : "project45gachaxssr"},
+            {"particle" : "project45gachaxssr"},
+            {"particle" : "project45gachaxssr"},
+            {"particle" : "project45gachaxssr"},
+            {"particle" : "project45gachaxssr"}
+          ]
+        }    
+      },
+      "sounds": {
+        "deathPuff" : [ "/sfx/objects/essencechest_open3.ogg" ]
+      }
+    },
 
     "behavior" : "monster",
 	  "deathBehavior" : "monster-death",
