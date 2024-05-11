@@ -58,94 +58,29 @@ function build(directory, config, parameters, level, seed)
   }
 
   construct(config, "augment") -- make sure config.augment exists
-
+  
   -- generate seed if supposed to be seeded
   -- but seed is not established
   if not (parameters.noSeed or configParameter("seed", seed)) then
     parameters.seed = math.floor(math.random() * 2147483647)
   end
 
-  if config.modCategory == "statMod"
-  and config.augment.stat.randomStats
-  and not parameters.augment
-  and configParameter("seed", seed) then
-    
-    construct(parameters, "augment", "stat")
+  local rng = sb.makeRandomSource(parameters.seed)
 
-    -- generate random source
-    parameters.seed = configParameter("seed", seed)
-    
-    local rng = sb.makeRandomSource(parameters.seed)
-    
-    -- prepare tooltip information
-    parameters.statInfo = ""
-    parameters.archetype = nil
-    parameters.slot = nil
-
-    -- begin stat generation process
-    for _, statName in ipairs(statNames) do
-      if config.augment.stat[statName] then -- generate stat if it exists
-
-        -- indicate if it modifies multiple stats or not
-        parameters.slot = parameters.slot and "multiple" or statName 
-
-        -- choose a random operation
-        local opName = "additive"
-        if  config.augment.stat[statName].additive
-        and config.augment.stat[statName].multiplicative then
-          opName = rng:randb() and "additive" or "multiplicative"
-        else
-          opName = not config.augment.stat[statName].additive and "multiplicative" or opName
-        end
-
-        -- generate random stat if operation was chosen successfully
-        if config.augment.stat[statName][opName] then
-
-          -- indicate if it does exclusively additive/multiplicative ops or both
-          if parameters.archetype then
-            parameters.archetype = parameters.archetype ~= opName and "mixed" or opName
-          else
-            parameters.archetype = opName
+  for stat, modifier in pairs(config.augment.stat) do
+    if rng:randb() then
+      if type(modifier) == "table" then
+        for operation, value in pairs(modifier) do
+          if type(value) == "table" then
+            config.augment.stat[stat][operation] = generateRandomStat(value, rng)
           end
-
-          -- generate stat if statname and opname exists, truncate to 3 decimal places
-          construct(parameters.augment, "stat", statName, opName)
-          parameters.augment.stat[statName][opName] = generateRandomStat(config.augment.stat[statName][opName], rng, 3)
-          parameters.augment.stat[statName][opName == "additive" and "multiplicative" or "additive"] = 0
-          
-          -- modify tooltip field info
-          local statValue = parameters.augment.stat[statName][opName]
-          if statValue then
-            statValue = statValue * (opName == "additive" and additiveStatDescMults[statName] or 1)
-            local operand = statValue > 0 and "+" or ""
-          
-            local statSuffix = ""
-            if opName == "multiplicative" then
-              statSuffix = isDiv[statName] and "d" or "x"
-            else
-              statSuffix = additiveStatUnits[statName] or ""
-            end
-
-            parameters.statInfo = parameters.statInfo .. string.format("%s %s%.1f%s^reset;\n",
-              statSlots[statName],
-              operand,
-              statValue,
-              statSuffix
-            )
-          end
-
         end
-        
       end
-    
-    end
-    
-    parameters.archetype = project45util.capitalize(parameters.archetype)
-    if not parameters.price then
-      local basePrice = config.price or 1000
-      parameters.price = math.floor(rng:randf(basePrice/3, basePrice*3) * 0.1)
+    else
+      config.augment.stat[stat] = nil
     end
   end
+  sb.logInfo(sb.printJson(config, 1))
   parameters.shortdescription = string.format("%s%s", config.shortdescription, parameters.seed and (" #" .. parameters.seed) or "")
   return unrandBuild(directory, config, parameters, level, seed)
 end

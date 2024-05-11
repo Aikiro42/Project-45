@@ -235,7 +235,8 @@ function apply(input)
         checker.statList[config.getParameter("itemName")] = (checker.statList[config.getParameter("itemName")] or 0) + 1
       else
         local retrievedSeed = config.getParameter("seed")
-        table.insert(checker.statList.wildcards, retrievedSeed)
+        checker.statList.wildcards[config.getParameter("itemName")] = checker.statList.wildcards[config.getParameter("itemName")] or {nil}
+        table.insert(checker.statList.wildcards[config.getParameter("itemName")], retrievedSeed)
       end
       checker.output:setInstanceValue("statList", checker.statList)
     end

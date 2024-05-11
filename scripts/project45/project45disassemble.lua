@@ -29,12 +29,14 @@ function disassemble(input)
               name = k,
               count = v})
           else
-            for _, savedSeed in ipairs(v) do
-              table.insert(disassembledItems, {
-                name = "project45-wildcardstatmod",
-                parameters = {
-                  seed = savedSeed
+            for wildcardItemId, savedSeeds in pairs(v) do
+              for _, seed in ipairs(savedSeeds) do
+                table.insert(disassembledItems, {
+                  name = wildcardItemId,
+                  parameters = {
+                    seed = seed
                 }})
+              end
             end
           end
         end

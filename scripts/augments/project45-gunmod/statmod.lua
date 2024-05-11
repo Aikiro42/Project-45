@@ -399,31 +399,41 @@ function apply(output, augment)
 
   end
 
+  -- special fields
+
+  local specFields = {
+    randomStats = true
+  }
+
   -- Actual general case handling
   for stat, op in pairs(augment) do
 
-    local actualStat = statAlias[stat] or stat
+    if not specFields[stat] then
 
-    local restricted = false
-    if isGroupMember[actualStat] then
-      restricted = isRestrictedGroup[statGroup[actualStat]]
-    elseif isStatGroup[actualStat] then
-      restricted = isRestrictedGroup[actualStat]
-    else
-      restricted = isRestrictedStat[actualStat]
-    end
+      local actualStat = statAlias[stat] or stat
+
+      local restricted = false
+      if isGroupMember[actualStat] then
+        restricted = isRestrictedGroup[statGroup[actualStat]]
+      elseif isStatGroup[actualStat] then
+        restricted = isRestrictedGroup[actualStat]
+      else
+        restricted = isRestrictedStat[actualStat]
+      end
+      
+      if restricted then
+        -- restricting stats and statGroups only allow rebasing
+        -- and rebase multiplication due to special cases
+        -- e.g. fireTime is calculated according to weapon parameters
+        statModifiers, newPrimaryAbility = updateStatModifiers(stat, op.rebase, op.rebaseMult, nil, nil) --> will recalculateStat
+      else
+        statModifiers, newPrimaryAbility = updateStatModifiers(stat, op.rebase, op.rebaseMult, op.additive, op.multiplicative) --> will recalculateStat
+      end
+
+      -- after doing operation, nullify augment.stat
+      augment[stat] = nil
     
-    if restricted then
-      -- restricting stats and statGroups only allow rebasing
-      -- and rebase multiplication due to special cases
-      -- e.g. fireTime is calculated according to weapon parameters
-      statModifiers, newPrimaryAbility = updateStatModifiers(stat, op.rebase, op.rebaseMult, nil, nil) --> will recalculateStat
-    else
-      statModifiers, newPrimaryAbility = updateStatModifiers(stat, op.rebase, op.rebaseMult, op.additive, op.multiplicative) --> will recalculateStat
     end
-
-    -- after doing operation, nullify augment.stat
-    augment[stat] = nil
 
   end
 
