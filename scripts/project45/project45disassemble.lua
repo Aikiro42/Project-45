@@ -43,12 +43,11 @@ function disassemble(input)
       end
 
       local stockAmmo = (input.parameters.savedGunState or {stockAmmo = 0}).stockAmmo or 0
-      local currentAmmo = math.max(0, (input.parameters.savedGunState or {ammo = 0}).ammo or 0)
-      if stockAmmo + currentAmmo > 0 then
+      if stockAmmo > 0 then
         table.insert(disassembledItems, {
           name = "project45-ammostock",
           parameters = {
-            ammo = stockAmmo + currentAmmo
+            ammo = stockAmmo
           }})
       end
 
