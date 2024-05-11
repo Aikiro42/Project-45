@@ -192,6 +192,8 @@
         {"weight" : 1, "item" : "project45-extendedbarrelmod"},
         {"weight" : 1, "item" : "project45-convergermod"},
         {"weight" : 1, "item" : "project45-aegisaltmod"},
+        {"weight" : 1, "item" : "project45-feroziummod"},
+        {"weight" : 1, "item" : "project45-violiummod"},
 
         // LEGENDARY
         {"weight" : 0.5, "item" : "project45-flashlasermod"},
@@ -212,7 +214,8 @@
         {"weight" : 1, "item" : "project45-gunscopemod"},
         {"weight" : 1, "item" : "project45-enemyradarmod"},
         {"weight" : 1, "item" : "project45-grenadelaunchermod"},
-        {"weight" : 1, "item" : "project45-underbarrelshotgunmod"}
+        {"weight" : 1, "item" : "project45-underbarrelshotgunmod"},
+        {"weight" : 1, "item" : "project45-solariummod"}
       ],
       "poolRounds" : 1,
       "allowDuplication" : false

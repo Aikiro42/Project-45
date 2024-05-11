@@ -1,0 +1,87 @@
+{
+  "itemName" : "project45-feroziummod",
+  "price" : 3000,
+  "rarity" : "Uncommon",
+  "tooltipKind" : "project45gunmod2",
+  "modCategory" : "gunMod",
+  "category" : "uniqueWeapon",
+  "itemTags": ["weapon"],
+  "tooltipFields":{
+    "subtitle": "Gun Mod",
+    "objectImage": "/items/augments/project45-gunmods/mods/project45-feroziummod/project45-feroziummod.png"
+  },
+  "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-feroziummod/project45-feroziummodicon.png",
+  "description" : "Replacement parts made from a mysterious alloy.",
+  "technicalInfo": "Final Damage +0.05x per Manipulator Armor.\nEnergy Regen.",
+  "shortdescription" : "Ferozium Alloy Parts",
+
+  "augment":{
+    "modName": "Ferozium Alloy Parts",
+    "category": "universal",
+    "slot": "material",
+    "passive": {
+      "passiveScript" : "/items/augments/project45-gunmods/mods/project45-feroziummod/project45-feroziummod.lua",
+      "passiveParameters": {
+        // listing them down here performs better than
+        // generating from within passive script
+        "validArmor": [
+          "humantier5mhead",
+          "humantier5mchest",
+          "humantier5mpants",
+          "humantier6mhead",
+          "humantier6mchest",
+          "humantier6mpants",
+          "apextier5mhead",
+          "apextier5mchest",
+          "apextier5mpants",
+          "apextier6mhead",
+          "apextier6mchest",
+          "apextier6mpants",
+          "hylotltier5mhead",
+          "hylotltier5mchest",
+          "hylotltier5mpants",
+          "hylotltier6mhead",
+          "hylotltier6mchest",
+          "hylotltier6mpants",
+          "florantier5mhead",
+          "florantier5mchest",
+          "florantier5mpants",
+          "florantier6mhead",
+          "florantier6mchest",
+          "florantier6mpants",
+          "glitchtier5mhead",
+          "glitchtier5mchest",
+          "glitchtier5mpants",
+          "glitchtier6mhead",
+          "glitchtier6mchest",
+          "glitchtier6mpants",
+          "novakidtier5mhead",
+          "novakidtier5mchest",
+          "novakidtier5mpants",
+          "novakidtier6mhead",
+          "novakidtier6mchest",
+          "novakidtier6mpants",
+          "aviantier5mhead",
+          "aviantier5mchest",
+          "aviantier5mpants",
+          "aviantier6mhead",
+          "aviantier6mchest",
+          "aviantier6mpants"
+        ],
+        "pieceDamage": 0.05
+      },
+      "passiveDescription": "Final Damage +0.05x per Manipulator Armor.\nEnergy Regen."
+    },
+    "stat": {
+      "reloadCost": {
+        "multiplicative": 0.5
+      }
+    }
+  },
+
+
+   
+
+  "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
+}

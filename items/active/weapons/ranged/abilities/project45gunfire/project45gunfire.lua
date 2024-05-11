@@ -1991,6 +1991,9 @@ function Project45GunFire:crit()
     return math.max(1, baseCritDamageMult + (critTier > 0 and 1 or self.critDamageMult))
   else
     self.critFlag = critTier > 0
+    if self.critFlag then
+      self:onCritPassive()
+    end
     return math.max(1, baseCritDamageMult)
   end
 end

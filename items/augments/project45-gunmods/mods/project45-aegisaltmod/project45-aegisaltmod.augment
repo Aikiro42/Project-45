@@ -12,8 +12,7 @@
   },
   "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-aegisaltmod/project45-aegisaltmodicon.png",
   "description" : "Replacement parts made from a lightweight alloy.",
-  "technicalInfo": "Base Damage +0.05x per Accelerator Armor.",
-  "statInfo": "Heavy: Removes mobility penalties.\nMobility +0.15x",
+  "technicalInfo": "Final Damage +0.05x per Accelerator Armor.\nMakes weapon light.",
   "shortdescription" : "Aegisalt Alloy Parts",
 
   "augment":{
@@ -23,10 +22,55 @@
     "passive": {
       "passiveScript" : "/items/augments/project45-gunmods/mods/project45-aegisaltmod/project45-aegisaltmod.lua",
       "passiveParameters": {
-        "validArmor": [],  // Automatically generataed
+        // listing them down here performs better than
+        // generating from within passive script
+        "validArmor": [
+          "humantier5ahead",
+          "humantier5achest",
+          "humantier5apants",
+          "humantier6ahead",
+          "humantier6achest",
+          "humantier6apants",
+          "apextier5ahead",
+          "apextier5achest",
+          "apextier5apants",
+          "apextier6ahead",
+          "apextier6achest",
+          "apextier6apants",
+          "hylotltier5ahead",
+          "hylotltier5achest",
+          "hylotltier5apants",
+          "hylotltier6ahead",
+          "hylotltier6achest",
+          "hylotltier6apants",
+          "florantier5ahead",
+          "florantier5achest",
+          "florantier5apants",
+          "florantier6ahead",
+          "florantier6achest",
+          "florantier6apants",
+          "glitchtier5ahead",
+          "glitchtier5achest",
+          "glitchtier5apants",
+          "glitchtier6ahead",
+          "glitchtier6achest",
+          "glitchtier6apants",
+          "novakidtier5ahead",
+          "novakidtier5achest",
+          "novakidtier5apants",
+          "novakidtier6ahead",
+          "novakidtier6achest",
+          "novakidtier6apants",
+          "aviantier5ahead",
+          "aviantier5achest",
+          "aviantier5apants",
+          "aviantier6ahead",
+          "aviantier6achest",
+          "aviantier6apants"
+        ],
         "pieceDamage": 0.05
       },
-      "passiveDescription": "Base Damage +0.05x per Accelerator Armor."
+      "passiveDescription": "Final Damage +0.05x per Accelerator Armor."
     },
     "stat": {
       "mobility": {
