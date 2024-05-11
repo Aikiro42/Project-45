@@ -1,0 +1,22 @@
+{
+  "kind" : "project45dragonsbreathtrailsparkle",
+  "definition" : {
+    "type" : "animated",
+    "animation" : "/particles/project45/projectile/project45dragonsbreathtrailsparkle/project45dragonsbreathtrailsparkle.animation",
+    "position" : [0, 0],
+    "initialVelocity" : [10, 0],
+    "finalVelocity" : [0, 0.0],
+    "light" : [255, 255, 167],
+    "approach" : [25, 25],
+    "fullbright": true,
+    "fade" : 2,
+    "destructionAction" : "shrink",
+    "destructionTime" : 3,
+    "size" : 1.25,
+    "timeToLive" : 0.5,
+    "variance" : {
+      "position" : [5, 0.25],
+      "initialVelocity" : [2, 0]
+    }
+  }
+}

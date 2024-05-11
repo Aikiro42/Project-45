@@ -1,0 +1,148 @@
+{
+  "projectileName" : "project45dragonsbreath",
+  "scripts": ["/projectiles/scripts/project45-killprojectileonstick.lua"],
+  "image" : "/projectiles/guns/bullets/project45dragonsbreath/pellet1.png",
+  "physics" : "grenade",
+  "frameNumber" : 1,
+  "animationCycle" : 1,
+  "damageKind" : "fire",
+  "pointLight" : true,
+  "lightColor": [164, 110, 6],
+  "fullbright": true,
+  "flippable" : true,
+  "statusEffects" : ["burning"],
+  "power" : 5.0,
+  "speed" : 200,
+  "piercing": false,
+  "timeToLive": 0.1,
+  "knockback" : 0,
+  "collisionPoly": [
+    [-8.5, 0],
+    [0, 1.5],
+    [8.5, 0],
+    [0, -1.5]
+  ],
+  "damagePoly" : [ [-8, 0], [-6, -6], [0, -8], [6, -6], [8, 0], [6, 6], [0, 8], [-6, 6] ],
+  "movementSettings":{
+    "collisionEnabled": true
+  },
+
+  "bounces" : 0,
+
+  "periodicActions" : [
+    {
+      "time" : 0.01,
+      "repeat" : true,
+      "action" : "particle",
+      "rotate" : true,
+      "specification" : {
+        "type" : "streak",
+        "layer" : "back",
+        "fullbright" : true,
+        "destructionAction" : "shrink",
+        "size" : 1,
+        "color" : [255, 255, 255, 255],
+        "collidesForeground" : false,
+        "length" : 13,
+        "position" : [0, 0],
+        "timeToLive" : 0,
+        "destructionTime" : 0.2,
+        "initialVelocity" : [0.001, 0],
+        "variance" : {
+          "position": [1,0],
+          "length": 0
+        }
+      }
+    },
+    {
+      "time" : 0.02,
+      "repeat" : true,
+      "action" : "particle",
+      "rotate" : true,
+      "specification" : "project45dragonsbreathtrail"
+    },
+    {
+      "time" : 0.03,
+      "repeat" : true,
+      "action" : "particle",
+      "rotate" : true,
+      "specification" : "project45dragonsbreathtrail2"
+    },
+    {
+      "time" : 0.01,
+      "repeat" : true,
+      "action" : "particle",
+      "rotate" : true,
+      "specification" : "project45dragonsbreathtrailsparkle"
+    },
+    {
+      "time" : 0.05,
+      "repeat" : true,
+      "action" : "particle",
+      "rotate" : true,
+      "specification" : "project45dragonsbreathcloud1"
+    }
+  ],
+
+  "actionOnReap": [
+    {
+      "action" : "particle",
+      "specification" : {
+        "type" : "animated",
+        "animation" : "/animations/smoke/smoke.animation",
+        "approach" : [0.5, 0.5],
+        "fullbright": false,
+        "timeToLive" : 0.6,
+        "variance" : {
+          "position" : [1.5, 1.5],
+          "initialVelocity" : [1, 1],
+          "timeToLive" : 0.15,
+          "rotation" : 180
+        }
+      }
+    },
+    {
+      "action" : "loop",
+      "count" : 3,
+      "body" : [
+        {
+          "action" : "option",
+          "options" : [
+            {
+              "action" : "particle",
+              "specification" : "project45dragonsbreathcloud1"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "action" : "loop",
+      "count" : 3,
+      "body" : [
+        {
+          "action" : "option",
+          "options" : [
+            {
+              "action" : "particle",
+              "specification" : {
+                "type" : "animated",
+                "animation" : "/animations/smallflame/smallflame.animation",
+                "fullbright": true,
+                "approach" : [0.5, 0.5],
+                "timeToLive" : 0.6,
+                "variance" : {
+                  "position" : [1.5, 1.5],
+                  "initialVelocity" : [1, 1],
+                  "timeToLive" : 0.15,
+                  "rotation" : 180
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+  
+}

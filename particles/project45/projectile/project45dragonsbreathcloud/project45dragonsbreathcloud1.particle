@@ -1,0 +1,16 @@
+{
+  "kind" : "project45dragonsbreathcloud1",
+  "definition" : {
+    "type" : "animated",
+    "animation" : "/particles/project45/projectile/project45dragonsbreathcloud/project45dragonsbreathcloud1.animation",
+    "approach" : [0.5, 0.5],
+    "fullbright": true,
+    "timeToLive" : 0.6,
+    "variance" : {
+      "position" : [1.5, 1.5],
+      "initialVelocity" : [1, 1],
+      "timeToLive" : 0.15,
+      "rotation" : 180
+    }
+  }
+}

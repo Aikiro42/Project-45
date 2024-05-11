@@ -11,9 +11,9 @@
     "objectImage": "/items/augments/project45-gunmods/ammo/project45-dragonsbreathmod/project45-dragonsbreathmod.png"
   },
   "inventoryIcon" : "/items/augments/project45-gunmods/ammo/project45-dragonsbreathmod/project45-dragonsbreathmodicon.png",
-  "description" : "Magnesium pellets in a fun-sized shell.",
-  "technicalInfo": "Fires short-lived incendiary projectiles.",
-  "statInfo": "Projectiles: 5",
+  "description" : "Magnesium-sodium compound pellets in a fun-sized shell.",
+  "technicalInfo": "Fires bright, short-lived incendiary projectiles.",
+  "statInfo": "Projectiles: 3",
   "shortdescription" : "Dragon's Breath",
 
   "augment":{
@@ -26,7 +26,7 @@
     },
     "stat": {
       "projectileCount": {
-        "rebase": 5
+        "rebase": 3
       }
     }
   },
