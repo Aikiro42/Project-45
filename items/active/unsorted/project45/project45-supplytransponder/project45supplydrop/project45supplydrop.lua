@@ -20,6 +20,8 @@ function Project45SupplyDrop:init()
   self.lockOnTime = self.lockOnTime or 0.5
   self.hardPity = self.hardPity or 5
 
+  self.pullEssenceCost = self.pullEssenceCost or 450
+
   self.pity = math.min(config.getParameter("pity", 0), self.hardPity)
   self.pulls = config.getParameter("pulls", 10)
   self.guarantee = config.getParameter("guarantee", 1)
@@ -68,6 +70,18 @@ function Project45SupplyDrop:triggering()
   return self.fireMode == (self.activatingFireMode or self.abilitySlot)
 end
 
+function Project45SupplyDrop:canPull()
+  return self.pulls > 0 or player.currency("essence") > self.pullEssenceCost
+end
+
+function Project45SupplyDrop:consumePull()
+  if self.pulls > 0 then
+    self.pulls = self.pulls - 1
+  elseif player.currency("essence") > self.pullEssenceCost then
+    player.consumeCurrency("essence", self.pullEssenceCost)
+  end
+end
+
 function Project45SupplyDrop:updateUI()
   world.sendEntityMessage(activeItem.ownerEntityId(), "initProject45UI" .. self.infoSide, {
     modSettings = {},
@@ -79,8 +93,8 @@ function Project45SupplyDrop:updateUI()
     aimPosition = aimPosition,
     uiPosition = aimPosition,
     currentAmmo = ((self.hardPity - self.pity + 1) % (self.hardPity + 1)),
-    stockAmmo = self.pulls,
-    reloadRating = self.pulls <= 0 and "BAD" or (self.guarantee == 1 and "PERFECT" or "GOOD"),
+    stockAmmo = self.pulls > 0 and self.pulls or math.floor(player.currency("essence") / self.pullEssenceCost),
+    reloadRating = not self:canPull() and "BAD" or (self.guarantee == 1 and "PERFECT" or "GOOD"),
     chamberState = "pity"
   })
 end
@@ -110,7 +124,7 @@ function Project45SupplyDrop:update(dt, fireMode, shiftHeld)
 
   if self:triggering() and not self.isFiring then
     if not self.weapon.currentAbility
-    and self.pulls > 0
+    and self:canPull()
     and world.type() ~= "unknown"
     then
       self:setState(self.tagging)
@@ -294,7 +308,7 @@ function Project45SupplyDrop:fire()
       }
     }
   )
-  self.pulls = self.pulls - 1
+  self:consumePull()
 end
 
 function Project45SupplyDrop:uninit()

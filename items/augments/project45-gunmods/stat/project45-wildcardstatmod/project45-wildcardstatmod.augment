@@ -2,7 +2,6 @@
   "itemName" : "project45-wildcardstatmod",
   "price" : 100,
   "rarity" : "Essential",
-  "isUnique": true,
   "tooltipKind" : "project45gunmod2",
   "tooltipFields": {
     "subtitle": "Stat Mod"

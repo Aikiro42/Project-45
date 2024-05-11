@@ -7,7 +7,7 @@
   "animation" : "project45-breakablesupplydrop.animation",
 
   "dropPools" : [ {
-    "default" : "project45-gacha-sr"
+    "default" : "project45-supply-sr"
   } ],
 
   "baseParameters" : {

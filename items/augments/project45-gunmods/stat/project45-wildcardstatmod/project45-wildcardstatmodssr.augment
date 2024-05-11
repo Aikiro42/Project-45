@@ -1,0 +1,47 @@
+{
+  "itemName" : "project45-wildcardstatmodssr",
+  "price" : 1000,
+  "rarity" : "Essential",
+  "isUnique": true,
+  "tooltipKind" : "project45gunmod2",
+  "tooltipFields": {
+    "subtitle": "Stat Mod"
+  },
+  "modCategory" : "statMod",
+  "category" : "uniqueWeapon",
+  "itemTags": ["weapon"],
+  "inventoryIcon" : "/items/augments/project45-gunmods/stat/project45-wildcardstatmod/project45-wildcardstatmodssr.png",
+  "statInfo" : "^#e2c344;???",
+  "description": "A mod that provides random positive stat bonuses.",
+  "slot": "multiple",
+  "archetype": "Mixed",
+  "shortdescription" : "^#e2c344;SSR Wildcard Mod",
+
+  "augment":{
+    "cost": 4,
+    "pureStatMod": true,
+    "stat": {
+      "randomStats": true,
+      "baseDamage": {
+        "additive": [1, 5],
+        "multiplicative": [0.5, 2]
+      },
+      "critChance": {
+        "additive": [0.1, 0.5],
+        "multiplicative": [2, 5]
+      },
+      "critDamageMult": {
+        "additive": [1, 2],
+        "multiplicative": [1, 2]
+      },
+      "reloadCost": {
+        "additive": [0, 25],
+        "multiplicative": [0, 1]
+      }
+    }
+  },
+
+  "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
+  "builder": "/items/buildscripts/buildproject45randstatmod.lua"
+
+}

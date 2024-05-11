@@ -147,7 +147,7 @@
       "pool" : [
         // UNIQUE
         {"weight" : 1, "item" : "project45-godmod"},
-        {"weight" : 1, "item" : "project45-wildcardstatmod"},
+        {"weight" : 1, "item" : "project45-wildcardstatmodssr"},
         {"weight" : 1, "item" : "project45-maxlevelmod"}
       ],
       "poolRounds" : 1,
