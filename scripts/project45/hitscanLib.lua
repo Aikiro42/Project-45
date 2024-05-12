@@ -421,16 +421,25 @@ function hitscanLib:chainScan(scanLength, ignoresTerrain, punchThrough, scanUnti
       })
 
       if #nextEntityIdCandidates < 2 then break end
+      -- if world.entityCanDamage(entity.id(), id)
+      -- and world.entityDamageTeam(id) ~= "ghostly" -- prevents from hitting those annoying floaty things
 
       local nextEntityId = nil
       for j=1, #nextEntityIdCandidates do
-        if not alreadyHit[nextEntityIdCandidates[j]] then
-          nextEntityId = nextEntityIdCandidates[j]
+        local candidateId = nextEntityIdCandidates[j]
+        if not alreadyHit[candidateId]
+        and world.entityCanDamage(entity.id(), candidateId)
+        and world.entityDamageTeam(candidateId) ~= "ghostly"
+        and (ignoresTerrain or not world.lineCollision(chain[#chain], world.entityPosition(candidateId)))
+        then
+          nextEntityId = candidateId
           break
         end
       end
       
       if not nextEntityId then break end
+      
+      
       
       local nextPosition = world.entityPosition(nextEntityId)
 
