@@ -7,7 +7,7 @@
     "layer" : "back",
     "size" : 0.75,
     "collidesForeground" : true,
-    "initialVelocity" : [4.0, 0.0],
+    "initialVelocity" : [8.0, 0.0],
     "finalVelocity" : [0, 0],
     "approach" : [2, 2],
     "timeToLive" : 0.4,

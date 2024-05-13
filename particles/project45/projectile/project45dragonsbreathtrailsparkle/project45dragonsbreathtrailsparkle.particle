@@ -6,7 +6,7 @@
     "position" : [0, 0],
     "initialVelocity" : [10, 0],
     "finalVelocity" : [0, 0.0],
-    "light" : [255, 255, 167],
+    "light" : [255, 212, 149],
     "approach" : [25, 25],
     "fullbright": true,
     "fade" : 2,
