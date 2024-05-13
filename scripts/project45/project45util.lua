@@ -91,6 +91,15 @@ function project45util.capitalize(str)
   return nil
 end
 
+-- Replaces % symbols in strings that will be printed via sb.logInfo/Warn/Error()
+-- in order to avoid the stupid "Improper lua log format specifier %" error.
+function project45util.sanitize(str)
+  if str then
+    return (str:gsub("%%", "%%%%"))
+  end
+  return nil
+end
+
 function project45util.diceroll(chance)
   return math.random() <= chance
 end
