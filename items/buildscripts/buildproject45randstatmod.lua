@@ -64,24 +64,70 @@ function build(directory, config, parameters, level, seed)
   if not (parameters.noSeed or configParameter("seed", seed)) then
     parameters.seed = math.floor(math.random() * 2147483647)
   end
-
-  local rng = sb.makeRandomSource(parameters.seed)
-
+    
+  local specialField = {
+    randomStats = true
+  }    
+  
+  -- get list of possible stats to modify
+  local possibleStats = {nil}    
   for stat, modifier in pairs(config.augment.stat) do
-    if rng:randb() then
-      if type(modifier) == "table" then
-        for operation, value in pairs(modifier) do
-          if type(value) == "table" then
-            config.augment.stat[stat][operation] = generateRandomStat(value, rng)
-          end
-        end
-      end
-    else
-      config.augment.stat[stat] = nil
+    if not specialField[stat] then
+      table.insert(possibleStats, stat)
     end
   end
-  sb.logInfo(sb.printJson(config, 1))
-  parameters.shortdescription = string.format("%s%s", config.shortdescription, parameters.seed and (" #" .. parameters.seed) or "")
+  
+  -- set upgrade cost to be 1/2 of modified stats
+  local nStats = math.ceil(#possibleStats / 2)
+  config.augment.cost = math.ceil(nStats/2)
+
+
+  if parameters.seed then
+
+    -- init seeded rng
+    local rng = sb.makeRandomSource(parameters.seed)
+    
+    -- choose n/2 stats from n possible stats, put in `modifications` table
+    local modifications = {}
+    for n=1, nStats do
+      local chosenStat = table.remove(possibleStats, (rng:randu32() % #possibleStats) + 1)
+      modifications[chosenStat] = config.augment.stat[chosenStat]
+    end
+
+    -- For each chosen stat and its operations
+    for stat, modification in pairs(modifications) do
+
+      -- get list of possible operations to apply
+      local possibleOps = {nil}
+      for op, value in pairs(modification) do
+        if type(value) == "table" then
+          table.insert(possibleOps, op)
+        end
+      end
+
+      -- if there are valid operations,
+      if #possibleOps > 0 then
+        
+        -- choose one among them and apply
+        local chosenOp = table.remove(possibleOps, (rng:randu32() % #possibleOps) + 1)
+        local chosenValueVector = modification[chosenOp]
+        config.augment.stat[stat][chosenOp] = generateRandomStat(chosenValueVector, rng)
+
+        -- nullify unchosen random ops
+        for _, op in ipairs(possibleOps) do
+          config.augment.stat[stat][op] = nil
+        end
+      end
+
+    end
+
+    -- nullify unchosen stats
+    for _, stat in ipairs(possibleStats) do
+      config.augment.stat[stat] = nil
+    end
+
+    parameters.shortdescription = string.format("%s%s", config.shortdescription, parameters.seed and (" #" .. parameters.seed) or "")
+  end
   return unrandBuild(directory, config, parameters, level, seed)
 end
 
