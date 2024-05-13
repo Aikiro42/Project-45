@@ -216,7 +216,11 @@ function apply(input)
   if checker.augment.stat then
     --[[
     "stat": {
-      "randomStats": bool,
+      "stackLimit": int,
+      
+      "randomStatParams": {
+        costPerStat: 0.5
+      },
       
       stat<string>: {
         "rebase": number
@@ -231,7 +235,7 @@ function apply(input)
 
     -- count stat if not wildcard
     if pureStatMod then
-      if not checker.augment.stat.randomStats then
+      if not checker.augment.stat.randomStatParams then
         checker.statList[config.getParameter("itemName")] = (checker.statList[config.getParameter("itemName")] or 0) + 1
       else
         local retrievedSeed = config.getParameter("seed")

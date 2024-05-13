@@ -204,7 +204,7 @@ function build(directory, config, parameters, level, seed)
     elseif modCategory == "statMod" then
       config.tooltipFields.subtitle = "Stat Mod"
       config.tooltipFields.archetypeTitleLabel = "Stat Type"
-      local random = deepConfigParameter(nil, "augment", "stat", "randomStats")
+      local random = deepConfigParameter(nil, "augment", "stat", "randomStatParams")
       config.tooltipFields.archetypeLabel = random and "Random" or "Static"
 
     elseif modCategory == "passiveMod" then
@@ -238,8 +238,8 @@ function build(directory, config, parameters, level, seed)
   -- change stats field
   local statLimit = 7
   local stats = 1
-  local specialField = set.new({"level", "pureStatMod", "randomStats"})
-  local isRandomStats = deepConfigParameter(false, "augment", "stat", "randomStats")
+  local specialField = set.new({"level", "pureStatMod", "randomStatParams", "stackLimit"})
+  local isRandomStats = deepConfigParameter(false, "augment", "stat", "randomStatParams")
   local registeredRandomStats = {}
 
   for stat, op in pairs(deepConfigParameter({}, "augment", "stat")) do

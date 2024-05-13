@@ -20,54 +20,21 @@ function build(directory, config, parameters, level, seed)
     end
   end
 
-  local statSlots = {
-    baseDamage = "^#FF9000;Base Damage",
-    fireTime = "^#FFD400;Fire Time",
-    reloadCost = "^#b0ff78;Reload Cost",
-    critChance = "^#FF6767;Crit Chance",
-    critDamage = "^#FF6767;Crit Damage",
-    multiple = "^#A8E6E2;Multiple",
-    level = "^#a8e6e2;Level"
-  }
-
-  local statNames = {
-    "baseDamage",
-    "reloadCost",
-    "fireTime",
-    "critChance",
-    "critDamage"
-  }
-
-  local isPercentValue = set.new({
-    "critChance"
-  })
-  
-  local isDiv = set.new({
-    "reloadCost",
-    "fireTime",
-  })
-
-  local additiveStatDescMults = {
-    fireTime = 1000,
-    critChance = 100
-  }
-
-  local additiveStatUnits = {
-    fireTime = "ms",
-    critChance = "%"
-  }
-
-  construct(config, "augment") -- make sure config.augment exists
+  construct(config, "augment", "stat") -- make sure config.augment.stat exists
+  construct(parameters, "augment", "stat") -- make sure config.augment.stat exists
   
   -- generate seed if supposed to be seeded
   -- but seed is not established
   if not (parameters.noSeed or configParameter("seed", seed)) then
     parameters.seed = math.floor(math.random() * 2147483647)
   end
-    
+
+  local randomStatParams = config.augment.stat.randomStatParams or {}
   local specialField = {
-    randomStats = true
-  }    
+    randomStatParams = true,
+    pureStatMod = true,
+    stackLimit = true
+  }
   
   -- get list of possible stats to modify
   local possibleStats = {nil}    
@@ -78,11 +45,13 @@ function build(directory, config, parameters, level, seed)
   end
   
   -- set upgrade cost to be 1/2 of modified stats
-  local nStats = math.ceil(#possibleStats / 2)
-  config.augment.cost = math.ceil(nStats/2)
+  local nStats = math.min(#possibleStats, randomStatParams.chosenStatCount or math.ceil(#possibleStats / 2))
+  local costPerStat = randomStatParams.costPerStat or 1
+  config.augment.cost = math.ceil(costPerStat * nStats)
 
-
-  if parameters.seed then
+  if parameters.seed
+  and not parameters.augment.stat.randomized
+  and config.augment.stat.randomStatParams then
 
     -- init seeded rng
     local rng = sb.makeRandomSource(parameters.seed)
@@ -125,8 +94,12 @@ function build(directory, config, parameters, level, seed)
     for _, stat in ipairs(possibleStats) do
       config.augment.stat[stat] = nil
     end
-
+    
+    parameters.augment.stat.randomized = true
+    parameters.augment.stat = config.augment.stat
     parameters.shortdescription = string.format("%s%s", config.shortdescription, parameters.seed and (" #" .. parameters.seed) or "")
+  else
+    config.augment.stat = parameters.augment.stat
   end
   return unrandBuild(directory, config, parameters, level, seed)
 end

@@ -318,4 +318,31 @@ function Checker:checkStat()
     return false
   end
 
+  -- stackLimit only applies to pure stat mods
+  if self.augment.pureStatMod
+  and self.augment.stat.stackLimit then
+
+    local augmentItemId = self.config.getParameter("itemName", "")
+    self.statList = self.statList or self.output:instanceValue("statList", {})
+    local installedCount = 0
+    if self.augment.stat.randomStatParams then
+      local wildcardSeeds = self.statList.wildcards[augmentItemId] or {nil}
+      installedCount = #wildcardSeeds    
+    else
+      installedCount = self.statList[augmentItemId] or 0
+    end
+
+    if installedCount >= self.augment.stat.stackLimit then
+      self:addError("Max stat mods of type installed")
+    end
+    
+    local passedCheck = installedCount < self.augment.stat.stackLimit
+    self.checked = self.checked and passedCheck
+    return passedCheck
+
+  end
+
+  self.checked = self.checked and true
+  return true
+
 end

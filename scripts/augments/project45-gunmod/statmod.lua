@@ -402,7 +402,9 @@ function apply(output, augment)
   -- special fields
 
   local specFields = {
-    randomStats = true
+    randomStatParams = true,
+    pureStatMod = true,
+    stackLimit = true
   }
 
   -- Actual general case handling
