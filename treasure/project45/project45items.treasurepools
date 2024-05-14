@@ -85,7 +85,10 @@
         {"weight" : 1, "item" : "project45-tcf-kineticarbiter"},
         {"weight" : 1, "item" : "project45-scz-spacecowboy"},
         {"weight" : 1, "item" : "project45-gov-fleetlyfading"},
-        {"weight" : 1, "item" : "project45-msx-marcohmg"}
+        {"weight" : 1, "item" : "project45-msx-marcohmg"},
+        {"weight" : 1, "item" : "project45-hlo-maxx"},
+        {"weight" : 1, "item" : "project45-wfm-kuvabramma"},
+        {"weight" : 1, "item" : "project45-mhf-boneshooter"}
 
       ],
       "poolRounds" : 1,

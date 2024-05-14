@@ -88,6 +88,9 @@ function Project45GunFire:init()
   self.movementSpeedFactor = self.movementSpeedFactor or 1
   self.jumpHeightFactor = self.jumpHeightFactor or 1
 
+  self.unjamAmount = self.unjamAmount or 0.2
+  self.unjamStDev = self.unjamStDev or 0.05
+
 
   -- SETTING VALIDATIONS: These validations serve to reduce firing conditions and allow consistent logic.
 
@@ -531,6 +534,7 @@ function Project45GunFire:updateUI()
     stockAmmo = storage.stockAmmo,
     reloadRating = reloadRatingList[storage.reloadRating],
     chamberState = animator.animationState("chamber"),
+    jamAmount = storage.jamAmount,
 
     aimPosition = aimPosition,
     uiPosition = self.modSettings.renderBarsAtCursor and aimPosition or {0, 0},
@@ -1096,7 +1100,7 @@ function Project45GunFire:unjamming()
   self.weapon:setStance(self.stances.jammed)
   self:onUnjamPassive()
 
-  self:updateJamAmount(math.random() * -1)
+  self:updateJamAmount(sb.nrand(self.unjamStDev, -self.unjamAmount))
   if storage.jamAmount <= 0 then
     -- animator.playSound("click")
     self:onFullUnjamPassive()
@@ -1722,7 +1726,6 @@ end
 -- Amount is clamped between 0 and 1.
 function Project45GunFire:updateJamAmount(delta, set)
   storage.jamAmount = set and delta or util.clamp(storage.jamAmount + delta, 0, 1)
-  world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UIField" .. self.infoSide, "jamAmount", storage.jamAmount)
 end
 
 function Project45GunFire:updateCycleTime()
