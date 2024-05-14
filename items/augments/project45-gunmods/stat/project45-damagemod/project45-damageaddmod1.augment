@@ -1,5 +1,5 @@
 {
-  "itemName" : "project45-firetimeaddmod",
+  "itemName" : "project45-damageaddmod1",
   "price" : 250,
   "rarity" : "Uncommon",
   "tooltipKind" : "project45gunmod2",
@@ -9,19 +9,19 @@
   "modCategory" : "statMod",
   "category" : "uniqueWeapon",
   "itemTags": ["weapon"],
-  "inventoryIcon" : "/items/augments/project45-gunmods/stat/project45-firetimemod/project45-firetimeaddmod.png",
-  "description": "Decreases Fire Time by 10ms.",
-  "statInfo" : "^#E2C344;Fire Time -10ms^reset;",
-  "slot": "fireTime",
+  "inventoryIcon" : "/items/augments/project45-gunmods/stat/project45-damagemod/project45-damageaddmod.png",
+  "statInfo" : "^#EA9931;Base Damage +0.2^reset;",
+  "description": "Increases Base Damage by 0.2.",
+  "shortdescription" : "^#EA9931;Base Damage T1",
+  "slot": "baseDamage",
   "archetype": "Additive",
-  "shortdescription" : "^#f4988c;(!)^reset; ^#E2C344;Fire Time T1",
   "augment":{
     "cost": 1,
     "pureStatMod": true,
     
     "stat":{
-      "fireTimeGroup": {
-        "additive": -0.01
+      "baseDamage": {
+        "additive": 0.2
       }
     }
   },

@@ -1,7 +1,7 @@
 {
-  "itemName" : "project45-damagemultmod",
-  "price" : 250,
-  "rarity" : "Uncommon",
+  "itemName" : "project45-damagemultmod2",
+  "price" : 500,
+  "rarity" : "Rare",
   "tooltipKind" : "project45gunmod2",
   "tooltipFields": {
     "subtitle": "Stat Mod"
@@ -10,19 +10,19 @@
   "category" : "uniqueWeapon",
   "itemTags": ["weapon"],
   "inventoryIcon" : "/items/augments/project45-gunmods/stat/project45-damagemod/project45-damagemultmod.png",
-  "description" : "Increases Base Damage by 30% of base.",
+  "description" : "Increases Base Damage by 75% of base.",
   "slot": "baseDamage",
   "archetype": "Multiplicative",
-  "statInfo": "^#EA9931;Base Damage +0.3x^reset;",
-  "shortdescription" : "^#f4988c;(!)^reset; ^#EA9931;Base Damage X1",
+  "statInfo": "^#EA9931;Base Damage +0.75x^reset;",
+  "shortdescription" : "^#EA9931;Base Damage X2",
 
   "augment":{
-    "cost": 1,
+    "cost": 2,
     "pureStatMod": true,
     
     "stat":{
       "baseDamage": {
-        "multiplicative": 0.3
+        "multiplicative": 0.75
       }
     }
   },

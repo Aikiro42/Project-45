@@ -1,7 +1,7 @@
 {
-  "itemName" : "project45-critdamageaddmod",
-  "price" : 250,
-  "rarity" : "Uncommon",
+  "itemName" : "project45-critdamageaddmod2",
+  "price" : 500,
+  "rarity" : "Rare",
   "tooltipKind" : "project45gunmod2",
   "tooltipFields": {
     "subtitle": "Stat Mod"
@@ -10,18 +10,18 @@
   "category" : "uniqueWeapon",
   "itemTags": ["weapon"],
   "inventoryIcon" : "/items/augments/project45-gunmods/stat/project45-critdamagemod/project45-critdamageaddmod.png",
-  "description": "Increases Crit Damage by 0.1.",
-  "statInfo" : "^#D93A3A;Crit Damage +0.1^reset;",
+  "description": "Increases Crit Damage by 0.25.",
+  "statInfo" : "^#D93A3A;Crit Damage +0.25^reset;",
   "slot": "critDamage",
   "archetype": "Additive",
-  "shortdescription" : "^#f4988c;(!)^reset; ^#D93A3A;Crit Damage T1",
+  "shortdescription" : "^#D93A3A;Crit Damage T2",
 
   "augment":{
-    "cost": 1,
+    "cost": 2,
     "pureStatMod": true,
     "stat":{
     "critDamageMult": {
-      "additive": 0.1
+      "additive": 0.25
     }
   }},
 

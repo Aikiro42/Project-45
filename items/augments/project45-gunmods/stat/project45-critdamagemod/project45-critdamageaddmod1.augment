@@ -1,5 +1,5 @@
 {
-  "itemName" : "project45-firetimeaddmod",
+  "itemName" : "project45-critdamageaddmod1",
   "price" : 250,
   "rarity" : "Uncommon",
   "tooltipKind" : "project45gunmod2",
@@ -9,22 +9,21 @@
   "modCategory" : "statMod",
   "category" : "uniqueWeapon",
   "itemTags": ["weapon"],
-  "inventoryIcon" : "/items/augments/project45-gunmods/stat/project45-firetimemod/project45-firetimeaddmod.png",
-  "description": "Decreases Fire Time by 10ms.",
-  "statInfo" : "^#E2C344;Fire Time -10ms^reset;",
-  "slot": "fireTime",
+  "inventoryIcon" : "/items/augments/project45-gunmods/stat/project45-critdamagemod/project45-critdamageaddmod.png",
+  "description": "Increases Crit Damage by 0.1.",
+  "statInfo" : "^#D93A3A;Crit Damage +0.1^reset;",
+  "slot": "critDamage",
   "archetype": "Additive",
-  "shortdescription" : "^#f4988c;(!)^reset; ^#E2C344;Fire Time T1",
+  "shortdescription" : "^#D93A3A;Crit Damage T1",
+
   "augment":{
     "cost": 1,
     "pureStatMod": true,
-    
     "stat":{
-      "fireTimeGroup": {
-        "additive": -0.01
-      }
+    "critDamageMult": {
+      "additive": 0.1
     }
-  },
+  }},
 
   "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
   "builder": "/items/buildscripts/buildproject45mod.lua"

@@ -1,7 +1,7 @@
 {
   "itemName" : "project45-levelmod",
   "price" : 2500,
-  "rarity" : "Essential",
+  "rarity" : "Legendary",
   "tooltipKind" : "project45gunmod2",
   "tooltipFields": {
     "subtitle": "Stat Mod"

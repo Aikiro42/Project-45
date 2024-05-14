@@ -22,17 +22,24 @@
     "pureStatMod": true,
     
     "stat": {
+      "stackLimit": 3,
       "baseDamage": {
-        "multiplicative": 0.4
+        "multiplicative": 1
       },
       "critChance": {
-        "additive": 0.10
+        "additive": 0.50
       },
       "critDamage": {
-        "additive": 0.12
+        "additive": 0.25
       },
       "fireTimeGroup": {
-        "multiplicative": 0.08
+        "multiplicative": 0.75
+      },
+      "multishot":{
+        "multiplicative": 0.5
+      },
+      "ammoConsumeChance": {
+        "additive": -0.15
       }
     }
   },

@@ -1,5 +1,5 @@
 {
-  "itemName" : "project45-reloadcostmultmod",
+  "itemName" : "project45-firetimemultmod1",
   "price" : 250,
   "rarity" : "Uncommon",
   "tooltipKind" : "project45gunmod2",
@@ -9,19 +9,18 @@
   "modCategory" : "statMod",
   "category" : "uniqueWeapon",
   "itemTags": ["weapon"],
-  "inventoryIcon" : "/items/augments/project45-gunmods/stat/project45-reloadcostmod/project45-reloadcostmultmod.png",
-  "statInfo" : "^#9BBA3D;Reload Cost +0.2d^reset;",
-  "description": "Increases Reload Cost denominator by 0.2.",
-  "slot": "reloadCost",
+  "inventoryIcon" : "/items/augments/project45-gunmods/stat/project45-firetimemod/project45-firetimemultmod.png",
+  "description": "Increases Fire Time denominator by 0.2.",
+  "statInfo" : "^#E2C344;Fire Time +0.2d^reset;",
+  "slot": "fireTime",
   "archetype": "Multiplicative",
-  "shortdescription" : "^#f4988c;(!)^reset; ^#9BBA3D;Reload Cost X1",
-
+  "shortdescription" : "^#E2C344;Fire Time X1",
   "augment":{
-    "cost": 1,
+    "cost": 2,
     "pureStatMod": true,
     
-    "stat":{
-      "reloadCost": {
+    "stat": {
+      "fireTimeGroup": {
         "multiplicative": 0.2
       }
     }

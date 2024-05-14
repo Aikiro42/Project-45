@@ -189,16 +189,16 @@
         "project45-wildcardstatmod",
         "project45-levelmod",
         "project45-maxlevelmod",
-        "project45-reloadcostaddmod",
-        "project45-reloadcostmultmod",
-        "project45-firetimeaddmod",
-        "project45-firetimemultmod",
-        "project45-damageaddmod",
-        "project45-damagemultmod",
-        "project45-critdamageaddmod",
-        "project45-critdamagemultmod",
-        "project45-critchanceaddmod",
-        "project45-critchancemultmod"
+        "project45-reloadcostaddmod1",
+        "project45-reloadcostmultmod1",
+        "project45-firetimeaddmod1",
+        "project45-firetimemultmod1",
+        "project45-damageaddmod1",
+        "project45-damagemultmod1",
+        "project45-critdamageaddmod1",
+        "project45-critdamagemultmod1",
+        "project45-critchanceaddmod1",
+        "project45-critchancemultmod1"
       ],
       
       "ammo": [

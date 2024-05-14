@@ -99,14 +99,19 @@
   "project45-stats-r": [
     [0, {
       "pool" : [
+        // 1
+        {"weight" : 1, "item" : "project45-critchanceaddmod1"},
+        {"weight" : 1, "item" : "project45-critdamageaddmod1"},
+        {"weight" : 1, "item" : "project45-damageaddmod1"},
+        {"weight" : 1, "item" : "project45-firetimeaddmod1"},
+        {"weight" : 1, "item" : "project45-reloadcostaddmod1"},
 
-        // COMMON
-        {"weight" : 1, "item" : "project45-reloadcostaddmod"},
+        {"weight" : 1, "item" : "project45-critchancemultmod1"},
+        {"weight" : 1, "item" : "project45-critdamagemultmod1"},
+        {"weight" : 1, "item" : "project45-damagemultmod1"},
+        {"weight" : 1, "item" : "project45-firetimemultmod1"},
+        {"weight" : 1, "item" : "project45-reloadcostmultmod1"}
 
-        // UNCOMMON
-        {"weight" : 0.5, "item" : "project45-reloadcostmultmod"},
-        {"weight" : 0.5, "item" : "project45-firetimeaddmod"},
-        {"weight" : 0.5, "item" : "project45-damageaddmod"}
       ],
       "poolRounds" : 1,
       "allowDuplication" : false
@@ -116,15 +121,21 @@
   "project45-stats-sr": [
     [0, {
       "pool" : [
-        // RARE
-        {"weight" : 1, "item" : "project45-critchanceaddmod"},
-        {"weight" : 1, "item" : "project45-critdamageaddmod"},
-        {"weight" : 1, "item" : "project45-firetimemultmod"},
-        {"weight" : 1, "item" : "project45-damagemultmod"},
+        // 2
+        {"weight" : 1, "item" : "project45-critchanceaddmod2"},
+        {"weight" : 1, "item" : "project45-critdamageaddmod2"},
+        {"weight" : 1, "item" : "project45-damageaddmod2"},
+        {"weight" : 1, "item" : "project45-firetimeaddmod2"},
+        {"weight" : 1, "item" : "project45-reloadcostaddmod2"},
 
-        // LEGENDARY
-        {"weight" : 0.5, "item" : "project45-critchancemultmod"},
-        {"weight" : 0.5, "item" : "project45-critdamagemultmod"}
+        {"weight" : 1, "item" : "project45-critchancemultmod2"},
+        {"weight" : 1, "item" : "project45-critdamagemultmod2"},
+        {"weight" : 1, "item" : "project45-damagemultmod2"},
+        {"weight" : 1, "item" : "project45-firetimemultmod2"},
+        {"weight" : 1, "item" : "project45-reloadcostmultmod2"},
+      
+        {"weight" : 1, "item" : "project45-levelmod"},
+        {"weight" : 1, "item" : "project45-wildcardstatmod"}
       ],
       "poolRounds" : 1,
       "allowDuplication" : false
@@ -134,8 +145,21 @@
   "project45-stats-ssr": [
     [0, {
       "pool" : [
-        // ESSENTIAL
-        {"weight" : 1, "item" : "project45-levelmod"}
+        // 3
+        {"weight" : 1, "item" : "project45-critchanceaddmod3"},
+        {"weight" : 1, "item" : "project45-critdamageaddmod3"},
+        {"weight" : 1, "item" : "project45-damageaddmod3"},
+        {"weight" : 1, "item" : "project45-firetimeaddmod3"},
+        {"weight" : 1, "item" : "project45-reloadcostaddmod3"},
+
+        {"weight" : 1, "item" : "project45-critchancemultmod3"},
+        {"weight" : 1, "item" : "project45-critdamagemultmod3"},
+        {"weight" : 1, "item" : "project45-damagemultmod3"},
+        {"weight" : 1, "item" : "project45-firetimemultmod3"},
+        {"weight" : 1, "item" : "project45-reloadcostmultmod3"},
+
+        {"weight" : 1, "item" : "project45-maxlevelmod"},
+        {"weight" : 1, "item" : "project45-wildcardstatmodssr"}
       ],
       "poolRounds" : 1,
       "allowDuplication" : false
@@ -146,9 +170,7 @@
     [0, {
       "pool" : [
         // UNIQUE
-        {"weight" : 1, "item" : "project45-godmod"},
-        {"weight" : 1, "item" : "project45-wildcardstatmodssr"},
-        {"weight" : 1, "item" : "project45-maxlevelmod"}
+        {"weight" : 1, "item" : "project45-godmod"}
       ],
       "poolRounds" : 1,
       "allowDuplication" : false
@@ -157,7 +179,6 @@
   
   // MODS
 
-  
   "project45-mods-r": [
     [0, {
       "pool" : [

@@ -1,5 +1,6 @@
 {
-  "itemName" : "project45-firetimeaddmod",
+  // bonus + bonus * 1.5 * (cost - 1)
+  "itemName" : "project45-critchanceaddmod1",
   "price" : 250,
   "rarity" : "Uncommon",
   "tooltipKind" : "project45gunmod2",
@@ -9,22 +10,21 @@
   "modCategory" : "statMod",
   "category" : "uniqueWeapon",
   "itemTags": ["weapon"],
-  "inventoryIcon" : "/items/augments/project45-gunmods/stat/project45-firetimemod/project45-firetimeaddmod.png",
-  "description": "Decreases Fire Time by 10ms.",
-  "statInfo" : "^#E2C344;Fire Time -10ms^reset;",
-  "slot": "fireTime",
+  "inventoryIcon" : "/items/augments/project45-gunmods/stat/project45-critchancemod/project45-critchanceaddmod.png",
+  "description": "Increases Crit Chance by 5%",
+  "statInfo" : "^#D93A3A;Crit Chance +5%^reset;",
+  "slot": "critChance",
   "archetype": "Additive",
-  "shortdescription" : "^#f4988c;(!)^reset; ^#E2C344;Fire Time T1",
+  "shortdescription" : "^#D93A3A;Crit Chance T1",
+
   "augment":{
     "cost": 1,
     "pureStatMod": true,
-    
     "stat":{
-      "fireTimeGroup": {
-        "additive": -0.01
-      }
+    "critChance": {
+      "additive": 0.05
     }
-  },
+  }},
 
   "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
   "builder": "/items/buildscripts/buildproject45mod.lua"
