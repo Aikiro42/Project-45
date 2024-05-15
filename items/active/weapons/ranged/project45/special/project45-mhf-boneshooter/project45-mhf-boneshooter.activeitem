@@ -23,7 +23,7 @@
     "acceptsAmmoArchetype": [
       "bullet",
       "grenade",
-      "shell"
+      "shotgun"
     ]
   },
 
@@ -64,16 +64,18 @@
 
     "sounds": {
       // "boltPull" : ["/sfx/project45neosfx/boltpull/boltpull-boltaction2.ogg"],
-      "boltPush" : ["/sfx/project45neosfx/boltpull/boltpull-boltaction4.ogg"],
+      "boltPush" : ["/sfx/project45neosfx/special/boneshooter/boneshooter_boltpush.ogg"],
 
-      "boltPull" : ["/sfx/project45neosfx/boltpush/boltpush-boltaction4.ogg"],
+      "boltPull" : ["/sfx/project45neosfx/special/boneshooter/boneshooter_boltpull.ogg"],
       // "boltPush" : ["/sfx/project45neosfx/boltpush/boltpush-cannon1.ogg"],
 
 
       // "ejectCasing": ["/sfx/project45neosfx/ejectcasing/ejectcasing-cannon1.ogg"],
-      "fire" : ["/sfx/project45neosfx/fire/fire-cannon1.ogg"],
+      "fire" : ["/sfx/project45neosfx/special/boneshooter/boneshooter_fire.ogg"],
+
       "reloadStart": ["/sfx/project45neosfx/getmag/getmag-generic1.ogg"],
-      "ejectMag": ["/sfx/project45neosfx/ejectmag/ejectmag-heavy1.ogg"]
+      "reloadEnd": ["/sfx/project45neosfx/special/boneshooter/boneshooter_loadmag.ogg"],
+      "ejectMag": ["/sfx/project45neosfx/special/boneshooter/boneshooter_ejectmag.ogg"]
     },
     "animatedParts": {
       "parts":{
@@ -161,11 +163,13 @@
     "maxAmmo": 7,
     "bulletsPerReload": 7,
     "inaccuracy": 2,
-    "semi": false,
+    "spread": 1,
+    "semi": true,
+    "manualFeed": false,
     "heavyWeapon": true,
     "resetChargeOnFire": false,
     "audibleEjection": true,
-    "cockTime": 0.8,
+    "cockTime": 0.5,
     
     "recoilMomentum": 10,
     "recoilMaxDeg": 30,
@@ -173,9 +177,9 @@
     "recoverDelay": 0,
     "recoverTime": 1.5,
 
-    "screenShakeAmount": 1,
+    "screenShakeAmount": 1.25,
     
-    "cycleTime": 0.5,
+    "cycleTime": 0.8,
 
     "projectileKind": "projectile",
     "projectileType": "project45stdcannonshell",
@@ -239,37 +243,37 @@
     "stances": {
       "aimStance": {
         "frontArmFrame" : "run.3",
-        "backArmFrame" : "fall.1"
+        "backArmFrame" : "swim.1"
       },
       "empty": {
         "frontArmFrame" : "run.3",
-        "backArmFrame" : "fall.1"
+        "backArmFrame" : "swim.1"
       },
       "reloading": {
-        "backArmFrame" : "fall.1"
+        "backArmFrame" : "swim.1"
       },
       "reloaded": {
         "frontArmFrame" : "rotation",
-        "backArmFrame" : "fall.1"
+        "backArmFrame" : "swim.1"
       },
       "boltPull": {
         "armRotation": 0,
         "weaponRotation": 0,
-        "backArmFrame" : "fall.1"
+        "backArmFrame" : "swim.1"
       },
       "boltPush": {
         "armRotation": 0,
         "weaponRotation": 0,
         "frontArmFrame" : "rotation",
-        "backArmFrame" : "fall.1"
+        "backArmFrame" : "swim.1"
       },
       "jammed": {
         "frontArmFrame" : "run.3",
-        "backArmFrame" : "fall.1"
+        "backArmFrame" : "swim.1"
       },
       "unjam": {
         "frontArmFrame" : "jump.2",
-        "backArmFrame" : "fall.1"
+        "backArmFrame" : "swim.1"
       }
     }
   },
