@@ -27,6 +27,9 @@
     "stat": {
       "projectileCount": {
         "rebase": 3
+      },
+      "spread": {
+        "rebase": 3
       }
     }
   },

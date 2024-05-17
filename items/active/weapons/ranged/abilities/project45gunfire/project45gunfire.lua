@@ -248,6 +248,7 @@ function Project45GunFire:init()
   activeItem.setScriptedAnimationParameter("performanceMode", self.performanceMode)
   
   -- Add functions used by this primaryAbility to altAbility
+  GunFire.infoSide = self.infoSide
   GunFire.recoil = self.recoil
   GunFire.rollMultishot = self.rollMultishot -- not working??
   GunFire.updateMagVisuals = self.updateMagVisuals
@@ -264,6 +265,7 @@ function Project45GunFire:init()
 
   -- Add functions used by this primaryAbility to altAbility
   
+  AltFireAttack.infoSide = self.infoSide
   AltFireAttack.recoil = self.recoil
   AltFireAttack.rollMultishot = self.rollMultishot
   AltFireAttack.updateMagVisuals = self.updateMagVisuals

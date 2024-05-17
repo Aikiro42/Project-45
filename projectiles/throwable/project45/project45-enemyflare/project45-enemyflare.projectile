@@ -1,0 +1,35 @@
+{
+  "projectileName" : "project45-enemyflare",
+  "physics" : "grenadenobounce",
+  "scripts": ["project45-enemyflare.lua"],
+  "bounces" : -1,
+  "timeToLive" : 20,
+  "image" : "project45-enemyflare.png",
+  "animationCycle" : 0.25,
+  "lightColor" : [234, 153, 49],
+  "frameNumber" : 2,
+  "periodicActions": [
+    {
+      "time" : 0.01,
+      "repeat" : true,
+      "action" : "particle",
+      "specification" : "project45beamendsmoke"
+    },
+    {
+      "time" : 0.01,
+      "repeat" : true,
+      "action" : "particle",
+      "specification" : "project45beamendspark"
+    }
+  ],
+  "actionOnReap" : [
+    {
+      "action" : "config",
+      "file" : "/projectiles/explosions/smoke/smoke.config"
+    }
+  ],
+  "power" : 0,
+  "onlyHitTerrain" : true,
+  "damageType" : "NoDamage",
+  "damageKind" : "default"
+}

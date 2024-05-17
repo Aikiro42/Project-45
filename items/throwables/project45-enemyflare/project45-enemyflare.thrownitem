@@ -1,0 +1,30 @@
+{
+  "itemName" : "project45-enemyflare",
+  "rarity" : "Common",
+  "price" : 5,
+  "category" : "throwableItem",
+  "inventoryIcon" : "project45-enemyflare.png",
+  "image" : "project45-enemyflare.png",
+  "shortdescription" : "Enemy Flare",
+  "description" : "Calls down enemies.",
+
+  "ammoUsage" : 1,
+
+  "edgeTrigger" : true,
+  "windupTime" : 0.0,
+  "cooldown" : 0.4,
+
+  "projectileType" : "project45-enemyflare",
+  "projectileConfig" : {
+    "speed" : 30,
+    "level" : 10,
+    "periodicActions" : [
+      {
+        "time" : 0,
+        "repeat" : false,
+        "action" : "sound",
+        "options" : [ "/sfx/projectiles/throw_item_small.ogg" ]
+      }
+    ]
+  }
+}

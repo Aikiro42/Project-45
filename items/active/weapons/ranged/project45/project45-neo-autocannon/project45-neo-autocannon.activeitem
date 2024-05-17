@@ -32,7 +32,7 @@
     "acceptsAmmoArchetype": [
       "bullet",
       "grenade",
-      "shell"
+      "shotgun"
     ]
   },
 

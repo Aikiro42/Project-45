@@ -1,0 +1,19 @@
+{
+  "kind" : "project45armadillohitspark",
+  "definition" : {
+    "type" : "ember",
+    "size" : 1.0,
+    "color" : [255,255,255, 255],
+    "destructionAction" : "fade",
+    "destructionTime" : 0.2,
+    "initialVelocity" : [0, 5],
+    "finalVelocity" : [0, -50],
+    "fullbright": true,
+    "approach" : [10, 50],
+    "timeToLive" : 0.2,
+    "layer" : "middle",
+    "variance" : {
+      "initialVelocity" : [20, 10]
+    }
+  }
+}

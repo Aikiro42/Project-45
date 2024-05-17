@@ -86,7 +86,10 @@
         {"weight" : 0.02, "pool" : "project45-gacha-ssr"},
         {"weight" : 0.02, "pool" : "project45-gacha-xssr"}
       ],
-      "poolRounds" : 1,
+      "poolRounds" : [
+        [0.5, 0],
+        [0.5, 1]
+      ],
       "allowDuplication" : false
     }]
   ]

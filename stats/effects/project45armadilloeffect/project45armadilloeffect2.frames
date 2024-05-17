@@ -1,0 +1,29 @@
+{
+  "frameGrid" : {
+    "size" : [48, 57],
+    "dimensions" : [12, 6],
+    "names" : [
+      ["activating.1","activating.2","activating.3","activating.4","activating.5","activating.6","activating.7","activating.8","activating.9","activating.10","activating.11","activating.12"],
+      ["idle.1", null, null, null, null, null, null, null, null, null, null, null],
+      ["hit1.1", "hit1.2", "hit1.3", "hit1.4", null, null, null, null, null, null, null, null],
+      ["hit2.1", "hit2.2", "hit2.3", "hit2.4", null, null, null, null, null, null, null, null],
+      ["hit3.1", "hit3.2", "hit3.3", "hit3.4", null, null, null, null, null, null, null, null],
+      ["breaking.1", null, null, null, null, null, null, null, null, null, null, null]
+    ]
+  },
+  "aliases" : {
+    "deactivating.1": "activating.12",
+    "deactivating.2": "activating.11",
+    "deactivating.3": "activating.10",
+    "deactivating.4": "activating.9",
+    "deactivating.5": "activating.8",
+    "deactivating.6": "activating.7",
+    "deactivating.7": "activating.6",
+    "deactivating.8": "activating.5",
+    "deactivating.9": "activating.4",
+    "deactivating.10": "activating.3",
+    "deactivating.11": "activating.2",
+    "deactivating.12": "activating.1"
+  }
+
+}

@@ -7,73 +7,64 @@ Project45Armadillo = WeaponAbility:new()
 function Project45Armadillo:init()
   self.shieldRadius = self.shieldRadius or 3
   self.shieldOffset = self.shieldOffset or {0, -0.5}
-  self.shieldActive = false 
+  self.shieldActive = false
 
-  self.energyDrain = self.energyDrain or 1
-  self.energyDrainTimer = 1
+  self.cooldownTime = self.cooldownTime or 1
+  self.cooldownTimer = self.cooldownTime
 
 end
-
+function Project45Armadillo:triggering()
+  return self.fireMode == (self.activatingFireMode or self.abilitySlot)
+end
 function Project45Armadillo:update(dt, fireMode, shiftHeld)
     
   WeaponAbility.update(self, dt, fireMode, shiftHeld)
 
-  if self.fireMode ~= (self.activatingFireMode or self.abilitySlot) then
+  if not self:triggering() then
     self.triggered = false
   end
 
-  if self.shieldActive then
-    status.addEphemeralEffect("project45armadilloeffect")
-    self.energyDrainTimer = math.max(self.energyDrainTimer - self.dt, 0)
-    if self.energyDrainTimer <= 0 then
-      self.energyDrainTimer = 1
-      if not status.overConsumeResource("energy", self.energyDrain) then
-        self:deactivate()
-      end
-    end
-  else
-    self.energyDrainTimer = 1
-  end
+  self.cooldownTimer = math.max(0, self.cooldownTimer - self.dt)
 
-  if self.shiftHeld
-  and not status.resourceLocked("energy")
+  self:updateShieldPoly()
+
+  if self:triggering()
+  and not self.triggered
+  and self.cooldownTimer == 0
   then
-    if not self.shieldActive then
-      self:activate()
+    if self:isShieldActive()
+    then
+      self:deactivateShield()
+    elseif not status.resourceLocked("energy")
+    then
+      self:activateShield()
     end
-  else
-    self:deactivate()
+    self.triggered = true
   end
-
 end
 
-function Project45Armadillo:activate()
-  self.shieldActive = true
-  status.addEphemeralEffect("project45armadilloeffect")
-  status.setPersistentEffects("project45armadilloshield", {
-    {
-      stat = "shieldHealth",
-      amount = status.resourceMax("energy") * 2
-    },
-    {
-      stat = "movementSpeedFactor",
-      amount = 0  
-    },
-    {
-      stat = "jumpHeightFactor",
-      amount = 0  
-    }
-  })
-  local poly = {self:generateShieldPoly(self.shieldRadius, self.shieldOffset)}
-  activeItem.setShieldPolys(poly)
+function Project45Armadillo:updateShieldPoly()
+  -- activeItem.setItemShieldPolys({{-1, -1}, {-1, 1}, {1, 1}, {1, -1}})
 end
 
-function Project45Armadillo:deactivate()
-  status.clearPersistentEffects("project45armadilloshield")
-  status.resetResource("shieldStamina")
+function Project45Armadillo:isShieldActive()
+  local statEffects = status.activeUniqueStatusEffectSummary()
+  for _, effect in ipairs(statEffects) do
+    if effect[1] == "project45armadilloeffect" then
+      return true
+    end
+  end
+  return false
+end
+
+function Project45Armadillo:activateShield()
+  status.addEphemeralEffect("project45armadilloeffect", status.resourceMax("energy")/10, activeItem.ownerEntityId())
+  status.overConsumeResource("energy", status.resourceMax("energy"))
+  self.cooldownTimer = self.cooldownTime
+end
+
+function Project45Armadillo:deactivateShield()
   status.removeEphemeralEffect("project45armadilloeffect")
-  activeItem.setShieldPolys()
-  self.shieldActive = false
 end
 
 function Project45Armadillo:generateShieldPoly(radius, shieldOffset, segments)
@@ -87,5 +78,4 @@ function Project45Armadillo:generateShieldPoly(radius, shieldOffset, segments)
 end
 
 function Project45Armadillo:uninit()
-  self:deactivate()
 end
