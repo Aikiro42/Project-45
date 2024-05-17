@@ -3,33 +3,44 @@
   "physics" : "grenadenobounce",
   "scripts": ["project45-enemyflare.lua"],
   "bounces" : -1,
-  "timeToLive" : 20,
+  "timeToLive" : 10,
   "image" : "project45-enemyflare.png",
   "animationCycle" : 0.25,
   "lightColor" : [234, 153, 49],
   "frameNumber" : 2,
+  "speed" : 30,
+  "level" : 10,
   "periodicActions": [
     {
-      "time" : 0.01,
-      "repeat" : true,
-      "action" : "particle",
-      "specification" : "project45beamendsmoke"
+      "time" : 0,
+      "repeat" : false,
+      "action" : "sound",
+      "options" : [ "/sfx/projectiles/throw_item_small.ogg" ]
     },
     {
       "time" : 0.01,
       "repeat" : true,
       "action" : "particle",
-      "specification" : "project45beamendspark"
-    }
-  ],
-  "actionOnReap" : [
+      "rotate": true,
+      "specification" : "project45enemyflaresmoke"
+    },
     {
-      "action" : "config",
-      "file" : "/projectiles/explosions/smoke/smoke.config"
+      "time" : 0.01,
+      "repeat" : true,
+      "action" : "particle",
+      "rotate": true,
+      "specification" : "project45enemyflareflame"
     }
   ],
   "power" : 0,
   "onlyHitTerrain" : true,
   "damageType" : "NoDamage",
-  "damageKind" : "default"
+  "damageKind" : "default",
+
+  "spawnRadius": 10,
+  "npcCount": 10,
+  "npcLevel": 6,
+  "spawnTime": 1.5,
+  "persistentAudio" : "/sfx/projectiles/flame_burning.ogg"
+
 }
