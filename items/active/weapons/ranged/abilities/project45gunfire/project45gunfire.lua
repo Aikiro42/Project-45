@@ -1496,8 +1496,18 @@ end
 
 -- SECTION:  UPDATE FUNCTIONS
 
-function Project45GunFire:updateAmmoRecharge()
+function Project45GunFire:updateAmmoRecharge(timeDelta)
   if not self.hasRechargingAmmo then return end
+  
+  timeDelta = timeDelta or 0
+  if timeDelta > 0 then
+    local ammoRecharged = math.floor(timeDelta / self._ammoRechargeTime)
+    sb.logInfo(ammoRecharged)
+    self:updateAmmo(ammoRecharged)
+    self.ammoRechargeTimer = 0
+    self.ammoRechargeDelayTimer = 0
+    return
+  end
   
   if self.ammoRechargeDelayTimer <= 0
   and storage.ammo > 0
@@ -2136,6 +2146,7 @@ function Project45GunFire:saveGunState()
     unejectedCasings = storage.unejectedCasings,
     jamAmount = storage.jamAmount,
     savedProjectileIndex = storage.savedProjectileIndex,
+    lastUsedTime = os.time(),
     loadSuccess = true
   }
   activeItem.setInstanceValue("savedGunState", gunState)
@@ -2154,6 +2165,7 @@ function Project45GunFire:validateState()
     unejectedCasings = 0,
     jamAmount = 0,
     savedProjectileIndex = 1,
+    lastUsedTime = os.time(),
     loadSuccess = false
   }
   
@@ -2176,7 +2188,12 @@ function Project45GunFire:loadGunState()
   self:updateChamberState(loadedGunState.chamber)
     
   storage.ammo = storage.ammo or loadedGunState.ammo
-  
+
+  local rechargeTimeDelta = math.abs(os.time() - loadedGunState.lastUsedTime)
+  if rechargeTimeDelta > 0 then
+    self:updateAmmoRecharge(rechargeTimeDelta)
+  end
+
   storage.stockAmmo = storage.stockAmmo or loadedGunState.stockAmmo
   self.weapon.stockAmmoDamageMult = 1 + (storage.stockAmmo * 0.1 / self.maxAmmo * 3)
 
