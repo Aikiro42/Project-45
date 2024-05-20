@@ -137,21 +137,21 @@ function Project45SupplyDrop:update(dt, fireMode, shiftHeld)
 end
 
 function Project45SupplyDrop:rollDrop()
-  sb.logInfo("is guarantee? " .. self.guarantee)  
+  -- sb.logInfo("is guarantee? " .. self.guarantee)  
   local dice = math.random()
   if self.pity >= self.hardPity then
     self.pity = 0
     if self.guarantee == 1 then
       self.guarantee = 0
-      sb.logInfo("Get guaranteed XSSR")
+      -- sb.logInfo("Get guaranteed XSSR")
       return "project45supplydropproj-xssr"
     else
       if dice <= 0.5 then
-        sb.logInfo("Won 50/50 @ pity!")
+        -- sb.logInfo("Won 50/50 @ pity!")
         return "project45supplydropproj-xssr"
       else
         self.guarantee = 1
-        sb.logInfo("Lost 50/50 @ pity...")
+        -- sb.logInfo("Lost 50/50 @ pity...")
         return "project45supplydropproj-ssr"
       end
     end
@@ -164,10 +164,10 @@ function Project45SupplyDrop:rollDrop()
       if rarity == "xssr" or rarity == "ssr" then
         if self.guarantee == 1 then
           self.guarantee = 0
-          sb.logInfo("Got guaranteed pre-pity!")
+          -- sb.logInfo("Got guaranteed pre-pity!")
           rarity = "xssr"
         elseif rarity == "ssr" then
-          sb.logInfo("Lost 50/50 pre-pity...")
+          -- sb.logInfo("Lost 50/50 pre-pity...")
           self.guarantee = 1
         end
         self.pity = 0

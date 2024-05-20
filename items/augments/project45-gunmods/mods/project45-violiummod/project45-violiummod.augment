@@ -77,6 +77,11 @@
           "value": true
         }
       }
+    },
+    "stat": {
+      "baseDamage": {
+        "rebaseMult": 1.5
+      }
     }
   },
 

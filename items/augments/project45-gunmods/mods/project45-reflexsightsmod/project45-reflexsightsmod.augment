@@ -32,6 +32,9 @@
       },
       "recoverDelay": {
         "rebaseMult": 0.25
+      },
+      "critChance": {
+        "additive": 0.25
       }
     },
     "gun": {

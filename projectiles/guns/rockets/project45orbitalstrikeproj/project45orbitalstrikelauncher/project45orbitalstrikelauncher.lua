@@ -13,7 +13,7 @@ end
 function update(dt)
 
   if not self.periodicProjectile then
-    sb.logInfo("missing params")
+    sb.logError("[PROJECT 45] project45orbitalstrikelauncher.projectile is missing parameter \"periodicProjectile\"")
     projectile.die()
 
   else

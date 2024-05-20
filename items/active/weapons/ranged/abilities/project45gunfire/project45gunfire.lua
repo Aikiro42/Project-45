@@ -1502,7 +1502,6 @@ function Project45GunFire:updateAmmoRecharge(timeDelta)
   timeDelta = timeDelta or 0
   if timeDelta > 0 then
     local ammoRecharged = math.floor(timeDelta / self._ammoRechargeTime)
-    sb.logInfo(ammoRecharged)
     self:updateAmmo(ammoRecharged)
     self.ammoRechargeTimer = 0
     self.ammoRechargeDelayTimer = 0
@@ -2027,17 +2026,6 @@ function Project45GunFire:damagePerShot(noDLM)
   * self.weapon.stockAmmoDamageMult
   -- * (self.balanceDamageMult or 1)
   / self.projectileCount
-
-  if dps_debug then
-    sb.logInfo(string.format("Final Damage: %f", finalDmg))
-    sb.logInfo(string.format("\t %25s: %f", "Base Damage", self.baseDamage))
-    sb.logInfo(string.format("\t %25s: %f", "Damage Level Multiplier", (noDLM and 1 or config.getParameter("damageLevelMultiplier", 1))))
-    sb.logInfo(string.format("\t %25s: %f", "Charge Damage", self.currentChargeDamage))
-    sb.logInfo(string.format("\t %25s: %f", "Reload Rating Damage", self.reloadRatingDamage))
-    sb.logInfo(string.format("\t %25s: %f", "Crit Damage", critDmg))
-    sb.logInfo(string.format("\t %25s: %f", "Passive Damage Mult", (self.passiveDamageMult or 1)))
-    sb.logInfo(string.format("\t\t %25s: %f", "Projectile count", self.projectileCount))
-  end
 
   return finalDmg
 end
