@@ -12,7 +12,7 @@ end
 
 function init()
   project45deployment_initOld()
-
+  self.project45UiFontParams = root.assetJson("/configs/project45/project45_general.config:uiFontParams")
   self.debugTimer = 0
   self.toPrint = {}
   self.gunStatusL = {}
@@ -258,7 +258,7 @@ function renderChamberIndicator(uiPosition, offset, chamberState)
       0.8,
       true,
       {255,255,255},
-      -0,5
+      -0.5
     )
     return
   end
@@ -527,15 +527,15 @@ function renderText(position, str, scale, doShadow, color, charSpacing)
   
   scale = scale or 1
   
-  local finalScale = scale * 0.4
+  local finalScale = scale * self.project45UiFontParams.scaleFactor
 
   -- enable shadow by default
   if doShadow == nil then
     doShadow = true
   end
     
-  local charWidth = 11 * finalScale
-  charSpacing = (charSpacing or 0) *finalScale
+  local charWidth = self.project45UiFontParams.charWidth * finalScale
+  charSpacing = (charSpacing or 0) * finalScale * self.project45UiFontParams.spacingFactor
 
   local textOffset = { charWidth/16 - (str:len() * (charWidth + charSpacing))/(2*8), 0}
   
@@ -545,7 +545,7 @@ function renderText(position, str, scale, doShadow, color, charSpacing)
     local chr = string.upper(string.sub(str, i, i))
     if doShadow then-- shadow
       localAnimator.addDrawable({
-        image = "/scripts/project45/ui/bender-light.png:" .. chr,
+        image = self.project45UiFontParams.spritePath .. ":" .. chr,
         position = vec2.add(leftPosition, {0.05, -0.05}),
         transformation = {
           {finalScale, 0, 0},
@@ -559,7 +559,7 @@ function renderText(position, str, scale, doShadow, color, charSpacing)
     
     -- text
     localAnimator.addDrawable({
-      image = "/scripts/project45/ui/bender-light.png:" .. chr,
+      image = self.project45UiFontParams.spritePath .. ":" .. chr,
       position = leftPosition,
       transformation = {
         {finalScale, 0, 0},
