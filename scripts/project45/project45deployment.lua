@@ -12,7 +12,7 @@ end
 
 function init()
   project45deployment_initOld()
-  self.project45UiFontParams = root.assetJson("/configs/project45/project45_general.config:uiFontParams")
+  self.project45UiConfig = root.assetJson("/configs/project45/project45_general.config:uiConfig")
   self.debugTimer = 0
   self.toPrint = {}
   self.gunStatusL = {}
@@ -292,45 +292,26 @@ function renderReloadRatingText(uiPosition, offset, reloadRating)
   )
 end
 
-function renderReloadBars(uiPosition, offset, reloadTimeframe, reloadProgress, reloadRating)
-  if not uiPosition then return end
-  if not reloadProgress then return end
-  offset = offset or {0, 0}
-  reloadRating = reloadRating or "OK"
-
-  local basePosition = vec2.add(uiPosition, offset)
-
-  reloadTimeframe = reloadTimeframe or {0.5, 0.6, 0.7, 0.8}
-  local perfectReloadTimeframe = {reloadTimeframe[2], reloadTimeframe[3]}
-  
-  -- base
-  localAnimator.addDrawable({
-    image = "/scripts/project45/ui/reloadbar-base.png",
-    position = basePosition,
-    color = {255,255,255},
-    fullbright = true,
-  }, "Overlay")
-
-  -- rating
-  if reloadRating ~= "OK" then
-    localAnimator.addDrawable({
-      image = "/scripts/project45/ui/reloadbar.png:" .. reloadRating,
-      position = basePosition,
-      color = {255,255,255},
-      fullbright = true,
-    }, "Overlay")
-  end
-
-end
-
 function renderReloadBar(uiPosition, offset, reloadTimeframe, reloadProgress, reloadRating)
   if not uiPosition then return end
   if not reloadProgress then return end
   offset = offset or {0, 0}
   reloadRating = reloadRating or "OK"
 
-  local basePosition = vec2.add(uiPosition, offset)
+  local zoneColors = {
+    bad = {255,255,255},
+    good = {106, 34, 132},
+    perfect = {210, 156, 231}
+  }
 
+  local zoneComplements = {
+    bad = {200, 0, 0},
+    good = {149,209,243},
+    perfect={255, 200, 0}
+  }
+
+  local basePosition = vec2.add(uiPosition, offset)
+  
   reloadTimeframe = reloadTimeframe or {0.5, 0.6, 0.7, 0.8}
   local perfectReloadTimeframe = {reloadTimeframe[2], reloadTimeframe[3]}
   
@@ -358,7 +339,7 @@ function renderReloadBar(uiPosition, offset, reloadTimeframe, reloadProgress, re
   localAnimator.addDrawable({
     image = "/scripts/project45/ui/reloadbar.png:goodrange",
     position = vec2.add(basePosition, {0, (-0.5 + goodY)*4}),
-    color = {106, 34, 132},
+    color = zoneColors.good,
     transformation = {
       {1, 0, 0},
       {0, goodScale, 0},
@@ -374,7 +355,7 @@ function renderReloadBar(uiPosition, offset, reloadTimeframe, reloadProgress, re
     image = "/scripts/project45/ui/reloadbar.png:perfectrange",
     -- .. string.format("?multiply=%sFF", project45util.rgbToHex({210, 156, 231})),
     position = vec2.add(basePosition, {0, (-0.5 + perfectY)*4}),
-    color = {210, 156, 231},
+    color = zoneColors.perfect,
     transformation = {
       {1, 0, 0},
       {0, perfectScale, 0},
@@ -383,14 +364,24 @@ function renderReloadBar(uiPosition, offset, reloadTimeframe, reloadProgress, re
     fullbright = true,
   }, "Overlay")
 
+
+  local currentZone = "bad"
+  
+  if reloadTimeframe[2] <= reloadProgress and reloadProgress <= reloadTimeframe[3] then
+    currentZone = "perfect"
+  elseif reloadTimeframe[1] <= reloadProgress and reloadProgress <= reloadTimeframe[4] then
+    currentZone = "good"
+  end
+  sb.logInfo(reloadProgress)
+
   -- arrow
   localAnimator.addDrawable({
-    image = "/scripts/project45/ui/reloadbar-arrow.png",
+    image = self.project45UiConfig.reloadArrow.image,
     position = vec2.add(basePosition, {0, (-0.5 + reloadProgress)*4}),
-    color = {255,255,255},
+    color = zoneComplements[currentZone] or project45util.complement(zoneColors[currentZone]),
     transformation = {
-      {0.8, 0, 0},
-      {0, 0.75, 0},
+      {self.project45UiConfig.reloadArrow.scale, 0, 0},
+      {0, self.project45UiConfig.reloadArrow.scale, 0},
       {0 ,0 ,1}
     },
     fullbright = true,
@@ -527,15 +518,15 @@ function renderText(position, str, scale, doShadow, color, charSpacing)
   
   scale = scale or 1
   
-  local finalScale = scale * self.project45UiFontParams.scaleFactor
+  local finalScale = scale * self.project45UiConfig.font.scaleFactor
 
   -- enable shadow by default
   if doShadow == nil then
     doShadow = true
   end
     
-  local charWidth = self.project45UiFontParams.charWidth * finalScale
-  charSpacing = (charSpacing or 0) * finalScale * self.project45UiFontParams.spacingFactor
+  local charWidth = self.project45UiConfig.font.charWidth * finalScale
+  charSpacing = (charSpacing or 0) * finalScale * self.project45UiConfig.font.spacingFactor
 
   local textOffset = { charWidth/16 - (str:len() * (charWidth + charSpacing))/(2*8), 0}
   
@@ -545,7 +536,7 @@ function renderText(position, str, scale, doShadow, color, charSpacing)
     local chr = string.upper(string.sub(str, i, i))
     if doShadow then-- shadow
       localAnimator.addDrawable({
-        image = self.project45UiFontParams.spritePath .. ":" .. chr,
+        image = self.project45UiConfig.font.spritePath .. ":" .. chr,
         position = vec2.add(leftPosition, {0.05, -0.05}),
         transformation = {
           {finalScale, 0, 0},
@@ -559,7 +550,7 @@ function renderText(position, str, scale, doShadow, color, charSpacing)
     
     -- text
     localAnimator.addDrawable({
-      image = self.project45UiFontParams.spritePath .. ":" .. chr,
+      image = self.project45UiConfig.font.spritePath .. ":" .. chr,
       position = leftPosition,
       transformation = {
         {finalScale, 0, 0},

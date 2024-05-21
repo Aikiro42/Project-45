@@ -193,6 +193,18 @@ function project45util.moreVividColor(color1, color2)
   return chosen
 end
 
+function project45util.complement(color)
+  local newColor = {color[1], color[2], color[3]}
+  if #color == 4 then
+    table.insert(newColor, color[4])
+  end
+  newColor[1] = 255 - newColor[1]
+  newColor[2] = 255 - newColor[2]
+  newColor[3] = 255 - newColor[3]
+  sb.logInfo(sb.printJson(newColor))
+  return newColor
+end
+
 function project45util.charat(s, i)
   return string.sub(s, i, i)
 end
