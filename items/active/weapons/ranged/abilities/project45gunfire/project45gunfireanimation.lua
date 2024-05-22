@@ -256,6 +256,7 @@ end
 
 function renderBeamChain()
   local beamChain = animationConfig.animationParameter("beamChain", {nil})
+  if not beamChain then return end
   if #beamChain < 2 then return end
 
   local beamChainColor = animationConfig.animationParameter("beamChainColor", {255,0,255})

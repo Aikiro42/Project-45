@@ -301,6 +301,8 @@ function Project45GunFire:init()
   if not self.weapon.armFrameAnimations then
     finalAimStance.frontArmFrame = "rotation"
     finalAimStance.backArmFrame = "rotation"
+    -- finalAimStance.frontArmFrame = self.stances.aimStance.frontArmFrame or "rotation"
+    -- finalAimStance.backArmFrame = self.stances.aimStance.backArmFrame or "rotation"
   end
   self.stances.aimStance = util.mergeTable(defaultAimStance, finalAimStance)
   
@@ -558,6 +560,7 @@ function Project45GunFire:uninit()
   self:uninitPassive()
   self:saveGunState()
   -- world.sendEntityMessage(activeItem.ownerEntityId(), "clearProject45UI")
+  activeItem.setScriptedAnimationParameter("beamChain", nil)
   activeItem.setScriptedAnimationParameter("beamLine", nil)
   activeItem.setScriptedAnimationParameter("projectileStack", nil)
 end
