@@ -1,0 +1,30 @@
+{
+  "itemName" : "project45-critchanceaddmod3",
+  "price" : 1000,
+  "rarity" : "Legendary",
+  "tooltipKind" : "project45gunmod2",
+  "tooltipFields": {
+    "subtitle": "Stat Mod"
+  },
+  "modCategory" : "statMod",
+  "category" : "uniqueWeapon",
+  "itemTags": ["weapon"],
+  "inventoryIcon" : "/items/augments/project45-gunmods/stat/project45-critchancemod/project45-critchanceaddmod.png",
+  "description": "Increases Crit Chance by 20%",
+  "statInfo" : "^#D93A3A;Crit Chance +20%^reset;",
+  "slot": "critChance",
+  "archetype": "Additive",
+  "shortdescription" : "^#D93A3A;Crit Chance T3",
+
+  "augment":{
+    "cost": 3,
+    "pureStatMod": true,
+    "stat":{
+    "critChance": {
+      "additive": 0.20
+    }
+  }},
+
+  "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
+}

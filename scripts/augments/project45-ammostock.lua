@@ -8,9 +8,12 @@ function apply(input)
   local output = Item.new(input)
 
   if output:instanceValue("itemName") == "project45-ammostock" then
-    if input.count > 1 then return end  -- do not stack on a stack of stock ammo
+    if output.count > 1 then
+      output:setInstanceValue("ammo", output:instanceValue("ammo") * output.count)
+      output.count = 1
+    end
 
-    local ammoStockLimit = root.assetJson("/configs/project45/project45_generalconfig.config:ammoStockLimit", 300)
+    local ammoStockLimit = root.assetJson("/configs/project45/project45_general.config:ammoStockLimit", 300)
     local oldAmmo = output:instanceValue("ammo")
     local addAmmo = config.getParameter("ammo", ammoStockLimit)
     
@@ -27,7 +30,7 @@ function apply(input)
   local modInfo = sb.jsonMerge(output.config.project45GunModInfo, input.parameters.project45GunModInfo)
   if not modInfo then return end
   
-  local maxStockAmmoMult = root.assetJson("/configs/project45/project45_generalconfig.config:maxStockAmmoMult")
+  local maxStockAmmoMult = root.assetJson("/configs/project45/project45_general.config:maxStockAmmoMult")
 
   local gunState = input.parameters.savedGunState or {
     chamber = "empty",

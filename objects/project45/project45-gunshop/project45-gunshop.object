@@ -131,7 +131,9 @@
         "project45-gov-fleetlyfading",
         "project45-tcf-kineticarbiter",
         "project45-pkf-typhon",
-        "project45-hlo-maxx"
+        "project45-hlo-maxx",
+        "project45-wfm-kuvabramma",
+        "project45-mhf-boneshooter"
 
       ],
       "mods": [
@@ -141,6 +143,7 @@
         "project45-gunscopemod",
         "project45-supergunscopemod",
         "project45-mlgscopemod",
+        "project45-orbitaltranspondermod",
         "project45-enemyradarmod",
         "project45-flashlasermod",
         "project45-grenadelaunchermod",
@@ -176,7 +179,10 @@
         
         // misc mods
         "project45-gripmod",
-        "project45-weightmod",
+        "project45-aegisaltmod",
+        "project45-feroziummod",
+        "project45-violiummod",
+        "project45-solariummod",
         "project45-stockmod"
       ],
 
@@ -184,16 +190,16 @@
         "project45-wildcardstatmod",
         "project45-levelmod",
         "project45-maxlevelmod",
-        "project45-reloadcostaddmod",
-        "project45-reloadcostmultmod",
-        "project45-firetimeaddmod",
-        "project45-firetimemultmod",
-        "project45-damageaddmod",
-        "project45-damagemultmod",
-        "project45-critdamageaddmod",
-        "project45-critdamagemultmod",
-        "project45-critchanceaddmod",
-        "project45-critchancemultmod"
+        "project45-reloadcostaddmod1",
+        "project45-reloadcostmultmod1",
+        "project45-firetimeaddmod1",
+        "project45-firetimemultmod1",
+        "project45-damageaddmod1",
+        "project45-damagemultmod1",
+        "project45-critdamageaddmod1",
+        "project45-critdamagemultmod1",
+        "project45-critchanceaddmod1",
+        "project45-critchancemultmod1"
       ],
       
       "ammo": [
@@ -213,6 +219,7 @@
         "project45-flechettemod",
         "project45-slugshellsmod",
         "project45-dragonsbreathmod",
+        "project45-fourgaugemod",
 
         // energy ammo
         "project45-iceammomod",
@@ -251,11 +258,12 @@
         "project45-ammostock",
         "project45-essentialgunoil",
 
-        "project45-gachabag",
+        "project45-supplytransponder",
         "project45-gachapull",
         "project45-gachapull10",
         
         "project45-energystim",
+        "project45-enemyflare",
         "nanowrap",        
         "manipulatormodule",
         "techcard",

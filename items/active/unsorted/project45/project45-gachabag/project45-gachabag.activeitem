@@ -6,7 +6,7 @@
   "rarity" : "Essential",
   "category" : "mysteriousReward",
   "description" : "A replenishing, auto-locking Gun Case. ^#eab3db;Add pulls by applying Gacha Keys.^reset;",
-  "shortdescription" : "Gacha Bag",
+  "shortdescription" : "^#f4988c;(!)^reset; Gacha Bag",
   "twoHanded" : true,
   "tooltipKind": "container",
 

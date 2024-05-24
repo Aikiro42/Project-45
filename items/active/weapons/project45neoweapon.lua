@@ -2,10 +2,11 @@ require "/scripts/util.lua"
 require "/scripts/interp.lua"
 require "/items/active/weapons/weapon.lua"
 
+local oldWeaponInit = Weapon.init
+local oldWeaponUpdate = Weapon.update
+
 function Weapon:init()
-  self.attackTimer = 0
-  self.aimAngle = 0
-  self.aimDirection = 1
+
   self.recoilAmount = 0
   self.stanceProgress = 1
 
@@ -17,34 +18,13 @@ function Weapon:init()
 
   self.armFrameAnimations = true
 
-  animator.setGlobalTag("elementalType", self.elementalType or "")
+  oldWeaponInit(self)
 
-  for _,ability in pairs(self.abilities) do
-    ability:init()
-  end
 end
 
 function Weapon:update(dt, fireMode, shiftHeld)
-  self.attackTimer = math.max(0, self.attackTimer - dt)
-
-  for _,ability in pairs(self.abilities) do
-    ability:update(dt, fireMode, shiftHeld)
-  end
-
-  if self.currentState then
-    if coroutine.status(self.stateThread) ~= "dead" then
-      local status, result = coroutine.resume(self.stateThread)
-      if not status then error(result) end
-    else
-      self.currentAbility:uninit()
-      self.currentAbility = nil
-      self.currentState = nil
-      self.stateThread = nil
-      if self.onLeaveAbility then
-        self.onLeaveAbility()
-      end
-    end
-  end
+  
+  oldWeaponUpdate(self, dt, fireMode, shiftHeld)
   
   if self.stanceProgress < 1 then -- prevent from computing when unnecessary
 
@@ -69,17 +49,6 @@ function Weapon:update(dt, fireMode, shiftHeld)
     self.baseWeaponRotation = self.baseWeaponRotation + self.weaponAngularVelocity * dt
   end
 
-  if self.handGrip == "wrap" then
-    activeItem.setOutsideOfHand(self:isFrontHand())
-  elseif self.handGrip == "embed" then
-    activeItem.setOutsideOfHand(not self:isFrontHand())
-  elseif self.handGrip == "outside" then
-    activeItem.setOutsideOfHand(true)
-  elseif self.handGrip == "inside" then
-    activeItem.setOutsideOfHand(false)
-  end
-
-  self:clearDamageSources()
 end
 
 function Weapon:updateAim()

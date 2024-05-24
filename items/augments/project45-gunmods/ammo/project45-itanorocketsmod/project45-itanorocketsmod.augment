@@ -15,16 +15,18 @@
   "technicalInfo" : "Fires multiple small rockets that home in on multiple enemies.",
   "shortdescription" : "Itano Rockets",
   
-  "conversion": "projectile",
   "augment":{
     "modName": "Itano Rockets",
     "category": "ballistic",
+    "conversion": "projectile",
+    "ammo": {
     "archetype": "rocket",
     "projectileType": "project45itanorocket"
+    }
   },
 
    
 
-  "scripts" : [ "/scripts/augments/project45-gunmod/ammomod.lua" ],
+  "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
   "builder": "/items/buildscripts/buildproject45mod.lua"
 }

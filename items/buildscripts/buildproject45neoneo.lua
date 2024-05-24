@@ -7,7 +7,8 @@ require "/items/buildscripts/project45abilities.lua"
 
 function build(directory, config, parameters, level, seed)
   
-  local generalConfig = root.assetJson("/configs/project45/project45_generalconfig.config")
+  local generalConfig = root.assetJson("/configs/project45/project45_general.config")
+  local generalTooltipConfig = root.assetJson("/configs/project45/project45_generaltooltip.config")
 
   local rarityConversions = {
     common = project45util.colorText("#96cbe7", "R (Common)"),
@@ -70,19 +71,22 @@ function build(directory, config, parameters, level, seed)
     end
   end
 
-  -- upgradeable weapon
-  -- we're not using configParameter because this should only apply to making weapons upgradeable
-  -- if a weapon is supposed to be upgradeable according to the config
-  -- then it's the programmer's responsibility to add the "upgradeableWeapon" itemTag
+  -- update item tags
+  local currentItemTags = configParameter("itemTags", {})
+
   if parameters.upgradeParameters then
-    config.upgradeParameters = parameters.upgradeParameters
-    local newItemTags = configParameter("itemTags", {})
-    if not set.new(newItemTags)["upgradeableWeapon"] then
-      table.insert(newItemTags, "upgradeableWeapon")
-      config.itemTags = newItemTags
+    config.upgradeParameters = sb.jsonMerge(config.upgradeParameters or {}, parameters.upgradeParameters)
+    if not set.new(currentItemTags)["upgradeableWeapon"] then
+      table.insert(currentItemTags, "upgradeableWeapon")
     end
-    -- sb.logInfo(configParameter("itemName") .. " upgradeable")
   end
+
+  if not set.new(currentItemTags)["project45"] then
+    table.insert(currentItemTags, "project45")
+  end
+
+  config.itemTags = currentItemTags
+
 
   -- generate seed if supposed to be seeded
   -- and seed is not established
@@ -370,7 +374,7 @@ function build(directory, config, parameters, level, seed)
   -- populate tooltip fields
   if config.tooltipKind == "project45gun" then
     config.tooltipFields = config.tooltipFields or {}
-    config.tooltipFields.subtitle = generalConfig.categoryStrings[config.project45GunModInfo.category or "Generic"] -- .. "^#D1D1D1;" .. config.gunArchetype or config.category
+    config.tooltipFields.subtitle = generalTooltipConfig.categoryStrings[config.project45GunModInfo.category or "Generic"] -- .. "^#D1D1D1;" .. config.gunArchetype or config.category
     config.tooltipFields.levelLabel = util.round(currentLevel, 1)
     config.tooltipFields.rarityLabel = rarityConversions[configParameter("isUnique", false) and "unique" or string.lower(configParameter("rarity", "common"))]
 
@@ -441,7 +445,7 @@ function build(directory, config, parameters, level, seed)
       local hiFireTime = math.max(actualCycleTime[2], primaryAbility("fireTime", 0.1)) + chargeTime
 
       -- get DPS from gun archetype
-      if config.gunArchetype then
+      if config.gunArchetype and not config.overrideArchetypeDps then
         local archetypeDps = generalConfig.gunArchetypeDamages[config.gunArchetype]
         config.primaryAbility.baseDps = (archetypeDps or config.primaryAbility.baseDamage)
       end
@@ -711,7 +715,7 @@ function build(directory, config, parameters, level, seed)
   -- set price
   -- should this be handled elsewhere?
   config.price = (config.price or 0) * root.evalFunction("itemLevelPriceMultiplier", currentLevel)
-  parameters.price = config.price -- needed for gunshop
+  parameters.price = config.price + (parameters.moddedPrice or 0) -- needed for gunshop
 
   return config, parameters
 end

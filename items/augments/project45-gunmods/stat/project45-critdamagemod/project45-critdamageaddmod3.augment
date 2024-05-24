@@ -1,0 +1,30 @@
+{
+  "itemName" : "project45-critdamageaddmod3",
+  "price" : 1000,
+  "rarity" : "Legendary",
+  "tooltipKind" : "project45gunmod2",
+  "tooltipFields": {
+    "subtitle": "Stat Mod"
+  },
+  "modCategory" : "statMod",
+  "category" : "uniqueWeapon",
+  "itemTags": ["weapon"],
+  "inventoryIcon" : "/items/augments/project45-gunmods/stat/project45-critdamagemod/project45-critdamageaddmod.png",
+  "description": "Increases Crit Damage by 0.4.",
+  "statInfo" : "^#D93A3A;Crit Damage +0.4^reset;",
+  "slot": "critDamage",
+  "archetype": "Additive",
+  "shortdescription" : "^#D93A3A;Crit Damage T3",
+
+  "augment":{
+    "cost": 3,
+    "pureStatMod": true,
+    "stat":{
+    "critDamageMult": {
+      "additive": 0.4
+    }
+  }},
+
+  "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
+}

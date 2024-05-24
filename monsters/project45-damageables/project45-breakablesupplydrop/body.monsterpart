@@ -1,0 +1,9 @@
+{
+  "name" : "project45-breakablesupplydrop",
+  "category" : "project45-breakablesupplydrop",
+  "type" : "body",
+
+  "frames" : {
+    "body" : "project45-breakablesupplydrop.png"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "name" : "project45armadilloeffectend",
+  "defaultDuration" : 1,
+
+  "scripts" : [
+    "project45armadilloeffectend.lua"
+  ],
+  "effectConfig" : {
+  },
+
+  "animationConfig" : "project45armadilloeffect.animation"
+}

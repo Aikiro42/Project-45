@@ -13,13 +13,31 @@
   "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-reflexsightsmod/project45-reflexsightsmodicon.png",
   "description" : "Attachment that exploits reflective properties to acquire targets faster.",
   "technicalInfo": "Enables laser sight.",
-  "statInfo": "Inaccuracy x0.8\nRecoil x0.8\nRecovery Time x0.25",
+  "statInfo": "Inaccuracy -0.2x\nRecoil -0.2x\nRecovery Time -0.75x",
   "shortdescription" : "Reflex Sights",
 
   "augment":{
     "modName": "Reflex Sights",
     "category": "universal",
     "slot": "sights",
+    "stat": {
+      "inaccuracy": {
+        "rebaseMult": 0.8
+      },
+      "recoilAmount": {
+        "rebaseMult": 0.8
+      },
+      "recoverTime": {
+        "rebaseMult": 0.8
+      },
+      "recoverDelay": {
+        "rebaseMult": 0.25
+      },
+      "critChance": {
+        "additive": 0.25
+      }
+    },
+    "gun": {
     "primaryAbility": {
       "laser": {
         "operation": "replace",
@@ -28,18 +46,6 @@
           "color": [255, 255, 255, 128],
           "width": 0.1
         }
-      },
-      "inaccuracy": {
-        "operation": "multiply",
-        "value": 0.8
-      },
-      "recoveryMult": {
-        "operation": "multiply",
-        "value": 0.25
-      },
-      "recoilMult": {
-        "operation": "multiply",
-        "value": 0.8
       }
     },
 
@@ -49,27 +55,12 @@
       "image" : "/items/augments/project45-gunmods/mods/project45-reflexsightsmod/project45-reflexsightsmodsprite.png<directives>",
       "offset": [0.0625, 0.0625]
     }
-
-    /*
-
-    ,"animationCustom": {
-      "animatedParts" : { "parts" : {
-        "sights" : {
-          "properties" : {
-            "zLevel" : 5,
-            "centered" : true,
-            "transformationGroups" : ["weapon"],
-            "image" : "/items/augments/project45-gunmods/mods/project45-reflexsightsmod/project45-reflexsightsmodsprite.png<directives>"
-          }
-        }}}
-    }
-
-    */
+  }
   },
 
 
    
 
-  "scripts" : [ "/scripts/augments/project45-gunmod/gunmod.lua" ],
+  "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
   "builder": "/items/buildscripts/buildproject45mod.lua"
 }

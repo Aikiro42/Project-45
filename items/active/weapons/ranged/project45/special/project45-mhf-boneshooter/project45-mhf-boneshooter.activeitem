@@ -1,0 +1,282 @@
+{
+  "itemName" : "project45-mhf-boneshooter",
+  "price" : 50000,
+  "maxStack" : 1,
+  "rarity" : "Essential",
+  "isUnique": true,
+  "description" : "A heavy bowgun used by novice hunters in a free and united world.",
+  "shortdescription" : "^#fdd14d;Bone Shooter^reset;",
+  "tooltipKind" : "project45gun",
+  "gunArchetype": "antiMateriel",
+  "category" : "uniqueWeapon",
+  "twoHanded" : true,
+  "itemTags" : ["weapon","ranged"],
+  "level" : 1,
+  "muzzleFlashColor": [255, 255, 200],
+  "inventoryIcon" : "project45-mhf-boneshooter-icon.png",
+
+  "project45GunModInfo": {
+    "category": "universal",
+    "incompatibleMods": [],
+    "allowsConversion": [],
+    "acceptsModSlot": [],
+    "acceptsAmmoArchetype": [
+      "bullet",
+      "grenade",
+      "shotgun"
+    ]
+  },
+
+  "animationParts" : {
+    "middle" : "project45-mhf-boneshooter.png",
+    "middleFullbright" : "",
+    "charge": "",
+    "chargeFullbright": "",
+    "magazine": "project45-mhf-boneshooter-mag.png",
+    "magazineFullbright": "",
+    "muzzleFlash": "/items/active/weapons/ranged/muzzleflash.png"
+  },
+
+  "animationCustom": {
+    "particleEmitters": {
+      "muzzleFlash": { "particles": [
+        {"particle": "rocketbarrelpuff"},
+        {"particle": "rocketbarrelpuff"},
+        {"particle": "rocketbarrelpuff"},
+        {"particle": "project45muzzle"},
+        {"particle": "project45muzzle"},
+        {"particle": "project45muzzle"}
+      ]},
+      "ejectionPort": {
+        "particles": [
+          {"particle": "project45sabotshell"},
+          {"particle": "rocketbarrelpuff"},
+          {"particle": "rocketbarrelpuff"},
+          {"particle": "rocketbarrelpuff"}  
+        ]
+      },
+      "magazine": {
+        "particles": [
+          {"particle": "project45autocannonmag"}
+        ]
+      }
+    },
+
+    "sounds": {
+      // "boltPull" : ["/sfx/project45neosfx/boltpull/boltpull-boltaction2.ogg"],
+      "boltPush" : ["/sfx/project45neosfx/special/boneshooter/boneshooter_boltpush.ogg"],
+
+      "boltPull" : ["/sfx/project45neosfx/special/boneshooter/boneshooter_boltpull.ogg"],
+      // "boltPush" : ["/sfx/project45neosfx/boltpush/boltpush-cannon1.ogg"],
+
+
+      // "ejectCasing": ["/sfx/project45neosfx/ejectcasing/ejectcasing-cannon1.ogg"],
+      "fire" : ["/sfx/project45neosfx/special/boneshooter/boneshooter_fire.ogg"],
+
+      "reloadStart": ["/sfx/project45neosfx/getmag/getmag-generic1.ogg"],
+      "reloadEnd": ["/sfx/project45neosfx/special/boneshooter/boneshooter_loadmag.ogg"],
+      "ejectMag": ["/sfx/project45neosfx/special/boneshooter/boneshooter_ejectmag.ogg"]
+    },
+    "animatedParts": {
+      "parts":{
+        "charge":{
+          "partStates":{
+            "charge":{
+              "off": {
+                "properties": {
+                  "image": "<partImage>:charging.1"
+                }
+              }
+            }
+          }
+        }
+      },
+      "stateTypes": {
+        "charge":{
+          "states":{
+            "charging":{
+              "frames": 2
+            }
+          }
+        },
+        "gun": {
+          "states":{
+            "idle": {
+              "frames": 1
+            },
+            "firing": {
+              "frames": 1
+            },
+            "firingLoop": {
+              "frames": 1
+            },
+            "ejecting": {
+              "frames": 1
+            },
+            "boltPulling": {
+              "frames": 1
+            },
+            "ejected": {
+              "frames": 1
+            },
+            "feeding": {
+              "frames": 5
+            },
+            "boltPushing": {
+              "frames": 5
+            },
+            "jammed": {
+              "frames": 1
+            },
+            "unjamming": {
+              "frames": 1
+            }
+          }
+        }
+      }
+    }
+  },
+
+  "baseOffset" : [0.75, -0.5],
+  // "baseOffset" : [1, 3],
+  "muzzleOffset" : [2.5, 0.125],
+  "ejectionPortOffset": [0.5, -0.125],
+  "magazineOffset": [-1.5, 0],
+
+  "railOffset": [1.5, 0],
+  "sightsOffset": [0.25, 1],
+  // "stockOffset": [-1.75, 0.75],
+
+  "debugPointColors": {
+    "rail": "red",
+    "sights": "orange",
+    "underbarrel": "green",
+    "stock": "magenta"
+  },
+
+  "scripts" : ["/items/active/weapons/ranged/project45gunneo.lua"],
+    
+  "primaryAbilityType": "project45gunfire",
+  "primaryAbility": {
+    "baseDamageMultiplier": 1.2,
+    "reloadCost": 100,
+    "maxAmmo": 7,
+    "bulletsPerReload": 7,
+    "inaccuracy": 2,
+    "spread": 1,
+    "semi": true,
+    "manualFeed": false,
+    "heavyWeapon": true,
+    "resetChargeOnFire": false,
+    "audibleEjection": true,
+    "cockTime": 0.5,
+    
+    "recoilMomentum": 10,
+    "recoilMaxDeg": 30,
+    "recoilAmount": 5,
+    "recoverDelay": 0,
+    "recoverTime": 1.5,
+
+    "screenShakeAmount": 1.25,
+    
+    "cycleTime": 0.8,
+
+    "projectileKind": "projectile",
+    "projectileType": "project45stdcannonshell",
+
+    "hitscanParameters": {
+      "hitscanWidth": 3,
+      "hitscanActionOnHit": [
+        {
+          "action" : "sound",
+          "options" : [
+            "/sfx/project45neosfx/bulletimpact/bulletimpact-generic1.ogg",
+            "/sfx/project45neosfx/bulletimpact/bulletimpact-generic2.ogg",
+            "/sfx/project45neosfx/bulletimpact/bulletimpact-generic3.ogg"
+          ]
+        },
+        /*
+        
+        {
+          "action": "config",
+          "file": "/projectiles/explosions/project45_hitexplosion/project45_hitexplosion.config"
+        },
+        
+        */
+        {
+          "action": "config",
+          "file": "/projectiles/explosions/regularexplosion/regularexplosion.config"
+        },
+        {
+          "action" : "loop",
+          "count" : 6,
+          "body" : [
+            {
+              "action" : "particle",
+              "specification" : {
+                "type" : "ember",
+                "size" : 1,
+                "color" : [255, 255, 200, 255],
+                "light" : [65, 65, 51],
+                "fullbright" : true,
+                "destructionTime" : 0.2,
+                "destructionAction" : "shrink",
+                "fade" : 0.9,
+                "initialVelocity" : [0, 5],
+                "finalVelocity" : [0, -50],
+                "approach" : [0, 30],
+                "timeToLive" : 0,
+                "layer" : "middle",
+                "variance" : {
+                  "position" : [0.25, 0.25],
+                  "size" : 0.5,
+                  "initialVelocity" : [10, 10],
+                  "timeToLive" : 0.2
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+
+    "stances": {
+      "aimStance": {
+        "frontArmFrame" : "run.3",
+        "backArmFrame" : "swim.1"
+      },
+      "empty": {
+        "frontArmFrame" : "run.3",
+        "backArmFrame" : "swim.1"
+      },
+      "reloading": {
+        "backArmFrame" : "swim.1"
+      },
+      "reloaded": {
+        "frontArmFrame" : "rotation",
+        "backArmFrame" : "swim.1"
+      },
+      "boltPull": {
+        "armRotation": 0,
+        "weaponRotation": 0,
+        "backArmFrame" : "swim.1"
+      },
+      "boltPush": {
+        "armRotation": 0,
+        "weaponRotation": 0,
+        "frontArmFrame" : "rotation",
+        "backArmFrame" : "swim.1"
+      },
+      "jammed": {
+        "frontArmFrame" : "run.3",
+        "backArmFrame" : "swim.1"
+      },
+      "unjam": {
+        "frontArmFrame" : "jump.2",
+        "backArmFrame" : "swim.1"
+      }
+    }
+  },
+
+  "builder" : "/items/buildscripts/buildproject45neoneo.lua"
+}

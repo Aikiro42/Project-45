@@ -28,20 +28,26 @@ function init()
     self.weapon:addAbility(shiftAbility)
   end
 
-  local generalConfig = root.assetJson("/configs/project45/project45_generalconfig.config")
+  local shiftAbility = getShiftAbility()
+  sb.logInfo(sb.printJson(shiftAbility))
+  if shiftAbility then
+    self.weapon:addAbility(shiftAbility)
+  end
+
+  local generalConfig = root.assetJson("/configs/project45/project45_general.config")
 
   activeItem.setScriptedAnimationParameter("hand", activeItem.hand())
 
   local userSettings = {
     "renderBarsAtCursor",
-    "useAmmoCounterImages",
-    "accurateBars"
+    "useAmmoCounterImages"
+    -- ,"accurateBars"
   }
 
   for _, setting in ipairs(userSettings) do
     activeItem.setScriptedAnimationParameter(
       setting,
-      status.statusProperty("project45_" .. setting,
+      (player and player.getProperty or status.statusProperty)("project45_" .. setting,
       generalConfig[setting])
     )
   end

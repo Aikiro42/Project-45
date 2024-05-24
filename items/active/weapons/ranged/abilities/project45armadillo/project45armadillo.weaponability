@@ -1,0 +1,16 @@
+{
+
+  "animationCustom": {
+    "sounds":{
+      "error": ["/sfx/interface/clickon_error.ogg"]
+    }
+  },
+
+  "ability" : {
+      "name" : "Armadillo Shield",
+      "type" : "project45armadillo",
+      "scripts" : ["/items/active/weapons/ranged/abilities/project45armadillo/project45armadillo.lua"],
+      "class" : "Project45Armadillo"
+  }
+}
+  

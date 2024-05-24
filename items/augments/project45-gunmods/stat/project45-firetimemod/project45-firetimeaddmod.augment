@@ -10,18 +10,22 @@
   "category" : "uniqueWeapon",
   "itemTags": ["weapon"],
   "inventoryIcon" : "/items/augments/project45-gunmods/stat/project45-firetimemod/project45-firetimeaddmod.png",
-  "description": "Decreases Fire Time by 2ms.",
+  "description": "Decreases Fire Time by 10ms.",
   "statInfo" : "^#E2C344;Fire Time -10ms^reset;",
   "slot": "fireTime",
   "archetype": "Additive",
-  "shortdescription" : "^#E2C344;Fire Time (+)",
+  "shortdescription" : "^#f4988c;(!)^reset; ^#E2C344;Fire Time T1",
   "augment":{
-    "upgradeCost": 1,
-    "fireTime": {
-      "additive": -0.01
+    "cost": 1,
+    "pureStatMod": true,
+    
+    "stat":{
+      "fireTimeGroup": {
+        "additive": -0.01
+      }
     }
   },
 
-  "scripts" : [ "/scripts/augments/project45-gunmod/statmod.lua" ],
+  "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
   "builder": "/items/buildscripts/buildproject45mod.lua"
 }

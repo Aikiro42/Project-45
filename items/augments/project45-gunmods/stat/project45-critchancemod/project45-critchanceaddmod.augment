@@ -1,7 +1,8 @@
 {
+  // bonus + bonus * 1.5 * (cost - 1)
   "itemName" : "project45-critchanceaddmod",
   "price" : 250,
-  "rarity" : "Rare",
+  "rarity" : "Uncommon",
   "tooltipKind" : "project45gunmod2",
   "tooltipFields": {
     "subtitle": "Stat Mod"
@@ -14,14 +15,17 @@
   "statInfo" : "^#D93A3A;Crit Chance +5%^reset;",
   "slot": "critChance",
   "archetype": "Additive",
-  "shortdescription" : "^#D93A3A;Crit Chance (+)",
+  "shortdescription" : "^#f4988c;(!)^reset; ^#D93A3A;Crit Chance T1",
 
   "augment":{
+    "cost": 1,
+    "pureStatMod": true,
+    "stat":{
     "critChance": {
       "additive": 0.05
     }
-  },
+  }},
 
-  "scripts" : [ "/scripts/augments/project45-gunmod/statmod.lua" ],
+  "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
   "builder": "/items/buildscripts/buildproject45mod.lua"
 }

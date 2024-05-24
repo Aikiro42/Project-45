@@ -12,46 +12,31 @@
   },
   "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-muzzlebrakemod/project45-muzzlebrakemodicon.png",
   "description" : "Makes exiting gas counteract the muzzle rise, reducing recoil.",
-  "statInfo": "Recoil x0.8",
+  "statInfo": "Recoil -0.2x",
   "shortdescription" : "Muzzle Brake",
 
   "augment":{
     "modName": "Muzzle Brake",
     "category": "ballistic",
     "slot": "muzzle",
-    "primaryAbility": {
-      "recoilMult": {
-        "operation": "multiply",
-        "value": 0.8
+    "stat": {
+      "recoilAmount": {
+        "rebaseMult": 0.8
       }
     },
-    
-    "sprite": {
-      "zLevel": 5,
-      "image": "/items/augments/project45-gunmods/mods/project45-muzzlebrakemod/project45-muzzlebrakemodsprite.png",
-      "offset": [0.25, -0.125]
+    "gun":{      
+      "sprite": {
+        "zLevel": 5,
+        "image": "/items/augments/project45-gunmods/mods/project45-muzzlebrakemod/project45-muzzlebrakemodsprite.png",
+        "offset": [0.25, -0.0625]
+      }
     }
-
-    /*
-    ,"animationCustom": {
-      "animatedParts" : { "parts" : {
-        "muzzle" : {
-          "properties" : {
-            "zLevel" : 5,
-            "centered" : true,
-            "offset" : [0.375, -0.125],
-            "transformationGroups" : ["muzzle"],
-            "image" : "/items/augments/project45-gunmods/mods/project45-muzzlebrakemod/project45-muzzlebrakemodsprite.png<directives>"
-          }
-        }}}
-    }
-    */
     
   },
 
 
    
 
-  "scripts" : [ "/scripts/augments/project45-gunmod/gunmod.lua" ],
+  "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
   "builder": "/items/buildscripts/buildproject45mod.lua"
 }

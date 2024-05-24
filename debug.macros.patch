@@ -81,18 +81,6 @@
     },
     {
         "op": "add",
-        "path": "/project45-givestatmods",
-        "value": [
-            "/spawnitem project45-damageaddmod 10",
-            "/spawnitem project45-critchanceaddmod 10",
-            "/spawnitem project45-critdamageaddmod 10",
-            "/spawnitem project45-damagemultmod 10",
-            "/spawnitem project45-critchancemultmod 10",
-            "/spawnitem project45-critdamagemultmod 10"
-        ]
-    },
-    {
-        "op": "add",
         "path": "/project45-giveartifacts",
         "value": [
             // floran

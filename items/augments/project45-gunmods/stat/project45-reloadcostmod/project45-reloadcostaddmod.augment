@@ -14,14 +14,19 @@
   "statInfo" : "^#9BBA3D;Reload Cost -3^reset;",
   "slot": "reloadCost",
   "archetype": "Additive",
-  "shortdescription" : "^#9BBA3D;Reload Cost (+)",
+  "shortdescription" : "^#f4988c;(!)^reset; ^#9BBA3D;Reload Cost T1",
 
   "augment":{
-    "reloadCost": {
-      "additive": -3
+    "cost": 1,
+    "pureStatMod": true,
+    
+    "stat": {
+      "reloadCost": {
+        "additive": -3
+      }
     }
   },
 
-  "scripts" : [ "/scripts/augments/project45-gunmod/statmod.lua" ],
+  "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
   "builder": "/items/buildscripts/buildproject45mod.lua"
 }

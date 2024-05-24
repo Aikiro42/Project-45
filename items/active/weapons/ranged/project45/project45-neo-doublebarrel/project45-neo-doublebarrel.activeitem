@@ -28,7 +28,8 @@
       "shotgun"
     ],
     "acceptsModSlot": [      
-      "material"
+      "material",
+      "magazine"
     ],
     "flipSlot": [
     ]
@@ -109,7 +110,13 @@
     "reloadCost": 10,
     "maxAmmo": 2,
     "bulletsPerReload": 1,
-    "inaccuracy": [1, 2, 3, 4],
+    "inaccuracy": 3,
+    "inaccuracyMults": {
+      "mobile": 1,
+      "walking": 0.75,
+      "stationary": 0.5,
+      "crouching": 0.25
+    },
     "semi": true,
     "cycleTime": 0.1,
     "cockTime": 0.5,

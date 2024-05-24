@@ -13,19 +13,29 @@
   "inventoryIcon" : "/items/augments/project45-gunmods/ability/project45-gunscopemod/project45-gunscopemodicon.png",
   "description" : "Easily aim at faraway targets. Also includes weak nightvision and a purple laser.",
   "shortdescription" : "Scope Mod",
-  "technicalInfo": "- Hold RClick to aim.\n- Move cursor to move crosshairs.\n- Tap crouch to lock scope.",
+  "technicalInfo": "- Hold RClick to aim.\n- Move cursor to move crosshairs.\n- Tap crouch to lock scope.\n+50% Crit Chance when aiming.",
   "statInfo": "Crit Chance +50% when aiming",
   "archetype": "Active Ability",
 
   "augment":{
     "category": "universal",
     "slot": "sights",
-    "altAbilityType" : "project45gunscope",
-    "overrideTwoHanded": true,
-    "twoHanded": true,
-    "hasShiftAction": true
+    "ability": {
+      "altAbilityType" : "project45gunscope",
+      "overrideTwoHanded": true,
+      "twoHanded": true,
+      "hasShiftAction": true
+    },
+    "stat": {
+      "recoverDelay": {
+        "rebaseMult": 0.9
+      },
+      "recoverTime": {
+        "rebaseMult": 1.1
+      }
+    }
   },
 
-  "scripts" : [ "/scripts/augments/project45-gunmod/abilitymod.lua" ],
+  "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
   "builder": "/items/buildscripts/buildproject45mod.lua"
 }

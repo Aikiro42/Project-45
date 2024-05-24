@@ -20,132 +20,87 @@ function build(directory, config, parameters, level, seed)
     end
   end
 
-  local statSlots = {
-    baseDamage = "^#FF9000;Base Damage",
-    fireTime = "^#FFD400;Fire Time",
-    reloadCost = "^#b0ff78;Reload Cost",
-    critChance = "^#FF6767;Crit Chance",
-    critDamage = "^#FF6767;Crit Damage",
-    multiple = "^#A8E6E2;Multiple",
-    level = "^#a8e6e2;Level"
-  }
-
-  local statNames = {
-    "baseDamage",
-    "reloadCost",
-    "fireTime",
-    "critChance",
-    "critDamage"
-  }
-
-  local isPercentValue = set.new({
-    "critChance"
-  })
+  construct(config, "augment", "stat") -- make sure config.augment.stat exists
+  construct(parameters, "augment", "stat") -- make sure config.augment.stat exists
   
-  local isDiv = set.new({
-    "reloadCost",
-    "fireTime",
-  })
-
-  local additiveStatDescMults = {
-    fireTime = 1000,
-    critChance = 100
-  }
-
-  local additiveStatUnits = {
-    fireTime = "ms",
-    critChance = "%"
-  }
-
-  construct(config, "augment") -- make sure config.augment exists
-
   -- generate seed if supposed to be seeded
   -- but seed is not established
   if not (parameters.noSeed or configParameter("seed", seed)) then
     parameters.seed = math.floor(math.random() * 2147483647)
   end
 
-  if config.modCategory == "statMod"
-  and config.augment.randomStats
-  and not parameters.augment
-  and configParameter("seed", seed) then
-    
-    construct(parameters, "augment")
-
-    -- generate random source
-    parameters.seed = configParameter("seed", seed)
-    local rng = sb.makeRandomSource(parameters.seed)
-    
-    -- prepare tooltip information
-    parameters.statInfo = ""
-    parameters.archetype = nil
-    parameters.slot = nil
-
-    -- begin stat generation process
-    for _, statName in ipairs(statNames) do
-      if config.augment[statName] then -- generate stat if it exists
-
-        -- indicate if it modifies multiple stats or not
-        parameters.slot = parameters.slot and "multiple" or statName 
-
-        -- choose a random operation
-        local opName = "additive"
-        if  config.augment[statName].additive
-        and config.augment[statName].multiplicative then
-          opName = rng:randb() and "additive" or "multiplicative"
-        else
-          opName = not config.augment[statName].additive and "multiplicative" or opName
-        end
-
-        -- generate random stat if operation was chosen successfully
-        if config.augment[statName][opName] then
-
-          -- indicate if it does exclusively additive/multiplicative ops or both
-          if parameters.archetype then
-            parameters.archetype = parameters.archetype ~= opName and "mixed" or opName
-          else
-            parameters.archetype = opName
-          end
-
-          -- generate stat if statname and opname exists, truncate to 3 decimal places
-          construct(parameters.augment, statName, opName)
-          parameters.augment[statName][opName] = generateRandomStat(config.augment[statName][opName], rng, 3)
-          parameters.augment[statName][opName == "additive" and "multiplicative" or "additive"] = 0
-          
-          -- modify tooltip field info
-          local statValue = parameters.augment[statName][opName]
-          if statValue then
-            statValue = statValue * (opName == "additive" and additiveStatDescMults[statName] or 1)
-            local operand = statValue > 0 and "+" or ""
-          
-            local statSuffix = ""
-            if opName == "multiplicative" then
-              statSuffix = isDiv[statName] and "d" or "x"
-            else
-              statSuffix = additiveStatUnits[statName] or ""
-            end
-
-            parameters.statInfo = parameters.statInfo .. string.format("%s %s%.1f%s^reset;\n",
-              statSlots[statName],
-              operand,
-              statValue,
-              statSuffix
-            )
-          end
-
-        end
-        
-      end
-    
-    end
-    
-    parameters.archetype = project45util.capitalize(parameters.archetype)
-    if not parameters.price then
-      local basePrice = config.price or 1000
-      parameters.price = math.floor(rng:randf(basePrice/3, basePrice*3) * 0.1)
+  local randomStatParams = config.augment.stat.randomStatParams or {}
+  local specialField = {
+    randomStatParams = true,
+    pureStatMod = true,
+    stackLimit = true
+  }
+  
+  -- get list of possible stats to modify
+  local possibleStats = {nil}    
+  for stat, modifier in pairs(config.augment.stat) do
+    if not specialField[stat] then
+      table.insert(possibleStats, stat)
     end
   end
+  
+  -- set upgrade cost to be 1/2 of modified stats
+  local nStats = math.min(#possibleStats, randomStatParams.chosenStatCount or math.ceil(#possibleStats / 2))
+  local costPerStat = randomStatParams.costPerStat or 1
+  config.augment.cost = math.ceil(costPerStat * nStats)
 
+  if parameters.seed
+  and not parameters.augment.stat.randomized
+  and config.augment.stat.randomStatParams then
+
+    -- init seeded rng
+    local rng = sb.makeRandomSource(parameters.seed)
+    
+    -- choose n/2 stats from n possible stats, put in `modifications` table
+    local modifications = {}
+    for n=1, nStats do
+      local chosenStat = table.remove(possibleStats, (rng:randu32() % #possibleStats) + 1)
+      modifications[chosenStat] = config.augment.stat[chosenStat]
+    end
+
+    -- For each chosen stat and its operations
+    for stat, modification in pairs(modifications) do
+
+      -- get list of possible operations to apply
+      local possibleOps = {nil}
+      for op, value in pairs(modification) do
+        if type(value) == "table" then
+          table.insert(possibleOps, op)
+        end
+      end
+
+      -- if there are valid operations,
+      if #possibleOps > 0 then
+        
+        -- choose one among them and apply
+        local chosenOp = table.remove(possibleOps, (rng:randu32() % #possibleOps) + 1)
+        local chosenValueVector = modification[chosenOp]
+        config.augment.stat[stat][chosenOp] = generateRandomStat(chosenValueVector, rng)
+
+        -- nullify unchosen random ops
+        for _, op in ipairs(possibleOps) do
+          config.augment.stat[stat][op] = nil
+        end
+      end
+
+    end
+
+    -- nullify unchosen stats
+    for _, stat in ipairs(possibleStats) do
+      config.augment.stat[stat] = nil
+    end
+    
+    parameters.augment.stat.randomized = true
+    parameters.augment.stat = config.augment.stat
+    parameters.shortdescription = string.format("%s%s", config.shortdescription, parameters.seed and (" #" .. parameters.seed) or "")
+  else
+    config.augment.stat = parameters.augment.stat
+  end
   return unrandBuild(directory, config, parameters, level, seed)
 end
 

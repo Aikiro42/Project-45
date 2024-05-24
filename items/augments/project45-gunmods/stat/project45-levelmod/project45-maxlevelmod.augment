@@ -1,6 +1,6 @@
 {
   "itemName" : "project45-maxlevelmod",
-  "price" : 20000,
+  "price" : 17000,
   "rarity" : "Essential",
   "isUnique": true,
   "tooltipKind" : "project45gunmod2",
@@ -19,10 +19,14 @@
   "shortdescription" : "^#a8e6e2;Max Level Upgrade",
 
   "augment":{
-    "upgradeCost": 0,
-    "level": 10
+    "cost": 0,
+    "pureStatMod": true,
+    
+    "stat": {
+      "level": 10
+    }
   },
 
-  "scripts" : [ "/scripts/augments/project45-gunmod/statmod.lua" ],
+  "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
   "builder": "/items/buildscripts/buildproject45mod.lua"
 }

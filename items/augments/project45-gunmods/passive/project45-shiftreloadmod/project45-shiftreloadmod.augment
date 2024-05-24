@@ -17,21 +17,23 @@
   
   "augment":{
     "modName": "Shift Reload",
-    "upgradeCost": 0,
+    "cost": 0,
     "category": "universal",
     "slot": "passive",
-    "passiveScript" : "/items/augments/project45-gunmods/passive/project45-shiftreloadmod/project45-shiftreloadmod.lua",
-    "passiveParameters": {},
-    "passiveDescription": "Shift Reload",
-    "animationCustom": {
-      "sounds":{
-        "shiftReloadError": ["/sfx/interface/clickon_error.ogg"]
-      }
-    },
-    "hasShiftAction": true,
-    "overrideShiftAction": true
+    "passive": {
+      "passiveScript" : "/items/augments/project45-gunmods/passive/project45-shiftreloadmod/project45-shiftreloadmod.lua",
+      "passiveParameters": {},
+      "passiveDescription": "Shift Reload",
+      "animationCustom": {
+        "sounds":{
+          "shiftReloadError": ["/sfx/interface/clickon_error.ogg"]
+        }
+      },
+      "hasShiftAction": true,
+      "overrideShiftAction": true
+    }
   },
 
-  "scripts" : [ "/scripts/augments/project45-gunmod/passivemod.lua" ],
+  "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
   "builder": "/items/buildscripts/buildproject45mod.lua"
 }

@@ -1,7 +1,7 @@
 {
   "itemName" : "project45-damagemultmod",
-  "price" : 500,
-  "rarity" : "Rare",
+  "price" : 250,
+  "rarity" : "Uncommon",
   "tooltipKind" : "project45gunmod2",
   "tooltipFields": {
     "subtitle": "Stat Mod"
@@ -14,15 +14,19 @@
   "slot": "baseDamage",
   "archetype": "Multiplicative",
   "statInfo": "^#EA9931;Base Damage +0.3x^reset;",
-  "shortdescription" : "^#EA9931;Base Damage (*)",
+  "shortdescription" : "^#f4988c;(!)^reset; ^#EA9931;Base Damage X1",
 
   "augment":{
-    "upgradeCost": 2,
-    "baseDamage": {
-      "multiplicative": 0.3
+    "cost": 1,
+    "pureStatMod": true,
+    
+    "stat":{
+      "baseDamage": {
+        "multiplicative": 0.3
+      }
     }
   },
 
-  "scripts" : [ "/scripts/augments/project45-gunmod/statmod.lua" ],
+  "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
   "builder": "/items/buildscripts/buildproject45mod.lua"
 }

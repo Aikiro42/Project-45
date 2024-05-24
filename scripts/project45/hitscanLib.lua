@@ -5,7 +5,7 @@ require "/scripts/set.lua"
 
 hitscanLib = {}
 
-local modConfig = root.assetJson("/configs/project45/project45_generalconfig.config")
+local modConfig = root.assetJson("/configs/project45/project45_general.config")
 
 function hitscanLib:fireChainBeam()
   if world.lineTileCollision(mcontroller.position(), self:firePosition()) then return end
@@ -282,7 +282,7 @@ function hitscanLib:fireChain()
       
       local damageConfig = {
         -- multiply nProjsOverflowMult to final damage to compensate for lost multishot
-        baseDamage = finalDamage / math.max(1, hitEntityIds),
+        baseDamage = finalDamage / math.max(1, #hitEntityIds),
         timeout = self.currentCycleTime,
       }
       damageConfig = sb.jsonMerge(damageConfig, self.hitscanParameters.hitscanDamageConfig or {})
@@ -421,16 +421,25 @@ function hitscanLib:chainScan(scanLength, ignoresTerrain, punchThrough, scanUnti
       })
 
       if #nextEntityIdCandidates < 2 then break end
+      -- if world.entityCanDamage(entity.id(), id)
+      -- and world.entityDamageTeam(id) ~= "ghostly" -- prevents from hitting those annoying floaty things
 
       local nextEntityId = nil
       for j=1, #nextEntityIdCandidates do
-        if not alreadyHit[nextEntityIdCandidates[j]] then
-          nextEntityId = nextEntityIdCandidates[j]
+        local candidateId = nextEntityIdCandidates[j]
+        if not alreadyHit[candidateId]
+        and world.entityCanDamage(entity.id(), candidateId)
+        and world.entityDamageTeam(candidateId) ~= "ghostly"
+        and (ignoresTerrain or not world.lineCollision(chain[#chain], world.entityPosition(candidateId)))
+        then
+          nextEntityId = candidateId
           break
         end
       end
       
       if not nextEntityId then break end
+      
+      
       
       local nextPosition = world.entityPosition(nextEntityId)
 

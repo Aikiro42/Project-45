@@ -1,0 +1,34 @@
+{
+  "animationCustom": {
+    "sounds": {
+      "ping": ["/sfx/interface/sniper_mark_pitch1.ogg"],
+      "lockPing": ["/sfx/interface/rocket_lockon.ogg"],
+      "ready" : [ "/sfx/interface/nav_panning_loop.ogg" ],
+      "loading": [ "/sfx/interface/nav_scanning_single.ogg" ],
+      "rare": [],
+      // https://freesound.org/people/KIZILSUNGUR/sounds/70299/
+      "locked": ["/sfx/project45neosfx/sonar.ogg"],
+      "error": ["/sfx/interface/clickon_error.ogg"]
+    }
+  },
+
+  "animationScripts": [
+    "/items/active/unsorted/project45/project45-supplytransponder/project45supplydrop/project45supplydropanimation.lua"
+  ],
+
+  "ability": {
+    "name": "Supply Drop",
+    "type": "project45supplydrop",
+    "scripts": [
+      "/items/active/unsorted/project45/project45-supplytransponder/project45supplydrop/project45supplydrop.lua"
+    ],
+    "class": "Project45SupplyDrop",
+    "hardPity": 25,
+    "dropChances": {
+      "xssr": 0.02,
+      "ssr": 0.02,
+      "sr": 0.46,
+      "r": 0.50
+    }
+  }
+}

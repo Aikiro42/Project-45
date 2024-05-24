@@ -1,0 +1,31 @@
+{
+  "itemName" : "project45-firetimemultmod3",
+  "price" : 1000,
+  "rarity" : "Legendary",
+  "tooltipKind" : "project45gunmod2",
+  "tooltipFields": {
+    "subtitle": "Stat Mod"
+  },
+  "modCategory" : "statMod",
+  "category" : "uniqueWeapon",
+  "itemTags": ["weapon"],
+  "inventoryIcon" : "/items/augments/project45-gunmods/stat/project45-firetimemod/project45-firetimemultmod.png",
+  "description": "Increases Fire Time denominator by 0.8.",
+  "statInfo" : "^#E2C344;Fire Time +0.8d^reset;",
+  "slot": "fireTime",
+  "archetype": "Multiplicative",
+  "shortdescription" : "^#E2C344;Fire Time X3",
+  "augment":{
+    "cost": 2,
+    "pureStatMod": true,
+    
+    "stat": {
+      "fireTimeGroup": {
+        "multiplicative": 0.8
+      }
+    }
+  },
+
+  "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
+}
