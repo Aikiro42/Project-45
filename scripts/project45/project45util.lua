@@ -201,7 +201,7 @@ function project45util.complement(color)
   newColor[1] = 255 - newColor[1]
   newColor[2] = 255 - newColor[2]
   newColor[3] = 255 - newColor[3]
-  sb.logInfo(sb.printJson(newColor))
+  -- sb.logInfo(sb.printJson(newColor))
   return newColor
 end
 

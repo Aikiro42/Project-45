@@ -1,5 +1,10 @@
 require "/scripts/vec2.lua"
+
+enemyRadar_oldUpdate = update or function() end
+
 function update()
+
+    enemyRadar_oldUpdate()
     -- laser
     local enemyEntities = animationConfig.animationParameter("enemyEntities")
     local radius = animationConfig.animationParameter("radius")

@@ -9,7 +9,7 @@ function build(directory, config, parameters, level, seed)
   
   local generalConfig = root.assetJson("/configs/project45/project45_general.config")
   local generalTooltipConfig = root.assetJson("/configs/project45/project45_generaltooltip.config")
-
+  
   local rarityConversions = {
     common = project45util.colorText("#96cbe7", "R (Common)"),
     uncommon = project45util.colorText("#96cbe7", "R (Uncommon)"),
@@ -169,41 +169,60 @@ function build(directory, config, parameters, level, seed)
 
 
   -- retrieve ability animation scripts
+  local compiledAnimationScripts = {}
   local primaryAnimationScripts = setupAbility(config, parameters, "primary")
   local altAnimationScripts = setupAbility(config, parameters, "alt")
   local shiftAnimationScripts = setupAbility(config, parameters, "shift")
+  -- alt <- shift <- primary <- config
+
   
-  
-  -- append shift animation scripts
-  -- to altAnimationScripts
-  -- alt <- shift
+  -- alt
+  for i, animationScript in ipairs(altAnimationScripts) do
+    if not project45util.isItemInList(compiledAnimationScripts, animationScript) then
+      table.insert(compiledAnimationScripts, animationScript)
+    end
+  end
+
+  --[[
+  -- local shiftPrimaryAnimationScripts = setupAbility(config, parameters, "shiftPrimary")
+  -- local shiftAltAnimationScripts = setupAbility(config, parameters, "shiftAlt")
+  -- shiftPrimary
+  for i, animationScript in ipairs(shiftPrimaryAnimationScripts) do
+    if not project45util.isItemInList(compiledAnimationScripts, animationScript) then
+      table.insert(compiledAnimationScripts, animationScript)
+    end
+  end
+
+  -- shiftAlt
+  for i, animationScript in ipairs(shiftAltAnimationScripts) do
+    if not project45util.isItemInList(compiledAnimationScripts, animationScript) then
+      table.insert(compiledAnimationScripts, animationScript)
+    end
+  end
+  --]]
+
+  -- shift
   for i, animationScript in ipairs(shiftAnimationScripts) do
-    if not project45util.isItemInList(altAnimationScripts, animationScript) then
-      table.insert(altAnimationScripts, animationScript)
+    if not project45util.isItemInList(compiledAnimationScripts, animationScript) then
+      table.insert(compiledAnimationScripts, animationScript)
     end
   end
 
-  -- append config animation scripts
-  -- to altAnimationScripts
-  -- (if anything is appended, altAnimationScripts is usually empty)
-  -- alt <- shift <- config
-  for i, animationScript in ipairs(config.animationScripts or {}) do
-    if not project45util.isItemInList(altAnimationScripts, animationScript) then
-      table.insert(altAnimationScripts, animationScript)
+  -- config
+  for i, animationScript in ipairs(configParameter("animationScripts", {})) do
+    if not project45util.isItemInList(compiledAnimationScripts, animationScript) then
+      table.insert(compiledAnimationScripts, animationScript)
     end
   end
 
-  -- append primary animation scripts
-  -- to altAnimationScripts
-  -- alt <- shift <- config <- primary
+  -- primary
   for i, animationScript in ipairs(primaryAnimationScripts) do
-    if not project45util.isItemInList(altAnimationScripts, animationScript) then
-      table.insert(altAnimationScripts, animationScript)
+    if not project45util.isItemInList(compiledAnimationScripts, animationScript) then
+      table.insert(compiledAnimationScripts, animationScript)
     end
   end
   
-  -- alt <- config <- primary
-  config.animationScripts = altAnimationScripts
+  config.animationScripts = compiledAnimationScripts
   
   -- elemental type and config (for alt ability)
   local elementalType = configParameter("elementalType", "physical")

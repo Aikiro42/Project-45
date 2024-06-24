@@ -11,6 +11,17 @@ function apply(output, augment)
 
   if augment then
 
+    local validAbilitySlots = set.new({
+      "alt",
+      "shift",
+      -- "shiftPrimary",
+      -- "shiftAlt"
+    })
+    local abilitySlot = "altAbility"
+    if augment.abilitySlot and validAbilitySlot[augment.abilitySlot] then
+      abilitySlot = augment.abilitySlot .. "Ability"
+    end
+
     -- alter or set ability type if present
     if augment.altAbilityType and output:instanceValue("altAbilityType") ~= augment.altAbilityType then
 

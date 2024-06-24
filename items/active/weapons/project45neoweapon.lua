@@ -103,7 +103,8 @@ function Weapon:updateAim()
 end
 
 function Weapon:setStance(stance)
-
+  
+  if not stance then return end
   if stance.disabled then return end
   if self.stance == stance then return end
 

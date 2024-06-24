@@ -1,10 +1,14 @@
 require "/scripts/vec2.lua"
 require "/scripts/util.lua"
 
+grenadeLauncher_oldUpdate = update or function() end
+
 function update()
     
     localAnimator.clearDrawables()
     localAnimator.clearLightSources()
+
+    grenadeLauncher_oldUpdate()
 
     local aimPos = activeItemAnimation.ownerAimPosition()
     local grenadeIndicatorOffset = animationConfig.animationParameter("grenadeIndicatorOffset")
