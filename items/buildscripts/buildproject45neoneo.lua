@@ -150,9 +150,9 @@ function build(directory, config, parameters, level, seed)
 
   -- recalculate rarity
   local rarityLevel = currentLevel/10
-  local levelRarityAssoc = {"Common", "Uncommon", "Rare", "Legendary", "Essential"}
-  local rarityLevelAssoc = {Essential=1,Legendary=0.8,Rare=0.6,Uncommon=0.4,Common=0.2}
-  if rarityLevelAssoc[configParameter("rarity", "Common")] < rarityLevel then
+  local levelRarityAssoc = {"common", "uncommon", "rare", "legendary", "essential"}
+  local rarityLevelAssoc = {essential=1,legendary=0.8,rare=0.6,uncommon=0.4,common=0.2}
+  if rarityLevelAssoc[string.lower(configParameter("rarity", "common"))] < rarityLevel then
     parameters.rarity = levelRarityAssoc[math.ceil(rarityLevel * #levelRarityAssoc)]
   end
 
