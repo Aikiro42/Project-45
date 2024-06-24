@@ -15,7 +15,8 @@
   
   "primaryAbilityType": "project45supplydrop",
   "primaryAbility": {
-    "hardPity": 25
+    "hardPity": 25,
+    "pullEssenceCost": 300
   },
   "builder" : "/items/buildscripts/buildunrandweapon.lua"
 }
