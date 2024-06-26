@@ -1,0 +1,40 @@
+{
+  "itemName" : "project45-adminmod",
+  "price" : 3000,
+  "rarity" : "Essential",
+  "isUnique": true,
+  "tooltipKind" : "project45gunmod2",
+  "tooltipFields": {
+    "subtitle": "Stat Mod"
+  },
+  "modCategory" : "statMod",
+  "category" : "uniqueWeapon",
+  "itemTags": ["weapon"],
+  "inventoryIcon" : "/items/augments/project45-gunmods/stat/project45-godmod/project45-godmod.png",
+  "statInfo" : "You're not supposed to have this.",
+  "description": "You're not supposed to have this.",
+  "slot": "multiple",
+  "archetype": "Mixed",
+  "shortdescription" : "^#fdd14d;Admin Mod^reset;",
+
+  "augment":{
+    "cost": 0,
+    "pureStatMod": true,
+    
+    "stat": {
+      "baseDamage": {
+        "multiplicative": 32
+      },
+      "critChance": {
+        "additive": 3
+      },
+      "critDamage": {
+        "additive": 1
+      }
+    }
+  },
+
+  "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
+
+}

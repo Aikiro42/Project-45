@@ -1,4 +1,6 @@
 require "/scripts/util.lua"
+require "/scripts/status.lua"
+require "/scripts/poly.lua"
 require "/items/active/weapons/project45neoweapon.lua"
 -- require "/items/active/weapons/ranged/gunfire.lua"
 
@@ -12,21 +14,50 @@ function Project45Armadillo:init()
   self.cooldownTime = self.cooldownTime or 1
   self.cooldownTimer = self.cooldownTime
 
+  self.riotShieldParameters = sb.jsonMerge({
+    shieldPoly = {{0, -2}, {0, 2}},
+    blockFailChance = 0.05,
+    blockFailDuration = 0.1
+  }, self.riotShieldParameters)
+
+  self.offsets = {
+    base = config.getParameter("baseOffset", {0, 0}),
+    underbarrel = config.getParameter("underbarrelOffset", {0, 0})
+  }
+  
+  self.riotShieldDamageListener = damageListener("damageTaken", function(notifications)
+    for _,notification in pairs(notifications) do
+      if notification.hitType == "ShieldHit" then
+        animator.playSound("block")        
+        if self.blockFailTimer == 0 and math.random() < self.riotShieldParameters.blockFailChance then
+          animator.playSound("break")
+          self.blockFailTimer = self.riotShieldParameters.blockFailDuration
+          activeItem.setItemShieldPolys({})
+        end
+        return
+      end
+    end
+  end)
+
+  self.blockFailTimer = 0
+
 end
+
 function Project45Armadillo:triggering()
   return self.fireMode == (self.activatingFireMode or self.abilitySlot)
 end
+
 function Project45Armadillo:update(dt, fireMode, shiftHeld)
     
   WeaponAbility.update(self, dt, fireMode, shiftHeld)
+
+  self:updateRiotShield()
 
   if not self:triggering() then
     self.triggered = false
   end
 
   self.cooldownTimer = math.max(0, self.cooldownTimer - self.dt)
-
-  self:updateShieldPoly()
 
   if self:triggering()
   and not self.triggered
@@ -43,8 +74,23 @@ function Project45Armadillo:update(dt, fireMode, shiftHeld)
   end
 end
 
-function Project45Armadillo:updateShieldPoly()
-  -- activeItem.setItemShieldPolys({{-1, -1}, {-1, 1}, {1, 1}, {1, -1}})
+
+function Project45Armadillo:updateRiotShield()
+
+  self.blockFailTimer = math.max(0, self.blockFailTimer - self.dt)
+  
+  if self.blockFailTimer > 0 then
+    activeItem.setItemShieldPolys({})
+    return
+  end
+
+  local shieldPoly = self.riotShieldParameters.shieldPoly
+  shieldPoly = poly.translate(shieldPoly, self.offsets.underbarrel)
+  shieldPoly = poly.translate(shieldPoly, self.weapon.weaponOffset)
+  shieldPoly = poly.rotate(shieldPoly, self.weapon.relativeWeaponRotation)
+  activeItem.setItemShieldPolys({shieldPoly})
+
+  self.riotShieldDamageListener:update()
 end
 
 function Project45Armadillo:isShieldActive()
@@ -65,16 +111,6 @@ end
 
 function Project45Armadillo:deactivateShield()
   status.removeEphemeralEffect("project45armadilloeffect")
-end
-
-function Project45Armadillo:generateShieldPoly(radius, shieldOffset, segments)
-  segments = segments or 8
-  local poly = {}
-  local arcAngle = 2*math.pi/segments
-  for i=1, segments do
-    table.insert(poly, vec2.add(shieldOffset, {radius * math.cos(arcAngle * i), radius * math.sin(arcAngle * i)}))
-  end
-  return poly
 end
 
 function Project45Armadillo:uninit()
