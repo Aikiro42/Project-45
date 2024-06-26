@@ -16,7 +16,8 @@ function disassemble(input)
 
       if input.parameters.modSlots then
         for k, v in pairs(input.parameters.modSlots) do
-          if k ~= "ability" then
+          local isAbility = {ability=true, shiftAbility=true}
+          if not isAbility[k] then
             table.insert(disassembledItems, v[2])
           end
         end

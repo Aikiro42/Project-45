@@ -95,9 +95,17 @@ function apply(input)
             "altAbility": {json},
             "hasShiftAction": bool
         }
-        --]]
+    --]]
     checker.output = applyAbilitymod(checker.output, checker.augment.ability)
-    newModSlots.ability = {checker.augment.modName, config.getParameter("itemName")}
+    
+    if checker.augment.ability.altAbilityType or checker.augment.ability.altAbility then
+      newModSlots.ability = {checker.augment.modName, config.getParameter("itemName")}
+    end
+
+    if checker.augment.ability.shiftAbilityType or checker.augment.ability.shiftAbility then
+      newModSlots.shiftAbility = {checker.augment.modName, config.getParameter("itemName")}
+    end
+    
     passiveSlot = checker.augment.slot
   end
 

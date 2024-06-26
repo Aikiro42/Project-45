@@ -114,6 +114,7 @@ function Checker:check()
   set.insert(acceptsModSlot, "intrinsic")
   set.insert(acceptsModSlot, "stat")
   set.insert(acceptsModSlot, "ammoType")
+  set.insert(acceptsModSlot, "manualReload")
   if not acceptsModSlot[augment.slot] then
     self:addError(string.format("Weapon does not accept %s mods", augment.slot))
     self.checked = false
@@ -189,18 +190,56 @@ function Checker:checkAbility()
     return true
   end
 
-  if self.modSlots.ability then
-    self:addError(string.format("Ability slot occupied"))
-    self.checked = false
-    return false
+  if (self.augment.ability.altAbilityType
+  or self.augment.ability.altAbility) then
+    if self.modSlots.ability then
+      self:addError(string.format("Ability slot occupied"))
+      self.checked = false
+      return false
+    end
+
+    if self.output:instanceValue("altAbility")
+    or self.output:instanceValue("altAbilityType")
+    then
+      self:addError(string.format("Weapon has ability"))
+      self.checked = false
+      return false
+    end
+
+    --[[
+    if self.augment.hasShiftAction
+    and (self.output:instanceValue("shiftAbility") or self.output:instanceValue("shiftAbilityType"))
+    then
+      self:addError(string.format("Incompatible with Shift Ability"))
+      self.checked = false
+      return false
+    end
+    --]]
   end
 
-  if self.output:instanceValue("altAbility")
-  or self.output:instanceValue("altAbilityType")
-  then
-    self:addError(string.format("Weapon has ability"))
-    self.checked = false
-    return false
+  if (self.augment.ability.shiftAbilityType
+  or self.augment.ability.shiftAbility) then
+    if self.modSlots.shiftAbility then
+      self:addError(string.format("Shift Ability slot occupied"))
+      self.checked = false
+      return false
+    end
+
+    if self.output:instanceValue("shiftAbility")
+    or self.output:instanceValue("shiftAbilityType")
+    then
+      self:addError(string.format("Weapon has Shift Ability"))
+      self.checked = false
+      return false
+    end
+
+    --[[
+    if self.output:instanceValue("hasShiftAction") then
+      self:addError(string.format("Weapon has Shift Action"))
+      self.checked = false
+      return false
+    end
+    --]]
   end
 
   self.checked = self.checked and true

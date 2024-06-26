@@ -18,7 +18,7 @@
   "augment":{
     "cost": 0,
     "category": "universal",
-    "slot": "intrinsic",
+    "slot": "manualReload",
     "ability": {
       "altAbilityType" : "project45gunfirereload",
       "overrideTwoHanded": true,

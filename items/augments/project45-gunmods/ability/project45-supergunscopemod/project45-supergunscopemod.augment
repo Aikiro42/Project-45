@@ -29,6 +29,7 @@
       "hasShiftAction": true,
       
       "altAbility": {
+        "name": "Hi-Tech Scope",
         "reticleProjectile": "project45hightechcamera"
       },
 
