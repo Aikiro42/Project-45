@@ -1,0 +1,51 @@
+{
+  "itemName" : "project45-armadillomod",
+  "price" : 17500,
+  "rarity" : "Essential",
+  "isUnique": true,
+  "tooltipKind" : "project45gunmod2",
+  "modCategory" : "abilityMod",
+  "category" : "uniqueWeapon",
+  "itemTags": ["weapon"],
+  "tooltipFields": {
+    "subtitle": "Ability Mod",
+    "objectImage": "/items/augments/project45-gunmods/ability/project45-armadillomod/project45-armadillomod.png"
+  },
+  "inventoryIcon" : "/items/augments/project45-gunmods/ability/project45-armadillomod/project45-armadillomodicon.png",
+  "description" : "A shield attachment that can generate an adaptive-reactive mobile defense light orb around its user. ",
+  "technicalInfo": "Right-click to generate a health- and energy-based shield that lasts 10 seconds.",
+  "shortdescription" : "A.R.M.D.L.O. Shield",
+  "archetype": "Active Ability",
+  
+  "augment":{
+    "category": "universal",
+    "slot": "underbarrel",
+    "ability": {
+      "altAbilityType" : "project45armadillo",
+      "overrideTwoHanded": true,
+      "twoHanded": true
+    },
+    "gun":{
+      "primaryAbility": {
+        "heavyWeapon": {
+          "operation": "replace",
+          "value": true
+        }
+      }
+    },
+    "stat": {
+      "recoverTime": {
+        "rebaseMult": 1.5
+      },
+      "recoilAmount":{
+        "rebaseMult": 0.5
+      },
+      "inaccuracy": {
+        "rebaseMult": 1.05
+      }
+    }
+  },
+
+  "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
+}
