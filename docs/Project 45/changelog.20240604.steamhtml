@@ -11,6 +11,7 @@ Currently reading commits from May 7, 2024 onwards.
 	[*] Weapons now remember their bonus ratio. If bonus ratio changed (e.g. seed changed and generated bonus is different) then their bonus ratio will appear as "??%" but colored depending on the newly generated bonus ratio.
 	[*] Removed setting to toggle accurate bars now that image transformation is utilized.
 [/list]
+
 [h3]New Features[/h3]
 [list]
 	[*] Weapons can now be [b]perfectly charged[/b]. If a weapon [i]can be[/i] and [i]is[/i] perfectly charged, it will multiply its damage by 1, the overcharge multiplier, or the perfect charge multiplier, whichever is greater. The following weapons thus have the respective overcharge and perfect charge damage multipliers:
@@ -61,12 +62,35 @@ Currently reading commits from May 7, 2024 onwards.
 	[/list]
 	[*] New mods have been added, namely:
 	[list]
-		[*] Manual Reload (ability)
-		[*] Shift Reload (passive)
-		[*] Orbital Transponder (calls in bunker buster missiles on a zone.)
-		[*] Ferozium Alloy Parts (gives energy regen and bonus based on manipulator armor pieces equipped)
-		[*] Violium Alloy Parts (makes weapon heavy but gives higher damage bonus based on separator armor pieces equipped)
-		[*] Solarium Alloy Parts (gives bonus when equipping tier5/tier6 armor and has a chance to give pixels on crit)
+		[*] Manual Reload[list]
+			[*] Ejects the current magazine when right-clicking, allowing the user to reload.
+			[*] Can be used to trigger active reloads.
+		[/list]
+		[*] Shift Reload[list]
+			[*] Ejects the current magazine when tapping shift, allowing the user to reload.
+			[*] Can be used to trigger active reloads.
+		[/list]
+		[*] A.R.M.D.L.O. Shield [list]
+			[*] Passively protects the user from frontal attacks.
+			[*] If the shield is hit shortly after equipping the weapon, it retaliates with a stasis shockwave.
+			[*] The shield has a 5% chance to allow damage through for 0.5s, shortly after which the shield is ready to retaliate on the next attack.
+			[*] Right-clicking gives the user a persistent, omnidirectional shield based on their health and energy.
+		[/list]
+		[*] Orbital Transponder [list]
+			[*] Calls in bunker buster missiles in a zone. Cooldown of 3s.
+			[*] Can work underground, up until an eighth of the world height away from the core.
+		[/list]
+		[*] Ferozium Alloy Parts [list]
+			[*] Gives persistent energy regen.
+			[*] Gives a +0.05x (5%) increase in damage per piece of Manipulator armor equipped.
+		[/list]
+		[*] Violium Alloy Parts [list]
+			[*] Gives a +0.2x (20%) increase in damage per piece of Separator armor equipped.
+		[/list]
+		[*] Solarium Alloy Parts [list]
+			[*] Gives a +0.02x (2%) increase in damage per piece of Tier 5/6 armor equipped.
+			[*] Gives a 4.5% chance to give the user 45 pixels on crit.
+		[/list]
 		[*] 4 GA. Shells
 		[*] SSR Wildcard Mod (only obtainable via gacha)
 	[/list]
@@ -98,6 +122,7 @@ Currently reading commits from May 7, 2024 onwards.
 	[*] Added higher tiers of additive and multiplicative mods. Tiers II and III can only be obtained via the gacha.
 	[*] Added the [b]Enemy Flare[/b]. This throwable summons ten tier 6 enemies around its vicinity over a period of time.
 [/list]
+
 [h3]Balance changes[/h3]
 [list]
 	[*] [b]Weapon damage is now unaffected by your Power stat.[/b]
@@ -174,7 +199,7 @@ Currently reading commits from May 7, 2024 onwards.
 	[/list]
 	[*] Reidentified [b]Aegisalt Alloy Parts[/b]. [b]Sell weapons that have this mod installed.[/b]
 	[list]
-		[*] Aegisalt Alloy Parts now increase your weapon damage based on the number of Accelerator armor pieces you have equipped, +5% per armor. (Race mod armors requires a compatibility mod - will work on improving this aspect)
+		[*] Aegisalt Alloy Parts now increase your weapon damage based on the number of Accelerator armor pieces you have equipped, +5% per armor.
 	[/list]
 	[*] The [b]Multithreader[/b] now halves a weapon's maximum ammo.
 	[*] The [b]Converger[/b] now multiplies damage by 1.1x.
@@ -214,19 +239,18 @@ Currently reading commits from May 7, 2024 onwards.
 	[*] Made firetime stat modding distribution consistent with semicharge weapons.
 	[*] Improved post-animation ejection (`ejectAfterAnimation`) logic; instead of ejecting casings after waiting for some time, it now happens when the animation state of the gun is not "ejecting"/"bolt-pulling" anymore.
 	[*] [b]Guns now update their price based on installed mods.[/b] Selling them via the [b]Reimburser[/b] should compensate you for their full value.
+	[*] Fixed lightweight-modded weapons becoming heavy and vice versa when applying weight-affecting mods in different orders.
 [/list]
 
-
-
-
-
-
 [h2]Mod-side[/h2]
+
 [h3]Bugfixes[/h3]
 [list]
 	[*] Fixed `hitscanParameters.hitscanColor` not affecting color of hitscan projectiles
 	[*] Fixed ammomod.lua crashing when weapon config hitscan/beamParameters is nil
+	[*] Fixed script crash when attempting to apply a gun mod with an uncapitalized rarity string.
 [/list]
+
 [h3]General Changes[/h3]
 [list]
 	[list]
@@ -244,7 +268,10 @@ Currently reading commits from May 7, 2024 onwards.
 		[*] added scanUntilCursor field
 	[/list]
 	[*] Rename function `moddedStat` to `getModifiedStat`
+	[*] add tentative code to set non-animating arm frames to the aimstance arm frame
+	[*] project45neoweapon.lua now calls the `init` and `update` functions of the original weapon.lua. The refactored script sets variables _before_ running `init`, and runs `update` before running its own update procedures.
 [/list]
+
 [h3]New Features[/h3]
 [list]
 	[*] Modders can now set whether their gun closes its bolt when firing the last round or not. This is overridden to `false` if the gun is manual-fed.
@@ -291,4 +318,5 @@ Currently reading commits from May 7, 2024 onwards.
 	[*] inaccuracy is now a modifiable stat
 	[*] added gradient function in project45util
 	[*] Unified disassembly script of gun disassembly kit UI script and portable GDK application script
+	[*] add `uiFontParams` field to configs to make it easier to apply custom ammo counter fonts
 [/list]
