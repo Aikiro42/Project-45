@@ -61,12 +61,35 @@ Currently reading commits from May 7, 2024 onwards.
 	[/list]
 	[*] New mods have been added, namely:
 	[list]
-		[*] Manual Reload (ability)
-		[*] Shift Reload (passive)
-		[*] Orbital Transponder (calls in bunker buster missiles on a zone.)
-		[*] Ferozium Alloy Parts (gives energy regen and bonus based on manipulator armor pieces equipped)
-		[*] Violium Alloy Parts (makes weapon heavy but gives higher damage bonus based on separator armor pieces equipped)
-		[*] Solarium Alloy Parts (gives bonus when equipping tier5/tier6 armor and has a chance to give pixels on crit)
+		[*] Manual Reload[list]
+			[*] Ejects the current magazine when right-clicking, allowing the user to reload.
+			[*] Can be used to trigger active reloads.
+		[/list]
+		[*] Shift Reload[list]
+			[*] Ejects the current magazine when tapping shift, allowing the user to reload.
+			[*] Can be used to trigger active reloads.
+		[/list]
+		[*] A.R.M.D.L.O. Shield [list]
+			[*] Passively protects the user from frontal attacks.
+			[*] If the shield is hit shortly after equipping the weapon, it retaliates with a stasis shockwave.
+			[*] The shield has a 5% chance to allow damage through for 0.5s, shortly after which the shield is ready to retaliate on the next attack.
+			[*] Right-clicking gives the user a persistent, omnidirectional shield; the shield's health is based on the sum of their max health and current energy.
+		[/list]
+		[*] Orbital Transponder [list]
+			[*] Calls in bunker buster missiles in a zone. Cooldown of 3s.
+			[*] Can work underground, up until an eighth of the world height away from the core.
+		[/list]
+		[*] Ferozium Alloy Parts [list]
+			[*] Gives persistent energy regen.
+			[*] Gives a +0.05x (5%) increase in damage per piece of Manipulator armor equipped.
+		[/list]
+		[*] Violium Alloy Parts [list]
+			[*] Gives a +0.2x (20%) increase in damage per piece of Separator armor equipped.
+		[/list]
+		[*] Solarium Alloy Parts [list]
+			[*] Gives a +0.02x (2%) increase in damage per piece of Tier 5/6 armor equipped.
+			[*] Gives a 4.5% chance to give the user 45 pixels on crit.
+		[/list]
 		[*] 4 GA. Shells
 		[*] SSR Wildcard Mod (only obtainable via gacha)
 	[/list]
@@ -207,7 +230,9 @@ Currently reading commits from May 7, 2024 onwards.
 	[*] Adjusted muzzle offset of the Covalence
 	[*] Improved VFX of some explosions
 	[*] Improved Dragon's Breath projectiles.
+	[*] Changed how Shift Reload and Enemy Radar is implemented. They are now "shift" abilities.
 [/list]
+
 [h3]Bugfixes[/h3]
 [list]
 	[*] Weapon UI should now be rendered client-side. No more seeing another person's ammo counter!
@@ -291,4 +316,10 @@ Currently reading commits from May 7, 2024 onwards.
 	[*] inaccuracy is now a modifiable stat
 	[*] added gradient function in project45util
 	[*] Unified disassembly script of gun disassembly kit UI script and portable GDK application script
+[/list]
+
+[h2]Notes[/h2]
+[list]
+	[*] Project 45 should not conflict with with Psyny's Ability Slot Extender; while the extender replaces `weapon.lua` and `abilities.lua`, Project 45 uses `project45neoweapon.lua` and `project45abilities.lua`.
+	[*] Project 45 has partial incompatibility with Psyny's Weapon Retrofitting Station. Some ability combinations on Project 45 weapons can cause the game to crash, potentially irrevocably. [b]Retrofit Project 45 weapons at your own risk.[/b]
 [/list]

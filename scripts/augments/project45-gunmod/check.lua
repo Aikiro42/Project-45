@@ -3,10 +3,10 @@ require "/scripts/set.lua"
 require "/scripts/util.lua"
 
 function print(...)
-  sb.logInfo(...)
+  -- sb.logInfo(...)
 end
 function json(...)
-  return sb.printJson(...)
+  -- return sb.printJson(...)
 end
 
 Checker = {}

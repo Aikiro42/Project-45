@@ -80,9 +80,7 @@ function Project45Armadillo:triggering()
 end
 
 function Project45Armadillo:update(dt, fireMode, shiftHeld)
-  
-  status.giveResource("health", 100) -- DELETEME:
-  
+    
   WeaponAbility.update(self, dt, fireMode, shiftHeld)
 
   self:updateRiotShield()
