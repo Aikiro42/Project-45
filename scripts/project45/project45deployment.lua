@@ -372,7 +372,7 @@ function renderReloadBar(uiPosition, offset, reloadTimeframe, reloadProgress, re
   elseif reloadTimeframe[1] <= reloadProgress and reloadProgress <= reloadTimeframe[4] then
     currentZone = "good"
   end
-  -- sb.logInfo(reloadProgress)
+  sb.logInfo(reloadProgress)
 
   -- arrow
   localAnimator.addDrawable({

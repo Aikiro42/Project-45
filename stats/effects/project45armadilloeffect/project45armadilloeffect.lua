@@ -3,7 +3,7 @@ function init()
   animator.playSound("activate")
   animator.playSound("loop", -1)
   local shieldHealth = status.resourceMax("health") + status.resource("energy")
-  -- sb.logInfo(string.format("Shield health: %f", shieldHealth))
+  sb.logInfo(string.format("Shield health: %f", shieldHealth))
   self.lastShieldHealth = shieldHealth
   self.maxEffectDuration = effect.duration()
   status.setResource("damageAbsorption", shieldHealth)
