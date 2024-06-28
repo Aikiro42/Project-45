@@ -237,6 +237,7 @@
         // grenade ammo
         "project45-clustergrenademod",
         "project45-thermitegrenademod",
+        "project45-jumpgrenademod",
 
         // rocket ammo
         "project45-homingrocketmod",
