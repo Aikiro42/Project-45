@@ -1,0 +1,82 @@
+{
+  "projectileName" : "project45_fleetlyfadingexplosion",
+  "image" : "project45_fleetlyfadingexplosion.png",
+  "animationCycle" : 0.1,
+  "timeToLive": 0.1,
+  "fullbright": true,
+  "frameNumber" : 6,
+  "speed" : 0,
+  "renderLayer": "MiddleParticle",
+  "damagePoly" : [
+    [ 25, 0 ],
+    [ 13.13, 21.27 ],
+    [ -11.2, 22.35 ],
+    [ -24.9, 2.21 ],
+    [ -14.96, -20.03 ],
+    [ 9.18, -23.25 ],
+    [ 24.61, -4.4 ]
+  ],
+  "actionOnReap": [
+    {
+      "action" : "loop",
+      "count" : 15,
+      "body" : [
+        {
+          "action" : "option",
+          "options" : [
+            {
+              "action" : "particle",
+              "specification" : {
+                "type" : "ember",
+                "size" : 1.0,
+                "color" : [210,156,231, 255],
+                "destructionAction" : "fade",
+                "destructionTime" : 0.2,
+                "initialVelocity" : [0, 0],
+                "finalVelocity" : [0, -50],
+                "fullbright": true,
+                "approach" : [10, 50],
+                "timeToLive" : 0.2,
+                "layer" : "back",
+                "variance" : {
+                  "initialVelocity" : [10, 10]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "action" : "option",
+          "options" : [
+            {
+              "action" : "particle",
+              "specification" : {
+                "type" : "ember",
+                "size" : 1.0,
+                "color" : [255,255,255, 255],
+                "destructionAction" : "fade",
+                "destructionTime" : 0.1,
+                "initialVelocity" : [0, 0],
+                "fullbright": true,
+                "timeToLive" : 0,
+                "layer" : "back",
+                "variance" : {
+                  "initialVelocity" : [50, 50]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "animationLoops" : false,
+  "piercing" : true,
+  "bounces" : -1,
+  "flippable" : true,
+  "power": 45,
+  "damageType" : "damage",
+  "damageKind" : "electric",
+  "pointLight" : true,
+  "lightColor": [106, 34, 132]
+}

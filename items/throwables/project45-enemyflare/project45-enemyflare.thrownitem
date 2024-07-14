@@ -1,0 +1,21 @@
+{
+  "itemName" : "project45-enemyflare",
+  "rarity" : "Common",
+  "price" : 1,
+  "category" : "throwableItem",
+  "inventoryIcon" : "project45-enemyflare.png",
+  "image" : "project45-enemyflare.png",
+  "shortdescription" : "Enemy Flare",
+  "description" : "Calls down enemies in a 10 block radius.",
+
+  "ammoUsage" : 1,
+
+  "edgeTrigger" : true,
+  "windupTime" : 0,
+  "cooldown" : 0.1,
+
+  "projectileType" : "project45-enemyflare",
+  "projectileConfig": {
+    "spawnRadius": 10
+  }
+}

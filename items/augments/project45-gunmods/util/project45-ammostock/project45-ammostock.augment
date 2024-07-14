@@ -9,10 +9,11 @@
     "objectImage": "/items/augments/project45-gunmods/util/project45-ammostock/project45-ammostock.png"
   },
   "inventoryIcon" : "/items/augments/project45-gunmods/util/project45-ammostock/project45-ammostockicon.png",
-  "description" : "A box of surplus ammo. ^#e2c344;Contains 50 rounds.^reset;\nApply on a weapon to stock up to ^#e2c344;3x its max ammo capacity^reset;.",
+  "description" : "^#e2c344;Contains 50 rounds.^reset;\nUse on weapon to stock up to ^#e2c344;6x max ammo capacity^reset;. Can be used on Stock Ammo to stack them.",
   
   "shortdescription" : "Stock Ammo",
-  "ammo": 50,
+  "pricePerAmmo": 5,
   
-  "scripts" : [ "/scripts/augments/project45-ammostock.lua" ]
+  "scripts" : [ "/scripts/augments/project45-ammostock.lua" ],
+  "builder": "/items/buildscripts/buildproject45ammostock.lua"
 }

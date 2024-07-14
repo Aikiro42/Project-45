@@ -5,344 +5,476 @@ require "/scripts/vec2.lua"
 require "/scripts/set.lua"
 require "/scripts/project45/project45util.lua"
 
-function apply(input, override, augment)
+function apply(output, augment)
 
-  -- do not install mod if the thing this mod is applied to isn't a gun
-    local output = Item.new(input)
-    local modInfo = sb.jsonMerge(output.config.project45GunModInfo, input.parameters.project45GunModInfo)
-    if not modInfo then return end
+  local input = output:descriptor()
+  local modInfo = output:instanceValue("project45GunModInfo")
 
-  local augment = augment or config.getParameter("augment")
-  
-  -- if augment field exists, do something
-  if augment then
-
-    local upgradeCost = augment.upgradeCost or 1
-    local statList = input.parameters.statList or {nil} -- retrieve stat mods
-    local upgradeCount = input.parameters.upgradeCount or 0
-    local upgradeCapacity = modInfo.upgradeCapacity or -1
-
-    local configParameterStat = function(stat, default)
-        if output.parameters.primaryAbility[stat] ~= nil then
-            return output.parameters.primaryAbility[stat]
-        elseif output.config.primaryAbility[stat] ~= nil then
-            return output.config.primaryAbility[stat]
-        else
-            return default
-        end
-    end
-    
-    -- MOD INSTALLATION GATES
-
-    if not override then
-
-        -- deny installation if upgrade capacity not enough
-        if upgradeCapacity > -1 and upgradeCount + upgradeCost > upgradeCapacity then
-            sb.logError("(statmod.lua) Stat mod application failed: Not Enough Upgrade Capacity")
-            return gunmodHelper.addMessage(input, "Not Enough Upgrade Capacity")
-        end
-
-        -- deny installation if stat mod upgrades level
-        -- and level of weapon is 10
-        if augment.level and (input.parameters.level or 1) >= 10 then
-            sb.logError("(statmod.lua) Stat mod application failed: max level reached.")
-            return gunmodHelper.addMessage(input, "Max level reached")
-        end
-    
-    end
-
-    -- MOD INSTALLATION PROCESS
-
-    -- prepare to alter stats and the primary ability in general
-    local newPrimaryAbility = {}
-
-    local statModifiers = input.parameters.statModifiers or {}
-
-    -- Alter Damage Per Shot
-    if augment.baseDamage then
-
-        statModifiers.baseDamage = statModifiers.baseDamage or {base = configParameterStat("baseDamage")}
-                
-        if augment.baseDamage.additive then
-            statModifiers.baseDamage.additive =
-                (statModifiers.baseDamage.additive or 0) + augment.baseDamage.additive
-        end
-
-        if augment.baseDamage.multiplicative then
-            statModifiers.baseDamage.multiplicative =
-                (statModifiers.baseDamage.multiplicative or 1) + augment.baseDamage.multiplicative
-        end
-        
-        -- apply baseDamage modifiers
-        newPrimaryAbility = sb.jsonMerge(newPrimaryAbility,
-            {
-                baseDamage = moddedStat(
-                    statModifiers.baseDamage.base,
-                    statModifiers.baseDamage.additive,
-                    statModifiers.baseDamage.multiplicative
-                )
-            })
-
-    end
-
-    -- Alter general Fire Rate
-    if augment.fireTime then
-
-        statModifiers.fireTime = statModifiers.fireTime or {base = {
-            cockTime = configParameterStat("cockTime"),
-            cycleTime = configParameterStat("cycleTime"),
-            midCockDelay = configParameterStat("midCockDelay", 0),
-            chargeTime = configParameterStat("chargeTime"),
-            overchargeTime = configParameterStat("overchargeTime"),
-            fireTime = configParameterStat("fireTime")
-        }}
-        
-        local newCockTime = statModifiers.fireTime.base.cockTime
-        local newMidCockDelay = statModifiers.fireTime.base.midCockDelay
-        local newCycleTime = statModifiers.fireTime.base.cycleTime
-        local newFireTime = statModifiers.fireTime.base.fireTime
-
-        local newChargeTime = statModifiers.fireTime.base.chargeTime
-        local newOverchargeTime = statModifiers.fireTime.base.overchargeTime
-
-        local minFireTime = math.min(
-            0.001,
-            type(newCycleTime) == "table" and newCycleTime[1] or newCycleTime,
-            newCockTime,
-            newFireTime
-        )
-            
-        if augment.fireTime.additive then
-            statModifiers.fireTime.additive =
-                (statModifiers.fireTime.additive or 0) + augment.fireTime.additive
-        end
-
-        if augment.fireTime.multiplicative then
-            statModifiers.fireTime.multiplicative =
-                (statModifiers.fireTime.multiplicative or 1) + augment.fireTime.multiplicative
-        end
-
-        --[[
-        Recall: calculation of displayed fire time
-        If gun is manualFeed:
-            fireTime* = cockTime + fireTime + chargeTime
-        else:
-            fireTime* = cycleTime + fireTime + chargeTime
-        --]]
-        
-        -- apply fireTime modifiers
-
-        local fireTimeAdd, chargeAdd, overchargeAdd
-
-        if statModifiers.fireTime.additive then
-            local isSemi = output.config.semi
-            if input.parameters.semi ~= nil then
-                isSemi = input.parameters.semi
-            end
-
-            local distributedStats = (isSemi and newChargeTime > 0) and 2 or 1
-            
-            fireTimeAdd = statModifiers.fireTime.additive / distributedStats
-     
-            chargeAdd = fireTimeAdd
-            if newChargeTime > 0 and not isSemi then
-                chargeAdd = statModifiers.fireTime.additive
-            end
-
-            -- ensures that same amount of time will be spent overcharging
-            overchargeAdd = 0
-            if newChargeTime > 0 and newOverchargeTime > 0 then
-                overchargeAdd = newOverchargeTime * chargeAdd / newChargeTime
-            end
-
-        end
-
-        -- modify cycle time to be at least minFiretime
-        if type(newCycleTime) == "table" then
-            newCycleTime = {
-                math.max(minFireTime, moddedStat(
-                        newCycleTime[1],
-                        fireTimeAdd,
-                        statModifiers.fireTime.multiplicative,
-                        true
-                    )
-                ),
-                math.max(minFireTime, moddedStat(
-                        newCycleTime[2],
-                        fireTimeAdd,
-                        statModifiers.fireTime.multiplicative,
-                        true
-                    )
-                )
-            }
-        else
-            newCycleTime = math.max(minFireTime, moddedStat(
-                    newCycleTime,
-                    fireTimeAdd,
-                    statModifiers.fireTime.multiplicative,
-                    true
-                )
-            )
-        end
-    
-        newCockTime = math.max(minFireTime, moddedStat(
-                newCockTime,
-                fireTimeAdd,
-                statModifiers.fireTime.multiplicative,
-                true
-            )
-        )
-        newFireTime = math.max(minFireTime, moddedStat(
-                newFireTime,
-                fireTimeAdd,
-                statModifiers.fireTime.multiplicative,
-                true
-            )
-        )
-        
-        if newChargeTime > 0 then
-            newChargeTime = math.max(0, moddedStat(
-                    newChargeTime,
-                    chargeAdd,
-                    statModifiers.fireTime.multiplicative,
-                    true
-                )
-            )
-        end
-        if newOverchargeTime > 0 then
-            newOverchargeTime = math.max(0, moddedStat(
-                    newOverchargeTime,
-                    overchargeAdd,
-                    statModifiers.fireTime.multiplicative,
-                    true
-                )
-            )
-        end
-
-
-        -- sb.logInfo(newOverchargeTime)
-        newPrimaryAbility = sb.jsonMerge(newPrimaryAbility, {
-            cockTime = newCockTime,
-            cycleTime = newCycleTime,
-            chargeTime = newChargeTime,
-            overchargeTime = newOverchargeTime,
-            fireTime = newFireTime
-        })
-
-    end
-
-    -- modify reload cost
-    if augment.reloadCost then
-
-        statModifiers.reloadCost = statModifiers.reloadCost or {base = configParameterStat("reloadCost")}
-
-        if augment.reloadCost.additive then
-            statModifiers.reloadCost.additive =
-                (statModifiers.reloadCost.additive or 0) + augment.reloadCost.additive
-        end
-
-        if augment.reloadCost.multiplicative then
-            statModifiers.reloadCost.multiplicative =
-                (statModifiers.reloadCost.multiplicative or 1) + augment.reloadCost.multiplicative
-        end
-        
-        -- apply reloadCost modifiers
-        local newReloadCost = math.max(0, moddedStat(
-                statModifiers.reloadCost.base,
-                statModifiers.reloadCost.additive,
-                statModifiers.reloadCost.multiplicative,
-                true
-            )
-        )
-        newPrimaryAbility = sb.jsonMerge(newPrimaryAbility, {reloadCost = newReloadCost})
-
-    end
-    
-    -- modify crit chance
-    if augment.critChance then
-        
-        statModifiers.critChance = statModifiers.critChance or {base=configParameterStat("critChance")}
-
-        if augment.critChance.additive then
-            statModifiers.critChance.additive =
-                (statModifiers.critChance.additive or 0) + augment.critChance.additive
-        end
-
-        if augment.critChance.multiplicative then
-            statModifiers.critChance.multiplicative =
-                (statModifiers.critChance.multiplicative or 1) + augment.critChance.multiplicative
-        end
-        
-        -- apply critChance modifiers
-        local newCritChance = moddedStat(
-            statModifiers.critChance.base,
-            statModifiers.critChance.additive,
-            statModifiers.critChance.multiplicative
-        )
-        newPrimaryAbility = sb.jsonMerge(newPrimaryAbility, {critChance = newCritChance})
-    end
-
-    -- modify critDamage
-    if augment.critDamage then
-        
-        statModifiers.critDamage = statModifiers.critDamage or {base=configParameterStat("critDamageMult")}
-
-        if augment.critDamage.additive then
-            statModifiers.critDamage.additive =
-                (statModifiers.critDamage.additive or 0) + augment.critDamage.additive
-        end
-        
-        if augment.critDamage.multiplicative then
-            statModifiers.critDamage.multiplicative =
-                (statModifiers.critDamage.multiplicative or 1) + augment.critDamage.multiplicative
-        end
-        
-        -- apply critDamageMult modifiers
-        local newCritDamage = moddedStat(
-            statModifiers.critDamage.base,
-            statModifiers.critDamage.additive,
-            statModifiers.critDamage.multiplicative
-        )
-        newPrimaryAbility = sb.jsonMerge(newPrimaryAbility, {critDamageMult = newCritDamage})
-    end
-
-    if augment.level then
-        output:setInstanceValue("level", math.min(10, (input.parameters.level or output.config.level) + augment.level))
-    end
-
-    -- merge changes
-    output:setInstanceValue("primaryAbility", sb.jsonMerge(input.parameters.primaryAbility, newPrimaryAbility))
-    output:setInstanceValue("statModifiers", statModifiers)
-
-    if not override then
-        -- count stat if not wildcard
-        if not augment.randomStats then
-            statList[config.getParameter("itemName")] = (statList[config.getParameter("itemName")] or 0) + 1
-        else
-            local retrievedSeed = config.getParameter("seed")
-            statList.wildcards = statList.wildcards or {}
-            table.insert(statList.wildcards, retrievedSeed)
-        end
-        output:setInstanceValue("statList", statList)
-        output:setInstanceValue("upgradeCount", upgradeCount + upgradeCost)
-
-        output:setInstanceValue("isModded", true)
-    end
-
-    return output:descriptor(), 1
-  
+  local configParameterStat = function(stat, default)
+    return output:instanceValue("primaryAbility", {})[stat] or default
   end
+
+  local statModifiers = output:instanceValue("statModifiers", {})
+
+  local statConfig = root.assetJson("/configs/project45/project45_generalstat.config")
+
+  local newPrimaryAbility = {}
+
+  -- stat lists composed of string-defaultValue pairs
+  local statList = statConfig.statDefaults or {}
+
+  -- stat flags
+  local isRestrictedStat = set.new(statConfig.restrictedStats or {})
+  local isConfigStat = set.new(statConfig.configStats or {})
+  local isRestrictedGroup = set.new(statConfig.restrictedGroups or {})
+  local isIntegerStat = set.new(statConfig.integerStats or {})
+  local isBadStat = set.new(statConfig.badStats or {})
+  local isBadGroup = set.new(statConfig.badGroups or {})
+  local isStatGroup = set.new(statConfig.statGroups or {})
+
+  -- stat properties
+  local statAlias = statConfig.statAliases or {}
+  local statGroup = statConfig.statGroupAssignments or {}
+  local isGroupMember = statGroup -- for readability
+  local statBounds = statConfig.statBounds or {}
+
+  -- group properties
+  local groupStats = {}
+  for stat, group in pairs(statGroup) do
+    if not groupStats[group] then
+      groupStats[group] = {stat}
+    else
+      table.insert(groupStats[group], stat)
+    end
+  end
+
+  -- Retrieves the base value of a stat in the following order until it gets a numerical value:
+  -- 1. from the respective `statModifiers` entry of the stat (either in the base table of a group or the base field of an individual entry)
+  -- 2. from the weapon's config
+  -- 3. from the `statDefaults` dictionary in `statmod.config`
+  -- @param stat: string
+  -- * can either be a member or individual stat/alias
+  local baseStat = function(stat)
+    stat = statAlias[stat] or stat
+
+    if isStatGroup[stat] then
+      sb.logError("(statmod.lua) BASE STAT OF GROUP WAS QUERIED")
+      return nil
+    end
+
+    local saved = nil
+    if isGroupMember[stat] then
+      saved = (statModifiers[statGroup[stat]] or {base={}}).base[stat]
+    else
+      saved = (statModifiers[stat] or {}).base
+    end
+
+    if saved then return saved end
+
+    if not statList[stat] then
+      sb.logError("(statmod.lua) UNREGISTERED STAT QUERIED")
+    end
+
+    local configPrimaryAbility = sb.jsonMerge(output.config.primaryAbility, output.parameters.primaryAbility)
+
+    return configPrimaryAbility[stat] or statList[stat]
+
+  end
+
+  -- Recalculates the final base value of a given stat.
+  -- Also initializes the individual/member entry of a stat, particularly its baseOrig and baseMult fields.
+  -- WARNING: Must be called before any stat calculation
+  local updateBase = function(stat, rebase, rebaseMult)
+    if isStatGroup[stat] then
+      sb.logError("Attempted to recalculate base of group.")
+      return nil
+    end
+    -- initalize stat entry
+    statModifiers[stat] = statModifiers[stat] or {
+      baseOrig = baseStat(stat),
+      baseMult = 1,
+      additive = 0,
+      multiplicative = statGroup[stat] and 0 or 1
+    }
+    statModifiers[stat].baseOrig = rebase or statModifiers[stat].baseOrig or baseStat(stat)
+    statModifiers[stat].baseMult = (statModifiers.baseMult or 1) * (rebaseMult or 1)
+    
+    local recalculatedBase = statModifiers[stat].baseOrig * statModifiers[stat].baseMult
+    if statGroup[stat] then
+      -- if stat is member, replace base value in group
+      statModifiers[statGroup[stat]].base[stat] = recalculatedBase
+    else
+      -- if stat is individual, replace its base value
+      statModifiers[stat].base = recalculatedBase
+    end
+
+    -- return recalculated value just in case it's needed
+    return recalculatedBase
+  end
+
+  -- SECTION: SPECIAL STAT CASES
+
+  if augment.maxAmmo then
+
+    statModifiers.maxAmmo = statModifiers.maxAmmo or {
+      base = baseStat("maxAmmo"),
+      baseOrig = baseStat("maxAmmo"),
+      baseMult = 1,
+      additive = 0,
+      multiplicative = 1
+    }
+    statModifiers.bulletsPerReload = statModifiers.bulletsPerReload or {
+      base = baseStat("bulletsPerReload"),
+      baseOrig = baseStat("bulletsPerReload"),
+      baseMult = 1,
+      additive = 0,
+      multiplicative = 1
+    }
+
+    if statModifiers.bulletsPerReload.base >= statModifiers.maxAmmo.base and not augment.bulletsPerReload then
+      augment.bulletsPerReload = augment.maxAmmo
+    end
+
+  end
+
+  -- individual fireTimeGroup stats
+  for _, fireTimeGroupStat in ipairs(groupStats.fireTimeGroup) do
+    if augment[fireTimeGroupStat] then
+
+      statModifiers.fireTimeGroup = statModifiers.fireTimeGroup or {
+        base = {},
+        additive = 0,
+        multiplicative = 1
+      }
+
+      statModifiers.fireTimeGroup.base[fireTimeGroupStat] = statModifiers.fireTimeGroup.base[fireTimeGroupStat] or baseStat(fireTimeGroupStat)
+      
+      updateBase(fireTimeGroupStat, augment[fireTimeGroupStat].rebase, augment[fireTimeGroupStat].rebaseMult)
+        
+      -- prompt recalculation
+      augment.fireTimeGroup = augment.fireTimeGroup or {}
+
+      -- clear entry to prevent general case from covering this
+      augment[fireTimeGroupStat] = nil
+  
+    end  
+  end
+
+  
+  -- Alter general Fire Time
+  if augment.fireTimeGroup then
+    statModifiers.fireTimeGroup = statModifiers.fireTimeGroup or {
+      base = {},
+      additive = 0,
+      multiplicative = 1
+    }
+    for _, fireTimeStat in ipairs(groupStats.fireTimeGroup) do
+      statModifiers.fireTimeGroup.base[fireTimeStat] = baseStat(fireTimeStat)
+    end
+
+    local newCockTime = statModifiers.fireTimeGroup.base.cockTime
+    local newMidCockDelay = statModifiers.fireTimeGroup.base.midCockDelay
+    local newCycleTime = statModifiers.fireTimeGroup.base.cycleTime
+    local newFireTime = statModifiers.fireTimeGroup.base.fireTime
+
+    local newChargeTime = statModifiers.fireTimeGroup.base.chargeTime
+    local newOverchargeTime = statModifiers.fireTimeGroup.base.overchargeTime
+
+    local minFireTime = math.min(0.001, type(newCycleTime) == "table" and newCycleTime[1] or newCycleTime, newCockTime,
+        newFireTime)
+
+    if augment.fireTimeGroup.additive then
+      statModifiers.fireTimeGroup.additive = (statModifiers.fireTimeGroup.additive or 0) + augment.fireTimeGroup.additive
+    end
+
+    if augment.fireTimeGroup.multiplicative then
+      statModifiers.fireTimeGroup.multiplicative = (statModifiers.fireTimeGroup.multiplicative or 1) +
+                                                  augment.fireTimeGroup.multiplicative
+    end
+
+    --[[
+    Recall: calculation of displayed fire time
+    If gun is manualFeed:
+        fireTime* = cockTime + fireTime + chargeTime
+    else:
+        fireTime* = cycleTime + fireTime + chargeTime
+    --]]
+
+    -- apply fireTime modifiers
+
+    local fireTimeAdd, chargeAdd, overchargeAdd
+
+    if statModifiers.fireTimeGroup.additive then
+      local isSemi = output.config.semi
+      if input.parameters.semi ~= nil then
+        isSemi = input.parameters.semi
+      end
+
+      local distributedStats = (isSemi and newChargeTime > 0) and 2 or 1
+
+      fireTimeAdd = statModifiers.fireTimeGroup.additive / distributedStats
+
+      chargeAdd = fireTimeAdd
+      if newChargeTime > 0 and not isSemi then
+        chargeAdd = statModifiers.fireTimeGroup.additive
+      end
+
+      -- ensures that same amount of time will be spent overcharging
+      overchargeAdd = 0
+      if newChargeTime > 0 and newOverchargeTime > 0 then
+        overchargeAdd = newOverchargeTime * chargeAdd / newChargeTime
+      end
+
+    end
+
+    -- modify cycle time to be at least minFiretime
+    if type(newCycleTime) == "table" then
+      newCycleTime = {math.max(minFireTime,
+          getModifiedStat(newCycleTime[1], fireTimeAdd, statModifiers.fireTimeGroup.multiplicative, true)),
+                      math.max(minFireTime,
+          getModifiedStat(newCycleTime[2], fireTimeAdd, statModifiers.fireTimeGroup.multiplicative, true))}
+    else
+      newCycleTime = math.max(minFireTime,
+          getModifiedStat(newCycleTime, fireTimeAdd, statModifiers.fireTimeGroup.multiplicative, true))
+    end
+
+    newCockTime = math.max(minFireTime,
+        getModifiedStat(newCockTime, fireTimeAdd, statModifiers.fireTimeGroup.multiplicative, true))
+    newFireTime = math.max(minFireTime,
+        getModifiedStat(newFireTime, fireTimeAdd, statModifiers.fireTimeGroup.multiplicative, true))
+
+    if newChargeTime > 0 then
+      newChargeTime = math.max(0, getModifiedStat(newChargeTime, chargeAdd, statModifiers.fireTimeGroup.multiplicative, true))
+    end
+    if newOverchargeTime > 0 then
+      newOverchargeTime = math.max(0, getModifiedStat(newOverchargeTime, overchargeAdd,
+          statModifiers.fireTimeGroup.multiplicative, true))
+    end
+
+    newPrimaryAbility = sb.jsonMerge(newPrimaryAbility, {
+      cockTime = newCockTime,
+      cycleTime = newCycleTime,
+      chargeTime = newChargeTime,
+      overchargeTime = newOverchargeTime,
+      fireTime = newFireTime
+    })
+
+    -- to be REALLY safe, nullify fireTime modification after processing
+    augment.fireTimeGroup = nil
+
+  end
+
+  -- Alter level
+  if augment.level then
+    output:setInstanceValue("level", math.min(10, (input.parameters.level or output.config.level) + augment.level))
+    augment.level = nil
+  end
+
+  -- SECTION: GENERAL CHANGES
+
+  -- Recalculates final stat set in the primaryAbility parameters.
+  -- @param stat: {StatGroup|StatAlias|Stat}<string>
+  -- * can be the name of a group of stats, an alias of a stat, or the stat itself
+  local recalculateStat = function(stat)
+
+    stat = statAlias[stat] or stat
+    if not (statList[stat] or isStatGroup[stat]) then return newPrimaryAbility end
+
+    -- to merge onto newPrimaryAbility
+    local primaryAbilityMod = {}
+
+    -- group
+    if isStatGroup[stat] or isGroupMember[stat] then
+      
+      local group = isStatGroup[stat] and stat or statGroup[stat]
+
+      -- begin group recalculation
+      for substat, substatBaseValue in pairs(statModifiers[group].base) do
+        -- get member stat entry modifications
+        local substatAdditive = (statModifiers[substat] or {additive=0}).additive
+        local substatMultiplicative = (statModifiers[substat] or {multiplicative=0}).multiplicative
+        -- apply group modification + member modification
+        primaryAbilityMod[substat] = getModifiedStat(
+          substatBaseValue,
+          statModifiers[group].additive or 0 + substatAdditive,
+          statModifiers[group].multiplicative or 0 + substatMultiplicative,
+          isBadStat[substat],
+          isIntegerStat[substat],
+          statBounds[substat]
+        )
+      end
+
+    -- individual
+    else
+      -- initialize
+      statModifiers[stat] = statModifiers[stat] or {
+        base = baseStat(stat),
+        baseOrig = baseStat(stat),
+        baseMult = 1,
+        additive = 0,
+        multiplicative = 1
+      }
+      
+      -- recalculate
+      primaryAbilityMod[stat] = getModifiedStat(
+        statModifiers[stat].base,
+        statModifiers[stat].additive,
+        statModifiers[stat].multiplicative,
+        isBadStat[stat],
+        isIntegerStat[stat],
+        statBounds[stat]
+      )
+    end
+
+    -- apply recalculation
+    newPrimaryAbility = sb.jsonMerge(newPrimaryAbility, primaryAbilityMod)
+
+    return newPrimaryAbility
+
+  end
+  
+  -- Updates the statModifier entry of a `stat`.
+  -- @param stat: {StatGroup|StatAlias|Stat}<string>
+  -- * can be the name of a group of stats, an alias of a stat, or the stat itself
+  -- @param rebase: number
+  -- * the new base value of `stat`.
+  -- * does not apply to groups
+  -- @param rebaseMult: number
+  -- * factor by which the base value of `stat` will be multiplied.
+  -- * does not apply to groups
+  -- @param additive: number
+  -- @param multiplicative: number
+  local updateStatModifiers = function(stat, rebase, rebaseMult, additive, multiplicative)
+
+    stat = statAlias[stat] or stat
+    if not (statList[stat] or isStatGroup[stat]) then return statModifiers end
+
+    local group = isStatGroup[stat] and stat or statGroup[stat]
+    
+    -- if provided stat is actually a group, initialize group entry
+    if group then
+      statModifiers[group] = statModifiers[group] or {
+        base = {},
+        additive = 0,
+        multiplicative = 1
+      }
+      for _, substat in ipairs(groupStats[group]) do
+        statModifiers[group].base[substat] = baseStat(substat)
+      end
+    end
+
+    -- otherwise, initialize member/individual entry of given stat
+    if not isStatGroup[stat] then
+
+      if isGroupMember[stat] then
+        statModifiers[stat] = statModifiers[stat] or {
+          baseOrig = baseStat(stat),
+          baseMult = 1,
+          additive = 0,
+          multiplicative = 0
+        }
+      else
+        statModifiers[stat] = statModifiers[stat] or {
+          base = baseStat(stat),
+          baseOrig = baseStat(stat),
+          baseMult = 1,
+          additive = 0,
+          multiplicative = 1
+        }
+      end
+
+      updateBase(stat, rebase, rebaseMult)
+
+    end
+
+    -- additive, multiplicative
+    statModifiers[group or stat].additive =
+      (statModifiers[group or stat].additive or 0) + (additive or 0)
+    statModifiers[group or stat].multiplicative =
+      (statModifiers[group or stat].multiplicative or (isGroupMember[stat] and 0 or 1)) + (multiplicative or 0)
+    
+    newPrimaryAbility = recalculateStat(stat)
+
+    return statModifiers, newPrimaryAbility
+
+  end
+
+  -- special fields
+
+  local specFields = {
+    randomStatParams = true,
+    pureStatMod = true,
+    stackLimit = true
+  }
+
+  -- Actual general case handling
+  for stat, op in pairs(augment) do
+
+    if not specFields[stat] then
+
+      local actualStat = statAlias[stat] or stat
+
+      local restricted = false
+      if isGroupMember[actualStat] then
+        restricted = isRestrictedGroup[statGroup[actualStat]]
+      elseif isStatGroup[actualStat] then
+        restricted = isRestrictedGroup[actualStat]
+      else
+        restricted = isRestrictedStat[actualStat]
+      end
+      
+      if restricted then
+        -- restricting stats and statGroups only allow rebasing
+        -- and rebase multiplication due to special cases
+        -- e.g. fireTime is calculated according to weapon parameters
+        statModifiers, newPrimaryAbility = updateStatModifiers(stat, op.rebase, op.rebaseMult, nil, nil) --> will recalculateStat
+      else
+        statModifiers, newPrimaryAbility = updateStatModifiers(stat, op.rebase, op.rebaseMult, op.additive, op.multiplicative) --> will recalculateStat
+      end
+
+      -- after doing operation, nullify augment.stat
+      augment[stat] = nil
+    
+    end
+
+  end
+
+  -- merge changes
+  -- output:setInstanceValue("primaryAbility", sb.jsonMerge(input.parameters.primaryAbility, newPrimaryAbility))
+  output:setInstanceValue("primaryAbility", sb.jsonMerge(output:instanceValue("primaryAbility"), newPrimaryAbility))
+  output:setInstanceValue("statModifiers", statModifiers)
+
+  return output
+
 end
 
-function moddedStat(base, additive, multiplicative, isDiv)
-    
-    additive = additive or 0
-    multiplicative = multiplicative or 1
+function getModifiedStat(base, additive, multiplicative, isDiv, isInt, bounds)
 
-    if isDiv then
-        return (base / multiplicative) + additive
+  additive = additive or 0
+  multiplicative = multiplicative or 1
+  local result = 0
+  if isDiv then
+    result = (base / multiplicative) + additive
+  else
+    result = base * multiplicative + additive
+  end
+
+  if bounds then
+    local lowerBound = bounds[1]
+    local upperBound = bounds[2]
+    if lowerBound and upperBound then
+      result = util.clamp(result, lowerBound, upperBound)
+    elseif lowerBound then
+      result = math.max(lowerBound, result)
+    elseif upperBound then
+      result = math.min(upperBound, result)
     end
+  end
 
-    return base * multiplicative + additive
+  if isInt then
+    return math.ceil(result)
+  end
+
+  return result
 
 end

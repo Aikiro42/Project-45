@@ -11,22 +11,31 @@
     "objectImage": "/items/augments/project45-gunmods/ammo/project45-dragonsbreathmod/project45-dragonsbreathmod.png"
   },
   "inventoryIcon" : "/items/augments/project45-gunmods/ammo/project45-dragonsbreathmod/project45-dragonsbreathmodicon.png",
-  "description" : "Magnesium pellets in a fun-sized shell.",
-  "technicalInfo": "Fires short-lived incendiary projectiles.",
-  "statInfo": "Projectiles: 5",
+  "description" : "Magnesium-sodium compound pellets in a fun-sized shell.",
+  "technicalInfo": "Fires bright, short-lived incendiary projectiles.",
+  "statInfo": "Projectiles: 3",
   "shortdescription" : "Dragon's Breath",
 
-  "conversion": "projectile",
   "augment":{
     "modName": "Dragon's Breath",
     "category": "ballistic",
-    "archetype": "shotgun",
-    "projectileCount": 5,
-    "projectileType": "project45dragonsbreath"
+    "conversion": "projectile",
+    "ammo": {
+      "archetype": "shotgun",
+      "projectileType": "project45dragonsbreath"
+    },
+    "stat": {
+      "projectileCount": {
+        "rebase": 3
+      },
+      "spread": {
+        "rebase": 3
+      }
+    }
   },
 
 
-  "scripts" : [ "/scripts/augments/project45-gunmod/ammomod.lua" ],
+  "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
   "builder": "/items/buildscripts/buildproject45mod.lua"
 
 }

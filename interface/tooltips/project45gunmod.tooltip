@@ -1,9 +1,9 @@
 {
   "background" : {
     "type" : "background",
-    "fileHeader" : "/interface/tooltips/project45statmod/project45statmod-tooltipheader.png",
-    "fileBody" : "/interface/tooltips/project45statmod/project45statmod-tooltipbody.png",
-    "fileFooter" : "/interface/tooltips/project45statmod/project45statmod-tooltipfooter.png"
+    "fileHeader" : "/interface/tooltips/project45gunmod/project45gunmod-tooltipheader.png",
+    "fileBody" : "/interface/tooltips/project45gunmod/project45gunmod-tooltipbody.png",
+    "fileFooter" : "/interface/tooltips/project45gunmod/project45gunmod-tooltipfooter.png"
   },
   "moneyIcon" : {
     "type" : "image",

@@ -3,7 +3,7 @@
   "price" : 5000,
   "maxStack" : 1,
   "rarity" : "Legendary",
-  "description" : "An sleek, energy marksman rifle.",
+  "description" : "An sleek, energy marksman rifle that fires seeking beams.",
   "shortdescription" : "Gazer",
   "tooltipKind" : "project45gun",
   "gunArchetype": "sniper",
@@ -44,7 +44,7 @@
 
   "project45GunModInfo":{
     "category": "energy",
-    "upgradeCapacity": 9,
+    
     "allowsConversion": [
       "projectile",
       "beam",
@@ -102,7 +102,13 @@
     "spread": 0.001,
 
     "hitscanParameters": {
-      "hitscanWidth": 3
+      "chain": true,
+      "hitscanWidth": 3,
+      "punchThrough": 3
+    },
+
+    "beamParameters": {
+      "chain": true
     },
 
     // "reloadTime": 10,

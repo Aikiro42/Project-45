@@ -14,30 +14,32 @@
   "description" : "Radiation beam configuration. Sometimes used as an on-field MRE cooking config.",
   "shortdescription" : "Radiation Beam",
 
-  "conversion": "beam",
   "augment":{
     "modName": "Radiation Beam",
     "category": "energy",
-    "archetype": "beam",
-    "muzzleFlashColor": [153,234,49],
-    "beamParameters":{
-      "beamDamageConfig":{
-        "damageSourceKind" : "poison",
-        "statusEffects":["weakpoison"],
-        "knockback" : 2
+    "conversion": "beam",
+    "ammo":{
+      "archetype": "beam",
+      "muzzleFlashColor": [153,234,49],
+      "beamParameters":{
+        "beamDamageConfig":{
+          "damageSourceKind" : "poison",
+          "statusEffects":["weakpoison"],
+          "knockback" : 2
+        }
+      },
+      "customSounds": {
+        "fireStart": ["/sfx/gun/mech_beamsniper_fire1.ogg"],
+        "fireLoop": ["/sfx/gun/mech_beamdrill_loop.ogg"],
+        "fireEnd": ["/sfx/gun/mech_beamdrill_winddown.ogg"]
       }
-    },
-    "customSounds": {
-      "fireStart": ["/sfx/gun/mech_beamsniper_fire1.ogg"],
-      "fireLoop": ["/sfx/gun/mech_beamdrill_loop.ogg"],
-      "fireEnd": ["/sfx/gun/mech_beamdrill_winddown.ogg"]
     }
   },
 
 
    
 
-  "scripts" : [ "/scripts/augments/project45-gunmod/ammomod.lua" ],
+  "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
   "builder": "/items/buildscripts/buildproject45mod.lua"
   
 }

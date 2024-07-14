@@ -1,0 +1,1 @@
+Credits to Nitrosteel for monster code and spawning method, from his fuelcanister "monster"

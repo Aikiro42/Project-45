@@ -1,0 +1,21 @@
+{
+  "kind" : "project45dragonsbreathtrailember",
+  "definition" : {
+    "type" : "ember",
+    "position" : [0, 0],
+    "initialVelocity" : [10, 0],
+    "finalVelocity" : [3, -3],
+    "color": [234,153,49],
+    "approach" : [7, 7],
+    "fullbright": true,
+    "fade" : 2,
+    "destructionAction" : "shrink",
+    "destructionTime" : 1.5,
+    "size" : 1,
+    "timeToLive" : 0,
+    "variance" : {
+      "position" : [5, 0.25],
+      "initialVelocity" : [2, 3]
+    }
+  }
+}

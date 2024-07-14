@@ -1,47 +1,46 @@
 {
-  "itemName" : "project45-tarmod",
-  "price" : 5000,
-  "rarity" : "Legendary",
-  "tooltipKind" : "project45gunmod2",
-  "modCategory" : "ammoMod",
-  "category" : "uniqueWeapon",
+  "itemName": "project45-tarmod",
+  "price": 5000,
+  "rarity": "Legendary",
+  "tooltipKind": "project45gunmod2",
+  "modCategory": "ammoMod",
+  "category": "uniqueWeapon",
   "itemTags": ["weapon"],
-  "tooltipFields":{
+  "tooltipFields": {
     "subtitle": "Ammo Mod",
     "objectImage": "/items/augments/project45-gunmods/ammo/project45-tarmod/project45-tarmod.png"
   },
-  "inventoryIcon" : "/items/augments/project45-gunmods/ammo/project45-tarmod/project45-tarmodicon.png",
-  "description" : "Spews black tar that slows enemies and makes them vulnerable.",
+  "inventoryIcon": "/items/augments/project45-gunmods/ammo/project45-tarmod/project45-tarmodicon.png",
+  "description": "Spews black tar that slows enemies and makes them vulnerable.",
   "technicalInfo": "Fires 3 arcing projectiles that inflict slow and vulnerability while inflicting physical damage.",
-  "shortdescription" : "Tar Tank",
+  "shortdescription": "Tar Tank",
 
-  "conversion": "projectile",
-  "augment":{
+  "augment": {
     "modName": "Tar Tank",
     "category": "experimental",
-    "archetype": "liquid",
+    "conversion": "projectile",
+    "ammo": {
+      "archetype": "liquid",
 
-    "projectileCount": 3,
-    "projectileType": "project45tarprojectile",
-    "projectileParameters": {
-      "physics": "grenade"
-    },
-    "spread": 1.5,
-    "multishot": 1,
+      "projectileCount": 3,
+      "projectileType": "project45tarprojectile",
+      "projectileParameters": {
+        "physics": "grenade"
+      },
+      "spread": 1.5,
+      "multishot": 1,
 
-    "customSounds": {
-      "fireStart": [ "/sfx/project45neosfx/fire/start/firestart-switch1.ogg" ],
-      "fireLoop": ["/sfx/project45neosfx/chargedrone/chargedrone-04.ogg"],
-      "fireEnd": [ "/sfx/project45neosfx/fire/start/firestart-switch1.ogg" ]
-    },
+      "customSounds": {
+        "fireStart": ["/sfx/project45neosfx/fire/start/firestart-switch1.ogg"],
+        "fireLoop": ["/sfx/project45neosfx/chargedrone/chargedrone-04.ogg"],
+        "fireEnd": ["/sfx/project45neosfx/fire/start/firestart-switch1.ogg"]
+      },
 
-    "hideMuzzleFlash": true,
-    "hideMuzzleSmoke": true
-  
+      "hideMuzzleFlash": true,
+      "hideMuzzleSmoke": true
+    }
   },
 
-   
-
-  "scripts" : [ "/scripts/augments/project45-gunmod/ammomod.lua" ],
+  "scripts": ["/scripts/augments/project45-gunmod/apply.lua"],
   "builder": "/items/buildscripts/buildproject45mod.lua"
 }

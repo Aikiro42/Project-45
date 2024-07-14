@@ -1,0 +1,39 @@
+{
+  "projectileName" : "project45_knockbackexplosion",
+  "image" : "project45-stdexplosionshockwave.png",
+  "animationCycle" : 0.2,
+  "frameNumber" : 6,
+  "speed" : 0,
+  "power": 1,
+  "powerMultiplier": 1,
+  "damagePoly" : [
+    [ 50, 0 ],
+    [ 26.27, 42.55 ],
+    [ -22.4, 44.7 ],
+    [ -49.8, 4.42 ],
+    [ -29.92, -40.06 ],
+    [ 18.37, -46.5 ]
+  ],
+  "animationLoops" : false,
+  "piercing" : true,
+  "collisionEnabled": false,
+  "movementSettings":{
+    "collisionEnabled": false
+  },
+  "flippable" : true,
+  "damageTeam" : { "type" : "indiscriminate" },
+  "damageKind" : "default",
+  // "damageType": "NoDamage",
+  "knockback" : 100,
+  "physicsForces" : {
+    "push" : {
+      "type" : "RadialForceRegion",
+      "categoryWhitelist" : ["monster", "player", "npc", "vehicle", "itemdrop"],
+      "outerRadius" : 45,
+      "innerRadius" : 0,
+      "targetRadialVelocity" : 1000,
+      "controlForce" : 1000
+    }
+  }
+
+}

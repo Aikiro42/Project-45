@@ -19,10 +19,13 @@
     "modName": "Extended Magazines",
     "category": "ballistic",
     "slot": "magazine",
-    "primaryAbility": {
+    "incompatibleWeapons": [
+      "project45-neo-sawedoff",
+      "project45-neo-doublebarrel"
+    ],
+    "stat": {
       "maxAmmo": {
-        "operation": "multiply",
-        "value": 2
+        "rebaseMult": 2
       }
     }
   },
@@ -30,6 +33,6 @@
 
    
 
-  "scripts" : [ "/scripts/augments/project45-gunmod/gunmod.lua" ],
+  "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
   "builder": "/items/buildscripts/buildproject45mod.lua"
 }

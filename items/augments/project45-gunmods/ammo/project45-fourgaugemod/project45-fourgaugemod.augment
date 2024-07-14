@@ -1,0 +1,76 @@
+{
+  "itemName": "project45-fourgaugemod",
+  "price": 1250,
+  "rarity": "Uncommon",
+  "tooltipKind": "project45gunmod2",
+  "modCategory": "ammoMod",
+  "category": "uniqueWeapon",
+  "itemTags": ["weapon"],
+  "tooltipFields": {
+    "subtitle": "Ammo Mod",
+    "objectImage": "/items/augments/project45-gunmods/ammo/project45-fourgaugemod/project45-fourgaugemod.png"
+  },
+  "inventoryIcon": "/items/augments/project45-gunmods/ammo/project45-fourgaugemod/project45-fourgaugemodicon.png",
+  "description": "This is just overkill.",
+  "statInfo": "Projectile Count: 1\nMultishot: 3\nBase Damage +1x\nSpread +1 deg.\nRecoil +10\nRecoil Momentum +10",
+  "shortdescription": "4 GA. Shells",
+
+  "augment": {
+    "modName": "4 GA. Shells",
+    "category": "ballistic",
+    "conversion": "projectile",
+    "slot": "ammoType",
+    "gun": {
+      "primaryAbility": {
+        "muzzleProjectiles": {
+          "operation": "replace",
+          "value": [
+            {
+              "type": "project45_muzzleshockwave",
+              "offset": [0, 0],
+              "parameters": {
+                "power": 0,
+                "speed": -5
+              },
+              "count": 1,
+              "firePerShot": true
+            }
+          ]
+        }
+      }
+    },
+    "ammo": {
+      "archetype": "shotgun",
+      "projectileType": "project45stdbullet",
+      "projectileParameters": {
+        "speed": 150
+      },
+      "customSounds": {
+        "fire": ["/sfx/project45neosfx/fire/fire-sniper1.ogg"]
+      }
+    },
+    "stat": {
+      "multishot": {
+        "rebase": 3
+      },
+      "projectileCount": {
+        "rebase": 1
+      },
+      "spread": {
+        "additive": 1
+      },
+      "recoilAmount": {
+        "additive": 10
+      },
+      "baseDamage": {
+        "multiplicative": 1
+      },
+      "recoilMomentum": {
+        "additive": 20
+      }
+    }
+  },
+
+  "scripts": ["/scripts/augments/project45-gunmod/apply.lua"],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
+}

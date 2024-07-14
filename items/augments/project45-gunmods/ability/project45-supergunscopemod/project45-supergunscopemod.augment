@@ -13,49 +13,57 @@
   },
   "inventoryIcon" : "/items/augments/project45-gunmods/ability/project45-supergunscopemod/project45-supergunscopemodicon.png",
   "description" : "A high-tech scope mod equipped with gyrostabilizers that help manage recoil and accuracy.",
-  "technicalInfo": "Works similar to the Scope Mod.",
+  "technicalInfo": "- Hold RClick to aim.\n- Move cursor to move crosshairs.\n- Tap crouch to lock scope.\n+50% Crit Chance when aiming.",
   "statInfo": "Recoil x0.8\nInaccuracy x0.8\nCrit Chance +50% when aiming",
   "shortdescription" : "Hi-tech Scope",
   "archetype": "Active Ability",
 
   "augment":{
-    "upgradeCost": 1,
+    "cost": 1,
     "category": "universal",
     "slot": "sights",
-    "altAbilityType" : "project45gunscope",
-    "overrideTwoHanded": true,
-    "twoHanded": true,
-    "hasShiftAction": true,
-    "primaryAbility": {
-      "inaccuracy": {
-        "operation": "multiply",
-        "value": 0.8
+    "ability": {
+      "altAbilityType" : "project45gunscope",
+      "overrideTwoHanded": true,
+      "twoHanded": true,
+      "hasShiftAction": true,
+      
+      "altAbility": {
+        "reticleProjectile": "project45hightechcamera"
       },
-      "recoilMult": {
-        "operation": "multiply",
-        "value": 0.8
-      }
-    },
 
-    "altAbility": {
-      "reticleProjectile": "project45hightechcamera"
-    },
-
-    "animationCustom": {
-      "animatedParts":{
-        "parts":{
-          "sights": {
-            "properties": {
-              "image" : "/items/augments/project45-gunmods/ability/project45-supergunscopemod/project45-supergunscopemodsprite.png<directives>"
+      "animationCustom": {
+        "animatedParts":{
+          "parts":{
+            "sights": {
+              "properties": {
+                "image" : "/items/augments/project45-gunmods/ability/project45-supergunscopemod/project45-supergunscopemodsprite.png<directives>"
+              }
             }
           }
         }
       }
+    },
+
+    "stat": {
+      "recoverDelay": {
+        "rebaseMult": 0.9
+      },
+      "recoverTime": {
+        "rebaseMult": 1.1
+      },
+      "inaccuracy": {
+        "rebaseMult": 0.5
+      },
+      "recoilAmount": {
+        "rebaseMult": 0.5
+      }
+
     }
 
   },
 
-  "scripts" : [ "/scripts/augments/project45-gunmod/abilitymod.lua" ],
+  "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
   "builder": "/items/buildscripts/buildproject45mod.lua"
 
 }

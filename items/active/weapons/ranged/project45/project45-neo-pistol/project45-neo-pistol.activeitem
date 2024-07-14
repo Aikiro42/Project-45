@@ -13,7 +13,7 @@
   "level" : 1,
   "muzzleFlashColor": [255, 255, 200],
   "inventoryIcon" : "project45-neo-pistol-icon.png",
-
+  
   "animationParts" : {
     "middle" : "project45-neo-pistol.png",
     "middleFullbright" : "",
@@ -69,7 +69,6 @@
 
   "project45GunModInfo":{
     "category": "ballistic",
-    "upgradeCapacity": 9,
     "allowsConversion": [
       "hitscan",
       "beam",
@@ -116,8 +115,14 @@
     "reloadCost": 25,
     "maxAmmo": 16,
     "bulletsPerReload": 16,
-    "inaccuracy": [0.5, 1, 1.25, 1.5],
-    
+    "inaccuracy": 1,
+    "inaccuracyMults": {
+      "mobile": 1,
+      "walking": 0.75,
+      "stationary": 0.5,
+      "crouching": 0.25
+    },
+
     "recoilAmount": 1.75,
     "recoilMaxDeg": 15,
     "recoverDelay": 0,

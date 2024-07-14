@@ -1,0 +1,48 @@
+{
+  "itemName" : "project45-gachabag",
+  "price" : 20000,
+  "level" : 1,
+  "maxStack" : 1,
+  "rarity" : "Essential",
+  "category" : "mysteriousReward",
+  "description" : "A replenishing, auto-locking Gun Case. ^#eab3db;Add pulls by applying Gacha Keys.^reset;",
+  "shortdescription" : "^#f4988c;(!)^reset; Gacha Bag",
+  "twoHanded" : true,
+  "tooltipKind": "container",
+
+  "tooltipFields": {
+    "objectImage": "/items/active/unsorted/project45/project45-gachabag/project45-gachabag.png"
+  },
+
+  "inventoryIcon" : "project45-gachabag-icon.png",
+  "animation" : "project45-gachabag.animation",
+  
+  "animationScripts": [
+    "/items/active/unsorted/project45/project45-gachabag/project45-gachabaganimation.lua"
+  ],
+  
+  "animationCustom" : {
+    "sounds": {
+      "xssr": ["/sfx/objects/essencechest_open3.ogg"],
+      "ssr": ["/sfx/objects/essencechest_open2.ogg"],
+      "sr": ["/sfx/objects/essencechest_open1.ogg"],
+      "r": [ ]
+    }
+  },
+  "scripts" : ["project45-gachabag.lua"],
+  "hardPity": 25,
+  "fireTime" : 0.1,
+  "fireOffset" : [1.0, 0.0],
+
+  "gachaPools": {
+    "xssr": [2, "project45-gacha-xssr"],
+    "ssr": [2, "project45-gacha-ssr"],
+    "sr": [46, "project45-gacha-sr"],
+    "r": [50, "project45-gacha-r"]
+  },
+
+  "treasure" : {
+    "pool" : "project45guns",
+    "level" : 1
+  }
+}

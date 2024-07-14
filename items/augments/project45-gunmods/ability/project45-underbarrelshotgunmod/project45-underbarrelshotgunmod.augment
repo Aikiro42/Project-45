@@ -19,28 +19,38 @@
   "augment": {
     "category": "universal",
     "slot": "underbarrel",
-    "animationCustom": {
-      "sounds": {
-        "altFire" : [ "/sfx/project45neosfx/fire/fire-shotgun1.ogg" ]
+    "ability": {
+      "animationCustom": {
+        "sounds": {
+          "altFire" : [ "/sfx/project45neosfx/fire/fire-shotgun1.ogg" ]
+        }
+      },
+      "altAbilityType": "project45underbarrelgun",
+      "altAbility": {
+        "name": "Modular Shotgun",
+        "baseDamageMultiplier" : 5,
+        "ammoPerShot": 5,
+        "fireTime": 0.25,
+        "projectileCount": 5,
+        "spread": 2.5,
+        "screenShakeAmount": 0.5,
+        "recoilAmount": 5
+      },
+      "overrideTwoHanded": true,
+      "twoHanded": true
+    },
+    "stat": {
+      "recoverDelay": {
+        "rebaseMult": 1.1
+      },
+      "recoverTime": {
+        "rebaseMult": 1.1
       }
-    },
-    "altAbilityType": "project45underbarrelgun",
-    "altAbility": {
-      "name": "Modular Shotgun",
-      "baseDamageMultiplier" : 5,
-      "ammoPerShot": 5,
-      "fireTime": 0.25,
-      "projectileCount": 5,
-      "spread": 2.5,
-      "screenShakeAmount": 0.5,
-      "recoilAmount": 5
-    },
-    "overrideTwoHanded": true,
-    "twoHanded": true
+    }
 
   },
 
-  "scripts" : [ "/scripts/augments/project45-gunmod/abilitymod.lua" ],
+  "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
   "builder": "/items/buildscripts/buildproject45mod.lua"
 
 }

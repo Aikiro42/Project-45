@@ -1,0 +1,110 @@
+{
+  "projectileName" : "project45brammaarrow",
+  "image" : "project45brammaarrow.png",
+  "scripts": ["/projectiles/scripts/project45-killprojectileonstick.lua"],
+  "physics" : "arrow",
+  "animationCycle" : 0.25,
+  "frameNumber" : 1,
+  "damageKind" : "standardbullet",
+  "pointLight" : true,
+  "lightColor": [1, 1, 1],
+  "fullbright": true,
+  "flippable" : true,
+  "piercing": false,
+  "statusEffects" : [ ],
+  "power" : 5.0,
+  "speed" : 80,
+  "knockback" : 5,
+  "collisionPoly": [
+    [-8.5, 0],
+    [0, 1.5],
+    [8.5, 0],
+    [0, -1.5]
+  ],
+  "movementSettings":{
+    "collisionEnabled": true
+  },
+  "bounces" : 0,
+
+  "periodicActions" : [
+    {
+      "time": 0,
+      "repeat": false,
+      "action": "sound",
+      "options": [
+        "/sfx/project45neosfx/special/kuvabramma/GrnBowProjectileA.ogg",
+        "/sfx/project45neosfx/special/kuvabramma/GrnBowProjectileB.ogg",
+        "/sfx/project45neosfx/special/kuvabramma/GrnBowProjectileC.ogg"
+      ]
+    },
+    {
+      "time" : 0.01,
+      "repeat" : true,
+      "action" : "particle",
+      "rotate" : true,
+      
+      "specification" : {
+        "type" : "streak",
+        "layer" : "back",
+        "fullbright" : false,
+        "destructionAction" : "shrink",
+        "size" : 1,
+        "color" : [255, 255, 255, 255],
+        "collidesForeground" : false,
+        "length" : 45,
+        "position" : [0, 0],
+        "timeToLive" : 0,
+        "destructionTime" : 0.2,
+        "initialVelocity" : [0.001, 0],
+        "variance" : {"length": 0}
+      }
+
+    }
+    //*/
+  ],
+  "actionOnReap": [
+    { 
+      "action" : "sound",
+      "options" : [
+        "/sfx/project45neosfx/special/kuvabramma/GrnBowProjectileExplosionA.ogg",
+        "/sfx/project45neosfx/special/kuvabramma/GrnBowProjectileExplosionB.ogg",
+        "/sfx/project45neosfx/special/kuvabramma/GrnBowProjectileExplosionC.ogg"
+      ]
+    },
+    {
+      "action" : "config",
+      "file" : "/projectiles/explosions/project45_stdexplosion/project45_brammaexplosion.config"
+    },
+    {
+      "action" : "loop",
+      "count" : 6,
+      "body" : [
+        {
+          "action" : "particle",
+          "specification" : {
+            "type" : "ember",
+            "size" : 1,
+            "color" : [255, 255, 255, 255],
+            "light" : [65, 65, 51],
+            "fullbright" : true,
+            "destructionTime" : 0.2,
+            "destructionAction" : "fade",
+            "fade" : 0.9,
+            "initialVelocity" : [0, 5],
+            "finalVelocity" : [0, -50],
+            "approach" : [0, 30],
+            "timeToLive" : 0,
+            "layer" : "middle",
+            "variance" : {
+              "position" : [0.25, 0.25],
+              "size" : 0.5,
+              "initialVelocity" : [10, 10],
+              "timeToLive" : 0.2
+            }
+          }
+        }
+      ]
+    }
+  ]
+  
+}

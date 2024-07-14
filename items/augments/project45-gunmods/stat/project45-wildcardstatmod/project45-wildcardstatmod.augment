@@ -1,8 +1,7 @@
 {
   "itemName" : "project45-wildcardstatmod",
-  "price" : 1000,
-  "rarity" : "Essential",
-  "isUnique": true,
+  "price" : 250,
+  "rarity" : "Legendary",
   "tooltipKind" : "project45gunmod2",
   "tooltipFields": {
     "subtitle": "Stat Mod"
@@ -18,31 +17,59 @@
   "shortdescription" : "^#d29ce7;Wildcard Mod",
 
   "augment":{
-    "upgradeCost": 7,
-    "randomStats": true,
-    "baseDamage": {
-      "additive": [-1, 3],
-      "multiplicative": [-0.15, 0.45]
-    },
-    "critChance": {
-      "additive": [-0.05, 0.15],
-      "multiplicative": [-0.5, 1.5]
-    },
-    "critDamage": {
-      "additive": [-0.1, 0.3],
-      "multiplicative": [-0.15, 0.45]
-    },
-    "reloadCost": {
-      "additive": [-4, 3],
-      "multiplicative": [-0.2, 0.4]
-    },
-    "fireTime": {
-      "additive": [-0.01, 0.1],
-      "multiplicative": [-2, 0.2]
+    "cost": 5,
+    "pureStatMod": true,
+    
+    "stat": {
+      "stackLimit": 4,
+      "randomStatParams": {
+        "costPerStat": 0.6,
+        "chosenStatCount": 3
+      },
+      "baseDamage": {
+        "additive": [-1, 3],
+        "multiplicative": [-0.15, 0.45]
+      },
+      "critChance": {
+        "additive": [-0.05, 0.15],
+        "multiplicative": [-0.5, 1.5]
+      },
+      "critDamageMult": {
+        "additive": [-0.1, 0.3],
+        "multiplicative": [-0.15, 0.45]
+      },
+      "reloadCost": {
+        "additive": [-4, 3],
+        "multiplicative": [-0.2, 0.4]
+      },
+      "fireTimeGroup": {
+        "additive": [-0.01, 0.1],
+        "multiplicative": [-2, 0.2]
+      },
+      "multishot": {
+        "additive": [0, 0.2],
+        "multiplicative": [0, 0.5]
+      },
+      "ammoConsumeChance": {
+        "additive": [-0.3, 0],
+        "multiplicative": [0, 0.5]
+      },
+      "recoilAmount": {
+        "additive": [-1, 1],
+        "multiplicative": [-0.5, 0.5]
+      },
+      "mobility": {
+        "additive": [-0.025, 0.1],
+        "multiplicative": [-0.05, 0.1]
+      },
+      "maxAmmo": {
+        "additive": [0, 10],
+        "multiplicative": [-1, 1]
+      }
     }
   },
 
-  "scripts" : [ "/scripts/augments/project45-gunmod/statmod.lua" ],
+  "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
   "builder": "/items/buildscripts/buildproject45randstatmod.lua"
 
 }

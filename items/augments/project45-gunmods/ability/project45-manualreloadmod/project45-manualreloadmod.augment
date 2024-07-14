@@ -16,14 +16,16 @@
   "archetype": "Active Ability",
   
   "augment":{
-    "upgradeCost": 0,
+    "cost": 0,
     "category": "universal",
     "slot": "intrinsic",
-    "altAbilityType" : "project45gunfirereload",
-    "overrideTwoHanded": true,
-    "twoHanded": true
+    "ability": {
+      "altAbilityType" : "project45gunfirereload",
+      "overrideTwoHanded": true,
+      "twoHanded": true
+    }
   },
 
-  "scripts" : [ "/scripts/augments/project45-gunmod/abilitymod.lua" ],
+  "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
   "builder": "/items/buildscripts/buildproject45mod.lua"
 }

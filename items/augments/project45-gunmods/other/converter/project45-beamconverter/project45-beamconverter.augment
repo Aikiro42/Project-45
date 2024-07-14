@@ -12,13 +12,15 @@
   "inventoryIcon" : "/items/augments/project45-gunmods/other/converter/project45-beamconverter/project45-beamconverter.png",
   "description" : "Converts bullets fired to beam ones.",
   "shortdescription" : "Beam Conversion",
-
-  "conversion": "beam",
-  "upgradeCost": 2,
+  
+  "augment": {
+    "cost": 2,
+    "conversion": "beam"
+  },
 
    
 
-  "scripts" : [ "/scripts/augments/project45-gunmod/convertermod.lua" ],
+  "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
   
   "technicalInfo": "Affects damage per shot.\nMay be rejected by some weapons.",
   "archetype": "Converter",

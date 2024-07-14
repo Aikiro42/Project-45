@@ -1,0 +1,43 @@
+{
+  "itemName" : "project45-orbitaltranspondermod",
+  "price" : 10000,
+  "rarity" : "Legendary",
+  "tooltipKind" : "project45gunmod2",
+  "modCategory" : "abilityMod",
+  "category": "uniqueWeapon",
+  "itemTags": ["weapon"],
+  "tooltipFields":{
+    "subtitle": "Ability Mod",
+    "objectImage": "/items/augments/project45-gunmods/ability/project45-orbitaltranspondermod/project45-orbitaltranspondermod.png"
+  },
+  "inventoryIcon" : "/items/augments/project45-gunmods/ability/project45-orbitaltranspondermod/project45-orbitaltranspondermodicon.png",
+  "description" : "A small transponder to request ordinance. Just point and click.",
+  "technicalInfo": "Right-click to summon an orbital strike.\nEnables laser.",
+  "shortdescription" : "Orbital Transponder",
+  "archetype": "Active Ability",
+
+  "augment":{
+    "category": "universal",
+    "slot": "rail",
+    "ability": {
+      "altAbilityType" : "project45orbitalstrike",
+      "overrideTwoHanded": true,
+      "twoHanded": true
+    },
+    "gun": {
+      "primaryAbility": {
+        "laser": {
+          "operation": "replace",
+          "value": {
+            "enabled": true,
+            "color": [255, 0, 0, 200],
+            "width": 0.2
+          }
+        }
+      }
+    }
+  },
+
+  "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
+}

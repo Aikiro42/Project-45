@@ -1,0 +1,95 @@
+{
+  "itemName" : "project45-aegisaltmod",
+  "price" : 3000,
+  "rarity" : "Uncommon",
+  "tooltipKind" : "project45gunmod2",
+  "modCategory" : "gunMod",
+  "category" : "uniqueWeapon",
+  "itemTags": ["weapon"],
+  "tooltipFields":{
+    "subtitle": "Gun Mod",
+    "objectImage": "/items/augments/project45-gunmods/mods/project45-aegisaltmod/project45-aegisaltmod.png"
+  },
+  "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-aegisaltmod/project45-aegisaltmodicon.png",
+  "description" : "Replacement parts made from a lightweight alloy.",
+  "technicalInfo": "Final Damage +0.05x per Accelerator Armor.\nMakes weapon light.",
+  "shortdescription" : "Aegisalt Alloy Parts",
+
+  "augment":{
+    "modName": "Aegisalt Alloy Parts",
+    "category": "universal",
+    "slot": "material",
+    "passive": {
+      "passiveScript" : "/items/augments/project45-gunmods/mods/project45-aegisaltmod/project45-aegisaltmod.lua",
+      "passiveParameters": {
+        // listing them down here performs better than
+        // generating from within passive script
+        "validArmor": [
+          "humantier5ahead",
+          "humantier5achest",
+          "humantier5apants",
+          "humantier6ahead",
+          "humantier6achest",
+          "humantier6apants",
+          "apextier5ahead",
+          "apextier5achest",
+          "apextier5apants",
+          "apextier6ahead",
+          "apextier6achest",
+          "apextier6apants",
+          "hylotltier5ahead",
+          "hylotltier5achest",
+          "hylotltier5apants",
+          "hylotltier6ahead",
+          "hylotltier6achest",
+          "hylotltier6apants",
+          "florantier5ahead",
+          "florantier5achest",
+          "florantier5apants",
+          "florantier6ahead",
+          "florantier6achest",
+          "florantier6apants",
+          "glitchtier5ahead",
+          "glitchtier5achest",
+          "glitchtier5apants",
+          "glitchtier6ahead",
+          "glitchtier6achest",
+          "glitchtier6apants",
+          "novakidtier5ahead",
+          "novakidtier5achest",
+          "novakidtier5apants",
+          "novakidtier6ahead",
+          "novakidtier6achest",
+          "novakidtier6apants",
+          "aviantier5ahead",
+          "aviantier5achest",
+          "aviantier5apants",
+          "aviantier6ahead",
+          "aviantier6achest",
+          "aviantier6apants"
+        ],
+        "pieceDamage": 0.05
+      },
+      "passiveDescription": "Final Damage +0.05x per Accelerator Armor."
+    },
+    "stat": {
+      "mobility": {
+        "multiplicative": 0.15
+      }
+    },
+    "gun":{
+      "primaryAbility": {
+        "heavyWeapon": {
+          "operation": "replace",
+          "value": false
+        }
+      }
+    }
+  },
+
+
+   
+
+  "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
+}

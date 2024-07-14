@@ -33,6 +33,7 @@
         {"weight" : 1, "item" : "project45-neo-carbine"},
         {"weight" : 1, "item" : "project45-neo-servicerifle"},
         {"weight" : 1, "item" : "project45-neo-cyclo"},
+        {"weight" : 1, "item" : "project45-neo-covalence"},
         {"weight" : 1, "item" : "project45-neo-beamsplitter"},
 
 
@@ -65,6 +66,7 @@
         {"weight" : 1, "item" : "project45-neo-minigun"},
         {"weight" : 1, "item" : "project45-neo-powerstave"},
         {"weight" : 1, "item" : "project45-neo-flamethrower"},
+        {"weight" : 1, "item" : "project45-neo-autocannon"},
         {"weight" : 1, "item" : "project45-neo-gaussrifle"}
       ],
       "poolRounds" : 1,
@@ -82,8 +84,11 @@
         {"weight" : 1, "item" : "project45-pkf-typhon"},
         {"weight" : 1, "item" : "project45-tcf-kineticarbiter"},
         {"weight" : 1, "item" : "project45-scz-spacecowboy"},
-        {"weight" : 1, "item" : "project45-gov-scarlet"},
-        {"weight" : 1, "item" : "project45-msx-marcohmg"}
+        {"weight" : 1, "item" : "project45-gov-fleetlyfading"},
+        {"weight" : 1, "item" : "project45-msx-marcohmg"},
+        {"weight" : 1, "item" : "project45-hlo-maxx"},
+        {"weight" : 1, "item" : "project45-wfm-kuvabramma"},
+        {"weight" : 1, "item" : "project45-mhf-boneshooter"}
 
       ],
       "poolRounds" : 1,
@@ -97,14 +102,19 @@
   "project45-stats-r": [
     [0, {
       "pool" : [
+        // 1
+        {"weight" : 1, "item" : "project45-critchanceaddmod1"},
+        {"weight" : 1, "item" : "project45-critdamageaddmod1"},
+        {"weight" : 1, "item" : "project45-damageaddmod1"},
+        {"weight" : 1, "item" : "project45-firetimeaddmod1"},
+        {"weight" : 1, "item" : "project45-reloadcostaddmod1"},
 
-        // COMMON
-        {"weight" : 1, "item" : "project45-reloadcostaddmod"},
+        {"weight" : 1, "item" : "project45-critchancemultmod1"},
+        {"weight" : 1, "item" : "project45-critdamagemultmod1"},
+        {"weight" : 1, "item" : "project45-damagemultmod1"},
+        {"weight" : 1, "item" : "project45-firetimemultmod1"},
+        {"weight" : 1, "item" : "project45-reloadcostmultmod1"}
 
-        // UNCOMMON
-        {"weight" : 0.5, "item" : "project45-reloadcostmultmod"},
-        {"weight" : 0.5, "item" : "project45-firetimeaddmod"},
-        {"weight" : 0.5, "item" : "project45-damageaddmod"}
       ],
       "poolRounds" : 1,
       "allowDuplication" : false
@@ -114,15 +124,21 @@
   "project45-stats-sr": [
     [0, {
       "pool" : [
-        // RARE
-        {"weight" : 1, "item" : "project45-critchanceaddmod"},
-        {"weight" : 1, "item" : "project45-critdamageaddmod"},
-        {"weight" : 1, "item" : "project45-firetimemultmod"},
-        {"weight" : 1, "item" : "project45-damagemultmod"},
+        // 2
+        {"weight" : 1, "item" : "project45-critchanceaddmod2"},
+        {"weight" : 1, "item" : "project45-critdamageaddmod2"},
+        {"weight" : 1, "item" : "project45-damageaddmod2"},
+        {"weight" : 1, "item" : "project45-firetimeaddmod2"},
+        {"weight" : 1, "item" : "project45-reloadcostaddmod2"},
 
-        // LEGENDARY
-        {"weight" : 0.5, "item" : "project45-critchancemultmod"},
-        {"weight" : 0.5, "item" : "project45-critdamagemultmod"}
+        {"weight" : 1, "item" : "project45-critchancemultmod2"},
+        {"weight" : 1, "item" : "project45-critdamagemultmod2"},
+        {"weight" : 1, "item" : "project45-damagemultmod2"},
+        {"weight" : 1, "item" : "project45-firetimemultmod2"},
+        {"weight" : 1, "item" : "project45-reloadcostmultmod2"},
+      
+        {"weight" : 1, "item" : "project45-levelmod"},
+        {"weight" : 1, "item" : "project45-wildcardstatmod"}
       ],
       "poolRounds" : 1,
       "allowDuplication" : false
@@ -132,8 +148,21 @@
   "project45-stats-ssr": [
     [0, {
       "pool" : [
-        // ESSENTIAL
-        {"weight" : 1, "item" : "project45-levelmod"}
+        // 3
+        {"weight" : 1, "item" : "project45-critchanceaddmod3"},
+        {"weight" : 1, "item" : "project45-critdamageaddmod3"},
+        {"weight" : 1, "item" : "project45-damageaddmod3"},
+        {"weight" : 1, "item" : "project45-firetimeaddmod3"},
+        {"weight" : 1, "item" : "project45-reloadcostaddmod3"},
+
+        {"weight" : 1, "item" : "project45-critchancemultmod3"},
+        {"weight" : 1, "item" : "project45-critdamagemultmod3"},
+        {"weight" : 1, "item" : "project45-damagemultmod3"},
+        {"weight" : 1, "item" : "project45-firetimemultmod3"},
+        {"weight" : 1, "item" : "project45-reloadcostmultmod3"},
+
+        {"weight" : 1, "item" : "project45-maxlevelmod"},
+        {"weight" : 1, "item" : "project45-wildcardstatmodssr"}
       ],
       "poolRounds" : 1,
       "allowDuplication" : false
@@ -144,9 +173,7 @@
     [0, {
       "pool" : [
         // UNIQUE
-        {"weight" : 1, "item" : "project45-godmod"},
-        {"weight" : 1, "item" : "project45-wildcardstatmod"},
-        {"weight" : 1, "item" : "project45-maxlevelmod"}
+        {"weight" : 1, "item" : "project45-godmod"}
       ],
       "poolRounds" : 1,
       "allowDuplication" : false
@@ -155,7 +182,6 @@
   
   // MODS
 
-  
   "project45-mods-r": [
     [0, {
       "pool" : [
@@ -171,7 +197,6 @@
         {"weight" : 0.5, "item" : "project45-overampmod"},
         {"weight" : 0.5, "item" : "project45-customnockmod"},
         {"weight" : 0.5, "item" : "project45-gripmod"},
-        {"weight" : 0.5, "item" : "project45-weightmod"},
         {"weight" : 0.5, "item" : "project45-stockmod"}
 
       ],
@@ -190,6 +215,9 @@
         {"weight" : 1, "item" : "project45-silencermod"},
         {"weight" : 1, "item" : "project45-extendedbarrelmod"},
         {"weight" : 1, "item" : "project45-convergermod"},
+        {"weight" : 1, "item" : "project45-aegisaltmod"},
+        {"weight" : 1, "item" : "project45-feroziummod"},
+        {"weight" : 1, "item" : "project45-violiummod"},
 
         // LEGENDARY
         {"weight" : 0.5, "item" : "project45-flashlasermod"},
@@ -210,7 +238,8 @@
         {"weight" : 1, "item" : "project45-gunscopemod"},
         {"weight" : 1, "item" : "project45-enemyradarmod"},
         {"weight" : 1, "item" : "project45-grenadelaunchermod"},
-        {"weight" : 1, "item" : "project45-underbarrelshotgunmod"}
+        {"weight" : 1, "item" : "project45-underbarrelshotgunmod"},
+        {"weight" : 1, "item" : "project45-solariummod"}
       ],
       "poolRounds" : 1,
       "allowDuplication" : false
@@ -223,7 +252,9 @@
         // UNIQUE
         {"weight" : 1, "item" : "project45-mlgscopemod"},
         {"weight" : 1, "item" : "project45-phaseshiftmod"},
-        {"weight" : 1, "item" : "project45-supergunscopemod"}
+        {"weight" : 1, "item" : "project45-supergunscopemod"},
+        {"weight" : 1, "item" : "project45-orbitaltranspondermod"},
+        {"weight" : 1, "item" : "project45-armadillomod"}
       ],
       "poolRounds" : 1,
       "allowDuplication" : false

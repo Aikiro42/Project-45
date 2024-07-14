@@ -1,6 +1,6 @@
 {
   "itemName" : "project45-teststatmod",
-  "price" : 30000,
+  "price" : 3000,
   "rarity" : "Common",
   "tooltipKind" : "project45gunmod2",
   "tooltipFields": {
@@ -16,12 +16,14 @@
   "shortdescription" : "Test statMod",
 
   "augment":{
-    "upgradeCost": 5,
+    "cost": 5,
+    "pureStatMod": true,
+    
     "baseDamage": {
       "additive": 1,
       "multiplicative": 1
     },
-    "fireTime": {
+    "fireTimeGroup": {
       "additive": -0.001,
       "multiplicative": 1
     },
@@ -39,7 +41,7 @@
     }
   },
 
-  "scripts" : [ "/scripts/augments/project45-gunmod/statmod.lua" ],
+  "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
   "builder": "/items/buildscripts/buildproject45mod.lua"
 
 }

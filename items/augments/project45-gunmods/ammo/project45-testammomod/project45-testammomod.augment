@@ -15,17 +15,19 @@
   "technicalInfo": "Ammo mod for testing projectiles.",
   "shortdescription" : "Test Projectiles",
 
-  "conversion": "projectile",
   "augment":{
     "modName": "Incendiary Bullets",
     "category": "universal",
+    "conversion": "projectile",
+    "ammo":{
     "archetype": "universal",
     "projectileType": "project45itanorocket"
+    }
   },
 
 
    
 
-  "scripts" : [ "/scripts/augments/project45-gunmod/ammomod.lua" ],
+  "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
   "builder": "/items/buildscripts/buildproject45mod.lua"
 }

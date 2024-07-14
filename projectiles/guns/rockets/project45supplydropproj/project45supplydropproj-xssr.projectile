@@ -1,0 +1,52 @@
+{
+  "projectileName" : "project45supplydropproj-xssr",
+  "image" : "project45supplydropproj.png",
+  "scripts": ["/projectiles/guns/rockets/project45supplydropproj/project45supplydropproj.lua"],
+  "animationCycle" : 1,
+  "timeToLive" : 10,
+  "frameNumber" : 1,
+  "speed" : 150,
+  "orientationLocked" : true,
+  "damagePoly" : [ [-33, -3], [-33, 3], [33, 3], [33, -3] ],
+  "collisionPoly": [ [-33, -3], [-33, 3], [33, 3], [33, -3] ],
+  "animationLoops" : true,
+  "piercing" : true,
+  "movementSettings": {
+    "collisionEnabled": false
+  },
+  "ignoreTerrain": true,
+  "bounces" : -1,
+  "flippable" : true,
+  "damageKind" : "default",
+  "damageType": "NoDamage",
+  "emitters" : [ ],
+  "fullbright" : false,
+  "statusEffects" : [],
+  "knockback" : 10,
+  "knockbackDirectional" : true,
+  "persistentAudio" : "/sfx/project45neosfx/chargedrone/chargedrone-03.ogg",
+  "actionOnReap" : [
+    {
+      "action" : "config",
+      "file" : "/projectiles/guns/rockets/project45supplydropproj/project45supplydropproj.config"
+    },
+    {
+      "action" : "spawnmonster",
+      "type" : "project45-breakablesupplydrop-xssr",
+      "offset" : [0, 0],
+      "level" : 1,
+      "arguments" : {
+        "aggressive" : true
+      }
+    }
+  ],
+  "actionOnCollision": [
+    {
+      "action" : "config",
+      "file" : "/projectiles/guns/rockets/project45supplydropproj/project45supplydropprojpierce.config"
+    }
+  ],
+  "maxCollisions": 10,
+  "damageTeam" : { "type" : "indiscriminate" }
+
+}

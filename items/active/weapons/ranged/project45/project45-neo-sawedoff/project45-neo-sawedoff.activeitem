@@ -16,7 +16,7 @@
 
   "project45GunModInfo": {
     "category": "ballistic",
-    "upgradeCapacity": 5,
+    
     "compatibleMods": [
       "project45-alofsmagmod"
     ],
@@ -30,6 +30,7 @@
     "acceptsModSlot": [
       "stock",
       "sights",
+      "magazine",
 
       "material"
     ],
@@ -116,7 +117,13 @@
 
     "maxAmmo": 2,
     "bulletsPerReload": 2,
-    "inaccuracy": [5, 5, 5, 5],
+    "inaccuracy": 5,
+    "inaccuracyMults": {
+      "mobile": 1,
+      "walking": 0.75,
+      "stationary": 0.5,
+      "crouching": 0.25
+    },
     "semi": true,
     "cycleTime": 0.1,
     "cockTime": 0.5,

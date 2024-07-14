@@ -11,25 +11,25 @@
     "objectImage": "/items/augments/project45-gunmods/mods/project45-extendedbarrelmod/project45-extendedbarrelmod.png"
   },
   "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-extendedbarrelmod/project45-extendedbarrelmodicon.png",
-  "statInfo" : "Spread x0.5",
+  "statInfo" : "Spread -0.5x",
   "description": "Isn't it weird that regardless of caliber, this magically fits on so many weapons?",
   "shortdescription" : "Extended Barrel",
   "augment":{
     "modName": "Extended Barrel",
     "category": "ballistic",
     "slot": "muzzle",
-    "muzzleOffset": [1, 0],
-    "primaryAbility": {
+    "stat": {
       "spread": {
-        "operation": "multiply",
-        "value": 0.5
+        "multiplicative": -0.5
       }
     },
-
-    "sprite": {
-      "image": "/items/augments/project45-gunmods/mods/project45-extendedbarrelmod/project45-extendedbarrelmodsprite.png",
-      "zLevel" : 5,
-      "offset" : [0.5, -0.0625]
+    "gun": {
+      "muzzleOffset": [1, 0],
+      "sprite": {
+        "image": "/items/augments/project45-gunmods/mods/project45-extendedbarrelmod/project45-extendedbarrelmodsprite.png",
+        "zLevel" : 5,
+        "offset" : [0.5, -0.0625]
+      }
     }
     
   },
@@ -37,6 +37,6 @@
 
    
 
-  "scripts" : [ "/scripts/augments/project45-gunmod/gunmod.lua" ],
+  "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
   "builder": "/items/buildscripts/buildproject45mod.lua"
 }
