@@ -10,6 +10,7 @@
 
         // UNCOMMON
         {"weight" : 0.5, "item" : "project45-neo-pistol"},
+        {"weight" : 0.5, "item" : "project45-neo-tmp"},
         {"weight" : 0.5, "item" : "project45-neo-sawedoff"},
         {"weight" : 0.5, "item" : "project45-neo-doublebarrel"},
         {"weight" : 0.5, "item" : "project45-neo-handmaderifle"},
