@@ -268,7 +268,15 @@
     // "loadRoundsThroughBolt": false,
 
     // "postReloadDelay": null, // float; time to wait before cocking in seconds, cockTime/8 by default
-    
+
+    /*
+    float; time to wait before being able to fire after cocking (read: manually feeding the round), in seconds
+    this does not apply if the gun is slam-fired.
+    This setting exists to allow the option to prevent players from firing the gun while the weapon's boltpush
+    stance transition/"animation" is in progress (see project45-cbp-malorian)
+    */
+    // "postCockCooldown": 0
+
     // determines whether the gun is break-action, i.e. breaks open when ejecting the mag
     // dictates whether the gun animation accesses the "open" state
     // "breakAction": false,

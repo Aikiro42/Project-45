@@ -14,7 +14,7 @@
   "tooltipKind" : "project45gun",
   "gunArchetype": "revolver",
   "category" : "uniqueWeapon",
-  "twoHanded" : false,
+  "twoHanded" : true,
   "itemTags" : ["weapon","ranged","pistol"],
   "level" : 1,
   "muzzleFlashColor": [255, 255, 200],
@@ -34,12 +34,12 @@
     "particleEmitters": {
       "ejectionPort": {
         "particles": [
-          {"particle": "project45bulletcasesmall"}
+          {"particle": "project45bulletcase"}
         ]
       },
       "magazine": {
         "particles": [
-          // TODO:
+          {"particle": "project45malorianmag"}
         ]
       }
     },
@@ -82,13 +82,21 @@
 
   "project45GunModInfo":{
     "category": "ballistic",
-    "upgradeCapacity": 10
+    "upgradeCapacity": 10,
+    "allowsConversion": [
+      "hitscan",
+      "summoned"
+    ],
+    "acceptsAmmoArchetype":[
+      "bullet"
+    ]
+
   },
 
   "baseOffset" : [0.375, 0.125],
   "muzzleOffset" : [1.375, 0.375],
-  "ejectionPortOffset": [-0.625, 0.5],
-  "magazineOffset": [-0.5, -0.25],
+  "ejectionPortOffset": [-0.375, 0.5],
+  "magazineOffset": [0.1875, 0.125],
 
   "railOffset": [0.625, 0],
   "sightsOffset": [0.375, 0.675],
@@ -106,7 +114,7 @@
   "primaryAbilityType": "project45gunfire",
   "overrideArchetypeDps": true,
   "primaryAbility": {
-    "baseDps": 37.57,
+    "baseDamageMultiplier": 2,
     "critChance": 0.3,
     "critDamageMult": 2,
     "reloadCost": 45,
@@ -126,12 +134,15 @@
     "cycleTime": 0.25,
     "projectileKind": "projectile",
     "audibleEjection": true,
-    // "reloadTime": 10,
+    
+    "closeBoltOnEmpty": true,
+    "postReloadDelay": 0.3,
+    "postCockCooldown": 0.5,
     "muzzleProjectiles": [
       {
-        "type": "project45_muzzleshockwavesmall",
+        "type": "project45dragonsbreath",
         "parameters": {
-          "speed": -2.5
+          "speed": 60
         },
         "firePerShot": true
       }
@@ -163,27 +174,32 @@
         "allowFlip" : false
       },
       "reloading" : {
-        "armRotation" : 45,
+        "armRotation" : 0,
         "weaponRotation" : 0,
         "weaponAngularVelocity": -2700,
-        "frontArmFrame": "rotation",
         "twoHanded": false
       },
       "reloaded" : {
-        "armRotation" : 45,
+        "armRotation" : 0,
         "weaponRotation" : -360,
         "frontArmFrame": "rotation",
-        "twoHanded" : false,
+        "twoHanded" : true,
         "allowRotate" : false,
         "allowFlip" : false,
         "snap": true
       },
       "boltPull": {
-        "twoHanded": false
+        "armRotation" : 45,
+        "weaponRotation": -360,
+        "twoHanded": true,
+        "frontArmFrame": "run.1"
       },
       "boltPush": {
+        "armRotation" : 45,
         "twoHanded": false,
-        "weaponRotation": 0
+        "weaponRotation": -360,
+        "frontArmFrame": "run.3",
+        "snap": true
       },
       "jammed": {
         "twoHanded": false

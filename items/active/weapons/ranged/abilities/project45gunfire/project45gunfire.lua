@@ -377,6 +377,15 @@ function Project45GunFire:renderModPositionDebug()
     )
   end
 
+  if type(self.debug) == "table" and self.debug.emitParticles then
+    self.debugParticleTimer = math.max(0, (self.debugParticleTimer or 0) - self.dt)
+    if self.debugParticleTimer <= 0 then
+      animator.burstParticleEmitter("ejectionPort")
+      animator.burstParticleEmitter("magazine")
+      self.debugParticleTimer = 0.05
+    end
+  end
+
 end
 
 function Project45GunFire:update(dt, fireMode, shiftHeld)
@@ -817,6 +826,7 @@ function Project45GunFire:feeding()
     return
   elseif self.manualFeed or self.isCocking then
     self.weapon:setStance(self.stances.boltPush)
+    self.cooldownTimer = self.postCockCooldown or self.cooldownTimer
   end
 
   -- otherwise, we wait
@@ -1052,7 +1062,7 @@ function Project45GunFire:reloading()
   if self.breakAction then
     animator.setAnimationState("gun", "ejected")
   end
-
+  
   self:setState(self.cocking)
 end
 
