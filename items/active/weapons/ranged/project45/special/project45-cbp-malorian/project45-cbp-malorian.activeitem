@@ -1,0 +1,201 @@
+{
+  // Credits to Mads Ravn (https://www.youtube.com/@TheMaskedAvengerN)
+  // for the reload sfx assets
+  // and YvesBelgira (https://next.nexusmods.com/profile/YvesBelgira/about-me?gameId=1151)
+  // for the fire sfx asset
+  // Credits to CD Projekt Red for the gun SFX
+  "itemName" : "project45-cbp-malorian",
+  "price" : 50000,
+  "maxStack" : 1,
+  "rarity" : "Essential",
+  "isUnique": true,
+  "description" : "The signature weapon of legendary novakid Jimmy Goldfoot.",
+  "shortdescription" : "^#fdd14d;Malorian Arms 3516^reset;",
+  "tooltipKind" : "project45gun",
+  "gunArchetype": "revolver",
+  "category" : "uniqueWeapon",
+  "twoHanded" : false,
+  "itemTags" : ["weapon","ranged","pistol"],
+  "level" : 1,
+  "muzzleFlashColor": [255, 255, 200],
+  "inventoryIcon" : "project45-cbp-malorian-icon.png",
+
+  "animationParts" : {
+    "middle" : "project45-cbp-malorian.png",
+    "middleFullbright" : "",
+    "charge": "",
+    "chargeFullbright": "",
+    "magazine": "project45-cbp-malorian-mag.png",
+    "magazineFullbright": "",
+    "muzzleFlash": "/items/active/weapons/ranged/muzzleflash.png"
+  },
+
+  "animationCustom": {
+    "particleEmitters": {
+      "ejectionPort": {
+        "particles": [
+          {"particle": "project45bulletcasesmall"}
+        ]
+      },
+      "magazine": {
+        "particles": [
+          // TODO:
+        ]
+      }
+    },
+
+    "sounds": {
+      "fire" : ["/sfx/project45neosfx/special/malorian/malorian_fire.ogg"],
+      "boltPull": ["/sfx/project45neosfx/special/malorian/malorian_boltpull.ogg"],
+      "boltPush": ["/sfx/project45neosfx/special/malorian/malorian_boltpush.ogg"],
+      "reloadEnd": ["/sfx/project45neosfx/special/malorian/malorian_loadmag.ogg"],
+      "ejectMag": ["/sfx/project45neosfx/special/malorian/malorian_ejectmag.ogg"]
+    },
+    "animatedParts": {
+      "parts":{
+        "charge":{
+          "partStates":{
+            "charge":{
+              "off": {
+                "properties": {
+                  "image": "<partImage>:charging.1"
+                }
+              }
+            }
+          }
+        }
+      },
+      "stateTypes": {
+        "gun": {
+          "states":{
+            "ejecting": {
+              "frames": 1
+            },
+            "feeding": {
+              "frames": 3
+            }
+          }
+        }
+      }
+    }
+  },
+
+  "project45GunModInfo":{
+    "category": "ballistic",
+    "upgradeCapacity": 10
+  },
+
+  "baseOffset" : [0.375, 0.125],
+  "muzzleOffset" : [1.375, 0.375],
+  "ejectionPortOffset": [-0.625, 0.5],
+  "magazineOffset": [-0.5, -0.25],
+
+  "railOffset": [0.625, 0],
+  "sightsOffset": [0.375, 0.675],
+  "stockOffset": [-0.75, -0.25],
+
+  "debugPointColors": {
+    "rail": "red",
+    "sights": "orange",
+    "underbarrel": "green",
+    "stock": "magenta"
+  },
+
+  "scripts" : ["/items/active/weapons/ranged/project45gunneo.lua"],
+    
+  "primaryAbilityType": "project45gunfire",
+  "overrideArchetypeDps": true,
+  "primaryAbility": {
+    "baseDps": 37.57,
+    "critChance": 0.3,
+    "critDamageMult": 2,
+    "reloadCost": 45,
+    "reloadTime": 0.7,
+    "maxAmmo": 10,
+    "bulletsPerReload": 10,
+    "inaccuracy": 4,
+    "spread": 0.2,
+    "screenShakeAmount": 1.25,
+
+    "recoilAmount": 10, // amount of recoil per shot, in degrees; arm and weapon will rotate by half of this
+    "recoilMaxDeg": 25, // the most the arm and weapon will rotate, in degrees.
+    "recoverDelay": 0,
+    "recoverTime": 0.2, // time it takes to recover aim completely, in seconds
+
+    "semi": true,
+    "cycleTime": 0.25,
+    "projectileKind": "projectile",
+    "audibleEjection": true,
+    // "reloadTime": 10,
+    "muzzleProjectiles": [
+      {
+        "type": "project45_muzzleshockwavesmall",
+        "parameters": {
+          "speed": -2.5
+        },
+        "firePerShot": true
+      }
+    ],
+
+    "laser":{
+      "enabled": false
+    },
+  
+    "stances":{
+
+
+      "idleneo": {
+        "twoHanded": false
+      },
+      "aimStance": {
+        "twoHanded": false,
+        "weaponRotation": 0
+      },
+      "empty": {
+        "twoHanded": false,
+        "weaponRotation": 360
+      },
+      "ejectmag" : {
+        "armRotation" : -45,
+        "weaponRotation" : 45,
+        "twoHanded" : false,
+        "allowRotate" : false,
+        "allowFlip" : false
+      },
+      "reloading" : {
+        "armRotation" : 45,
+        "weaponRotation" : 0,
+        "weaponAngularVelocity": -2700,
+        "frontArmFrame": "rotation",
+        "twoHanded": false
+      },
+      "reloaded" : {
+        "armRotation" : 45,
+        "weaponRotation" : -360,
+        "frontArmFrame": "rotation",
+        "twoHanded" : false,
+        "allowRotate" : false,
+        "allowFlip" : false,
+        "snap": true
+      },
+      "boltPull": {
+        "twoHanded": false
+      },
+      "boltPush": {
+        "twoHanded": false,
+        "weaponRotation": 0
+      },
+      "jammed": {
+        "twoHanded": false
+      },
+      "unjam": {
+        "armRotation": -45,
+        "weaponRotation": -5,
+        "frontArmFrame": "rotation",
+        "twoHanded": false      
+      }
+    }
+  },
+
+  "builder" : "/items/buildscripts/buildproject45neoneo.lua"
+}

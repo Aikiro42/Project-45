@@ -4,6 +4,7 @@
   "rarity" : "Common",
   "tooltipKind" : "project45gunmod",
   "category" : "upgradeComponent",
+  "itemTags": ["weapon"],
   "tooltipFields":{
     "subtitle": "Applied Utility",
     "objectImage": "/items/augments/project45-gunmods/util/project45-ammostock/project45-ammostock.png"

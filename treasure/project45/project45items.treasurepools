@@ -88,7 +88,8 @@
         {"weight" : 1, "item" : "project45-msx-marcohmg"},
         {"weight" : 1, "item" : "project45-hlo-maxx"},
         {"weight" : 1, "item" : "project45-wfm-kuvabramma"},
-        {"weight" : 1, "item" : "project45-mhf-boneshooter"}
+        {"weight" : 1, "item" : "project45-mhf-boneshooter"},
+        {"weight" : 1, "item" : "project45-cbp-malorian"}
 
       ],
       "poolRounds" : 1,
