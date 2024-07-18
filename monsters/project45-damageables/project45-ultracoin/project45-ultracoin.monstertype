@@ -1,0 +1,118 @@
+{
+  "type" : "project45-ultracoin",
+
+  "categories" : [ "project45-ultracoin" ],
+  "parts" : [ "body" ],
+
+  "animation" : "project45-ultracoin.animation",
+
+  "dropPools" : [ { "default" : "empty" } ],
+
+  "baseParameters" : {
+    "scripts" : [
+      "/monsters/project45-damageables/project45-ultracoin/project45-ultracoin.lua"
+    ],
+
+    "behavior" : "monster",
+
+    "behaviorConfig" : {
+      "damageOnTouch" : true,
+      "targetOnDamage" : false
+    },
+
+    "damageTeamType" : "indiscriminate",
+
+    "touchDamage" : {
+      "poly" : [ [-0.5, -0.5], [-0.5, 0.5],  [0.5, 0.5], [0.5, -0.5]],
+      "damage" : 0,
+
+      "teamType" : "enemy",
+      "damageSourceKind" : "slash",
+      "knockback" : 20,
+      "statusEffects" : [ ]
+    },
+
+    "metaBoundBox" : [-0.5, -0.5, 0.5, 0.5],
+    "scale" : 1,
+
+    "movementSettings" : {
+      "collisionPoly" : [ [-0.5, -0.5], [-0.5, 0.5],  [0.5, 0.5], [0.5, -0.5]],
+
+      "collisionEnabled" : true,
+      "gravityEnabled" : true,
+      "mass" : 0.1,
+      "flySpeed" : 0,
+      "airFriction" : 0.0,
+      "airForce" : 0.0,
+      "physicsEffectCategories" : ["boss"],
+      "maximumPlatformCorrection": 0,
+      "maximumPlatformCorrectionVelocityFactor": 0
+  
+    },
+
+    "aggressive" : false,
+
+    // "bodyMaterialKind" : "robotic",
+
+    "knockoutTime" : 0,
+    "knockoutAnimationStates" : {
+      "damage" : "stunned"
+    },
+    "deathParticles" : "deathPoof",
+    "knockoutEffect" : "",
+
+    "statusSettings" : {
+      "statusProperties" : {
+        // "targetMaterialKind" : "robotic"
+      },
+
+      "appliesEnvironmentStatusEffects" : false,
+      "appliesWeatherStatusEffects" : false,
+      "minimumLiquidStatusEffectPercentage" : 0.1,
+
+      "primaryScriptSources" : [
+        "/monsters/project45-damageables/project45-ultracoin/project45-ultracoin-stat.lua"
+      ],
+      "primaryScriptDelta" : 60,
+
+      "stats" : {
+        "knockbackStunTime" : {
+          "baseValue" : 0
+        },
+        "knockbackThreshold" : {
+          "baseValue" : 0
+        },
+        "maxHealth" : {
+          "baseValue" : 1
+        },
+        "protection" : {
+          "baseValue" : 0.0
+        },
+        "healthRegen" : {
+          "baseValue" : 1
+        },
+        "powerMultiplier" : {
+          "baseValue" : 1.0
+        }
+      },
+
+      "resources" : {
+        "stunned" : {
+          "deltaValue" : -1.0,
+          "initialValue" : 0.0
+        },
+        "health" : {
+          "maxStat" : "maxHealth",
+          "deltaStat" : "healthRegen",
+          "defaultPercentage" : 100
+        }
+      }
+    },
+
+    "mouthOffset" : [0, 0],
+    "feetOffset" : [0, 0],
+
+    "capturable" : false,
+    "relocatable" : true
+  }
+}

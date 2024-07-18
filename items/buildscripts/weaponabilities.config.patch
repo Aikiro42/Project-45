@@ -68,5 +68,10 @@
         "op": "add",
         "path": "/project45tester",
         "value": "/items/active/weapons/ranged/abilities/project45tester/project45tester.weaponability"
+    },
+    {
+        "op": "add",
+        "path": "/project45ultracoin",
+        "value": "/items/active/weapons/ranged/abilities/project45ultracoin/project45ultracoin.weaponability"
     }
 ]

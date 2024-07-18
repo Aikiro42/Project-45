@@ -1,0 +1,9 @@
+{
+  "name" : "project45-ultracoin",
+  "category" : "project45-ultracoin",
+  "type" : "body",
+
+  "frames" : {
+    "body" : "project45-ultracoin.png"
+  }
+}
