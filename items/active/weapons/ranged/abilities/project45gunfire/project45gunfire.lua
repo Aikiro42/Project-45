@@ -1490,8 +1490,12 @@ function Project45GunFire:screenShake(amount, shakeTime, random)
   if amount == 0 then return end
 
   local source = mcontroller.position()
-  local shake_dir = vec2.mul(self:aimVector(0), amount)
-  if random then vec2.rotate(shake_dir, 3.14 * math.random()) end
+  local shake_dir
+  if random then
+    shake_dir = vec2.rotate({amount, 0}, 3.14 * math.random())
+  else
+    shake_dir = vec2.mul(self:aimVector(0), amount)
+  end
   local cam = world.spawnProjectile(
     "invisibleprojectile",
     vec2.add(source, shake_dir),
@@ -1605,6 +1609,9 @@ function Project45GunFire:updateCharge()
   animator.setSoundVolume("chargeDrone", 0.25 + 0.7 * math.min(chargeProgress, 2))
   animator.setSoundPitch("chargeWhine", 1 + 0.3 * math.min(chargeProgress, 2))
   animator.setSoundVolume("chargeWhine", 0.25 + 0.75 * math.min(chargeProgress, 2))
+  if self.chargeScreenShakeMult then
+    self:screenShake(chargeProgress * self.currentScreenShake * self.chargeScreenShakeMult, nil, true)
+  end
 
   -- start/stop sounds accordingly
   if self.chargeTimer > 0 and not self.chargeLoopPlaying then

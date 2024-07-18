@@ -122,8 +122,11 @@
         "project45-neo-beamgun",
         "project45-neo-gazer",
 
-        // Special/Experimental
+        // Experimental
         "project45-neo-powerstave",
+        "project45-neo-sawblader",
+
+        // Special
         "project45-neb-zweibrandyr",
         "project45-neb-warbolter",
         "project45-neb-magmaspitter",
