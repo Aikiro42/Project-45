@@ -186,8 +186,7 @@
   },
 
   "sounds" : {
-    "aggroHop" : [ "/sfx/npc/monsters/monster_surprise.ogg" ],
-    "drop" : [ "/sfx/tools/pickaxe_precious.ogg" ],
+    "drop" : [ "/sfx/project45neosfx/ability/project45ultracoin/coindrop.ogg" ],
     "hit": [
       "/sfx/project45neosfx/ability/project45ultracoin/coinhit1.ogg",
       "/sfx/project45neosfx/ability/project45ultracoin/coinhit2.ogg"

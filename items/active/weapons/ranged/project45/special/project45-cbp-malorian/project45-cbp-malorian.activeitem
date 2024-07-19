@@ -138,6 +138,7 @@
     "closeBoltOnEmpty": true,
     "postReloadDelay": 0.3,
     "postCockCooldown": 0.5,
+    /*
     "muzzleProjectiles": [
       {
         "type": "project45dragonsbreath",
@@ -147,6 +148,7 @@
         "firePerShot": true
       }
     ],
+    */
 
     "laser":{
       "enabled": false
@@ -210,7 +212,13 @@
         "frontArmFrame": "rotation",
         "twoHanded": false      
       }
-    }
+    },
+
+    "ammoPerShot": 1
+  },
+
+  "altAbilityType": "project45ultracoin",
+  "altAbility": {
   },
 
   "builder" : "/items/buildscripts/buildproject45neoneo.lua"

@@ -2,6 +2,7 @@
 
   "animationCustom": {
     "sounds":{
+      "error": ["/sfx/interface/clickon_error.ogg"],
       "throwPing": ["/sfx/project45neosfx/ability/project45ultracoin/coinflip.ogg"]
     }
   },
@@ -18,7 +19,44 @@
         "throwForce": 0.5,
         "angle": 0.1
       },
-      "pixelCost": 100
+      "pixelCost": 100,
+      "energyCost": 5,
+      "consumeAmmo": true,
+
+      "coinParameters": {
+        /*
+        amount of base damage accumulated per second before getting hit
+        */
+        "baseDamageRampUp": 45,
+        
+        // max base damage accumulated per coin
+        "maxBaseDamage": 450,
+
+        // odds of each coin to fire directly at an enemy while chaining
+        // values below 0 negate splitshots
+        // values above 1 guarantee splitshots
+        "splitShotChance": 0.1,
+
+        // number of times a coin can bounce off the ground before despawning
+        "maxBounces": 3,
+
+        // {x, y} multipliers applied to the coin's speed every bounce
+        "bounceVelocityDecay": [0.8, 0.8],
+
+        // number of seconds each coin lives
+        "timeToLive": 30,
+
+
+        // VISUALS
+        
+        // rate at which a coin spins
+        "angularVelocity": -3.14,
+        
+        // how often segments will be generated; larger values mean more jagged segments
+        "tracerSegmentTickFrequency": 2,
+        // how long segments persist; larger values means longer tracers
+        "tracerSegmentTickLifetime": 30
+      }
   }
 }
   

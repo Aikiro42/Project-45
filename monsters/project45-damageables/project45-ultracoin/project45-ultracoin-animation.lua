@@ -3,9 +3,9 @@ require "/scripts/poly.lua"
 
 function init()
   self.lineStack = {nil}
-  self.segmentTicks = 2
+  self.segmentTicks = animationConfig.animationParameter("tracerSegmentTickFrequency", 2)
   self.segmentTicker = self.segmentTicks
-  self.segmentTicksToLive = 10
+  self.segmentTicksToLive = animationConfig.animationParameter("tracerSegmentTickLifetime", 10)
 end
 
 function update(dt)

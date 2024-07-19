@@ -5,20 +5,30 @@ require "/scripts/status.lua"
 function init()
   
   self.parentEntityId = config.getParameter("parentEntityId")
-  self.ownerPowerMultipler = config.getParameter("ownerPowerMultipler", 1)
-  self.baseDamage = config.getParameter("baseDamage", 45)
-  self.timeToLive = 30
+  self.parentDamageTeam = world.entityDamageTeam(self.parentEntityId)
 
-  self.angularVelocity = -util.toRadians(180)
+  self.ownerPowerMultiplier = config.getParameter("ownerPowerMultiplier", 1)
+
+  self.baseDamage = 0
+  self.baseDamageRampUp = config.getParameter("baseDamageRampUp", 45)
+  self.maxBaseDamage = config.getParameter("maxBaseDamage", 450)
+  
+  self.timeToLive = config.getParameter("timeToLive", 10)
+
+  self.angularVelocity = config.getParameter("angularVelocity", -util.toRadians(180))
 
   self.freeze = nil
   self.freezeDuration = 0.1
   self.freezeTimer = 0
   
-  self.splitShotChance = 0.25
+  self.splitShotChance = config.getParameter("splitShotChance", 0.25)
 
   self.chainDepth = 1
-  self.bounces = 3
+
+  monster.setAnimationParameter("tracerSegmentTickLifetime", config.getParameter("tracerSegmentTickLifetime", 10))
+  monster.setAnimationParameter("tracerSegmentTickFrequency", config.getParameter("tracerSegmentTickFrequency", 10))
+
+  monster.setDamageBar("none")
 
   -- give momentum
   local initialMomentum = config.getParameter("initialMomentum", {5,5})
@@ -35,76 +45,47 @@ function init()
       self.freeze = mcontroller.position()
     end
     self.freezeTimer = self.freezeDuration
-    self.timeToLive = 3
+    self.timeToLive = math.max(self.timeToLive, 3)
   end)
 
-  message.setHandler("project45-ultracoin-die", function(_, _, origin, depth, distanceBonus)
+  message.setHandler("project45-ultracoin-die", function(_, _, origin, depth, baseDamage, distanceBonus)
     renderShot(origin, mcontroller.position())
     status.addEphemeralEffect("project45death")
+    self.baseDamage = self.baseDamage + baseDamage
     self.chainDepth = depth + 1
     self.distanceBonus = (distanceBonus or 0) + math.abs(world.magnitude(origin, mcontroller.position()))
+  end)
+
+  message.setHandler("isHit", function()
+    sb.logInfo("I'm hit!")
   end)
 
 end
 
 function update(dt)
-
-  -- monster.setAnimationParameter("position", mcontroller.position())
-
-  if self.bounces == 0
-  or self.timeToLive <= 0 then
-      self.expired = true
-      status.addEphemeralEffect("project45death")
+  
+  if mcontroller.isColliding() or self.timeToLive <= 0 then
+    self.expired = true
+    status.addEphemeralEffect("project45death")
   end
   
-  if willCollide(dt) then
-    mcontroller.setXVelocity(self.currentVelocity[1]*0.5)
-    mcontroller.controlJump()
-    self.currentVelocity[2] = self.currentVelocity[2]*0.5
-    self.bounces = self.bounces - 1
-  end
-
-  mcontroller.controlParameters({
-    airJumpProfile = {
-      jumpSpeed = self.currentVelocity[2]
-    }
-  })
-
-
-  --[[
-  if self.freeze and self.freezeTimer > 0 then
-    mcontroller.controlApproachVelocity({0, 0}, 9999)
-    mcontroller.controlModifiers({movementSuppressed = true})
-    self.freezeTimer = self.freezeTimer - dt
-  else
-    if self.approachVelocity.sustainTime > 0 then
-      mcontroller.controlApproachVelocity(self.approachVelocity.velocity, self.approachVelocity.force)
-      if self.approachVelocity.threshold > self.approachVelocity.force then
-        self.approachVelocity.force = math.min(self.approachVelocity.threshold, self.approachVelocity.force + self.approachVelocity.delta)
-      else
-        self.approachVelocity.sustainTime = self.approachVelocity.sustainTime - dt
-      end
-    end
-  --]]
-
+  self.baseDamage = math.min(self.maxBaseDamage, self.baseDamage + dt * self.baseDamageRampUp)
   self.timeToLive = self.timeToLive - dt
-
-  -- rotate
   animator.rotateTransformationGroup("body", self.angularVelocity)  
   
 end
 
 function die()
-
-  self.freeze = mcontroller.position()
-  self.freezeTimer = self.freezeDuration
-
   -- hit
   if not self.expired then
+    monster.setDamageTeam(self.parentDamageTeam)
+    
     animator.playSound("hit")
     animator.burstParticleEmitter("hitPoof")
 
-    -- scan surroundings for nearest coin entity
+    -- scan surroundings for nearest coin/target entity;
+    -- freeze each coin it detects
+    local finalTarget, coinTarget
     local entityIds = world.entityQuery(
       mcontroller.position(),
       75,
@@ -115,27 +96,27 @@ function die()
         withoutEntityId = self.parentEntityId
       }
     )
-    local finalTarget, coinTarget
-
     for _, entityId in ipairs(entityIds) do
       if world.entityExists(entityId) and entityId ~= entity.id() then
         if world.entityTypeName(entityId) ==  "project45-ultracoin" then
           world.sendEntityMessage(entityId, "project45-ultracoin-freeze")
           coinTarget = coinTarget or entityId
         else
-          finalTarget = entityId
+          finalTarget = finalTarget or entityId
         end
       end
     end
 
+    -- activate next coin if they exist
     local isFinal
-
     if coinTarget and world.entityExists(coinTarget) then
-      world.sendEntityMessage(coinTarget, "project45-ultracoin-die", mcontroller.position(), self.chainDepth, self.distanceBonus or 0)
+      world.sendEntityMessage(coinTarget, "project45-ultracoin-die", mcontroller.position(), self.chainDepth, self.baseDamage, self.distanceBonus or 0)
     else
       isFinal = true
     end
 
+    -- hit target if split shot process
+    -- or if there are no more coins
     if isFinal or math.random() <= self.splitShotChance then
       local finalDestination = mcontroller.position()
       if finalTarget and world.entityExists(finalTarget) then
@@ -179,7 +160,7 @@ function willCollide(dt)
 end
 
 function calculateDamage(distanceBonus)
-  return self.baseDamage * math.max(1, distanceBonus/8) * self.ownerPowerMultipler * self.chainDepth
+  return self.baseDamage * math.max(1, distanceBonus/8) * self.ownerPowerMultiplier * self.chainDepth
 end
 
 function renderShot(origin, destination, projectileParams)
@@ -189,9 +170,8 @@ function renderShot(origin, destination, projectileParams)
 
   local defaultParams = {
     power=0,
-    speed=10,
-    timeToLive=0.01,
-    damageType="noDamage",
+    speed=0,
+    timeToLive=0.1,
     piercing = true,
     periodicActions = {
       {
@@ -232,7 +212,7 @@ function renderShot(origin, destination, projectileParams)
   world.spawnProjectile(
     "invisibleprojectile",
     destination,
-    entity.id(),
+    self.parentEntityId,
     vector,
     false,
     finalParams

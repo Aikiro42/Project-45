@@ -16,7 +16,7 @@
       "/monsters/project45-damageables/project45-ultracoin/project45-ultracoin-animation.lua"
     ],
 
-    "damageTeamType" : "indiscriminate",
+    "damageTeamType" : "enemy",
 
     "touchDamage" : {
       "poly" : [],
@@ -28,14 +28,15 @@
       "statusEffects" : [ ]
     },
 
-    "metaBoundBox" : [-1.5, -1.5, 1.5, 1.5],
+    "metaBoundBox" : [-1, -1, 1, 1],
     "scale" : 1,
 
     "movementSettings" : {
       // "collisionPoly" : [ [-0.280, -0.280], [-0.280, 0.280],  [0.280, 0.280], [0.280, -0.280]],
       // "collisionPoly" : [ [-0.25, -0.125], [-0.25, 0.125],  [0.25, 0.125], [0.25, -0.125]],
+      "collisionPoly" : [ [-1, -1], [-1, 1],  [1, 1], [1, -1]],
       // "collisionPoly" : [ [0, 0.1], [0.1, 0.1], [0.1, 0], [0, 0]],
-      ///*
+      /*
       "collisionPoly": [
         [1.00,0.00],
         [0.81,0.59],
@@ -56,7 +57,6 @@
       "flySpeed" : 0,
       "airFriction" : 0,
       "airForce" : 0.0,
-      "bounceFactor" : 0,
 
       "airJumpProfile" : {
         "jumpSpeed" : 20.0

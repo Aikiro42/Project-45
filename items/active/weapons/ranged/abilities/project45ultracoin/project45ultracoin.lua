@@ -16,22 +16,32 @@ function Project45Ultracoin:update(dt, fireMode, shiftHeld)
 
     if self.fireMode == "alt"
     and self.cooldownTimer <= 0
-    and self.pixelCost < player.currency("money")
     then
+        if self.pixelCost < player.currency("money")
+        and status.consumeResource("energy", self.energyCost)
+        and ((self.consumeAmmo and (storage.ammo or 2) > 1) or not self.consumeAmmo)
+        then
 
-        local force = self.throwForce * sb.nrand(self.inaccuracy.throwForce, 1)
-        local vector = vec2.norm(world.distance(activeItem.ownerAimPosition(), mcontroller.position()))
-        vector = vec2.rotate(vector, sb.nrand(self.inaccuracy.angle, 0))
-        
-        animator.playSound("throwPing")
-        world.spawnMonster(
-            "project45-ultracoin",
-            mcontroller.position(),
-            {
-                initialMomentum = vec2.mul(vector, self.throwForce),
-                parentEntityId = activeItem.ownerEntityId()
-            })
-        player.consumeCurrency("money", self.pixelCost)
+            local force = self.throwForce * sb.nrand(self.inaccuracy.throwForce, 1)
+            local vector = vec2.norm(world.distance(activeItem.ownerAimPosition(), mcontroller.position()))
+            vector = vec2.rotate(vector, sb.nrand(self.inaccuracy.angle, 0))
+            
+            animator.playSound("throwPing")
+            world.spawnMonster(
+                "project45-ultracoin",
+                mcontroller.position(),
+                sb.jsonMerge(self.coinParameters or {},
+                {
+                    initialMomentum = vec2.mul(vector, self.throwForce),
+                    parentEntityId = activeItem.ownerEntityId()
+                }))
+            player.consumeCurrency("money", self.pixelCost)
+            if self.consumeAmmo and storage.ammo then
+                storage.ammo = storage.ammo - 1
+            end
+        else
+            animator.playSound("error")        
+        end
         self.cooldownTimer = self.fireTime
     end
 
