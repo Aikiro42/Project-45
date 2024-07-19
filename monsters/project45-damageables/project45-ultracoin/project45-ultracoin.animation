@@ -62,6 +62,7 @@
       "body" : {
         "properties" : {
           "transformationGroups" : [ "body" ],
+          "fullbright" : true,
           "offset" : [0, 0]
         },
         "partStates" : {
@@ -106,6 +107,14 @@
     }
   },
 
+  "lights" : {
+    "glow" : {
+      "active" : true,
+      "position" : [0, 0],
+      "color" : [25, 20, 10]
+    }
+  },
+
   "particleEmitters" : {
     "spindust" : {
       "emissionRate" : 15,
@@ -124,6 +133,14 @@
         { "particle" : "deathfizz3right" },
         { "particle" : "deathfizz4left" },
         { "particle" : "deathfizz4right" }
+      ]
+    },
+    "hitPoof" : {
+      "particles" : [
+        { "particle" : "project45shineparticle-white" },
+        { "particle" : "project45shineparticle-white" },
+        { "particle" : "project45shineparticle-white" },
+        { "particle" : "project45shineimpact" }
       ]
     },
     "captureParticles" : {
@@ -171,6 +188,9 @@
   "sounds" : {
     "aggroHop" : [ "/sfx/npc/monsters/monster_surprise.ogg" ],
     "drop" : [ "/sfx/tools/pickaxe_precious.ogg" ],
-    "hit": ["/sfx/melee/pan_hit.ogg"]
+    "hit": [
+      "/sfx/project45neosfx/ability/project45ultracoin/coinhit1.ogg",
+      "/sfx/project45neosfx/ability/project45ultracoin/coinhit2.ogg"
+    ]
   }
 }

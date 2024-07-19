@@ -12,18 +12,14 @@
     "scripts" : [
       "/monsters/project45-damageables/project45-ultracoin/project45-ultracoin.lua"
     ],
+    "animationScripts" : [
+      "/monsters/project45-damageables/project45-ultracoin/project45-ultracoin-animation.lua"
+    ],
 
-    "behavior" : "monster",
-
-    "behaviorConfig" : {
-      "damageOnTouch" : true,
-      "targetOnDamage" : false
-    },
-
-    "damageTeamType" : "indiscriminate",
+    "damageTeamType" : "enemy",
 
     "touchDamage" : {
-      "poly" : [ [-0.5, -0.5], [-0.5, 0.5],  [0.5, 0.5], [0.5, -0.5]],
+      "poly" : [],
       "damage" : 0,
 
       "teamType" : "enemy",
@@ -32,18 +28,36 @@
       "statusEffects" : [ ]
     },
 
-    "metaBoundBox" : [-0.5, -0.5, 0.5, 0.5],
+    "metaBoundBox" : [-1.5, -1.5, 1.5, 1.5],
     "scale" : 1,
 
     "movementSettings" : {
-      "collisionPoly" : [ [-0.5, -0.5], [-0.5, 0.5],  [0.5, 0.5], [0.5, -0.5]],
+      // "collisionPoly" : [ [-0.280, -0.280], [-0.280, 0.280],  [0.280, 0.280], [0.280, -0.280]],
+      // "collisionPoly" : [ [-0.25, -0.125], [-0.25, 0.125],  [0.25, 0.125], [0.25, -0.125]],
+      // "collisionPoly" : [ [0, 0.1], [0.1, 0.1], [0.1, 0], [0, 0]],
+      ///*
+      "collisionPoly": [
+        [1.00,0.00],
+        [0.81,0.59],
+        [0.31,0.95],
+        [-0.31,0.95],
+        [-0.81,0.59],
+        [-1.00,0.00],
+        [-0.81,-0.59],
+        [-0.31,-0.95],
+        [0.31,-0.95],
+        [0.81,-0.59]
+      ],
+      //*/
 
-      "collisionEnabled" : true,
+      "collisionEnabled" : false,
       "gravityEnabled" : true,
       "mass" : 0.1,
       "flySpeed" : 0,
-      "airFriction" : 0.0,
+      "airFriction" : 0,
       "airForce" : 0.0,
+      "bounceFactor" : 0,
+      "groundFriction": 1000,
       "physicsEffectCategories" : ["boss"],
       "maximumPlatformCorrection": 0,
       "maximumPlatformCorrectionVelocityFactor": 0
@@ -63,7 +77,7 @@
 
     "statusSettings" : {
       "statusProperties" : {
-        // "targetMaterialKind" : "robotic"
+        "targetMaterialKind" : "robotic"
       },
 
       "appliesEnvironmentStatusEffects" : false,
@@ -73,7 +87,7 @@
       "primaryScriptSources" : [
         "/monsters/project45-damageables/project45-ultracoin/project45-ultracoin-stat.lua"
       ],
-      "primaryScriptDelta" : 60,
+      "primaryScriptDelta" : 5,
 
       "stats" : {
         "knockbackStunTime" : {
@@ -89,7 +103,7 @@
           "baseValue" : 0.0
         },
         "healthRegen" : {
-          "baseValue" : 1
+          "baseValue" : 0
         },
         "powerMultiplier" : {
           "baseValue" : 1.0

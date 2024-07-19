@@ -1,99 +1,217 @@
--- require "/monsters/monster.lua"
 require "/scripts/util.lua"
 require "/scripts/vec2.lua"
+require "/scripts/status.lua"
 
-local oldInit = init or function() end
-local oldUpdate = update or function() end
 function init()
-
-  self.parentEntityId = config.getParameter("parentEntityId")
-
-  self.suicideDamageRequest = {
-    damage = 1000,
-    damageType = "damage",
-    damageSourceKind = "default",
-    sourceEntityId = entity.id()
-  }
-  self.timeToLive = 3
-
-  self.angularVelocity = -util.toRadians(15)
-
-  local initialMomentum = config.getParameter("initialMomentum", {0,3})
-  initialMomentum[2] = initialMomentum[2] * (1 - math.random()*0.3)
-  mcontroller.addMomentum(initialMomentum)
   
+  self.parentEntityId = config.getParameter("parentEntityId")
+  self.ownerPowerMultipler = config.getParameter("ownerPowerMultipler", 1)
+  self.baseDamage = config.getParameter("baseDamage", 45)
+  self.timeToLive = 30
+
+  self.angularVelocity = -util.toRadians(180)
+
   self.freeze = nil
+  self.freezeDuration = 0.1
+  self.freezeTimer = 0
+  
+  self.chainDepth = 1
+
+  -- give momentum
+  local initialMomentum = config.getParameter("initialMomentum", {5,5})
+  mcontroller.addMomentum(initialMomentum)
+  self.currentVelocity = mcontroller.velocity()
+
+  self.approachVelocity = {
+    velocity = {0, 0},
+    force = 0,
+    delta = sb.nrand(1, 5),
+    threshold = 30,
+    sustainTime = 0.01
+  }
+
+  animator.rotateTransformationGroup("body", sb.nrand(math.pi, 0))  
+
+  -- set handlers
   message.setHandler("project45-ultracoin-freeze", function()
     if not self.freeze then
       self.freeze = mcontroller.position()
     end
+    self.freezeTimer = self.freezeDuration
     self.timeToLive = 3
   end)
 
+  message.setHandler("project45-ultracoin-die", function(_, _, origin, depth, distanceBonus)
+    renderShot(origin, mcontroller.position())
+    status.addEphemeralEffect("project45death")
+    self.chainDepth = depth + 1
+    self.distanceBonus = (distanceBonus or 0) + math.abs(world.magnitude(origin, mcontroller.position()))
+  end)
 end
 
 function update(dt)
 
-  if mcontroller.isColliding() or self.timeToLive <= 0 then
-    self.badDeath = true
-    status.applySelfDamageRequest(self.suicideDamageRequest)
-  end
-  
-  if self.freeze then
+  if self.freeze and self.freezeTimer > 0 then
     mcontroller.controlApproachVelocity({0, 0}, 9999)
     mcontroller.controlModifiers({movementSuppressed = true})
+    self.freezeTimer = self.freezeTimer - dt
   else
-    mcontroller.addMomentum({0, 0.3})
+    if willCollide(dt)
+    or self.timeToLive <= 0
+    then
+      self.expired = true
+      status.addEphemeralEffect("project45death")
+    end
+    --[[
+    if self.approachVelocity.sustainTime > 0 then
+      mcontroller.controlApproachVelocity(self.approachVelocity.velocity, self.approachVelocity.force)
+      if self.approachVelocity.threshold > self.approachVelocity.force then
+        self.approachVelocity.force = math.min(self.approachVelocity.threshold, self.approachVelocity.force + self.approachVelocity.delta)
+      else
+        self.approachVelocity.sustainTime = self.approachVelocity.sustainTime - dt
+      end
+    end
+    --]]
   end
 
   self.timeToLive = self.timeToLive - dt
 
   -- rotate
-  mcontroller.controlRotation(self.angularVelocity)
   animator.rotateTransformationGroup("body", self.angularVelocity)  
-
-  -- oldUpdate(dt)
-
   
 end
 
 function die()
-  if not self.badDeath then
+
+  self.freeze = mcontroller.position()
+  self.freezeTimer = self.freezeDuration
+
+  -- hit
+  if not self.expired then
     animator.playSound("hit")
-    
+    animator.burstParticleEmitter("hitPoof")
+
     -- scan surroundings for nearest coin entity
-    local coins = world.entityQuery(mcontroller.position(), 75, {order = "nearest", boundMode = "position", includedTypes = {"player", "monster", "npc"}, withoutEntityId = self.parentEntityId})
+    local entityIds = world.entityQuery(
+      mcontroller.position(),
+      75,
+      {
+        order = "nearest",
+        boundMode = "position",
+        includedTypes = {"player", "monster", "npc"},
+        withoutEntityId = self.parentEntityId
+      }
+    )
     local finalTarget, coinTarget
-    for _, coinId in ipairs(coins) do
-      if world.entityExists(coinId) then
-        world.sendEntityMessage(coinId, "project45-ultracoin-freeze")
-        if world.entityTypeName(coinId) ==  "project45-ultracoin" then
-          coinTarget = coinId
+
+    for _, entityId in ipairs(entityIds) do
+      if world.entityExists(entityId) then
+        if world.entityTypeName(entityId) ==  "project45-ultracoin" and entityId ~= entity.id() then
+          world.sendEntityMessage(entityId, "project45-ultracoin-freeze")
+          coinTarget = coinTarget or entityId
+        else
+          finalTarget = entityId
         end
-        finalTarget = coinTarget or coinId
       end
     end
 
-    local projectilePosition = mcontroller.position()
-    local projectileVector = vec2.rotate({0, 1}, math.random()*math.pi)
-
-    if world.entityExists(finalTarget) then
-      projectilePosition = world.entityPosition(finalTarget)
-      projectileVector = vec2.norm(world.distance(projectilePosition, mcontroller.position()))
-      world.spawnProjectile(
-        "project45stdbullet",
-        projectilePosition,
-        self.parentEntityId,
-        projectileVector,
-        true,
-        {
-          damageTeam={type="indiscriminate", team=0}
-        }
-      )
+    if coinTarget and world.entityExists(coinTarget) then
+      world.sendEntityMessage(coinTarget, "project45-ultracoin-die", mcontroller.position(), self.chainDepth, self.distanceBonus or 0)
+    else
+      local finalDestination = mcontroller.position()
+      if finalTarget and world.entityExists(finalTarget) then
+        finalDestination = world.entityPosition(finalTarget)
+      end
+      local distanceBonus = math.abs(world.magnitude(finalDestination, self.initPoint or mcontroller.position()))
+      renderShot(mcontroller.position(), finalDestination, {
+        power = self.baseDamage * math.max(1, distanceBonus/8) * self.ownerPowerMultipler * self.chainDepth,
+        damageType = "IgnoresDef"
+      })
     end
 
   else
     animator.playSound("drop")
     animator.burstParticleEmitter("deathPoof")
   end
+end
+
+
+function isColliding()
+  self.previousPosition = self.previousPosition or mcontroller.position()
+  local wallCollisionSet = {"Dynamic", "Block"}
+  if world.lineCollision(mcontroller.position(), self.previousPosition, wallCollisionSet)
+  then
+    return true
+  end
+  self.previousPosition = mcontroller.position()
+  return false
+end
+
+function willCollide(dt)
+  local expectedPosition = vec2.add(mcontroller.position(), vec2.norm(mcontroller.velocity()))
+  local wallCollisionSet = {"Dynamic", "Block"}
+  local pos = mcontroller.position()
+  
+  local origin = mcontroller.position()
+  local destination = expectedPosition
+
+  world.debugLine(origin, destination, "red")
+  return world.lineCollision(origin, destination, wallCollisionSet)
+end
+
+function renderShot(origin, destination, projectileParams)
+      
+  local vector = vec2.norm(world.distance(destination, origin))
+  local len = world.magnitude(destination, origin)
+
+  local defaultParams = {
+    power=0,
+    speed=10,
+    timeToLive=0.01,
+    damageType="noDamage",
+    piercing = true,
+    periodicActions = {
+      {
+        time = 0,
+        ["repeat"] = false,
+        action = "loop",
+        count = 1,
+        body = {{
+          action = "particle",
+          specification = {
+            type = "streak",
+            color = {255, 255, 200},
+            light = {25, 25, 20},
+            length = len*8,
+            initialVelocity = vec2.mul(vector, 0.01),
+            position = {0, 0},
+            approach = {0, 0},
+            timeToLive = 0,
+            layer = "back",
+            destructionAction = "shrink",
+            destructionTime = 0.1,
+            fade=0.1,
+            size = 1,
+            rotate = true,
+            fullbright = true,
+            collidesForeground = false,
+            variance = {
+              length = 0
+            }
+          }
+        }}
+      }
+    }
+  }
+  projectileParams = projectileParams or {}
+
+  local finalParams = sb.jsonMerge(defaultParams, projectileParams)
+  world.spawnProjectile(
+    "invisibleprojectile",
+    destination,
+    entity.id(),
+    vector,
+    false,
+    finalParams
+  )
 end

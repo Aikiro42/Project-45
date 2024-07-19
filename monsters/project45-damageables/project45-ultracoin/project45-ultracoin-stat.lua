@@ -78,11 +78,11 @@ function applyDamageRequest(damageRequest)
     sourceEntityId = damageRequest.sourceEntityId,
     targetEntityId = entity.id(),
     position = mcontroller.position(),
-    damageDealt = damage,
+    damageDealt = 0,
     healthLost = healthLost,
     hitType = hitType,
     kind = "Normal",
-    damageSourceKind = damageRequest.damageSourceKind,
+    damageSourceKind = "nodamage",
     targetMaterialKind = status.statusProperty("targetMaterialKind")
   }}
 end

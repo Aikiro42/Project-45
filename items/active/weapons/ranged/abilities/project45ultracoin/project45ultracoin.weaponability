@@ -2,7 +2,7 @@
 
   "animationCustom": {
     "sounds":{
-      "error": ["/sfx/interface/clickon_error.ogg"]
+      "throwPing": ["/sfx/project45neosfx/ability/project45ultracoin/coinflip.ogg"]
     }
   },
 
@@ -10,7 +10,12 @@
       "name" : "Ultracoin",
       "type" : "project45ultracoin",
       "scripts" : ["/items/active/weapons/ranged/abilities/project45ultracoin/project45ultracoin.lua"],
-      "class" : "Project45Ultracoin"
+      "class" : "Project45Ultracoin",
+
+      "fireTime": 0.15,
+      "throwForce": 5,
+      "inaccuracy": 0.1,
+      "pixelCost": 100
   }
 }
   
