@@ -15,21 +15,18 @@ function init()
   self.freezeDuration = 0.1
   self.freezeTimer = 0
   
+  self.splitShotChance = 0.25
+
   self.chainDepth = 1
+  self.bounces = 3
 
   -- give momentum
   local initialMomentum = config.getParameter("initialMomentum", {5,5})
   mcontroller.addMomentum(initialMomentum)
   self.currentVelocity = mcontroller.velocity()
 
-  self.approachVelocity = {
-    velocity = {0, 0},
-    force = 0,
-    delta = sb.nrand(1, 5),
-    threshold = 30,
-    sustainTime = 0.01
-  }
-
+  --monster.setAnimationParameter("collisionPoly", mcontroller.collisionPoly())
+    
   animator.rotateTransformationGroup("body", sb.nrand(math.pi, 0))  
 
   -- set handlers
@@ -47,22 +44,39 @@ function init()
     self.chainDepth = depth + 1
     self.distanceBonus = (distanceBonus or 0) + math.abs(world.magnitude(origin, mcontroller.position()))
   end)
+
 end
 
 function update(dt)
 
+  -- monster.setAnimationParameter("position", mcontroller.position())
+
+  if self.bounces == 0
+  or self.timeToLive <= 0 then
+      self.expired = true
+      status.addEphemeralEffect("project45death")
+  end
+  
+  if willCollide(dt) then
+    mcontroller.setXVelocity(self.currentVelocity[1]*0.5)
+    mcontroller.controlJump()
+    self.currentVelocity[2] = self.currentVelocity[2]*0.5
+    self.bounces = self.bounces - 1
+  end
+
+  mcontroller.controlParameters({
+    airJumpProfile = {
+      jumpSpeed = self.currentVelocity[2]
+    }
+  })
+
+
+  --[[
   if self.freeze and self.freezeTimer > 0 then
     mcontroller.controlApproachVelocity({0, 0}, 9999)
     mcontroller.controlModifiers({movementSuppressed = true})
     self.freezeTimer = self.freezeTimer - dt
   else
-    if willCollide(dt)
-    or self.timeToLive <= 0
-    then
-      self.expired = true
-      status.addEphemeralEffect("project45death")
-    end
-    --[[
     if self.approachVelocity.sustainTime > 0 then
       mcontroller.controlApproachVelocity(self.approachVelocity.velocity, self.approachVelocity.force)
       if self.approachVelocity.threshold > self.approachVelocity.force then
@@ -71,8 +85,7 @@ function update(dt)
         self.approachVelocity.sustainTime = self.approachVelocity.sustainTime - dt
       end
     end
-    --]]
-  end
+  --]]
 
   self.timeToLive = self.timeToLive - dt
 
@@ -105,8 +118,8 @@ function die()
     local finalTarget, coinTarget
 
     for _, entityId in ipairs(entityIds) do
-      if world.entityExists(entityId) then
-        if world.entityTypeName(entityId) ==  "project45-ultracoin" and entityId ~= entity.id() then
+      if world.entityExists(entityId) and entityId ~= entity.id() then
+        if world.entityTypeName(entityId) ==  "project45-ultracoin" then
           world.sendEntityMessage(entityId, "project45-ultracoin-freeze")
           coinTarget = coinTarget or entityId
         else
@@ -115,16 +128,22 @@ function die()
       end
     end
 
+    local isFinal
+
     if coinTarget and world.entityExists(coinTarget) then
       world.sendEntityMessage(coinTarget, "project45-ultracoin-die", mcontroller.position(), self.chainDepth, self.distanceBonus or 0)
     else
+      isFinal = true
+    end
+
+    if isFinal or math.random() <= self.splitShotChance then
       local finalDestination = mcontroller.position()
       if finalTarget and world.entityExists(finalTarget) then
         finalDestination = world.entityPosition(finalTarget)
       end
       local distanceBonus = math.abs(world.magnitude(finalDestination, self.initPoint or mcontroller.position()))
       renderShot(mcontroller.position(), finalDestination, {
-        power = self.baseDamage * math.max(1, distanceBonus/8) * self.ownerPowerMultipler * self.chainDepth,
+        power = calculateDamage(distanceBonus),
         damageType = "IgnoresDef"
       })
     end
@@ -157,6 +176,10 @@ function willCollide(dt)
 
   world.debugLine(origin, destination, "red")
   return world.lineCollision(origin, destination, wallCollisionSet)
+end
+
+function calculateDamage(distanceBonus)
+  return self.baseDamage * math.max(1, distanceBonus/8) * self.ownerPowerMultipler * self.chainDepth
 end
 
 function renderShot(origin, destination, projectileParams)

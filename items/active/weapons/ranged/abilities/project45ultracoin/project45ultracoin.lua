@@ -18,8 +18,10 @@ function Project45Ultracoin:update(dt, fireMode, shiftHeld)
     and self.cooldownTimer <= 0
     and self.pixelCost < player.currency("money")
     then
+
+        local force = self.throwForce * sb.nrand(self.inaccuracy.throwForce, 1)
         local vector = vec2.norm(world.distance(activeItem.ownerAimPosition(), mcontroller.position()))
-        vector = vec2.rotate(vector, sb.nrand(self.inaccuracy, 0))
+        vector = vec2.rotate(vector, sb.nrand(self.inaccuracy.angle, 0))
         
         animator.playSound("throwPing")
         world.spawnMonster(

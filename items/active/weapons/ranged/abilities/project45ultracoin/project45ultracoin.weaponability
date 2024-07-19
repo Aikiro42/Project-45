@@ -13,8 +13,11 @@
       "class" : "Project45Ultracoin",
 
       "fireTime": 0.15,
-      "throwForce": 5,
-      "inaccuracy": 0.1,
+      "throwForce": 3,
+      "inaccuracy": {
+        "throwForce": 0.5,
+        "angle": 0.1
+      },
       "pixelCost": 100
   }
 }
