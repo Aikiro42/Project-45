@@ -314,7 +314,7 @@ function Project45GunFire:init()
 
   self.recoverDelayTimer = 0
     
-  local initStance = {
+  local initStance = self.stances.initStance or {
     armRotation = -45,
     snap = true
   }
@@ -839,6 +839,10 @@ function Project45GunFire:feeding()
     util.wait(self.currentCycleTime/3)
   end
   
+  if self.isCocking and self.postReloadInitSound then
+    util.wait(self.dt)
+    animator.playSound("init")
+  end
   self.weapon:setStance(self.stances.aimStance)
   
   animator.setAnimationState("bolt", "closed")

@@ -45,11 +45,43 @@
     },
 
     "sounds": {
-      "fire" : ["/sfx/project45neosfx/special/malorian/malorian_fire.ogg"],
-      "boltPull": ["/sfx/project45neosfx/special/malorian/malorian_boltpull.ogg"],
-      "boltPush": ["/sfx/project45neosfx/special/malorian/malorian_boltpush.ogg"],
-      "reloadEnd": ["/sfx/project45neosfx/special/malorian/malorian_loadmag.ogg"],
-      "ejectMag": ["/sfx/project45neosfx/special/malorian/malorian_ejectmag.ogg"]
+      "init": [
+        "/sfx/project45neosfx/special/malorian/malorian_init1.ogg",
+        "/sfx/project45neosfx/special/malorian/malorian_init2.ogg",
+        "/sfx/project45neosfx/special/malorian/malorian_init3.ogg"
+      ],
+      "reloadStart": [
+        "/sfx/project45neosfx/special/malorian/malorian_init.ogg"
+      ],
+      "fire" : [
+        "/sfx/project45neosfx/special/malorian/malorian_fire1.ogg",
+        "/sfx/project45neosfx/special/malorian/malorian_fire2.ogg",
+        "/sfx/project45neosfx/special/malorian/malorian_fire3.ogg",
+        "/sfx/project45neosfx/special/malorian/malorian_fire4.ogg",
+        "/sfx/project45neosfx/special/malorian/malorian_fire5.ogg",
+        "/sfx/project45neosfx/special/malorian/malorian_fire6.ogg",
+        "/sfx/project45neosfx/special/malorian/malorian_fire7.ogg"
+      ],
+      "boltPull": [
+        "/sfx/project45neosfx/special/malorian/malorian_boltpull1.ogg",
+        "/sfx/project45neosfx/special/malorian/malorian_boltpull2.ogg",
+        "/sfx/project45neosfx/special/malorian/malorian_boltpull3.ogg"
+      ],
+      "boltPush": [
+        "/sfx/project45neosfx/special/malorian/malorian_boltpush1.ogg",
+        "/sfx/project45neosfx/special/malorian/malorian_boltpush2.ogg",
+        "/sfx/project45neosfx/special/malorian/malorian_boltpush3.ogg"
+      ],
+      "reloadEnd": [
+        "/sfx/project45neosfx/special/malorian/malorian_loadmag1.ogg",
+        "/sfx/project45neosfx/special/malorian/malorian_loadmag2.ogg",
+        "/sfx/project45neosfx/special/malorian/malorian_loadmag3.ogg"
+      ],
+      "ejectMag": [
+        "/sfx/project45neosfx/special/malorian/malorian_ejectmag1.ogg",
+        "/sfx/project45neosfx/special/malorian/malorian_ejectmag2.ogg",
+        "/sfx/project45neosfx/special/malorian/malorian_ejectmag3.ogg"
+      ]
     },
     "animatedParts": {
       "parts":{
@@ -125,8 +157,8 @@
     "spread": 0.2,
     "screenShakeAmount": 1.25,
 
-    "recoilAmount": 10, // amount of recoil per shot, in degrees; arm and weapon will rotate by half of this
-    "recoilMaxDeg": 25, // the most the arm and weapon will rotate, in degrees.
+    "recoilAmount": 15, // amount of recoil per shot, in degrees; arm and weapon will rotate by half of this
+    "recoilMaxDeg": 45, // the most the arm and weapon will rotate, in degrees.
     "recoverDelay": 0,
     "recoverTime": 0.2, // time it takes to recover aim completely, in seconds
 
@@ -134,6 +166,7 @@
     "cycleTime": 0.25,
     "projectileKind": "projectile",
     "audibleEjection": true,
+    "postReloadInitSound": true,
     
     "closeBoltOnEmpty": true,
     "postReloadDelay": 0.3,
@@ -159,6 +192,12 @@
 
       "idleneo": {
         "twoHanded": false
+      },
+      "initStance": {
+        "twoHanded": false,
+        "armRotation": -45,
+        "weaponRotation": -540,
+        "snap": true
       },
       "aimStance": {
         "twoHanded": false,

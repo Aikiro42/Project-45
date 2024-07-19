@@ -1,7 +1,14 @@
 /sfx/statuseffects/project45/project45armadilloeffect/
 - Crack_glass.wav by 13FPanska_Cerny_Jan -- https://freesound.org/s/379008/ -- License: Creative Commons 0
+
+/sfx/project45neosfx/ability/project45ultracoin/
 - Coinfall.wav by RynoStols -- https://freesound.org/s/326723/ -- License: Attribution NonCommercial 4.0
 - CoinFlic6.mp3 by Sojan -- https://freesound.org/s/334302/ -- License: Creative Commons 0
 - gunshot ricochet.aiff by bevibeldesign -- https://freesound.org/s/315858/ -- License: Attribution NonCommercial 4.0
 - Coin Flip - 4 by SpaceJoe -- https://freesound.org/s/485727/ -- License: Creative Commons 0
 - coins-falling-013.wav by Gerent -- https://freesound.org/s/558992/ -- License: Creative Commons 0
+
+/sfx/project45neosfx/special/malorian/
+- Malorian Arms Demo by Mads Ravn -- https://www.youtube.com/@TheMaskedAvengerN , https://www.youtube.com/watch?v=ABoT_9TjMHQ
+- Cyberpunk 2077 SoundFX Replacer - 10MM Pistol by YvesBelgira -- https://next.nexusmods.com/profile/YvesBelgira/about-me?gameId=1151, https://www.nexusmods.com/fallout4/mods/67329
+- Cyberpunk 2077 - Malorian Arms 3516 by ressness -- https://next.nexusmods.com/profile/resness/about-me?gameId=1151, https://www.nexusmods.com/fallout4/mods/74766?tab=files
