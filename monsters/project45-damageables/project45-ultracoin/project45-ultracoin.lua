@@ -17,13 +17,17 @@ function init()
 
   self.angularVelocity = config.getParameter("angularVelocity", -util.toRadians(180))
 
-  self.freeze = nil
-  self.freezeDuration = 0.1
-  self.freezeTimer = 0
+  self.freezeDuration = 3
+  self.freezeTimer = -1
   
   self.splitShotChance = config.getParameter("splitShotChance", 0.25)
 
   self.chainDepth = 1
+
+  self.zeroGControlForce = 0
+  self.zeroGControlForceDelta = 4
+
+  self.currentMass = mcontroller.mass()
 
   monster.setAnimationParameter("tracerSegmentTickLifetime", config.getParameter("tracerSegmentTickLifetime", 10))
   monster.setAnimationParameter("tracerSegmentTickFrequency", config.getParameter("tracerSegmentTickFrequency", 10))
@@ -41,24 +45,13 @@ function init()
 
   -- set handlers
   message.setHandler("project45-ultracoin-freeze", function()
-    self.freeze = true
+    status.setPersistentEffects("invulnerable", {{stat = "invulnerable", amount = 1}})
     mcontroller.controlParameters({
       gravityEnabled = false
     })
-    status.setPersistentEffects("invulnerable", {{stat = "invulnerable", amount = 1}})
     mcontroller.setVelocity({0, 0})
     self.freezeTimer = self.freezeDuration
-    self.timeToLive = math.max(self.timeToLive, 3)
-  end)
-
-  message.setHandler("project45-ultracoin-die", function(_, _, origin, depth, baseDamage, distanceBonus, isSource)
-    if origin then
-      renderShot(origin, mcontroller.position())
-    end
-    self.baseDamage = (self.baseDamage or 0) + baseDamage
-    self.chainDepth = (depth or 0) + 1
-    self.distanceBonus = (distanceBonus or 0) + math.abs(world.magnitude(origin, mcontroller.position()))
-    status.addEphemeralEffect("project45death")
+    self.timeToLive = self.timeToLive + 3
   end)
   
   message.setHandler("project45-ultracoin-chain", function(_, _, rootDamageRequest, damageMultiplier, originPos)
@@ -72,23 +65,41 @@ function init()
     self.damageMultiplier = damageMultiplier + 1
     self.baseDamage = self.rootDamageRequest.damage * self.damageMultiplier
     sb.logInfo(string.format("Current damage: %.2f", self.baseDamage))
-    status.modifyResource("health", -status.resource("health"))
+    suicide()
   end)
 
 end
 
 function update(dt)
   
-  --[[
-  if mcontroller.isColliding() or self.timeToLive <= 0 then
+  
+  if (self.freezeTimer < 0 and mcontroller.onGround()) or self.timeToLive <= 0 then
     self.expired = true
-    status.addEphemeralEffect("project45death")
+    suicide()
   end
-  --]]
-  self.score = self.score + 1
-  self.timeToLive = self.timeToLive - dt
+  
+  if not mcontroller.zeroG() then
+    self.score = self.score + 1
+    self.currentMass = self.currentMass - dt
+    mcontroller.controlParameters({
+      mass = self.currentMass
+    })
+  elseif mcontroller.velocity() ~= {0, 0} then
+    self.zeroGControlForce = self.zeroGControlForce + self.zeroGControlForceDelta
+    mcontroller.controlApproachVelocity({0, 0}, self.zeroGControlForce)
+  end
+
+  if self.freezeTimer < 0 then
+    self.timeToLive = self.timeToLive - dt
+  else
+    self.freezeTimer = self.freezeTimer - dt
+  end
   animator.rotateTransformationGroup("body", self.angularVelocity)  
   
+end
+
+function suicide()
+  status.modifyResource("health", -status.resource("health"))
 end
 
 function die()
@@ -136,7 +147,7 @@ function die()
         if world.entityTypeName(entityId) ==  "project45-ultracoin" then
           world.sendEntityMessage(entityId, "project45-ultracoin-freeze")
           coinTarget = coinTarget or entityId
-        else
+        elseif world.entityCanDamage(entity.id(), entityId) then
           finalTarget = finalTarget or entityId
         end
       end
@@ -160,18 +171,27 @@ function die()
     -- or if there are no more coins
     local splitShot = math.random() <= self.splitShotChance
     sb.logInfo("split shot? " .. (splitShot and "yes" or "no"))
+    
     if isFinal or splitShot then
       sb.logInfo("Final Damage: " .. self.baseDamage)
-      local finalDestination = mcontroller.position()
+      
       if finalTarget and world.entityExists(finalTarget) then
-        finalDestination = world.entityPosition(finalTarget)
+        sb.logInfo("Final Target: " .. world.entityTypeName(finalTarget))
+        local finalDestination = world.entityPosition(finalTarget)
+        local statfx = self.rootDamageRequest.statusEffects
+        renderShot(mcontroller.position(), finalDestination, {
+          power = calculateFinalDamage(),
+          damageType = "IgnoresDef",
+          statusEffects = #statfx > 0 and statfx or nil
+        })
+      
+      elseif isFinal or not splitShot then
+        sb.logInfo("Failed to find a target.")
+        monster.setAnimationParameter("finalDamageParticle", {
+          order = 0,
+          finalDamage = calculateFinalDamage()
+        })
       end
-      local statfx = self.rootDamageRequest.statusEffects
-      renderShot(mcontroller.position(), finalDestination, {
-        power = self.baseDamage,
-        damageType = "IgnoresDef",
-        statusEffects = #statfx > 0 and statfx or nil
-      })
     end
 
   else
@@ -180,84 +200,29 @@ function die()
   end
 end
 
-
-function isColliding()
-  self.previousPosition = self.previousPosition or mcontroller.position()
-  local wallCollisionSet = {"Dynamic", "Block"}
-  if world.lineCollision(mcontroller.position(), self.previousPosition, wallCollisionSet)
-  then
-    return true
-  end
-  self.previousPosition = mcontroller.position()
-  return false
-end
-
-function willCollide(dt)
-  local expectedPosition = vec2.add(mcontroller.position(), vec2.norm(mcontroller.velocity()))
-  local wallCollisionSet = {"Dynamic", "Block"}
-  local pos = mcontroller.position()
-  
-  local origin = mcontroller.position()
-  local destination = expectedPosition
-
-  world.debugLine(origin, destination, "red")
-  return world.lineCollision(origin, destination, wallCollisionSet)
-end
-
-function calculateDamage(distanceBonus)
-  return util.clamp(
-    self.baseDamage
-      -- * math.max(1, distanceBonus)
-      * self.ownerPowerMultiplier
-      * self.chainDepth
-      * self.damageCalcParameters.finalDamageMultiplier,
-    self.damageCalcParameters.finalDamageRange[1],
-    self.damageCalcParameters.finalDamageRange[2]
-  )
+function calculateFinalDamage()
+  return self.baseDamage
 end
 
 function renderShot(origin, destination, projectileParams)
-      
-  local vector = vec2.norm(world.distance(destination, origin))
-  local len = world.magnitude(destination, origin)
+        
+  monster.setAnimationParameter("hitscanRenderJob", {
+    order = sb.nrand(100, 0),
+    origin = origin,
+    destination = destination,
+    particleParameters = {
+      color = {255, 255, 200},
+      light = {25, 25, 20},
+      destructionTime = 0.3,
+      size = 2
+    }
+  })
 
   local defaultParams = {
     power=0,
     speed=0,
     timeToLive=0.1,
-    piercing = true,
-    periodicActions = {
-      {
-        time = 0,
-        ["repeat"] = false,
-        action = "loop",
-        count = 1,
-        body = {{
-          action = "particle",
-          specification = {
-            type = "streak",
-            color = {255, 255, 200},
-            light = {25, 25, 20},
-            length = len*8,
-            initialVelocity = vec2.mul(vector, 0.01),
-            position = {0, 0},
-            approach = {0, 0},
-            timeToLive = 0,
-            layer = "back",
-            destructionAction = "shrink",
-            destructionTime = 0.1,
-            fade=0.1,
-            size = 1,
-            rotate = true,
-            fullbright = true,
-            collidesForeground = false,
-            variance = {
-              length = 0
-            }
-          }
-        }}
-      }
-    }
+    piercing = true
   }
   projectileParams = projectileParams or {}
 

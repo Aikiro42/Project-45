@@ -16,7 +16,7 @@ function Project45Ultracoin:init()
     self.limitEntities = true
     self.queryPeriod = 0.25
     self.queryEntityTimer = 0
-    self.entityThreshold = 10
+    self.entityThreshold = self.entityThreshold or 10
 
     self.aimOffset = self.aimOffset or {0, 0}
 end

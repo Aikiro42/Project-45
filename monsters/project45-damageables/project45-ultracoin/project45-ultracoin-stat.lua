@@ -11,8 +11,10 @@ end
 function applyDamageRequest(damageRequest)
 
   -- start chain
-  sb.logInfo("Sending damage Request: " .. sb.printJson(damageRequest, 1))
-  world.sendEntityMessage(entity.id(), "project45-ultracoin-chain", damageRequest, 2, nil)
+  if entity.id() ~= damageRequest.sourceEntityId then
+    sb.logInfo("Sending damage Request: " .. sb.printJson(damageRequest, 1))
+    world.sendEntityMessage(entity.id(), "project45-ultracoin-chain", damageRequest, 2, nil)
+  end
 
   if world.getProperty("nonCombat") then
     return {}
@@ -90,6 +92,7 @@ function applyDamageRequest(damageRequest)
     damageSourceKind = "nodamage",
     targetMaterialKind = status.statusProperty("targetMaterialKind")
   }}
+
 end
 
 function knockbackMomentum(momentum)

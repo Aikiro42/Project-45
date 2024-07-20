@@ -118,7 +118,7 @@
   "particleEmitters" : {
     "spindust" : {
       "emissionRate" : 15,
-      "offsetRegion" : [ -0.0, -2.25, 0.0, -2.25 ],
+      "offsetRegion" : [ -0.0, -0.0, 0.0, 0.0 ],
       "particles" : [
         { "particle" : "mandrafloradust" }
       ]
@@ -136,11 +136,12 @@
       ]
     },
     "hitPoof" : {
+      "offsetRegion" : [ -0.0, -0.0, 0.0, 0.0 ],
       "particles" : [
         { "particle" : "project45shineparticle-white" },
         { "particle" : "project45shineparticle-white" },
-        { "particle" : "project45shineparticle-white" },
-        { "particle" : "project45shineimpact" }
+        { "particle" : "project45shineimpact" },
+        { "particle" : "project45shineparticle-white" }
       ]
     },
     "captureParticles" : {
