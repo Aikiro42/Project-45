@@ -6,12 +6,23 @@ Project45Ultracoin = WeaponAbility:new()
 
 function Project45Ultracoin:init()
     self.cooldownTimer = 0
+    self.ammoPerToss = math.max(0, self.ammoPerToss or 0)
+
+    self.maxChainDistsance = self.maxChainDistsance or 75
+
+    -- i mean sure you could modify these in the weaponability json
+    -- but i won't accept responsibility for when your world crashes
+    -- due to too many entities
+    self.limitEntities = true
+    self.queryPeriod = 0.25
+    self.queryEntityTimer = 0
+    self.entityThreshold = 10
 end
 
 function Project45Ultracoin:update(dt, fireMode, shiftHeld)
     
     WeaponAbility.update(self, dt, fireMode, shiftHeld)
-    
+    self:queryEntities() -- updates self.currentEntityCount
     self.cooldownTimer = self.cooldownTimer - self.dt
 
     if self.fireMode == "alt"
@@ -19,9 +30,9 @@ function Project45Ultracoin:update(dt, fireMode, shiftHeld)
     then
         if self.pixelCost < player.currency("money")
         and status.consumeResource("energy", self.energyCost)
-        and ((self.consumeAmmo and (storage.ammo or 2) > 1) or not self.consumeAmmo)
+        and ((self.ammoPerToss > 0 and (storage.ammo or 2) > 1) or self.ammoPerToss == 0)
+        and self.currentEntityCount < self.entityThreshold
         then
-
             local force = self.throwForce * sb.nrand(self.inaccuracy.throwForce, 1)
             local vector = vec2.norm(world.distance(activeItem.ownerAimPosition(), mcontroller.position()))
             vector = vec2.rotate(vector, sb.nrand(self.inaccuracy.angle, 0))
@@ -33,11 +44,14 @@ function Project45Ultracoin:update(dt, fireMode, shiftHeld)
                 sb.jsonMerge(self.coinParameters or {},
                 {
                     initialMomentum = vec2.mul(vector, self.throwForce),
-                    parentEntityId = activeItem.ownerEntityId()
+                    ownerEntityId = activeItem.ownerEntityId(),
+                    ownerDamageTeam = world.entityDamageTeam(activeItem.ownerEntityId()),
+                    maxChainDistance = self.maxChainDistsance,
+                    ownerPowerMultiplier = activeItem.ownerPowerMultiplier()
                 }))
             player.consumeCurrency("money", self.pixelCost)
-            if self.consumeAmmo and storage.ammo then
-                storage.ammo = storage.ammo - 1
+            if storage.ammo then
+                storage.ammo = storage.ammo - self.ammoPerToss
             end
         else
             animator.playSound("error")        
@@ -45,6 +59,18 @@ function Project45Ultracoin:update(dt, fireMode, shiftHeld)
         self.cooldownTimer = self.fireTime
     end
 
+end
+
+function Project45Ultracoin:queryEntities()
+    self.queryEntityTimer = self.queryEntityTimer - self.dt
+    if self.queryEntityTimer > 0 then return end
+    self.queryEntityTimer = self.queryPeriod
+    local detectedEntities = world.entityQuery(mcontroller.position(), self.maxChainDistsance, {
+        withoutEntityId = entity.id(),
+        includedTypes = {"creature"},
+        order = "nearest"
+    })
+    self.currentEntityCount = #detectedEntities
 end
 
 function Project45Ultracoin:uninit()

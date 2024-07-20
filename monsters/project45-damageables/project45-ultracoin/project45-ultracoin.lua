@@ -4,14 +4,23 @@ require "/scripts/status.lua"
 
 function init()
   
-  self.parentEntityId = config.getParameter("parentEntityId")
-  self.parentDamageTeam = world.entityDamageTeam(self.parentEntityId)
-
+  self.ownerEntityId = config.getParameter("ownerEntityId")
+  self.ownerDamageTeam = config.getParameter("ownerDamageTeam", {
+    type="indiscriminate",
+    team=0
+  })
   self.ownerPowerMultiplier = config.getParameter("ownerPowerMultiplier", 1)
+  
+  self.maxChainDistance = config.getParameter("maxChainDistance", 75)
 
-  self.baseDamage = 0
-  self.baseDamageRampUp = config.getParameter("baseDamageRampUp", 45)
-  self.maxBaseDamage = config.getParameter("maxBaseDamage", 450)
+  self.damageCalcParameters = config.getParameter("damageCalcParameters", {
+    baseDamageRange = {1, 450},
+    baseDamageDelta = 45,
+    finalDamageRange = {45, 69420},
+    finalDamageMultiplier = 1
+  })
+
+  self.baseDamage = self.damageCalcParameters.adaptiveBaseDamage and 1 or self.damageCalcParameters.baseDamageRange[1]
   
   self.timeToLive = config.getParameter("timeToLive", 10)
 
@@ -56,7 +65,7 @@ function init()
     self.distanceBonus = (distanceBonus or 0) + math.abs(world.magnitude(origin, mcontroller.position()))
   end)
 
-  message.setHandler("isHit", function()
+  message.setHandler("hit", function()
     sb.logInfo("I'm hit!")
   end)
 
@@ -69,7 +78,10 @@ function update(dt)
     status.addEphemeralEffect("project45death")
   end
   
-  self.baseDamage = math.min(self.maxBaseDamage, self.baseDamage + dt * self.baseDamageRampUp)
+  self.baseDamage = math.min(
+    self.baseDamage + dt * self.damageCalcParameters.baseDamageDelta,
+    self.damageCalcParameters.baseDamageRange[2]
+  )
   self.timeToLive = self.timeToLive - dt
   animator.rotateTransformationGroup("body", self.angularVelocity)  
   
@@ -78,7 +90,7 @@ end
 function die()
   -- hit
   if not self.expired then
-    monster.setDamageTeam(self.parentDamageTeam)
+    monster.setDamageTeam(self.ownerDamageTeam)
     
     animator.playSound("hit")
     animator.burstParticleEmitter("hitPoof")
@@ -88,12 +100,12 @@ function die()
     local finalTarget, coinTarget
     local entityIds = world.entityQuery(
       mcontroller.position(),
-      75,
+      self.maxChainDistance,
       {
         order = "nearest",
         boundMode = "position",
         includedTypes = {"player", "monster", "npc"},
-        withoutEntityId = self.parentEntityId
+        withoutEntityId = self.ownerEntityId
       }
     )
     for _, entityId in ipairs(entityIds) do
@@ -110,7 +122,11 @@ function die()
     -- activate next coin if they exist
     local isFinal
     if coinTarget and world.entityExists(coinTarget) then
-      world.sendEntityMessage(coinTarget, "project45-ultracoin-die", mcontroller.position(), self.chainDepth, self.baseDamage, self.distanceBonus or 0)
+      world.sendEntityMessage(
+        coinTarget,
+        "project45-ultracoin-die",
+        mcontroller.position(), self.chainDepth, self.baseDamage, self.distanceBonus or 0
+      )
     else
       isFinal = true
     end
@@ -122,9 +138,8 @@ function die()
       if finalTarget and world.entityExists(finalTarget) then
         finalDestination = world.entityPosition(finalTarget)
       end
-      local distanceBonus = math.abs(world.magnitude(finalDestination, self.initPoint or mcontroller.position()))
       renderShot(mcontroller.position(), finalDestination, {
-        power = calculateDamage(distanceBonus),
+        power = calculateDamage(self.distanceBonus or 0),
         damageType = "IgnoresDef"
       })
     end
@@ -160,7 +175,15 @@ function willCollide(dt)
 end
 
 function calculateDamage(distanceBonus)
-  return self.baseDamage * math.max(1, distanceBonus/8) * self.ownerPowerMultiplier * self.chainDepth
+  return util.clamp(
+    self.baseDamage
+      * math.max(1, distanceBonus)
+      * self.ownerPowerMultiplier
+      * self.chainDepth
+      * self.damageCalcParameters.finalDamageMultiplier,
+    self.damageCalcParameters.finalDamageRange[1],
+    self.damageCalcParameters.finalDamageRange[2]
+  )
 end
 
 function renderShot(origin, destination, projectileParams)
@@ -212,7 +235,7 @@ function renderShot(origin, destination, projectileParams)
   world.spawnProjectile(
     "invisibleprojectile",
     destination,
-    self.parentEntityId,
+    self.ownerEntityId,
     vector,
     false,
     finalParams

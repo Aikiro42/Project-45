@@ -163,7 +163,7 @@
     "recoverTime": 0.2, // time it takes to recover aim completely, in seconds
 
     "semi": true,
-    "cycleTime": 0.25,
+    "cycleTime": 0.4,
     "projectileKind": "projectile",
     "audibleEjection": true,
     "postReloadInitSound": true,
@@ -253,12 +253,15 @@
       }
     },
 
-    "ammoPerShot": 1
+    "ammoPerShot": 0
   },
 
   "altAbilityType": "project45ultracoin",
   "altAbility": {
-  },
+    "pixelCost": 0,
+    "energyCost": 0,
+    "ammoPerToss": 0
+},
 
   "builder" : "/items/buildscripts/buildproject45neoneo.lua"
 }

@@ -22,18 +22,33 @@
         "throwForce": 0.5,
         "angle": 0.1
       },
+      
+      // Cast costs
       "pixelCost": 100,
       "energyCost": 5,
-      "consumeAmmo": true,
+      "ammoPerToss": 1,
 
       "coinParameters": {
-        /*
-        amount of base damage accumulated per second before getting hit
-        */
-        "baseDamageRampUp": 45,
-        
-        // max base damage accumulated per coin
-        "maxBaseDamage": 450,
+        "damageCalcParameters": {
+          /*
+          base damage per coin is clamped within this range;
+          when first spawning, a coin's base damage is initialized with
+          the lower value of this range.
+          */
+          "baseDamageRange": [1, 450],
+          /*
+          amount continuously incremented to base damage per second before ricoshot;
+          e.g. if the coin has been in the air for 0.1s and its baseDamageDelta is 10,
+          then 0.1 * 10 = 1 is added to the coin's base damage.
+          */
+          "baseDamageDelta": 45,
+          /*
+          final damage dealt to target is clamped within this range. This can help prevent potential issues with
+          integer overflow. (Exponential growth is a powerful thing)
+          */
+          "finalDamageRange": [45, 69420],
+          "finalDamageMultiplier": 0.5
+        },
 
         // odds of each coin to fire directly at an enemy while chaining
         // values below 0 negate splitshots
