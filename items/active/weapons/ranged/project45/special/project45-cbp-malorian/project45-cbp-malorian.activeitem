@@ -258,6 +258,14 @@
 
   "altAbilityType": "project45ultracoin",
   "altAbility": {
+    "inaccuracy": {
+      "throwForce": 0,
+      "angle": 0
+    },
+    "damageCalcParameters": {
+      "finalDamageRange": [0, 65536]
+    },
+    "splitShotChance": 0,
     "pixelCost": 0,
     "energyCost": 0,
     "ammoPerToss": 0

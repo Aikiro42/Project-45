@@ -9,6 +9,11 @@ function init()
 end
 
 function applyDamageRequest(damageRequest)
+
+  -- start chain
+  sb.logInfo("Sending damage Request: " .. sb.printJson(damageRequest, 1))
+  world.sendEntityMessage(entity.id(), "project45-ultracoin-chain", damageRequest, 2, nil)
+
   if world.getProperty("nonCombat") then
     return {}
   end
@@ -79,7 +84,7 @@ function applyDamageRequest(damageRequest)
     targetEntityId = entity.id(),
     position = mcontroller.position(),
     damageDealt = 0,
-    healthLost = healthLost,
+    healthLost = damage,
     hitType = hitType,
     kind = "Normal",
     damageSourceKind = "nodamage",

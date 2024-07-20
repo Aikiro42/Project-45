@@ -17,6 +17,8 @@ function Project45Ultracoin:init()
     self.queryPeriod = 0.25
     self.queryEntityTimer = 0
     self.entityThreshold = 10
+
+    self.aimOffset = self.aimOffset or {0, 0}
 end
 
 function Project45Ultracoin:update(dt, fireMode, shiftHeld)
@@ -33,8 +35,9 @@ function Project45Ultracoin:update(dt, fireMode, shiftHeld)
         and ((self.ammoPerToss > 0 and (storage.ammo or 2) > 1) or self.ammoPerToss == 0)
         and self.currentEntityCount < self.entityThreshold
         then
+
             local force = self.throwForce * sb.nrand(self.inaccuracy.throwForce, 1)
-            local vector = vec2.norm(world.distance(activeItem.ownerAimPosition(), mcontroller.position()))
+            local vector = self:aimVector(self.aimOffset)
             vector = vec2.rotate(vector, sb.nrand(self.inaccuracy.angle, 0))
             
             animator.playSound("throwPing")
@@ -44,10 +47,12 @@ function Project45Ultracoin:update(dt, fireMode, shiftHeld)
                 sb.jsonMerge(self.coinParameters or {},
                 {
                     initialMomentum = vec2.mul(vector, self.throwForce),
+
                     ownerEntityId = activeItem.ownerEntityId(),
                     ownerDamageTeam = world.entityDamageTeam(activeItem.ownerEntityId()),
+                    
                     maxChainDistance = self.maxChainDistsance,
-                    ownerPowerMultiplier = activeItem.ownerPowerMultiplier()
+                    damageCalcParameters = self.damageCalcParameters
                 }))
             player.consumeCurrency("money", self.pixelCost)
             if storage.ammo then
@@ -59,6 +64,15 @@ function Project45Ultracoin:update(dt, fireMode, shiftHeld)
         self.cooldownTimer = self.fireTime
     end
 
+end
+
+function Project45Ultracoin:aimVector(aimOffset)
+    return vec2.norm(
+            world.distance(
+                vec2.add(activeItem.ownerAimPosition(), aimOffset or {0, 0}),
+                mcontroller.position()
+            )
+    )
 end
 
 function Project45Ultracoin:queryEntities()
