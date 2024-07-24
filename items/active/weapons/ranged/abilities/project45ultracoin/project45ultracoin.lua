@@ -48,8 +48,7 @@ function Project45Ultracoin:update(dt, fireMode, shiftHeld)
                 {
                     initialMomentum = vec2.mul(vector, self.throwForce),
                     ownerEntityId = activeItem.ownerEntityId(),
-                    ownerDamageTeam = world.entityDamageTeam(activeItem.ownerEntityId()),
-                    maxChainDistance = self.maxChainDistsance,
+                    ownerDamageTeam = world.entityDamageTeam(activeItem.ownerEntityId())
                 }))
             player.consumeCurrency("money", self.pixelCost)
             if storage.ammo then

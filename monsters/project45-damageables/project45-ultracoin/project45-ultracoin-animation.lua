@@ -25,44 +25,6 @@ function update(dt)
     self.segmentTicker = self.segmentTicks
   end
 
-  local hitscanRenderJob = animationConfig.animationParameter("hitscanRenderJob")
-  if hitscanRenderJob and hitscanRenderJob.order ~= self.hitscanRenderJob then
-    self.hitscanRenderJob = hitscanRenderJob.order
-    -- drawStreak(hitscanRenderJob.origin, hitscanRenderJob.destination, hitscanRenderJob.particleParameters)
-    --[[
-    drawStreakImage(hitscanRenderJob.origin, hitscanRenderJob.destination, hitscanRenderJob.particleParameters)
-    drawStreakImage(hitscanRenderJob.destination, hitscanRenderJob.origin, hitscanRenderJob.particleParameters)
-    drawStreakImage(hitscanRenderJob.destination, hitscanRenderJob.origin, hitscanRenderJob.particleParameters, {initialVelocity={0, 0}})
-    --]]
-    drawStreakImage(hitscanRenderJob.origin, hitscanRenderJob.destination, hitscanRenderJob.particleParameters)
-  end
-
-  local finalDamageParticle = animationConfig.animationParameter("finalDamageParticle")
-  if finalDamageParticle and finalDamageParticle.order ~= self.finalDamageParticleOrder then
-    self.finalDamageParticleOrder = finalDamageParticle.order
-    localAnimator.spawnParticle(
-      {
-        type = "text",
-        text= "^shadow;" .. math.floor(finalDamageParticle.finalDamage),
-        color = {255, 200, 0},
-        initialVelocity={0.0, 15.0},
-        finalVelocity={0.0, -15},
-        approach={3, 30},
-        angularVelocity=20,
-        size = 1,
-        timeToLive=0.7,
-        fullbright = true,
-        flippable = false,
-        destructionAction="shrink",
-        destructionTime=0.5,
-        layer = "front",
-        variance={
-          initialVelocity={9.0, 3.0}
-        },
-    
-      }, entity.position())
-  end
-
 end
 
 function drawStreak(origin, destination, particleParameters)
@@ -103,7 +65,7 @@ function drawStreakImage(origin, destination, particleParameters, primaryParamet
   local length = world.magnitude(destination, origin)
   local vector = vec2.norm(world.distance(destination, origin))
   
-  local size = 0.5
+  local size = 1
   local image = "/particles/project45/pixel.png"
 
   local directive = string.format("?scalenearest=%.2f;1", length*8/size)
@@ -138,4 +100,25 @@ function drawStreakImage(origin, destination, particleParameters, primaryParamet
 
   particleParameters = sb.jsonMerge(particleParameters, primaryParameters)
   localAnimator.spawnParticle(particleParameters)
+end
+
+function drawStaggeredStreakImage(origin, destination, particleParameters)
+  sb.logInfo(sb.printJson(destination))
+  local length = world.magnitude(destination, origin)
+  local vector = vec2.norm(world.distance(destination, origin))
+  local segments = math.max(1, math.floor(length/5))
+
+  if segments == 1 then
+    drawStreakImage(origin, destination, particleParameters)
+  end
+
+  local segmentLength = length / segments
+  local segmentVector = vec2.mul(vector, segmentLength)
+  local a, b = origin, vec2.add(origin, segmentVector)
+  while segments > 0 do
+    drawStreakImage(a, b, particleParameters)
+    a = b
+    b = vec2.add(a, segmentVector)
+    segments = segments - 1
+  end
 end

@@ -77,7 +77,7 @@ function init()
     -- sb.logInfo(string.format("(%d) Coin %d; Current damage: %.2f", entity.id(), damageMultiplier-1, self.baseDamage))
     sudoku()
   end)
-
+  
 end
 
 function update(dt)
@@ -169,6 +169,7 @@ function die()
         withoutEntityId = self.ownerEntityId
       }
     )
+
     for _, entityId in ipairs(entityIds) do
       if world.entityExists(entityId) and entityId ~= entity.id() then
         if world.entityTypeName(entityId) ==  "project45-ultracoin" then
@@ -208,11 +209,11 @@ function die()
     local splitShot = canSplitShot()
     if isFinal or splitShot then
       -- sb.logInfo(string.format("\t(%d) -> (%s); Final Damage: %f", entity.id(), finalTarget, self.baseDamage))
-      
+      local statfx = self.rootDamageRequest.statusEffects
       if finalTarget and world.entityExists(finalTarget) then
+        self.finalTarget = finalTarget
         -- sb.logInfo("Final Target: " .. world.entityTypeName(finalTarget))
         local finalDestination = world.entityPosition(finalTarget)
-        local statfx = self.rootDamageRequest.statusEffects
         renderShot(mcontroller.position(), finalDestination, {
           power = calculateFinalDamage(splitShot and not isFinal),
           damageType = "IgnoresDef",
@@ -221,9 +222,10 @@ function die()
       
       elseif isFinal or not canSplitShot() then
         -- sb.logInfo("Failed to find a target.")
-        monster.setAnimationParameter("finalDamageParticle", {
-          order = 0,
-          finalDamage = calculateFinalDamage()
+        renderFinalDamage(mcontroller.position(), calculateFinalDamage(), {
+          power = calculateFinalDamage(splitShot and not isFinal),
+          damageType = "IgnoresDef",
+          statusEffects = #statfx > 0 and statfx or nil
         })
       end
     end
@@ -239,31 +241,107 @@ function calculateFinalDamage(splitShot)
 end
 
 function renderShot(origin, destination, projectileParams)
-        
-  monster.setAnimationParameter("hitscanRenderJob", {
-    order = sb.nrand(100, 0),
-    origin = origin,
-    destination = destination,
-    particleParameters = {
-      color = {255, 255, 200}
-    }
-  })
 
-  local defaultParams = {
+  local length = world.magnitude(destination, origin)
+  local vector = world.distance(destination, origin)
+  local primaryParameters = {
+    length = length*8,
+    -- initialVelocity = vec2.mul(vec2.norm(vector), 0.01),
+    initialVelocity = {0.001, 0}
+  }
+
+  local particleParameters = {
+    type = "streak",
+    color = {255, 255, 200},
+    light = {25, 25, 20},
+    approach = {0, 0},
+    timeToLive = 0,
+    layer = "back",
+    destructionAction = "shrink",
+    destructionTime = 1,
+    fade=0.1,
+    size = 1,
+    rotate = true,
+    fullbright = true,
+    collidesForeground = false,
+    variance = {
+      length = 0,
+    }
+  }
+
+  particleParameters = sb.jsonMerge(particleParameters, primaryParameters)
+
+  local defaultProjectileParams = {
     power=0,
     speed=0,
-    timeToLive=0.1,
-    piercing = true
+    piercing = true,
+    periodicActions = {{
+      time = 0,
+      ["repeat"] = false,
+      rotate=true,
+      action = "particle",
+      specification = particleParameters
+    }}
   }
-  projectileParams = projectileParams or {}
+  local projectileParams = projectileParams or {}
 
-  local finalParams = sb.jsonMerge(defaultParams, projectileParams)
+  local finalParams = sb.jsonMerge(defaultProjectileParams, projectileParams)
+
   world.spawnProjectile(
-    "invisibleprojectile",
+    finalParams.power > 0 and "project45-stdexplosionshockwave" or "project45_invisiblesummon",
     destination,
     self.ownerEntityId,
     vector,
     false,
     finalParams
   )
+
+end
+
+function renderFinalDamage(position, damage, projectileParams)
+  local finalDamageParticle = {
+    type = "text",
+    text= "^shadow;" .. math.floor(damage),
+    color = {255, 200, 0},
+    initialVelocity={0.0, 15.0},
+    finalVelocity={0.0, -15},
+    approach={3, 30},
+    angularVelocity=20,
+    size = 1,
+    timeToLive=0.7,
+    fullbright = true,
+    flippable = false,
+    destructionAction="shrink",
+    destructionTime=0.5,
+    layer = "front",
+    variance={
+      initialVelocity={9.0, 3.0}
+    },
+  }
+
+  local defaultProjectileParams = {
+    power=damage,
+    speed=0,
+    piercing = true,
+    periodicActions = {{
+      time = 0,
+      ["repeat"] = false,
+      rotate=true,
+      action = "particle",
+      specification = finalDamageParticle
+    }}
+  }
+  local projectileParams = projectileParams or {}
+
+  local finalParams = sb.jsonMerge(defaultProjectileParams, projectileParams)
+
+  world.spawnProjectile(
+    "project45-stdexplosionshockwave",
+    position,
+    self.ownerEntityId,
+    {1, 0},
+    false,
+    finalParams
+  )
+
 end

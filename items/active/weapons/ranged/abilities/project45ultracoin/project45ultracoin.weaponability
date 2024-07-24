@@ -60,7 +60,7 @@
         // number of seconds each coin lives
         "timeToLive": 30,
 
-        "maxChainDistance": 75,
+        "maxChainDistance": 30,
 
         "zeroGControlForceDelta": 4,
 
