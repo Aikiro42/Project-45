@@ -12,7 +12,7 @@ function applyDamageRequest(damageRequest)
 
   -- start chain
   if entity.id() ~= damageRequest.sourceEntityId then
-    sb.logInfo("Sending damage Request: " .. sb.printJson(damageRequest, 1))
+    -- sb.logInfo("Sending damage Request: " .. sb.printJson(damageRequest, 1))
     world.sendEntityMessage(entity.id(), "project45-ultracoin-chain", damageRequest, 2, nil)
   end
 

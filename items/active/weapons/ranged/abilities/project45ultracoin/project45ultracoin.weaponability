@@ -6,7 +6,7 @@
   "animationCustom": {
     "sounds":{
       "error": ["/sfx/interface/clickon_error.ogg"],
-      "throwPing": ["/sfx/project45neosfx/ability/project45ultracoin/coinflip.ogg"]
+      "toss": ["/sfx/project45neosfx/ability/project45ultracoin/coinflip.ogg"]
     }
   },
 
@@ -28,52 +28,45 @@
       "energyCost": 5,
       "ammoPerToss": 1,
 
+      "coinMonster": "project45-ultracoin",
       "coinParameters": {
-        "damageCalcParameters": {
-          /*
-          base damage per coin is clamped within this range;
-          when first spawning, a coin's base damage is initialized with
-          the lower value of this range.
-          */
-          "baseDamageRange": [1, 450],
-          /*
-          amount continuously incremented to base damage per second before ricoshot;
-          e.g. if the coin has been in the air for 0.1s and its baseDamageDelta is 10,
-          then 0.1 * 10 = 1 is added to the coin's base damage.
-          */
-          "baseDamageDelta": 45,
-          /*
-          final damage dealt to target is clamped within this range. This can help prevent potential issues with
-          integer overflow. (Exponential growth is a powerful thing)
-          */
-          "finalDamageRange": [45, 69420],
-          "finalDamageMultiplier": 0.5
+
+        // value multiplied to the final damage after being increased n+1 times
+        "finalDamageMult": 1,
+
+        "splitShotParameters": {
+          // seconds that must pass before a coin can splitshot
+          "time": 1,
+          // max amount of time (in seconds) added to the splitshot time
+          "rand": 3,
+          // damage multiplier 
+          "damageMult": 2
         },
 
-        // odds of each coin to fire directly at an enemy while chaining
-        // values below 0 negate splitshots
-        // values above 1 guarantee splitshots
-        "splitShotChance": 0.1,
-
-        // number of times a coin can bounce off the ground before despawning
-        "maxBounces": 3,
-
-        // {x, y} multipliers applied to the coin's speed every bounce
-        "bounceVelocityDecay": [0.8, 0.8],
+        "fallControlParameters": {
+          "deltas": {
+            // how much the control force changes per second
+            // (only applies in zero gravity)
+            "controlForce": 250,
+            // how much air friction changes per second
+            // (only applies in non-zero gravity)
+            "airFriction": 3
+          },
+          // maximum amount of air friction subtracted
+          // (the higher the value, the more likely the coin falls faster)
+          "maxAirFrictionRand": 0.1
+        },
 
         // number of seconds each coin lives
         "timeToLive": 30,
 
+        "maxChainDistance": 75,
 
-        // VISUALS
-        
+        "zeroGControlForceDelta": 4,
+
+        // VISUALS        
         // rate at which a coin spins
-        "angularVelocity": -3.14,
-        
-        // how often segments will be generated; larger values mean more jagged segments
-        "tracerSegmentTickFrequency": 2,
-        // how long segments persist; larger values means longer tracers
-        "tracerSegmentTickLifetime": 30
+        "angularVelocity": -3.14
       }
   }
 }

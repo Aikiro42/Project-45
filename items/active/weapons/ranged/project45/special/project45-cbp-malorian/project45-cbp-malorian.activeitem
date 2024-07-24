@@ -258,6 +258,8 @@
 
   "altAbilityType": "project45ultracoin",
   "altAbility": {
+    // "entityThreshold": 999,
+    // "fireTime": 0,
     "inaccuracy": {
       "throwForce": 0,
       "angle": 0

@@ -138,10 +138,31 @@
     "hitPoof" : {
       "offsetRegion" : [ -0.0, -0.0, 0.0, 0.0 ],
       "particles" : [
-        { "particle" : "project45shineparticle-white" },
-        { "particle" : "project45shineparticle-white" },
-        { "particle" : "project45shineimpact" },
-        { "particle" : "project45shineparticle-white" }
+        // { "particle" : "project45shineparticle-white" },
+        // { "particle" : "project45shineparticle-white" },
+        // { "particle" : "project45shineparticle-white" },
+        { "particle" : "project45shineimpact" }
+      ]
+    },
+    "twinkle" : {
+      "offsetRegion" : [ -0.0, -0.0, 0.0, 0.0 ],
+      "particles" : [
+        { "particle" : {
+          "type" : "animated",
+          "image" : "/animations/1hswordhitspark/1hswordhitspark.animation",
+          "fullbright": true,
+          "size" : 1.0,
+          "color" : [255, 255, 200, 255],
+          "destructionAction" : "shrink",
+          "destructionTime" : 0.3,
+          "fade" : 0.9,
+          "angularVelocity": 1800,
+          "timeToLive" : 0,
+          "variance" : {
+            "size" : 0.05
+          }
+        }
+      }
       ]
     },
     "captureParticles" : {
@@ -191,6 +212,7 @@
     "hit": [
       "/sfx/project45neosfx/ability/project45ultracoin/coinhit1.ogg",
       "/sfx/project45neosfx/ability/project45ultracoin/coinhit2.ogg"
-    ]
+    ],
+    "twinkle": [ "/sfx/project45neosfx/ability/project45ultracoin/twinkle.ogg" ]
   }
 }

@@ -40,19 +40,16 @@ function Project45Ultracoin:update(dt, fireMode, shiftHeld)
             local vector = self:aimVector(self.aimOffset)
             vector = vec2.rotate(vector, sb.nrand(self.inaccuracy.angle, 0))
             
-            animator.playSound("throwPing")
+            animator.playSound("toss")
             world.spawnMonster(
-                "project45-ultracoin",
+                self.coinMonster,
                 mcontroller.position(),
                 sb.jsonMerge(self.coinParameters or {},
                 {
                     initialMomentum = vec2.mul(vector, self.throwForce),
-
                     ownerEntityId = activeItem.ownerEntityId(),
                     ownerDamageTeam = world.entityDamageTeam(activeItem.ownerEntityId()),
-                    
                     maxChainDistance = self.maxChainDistsance,
-                    damageCalcParameters = self.damageCalcParameters
                 }))
             player.consumeCurrency("money", self.pixelCost)
             if storage.ammo then
