@@ -164,6 +164,7 @@
 
     "semi": true,
     "cycleTime": 0.4,
+    "fireTime": 0.3,
     "projectileKind": "projectile",
     "audibleEjection": true,
     "postReloadInitSound": true,
@@ -251,27 +252,8 @@
         "frontArmFrame": "rotation",
         "twoHanded": false      
       }
-    },
-
-    "ammoPerShot": 0
+    }
   },
-
-  "altAbilityType": "project45ultracoin",
-  "altAbility": {
-    // "entityThreshold": 999,
-    // "fireTime": 0,
-    "inaccuracy": {
-      "throwForce": 0,
-      "angle": 0
-    },
-    "damageCalcParameters": {
-      "finalDamageRange": [0, 65536]
-    },
-    "splitShotChance": 0,
-    "pixelCost": 0,
-    "energyCost": 0,
-    "ammoPerToss": 0
-},
 
   "builder" : "/items/buildscripts/buildproject45neoneo.lua"
 }
