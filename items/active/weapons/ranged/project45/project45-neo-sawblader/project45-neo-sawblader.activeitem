@@ -50,9 +50,9 @@
     },
 
     "sounds": {
-      "chargeWhine" : ["/sfx/project45neosfx/chargewhine/chargewhine-01.ogg"],
+      "chargeWhine" : ["/sfx/project45neosfx/chargewhine/chargewhine-02.ogg"],
       "chargeDrone" : ["/sfx/melee/mech_drill_active1.ogg"],  
-      "fire" : ["/sfx/project45neosfx/fire/fire-lmg1.ogg"],
+      "fire" : ["/sfx/project45neosfx/fire/fire-energy5.ogg"],
       "ejectMag": [ "/sfx/project45neosfx/ejectmag/ejectmag-heavy1.ogg"],
       "reloadEnd": ["/sfx/project45neosfx/loadmag/loadmag-heavy2.ogg"]
     },
@@ -118,9 +118,13 @@
     "autoFireOnFullCharge": false,
     "chargeWhenObstructed": true,
 
-    "hideMuzzleSmoke": true,
-    "chargeSmoke": true,
+    "projectileType": "project45sawblade",
 
+    "hideMuzzleSmoke": false,
+    "chargeSmoke": true,
+    "maxChargeVolume": 1,
+    "maxChargePitch": 3,
+    "chargePitchMult": 1,
     "cycleTime": 0.25,
     "chargeFrames": 4,
     "chargeTime": 0.5,

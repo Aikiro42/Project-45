@@ -44,7 +44,20 @@
       ],
       "perfectChargeFire": ["/sfx/project45neosfx/special/ultrakill/ultrakill_chargefire.ogg"],
       "chargeDrone" : ["/sfx/project45neosfx/special/ultrakill/ultrakill_chargedrone.ogg"],
-      "chargeStart" : ["/sfx/project45neosfx/special/ultrakill/ultrakill_chargestart.ogg"]
+      "chargeStart" : ["/sfx/project45neosfx/special/ultrakill/ultrakill_chargestart.ogg"],
+      "ejectMag": [ "/sfx/project45neosfx/ejectmag/ejectmag-breakaction1.ogg" ],
+      "boltPush": [ ],
+      "boltPull": ["/sfx/project45neosfx/click/click-03.ogg"],
+      "reloadEnd" : ["/sfx/project45neosfx/loadmag/loadmag-revolver1.ogg"],
+      "loadRound": ["/sfx/project45neosfx/loadround/loadround-revolver1.ogg"],
+      "goodReload": [ ],
+      "ejectCasing": [
+        "/sfx/project45neosfx/ejectcasing/ejectcasing-brass1.ogg",
+        "/sfx/project45neosfx/ejectcasing/ejectcasing-brass2.ogg",
+        "/sfx/project45neosfx/ejectcasing/ejectcasing-brass3.ogg",
+        "/sfx/project45neosfx/ejectcasing/ejectcasing-brass4.ogg",
+        "/sfx/project45neosfx/ejectcasing/ejectcasing-brass5.ogg"
+      ]
     },
     "animatedParts": {
       "parts":{
@@ -74,15 +87,7 @@
 
   "project45GunModInfo":{
     "category": "ballistic",
-    "upgradeCapacity": 10,
-    "allowsConversion": [
-      "hitscan",
-      "summoned"
-    ],
-    "acceptsAmmoArchetype":[
-      "bullet"
-    ]
-
+    "upgradeCapacity": 10
   },
 
   "baseOffset" : [0.875, 0.125],
@@ -106,7 +111,7 @@
   "primaryAbilityType": "project45gunfire",
   "overrideArchetypeDps": true,
   "primaryAbility": {
-    "baseDamageMultiplier": 1.5,
+    "baseDamageMultiplier": 0.5,
     "critChance": 0.1,
     "critDamageMult": 3,
     "reloadCost": 50,

@@ -25,7 +25,7 @@
       
       // Cast costs
       "pixelCost": 100,
-      "energyCost": 5,
+      "energyCost": 25,
       "ammoPerToss": 1,
 
       "coinMonster": "project45-ultracoin",
@@ -33,6 +33,9 @@
 
         // value multiplied to the final damage after being increased n+1 times
         "finalDamageMult": 1,
+
+        // value multiplied to the final damage if the coin is on the ground
+        "groundedDamageMult": 0.5,
 
         "splitShotParameters": {
           // seconds that must pass before a coin can splitshot
@@ -50,7 +53,8 @@
             "controlForce": 250,
             // how much air friction changes per second
             // (only applies in non-zero gravity)
-            "airFriction": 3
+            // "airFriction": 3
+            "airFriction": 0
           },
           // maximum amount of air friction subtracted
           // (the higher the value, the more likely the coin falls faster)
@@ -58,7 +62,7 @@
         },
 
         // number of seconds each coin lives
-        "timeToLive": 30,
+        "timeToLive": 10,
 
         "maxChainDistance": 30,
 

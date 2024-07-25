@@ -56,6 +56,11 @@ function Project45GunFire:init()
   self.hideMuzzleSmoke = self.performanceMode or self.hideMuzzleSmoke
   self.weapon.startRecoil = 0
 
+  self.chargeVolumeMult = self.chargeVolumeMult or 0.7
+  self.chargePitchMult = self.chargePitchMult or 0.3
+  self.maxChargeVolume = self.maxChargeVolume or 2
+  self.maxChargePitch = self.maxChargePitch or 2
+
   self.recoilOffsetProgress = 1
 
   self.balanceDamageMult = config.getParameter("balanceDamageMult", 1)
@@ -1610,9 +1615,9 @@ function Project45GunFire:updateCharge()
 
   -- update sounds
   local chargeProgress = self.chargeTimer / (self.chargeTime > 0 and self.chargeTime or self.overchargeTime)
-  animator.setSoundVolume("chargeDrone", 0.25 + 0.7 * math.min(chargeProgress, 2))
-  animator.setSoundPitch("chargeWhine", 1 + 0.3 * math.min(chargeProgress, 2))
-  animator.setSoundVolume("chargeWhine", 0.25 + 0.75 * math.min(chargeProgress, 2))
+  animator.setSoundVolume("chargeDrone", 0.25 + self.chargeVolumeMult * math.min(chargeProgress, self.maxChargeVolume))
+  animator.setSoundPitch("chargeWhine", 1 + self.chargePitchMult * math.min(chargeProgress, self.maxChargePitch))
+  animator.setSoundVolume("chargeWhine", 0.25 + self.chargeVolumeMult * math.min(chargeProgress, self.maxChargeVolume))
   if self.chargeScreenShakeMult then
     self:screenShake(chargeProgress * self.currentScreenShake * self.chargeScreenShakeMult, nil, true)
   end

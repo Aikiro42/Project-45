@@ -3,6 +3,8 @@ require "/scripts/vec2.lua"
 require "/scripts/status.lua"
 
 function init()
+
+
   -- gather owner data
   self.ownerEntityId = config.getParameter("ownerEntityId")
   self.ownerDamageTeam = config.getParameter("ownerDamageTeam")
@@ -12,7 +14,8 @@ function init()
   self.maxChainDistance = config.getParameter("maxChainDistance", 75)
   self.timeToLive = config.getParameter("timeToLive", 10)
   self.angularVelocity = config.getParameter("angularVelocity", -util.toRadians(180))
-  self.finalDamageMult = config.getParameter("finalDamageMult", 0)
+  self.finalDamageMult = config.getParameter("finalDamageMult", 1)
+  self.groundedDamageMult = config.getParameter("groundedDamageMult", 1)
 
   self.freezeDuration = 3
 
@@ -81,9 +84,12 @@ function init()
 end
 
 function update(dt)
-  
+
+  self.grounded = mcontroller.groundMovement()
+
   -- die when hitting ground or out of TTL
-  if (self.freezeTimer < 0 and mcontroller.onGround()) or self.timeToLive <= 0 then
+  -- if (self.freezeTimer < 0 and mcontroller.onGround()) or self.timeToLive <= 0 then
+  if self.timeToLive <= 0 then
     self.expired = true
     sudoku()
   end
@@ -103,7 +109,7 @@ function update(dt)
 
   -- deplete TTL, pause if frozen
   if self.freezeTimer < 0 then
-    self.timeToLive = self.timeToLive - dt
+    self.timeToLive = self.timeToLive - (dt * (grounded and 4 or 1))
   else
     self.freezeTimer = self.freezeTimer - dt
   end
@@ -118,7 +124,20 @@ function update(dt)
   end
 
   -- spin
-  animator.rotateTransformationGroup("body", self.angularVelocity)  
+  if self.grounded then
+    if not self.landed then
+      self.landed = true
+      animator.playSound("drop")
+      -- status.setPersistentEffects("invulnerable", {{stat = "invulnerable", amount = 1}})
+    end
+    animator.resetTransformationGroup("body")
+  else
+    if self.landed then
+      self.landed = false
+      -- status.clearPersistentEffects("invulnerable")
+    end
+    animator.rotateTransformationGroup("body", self.angularVelocity)
+  end
   
 end
 
@@ -183,7 +202,7 @@ function die()
 
     -- activate next coin if they exist
     local isFinal
-    if coinTarget and world.entityExists(coinTarget) then
+    if not self.grounded and coinTarget and world.entityExists(coinTarget) then
       world.sendEntityMessage(
         coinTarget,
         "project45-ultracoin-chain",
@@ -237,7 +256,7 @@ function die()
 end
 
 function calculateFinalDamage(splitShot)
-  return self.baseDamage * self.finalDamageMult * (splitShot and self.splitShotParameters.damageMult or 1)
+  return self.baseDamage * (self.grounded and self.groundedDamageMult or self.finalDamageMult) * (splitShot and self.splitShotParameters.damageMult or 1)
 end
 
 function renderShot(origin, destination, projectileParams)
@@ -288,7 +307,7 @@ function renderShot(origin, destination, projectileParams)
   local finalParams = sb.jsonMerge(defaultProjectileParams, projectileParams)
 
   world.spawnProjectile(
-    finalParams.power > 0 and "project45-stdexplosionshockwave" or "project45_invisiblesummon",
+    finalParams.power > 0 and "project45-ultracoinhit" or "project45_invisiblesummon",
     destination,
     self.ownerEntityId,
     vector,
@@ -336,7 +355,7 @@ function renderFinalDamage(position, damage, projectileParams)
   local finalParams = sb.jsonMerge(defaultProjectileParams, projectileParams)
 
   world.spawnProjectile(
-    "project45-stdexplosionshockwave",
+    "project45-ultracoinhit",
     position,
     self.ownerEntityId,
     {1, 0},

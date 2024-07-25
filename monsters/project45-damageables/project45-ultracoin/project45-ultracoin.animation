@@ -138,9 +138,9 @@
     "hitPoof" : {
       "offsetRegion" : [ -0.0, -0.0, 0.0, 0.0 ],
       "particles" : [
-        // { "particle" : "project45shineparticle-white" },
-        // { "particle" : "project45shineparticle-white" },
-        // { "particle" : "project45shineparticle-white" },
+        { "particle" : "project45shineparticle-white" },
+        { "particle" : "project45shineparticle-white" },
+        { "particle" : "project45shineparticle-white" },
         { "particle" : "project45shineimpact" }
       ]
     },
