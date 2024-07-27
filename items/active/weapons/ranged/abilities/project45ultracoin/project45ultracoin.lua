@@ -14,9 +14,7 @@ function Project45Ultracoin:init()
     -- but i won't accept responsibility for when your world crashes
     -- due to too many entities
     self.limitEntities = true
-    self.queryPeriod = 0.25
-    self.queryEntityTimer = 0
-    self.entityThreshold = self.entityThreshold or 10
+    self.entityThreshold = self.entityThreshold or 64
 
     self.aimOffset = self.aimOffset or {0, 0}
 end
@@ -24,7 +22,6 @@ end
 function Project45Ultracoin:update(dt, fireMode, shiftHeld)
     
     WeaponAbility.update(self, dt, fireMode, shiftHeld)
-    self:queryEntities() -- updates self.currentEntityCount
     self.cooldownTimer = self.cooldownTimer - self.dt
 
     if self.fireMode == "alt"
@@ -33,7 +30,7 @@ function Project45Ultracoin:update(dt, fireMode, shiftHeld)
         if self.pixelCost < player.currency("money")
         and status.consumeResource("energy", self.energyCost)
         and ((self.ammoPerToss > 0 and (storage.ammo or 2) > 1) or self.ammoPerToss == 0)
-        and self.currentEntityCount < self.entityThreshold
+        and self:currentEntityCount() < self.entityThreshold
         then
 
             local force = self.throwForce * sb.nrand(self.inaccuracy.throwForce, 1)
@@ -71,16 +68,13 @@ function Project45Ultracoin:aimVector(aimOffset)
     )
 end
 
-function Project45Ultracoin:queryEntities()
-    self.queryEntityTimer = self.queryEntityTimer - self.dt
-    if self.queryEntityTimer > 0 then return end
-    self.queryEntityTimer = self.queryPeriod
+function Project45Ultracoin:currentEntityCount()
     local detectedEntities = world.entityQuery(mcontroller.position(), self.maxChainDistsance, {
         withoutEntityId = entity.id(),
         includedTypes = {"creature"},
         order = "nearest"
     })
-    self.currentEntityCount = #detectedEntities
+    return #detectedEntities
 end
 
 function Project45Ultracoin:uninit()

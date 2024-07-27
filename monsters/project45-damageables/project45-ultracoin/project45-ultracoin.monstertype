@@ -64,6 +64,10 @@
         "jumpSpeed" : 20.0
       },
 
+      "liquidBuoyancy" : 0,
+      "liquidFriction" : 0.7,
+      "liquidForce" : 1000,
+
       "groundFriction": 1000,
       "physicsEffectCategories" : ["boss"],
       "maximumPlatformCorrection": 0,

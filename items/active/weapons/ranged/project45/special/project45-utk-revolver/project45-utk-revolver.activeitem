@@ -4,7 +4,7 @@
   "maxStack" : 1,
   "rarity" : "Essential",
   "isUnique": true,
-  "description" : "\"I'M GOING TO ULTRAKILL YOU, YOU INSIGNIFICANT F-\"",
+  "description" : "An experimental revolver with a built-in pixel minter.",
   "shortdescription" : "^#fdd14d;Ultrakill Revolver^reset;",
   "tooltipKind" : "project45gun",
   "gunArchetype": "pistol",
@@ -113,6 +113,7 @@
   "primaryAbility": {
     "baseDamageMultiplier": 0.5,
     "critChance": 0.1,
+    // "critChance": 1,
     "critDamageMult": 3,
     "reloadCost": 50,
     "reloadTime": 0.5,
@@ -139,6 +140,7 @@
     "semi": true,
     "cycleTime": 0.24,
     "fireTime": 0.1,
+    "multishot": 2,
     "projectileKind": "hitscan",
     "hitscanParameters": {
       "punchThrough": 1,
@@ -209,7 +211,11 @@
 
   "altAbilityType": "project45ultracoin",
   "altAbility": {
-    "ammoPerToss": 0
+    "ammoPerToss": 0,
+    "inaccuracy": {
+      "throwForce": 0.01,
+      "angle": 0.01
+    }
   },
 
   "builder" : "/items/buildscripts/buildproject45neoneo.lua"

@@ -503,7 +503,6 @@ function hitscanLib:fireHitscan(projectileType)
           animator.burstParticleEmitter("muzzleCrit")
         end
         damageConfig.statusEffects = sb.jsonMerge(damageConfig.statusEffects, {"project45critdamaged"})
-        self.critFlag = false
       end
       damageConfig.timeoutGroup = "project45projectile" .. i
 
@@ -516,6 +515,7 @@ function hitscanLib:fireHitscan(projectileType)
       )
 
     end
+    self.critFlag = false
     --]]
 
     -- generate damage source lines

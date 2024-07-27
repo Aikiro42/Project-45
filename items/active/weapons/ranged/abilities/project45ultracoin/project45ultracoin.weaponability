@@ -31,17 +31,20 @@
       "coinMonster": "project45-ultracoin",
       "coinParameters": {
 
-        // value multiplied to the final damage after being increased n+1 times
+        // value added to the multiplier per coin ricocheted
+        "damageMultiplierIncrement": 1,
+
+        // value multiplied to the damage after being increased by <damageMultiplierIncrement> * (n+1)
         "finalDamageMult": 1,
 
         // value multiplied to the final damage if the coin is on the ground
-        "groundedDamageMult": 0.5,
-
+        "groundedDamageMult": 0.8,
+        
         "splitShotParameters": {
           // seconds that must pass before a coin can splitshot
-          "time": 1,
+          "time": 0.3,
           // max amount of time (in seconds) added to the splitshot time
-          "rand": 3,
+          "rand": 1,
           // damage multiplier 
           "damageMult": 2
         },
@@ -58,13 +61,14 @@
           },
           // maximum amount of air friction subtracted
           // (the higher the value, the more likely the coin falls faster)
-          "maxAirFrictionRand": 0.1
+          // "maxAirFrictionRand": 0.1
+          "maxAirFrictionRand": 0
         },
 
         // number of seconds each coin lives
         "timeToLive": 10,
 
-        "maxChainDistance": 30,
+        "maxChainDistance": 50,
 
         "zeroGControlForceDelta": 4,
 

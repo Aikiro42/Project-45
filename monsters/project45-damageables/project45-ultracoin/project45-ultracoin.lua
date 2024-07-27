@@ -4,7 +4,6 @@ require "/scripts/status.lua"
 
 function init()
 
-
   -- gather owner data
   self.ownerEntityId = config.getParameter("ownerEntityId")
   self.ownerDamageTeam = config.getParameter("ownerDamageTeam")
@@ -14,10 +13,17 @@ function init()
   self.maxChainDistance = config.getParameter("maxChainDistance", 75)
   self.timeToLive = config.getParameter("timeToLive", 10)
   self.angularVelocity = config.getParameter("angularVelocity", -util.toRadians(180))
-  self.finalDamageMult = config.getParameter("finalDamageMult", 1)
+  self.damageMutiplierIncrement = config.getParameter("damageMultiplierIncrement", 1)
+  self.multipliers = {
+    finalDamageMult = config.getParameter("finalDamageMult", 1),
+  }
   self.groundedDamageMult = config.getParameter("groundedDamageMult", 1)
-
-  self.freezeDuration = 3
+  self.currentControlParameters = {}
+  self.airTimeScoreMult = 0.01
+  self.refreshMomentum = config.getParameter("refreshMomentum", {
+    base = {0, 2},
+    stDev = {0.25, 0.1}
+  })
 
   local defaultSplitshotParameters = {
     time = 0.3,
@@ -39,10 +45,12 @@ function init()
   -- initialize variables
 
   self.baseDamage = 1
+  self.freezeDuration = 3
+  self.groundedPenaltyMult = 1
   self.freezeTimer = -1
-  self.debugFreezeTime = 0
   self.zeroGControlForce = 0
-  self.fallingAirFriction = 0
+  self.currentControlParameters.airFriction = 0
+  self.airTimeScore = 0
   
   local airFrictionSub = math.abs(sb.nrand(self.fallControlParameters.maxAirFrictionRand, 0))
   self.maxAirFriction = 1 - airFrictionSub
@@ -58,37 +66,43 @@ function init()
 
   -- set handler for freezing
   -- this message is received if potentially targeted by a ricoshot
-  message.setHandler("project45-ultracoin-freeze", function()
-    status.setPersistentEffects("invulnerable", {{stat = "invulnerable", amount = 1}})
-    mcontroller.controlParameters({
-      gravityEnabled = false
-    })
-    mcontroller.setVelocity({0, 0})
-    self.freezeTimer = self.freezeDuration
-  end)
+  message.setHandler("project45-ultracoin-freeze", freeze)
   
   -- set handler for passing on the ricoshot
   message.setHandler("project45-ultracoin-chain", function(_, _, rootDamageRequest, damageMultiplier, originPos)
     if originPos then
       renderShot(originPos, mcontroller.position())
-    else
-      -- sb.logInfo("Starting chain on " .. entity.id())
     end
     self.rootDamageRequest = rootDamageRequest
-    self.damageMultiplier = damageMultiplier + 1
+    self.damageMultiplier = (damageMultiplier or 1) + self.damageMutiplierIncrement
     self.baseDamage = self.rootDamageRequest.damage * self.damageMultiplier
     -- sb.logInfo(string.format("(%d) Coin %d; Current damage: %.2f", entity.id(), damageMultiplier-1, self.baseDamage))
-    sudoku()
+    if self.grounded then
+      renderFinalDamage(mcontroller.position(), self.baseDamage, {power = self.baseDamage})
+    else
+      sudoku()
+    end
   end)
+
+  message.setHandler("project45-ultracoin-refresh", refresh)
+
+  world.sendEntityMessage(entity.id(), "project45-ultracoin-setrefreshmomentum", self.refreshMomentum)
   
+end
+
+function refresh()
+  self.timeToLive = self.splitShotParameters.time + 0.1 + math.abs(sb.nrand(self.splitShotParameters.rand, 0))
+  self.currentControlParameters.airFriction = 0
+  self.grounded = false
+  self.currentControlParameters.gravityEnabled = true
+  status.clearPersistentEffects("invulnerable")
 end
 
 function update(dt)
 
   self.grounded = mcontroller.groundMovement()
 
-  -- die when hitting ground or out of TTL
-  -- if (self.freezeTimer < 0 and mcontroller.onGround()) or self.timeToLive <= 0 then
+  -- die when out of TTL
   if self.timeToLive <= 0 then
     self.expired = true
     sudoku()
@@ -99,17 +113,17 @@ function update(dt)
     self.zeroGControlForce = self.zeroGControlForce + self.fallControlParameters.deltas.controlForce * dt
     mcontroller.controlApproachVelocity({0, 0}, self.zeroGControlForce)
   
-    -- if under influence of gravity, slow descent
+  -- if under influence of gravity, slow descent
   elseif mcontroller.yVelocity() <= 0 then
-    self.fallingAirFriction = self.fallingAirFriction + self.fallControlParameters.deltas.airFriction * dt
-    mcontroller.controlParameters({
-      airFriction = math.min(self.maxAirFriction, self.fallingAirFriction)
-    })
+    self.currentControlParameters.airFriction = math.min(
+      self.maxAirFriction,
+      self.currentControlParameters.airFriction + self.fallControlParameters.deltas.airFriction * dt
+    )
   end
 
   -- deplete TTL, pause if frozen
   if self.freezeTimer < 0 then
-    self.timeToLive = self.timeToLive - (dt * (grounded and 4 or 1))
+    self.timeToLive = self.timeToLive - (dt * 1) -- (self.grounded and 8 or 1))
   else
     self.freezeTimer = self.freezeTimer - dt
   end
@@ -123,35 +137,49 @@ function update(dt)
     end
   end
 
-  -- spin
   if self.grounded then
+    self.multipliers.groundedDamageMult = self.groundedDamageMult
+    self.currentControlParameters.gravityEnabled = true
     if not self.landed then
-      self.landed = true
       animator.playSound("drop")
-      -- status.setPersistentEffects("invulnerable", {{stat = "invulnerable", amount = 1}})
+      self.landed = true
+    end
+    if status.getPersistentEffects("invulnerable") then
+      status.clearPersistentEffects("invulnerable")
+    end
+    if self.freezeTimer > 0 then
+      self.freezeTimer = 0
     end
     animator.resetTransformationGroup("body")
+  
+  -- spin otherwise
   else
-    if self.landed then
-      self.landed = false
-      -- status.clearPersistentEffects("invulnerable")
-    end
+    self.landed = false
+    self.airTimeScore = self.airTimeScore + 1
     animator.rotateTransformationGroup("body", self.angularVelocity)
   end
   
+  mcontroller.controlParameters(self.currentControlParameters)
+
 end
 
+function freeze()
+  status.setPersistentEffects("invulnerable", {{stat = "invulnerable", amount = 1}})
+  self.currentControlParameters.gravityEnabled = false
+  mcontroller.setVelocity({0, 0})
+  self.freezeTimer = self.freezeDuration
+end
 
 function sudoku()
   status.modifyResource("health", -status.resource("health"))
 end
 
 function canSplitShot()
-  return self.timeToLive <= self.splitShotParameters.time
+  return not self.grounded and self.timeToLive <= self.splitShotParameters.time
 end
 
 function die()
-  
+  freeze()
   -- if hit, process ricoshot logic
   if self.rootDamageRequest then
 
@@ -256,7 +284,15 @@ function die()
 end
 
 function calculateFinalDamage(splitShot)
-  return self.baseDamage * (self.grounded and self.groundedDamageMult or self.finalDamageMult) * (splitShot and self.splitShotParameters.damageMult or 1)
+  if splitShot then
+    self.multipliers.splitShotDamageMult = self.splitShotParameters.damageMult
+  end
+
+  local finalMultiplier = 1
+  for name, mult in pairs(self.multipliers) do
+    finalMultiplier = finalMultiplier * mult
+  end
+  return self.baseDamage * finalMultiplier
 end
 
 function renderShot(origin, destination, projectileParams)

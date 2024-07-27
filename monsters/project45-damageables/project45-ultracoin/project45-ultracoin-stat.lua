@@ -2,10 +2,16 @@ require "/scripts/vec2.lua"
 
 function init()
   self.damageFlashTime = 0
-
+  self.refreshMomentum = {
+    base = {0, 2},
+    stDev = {0.25, 0.1}
+  }
   message.setHandler("applyStatusEffect", function(_, _, effectConfig, duration, sourceEntityId)
       status.addEphemeralEffect(effectConfig, duration, sourceEntityId)
     end)
+  message.setHandler("project45-ultracoin-setrefreshmomentum", function(_, _, refreshMomentum)
+    self.refreshMomentum = sb.jsonMerge(self.refreshMomentum, refreshMomentum or {})
+  end)
 end
 
 function applyDamageRequest(damageRequest)
@@ -13,7 +19,16 @@ function applyDamageRequest(damageRequest)
   -- start chain
   if entity.id() ~= damageRequest.sourceEntityId then
     -- sb.logInfo("Sending damage Request: " .. sb.printJson(damageRequest, 1))
-    world.sendEntityMessage(entity.id(), "project45-ultracoin-chain", damageRequest, 2, nil)
+    if not mcontroller.groundMovement() then
+      world.sendEntityMessage(entity.id(), "project45-ultracoin-chain", damageRequest, nil, nil)
+    else
+      world.sendEntityMessage(entity.id(), "project45-ultracoin-refresh")
+      self.applyKnockback = {
+        sb.nrand(self.refreshMomentum.stDev[1], self.refreshMomentum.base[1]),
+        sb.nrand(self.refreshMomentum.stDev[2], self.refreshMomentum.base[2])
+      }
+      return {}
+    end
   end
 
   if world.getProperty("nonCombat") then
