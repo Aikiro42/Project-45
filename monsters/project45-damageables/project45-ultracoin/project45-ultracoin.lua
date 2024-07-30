@@ -19,11 +19,7 @@ function init()
   }
   self.groundedDamageMult = config.getParameter("groundedDamageMult", 1)
   self.currentControlParameters = {}
-  self.airTimeScoreMult = 0.01
-  self.refreshMomentum = config.getParameter("refreshMomentum", {
-    base = {0, 2},
-    stDev = {0.25, 0.1}
-  })
+  self.airTimeScoreMult = config.getParameter("airTimeScoreMult", 0.01)
 
   local defaultSplitshotParameters = {
     time = 0.3,
@@ -45,7 +41,7 @@ function init()
   -- initialize variables
 
   self.baseDamage = 1
-  self.freezeDuration = 3
+  self.freezeDuration = 1
   self.groundedPenaltyMult = 1
   self.freezeTimer = -1
   self.zeroGControlForce = 0
@@ -62,40 +58,68 @@ function init()
   mcontroller.addMomentum(initialMomentum)
   self.currentVelocity = mcontroller.velocity()
     
-  animator.rotateTransformationGroup("body", sb.nrand(math.pi, 0))  
+  animator.rotateTransformationGroup("body", sb.nrand(math.pi, 0))
 
   -- set handler for freezing
   -- this message is received if potentially targeted by a ricoshot
   message.setHandler("project45-ultracoin-freeze", freeze)
+  message.setHandler("project45-ultracoin-unfreeze", unfreeze)
   
   -- set handler for passing on the ricoshot
-  message.setHandler("project45-ultracoin-chain", function(_, _, rootDamageRequest, damageMultiplier, originPos)
-    if originPos then
-      renderShot(originPos, mcontroller.position())
-    end
-    self.rootDamageRequest = rootDamageRequest
-    self.damageMultiplier = (damageMultiplier or 1) + self.damageMutiplierIncrement
-    self.baseDamage = self.rootDamageRequest.damage * self.damageMultiplier
-    -- sb.logInfo(string.format("(%d) Coin %d; Current damage: %.2f", entity.id(), damageMultiplier-1, self.baseDamage))
+  message.setHandler("project45-ultracoin-chain", function(_, _, rootDamageRequest, damageMultiplier, originPos, targetId)
+    self.volumeDivisor = damageMultiplier or 1
+    damageMultiplier = damageMultiplier or self.damageMultiplier
     if self.grounded then
-      renderFinalDamage(mcontroller.position(), self.baseDamage, {power = self.baseDamage})
+      refresh(rootDamageRequest, damageMultiplier, originPos, targetId)
     else
-      sudoku()
+      chain(rootDamageRequest, damageMultiplier, originPos)
     end
   end)
 
-  message.setHandler("project45-ultracoin-refresh", refresh)
-
-  world.sendEntityMessage(entity.id(), "project45-ultracoin-setrefreshmomentum", self.refreshMomentum)
+  message.setHandler("project45-ultracoin-refresh", function(_, _, rootDamageRequest, damageMultiplier, originPos)
+    self.volumeDivisor = damageMultiplier or 1
+    refresh(rootDamageRequest, damageMultiplier, originPos)
+  end)
   
 end
 
-function refresh()
+function chain(rootDamageRequest, damageMultiplier, originPos)
+  if originPos then
+    renderShot(originPos, mcontroller.position())
+  end
+  self.rootDamageRequest = rootDamageRequest
+  self.damageMultiplier = (self.damageMultiplier or damageMultiplier or 1) + self.damageMutiplierIncrement
+  self.baseDamage = self.rootDamageRequest.damage * self.damageMultiplier
+  sudoku()
+end
+
+function refresh(rootDamageRequest, damageMultiplier, originPos, targetId)
+  if originPos then
+    renderShot(originPos, mcontroller.position())
+  end
+  status.clearPersistentEffects("invulnerable")
+  status.addEphemeralEffect("invulnerable", 0.05)
+  animator.playSound("refreshHit")
+  animator.burstParticleEmitter("hitPoof")
+  mcontroller.addMomentum({
+      sb.nrand(0.25, 0),
+      sb.nrand(0.1, 2)
+    })
+  if targetId and world.entityExists(targetId) then
+    -- sb.logInfo("Final Target: " .. world.entityTypeName(finalTarget))
+    local statfx = rootDamageRequest.statusEffects
+    local finalDestination = world.entityPosition(targetId)
+    renderShot(mcontroller.position(), finalDestination, {
+      power = calculateFinalDamage(false, rootDamageRequest.damage * (damageMultiplier or 1)),
+      damageType = "IgnoresDef",
+      statusEffects = #statfx > 0 and statfx or nil
+    }, true)
+  end
+  self.twinkled = false
   self.timeToLive = self.splitShotParameters.time + 0.1 + math.abs(sb.nrand(self.splitShotParameters.rand, 0))
   self.currentControlParameters.airFriction = 0
   self.grounded = false
   self.currentControlParameters.gravityEnabled = true
-  status.clearPersistentEffects("invulnerable")
 end
 
 function update(dt)
@@ -124,6 +148,8 @@ function update(dt)
   -- deplete TTL, pause if frozen
   if self.freezeTimer < 0 then
     self.timeToLive = self.timeToLive - (dt * 1) -- (self.grounded and 8 or 1))
+    self.currentControlParameters.gravityEnabled = true
+    status.clearPersistentEffects("invulnerable")
   else
     self.freezeTimer = self.freezeTimer - dt
   end
@@ -137,26 +163,32 @@ function update(dt)
     end
   end
 
+  -- if grounded...
   if self.grounded then
-    self.multipliers.groundedDamageMult = self.groundedDamageMult
-    self.currentControlParameters.gravityEnabled = true
+    -- play sound
     if not self.landed then
       animator.playSound("drop")
       self.landed = true
     end
-    if status.getPersistentEffects("invulnerable") then
-      status.clearPersistentEffects("invulnerable")
-    end
+    -- apply damage penalty
+    self.multipliers.groundedDamageMult = self.groundedDamageMult
+    -- reset air time score
+    self.airTimeScore = 0
+    -- unfreeze
     if self.freezeTimer > 0 then
-      self.freezeTimer = 0
+      unfreeze()
     end
-    animator.resetTransformationGroup("body")
-  
-  -- spin otherwise
+    -- lay flat on ground
+    animator.resetTransformationGroup("body")  
+
+  -- else if air/waterborne...
   else
+    -- reset sound flag
     self.landed = false
-    self.airTimeScore = self.airTimeScore + 1
+    -- rotate
     animator.rotateTransformationGroup("body", self.angularVelocity)
+    -- increment air time score
+    self.airTimeScore = self.airTimeScore + 1
   end
   
   mcontroller.controlParameters(self.currentControlParameters)
@@ -165,9 +197,14 @@ end
 
 function freeze()
   status.setPersistentEffects("invulnerable", {{stat = "invulnerable", amount = 1}})
-  self.currentControlParameters.gravityEnabled = false
   mcontroller.setVelocity({0, 0})
   self.freezeTimer = self.freezeDuration
+end
+
+function unfreeze()
+  status.clearPersistentEffects("invulnerable")
+  self.currentControlParameters.gravityEnabled = true
+  self.freezeTimer = 0
 end
 
 function sudoku()
@@ -179,12 +216,13 @@ function canSplitShot()
 end
 
 function die()
-  freeze()
+  sb.logInfo(self.airTimeScore)
   -- if hit, process ricoshot logic
-  if self.rootDamageRequest then
+  if self.rootDamageRequest and not self.expired then
 
     -- indicate success first
     animator.playSound("hit")
+    animator.setSoundVolume("hit", 1/(self.volumeDivisor or 1))
     animator.burstParticleEmitter("hitPoof")
 
     -- set own damage team to that of owner/damage source
@@ -236,7 +274,8 @@ function die()
         "project45-ultracoin-chain",
         self.rootDamageRequest,
         self.damageMultiplier,
-        mcontroller.position()
+        mcontroller.position(),
+        finalTarget
       )
     else
       isFinal = true
@@ -265,7 +304,7 @@ function die()
           power = calculateFinalDamage(splitShot and not isFinal),
           damageType = "IgnoresDef",
           statusEffects = #statfx > 0 and statfx or nil
-        })
+        }, true)
       
       elseif isFinal or not canSplitShot() then
         -- sb.logInfo("Failed to find a target.")
@@ -283,22 +322,28 @@ function die()
   end
 end
 
-function calculateFinalDamage(splitShot)
+function calculateFinalDamage(splitShot, baseDamage)
+  baseDamage = baseDamage or self.baseDamage
+
+  -- splitshot
   if splitShot then
     self.multipliers.splitShotDamageMult = self.splitShotParameters.damageMult
   end
+
+  -- airtime score
+  self.multipliers.airTimeScoreDamageMult = 1 + self.airTimeScore * self.airTimeScoreMult
 
   local finalMultiplier = 1
   for name, mult in pairs(self.multipliers) do
     finalMultiplier = finalMultiplier * mult
   end
-  return self.baseDamage * finalMultiplier
+  return baseDamage * finalMultiplier
 end
 
-function renderShot(origin, destination, projectileParams)
-
+function renderShot(origin, destination, projectileParams, damageEntity)
+  
   local length = world.magnitude(destination, origin)
-  local vector = world.distance(destination, origin)
+  local vector = damageEntity and world.distance(destination, origin) or world.distance(origin, destination)
   local primaryParameters = {
     length = length*8,
     -- initialVelocity = vec2.mul(vec2.norm(vector), 0.01),
@@ -344,7 +389,7 @@ function renderShot(origin, destination, projectileParams)
 
   world.spawnProjectile(
     finalParams.power > 0 and "project45-ultracoinhit" or "project45_invisiblesummon",
-    destination,
+    damageEntity and destination or origin,
     self.ownerEntityId,
     vector,
     false,
@@ -354,6 +399,8 @@ function renderShot(origin, destination, projectileParams)
 end
 
 function renderFinalDamage(position, damage, projectileParams)
+  if not damage then return end
+  if damage <= 0 then return end
   local finalDamageParticle = {
     type = "text",
     text= "^shadow;" .. math.floor(damage),

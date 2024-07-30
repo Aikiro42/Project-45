@@ -11,7 +11,7 @@
     "objectImage": "/items/augments/project45-gunmods/ammo/project45-itanorocketsmod/project45-itanorocketsmod.png"
   },
   "inventoryIcon" : "/items/augments/project45-gunmods/ammo/project45-itanorocketsmod/project45-itanorocketsmodicon.png",
-  "description": "\"Why fire one missile when you launch a whole circus?\"\n- Ichirō Itano",
+  "description": "\"Why fire one missile when you launch a whole circus?\"\n- Ichiro Itano",
   "technicalInfo" : "Fires multiple small rockets that home in on multiple enemies.",
   "shortdescription" : "Itano Rockets",
   
@@ -24,8 +24,6 @@
     "projectileType": "project45itanorocket"
     }
   },
-
-   
 
   "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
   "builder": "/items/buildscripts/buildproject45mod.lua"

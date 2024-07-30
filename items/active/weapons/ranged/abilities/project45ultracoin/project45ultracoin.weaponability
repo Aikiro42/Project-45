@@ -38,13 +38,17 @@
         "finalDamageMult": 1,
 
         // value multiplied to the final damage if the coin is on the ground
-        "groundedDamageMult": 0.8,
+        "groundedDamageMult": 0.5,
+
+        // affects the coins damage the longer the coin falls in the air
+        // i.e. mult = 1 + (airTimeDamageMult * ticks)
+        "airTimeDamageMult": 0.1,
         
         "splitShotParameters": {
           // seconds that must pass before a coin can splitshot
           "time": 0.3,
           // max amount of time (in seconds) added to the splitshot time
-          "rand": 1,
+          "rand": 0.1,
           // damage multiplier 
           "damageMult": 2
         },

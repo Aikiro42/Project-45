@@ -213,6 +213,9 @@
       "/sfx/project45neosfx/ability/project45ultracoin/coinhit1.ogg",
       "/sfx/project45neosfx/ability/project45ultracoin/coinhit2.ogg"
     ],
-    "twinkle": [ "/sfx/project45neosfx/ability/project45ultracoin/twinkle.ogg" ]
+    "twinkle": [ "/sfx/project45neosfx/ability/project45ultracoin/twinkle.ogg" ],
+    "refreshHit": [
+      "/sfx/project45neosfx/ability/project45ultracoin/coinflip.ogg"
+    ]
   }
 }
