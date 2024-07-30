@@ -105,12 +105,14 @@ function refresh(rootDamageRequest, damageMultiplier, originPos, targetId)
       sb.nrand(0.25, 0),
       sb.nrand(0.1, 2)
     })
+  self.damageMultiplier = math.max(self.damageMultiplier or damageMultiplier or 1, damageMultiplier or 1)
+  sb.logInfo(self.damageMultiplier)
   if targetId and world.entityExists(targetId) then
     -- sb.logInfo("Final Target: " .. world.entityTypeName(finalTarget))
     local statfx = rootDamageRequest.statusEffects
     local finalDestination = world.entityPosition(targetId)
     renderShot(mcontroller.position(), finalDestination, {
-      power = calculateFinalDamage(false, rootDamageRequest.damage * (damageMultiplier or 1)),
+      power = calculateFinalDamage(false, rootDamageRequest.damage * self.damageMultiplier),
       damageType = "IgnoresDef",
       statusEffects = #statfx > 0 and statfx or nil
     }, true)
@@ -216,7 +218,6 @@ function canSplitShot()
 end
 
 function die()
-  sb.logInfo(self.airTimeScore)
   -- if hit, process ricoshot logic
   if self.rootDamageRequest and not self.expired then
 
@@ -386,6 +387,10 @@ function renderShot(origin, destination, projectileParams, damageEntity)
   local projectileParams = projectileParams or {}
 
   local finalParams = sb.jsonMerge(defaultProjectileParams, projectileParams)
+  
+  if finalParams.power > 0 then
+    sb.logInfo("Dealt " .. finalParams.power .. " damage")
+  end
 
   world.spawnProjectile(
     finalParams.power > 0 and "project45-ultracoinhit" or "project45_invisiblesummon",
