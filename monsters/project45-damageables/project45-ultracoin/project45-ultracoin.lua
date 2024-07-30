@@ -106,7 +106,6 @@ function refresh(rootDamageRequest, damageMultiplier, originPos, targetId)
       sb.nrand(0.1, 2)
     })
   self.damageMultiplier = math.max(self.damageMultiplier or damageMultiplier or 1, damageMultiplier or 1)
-  sb.logInfo(self.damageMultiplier)
   if targetId and world.entityExists(targetId) then
     -- sb.logInfo("Final Target: " .. world.entityTypeName(finalTarget))
     local statfx = rootDamageRequest.statusEffects
@@ -388,10 +387,6 @@ function renderShot(origin, destination, projectileParams, damageEntity)
 
   local finalParams = sb.jsonMerge(defaultProjectileParams, projectileParams)
   
-  if finalParams.power > 0 then
-    sb.logInfo("Dealt " .. finalParams.power .. " damage")
-  end
-
   world.spawnProjectile(
     finalParams.power > 0 and "project45-ultracoinhit" or "project45_invisiblesummon",
     damageEntity and destination or origin,
