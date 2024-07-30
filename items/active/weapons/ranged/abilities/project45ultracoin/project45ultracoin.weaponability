@@ -48,7 +48,7 @@
           // seconds that must pass before a coin can splitshot
           "time": 0.3,
           // max amount of time (in seconds) added to the splitshot time
-          "rand": 0.1,
+          "rand": 1,
           // damage multiplier 
           "damageMult": 2
         },
@@ -70,7 +70,7 @@
         },
 
         // number of seconds each coin lives
-        "timeToLive": 10,
+        "timeToLive": 5,
 
         "maxChainDistance": 50,
 
