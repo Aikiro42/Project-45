@@ -1,0 +1,64 @@
+[h1]Version 1.6.1b[/h1]
+
+[h2]User-side[/h2]
+
+[h3]New Features[/h3]
+[list]
+	[*] Added the [b]Malorian Arms 3516[/b] (XSSR).
+	[*] Added the [b]Machine Pistol[/b] (R), a one-handed submachine gun.
+	[*] Added the [b]Sawblader[/b] (SSR), a sawblade launcher.
+	[*] Added the [b]Ultrakill Revolver[/b] (XSSR) with its coin ability. [list]
+		[*] Right clicking throws a coin in the air. Coins are treated as monsters by the game. [list]
+			[*] Coins live for a minimum of 5 seconds.
+		[/list]
+		[*] Damage a coin while air/waterborne to start a "chain" (ricoshot) sequence. [list]
+			[*] Coins can be damaged by any instance, whether it be hitscan, projectile, or melee.
+			[*] Coins cannot be damaged by enemies.
+			[*] A chain is terminated if [list]
+				[*] The last coin cannot find an entity to damage/chain to
+				[*] The last coin is on the ground.
+				[*] An entity is damaged. [list]
+					[*] This applies to to damage dealt by Splitshots.
+				[/list]
+			[/list]
+			[*] [b]Chain multiplier:[/b] Coins multiply the damage dealt to the initial coin by [i]n+1[/i], with n being the number of coins chained.
+			[*] [b]Air time multiplier:[/b] Besides the chain multiplier, the final coin multiplies the final damage by [i]1 + (0.1 * x)[/i], where [i]x[/i] is the number of ticks the coin has been in the air for.
+			[*] Coins damage the entity nearest to them. Coins take precedence over damageable entities.
+			[*] Directly damaging multiple coins at once can reduce the effectiveness of the initial damage; it is thus advised to hit a singular coin to start a chain sequence.
+		[/list]
+		[*] [b]Splitshots:[/b] Coins can damage an enemy while chaining after at least 0.3s.
+		[*] [b]Grounded:[/b] Coins does not despawn when hitting a surface, but they do not bounce. [list]
+			[*] [b]Grounded penalty:[/b] Letting coins hit the ground will incur a 0.5x multiplier to the final damage they will deal to an enemy. For example:[list]
+				[*] Let coin A be a coin that landed on the ground at least once in its lifetime.
+				[*] Let coin B be a coin that has never landed on the ground.
+				[*] If coin A is hit and chains to coin B, which immediately hits an enemy, the 0.5x multiplier will [b]not[/b] be applied.
+				[*] If coin B is hit and chains to coin A, which immediately hits an enemy, then the 0.5x multiplier [b]will[/b] be applied.
+				[*] It is thus advised to use grounded coins as chain-starters.
+			[list]
+			[*] [b]Refreshing:[/b] Coins on the ground can be re-launched into the air by damaging or chaining them. This is called "refreshing". [list]
+				[*] Refreshing a coin adds a random small amount of time to its lifetime.
+				[*] Refreshing a coin resets its air time multiplier.
+				[*] Multiple coins can be refreshed at once, given they can all be damaged at the same time.
+				[*] A valid way to use the coins would be to throw multiple of them into the ground, refresh all of them at once with a melee weapon, and easily achieve a high multiplier. [i]Note that the 0.5x grounded damage penalty still applies.[/i]
+			[/list]
+			[*] [b]Grounded chain:[/b] Refreshing a coin via chain will cause it to hit the damageable entity nearest to the chaining coin. [list]
+				[*] The grounded penalty still applies.
+			[/list]
+			[*] [b]Inherited multiplier:[/b] A refreshed coin inherits and applies the [i]maximum[/i] damage multiplier dealt by all chains that refresh it.[list]
+				[*] For example, a grounded coin inherits an 8x damage multiplier from a 7-coin chain refresh.
+				[*] A subsequent 6-coin chain refresh will not override the 8x damage multiplier the coin inherited.
+				[*] A 9-coin chain refresh will override the 8x damage multiplier the coin inherited, making the coin have a 10x damage multiplier.
+				[*] This multiplier persists until the coin expires.
+				[*] Refreshing (via direct damage) a coin that has been refreshed with a chain does not reset this inherited multiplier.
+			[/list]
+		[/list]
+	[/list]
+[/list]
+
+
+[h3]Bug Fixes[/h3]
+[list]
+	[*] Look of weapon UI has been updated. 
+	[*] Added missing magazine particle for the Boneshooter.
+	[*] Fixed Ammo Stock tags. It should now appear in the correct tabs in custom inventories.
+[/list]
