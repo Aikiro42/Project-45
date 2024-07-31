@@ -265,13 +265,15 @@
         "project45-gunrepairkit",
         "project45-ammostock",
         "project45-essentialgunoil",
-
+        
+        "project45-riotshield",
         "project45-supplytransponder",
         "project45-gachapull",
         "project45-gachapull10",
         
         "project45-energystim",
         "project45-enemyflare",
+        
         "nanowrap",        
         "manipulatormodule",
         "techcard",

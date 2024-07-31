@@ -1,0 +1,62 @@
+{
+  "itemName" : "project45-riotshield",
+  "fixedLevel" : false,
+  "price" : 720,
+  "maxStack" : 1,
+  "rarity" : "Uncommon",
+  "category" : "shield",
+  "description" : "A riot shield made out of a lightweight alloy. ^#51bd3b;Shield health scales with maximum energy.^reset;",
+  "shortdescription" : "Riot Shield",
+  "tooltipKind" : "Shield",
+  "twoHanded" : false,
+  "itemTags" : ["shield"],
+
+  "inventoryIcon" : "project45-riotshield.png:nearidle",
+
+  "animation" : "project45-riotshield.animation",
+  "animationParts" : {
+    "shield" : "project45-riotshield.png"
+  },
+  "animationCustom" : {
+    "animatedParts" : { "parts" : { "shield" : { "properties" : {
+        "shieldPoly" : [ [-0.5, -2.5], [-0.5, 2.25], [0.75, 1.5], [0.75, -1.75] ]
+    }}}},
+    "sounds" : {
+      "raiseShield" : [ "/sfx/objects/locker_open.ogg" ],
+      "perfectBlock" : [ "/sfx/melee/shield_block_metal_perfect.ogg" ],
+      "block" : [ "/sfx/melee/shield_block_metal.ogg" ],
+      "break" : [ "/sfx/melee/shield_break_metal.ogg" ]
+    }
+  },
+
+  "scripts" : ["/items/active/shields/project45/project45-shield.lua"],
+
+  "minActiveTime" : 0.1,
+
+  "forceWalk" : true,
+  "baseShieldHealth" : 0.5,
+  "cooldownTime" : 0.25,
+
+  "perfectBlockDirectives" : "",
+  "perfectBlockTime" : 0,
+
+  "knockback" : 5,
+
+  "stances" : {
+    "idle" : {
+      "armRotation" : -75,
+      "shieldRotation" : 0,
+      "aimAngle": 0,
+      "allowRotate" : false,
+      "allowFlip" : true
+    },
+    "raised" : {
+      "armRotation" : 0,
+      "shieldRotation" : 0,
+      "allowRotate" : true,
+      "allowFlip" : true
+    }
+  },
+
+  "builder" : "/items/buildscripts/buildunrandshield.lua"
+}
