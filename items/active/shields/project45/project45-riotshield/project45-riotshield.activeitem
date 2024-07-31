@@ -6,7 +6,7 @@
   "rarity" : "Uncommon",
   "category" : "shield",
   "description" : "A riot shield made out of a lightweight alloy. ^#51bd3b;Shield health scales with maximum energy.^reset;",
-  "shortdescription" : "Riot Shield",
+  "shortdescription" : "P-45 Riot Shield",
   "tooltipKind" : "Shield",
   "twoHanded" : false,
   "itemTags" : ["shield"],
