@@ -9,7 +9,7 @@
   "lightColor": [75, 36, 0],
   "fullbright": true,
   "flippable" : true,
-  "piercing": false,
+  "piercing": true,
   "statusEffects" : [ ],
   "power" : 5.0,
   "speed" : 200,

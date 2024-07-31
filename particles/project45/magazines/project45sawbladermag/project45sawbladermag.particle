@@ -1,8 +1,8 @@
 {
-  "kind" : "project45minigunmag",
+  "kind" : "project45sawbladermag",
   "definition" : {
-    "type" : "animated",
-    "image" : "/particles/project45/magazines/project45minigunmag/project45minigunmag.animation",
+    "type" : "textured",
+    "image" : "/particles/project45/magazines/project45sawbladermag/project45sawbladermag.png",
     "fade" : 0.9,
 	  "position" : [0, 0],
 	  "size" : 1.0,
