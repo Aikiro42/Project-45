@@ -26,7 +26,9 @@
 
   "project45GunModInfo": {
     "category": "ballistic",
-    
+    "compatibleMods": [
+      "project45-speedloadermod"
+    ],
     "allowsConversion": [
       "hitscan",
       "beam",
@@ -34,7 +36,7 @@
     ],
     "acceptsModSlot": [
       "stock",
-      
+      "magazine",
       "material"
     ],
     "acceptsAmmoArchetype": [

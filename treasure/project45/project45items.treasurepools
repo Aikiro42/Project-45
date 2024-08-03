@@ -1,6 +1,6 @@
 {
 
-  // GUNS
+  // SECTION: GUNS
 
   "project45-guns-r": [
     [0, {
@@ -33,6 +33,7 @@
         {"weight" : 1, "item" : "project45-neo-assaultrifle"},
         {"weight" : 1, "item" : "project45-neo-carbine"},
         {"weight" : 1, "item" : "project45-neo-servicerifle"},
+        {"weight" : 1, "item" : "project45-neo-handmortar"},
         {"weight" : 1, "item" : "project45-neo-cyclo"},
         {"weight" : 1, "item" : "project45-neo-covalence"},
         {"weight" : 1, "item" : "project45-neo-beamsplitter"},
@@ -99,7 +100,7 @@
     }]
   ],
 
-  // STATS
+  // SECTION: STATS
 
   
   "project45-stats-r": [
@@ -183,7 +184,7 @@
     }]
   ],
   
-  // MODS
+  // SECTION: MODS
 
   "project45-mods-r": [
     [0, {
@@ -221,6 +222,7 @@
         {"weight" : 1, "item" : "project45-aegisaltmod"},
         {"weight" : 1, "item" : "project45-feroziummod"},
         {"weight" : 1, "item" : "project45-violiummod"},
+        {"weight" : 1, "item" : "project45-speedloadermod"},
 
         // LEGENDARY
         {"weight" : 0.5, "item" : "project45-flashlasermod"},

@@ -107,6 +107,7 @@
         
         // Heavies
         "project45-neo-amr",
+        "project45-neo-handmortar",
         "project45-neo-grenadelauncher",
         "project45-neo-rocketlauncher",
         "project45-neo-minigun",
@@ -172,6 +173,9 @@
         "project45-extendedmagmod",
         "project45-alofsmagmod",
         "project45-overampmod",
+
+        // magwell
+        "project45-speedloadermod",
 
         // bowstring
         "project45-customnockmod",  

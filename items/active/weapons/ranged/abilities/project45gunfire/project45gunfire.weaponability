@@ -58,7 +58,13 @@
     - muzzle particles
     */
     // "performanceMode": false,
-    // "debug": false,
+    
+    /*
+    "debug": {
+      // if true, causes the weapon to continuously spit particles from their ejection port and magazine port
+      "emitParticles": false
+    },
+    */
 
     /*
     Hide Muzzle Flash & Smoke

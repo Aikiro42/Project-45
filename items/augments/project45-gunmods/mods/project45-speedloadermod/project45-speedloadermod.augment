@@ -1,0 +1,39 @@
+{
+  "itemName" : "project45-speedloadermod",
+  "price" : 7000,
+  "rarity" : "Rare",
+  "tooltipKind" : "project45gunmod2",
+  "modCategory" : "gunMod",
+  "category" : "uniqueWeapon",
+  "itemTags": ["weapon"],
+  "tooltipFields":{
+    "subtitle": "Gun Mod",
+    "objectImage": "/items/augments/project45-gunmods/mods/project45-speedloadermod/project45-speedloadermod.png"
+  },
+  "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-speedloadermod/project45-speedloadermodicon.png",
+  "description": "A speedloader for revolver cylinders. Uses a spring mechanism to hold rounds together.",
+  "technicalInfo" : "Allows weapon to load to full magazine capacity.",
+  "statInfo": "If I appear anywhere, something's wrong; check the scripts and tooltips.",
+  "shortdescription" : "Speedloader",
+   
+  "augment": {
+    "modName": "Speedloader",
+    "compatibleWeapons": [
+      "project45-neo-revolver"
+    ],
+    "exclusiveCompatibility": true,
+    "category": "ballistic",
+    "slot": "magwell",
+    "stat": {
+      "reloadTime": {
+        "additive": 0.3
+      },
+      "bulletsPerReload": {
+        "rebase": "Full"
+      }
+    }
+  },
+
+  "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
+}

@@ -76,8 +76,10 @@ function build(directory, config, parameters, level, seed)
   -- @param stat: string
   -- @param op: string
   -- @param val: number
+  -- @param override: causes the function to set formattedVal to be exactly val,
+  --  used if val can possibly be a string
   -- @return formattedStat: string, formattedVal: string
-  local formatStat = function(stat, op, val)
+  local formatStat = function(stat, op, val, override)
     --[[
     config.tooltipFields["stat" .. stats .. "TitleLabel"] = "^#d29ce7;???"
     config.tooltipFields["stat" .. stats .. "Label"] = "^#d29ce7;???"
@@ -86,14 +88,20 @@ function build(directory, config, parameters, level, seed)
     
     -- values to be changed and returned
     local formattedStat = stat
-    local formattedVal = type(val) ~= "table" and string.format("%.1f", val) or "^#d29ce7;???"
+    local statColor = generalStatConfig.statColors.default
+
+    local formattedVal
+    if override then
+      formattedVal = project45util.colorText(statColor, string.format("%s", val))
+    else
+      formattedVal = type(val) ~= "table" and string.format("%.1f", val) or "^#d29ce7;???"
+    end
 
     local statGroup = generalStatConfig.statGroupAssignments
     local isMember = statGroup
     local isGroup = set.new(generalStatConfig.statGroups)
     
     -- format stat
-    local statColor = generalStatConfig.statColors.default
     local statName = project45util.capitalize(stat)
     if not isMember[stat] and not isGroup[stat] then -- individual stat
       statColor = generalStatConfig.statColors[stat] or statColor
@@ -107,6 +115,10 @@ function build(directory, config, parameters, level, seed)
     
     end
     formattedStat = project45util.colorText(type(val) == "table" and "#d29ce7" or statColor, statName)
+
+    if override then
+      return formattedStat, formattedVal
+    end
 
     -- format mod val
     if type(val) ~= "table" then
@@ -239,6 +251,7 @@ function build(directory, config, parameters, level, seed)
   local statLimit = 7
   local stats = 1
   local specialField = set.new({"level", "pureStatMod", "randomStatParams", "stackLimit"})
+  local specialCases = set.new({"bulletsPerReload"})
   local isRandomStats = deepConfigParameter(false, "augment", "stat", "randomStatParams")
   local registeredRandomStats = {}
 
@@ -251,7 +264,7 @@ function build(directory, config, parameters, level, seed)
             config.tooltipFields.stat7Label = "^#7e7e7e;..."
             break
           end
-          local formattedStat, formattedVal = formatStat(stat, mod, val)
+          local formattedStat, formattedVal = formatStat(stat, mod, val, type(val) == "string")
           config.tooltipFields["stat" .. stats .. "TitleLabel"] = formattedStat
           config.tooltipFields["stat" .. stats .. "Label"] = formattedVal
           stats = stats + 1

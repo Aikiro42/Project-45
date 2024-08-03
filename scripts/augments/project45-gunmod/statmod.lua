@@ -114,6 +114,7 @@ function apply(output, augment)
 
   -- SECTION: SPECIAL STAT CASES
 
+  -- General handling of Max Ammo
   if augment.maxAmmo then
 
     statModifiers.maxAmmo = statModifiers.maxAmmo or {
@@ -135,6 +136,16 @@ function apply(output, augment)
       augment.bulletsPerReload = augment.maxAmmo
     end
 
+  end
+  
+  -- Per-bullet reload to full reload conversion
+  if augment.bulletsPerReload and augment.bulletsPerReload.rebase then
+    if string.lower(augment.bulletsPerReload.rebase) == "full" then
+      -- it's quite complicated and slow to prematurely determine final max ammo,
+      -- so we set it to a very large value
+      -- the case where bulletsPerReload > maxAmmo is corrected by the weaponability anyway
+      augment.bulletsPerReload.rebase = 999999
+    end
   end
 
   -- individual fireTimeGroup stats
@@ -160,7 +171,6 @@ function apply(output, augment)
     end  
   end
 
-  
   -- Alter general Fire Time
   if augment.fireTimeGroup then
     statModifiers.fireTimeGroup = statModifiers.fireTimeGroup or {
