@@ -252,7 +252,9 @@
         // experimental ammo
         "project45-gasmod",
         "project45-tarmod",
-        "project45-gravbombmod"
+
+        "project45-gravbombmod",
+        "project45-haloburstmod"
         
       ],
 
