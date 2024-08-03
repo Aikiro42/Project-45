@@ -62,7 +62,15 @@
     /*
     "debug": {
       // if true, causes the weapon to continuously spit particles from their ejection port and magazine port
-      "emitParticles": false
+      "emitParticles": false,
+
+      "pointColors": {
+        "rail": "red",
+        "sights": "orange",
+        "underbarrel": "green",
+        "stock": "gray"
+      },
+
     },
     */
 
