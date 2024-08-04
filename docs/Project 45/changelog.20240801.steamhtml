@@ -4,10 +4,42 @@
 
 [h3]New Features[/h3]
 [list]
-	[*] Added the [b]P-45 Riot Shield[/b] for use with one-handed weapons.
+	[*] Added the [b]Hand Mortar[/b], a cheaper, single-shot grenade launcher.
+	[*] 
 [/list]
 
 [h3]Bug Fixes[/h3]
 [list]
 	[*] Look of weapon UI has been updated. 
 [/list]
+
+- add new damage types: project45dark and project45holy, resisted by `darkResistance` and `holyResistance`, respectively; the following resistances are named such to ensure compatibility with other mods that employ dark/light-esque damage attributes
+- rename and improve descriptions of the Supply Transponder and Partial/Full Cipher Keys (formerly Gacha Keys)
+
+feat: add new gun and mod
+- add project45-neo-handmortar, a single-shot grenade launcher.
+- add project45-speedloadermod to convert revolvers from per-bullet reload to full reload
+- enabled magazine slot on project45-neo-revolver
+- add special case for per-bullet reload to full reload conversion
+- fix bug where whitelisting weapons/mods does virtually nothing
+- remove printlines from project45-enemyflare.lua
+- add documentation for the primary ability's "debug" field
+
+feat: add project45-syringeloadermod
+- fix project45-neo-shotgun not rotating after slam firing
+- decrease price of project45-speedloadermod
+- add project45-syringeloader, a syringe loader for the shotgun
+
+feat: add project45-neo-crossbow
+- change P-45 Riot Shield rarity from "Uncommon" to "Legendary"
+- move debugPointColors to self.debug.pointColors and add documentation
+- add Crossbow, an automatic crossbow with a 5-round, top-loaded magazine
+- improve visuals of arrow projectile trails
+
+fix: minor fixes
+- renamed `gunArchetypeDamages` to `gunArchetypeDps` in config
+- remove unused `standardMaxAmmo` in config
+- add magic number in config
+- change crossbow parameters; add 0.9x baseDamageMultiplier
+- fix Hi-tech Scope using regular scope sprite
+- add project45-modhider, an appliable tool that's used to make weapon mods invisible
