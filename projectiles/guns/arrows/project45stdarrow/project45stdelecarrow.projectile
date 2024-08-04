@@ -41,7 +41,7 @@
         "size" : 1,
         "color" : [210, 156, 231, 255],
         "collidesForeground" : false,
-        "length" : 30,
+        "length" : 14,
         "position" : [0, 0],
         "timeToLive" : 0,
         "destructionTime" : 0.2,

@@ -1,6 +1,6 @@
 {
 
-  // GUNS
+  // SECTION: GUNS
 
   "project45-guns-r": [
     [0, {
@@ -10,6 +10,7 @@
 
         // UNCOMMON
         {"weight" : 0.5, "item" : "project45-neo-pistol"},
+        {"weight" : 0.5, "item" : "project45-neo-tmp"},
         {"weight" : 0.5, "item" : "project45-neo-sawedoff"},
         {"weight" : 0.5, "item" : "project45-neo-doublebarrel"},
         {"weight" : 0.5, "item" : "project45-neo-handmaderifle"},
@@ -32,6 +33,7 @@
         {"weight" : 1, "item" : "project45-neo-assaultrifle"},
         {"weight" : 1, "item" : "project45-neo-carbine"},
         {"weight" : 1, "item" : "project45-neo-servicerifle"},
+        {"weight" : 1, "item" : "project45-neo-handmortar"},
         {"weight" : 1, "item" : "project45-neo-cyclo"},
         {"weight" : 1, "item" : "project45-neo-covalence"},
         {"weight" : 1, "item" : "project45-neo-beamsplitter"},
@@ -45,6 +47,7 @@
         {"weight" : 0.5, "item" : "project45-neo-sniper"},
         {"weight" : 0.5, "item" : "project45-neo-machinegun"},
         {"weight" : 0.5, "item" : "project45-neo-grenadelauncher"},
+        {"weight" : 0.5, "item" : "project45-neo-crossbow"},
 
         {"weight" : 0.5, "item" : "project45-neo-accelerator"},
         {"weight" : 0.5, "item" : "project45-neo-beamgun"},
@@ -67,7 +70,8 @@
         {"weight" : 1, "item" : "project45-neo-powerstave"},
         {"weight" : 1, "item" : "project45-neo-flamethrower"},
         {"weight" : 1, "item" : "project45-neo-autocannon"},
-        {"weight" : 1, "item" : "project45-neo-gaussrifle"}
+        {"weight" : 1, "item" : "project45-neo-gaussrifle"},
+        {"weight" : 1, "item" : "project45-neo-sawblader"}
       ],
       "poolRounds" : 1,
       "allowDuplication" : false
@@ -88,15 +92,16 @@
         {"weight" : 1, "item" : "project45-msx-marcohmg"},
         {"weight" : 1, "item" : "project45-hlo-maxx"},
         {"weight" : 1, "item" : "project45-wfm-kuvabramma"},
-        {"weight" : 1, "item" : "project45-mhf-boneshooter"}
-
+        {"weight" : 1, "item" : "project45-mhf-boneshooter"},
+        {"weight" : 1, "item" : "project45-cbp-malorian"},
+        {"weight" : 1, "item" : "project45-utk-revolver"}
       ],
       "poolRounds" : 1,
       "allowDuplication" : false
     }]
   ],
 
-  // STATS
+  // SECTION: STATS
 
   
   "project45-stats-r": [
@@ -180,7 +185,7 @@
     }]
   ],
   
-  // MODS
+  // SECTION: MODS
 
   "project45-mods-r": [
     [0, {
@@ -218,6 +223,8 @@
         {"weight" : 1, "item" : "project45-aegisaltmod"},
         {"weight" : 1, "item" : "project45-feroziummod"},
         {"weight" : 1, "item" : "project45-violiummod"},
+        {"weight" : 1, "item" : "project45-speedloadermod"},
+        {"weight" : 1, "item" : "project45-syringeloadermod"},
 
         // LEGENDARY
         {"weight" : 0.5, "item" : "project45-flashlasermod"},

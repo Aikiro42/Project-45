@@ -1,0 +1,37 @@
+{
+  "itemName" : "project45-haloburstmod",
+  "price" : 5000,
+  "rarity" : "Legendary",
+  "tooltipKind" : "project45gunmod2",
+  "modCategory" : "ammoMod",
+  "category" : "uniqueWeapon",
+  "itemTags": ["weapon"],
+  "tooltipFields":{
+    "subtitle": "Ammo Mod",
+    "objectImage": "/items/augments/project45-gunmods/ammo/project45-haloburstmod/project45-haloburstmod.png"
+  },
+  "inventoryIcon" : "/items/augments/project45-gunmods/ammo/project45-haloburstmod/project45-haloburstmodicon.png",
+  "description": "Technology adapted from Ancient Avian technology. Few materials, if any, can withstand Holy.",
+  "technicalInfo" : "Releases bursts that deal Holy damage.",
+  "shortdescription" : "Halobursts",
+
+  "augment":{
+    "modName": "Halobursts",
+    "category": "experimental",
+
+    "conversion": "summoned",
+    "ammo":{
+      "archetype": "summoned",
+
+      "summonedProjectileType": "project45_haloburst",
+      "summonedProjectileParameters":{
+        "speed": 0
+      }
+    }
+  },
+
+   
+
+  "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
+}

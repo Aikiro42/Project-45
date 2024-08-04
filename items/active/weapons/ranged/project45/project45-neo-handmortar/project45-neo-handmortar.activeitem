@@ -1,0 +1,205 @@
+{
+  "itemName" : "project45-neo-handmortar",
+  "price" : 2500,
+  "maxStack" : 1,
+  "rarity" : "Rare",
+  "description" : "A handheld grenade launcher.",
+  "shortdescription" : "Hand Mortar",
+  "tooltipKind" : "project45gun",
+  "gunArchetype": "grenadeLauncher",
+  "category" : "grenadelauncher",
+  "twoHanded" : true,
+  "itemTags" : ["weapon","ranged","grenadelauncher"],
+  "level" : 1,
+  "muzzleFlashColor": [255, 255, 200],
+  "inventoryIcon" : "project45-neo-handmortar-icon.png",
+
+  "project45GunModInfo": {
+    "category": "ballistic",
+    "upgradeCapacity": 10,
+    "allowsConversion": [],
+    "acceptsAmmoArchetype": [
+      "grenade",
+      "shotgun"
+    ],
+    "acceptsModSlot": [
+      "rail",
+      "sights",
+      "underbarrel",
+      
+      "material"
+    ],
+    "flipSlot": [
+      "stock"
+    ]
+  },
+
+  "animationParts" : {
+    "middle" : "project45-neo-handmortar.png",
+    "middleFullbright" : "",
+    "charge": "",
+    "chargeFullbright": "",
+    "magazine": "",
+    "magazineFullbright": ""
+  },
+
+  "animationCustom": {
+    "particleEmitters": {
+      "ejectionPort": {
+        "particles": [
+          {"particle": "rocketbarrelpuff"},
+          {"particle": "project45grenadeshell"}
+        ]
+      },
+      "magazine": {
+        "particles": [
+        ]
+      }
+    },
+
+    "sounds": {
+      "fire" : ["/sfx/project45neosfx/fire/fire-grenadelauncher1.ogg"],
+      "ejectCasing": [
+        "/sfx/project45neosfx/ejectcasing/ejectcasing-cannon1.ogg"
+      ],
+      "ejectMag": [ ],
+      "boltPull" : ["/sfx/project45neosfx/boltpull/boltpull-shotgun1.ogg"],
+      "boltPush" : ["/sfx/project45neosfx/boltpush/boltpush-shotgun1.ogg"]
+    },
+    "animatedParts": {
+      "parts":{
+        "middle":{
+          "partStates":{
+            "gun":{
+              "fired": {
+                "properties": {
+                  "image": "<partImage>:firing.1"
+                }
+              }
+            }
+          }
+        },
+        "charge":{
+          "partStates":{
+            "charge":{
+              "off": {
+                "properties": {
+                  "image": "<partImage>:charging.1"
+                }
+              }
+            }
+          }
+        }
+      },
+      "stateTypes": {
+        "gun": {
+          "states":{
+            "idle": {
+              "frames": 1
+            },
+            "open": {
+              "frames": 1
+            },
+            "ejecting": {
+              "frames": 3
+            },
+            "boltPulling": {
+              "frames": 3
+            },
+            "feeding": {
+              "frames": 3
+            },
+            "boltPushing": {
+              "frames": 3
+            }
+          }
+        }
+      }
+    }
+  },
+
+  "baseOffset" : [0.75, 0.25],
+  "muzzleOffset" : [1.125, 0.125],
+  "ejectionPortOffset": [0.125, 0.1875],
+  "magazineOffset": [0, 0],
+
+  "railOffset": [0, 0],
+  "underbarrelOffset": [0.5, -0.25],
+  "sightsOffset": [-0.125, 0.375],
+  "stockOffset": [-0.75, -0.5625],
+
+  "debugPointColors": {
+    "rail": "red",
+    "sights": "orange",
+    "underbarrel": "green",
+    "stock": "gray"
+  },
+
+  "scripts" : ["/items/active/weapons/ranged/project45gunneo.lua"],
+    
+  "primaryAbilityType": "project45gunfire",
+  "primaryAbility": {
+    "baseDamageMultiplier": 1.1,
+    "reloadCost": 10,
+    "critDamageMult": 5,
+    "critChance": 0.02,
+    "maxAmmo": 1,
+    "bulletsPerReload": 1,
+    "inaccuracy": 3,
+    "semi": true,
+    "cycleTime": 0.1,
+    "cockTime": 0.2,
+    "projectileKind": "projectile",
+    "projectileType": "project45stdgrenade",
+    "reloadTime": 1,
+    "spread": 1,
+    "postReloadDelay": 0.1,
+
+    "manualFeed": true,
+    "internalMag": true,
+    "loadRoundsThroughBolt": true,
+    "ejectCasingsWithMag": true,
+    "ejectMagOnEmpty": "ejecting",
+    "reloadOnEjectMag": false,
+    "slamFire": false,
+    "jamChances": [0.5, 0.1, 0.05, 0],
+
+    "recoilAmount": 15, // amount of recoil per shot, in degrees; arm and weapon will rotate by half of this
+    "recoilMaxDeg": 45, // the most the arm and weapon will rotate, in degrees.
+    "recoverTime": 1, // time it takes to recover aim completely, in seconds
+
+    // "reloadTime": 10,
+
+    "laser":{
+      "enabled": false
+    },
+    
+    "stances": {
+      "empty": {
+        "armRotation" : 5,
+        "weaponRotation" : 5,
+        "twoHanded" : true,
+        "allowRotate" : false,
+        "allowFlip" : true,
+        "frontArmFrame" : "run.2",
+
+        // New Stance Parameters
+
+        "disabled": false,
+        /*
+        if true, stance isn't applied at all.
+        */
+
+        "snap": false
+        /*
+        if true, stance snaps immediately and doesn't smoothly transist from previous stance.
+        Certain stances always snap: the "unjam", "reloading" and "loadRound" stances.
+        Certain stances snap depending on certain conditions: "reloaded" snaps if "reloadOnEjectMag" is false.
+        */
+        
+      }
+    }
+  },
+
+  "builder" : "/items/buildscripts/buildproject45neoneo.lua"
+}

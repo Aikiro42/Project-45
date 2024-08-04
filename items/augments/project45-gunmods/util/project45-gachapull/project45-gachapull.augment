@@ -8,7 +8,7 @@
     "subtitle": "Applied Utility"
   },
   "inventoryIcon" : "/items/augments/project45-gunmods/util/project45-gachapull/project45-gachapull.png",
-  "description" : "A one-time-use key for opening the ever-replenishing ^#d29ce7;Gacha Bag^reset;.",
-  "shortdescription" : "Gacha Key",
+  "description" : "A round key for the Supply Transponder's channel. ^#d29ce7;Provides 1 pull.^reset;",
+  "shortdescription" : "Partial Cipher Key",
   "scripts" : [ "/scripts/augments/project45-gachapull.lua" ]
 }

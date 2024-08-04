@@ -137,26 +137,31 @@ function Checker:check()
       self.checked = false
     end
   end
-
-  -- Bad if augment blacklists weapon
+  
+  -- Check blacklist
   local weaponBlacklist = set.new(augment.incompatibleWeapons or {})
-  if weaponBlacklist[input.name] then
-    self:addError(string.format("Weapon incompatible with mod"))
-    self.checked = false
-  end
-
-  -- Bad if weapon blacklists augment
   local augmentBlacklist = set.new(modInfo.incompatibleMods or {})
-  if augmentBlacklist[config.getParameter("itemName")] then
-    self:addError(string.format("Mod incompatible with weapon"))
-    self.checked = false
+  local incompatible = weaponBlacklist[input.name] or augmentBlacklist[config.getParameter("itemName")]
+
+  if incompatible then
+    -- Bad if augment blacklists weapon
+    if weaponBlacklist[input.name] then
+      self:addError(string.format("Weapon incompatible with mod"))
+      self.checked = false
+    end
+
+    -- Bad if weapon blacklists augment
+    if augmentBlacklist[config.getParameter("itemName")] then
+      self:addError(string.format("Mod incompatible with weapon"))
+      self.checked = false
+    end
   end
 
   -- Check whitelist
   local weaponWhitelist = set.new(augment.compatibleWeapons or {})
   local augmentWhitelist = set.new(modInfo.compatibleMods or {})
   local compatible = weaponWhitelist[input.name] or augmentWhitelist[config.getParameter("itemName")]
-  self.compatible = compatible
+  self.compatible = compatible and not incompatible
 
   if not compatible then
     -- Bad if mod has exclusive compatibility and is incompatible with weapon
@@ -169,6 +174,9 @@ function Checker:check()
       self:addError(string.format("Category mismatch"))
       self.checked = false
     end
+  else
+    -- Good if whitelisted and not blacklisted
+    self.checked = true
   end
 
   if self.checked == nil then

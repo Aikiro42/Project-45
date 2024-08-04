@@ -139,6 +139,7 @@
         "lite": true,
         "armRotation": 0,
         "weaponRotation": 0,
+        "allowRotate": true,
         "frontArmFrame": "run.3",
         "backArmFrame": "jump.2"
       },
@@ -146,6 +147,7 @@
         "lite": true,
         "armRotation": 0,
         "weaponRotation": 0,
+        "allowRotate": true,
         "frontArmFrame": "run.3",
         "backArmFrame": "fall.1"
       },

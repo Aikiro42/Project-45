@@ -64,7 +64,7 @@
     ],
     "speed" : 0,
     "power" : 1,
-    "damageKind": "electric",
+    "damageKind": "project45dark",
     "damageType": "IgnoresDef",
     "damageRepeatTimeout": 0.1,
     

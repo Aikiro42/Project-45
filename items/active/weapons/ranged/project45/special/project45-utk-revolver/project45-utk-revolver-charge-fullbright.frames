@@ -1,0 +1,9 @@
+{
+  "frameGrid" : {
+    "size" : [23, 9],
+    "dimensions" : [2, 1],
+    "names" : [
+      ["charging.1", "charging.2"]
+    ]
+  }
+}

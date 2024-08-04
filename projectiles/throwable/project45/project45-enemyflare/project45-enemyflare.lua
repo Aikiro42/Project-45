@@ -37,8 +37,8 @@ function atEntityCap(entityCap)
   local entities = world.entityQuery(mcontroller.position(), self.spawnRadius, {
     withoutEntityId = entity.id()
   })
-  sb.logInfo("Entity count: " .. #entities)
-  sb.logInfo(sb.printJson(entities, 1))
+  -- sb.logInfo("Entity count: " .. #entities)
+  -- sb.logInfo(sb.printJson(entities, 1))
   return #entities >= entityCap
 end
 
