@@ -1,0 +1,31 @@
+[
+  {
+    "op": "add",
+    "path": "/project45holy",
+    "value": {
+      "resistanceStat" : "holyResistance",
+      "damageNumberParticles" : {
+        "hit" : "project45-holydamagenumber",
+        "stronghit" : "project45-holydamagenumberstrong",
+        "weakhit" : "project45-holydamagenumberweak",
+        "shieldhit" : "project45-holydamagenumberweak",
+        "kill" : "project45-holydamagenumberstrong"
+      }  
+    }
+  },
+
+  {
+    "op": "add",
+    "path": "/project45dark",
+    "value": {
+      "resistanceStat" : "darkResistance",
+      "damageNumberParticles" : {
+        "hit" : "project45-darkdamagenumber",
+        "stronghit" : "project45-darkdamagenumberstrong",
+        "weakhit" : "project45-darkdamagenumberweak",
+        "shieldhit" : "project45-holydamagenumberweak",
+        "kill" : "project45-darkdamagenumberstrong"
+      }  
+    }
+  }
+]

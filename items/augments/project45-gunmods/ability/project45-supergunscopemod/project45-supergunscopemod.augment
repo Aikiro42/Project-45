@@ -27,12 +27,13 @@
       "overrideTwoHanded": true,
       "twoHanded": true,
       "hasShiftAction": true,
-      
       "altAbility": {
         "name": "Hi-Tech Scope",
         "reticleProjectile": "project45hightechcamera"
-      },
+      }
+    },
 
+    "gun": {  
       "animationCustom": {
         "animatedParts":{
           "parts":{

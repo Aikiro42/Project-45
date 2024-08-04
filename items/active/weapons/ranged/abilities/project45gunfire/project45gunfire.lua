@@ -56,6 +56,11 @@ function Project45GunFire:init()
   self.hideMuzzleSmoke = self.performanceMode or self.hideMuzzleSmoke
   self.weapon.startRecoil = 0
 
+  self.chargeVolumeMult = self.chargeVolumeMult or 0.7
+  self.chargePitchMult = self.chargePitchMult or 0.3
+  self.maxChargeVolume = self.maxChargeVolume or 2
+  self.maxChargePitch = self.maxChargePitch or 2
+
   self.recoilOffsetProgress = 1
 
   self.balanceDamageMult = config.getParameter("balanceDamageMult", 1)
@@ -314,7 +319,7 @@ function Project45GunFire:init()
 
   self.recoverDelayTimer = 0
     
-  local initStance = {
+  local initStance = self.stances.initStance or {
     armRotation = -45,
     snap = true
   }
@@ -353,7 +358,7 @@ function Project45GunFire:renderModPositionDebug()
   
   local weaponPos = vec2.add(mcontroller.position(), activeItem.handPosition(vec2.rotate(self.weapon.weaponOffset, self.weapon.relativeWeaponRotation)))
 
-  local debugPointColors = config.getParameter("debugPointColors", {})
+  local debugPointColors = self.debug.pointColors
 
   local modPositions = {
     rail=debugPointColors.rail or "gray",
@@ -375,6 +380,15 @@ function Project45GunFire:renderModPositionDebug()
       ),
       color
     )
+  end
+
+  if type(self.debug) == "table" and self.debug.emitParticles then
+    self.debugParticleTimer = math.max(0, (self.debugParticleTimer or 0) - self.dt)
+    if self.debugParticleTimer <= 0 then
+      animator.burstParticleEmitter("ejectionPort")
+      animator.burstParticleEmitter("magazine")
+      self.debugParticleTimer = 0.05
+    end
   end
 
 end
@@ -817,6 +831,7 @@ function Project45GunFire:feeding()
     return
   elseif self.manualFeed or self.isCocking then
     self.weapon:setStance(self.stances.boltPush)
+    self.cooldownTimer = self.postCockCooldown or self.cooldownTimer
   end
 
   -- otherwise, we wait
@@ -829,6 +844,10 @@ function Project45GunFire:feeding()
     util.wait(self.currentCycleTime/3)
   end
   
+  if self.isCocking and self.postReloadInitSound then
+    util.wait(self.dt)
+    animator.playSound("init")
+  end
   self.weapon:setStance(self.stances.aimStance)
   
   animator.setAnimationState("bolt", "closed")
@@ -1052,7 +1071,7 @@ function Project45GunFire:reloading()
   if self.breakAction then
     animator.setAnimationState("gun", "ejected")
   end
-
+  
   self:setState(self.cocking)
 end
 
@@ -1480,8 +1499,12 @@ function Project45GunFire:screenShake(amount, shakeTime, random)
   if amount == 0 then return end
 
   local source = mcontroller.position()
-  local shake_dir = vec2.mul(self:aimVector(0), amount)
-  if random then vec2.rotate(shake_dir, 3.14 * math.random()) end
+  local shake_dir
+  if random then
+    shake_dir = vec2.rotate({amount, 0}, 3.14 * math.random())
+  else
+    shake_dir = vec2.mul(self:aimVector(0), amount)
+  end
   local cam = world.spawnProjectile(
     "invisibleprojectile",
     vec2.add(source, shake_dir),
@@ -1592,9 +1615,12 @@ function Project45GunFire:updateCharge()
 
   -- update sounds
   local chargeProgress = self.chargeTimer / (self.chargeTime > 0 and self.chargeTime or self.overchargeTime)
-  animator.setSoundVolume("chargeDrone", 0.25 + 0.7 * math.min(chargeProgress, 2))
-  animator.setSoundPitch("chargeWhine", 1 + 0.3 * math.min(chargeProgress, 2))
-  animator.setSoundVolume("chargeWhine", 0.25 + 0.75 * math.min(chargeProgress, 2))
+  animator.setSoundVolume("chargeDrone", 0.25 + self.chargeVolumeMult * math.min(chargeProgress, self.maxChargeVolume))
+  animator.setSoundPitch("chargeWhine", 1 + self.chargePitchMult * math.min(chargeProgress, self.maxChargePitch))
+  animator.setSoundVolume("chargeWhine", 0.25 + self.chargeVolumeMult * math.min(chargeProgress, self.maxChargeVolume))
+  if self.chargeScreenShakeMult then
+    self:screenShake(chargeProgress * self.currentScreenShake * self.chargeScreenShakeMult, nil, true)
+  end
 
   -- start/stop sounds accordingly
   if self.chargeTimer > 0 and not self.chargeLoopPlaying then

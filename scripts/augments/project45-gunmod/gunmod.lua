@@ -53,6 +53,10 @@ function apply(output, augment)
         end
       end
 
+      if augment.primaryAbility.heavyWeapon and newPrimaryAbility.heavyWeapon == false then
+        augment.primaryAbility.heavyWeapon = nil
+      end
+
       local protectedParameters = root.assetJson("/configs/project45/project45_generalstat.config:statDefaults")
       -- protect gun from getting their stats modified directly
       for param, _ in pairs(protectedParameters) do
@@ -228,13 +232,23 @@ function modify(oldValue, operation, modValue)
       newValue[key] = modify(val, operation, modValue)
     end
 
-    -- if old value is atomic, modify as such
-    -- this is a base case
+  -- if old value is atomic, modify as such
+  -- this is a base case
   else
     if operation == "add" then
       newValue = oldValue + modValue
     elseif operation == "multiply" then
       newValue = oldValue * modValue
+    
+    -- should be used with boolean properties
+    elseif operation == "or" then
+      newValue = oldValue or newValue
+      
+    -- must only be used with boolean properties
+    elseif operation == "and" then
+      newValue = oldValue and newValue
+    elseif operation == "not" then
+      newValue = not oldValue
     end
 
   end

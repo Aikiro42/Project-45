@@ -58,7 +58,21 @@
     - muzzle particles
     */
     // "performanceMode": false,
-    // "debug": false,
+    
+    /*
+    "debug": {
+      // if true, causes the weapon to continuously spit particles from their ejection port and magazine port
+      "emitParticles": false,
+
+      "pointColors": {
+        "rail": "red",
+        "sights": "orange",
+        "underbarrel": "green",
+        "stock": "gray"
+      },
+
+    },
+    */
 
     /*
     Hide Muzzle Flash & Smoke
@@ -268,7 +282,15 @@
     // "loadRoundsThroughBolt": false,
 
     // "postReloadDelay": null, // float; time to wait before cocking in seconds, cockTime/8 by default
-    
+
+    /*
+    float; time to wait before being able to fire after cocking (read: manually feeding the round), in seconds
+    this does not apply if the gun is slam-fired.
+    This setting exists to allow the option to prevent players from firing the gun while the weapon's boltpush
+    stance transition/"animation" is in progress (see project45-cbp-malorian)
+    */
+    // "postCockCooldown": 0
+
     // determines whether the gun is break-action, i.e. breaks open when ejecting the mag
     // dictates whether the gun animation accesses the "open" state
     // "breakAction": false,
@@ -407,7 +429,9 @@
     
     "progressiveCharge": true, // whether the charge animation loops or is dependent on charge progress
     "chargeFrames": 1, // only matters if progressiveCharge is true
-
+    
+    // "chargeScreenShakeMult": 1 // shakes screen as you charge up the weapon
+    
     // makes the gun fire once the charge timer hits/passes chargeTime
     // "fireBeforeOvercharge": false,
     

@@ -1,0 +1,22 @@
+{
+  "kind" : "project45sawbladesparkle",
+  "definition" : {
+    "type" : "animated",
+    "animation" : "/particles/project45/projectile/project45dragonsbreathtrailsparkle/project45dragonsbreathtrailsparkle.animation",
+    "position" : [0, 0],
+    "initialVelocity" : [-10, 0],
+    "finalVelocity" : [0, 0.0],
+    "light" : [255, 212, 149],
+    "approach" : [25, 25],
+    "fullbright": true,
+    "fade" : 2,
+    "destructionAction" : "shrink",
+    "destructionTime" : 3,
+    "size" : 1.25,
+    "timeToLive" : 0.5,
+    "variance" : {
+      "position" : [0, 0.25],
+      "initialVelocity" : [2, 0]
+    }
+  }
+}

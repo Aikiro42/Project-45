@@ -1,0 +1,128 @@
+{
+  "projectileName" : "project45sawblade",
+  "image" : "project45sawblade.png",
+  "physics" : "sticky",
+  "animationCycle" : 0.1,
+  "frameNumber" : 2,
+  "damageKind" : "standardbullet",
+  "pointLight" : true,
+  "lightColor": [75, 36, 0],
+  "fullbright": true,
+  "flippable" : true,
+  "piercing": true,
+  "statusEffects" : [ ],
+  "power" : 5.0,
+  "speed" : 200,
+  "knockback" : 0,
+  "collisionPoly": [
+    [-8.5, 0],
+    [0, 1.5],
+    [8.5, 0],
+    [0, -1.5]
+  ],
+  "movementSettings":{
+    "collisionEnabled": true
+  },
+  "bounces" : 0,
+
+  "periodicActions" : [
+    {
+      "time" : 0.05,
+      "repeat" : true,
+      "action" : "particle",
+      "rotate" : true,
+      "specification" : {
+        "type" : "animated",
+        "animation" : "/animations/cloudpuff/cloudpuff.animation",
+        "initialVelocity": [0, 0],
+        "finalVelocity": [0, 0],
+        "approach" : [10, 10],
+        "fullbright": true,
+        "timeToLive" : 0.6,
+        "variance" : {
+          "position" : [0, 0],
+          "initialVelocity" : [15, 15],
+          "timeToLive" : 0.15,
+          "rotation" : 180
+        }
+      }
+    },
+    {
+      "time" : 0.04,
+      "repeat" : true,
+      "action" : "particle",
+      "rotate" : true,
+      "specification" : "project45sawbladetrail"
+    },
+    {
+      "time" : 0.06,
+      "repeat" : true,
+      "action" : "particle",
+      "rotate" : true,
+      "specification" : "project45sawbladetrail2"
+    },
+    {
+      "time" : 0.1,
+      "repeat" : true,
+      "action" : "particle",
+      "rotate" : true,
+      "specification" : "project45sawbladesparkle"
+    },
+    {
+      "time" : 0.05,
+      "repeat" : true,
+      "action" : "particle",
+      "rotate" : true,
+      "specification" : "project45sawbladeember"
+    }
+  ],
+  "actionOnReap": [
+    { 
+      "action" : "sound",
+      "options" : [
+        "/sfx/project45neosfx/bulletimpact/bulletimpact-generic1.ogg",
+        "/sfx/project45neosfx/bulletimpact/bulletimpact-generic2.ogg",
+        "/sfx/project45neosfx/bulletimpact/bulletimpact-generic3.ogg"
+      ]
+    },
+    /*
+    
+    {
+      "action": "config",
+      "file": "/projectiles/explosions/project45_hitexplosion/project45_hitexplosion.config"
+    },
+    
+    */
+    {
+      "action" : "loop",
+      "count" : 6,
+      "body" : [
+        {
+          "action" : "particle",
+          "specification" : {
+            "type" : "ember",
+            "size" : 1,
+            "color" : [255, 255, 200, 255],
+            "light" : [65, 65, 51],
+            "fullbright" : true,
+            "destructionTime" : 0.2,
+            "destructionAction" : "shrink",
+            "fade" : 0.9,
+            "initialVelocity" : [0, 5],
+            "finalVelocity" : [0, -50],
+            "approach" : [0, 30],
+            "timeToLive" : 0,
+            "layer" : "middle",
+            "variance" : {
+              "position" : [0.25, 0.25],
+              "size" : 0.5,
+              "initialVelocity" : [10, 10],
+              "timeToLive" : 0.2
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "persistentAudio" : "/sfx/tools/chainsaw_cut_metal.ogg"
+}

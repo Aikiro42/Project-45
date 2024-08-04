@@ -12,11 +12,11 @@
   },
   "inventoryIcon" : "/items/augments/project45-gunmods/ammo/project45-gravbombmod/project45-gravbombmodicon.png",
   "description": "Technology adapted from Ancient Artifacts. Does not seem to affect the caster.",
-  "technicalInfo" : "Summons temporal singularities that float in mid-air, detonating after a short time, dealing electric damage.",
-  "shortdescription" : "Singularity Essence",
+  "technicalInfo" : "Spawns singularities that float in mid-air, detonating after a short time, dealing electric & Dark damage.",
+  "shortdescription" : "Gravibombs",
 
   "augment":{
-    "modName": "Singularity Essence",
+    "modName": "Gravibombs",
     "category": "experimental",
 
     "conversion": "summoned",

@@ -1,0 +1,20 @@
+{
+  "name": "project45-dev-playground",
+  "version": "1.0.0",
+  "description": "Playground and sandbox for making stuff for Project 45",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "steamdown": "node ./markdown_to_steam.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "../../."
+  },
+  "author": "aikiro42",
+  "license": "ISC",
+  "dependencies": {
+    "steamdown": "^0.2.1"
+  }
+}

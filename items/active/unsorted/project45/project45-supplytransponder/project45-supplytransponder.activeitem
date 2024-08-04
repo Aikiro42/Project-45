@@ -5,7 +5,7 @@
   "maxStack" : 1,
   "rarity" : "Essential",
   "category" : "mysteriousReward",
-  "description" : "Call in a random item.",
+  "description" : "Call in a random item over an encrypted channel.^#d29ce7;Requires cipher keys to use.^reset;",
   "shortdescription" : "Supply Transponder",
   "itemTags": ["project45"],
   "twoHanded" : false,

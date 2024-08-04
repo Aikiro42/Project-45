@@ -9,13 +9,13 @@
   "objectType" : "container",
   "printable" : false,
 
-  "apexDescription" : "A healthy campfire. I could cook some food using it.",
-  "avianDescription" : "A campfire. It's useful for very basic cooking.",
-  "floranDescription" : "Floran hate flames, but likesss to cook. Cooking leadss to eating.",
-  "glitchDescription" : "Informed. Heating meat with fire is a basic form of cooking.",
-  "humanDescription" : "I've always enjoyed watching the flames of a campfire dance.",
-  "hylotlDescription" : "A campfire, I enjoy the simplicity of flame-cooked food.",
-  "novakidDescription" : "A toasty campfire for cookin'. What more d'ya need?",
+  "apexDescription" : "I should submit some samples and weapon performance reports.",
+  "avianDescription" : "I wonder if the relics I own hold any value...",
+  "floranDescription" : "Floran put sssstuff in, sssell... Get money for food.",
+  "glitchDescription" : "Curious. Would my mechaphysiological modules be reimbursed?",
+  "humanDescription" : "\"Sells items for full price\"? What a deal!",
+  "hylotlDescription" : "It seems Letheia's outsourcing materials and data from basically anybody nowadays.",
+  "novakidDescription" : "Oh hey, a golden trash can.",
 
 
   "scripts": ["/objects/scripts/project45-gunseller.lua"],

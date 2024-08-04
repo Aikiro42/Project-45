@@ -3,7 +3,7 @@
   "price" : 10000,
   "maxStack" : 1,
   "rarity" : "Essential",
-  "description" : "This is a flamethrower. It throws flames.",
+  "description" : "This is a flammenwerfer. It werfs flammens.",
   "shortdescription" : "Flamethrower",
   "tooltipKind" : "project45gun",
   "gunArchetype": "flamethrower",

@@ -30,6 +30,12 @@
       },
       "critDamage": {
         "additive": 1
+      },
+      "recoilAmount": {
+        "rebaseMult": 0.1
+      },
+      "inaccuracy": {
+        "rebaseMult": 0.1
       }
     }
   },

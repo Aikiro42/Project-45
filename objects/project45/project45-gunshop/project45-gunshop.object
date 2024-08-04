@@ -80,6 +80,7 @@
         "project45-neo-deagle",
         
         // SMGs
+        "project45-neo-tmp",
         "project45-neo-smg",
         "project45-neo-smartgun",
         
@@ -100,12 +101,14 @@
         "project45-neo-servicerifle",
         "project45-neo-huntingrifle",
         "project45-neo-sniper",
+        "project45-neo-crossbow",
 
         // Machine guns
         "project45-neo-machinegun",
         
         // Heavies
         "project45-neo-amr",
+        "project45-neo-handmortar",
         "project45-neo-grenadelauncher",
         "project45-neo-rocketlauncher",
         "project45-neo-minigun",
@@ -121,8 +124,11 @@
         "project45-neo-beamgun",
         "project45-neo-gazer",
 
-        // Special/Experimental
+        // Experimental
         "project45-neo-powerstave",
+        "project45-neo-sawblader",
+
+        // Special
         "project45-neb-zweibrandyr",
         "project45-neb-warbolter",
         "project45-neb-magmaspitter",
@@ -133,7 +139,9 @@
         "project45-pkf-typhon",
         "project45-hlo-maxx",
         "project45-wfm-kuvabramma",
-        "project45-mhf-boneshooter"
+        "project45-mhf-boneshooter",
+        "project45-cbp-malorian",
+        "project45-utk-revolver"
 
       ],
       "mods": [
@@ -166,6 +174,10 @@
         "project45-extendedmagmod",
         "project45-alofsmagmod",
         "project45-overampmod",
+
+        // magwell
+        "project45-speedloadermod",
+        "project45-syringeloadermod",
 
         // bowstring
         "project45-customnockmod",  
@@ -237,6 +249,7 @@
         // grenade ammo
         "project45-clustergrenademod",
         "project45-thermitegrenademod",
+        "project45-jumpgrenademod",
 
         // rocket ammo
         "project45-homingrocketmod",
@@ -245,7 +258,9 @@
         // experimental ammo
         "project45-gasmod",
         "project45-tarmod",
-        "project45-gravbombmod"
+
+        "project45-gravbombmod",
+        "project45-haloburstmod"
         
       ],
 
@@ -258,13 +273,16 @@
         "project45-gunrepairkit",
         "project45-ammostock",
         "project45-essentialgunoil",
-
+        "project45-modhider",
+        
+        "project45-riotshield",
         "project45-supplytransponder",
         "project45-gachapull",
         "project45-gachapull10",
         
         "project45-energystim",
         "project45-enemyflare",
+        
         "nanowrap",        
         "manipulatormodule",
         "techcard",

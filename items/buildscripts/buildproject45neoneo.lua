@@ -261,6 +261,14 @@ function build(directory, config, parameters, level, seed)
   -- gun offsets
   if config.baseOffset then
 
+    local hiddenParts = set.new(deepConfigParameter({}, "project45GunModInfo", "hiddenSlots"))
+    
+    for modSlot, _ in pairs(hiddenParts) do
+      construct(parameters, "animationCustom", "animatedParts", "parts", modSlot, "properties")
+      parameters.animationCustom.animatedParts.parts[modSlot].properties.image = ""
+      parameters[modSlot .. "Offset"] = vec2.add(config[modSlot .. "Offset"], config.baseOffset)
+    end
+
     local parts = {
       "middle",
       "charge",
@@ -302,9 +310,9 @@ function build(directory, config, parameters, level, seed)
       "underbarrel",
       "stock"
     }
-
+    
     for _, modPart in ipairs(modParts) do
-      if config[modPart .. "Offset"] then
+      if config[modPart .. "Offset"] and not hiddenParts[modPart] then
           config[modPart .. "Offset"] = vec2.add(config.baseOffset, config[modPart .. "Offset"])
           construct(config, "animationCustom", "animatedParts", "parts", modPart, "properties")
           construct(config, "animationCustom", "animatedParts", "parts", modPart .. "Fullbright", "properties")
@@ -399,6 +407,7 @@ function build(directory, config, parameters, level, seed)
 
     local modList = parameters.modSlots or config.modSlots or {}
     if config.project45GunModInfo then
+  
       local acceptedModSlots = set.new(config.project45GunModInfo.acceptsModSlot or {})
       local mods = {
         "sights",
@@ -465,7 +474,7 @@ function build(directory, config, parameters, level, seed)
 
       -- get DPS from gun archetype
       if config.gunArchetype and not config.overrideArchetypeDps then
-        local archetypeDps = generalConfig.gunArchetypeDamages[config.gunArchetype]
+        local archetypeDps = generalConfig.gunArchetypeDps[config.gunArchetype]
         config.primaryAbility.baseDps = (archetypeDps or config.primaryAbility.baseDamage)
       end
 
