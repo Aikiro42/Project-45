@@ -1,0 +1,12 @@
+{
+  "itemName" : "project45-modhider",
+  "price" : 45,
+  "rarity" : "Common",
+  "tooltipKind" : "project45gunmod",
+  "category" : "tool",
+  "inventoryIcon" : "/items/augments/project45-gunmods/other/project45-modhider/project45-modhider.png",
+  "description" : "Hides mods installed on weapons. ^#ea9931;(Rail, Sight, Muzzle, Underbarrel, Stock)^reset;",
+  "shortdescription" : "Attachment Glamour",
+
+  "scripts" : [ "/items/augments/project45-gunmods/other/project45-modhider/project45-modhider.lua" ]
+}

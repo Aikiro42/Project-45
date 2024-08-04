@@ -27,11 +27,12 @@
       "overrideTwoHanded": true,
       "twoHanded": true,
       "hasShiftAction": true,
-      
       "altAbility": {
         "reticleProjectile": "project45hightechcamera"
-      },
+      }
+    },
 
+    "gun": {  
       "animationCustom": {
         "animatedParts":{
           "parts":{
