@@ -190,8 +190,11 @@
         "project45-convergermod",
         "project45-splittermod",
         
-        // misc mods
+        // underbarrel mods
         "project45-gripmod",
+        "project45-gunshieldmod",
+        
+        // misc mods
         "project45-aegisaltmod",
         "project45-feroziummod",
         "project45-violiummod",

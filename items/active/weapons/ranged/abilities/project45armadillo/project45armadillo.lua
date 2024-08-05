@@ -71,10 +71,13 @@ function Project45Armadillo:init()
   self.blockFailTimer = 0
 
   self.paired = activeItem.callOtherHandScript("isProject45Armadillo")
-  self.disabled = self.paired and activeItem.hand() == "primary"
+  self.disabled = self.disabled or (self.paired and activeItem.hand() == "primary")
   
-  self:flicker({"AF4E00AA", "EA9931AA"}, self.riotShieldParameters.perfectBlockDuration, 0.5)
-  -- animator.playSound("initShield")
+  if not self.disabled then
+    self:flicker({"AF4E00AA", "EA9931AA"}, self.riotShieldParameters.perfectBlockDuration, 0.5)
+  else
+    self:flicker({"FFFFFFAA", "FFFFFFAA"}, self.riotShieldParameters.perfectBlockDuration, 0.5)
+  end
 
 end
 

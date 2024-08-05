@@ -11,18 +11,14 @@
             "centered" : true,
             "offset": [0, 0],
             "transformationGroups" : ["weapon"],
-            "image" : "/items/active/weapons/ranged/abilities/project45armadillo/project45armadillosprite.png<shieldDirectives>"
+            "image" : "/items/active/weapons/ranged/abilities/project45armadillo/project45gunshieldsprite.png<shieldDirectives>"
           }
         }
       }
     },
     "sounds":{
       "error": ["/sfx/interface/clickon_error.ogg"],
-      "initShield": [
-        "/sfx/gun/magnorbs_fire5.ogg",
-        "/sfx/gun/magnorbs_fire6.ogg",
-        "/sfx/gun/magnorbs_fire7.ogg"
-      ],
+      "initShield": [ ],
       "shockwave": [
         "/sfx/gun/mech_beamdrill_winddown.ogg"
       ],
@@ -46,13 +42,14 @@
   },
 
   "ability" : {
-      "name" : "A.R.M.D.L.O. Shield",
-      "type" : "project45armadillo",
+      "name" : "Gun Shield",
+      "type" : "project45gunshield",
       "scripts" : ["/items/active/weapons/ranged/abilities/project45armadillo/project45armadillo.lua"],
       "class" : "Project45Armadillo",
       
-      // "shiftActivates": false,
-      // "shiftTime": 0.2,
+      "disabled": true,
+      "shiftActivates": true,
+      "shiftTime": 0.2,
       "cooldownTime": 0.1,
 
       "riotShieldParameters": {
@@ -62,9 +59,9 @@
           [-0.5, -1.25],
           [-0.5, 1.5]
         ],
-        "perfectBlockDuration": 0.8,
-        "blockFailChance": 0.05,
-        "blockFailDuration": 0.5
+        "perfectBlockDuration": 1,
+        "blockFailChance": 0.1,
+        "blockFailDuration": 0.8
       }
   }
 }

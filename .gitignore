@@ -1,6 +1,6 @@
 scripts/vec2.lua
-npcs/threats/*.*
 .vscode
+items/buildscripts/abilities.lua
 items/active/weapons/ranged/gunfire.lua
 items/active/weapons/ranged/beamfire.lua
 items/active/weapons/ranged/abilities/altfire.lua
