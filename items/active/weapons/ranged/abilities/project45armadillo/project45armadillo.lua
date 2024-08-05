@@ -67,8 +67,11 @@ function Project45Armadillo:init()
     end
   end)
 
-
+  self.shiftHeldTimer = -1
   self.blockFailTimer = 0
+
+  self.paired = activeItem.callOtherHandScript("isProject45Armadillo")
+  self.disabled = self.paired and activeItem.hand() == "primary"
   
   self:flicker({"AF4E00AA", "EA9931AA"}, self.riotShieldParameters.perfectBlockDuration, 0.5)
   -- animator.playSound("initShield")
@@ -76,16 +79,37 @@ function Project45Armadillo:init()
 end
 
 function Project45Armadillo:triggering()
-  return self.fireMode == (self.activatingFireMode or self.abilitySlot)
+  if self.shiftActivates then
+    return self.shiftTriggered
+  else
+    return self.fireMode == (self.activatingFireMode or self.abilitySlot)
+  end
+end
+
+function Project45Armadillo:updateShift(dt, shiftHeld)
+  if not self.shiftActivates then return end
+  if shiftHeld then
+    if self.shiftHeldTimer < 0 then
+      self.shiftHeldTimer = 0
+    end
+    self.shiftHeldTimer = self.shiftHeldTimer + dt
+  elseif self.shiftHeldTimer >= 0 then
+    if self.shiftHeldTimer <= self.shiftTime then
+      self.shiftTriggered = true
+    end
+    self.shiftHeldTimer = -1
+  end
 end
 
 function Project45Armadillo:update(dt, fireMode, shiftHeld)
-  
-  status.giveResource("health", 100) -- DELETEME:
-  
+    
   WeaponAbility.update(self, dt, fireMode, shiftHeld)
-
+  
   self:updateRiotShield()
+
+  if self.disabled then return end
+
+  self:updateShift(dt, shiftHeld)
 
   if not self:triggering() then
     self.triggered = false
@@ -93,19 +117,25 @@ function Project45Armadillo:update(dt, fireMode, shiftHeld)
 
   self.cooldownTimer = math.max(0, self.cooldownTimer - self.dt)
 
-  if self:triggering()
-  and not self.triggered
-  and self.cooldownTimer == 0
-  then
-    if self:isShieldActive()
+  if self:triggering() then
+    self.shiftTriggered = false
+
+    if not self.triggered
+    and self.cooldownTimer == 0
     then
-      self:deactivateShield()
-    elseif not status.resourceLocked("energy")
-    then
-      self:activateShield()
+      self.cooldownTimer = self.cooldownTime
+      if self:isShieldActive()
+      then
+        self:deactivateShield()
+      elseif not status.resourceLocked("energy")
+      then
+        self:activateShield()
+      end
+      self.triggered = true
     end
-    self.triggered = true
+
   end
+
 end
 
 function Project45Armadillo:flicker(colors, time, intensity)
@@ -167,7 +197,7 @@ end
 
 function Project45Armadillo:activateShield()
   self:flicker({"E2C344FF", "A46E06FF"}, 0.5)
-  status.addEphemeralEffect("project45armadilloeffect", status.resourceMax("energy")/10, activeItem.ownerEntityId())
+  status.addEphemeralEffect("project45armadilloeffect", status.resourceMax("energy")/(self.paired and 5 or 10), activeItem.ownerEntityId())
   status.overConsumeResource("energy", status.resourceMax("energy"))
   self.cooldownTimer = self.cooldownTime
 end
@@ -206,4 +236,8 @@ function Project45Armadillo:shieldAimVector()
 end
 
 function Project45Armadillo:uninit()
+end
+
+function isProject45Armadillo()
+  return true
 end

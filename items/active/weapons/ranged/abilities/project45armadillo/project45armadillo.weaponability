@@ -50,6 +50,11 @@
       "type" : "project45armadillo",
       "scripts" : ["/items/active/weapons/ranged/abilities/project45armadillo/project45armadillo.lua"],
       "class" : "Project45Armadillo",
+      
+      "shiftActivates": true,
+      "shiftTime": 0.2,
+      "cooldownTime": 0.1,
+
       "riotShieldParameters": {
         "shieldPoly": [
           [0.5, 1.5],

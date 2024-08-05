@@ -3,7 +3,7 @@
   "price" : 1000,
   "rarity" : "Common",
   "tooltipKind" : "project45gunmod2",
-  "modCategory" : "passiveMod",
+  "modCategory" : "abilityMod",
   "category" : "uniqueWeapon",
   "itemTags": ["weapon"],
   "tooltipFields": {

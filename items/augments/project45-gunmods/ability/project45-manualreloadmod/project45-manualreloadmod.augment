@@ -16,6 +16,7 @@
   "archetype": "Active Ability",
   
   "augment":{
+    "modName": "Manual Reload",
     "cost": 0,
     "category": "universal",
     "slot": "manualReload",

@@ -21,9 +21,7 @@
     "category": "universal",
     "slot": "underbarrel",
     "ability": {
-      "altAbilityType" : "project45armadillo",
-      "overrideTwoHanded": true,
-      "twoHanded": true
+      "shiftAbilityType" : "project45armadillo"
     },
     "gun":{
       "primaryAbility": {

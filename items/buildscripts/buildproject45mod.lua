@@ -198,7 +198,14 @@ function build(directory, config, parameters, level, seed)
       config.tooltipFields.subtitle = "Ability Mod"
       config.tooltipFields.archetypeTitleLabel = "Ability Type"
       local isActive = deepConfigParameter(false, "augment", "ability", "overrideTwoHanded")
-      config.tooltipFields.archetypeLabel = isActive and "Active" or "Passive"
+      local shift = deepConfigParameter(false, "augment", "ability", "hasShiftAction")
+      if isActive then
+        config.tooltipFields.archetypeLabel = "Active"
+      elseif shift then
+        config.tooltipFields.archetypeLabel = "Shift"
+      else
+        config.tooltipFields.archetypeLabel = "Passive"
+      end
 
     elseif modCategory == "gunMod" then
       config.tooltipFields.subtitle = "Gun Mod"
