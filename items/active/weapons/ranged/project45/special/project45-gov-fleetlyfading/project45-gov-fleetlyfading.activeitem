@@ -193,5 +193,7 @@
 
   },
 
+  "altAbilityType": "project45scarletflash",
+
   "builder" : "/items/buildscripts/buildproject45neoneo.lua"
 }

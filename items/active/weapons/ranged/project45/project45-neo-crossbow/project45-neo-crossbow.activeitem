@@ -4,7 +4,7 @@
   "maxStack" : 1,
   "rarity" : "Legendary",
   "description" : "An automatic crossbow loaded by a motor. Its string generates heat as it accumulates elastic energy.",
-  "shortdescription" : "^#fdd14d;Crossbow^reset;",
+  "shortdescription" : "Crossbow",
   "tooltipKind" : "project45gun",
   "gunArchetype": "bow",
   "category" : "bow",

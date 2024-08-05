@@ -2,10 +2,11 @@
   "projectileName" : "project45scarletflash",
   "image" : "project45scarletflash.png",
   "physics" : "laser",
-  "animationCycle" : 0.5,
-  "timeToLive": 0.5,
+  "animationCycle" : 0.25,
+  "timeToLive": 0.25,
   "frameNumber" : 6,
   "damageKind" : "electric",
+  "damageType": "IgnoresDef",
   "pointLight" : true,
   "lightColor": [106, 34, 132],
   "fullbright": true,
@@ -13,7 +14,7 @@
   "piercing": true,
   "statusEffects" : [ ],
   "power" : 5.0,
-  "speed" : 75,
+  "speed" : 150,
   "knockback" : 0,
   "collisionPoly": [
     [-8.5, 0],
@@ -41,7 +42,7 @@
         "size" : 5,
         "color" : [164, 81, 196, 255],
         "collidesForeground" : false,
-        "length" : 10,
+        "length" : 20,
         "position" : [0, 0],
         "timeToLive" : 0,
         "destructionTime" : 1,
@@ -64,7 +65,7 @@
         "size" : 1.5,
         "color" : [255, 255, 255, 255],
         "collidesForeground" : false,
-        "length" : 10,
+        "length" : 20,
         "position" : [0, 0],
         "timeToLive" : 0,
         "destructionTime" : 1.5,
@@ -94,7 +95,7 @@
           "approach" : [10, 10],
           "angularVelocity" : 30,
           "timeToLive" : 0,
-          "layer" : "back",
+          "layer" : "front",
           "variance" : {
             "size": 1,
             "position" : [10, 10],
@@ -112,7 +113,22 @@
       "action" : "particle",
       "rotate" : true,
       "specification" : "project45blot01"
+    },
+    {
+      "time" : 0.01,
+      "repeat" : true,
+      "action" : "particle",
+      "rotate" : true,
+      "specification" : "project45blot02"
+    },
+    {
+      "time" : 0.01,
+      "repeat" : true,
+      "action" : "particle",
+      "rotate" : true,
+      "specification" : "project45blot03"
     }
+
     //*/
   ],
   "actionOnReap": [

@@ -78,5 +78,10 @@
         "op": "add",
         "path": "/project45ultracoin",
         "value": "/items/active/weapons/ranged/abilities/project45ultracoin/project45ultracoin.weaponability"
+    },
+    {
+        "op": "add",
+        "path": "/project45scarletflash",
+        "value": "/items/active/weapons/ranged/abilities/project45scarletflash/project45scarletflash.weaponability"
     }
 ]
