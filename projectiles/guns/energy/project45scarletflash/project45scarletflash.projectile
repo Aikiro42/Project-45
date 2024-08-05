@@ -1,0 +1,122 @@
+{
+  "projectileName" : "project45scarletflash",
+  "image" : "project45scarletflash.png",
+  "physics" : "laser",
+  "animationCycle" : 0.5,
+  "timeToLive": 0.5,
+  "frameNumber" : 6,
+  "damageKind" : "electric",
+  "pointLight" : true,
+  "lightColor": [106, 34, 132],
+  "fullbright": true,
+  "flippable" : true,
+  "piercing": true,
+  "statusEffects" : [ ],
+  "power" : 5.0,
+  "speed" : 75,
+  "knockback" : 0,
+  "collisionPoly": [
+    [-8.5, 0],
+    [0, 1.5],
+    [8.5, 0],
+    [0, -1.5]
+  ],
+  "movementSettings":{
+    "collisionEnabled": false
+  },
+  "bounces" : 0,
+
+  "periodicActions" : [
+    {
+      "time" : 0.01,
+      "repeat" : true,
+      "action" : "particle",
+      "rotate" : true,
+      
+      "specification" : {
+        "type" : "streak",
+        "layer" : "front",
+        "fullbright" : true,
+        "destructionAction" : "shrink",
+        "size" : 5,
+        "color" : [164, 81, 196, 255],
+        "collidesForeground" : false,
+        "length" : 10,
+        "position" : [0, 0],
+        "timeToLive" : 0,
+        "destructionTime" : 1,
+        "initialVelocity" : [0.001, 0],
+        "variance" : {"length": 0, "destructionTime": 0.2}
+      }
+
+    },
+    {
+      "time" : 0.01,
+      "repeat" : true,
+      "action" : "particle",
+      "rotate" : true,
+      
+      "specification" : {
+        "type" : "streak",
+        "layer" : "front",
+        "fullbright" : true,
+        "destructionAction" : "shrink",
+        "size" : 1.5,
+        "color" : [255, 255, 255, 255],
+        "collidesForeground" : false,
+        "length" : 10,
+        "position" : [0, 0],
+        "timeToLive" : 0,
+        "destructionTime" : 1.5,
+        "initialVelocity" : [0.001, 0],
+        "variance" : {"length": 0, "destructionTime": 0.2}
+      }
+
+    },
+    {
+      "time" : 0.01,
+      "repeat" : true,
+      "action" : "particle",
+      "rotate" : true,
+      
+      "specification" : {
+          "type" : "animated",
+          "animation" : "/animations/petals/petals.animation",
+          "size" : 1,
+          "collidesForeground" : false,
+          "position" : [0, 0],
+          "light" : [164, 81, 196],
+          "fade" : 0.9,
+          "destructionAction" : "shrink",
+          "destructionTime" : 6,
+          "initialVelocity" : [0, 0],
+          "finalVelocity" : [0, 0],
+          "approach" : [10, 10],
+          "angularVelocity" : 30,
+          "timeToLive" : 0,
+          "layer" : "back",
+          "variance" : {
+            "size": 1,
+            "position" : [10, 10],
+            "rotation": 360,
+            "angularVelocity": 10,
+            "initialVelocity" : [15, 15],
+            "finalVelocity" : [5, 5]
+        }
+      }
+
+    },
+    {
+      "time" : 0.01,
+      "repeat" : true,
+      "action" : "particle",
+      "rotate" : true,
+      "specification" : "project45blot01"
+    }
+    //*/
+  ],
+  "actionOnReap": [
+
+  ]
+  
+}
