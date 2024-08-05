@@ -19,7 +19,7 @@
   "level" : 1,
   "muzzleFlashColor": [255, 255, 200],
   "inventoryIcon" : "project45-cbp-malorian-icon.png",
-
+  "elementalType": "fire",
   "animationParts" : {
     "middle" : "project45-cbp-malorian.png",
     "middleFullbright" : "",
@@ -253,6 +253,12 @@
         "twoHanded": false      
       }
     }
+  },
+
+  "altAbilityType": "explosiveburst",
+  "altAbility": {
+    "recoilAmount": 0,
+    "burstCount": 3
   },
 
   "builder" : "/items/buildscripts/buildproject45neoneo.lua"
