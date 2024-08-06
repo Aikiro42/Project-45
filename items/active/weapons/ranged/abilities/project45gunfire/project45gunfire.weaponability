@@ -88,6 +88,14 @@
     */
     // "enableMuzzleCritParticles": false,
 
+    /*
+    string; Causes the sprite to be rendered similar to shields (requires "behind" frames).
+    Must be equal to the string used to distinguish front frames from back frames
+    e.g. gun.png:idle.1.behind
+    */
+    
+    // "backHandFrame": ".behind",
+
     // ____________________________________[ SECTION: Projectile Config ]____________________________________
     
     /*

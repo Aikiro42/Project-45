@@ -385,7 +385,7 @@ function Project45GunFire:renderModPositionDebug()
   if type(self.debug) == "table" and self.debug.emitParticles then
     self.debugParticleTimer = math.max(0, (self.debugParticleTimer or 0) - self.dt)
     if self.debugParticleTimer <= 0 then
-      animator.burstParticleEmitter("ejectionPort")
+      animator.burstParticleEmitter(self.isBehind and "backEjectionPort" or "ejectionPort")
       animator.burstParticleEmitter("magazine")
       self.debugParticleTimer = 0.05
     end
@@ -415,6 +415,7 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
   self:updateProjectileStack()
   self:updateMovementControlModifiers()
   self:updateMuzzleFlash()
+  self:updateBackHandSprite()
 
   if self.mustEject
   and animator.animationState("gun") ~= "ejecting"
@@ -1333,8 +1334,8 @@ function Project45GunFire:discardCasings(numCasings)
   end
 
   if storage.unejectedCasings > 0 or numCasings then
-    animator.setParticleEmitterBurstCount("ejectionPort", numCasings or storage.unejectedCasings)
-    animator.burstParticleEmitter("ejectionPort")
+    animator.setParticleEmitterBurstCount(self.isBehind and "backEjectionPort" or "ejectionPort", numCasings or storage.unejectedCasings)
+    animator.burstParticleEmitter(self.isBehind and "backEjectionPort" or "ejectionPort")
     for casing = numCasings or storage.unejectedCasings, 0, -1 do
       animator.setSoundPitch("ejectCasing", sb.nrand(0.075, 1))
       animator.playSound("ejectCasing")
@@ -1883,6 +1884,18 @@ function Project45GunFire:updateCursor()
         (mcontroller.crouching()      and self.recoverTime.crouching)  or
     (not mcontroller.running()        and self.recoverTime.stationary) or 
                                           self.recoverTime.mobile
+end
+
+function Project45GunFire:updateBackHandSprite()
+  if not self.backHandFrame then return end
+
+  local _, aimDirection = activeItem.aimAngleAndDirection(0, activeItem.ownerAimPosition())
+  self.isBehind = aimDirection < 0
+  local isNearHand = (activeItem.hand() == "primary") == (aimDirection < 0)
+  
+  animator.setGlobalTag("behind", aimDirection < 0 and self.backHandFrame or "")
+  activeItem.setOutsideOfHand(isNearHand)
+  
 end
 
 -- SECTION: EVAL FUNCTIONS

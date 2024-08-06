@@ -15,6 +15,18 @@
     "present.loop.1": "present.5",
 
     // Internal mag
-    "present.default": "present.5"
+    "present.default": "present.5",
+
+    
+    "present.5.back": "present.5",
+    "present.4.back": "present.4",
+    "present.3.back": "present.5",
+    "present.2.back": "present.2",
+    "present.1.back": "present.1",
+    "present.0.back": "present.0",
+    "absent.back": "absent",
+    "present.loop.0.back": "present.4",
+    "present.loop.1.back": "present.5",
+    "present.default.back": "present.5"
   }
 }

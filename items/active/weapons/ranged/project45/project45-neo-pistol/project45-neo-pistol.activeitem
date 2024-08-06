@@ -123,6 +123,8 @@
       "crouching": 0.25
     },
 
+    "backHandFrame": ".back",
+
     "recoilAmount": 1.75,
     "recoilMaxDeg": 15,
     "recoverDelay": 0,
@@ -190,7 +192,7 @@
     }
   },
   
-  "shiftAbilityType": "project45enemyradar",
+  // "shiftAbilityType": "project45enemyradar",
 
   "builder" : "/items/buildscripts/buildproject45neoneo.lua"
 }
