@@ -10,6 +10,8 @@ function Project45ScarletFlash:init()
     self.cooldownTimer = self.cooldownTime
     self.stacks = 0
     self.stackTimer = 0
+    animator.setParticleEmitterActive("charging", false)
+    animator.stopAllSounds("activate")
 end
 
 function Project45ScarletFlash:update(dt, fireMode, shiftHeld)
@@ -175,8 +177,11 @@ function Project45ScarletFlash:aimVector()
 end
 
 function Project45ScarletFlash:calculateDamage()
-    return status.resourceMax("energy")*self.energyScaleFactor*activeItem.ownerPowerMultiplier()
+    local maxEnergy = status.resourceMax("energy")
+    local remainingHealth = 2 - status.resourcePercentage("health")
+    return maxEnergy*remainingHealth*self.energyScaleFactor*activeItem.ownerPowerMultiplier()
 end
 
 function Project45ScarletFlash:uninit()
+    animator.stopAllSounds("activate")
 end

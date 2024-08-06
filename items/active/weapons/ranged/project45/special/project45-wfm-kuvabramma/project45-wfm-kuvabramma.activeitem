@@ -140,7 +140,7 @@
     "dischargeTimeMult": 4,
     "projectileType": "project45brammaarrow",
 
-    "spread": 4,
+    "spread": 1,
     "recoilAmount": 0.1,
     "inaccuracy": 0.1,
     "reloadTime": 0.6,

@@ -27,7 +27,7 @@
       "class" : "Project45ScarletFlash",
       
       "cooldownTime": 1,
-      "energyScaleFactor": 0.3,
+      "energyScaleFactor": 0.15,
       "explosionDelay": 2.33,
 
       "slashDetectionRadius": 15,
