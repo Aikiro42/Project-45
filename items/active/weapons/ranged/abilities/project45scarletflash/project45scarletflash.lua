@@ -2,6 +2,7 @@ require "/scripts/util.lua"
 require "/scripts/vec2.lua"
 require "/scripts/status.lua"
 require "/items/active/weapons/project45neoweapon.lua"
+require "/scripts/project45/project45util.lua"
 -- require "/items/active/weapons/ranged/gunfire.lua"
 
 Project45ScarletFlash = WeaponAbility:new()
@@ -10,6 +11,13 @@ function Project45ScarletFlash:init()
     self.cooldownTimer = self.cooldownTime
     self.stacks = 0
     self.stackTimer = 0
+    -- find project45gunfire
+    for i, ability in ipairs(self.weapon.abilities) do
+        if ability.name == "_Project45GunFire_" then
+            self.abilityIndex = i
+            break
+        end
+    end
     animator.setParticleEmitterActive("charging", false)
     animator.stopAllSounds("activate")
 end
@@ -48,6 +56,8 @@ function Project45ScarletFlash:activating()
     local slashRadius = self.slashDetectionRadius
     local slashFuzz = vec2.rotate(self.slashFuzz, activeItem.aimAngle(0, activeItem.ownerAimPosition()))
     
+    local abilityDamage = self:calculateDamage()
+
     status.overConsumeResource("energy", status.resourceMax("energy"))
     local savedPosition = mcontroller.position()
     local aimVec = self:aimVector()
@@ -61,7 +71,7 @@ function Project45ScarletFlash:activating()
         aimVec,
         false,
         {
-            power=self:calculateDamage()
+            power=abilityDamage
         }
     )
     
@@ -77,7 +87,7 @@ function Project45ScarletFlash:activating()
             {1, 0},
             true,
             {
-                power=self:calculateDamage(),
+                power=abilityDamage,
                 actionOnSpawn={
                     {
                         action="sound",
@@ -101,7 +111,7 @@ function Project45ScarletFlash:activating()
     local slashedEntities=set.new(detectedEntities)
 
     local slashAngle = 2*math.pi/slashes
-    local damagePerSlash = self:calculateDamage()/5
+    local damagePerSlash = abilityDamage/5
     for i=0, slashes do
         
         -- get entity info
@@ -126,7 +136,7 @@ function Project45ScarletFlash:activating()
                 sb.nrand(slashFuzz[2], 0)
             }),
             slashedEntities[id] and id or activeItem.ownerEntityId(),
-            vec2.rotate({1, 0}, slashAngle*i),
+            vec2.rotate({1, 0}, slashedEntities[id] and (math.pi/4) or slashAngle*i),
             slashedEntities[id],
             {
                 power=damagePerSlash,
@@ -158,6 +168,7 @@ function Project45ScarletFlash:activating()
             }
         )
         slashedEntities[id] = false
+        util.wait(self.slashSpawnDelay)
     end
 
 
@@ -176,10 +187,21 @@ function Project45ScarletFlash:aimVector()
     return aimVec
 end
 
-function Project45ScarletFlash:calculateDamage()
-    local maxEnergy = status.resourceMax("energy")
-    local remainingHealth = 2 - status.resourcePercentage("health")
-    return maxEnergy*remainingHealth*self.energyScaleFactor*activeItem.ownerPowerMultiplier()
+function Project45ScarletFlash:calculateDamage(ability)
+    if self.abilityIndex and not ability then
+        ability = self.weapon.abilities[self.abilityIndex]
+    end
+    if ability then
+        self.baseDamage = ability.baseDamage
+            * ability.reloadRatingDamage
+            * (ability.passiveDamageMult or 1)
+            * self.weapon.stockAmmoDamageMult
+            * ability:calculateCritDamage(false, storage.reloadRating)
+    else
+        self.baseDamage = status.resourceMax("energy") * self.energyScaleFactor
+    end
+    local remainingHealthMult = 1 + ((1 - status.resourcePercentage("health")) * self.healthScaleFactor)
+    return self.baseDamage*remainingHealthMult
 end
 
 function Project45ScarletFlash:uninit()

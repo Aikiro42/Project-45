@@ -2035,23 +2035,24 @@ end
 function Project45GunFire:crit()
   if not storage.currentCritChance then return 1 end
 
-  -- crit damage = base crit damage + floor(crit chance)
-  -- crit damage + 1 if super crit; crit damage + 0 otherwise
-
   local critTier = math.floor(storage.currentCritChance);
-  local baseCritDamageMult = critTier > 0 and (self.critDamageMult + critTier - 1) or 0
-
-  if project45util.diceroll(storage.currentCritChance - critTier, "Crit: ") then
-    self.critFlag = true
+  local isCrit = project45util.diceroll(storage.currentCritChance - critTier, "Crit: ")
+  self.critFlag = isCrit or critTier > 0
+  if self.critFlag then
     self:onCritPassive()
-    return math.max(1, baseCritDamageMult + (critTier > 0 and 1 or self.critDamageMult))
-  else
-    self.critFlag = critTier > 0
-    if self.critFlag then
-      self:onCritPassive()
-    end
-    return math.max(1, baseCritDamageMult)
   end
+  return self:calculateCritDamage(isCrit, critTier)
+end
+
+function Project45GunFire:calculateCritDamage(isCrit, critTier)
+  critTier = critTier or math.floor(storage.currentCritChance)
+  if critTier == 0 then -- base
+    return isCrit and self.critDamageMult or 1
+  end
+  -- crit tier = floor(crit chance)
+  -- crit damage = base crit damage + crit tier
+  -- crit damage + 1 if super crit; crit damage + 0 otherwise
+  return math.max(1, self.critDamageMult + critTier + (isCrit and 1 or 0))
 end
 
 -- Calculates the damage per shot of the weapon.
