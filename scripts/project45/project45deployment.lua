@@ -476,7 +476,7 @@ function renderChargeBar(uiPosition, offset, chargeTime, overchargeTime, perfect
   -- overcharge bar
   if overchargeTime > 0 then
 
-    if overchargeProgress > 0 and perfectChargeRange[1] > 0 and perfectChargeRange[2] > 0 then
+    if overchargeProgress > 0 and perfectChargeRange[1] >= 0 and perfectChargeRange[2] > 0 then
       localAnimator.addDrawable({
         image = "/scripts/project45/ui/chargebar.png"
         .. string.format("?multiply=FFFFFF%02X", math.ceil(255*overallProgress)),

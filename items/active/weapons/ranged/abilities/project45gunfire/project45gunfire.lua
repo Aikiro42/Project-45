@@ -604,6 +604,19 @@ function Project45GunFire:jammed() -- state
   self.weapon:setStance(self.stances.jammed)
 end
 
+function Project45GunFire:prepareFiringStance()
+
+  if self.stances.firing then
+    local waitTime = 0
+    if not self.weapon.allowRotate then
+      waitTime = 5*self.dt
+    end
+    self.weapon:setStance(self.stances.firing)
+    util.wait(waitTime)
+  end
+
+end
+
 function Project45GunFire:firing() -- state
   
   self.triggered = self.semi or storage.ammo == 0
@@ -628,9 +641,7 @@ function Project45GunFire:firing() -- state
   self.isFiring = true
   animator.setAnimationState("gun", self.loopFiringAnimation and "firingLoop" or "firing")
 
-  if self.stances.firing then
-    self.weapon:setStance(self.stances.firing)
-  end
+  self:prepareFiringStance()
 
   -- reset burst count if already max
   storage.burstCounter = (storage.burstCounter >= self.burstCount) and 0 or storage.burstCounter
@@ -648,7 +659,7 @@ function Project45GunFire:firing() -- state
   self:recoil()
 
   if self.projectileKind ~= "summoned"
-  and self.recoilMomentum > 0
+  and self.recoilMomentum ~= 0
   and not mcontroller.crouching() then
     mcontroller.addMomentum(vec2.mul(self:aimVector(), self.recoilMomentum * -1))
   end
@@ -1893,9 +1904,10 @@ function Project45GunFire:updateBackHandSprite()
   self.isBehind = aimDirection < 0
   local isNearHand = (activeItem.hand() == "primary") == (aimDirection < 0)
   
-  animator.setGlobalTag("behind", aimDirection < 0 and self.backHandFrame or "")
-  activeItem.setOutsideOfHand(isNearHand)
-  
+  animator.setGlobalTag("behind", isNearHand and self.backHandFrame or "")
+  if self.handGrip then
+    self.weapon.handGrip = self.handGrip
+  end
 end
 
 -- SECTION: EVAL FUNCTIONS

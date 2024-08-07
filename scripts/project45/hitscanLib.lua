@@ -9,8 +9,9 @@ local modConfig = root.assetJson("/configs/project45/project45_general.config")
 
 function hitscanLib:fireChainBeam()
   if world.lineTileCollision(mcontroller.position(), self:firePosition()) then return end
-
   
+  self:prepareFiringStance()
+
   local punchThrough = self.beamParameters.punchThrough or 0
   local ignoresTerrain = self.beamParameters.ignoresTerrain
 
@@ -80,7 +81,7 @@ function hitscanLib:fireChainBeam()
       
       ammoConsumeTimer = 0
       if self.beamParameters.consumeAmmoOverTime or not consumedAmmo then
-        self:updateAmmo(-self.ammoPerShot)
+        self:updateAmmo(project45util.diceroll(self.ammoConsumeChance) and -self.ammoPerShot or 0)
         storage.unejectedCasings = storage.unejectedCasings + math.min(storage.ammo, self.ammoPerShot)
         consumedAmmo = true
       end
@@ -234,6 +235,8 @@ function hitscanLib:fireChainBeam()
   
   if not self.alwaysMaintainCharge and self.resetChargeOnFire then self.chargeTimer = 0 end
   
+  self.weapon:setStance(self.stances.aimStance)
+
   if self.beamParameters.ejectCasingsOnBeamEnd then
     self:setState(self.ejecting)
   else
@@ -248,7 +251,7 @@ end
 function hitscanLib:fireChain()
   -- TODO: make chainScan arguments dynamic
   
-  
+  sb.logInfo("hahahahaha")
   local punchThrough = self.hitscanParameters.punchThrough or 0
   local ignoresTerrain = self.hitscanParameters.ignoresTerrain
 
@@ -635,7 +638,10 @@ end
 
 
 function hitscanLib:fireBeam()
+
     if world.lineTileCollision(mcontroller.position(), self:firePosition()) then return end
+    
+    self:prepareFiringStance()
     
     local punchThrough = self.beamParameters.punchThrough or 0
     local ignoresTerrain = self.beamParameters.ignoresTerrain
@@ -679,7 +685,6 @@ function hitscanLib:fireBeam()
     and (not self.beamParameters.consumeAmmoOverTime or storage.ammo > 0)
     and not world.lineTileCollision(mcontroller.position(), self:firePosition())
     do
-
       self.isFiring = true
   
       hitreg = self:hitscan(true, nil, self.beamParameters.range, ignoresTerrain, punchThrough, self.beamParameters.scanUntilCursor)
@@ -691,7 +696,7 @@ function hitscanLib:fireBeam()
         self:onFirePassive()  -- trigger onFirePassive on tick
         ammoConsumeTimer = 0
         if self.beamParameters.consumeAmmoOverTime or not consumedAmmo then
-          self:updateAmmo(-self.ammoPerShot)
+          self:updateAmmo(project45util.diceroll(self.ammoConsumeChance) and -self.ammoPerShot or 0)
           storage.unejectedCasings = storage.unejectedCasings + math.min(storage.ammo, self.ammoPerShot)
           consumedAmmo = true
         end
@@ -828,6 +833,8 @@ function hitscanLib:fireBeam()
     activeItem.setScriptedAnimationParameter("beamLine", nil)
     
     if not self.alwaysMaintainCharge and self.resetChargeOnFire then self.chargeTimer = 0 end
+    
+    self.weapon:setStance(self.stances.aimStance)
     
     if self.beamParameters.ejectCasingsOnBeamEnd then
       self:setState(self.ejecting)

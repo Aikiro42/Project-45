@@ -101,6 +101,7 @@ function project45util.sanitize(str)
 end
 
 function project45util.diceroll(chance)
+  if not chance then return false end
   return math.random() <= chance
 end
 

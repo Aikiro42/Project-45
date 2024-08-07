@@ -1,0 +1,230 @@
+{
+  "itemName" : "project45-neo-gunfist",
+  "price" : 5000,
+  "maxStack" : 1,
+  "rarity" : "Legendary",
+  "description" : "Force-Impulse Strike Technology gauntlet. Fires Mach 5 punches.",
+  "shortdescription" : "F.I.S.T. Gauntlet",
+  "tooltipKind" : "project45gun",
+  "gunArchetype": "shotgun",
+  "category" : "fistWeapon",
+  "twoHanded" : false,
+  "itemTags" : ["weapon","ranged","fistWeapon"],
+  "level" : 1,
+  "muzzleFlashColor": [149, 209, 243],
+  "inventoryIcon" : "project45-neo-gunfist.png:idle.1.back",
+
+  "animationParts" : {
+    "middle" : "project45-neo-gunfist.png",
+    "middleFullbright" : "project45-neo-gunfist-fullbright.png",
+    "charge": "",
+    "chargeFullbright": "",
+    "magazine": "",
+    "magazineFullbright": ""
+  },
+
+  "animationCustom": {
+    "particleEmitters": {
+      "ejectionPort": {
+        "particles": [
+          {"particle": "rocketbarrelpuff"},
+          {"particle": "rocketbarrelpuff"},
+          {"particle": "rocketbarrelpuff"}  
+        ]
+      },
+      "backEjectionPort": {
+        "particles": [
+        ]
+      },
+      "magazine": {
+        "particles": [
+
+        ]
+      }
+    },
+
+    "sounds": {
+      "fire" : [
+        "/sfx/project45neosfx/fire/fire-fist1.ogg",
+        "/sfx/project45neosfx/fire/fire-fist2.ogg",
+        "/sfx/project45neosfx/fire/fire-fist3.ogg"
+      ],
+      "hollow": []
+    }
+  },
+
+  "project45GunModInfo":{
+    "category": "experimental",
+    
+    "compatibleMods": [
+      "project45-overampmod",
+      
+      "project45-firebeammod",
+      "project45-poisonbeammod"
+  ],
+    "allowsConversion": [
+      "beam"
+    ],
+    "acceptsAmmoArchetype":[
+      "beam"
+    ],
+    "acceptsModSlot": [
+      "rail",
+      "material",
+      "magazine"
+    ]
+  },
+
+  "baseOffset" : [0, 0],
+  "muzzleOffset" : [0, 0],
+  "ejectionPortOffset": [0, 0],
+  "magazineOffset": [0, 0],
+
+  "railOffset": [0, 0],
+  "underbarrelOffset": [0, 0],
+  "sightsOffset": [0, 0],
+
+  "debugPointColors": {
+    "rail": "red",
+    "sights": "orange",
+    "underbarrel": "green"
+  },
+
+  "scripts" : ["/items/active/weapons/ranged/project45gunneo.lua"],
+    
+  "primaryAbilityType": "project45gunfire",
+  "primaryAbility": {
+    "reloadCost": 50,
+    "critChance": 0.10,
+    "critDamageMult": 2,
+    
+    "inaccuracy": 3,
+    "recoilAmount": 1,
+    "recoilMaxDeg": 15,
+    "recoverDelay": 0.1,
+    "recoverTime": 0.8,
+    
+    "semi": false,
+    "fireTime": 0.15,
+    "cycleTime": 0.075,
+    
+    "maxAmmo": 50,
+    "bulletsPerReload": 50,
+    "ammoPerShot": 1,
+    "ejectMagOnEmpty": "ejecting",
+    
+    "recoilMomentum": -15,
+    "jamChances": [0, 0, 0, 0],
+
+    "overchargeTime": 1,
+    "chargeDamageMult": 1,
+    // "perfectChargeRange": [0.25, 0.75],
+    "perfectChargeRange": [0, 0.5],
+    "perfectChargeDamageMult": 10,
+    "dischargeTimeMult": 2,
+    "muzzleProjectiles": [
+      {
+        "type": "project45_muzzleshockwavesmall",
+        "parameters": {
+          "speed": -5
+        },
+        "firePerShot": true
+      }
+    ],
+
+    "projectileType": "project45_elecexplosion",    
+    "projectileParameters": {
+      "speed": 10
+    },
+    "projectileCount": 1,
+    "spread": 0.001,
+
+    "hitscanParameters": {
+      "hitscanWidth": 8,
+      "hitscanBrightness": 0.5
+    },
+    "beamParameters": {
+      "beamWidth": 8,
+      "beamInnerWidth": 4
+    },
+
+    
+    "backHandFrame": ".back",
+    "handGrip": "wrap",
+
+    "stances": {
+      "aimStance": {
+        
+        "armRotation" : 0,
+        "weaponRotation" : 45,
+        // "weaponRotationCenter" : [-1.0, 0.0],
+        "weaponOffset" : [-0.25, 0.25],
+        "twoHanded": false,
+        "aimAngle": 0,
+        "allowRotate" : false,
+        "allowFlip" : true,
+        "snap": true,
+        "frontArmFrame" : "run.2",
+        "backArmFrame" : "jump.3"
+
+      },
+      "firing": {
+        "armRotation": 0,
+        "weaponRotation": 0,
+        "weaponOffset" : [0.5, 0],
+        "allowRotate" : true,
+        "allowFlip": true,
+        "snap": true
+      },
+      "empty": {
+        "armRotation" : -45,
+        "weaponRotation" : 45,
+        // "weaponRotationCenter" : [-1.0, 0.0],
+        "weaponOffset" : [-0.25, 0.25],
+        "twoHanded": false,
+        "allowRotate" : false,
+        "allowFlip" : true,
+
+        "frontArmFrame" : "run.2",
+        "backArmFrame" : "jump.3"
+      },
+      "ejectmag" : {
+        "armRotation" : -45,
+        "weaponRotation" : 45,
+        "twoHanded" : false,
+        "allowRotate" : false,
+        "allowFlip" : false
+      },
+      "reloading" : {
+        "armRotation" : 45,
+        "frontArmFrame": "rotation",
+        "twoHanded": false
+      },
+      "reloaded" : {
+        "armRotation" : -100,
+        "frontArmFrame": "rotation",
+        "twoHanded" : false,
+        "allowRotate" : false,
+        "allowFlip" : false
+        ,"snap": true
+      },
+      "boltPull": {
+        "twoHanded": false
+      },
+      "boltPush": {
+        "twoHanded": false
+      },
+      "jammed": {
+        "twoHanded": false
+
+      },
+      "unjam": {
+        "armRotation": -45,
+        "frontArmFrame": "rotation",
+        "twoHanded": false      
+      }
+    }
+  },
+
+  "builder" : "/items/buildscripts/buildproject45neoneo.lua"
+}
