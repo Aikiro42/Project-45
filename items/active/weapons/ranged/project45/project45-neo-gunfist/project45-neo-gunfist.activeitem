@@ -27,9 +27,7 @@
     "particleEmitters": {
       "ejectionPort": {
         "particles": [
-          {"particle": "rocketbarrelpuff"},
-          {"particle": "rocketbarrelpuff"},
-          {"particle": "rocketbarrelpuff"}  
+
         ]
       },
       "backEjectionPort": {

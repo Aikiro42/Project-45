@@ -1,0 +1,8 @@
+{
+  "frames" : "project45realityshard02.png",
+  "variants" : 1,
+  "fullbright": true,
+  "frameNumber" : 4,
+  "animationCycle" : 0.2,
+  "offset" : [0, 0]
+}

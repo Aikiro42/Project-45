@@ -42,18 +42,15 @@
     },
     
     "particleEmitters" : {
-      "altMuzzle" : {
+      "realityBreak" : {
         "active" : false,
-        "emissionRate" : 8,
-        "transformationGroups" : ["muzzle"],
-        "offsetRegion" : [-0.25, -0.5, -0.25, -0.5],
+        "emissionRate" : 1,
+        "offsetRegion" : [0, 0, 0, 0],
         "particles" : [
-          {"particle": "rocketbarrelpuff"},
-          {"particle": "rocketbarrelpuff"},
-          {"particle": "rocketbarrelpuff"},
-          {"particle": "project45muzzle"},
-          {"particle": "project45muzzle"},
-          {"particle": "project45muzzle"}
+          {"particle": "project45realityshard01"},
+          {"particle": "project45realityshard02"},
+          {"particle": "project45realityshard03"},
+          {"particle": "project45realityshard04"}
         ]
       }
     }
@@ -65,8 +62,8 @@
       "scripts" : ["/items/active/weapons/ranged/abilities/project45phaseshift/project45phaseshift.lua"],
       "class" : "Project45PhaseShift",
       
-      "energyUsageRatePercent": 0.1,
-      "dodgeEnergyCostPercent": 0.1,
+      "energyUsageRatePercent": 0.05,
+      "dodgeEnergyCostPercent": 0.05,
 
       "dodgeCooldownTime": 0.5,
       "shiftHeldTime": 0.2,

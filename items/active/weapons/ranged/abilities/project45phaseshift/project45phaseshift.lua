@@ -92,13 +92,32 @@ end
 function Project45PhaseShift:dodge()
 
     local projectileId = world.spawnProjectile(
-        "project45_elecexplosion",
+        "invisibleprojectile",
         mcontroller.position(),
         activeItem.ownerEntityId(),
         {1, 0},
         false,
         {
-            power= 0
+            power=0,
+            timeToLive=0,
+            actionOnReap={
+                {
+                    action="particle",
+                    specification="project45realityshard01"
+                },
+                {
+                    action="particle",
+                    specification="project45realityshard02"
+                },
+                {
+                    action="particle",
+                    specification="project45realityshard03"
+                },
+                {
+                    action="particle",
+                    specification="project45realityshard04"
+                },
+            }
         }
     )
 
@@ -131,13 +150,32 @@ end
 function Project45PhaseShift:beginPhaseShift()
     self.phasing = true
     local projectileId = world.spawnProjectile(
-        "project45_elecexplosion",
+        "invisibleprojectile",
         mcontroller.position(),
         activeItem.ownerEntityId(),
         {1, 0},
         false,
         {
-            power= 0
+            power= 0,
+            timeToLive=0,
+            actionOnReap={
+                {
+                    action="particle",
+                    specification="project45realityshard01"
+                },
+                {
+                    action="particle",
+                    specification="project45realityshard02"
+                },
+                {
+                    action="particle",
+                    specification="project45realityshard03"
+                },
+                {
+                    action="particle",
+                    specification="project45realityshard04"
+                },
+            }
         }
     )
     animator.playSound("phaseStart")
@@ -147,13 +185,32 @@ end
 function Project45PhaseShift:endPhaseShift()
     self.phasing = false
     local projectileId = world.spawnProjectile(
-        "project45_elecexplosion",
+        "invisibleprojectile",
         mcontroller.position(),
         activeItem.ownerEntityId(),
         {1, 0},
         false,
         {
-            power= 0
+            power=0,
+            timeToLive=0,
+            actionOnReap={
+                {
+                    action="particle",
+                    specification="project45realityshard01"
+                },
+                {
+                    action="particle",
+                    specification="project45realityshard02"
+                },
+                {
+                    action="particle",
+                    specification="project45realityshard03"
+                },
+                {
+                    action="particle",
+                    specification="project45realityshard04"
+                },
+            }
         }
     )
     if not status.resourcePositive("energy") then

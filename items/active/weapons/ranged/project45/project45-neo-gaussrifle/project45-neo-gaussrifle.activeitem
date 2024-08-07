@@ -3,7 +3,7 @@
   "price" : 10000,
   "maxStack" : 1,
   "rarity" : "Essential",
-  "description" : "Launches high-speed projectiles with ultra-string magneticism.",
+  "description" : "Launches high-speed projectiles with ultra-strong magneticism.",
   "shortdescription" : "Gauss Rifle",
   "gunArchetype": "antiMateriel",
   "tooltipKind" : "project45gun",
