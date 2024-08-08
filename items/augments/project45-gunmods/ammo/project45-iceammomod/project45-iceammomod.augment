@@ -22,6 +22,7 @@
 
     "ammo":{
       "archetype": "laser",
+      "elementalType": "ice",
       "spread": 0.01,
       "muzzleFlashColor": [150,203,231],
       "hitscanParameters":{

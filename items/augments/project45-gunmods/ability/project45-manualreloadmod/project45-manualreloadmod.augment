@@ -21,6 +21,7 @@
     "category": "universal",
     "slot": "manualReload",
     "ability": {
+      "name": "Manual Reload",
       "altAbilityType" : "project45gunfirereload",
       "overrideTwoHanded": true,
       "twoHanded": true

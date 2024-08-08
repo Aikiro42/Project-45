@@ -21,6 +21,7 @@
     "conversion": "projectile",
     "ammo": {
       "archetype": "bullet",
+      "elementalType": "fire",
       "projectileType": "project45stdfirebullet"
     }
     

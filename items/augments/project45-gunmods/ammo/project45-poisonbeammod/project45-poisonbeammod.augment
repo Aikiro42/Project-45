@@ -20,6 +20,7 @@
     "conversion": "beam",
     "ammo":{
       "archetype": "beam",
+      "elementalType": "poison",
       "muzzleFlashColor": [153,234,49],
       "beamParameters":{
         "beamDamageConfig":{

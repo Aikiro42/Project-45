@@ -4,6 +4,7 @@
   "maxStack" : 1,
   "rarity" : "Essential",
   "description" : "A heavy minigun with a compact magazine.",
+  "lore": "It's quite heavy, but you'll feel like a B.A.M.F. wielding it.",
   "shortdescription" : "Minigun",
   "tooltipKind" : "project45gun",
   "gunArchetype": "machineGun",

@@ -21,6 +21,7 @@
     "conversion": "projectile",
     "ammo": {
       "archetype": "arrow",
+      "elementalType": "fire",
       "projectileType": "project45stdfirearrow"
     }
     

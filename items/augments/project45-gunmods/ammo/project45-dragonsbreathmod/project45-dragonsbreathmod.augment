@@ -21,6 +21,7 @@
     "category": "ballistic",
     "conversion": "projectile",
     "ammo": {
+      "elementalType": "fire",
       "archetype": "shotgun",
       "projectileType": "project45dragonsbreath"
     },

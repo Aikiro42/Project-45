@@ -574,6 +574,16 @@
         {"particle": "project45muzzle"}
       ]
     },
+    "altMuzzleFlash" : {
+      "transformationGroups" : ["muzzle"],
+      "offsetRegion" : [0, 0, 0, 0],
+      "emissionRate" : 100,
+      "particles" : [ 
+        {"particle": "project45muzzle"},
+        {"particle": "project45muzzle"},
+        {"particle": "project45muzzle"}
+      ]
+    },
     "muzzleCrit" : {
       "transformationGroups" : ["muzzle"],
       "offsetRegion" : [0, 0, 0, 0],
@@ -667,11 +677,6 @@
     "fire": ["/sfx/project45neosfx/fire/fire-pistol1.ogg"],
     "perfectChargeFire": [],
 
-    // functions as expected of vanilla starbound
-    "fireStart": [ ],
-    "fireLoop": [ ],
-    "fireEnd": [ ],
-
     // plays when the gun isn't jammed and cannot be fired.
     "click": ["/sfx/project45neosfx/click/click-01.ogg"],
 
@@ -733,7 +738,11 @@
     "chargeEnd": [ ],
     
     // properties present for compatibility
-    "beamImpact": []
+    "beamImpact": [],
+    "altFire": [ ],
+    "fireStart": [ ],
+    "fireLoop": [ ],
+    "fireEnd": [ ]
     
   }
 }

@@ -22,7 +22,6 @@
     "conversion": "summoned",
     "ammo":{
       "archetype": "summoned",
-
       "summonedProjectileType": "project45gravitygrenade",
       "summonedProjectileParameters":{
         "speed": 0

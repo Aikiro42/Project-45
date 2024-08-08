@@ -1,0 +1,88 @@
+{
+  "itemName" : "project45-neo-npc-combatrifle",
+  "price" : 1080,
+  "maxStack" : 1,
+  "rarity" : "Legendary",
+  "description" : "Used by Letheia and Miniknog goons.",
+  "shortdescription" : "Combat Rifle",
+  "category" : "uniqueWeapon",
+  "twoHanded" : true,
+  "itemTags" : ["weapon","ranged","assaultRifle"],
+  "level" : 6,
+
+  "inventoryIcon" : [
+    { "image" : "project45-neo-combatrifle-icon.png" }
+  ],
+
+  "animation" : "project45-neo-npc-combatrifle.animation",
+  "animationParts" : {
+    "middle" : "project45-neo-combatrifle-icon.png",
+    "middleFullbright" : "",
+    "muzzleFlash": "/items/active/weapons/ranged/muzzleflash.png"
+  },
+  "animationCustom" : {
+    "sounds" : {
+      "fire" : [
+        "/sfx/project45neosfx/fire/fire-rifle1.ogg"
+      ]
+    },
+    "lights" : {
+      "muzzleFlash" : {
+        "color" : [255, 255, 200]
+      }
+    }
+  },
+
+  "baseOffset" : [0.75, 0.25],
+  "muzzleOffset" : [2.125, 0.25],
+
+  "scripts" : ["/items/active/weapons/ranged/gun.lua"],
+
+  "elementalType" : "physical",
+
+  "primaryAbility" : {
+    "scripts" : ["/items/active/weapons/ranged/gunfire.lua"],
+    "class" : "GunFire",
+
+    "fireTime" : 0,
+    "baseDps" : 7,
+    "energyUsage" : 11,
+    "projectileCount" : 1,
+    "inaccuracy" : 0.01,
+    "fireType" : "auto",
+
+    "projectileType" : "project45stdbullet",
+    "muzzleFlashVariants" : 1,
+
+    "stances" : {
+      "idle" : {
+        "armRotation" : 0,
+        "weaponRotation" : 0,
+        "twoHanded" : true,
+
+        "allowRotate" : true,
+        "allowFlip" : true
+      },
+      "fire" : {
+        "duration" : 0,
+        "armRotation" : 4,
+        "weaponRotation" : 4,
+        "twoHanded" : true,
+
+        "allowRotate" : false,
+        "allowFlip" : false
+      },
+      "cooldown" : {
+        "duration" : 0.15,
+        "armRotation" : 4,
+        "weaponRotation" : 4,
+        "twoHanded" : true,
+
+        "allowRotate" : false,
+        "allowFlip" : false
+      }
+    }
+  },
+
+  "builder" : "/items/buildscripts/buildunrandweapon.lua"
+}

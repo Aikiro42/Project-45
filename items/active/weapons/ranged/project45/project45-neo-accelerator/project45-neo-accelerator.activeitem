@@ -4,6 +4,7 @@
   "maxStack" : 1,
   "rarity" : "Legendary",
   "description" : "An energy assault rifle; the fire rate goes up the longer it's fired.",
+  "lore": "The standard for suppresive energy fire.",
   "shortdescription" : "Accelerator",
   "gunArchetype": "assaultRifle",
   "tooltipKind" : "project45gun",

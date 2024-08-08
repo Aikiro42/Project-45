@@ -22,7 +22,6 @@
     "conversion": "summoned",
     "ammo":{
       "archetype": "summoned",
-
       "summonedProjectileType": "project45_haloburst",
       "summonedProjectileParameters":{
         "speed": 0

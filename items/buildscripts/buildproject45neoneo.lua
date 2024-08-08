@@ -167,7 +167,6 @@ function build(directory, config, parameters, level, seed)
     parameters.shortdescription = config.shortdescription .. string.format(" %sT%d^reset;", levelColor, currentLevel)
   end
 
-
   -- retrieve ability animation scripts
   local compiledAnimationScripts = {}
   local primaryAnimationScripts = setupAbility(config, parameters, "primary")
@@ -226,10 +225,17 @@ function build(directory, config, parameters, level, seed)
   
   -- elemental type and config (for alt ability)
   local elementalType = configParameter("elementalType", "physical")
-
   replacePatternInData(config, nil, "<elementalType>", elementalType)
   if config.altAbility and config.altAbility.elementalConfig then
     util.mergeTable(config.altAbility, config.altAbility.elementalConfig[elementalType])
+  end
+
+  -- elemental type and config (for shift ability)
+  local elementalType = configParameter("elementalType", "physical")
+
+  replacePatternInData(config, nil, "<elementalType>", elementalType)
+  if config.shiftAbility and config.shiftAbility.elementalConfig then
+    util.mergeTable(config.shiftAbility, config.shiftAbility.elementalConfig[elementalType])
   end
 
   -- calculate damage level multiplier
@@ -404,6 +410,9 @@ function build(directory, config, parameters, level, seed)
     config.tooltipFields.subtitle = generalTooltipConfig.categoryStrings[config.project45GunModInfo.category or "Generic"] -- .. "^#D1D1D1;" .. config.gunArchetype or config.category
     config.tooltipFields.levelLabel = util.round(currentLevel, 1)
     config.tooltipFields.rarityLabel = rarityConversions[configParameter("isUnique", false) and "unique" or string.lower(configParameter("rarity", "common"))]
+    if elementalType ~= "physical" then
+      config.tooltipFields.elementImage = "/interface/elements/"..elementalType..".png"
+    end
 
     local modList = parameters.modSlots or config.modSlots or {}
     if config.project45GunModInfo then
@@ -617,6 +626,7 @@ function build(directory, config, parameters, level, seed)
       end
 
       config.tooltipFields.bonusRatioLabel = ""
+      config.tooltipFields.bonusRatioTitleLabel = ""
       config.tooltipFields.bonusRatioShadowLabel = ""
       if randStatBonus > 0 and parameters.isRandomized then
         local bonusDesc = parameters.randStatBonus == randStatBonus and string.format("^shadow;%d%%", math.floor(randStatBonus * 100)) or "^shadow;??%"
@@ -629,6 +639,7 @@ function build(directory, config, parameters, level, seed)
           bonusColor = "#60b8ea"
         end
         config.tooltipFields.bonusRatioLabel = project45util.colorText(bonusColor, bonusDesc)
+        config.tooltipFields.bonusRatioTitleLabel = project45util.colorText(bonusColor, "^shadow;Stat Bonus")
         config.tooltipFields.bonusRatioShadowLabel = project45util.colorText("#a0a0a0", bonusDesc)
       end
 
@@ -708,7 +719,7 @@ function build(directory, config, parameters, level, seed)
       
       local modListDesc = ""
       if modList then
-        local exclude = set.new({"passive","ability","shiftAbility","rail","sights","muzzle","underbarrel","stock","ammoType"})
+        local exclude = set.new({"passive","ability","manualReload", "shiftAbility","rail","sights","muzzle","underbarrel","stock","ammoType"})
         for modSlot, modKind in pairs(modList) do
           if not exclude[modSlot] and modKind[1] ~= "ability" then
             descriptionScore = descriptionScore + 1
@@ -717,25 +728,30 @@ function build(directory, config, parameters, level, seed)
         end
       end
 
-      local finalDescription = passiveDesc .. heavyDesc .. chargeDesc .. overchargeDesc .. multishotDesc .. modListDesc -- .. config.description
-      finalDescription = finalDescription == "" and project45util.colorText("#777777", "No notable qualities.") or finalDescription
-      
-      descriptionScore = descriptionScore + math.ceil((#config.description)/18)
-      
-      if descriptionScore <= 7 then
-        config.description = config.description .. "\n" .. finalDescription
-      else
-        config.description = "Highly modified.\n" .. finalDescription
+      local finalDescription = passiveDesc .. heavyDesc .. chargeDesc .. overchargeDesc .. multishotDesc .. modListDesc
+      finalDescription = finalDescription == "" and project45util.colorText("#777777", "No notable qualities.") or finalDescription      
+      config.tooltipFields.technicalLabel = finalDescription
+
+      if config.lore then
+        config.description = config.description .. " " .. project45util.colorText("#9da8af", config.lore)
       end
 
     end
 
     if parameters.altAbility then
-      config.tooltipFields.altAbilityLabel = ("^#ABD2FF;" .. (parameters.altAbility.name or "Unknown"))
+      config.tooltipFields.altAbilityLabel = ("^#ffffa7;" .. (parameters.altAbility.name or "Unknown"))
     elseif config.altAbility then
-      config.tooltipFields.altAbilityLabel = ("^#ABD2FF;" .. (config.altAbility.name or "Unknown"))
+      config.tooltipFields.altAbilityLabel = ("^#ffffa7;" .. (config.altAbility.name or "Unknown"))
     else
       config.tooltipFields.altAbilityLabel = "^#777777;None"
+    end
+
+    if parameters.shiftAbility then
+      config.tooltipFields.shiftAbilityLabel = ("^#a8e6e2;" .. (parameters.shiftAbility.name or "Unknown"))
+    elseif config.shiftAbility then
+      config.tooltipFields.shiftAbilityLabel = ("^#a8e6e2;" .. (config.shiftAbility.name or "Unknown"))
+    else
+      config.tooltipFields.shiftAbilityLabel = "^#777777;None"
     end
 
   end

@@ -2380,9 +2380,5 @@ function Project45GunFire:altMuzzleFlash()
     animator.burstParticleEmitter("altMuzzleFlash", true)
   end
 
-  if self.usePrimaryFireSound then
-    animator.playSound("fire")
-  else
-    animator.playSound("altFire")
-  end
+  animator.playSound(self.usePrimaryFireSound and "fire" or "altFire")
 end

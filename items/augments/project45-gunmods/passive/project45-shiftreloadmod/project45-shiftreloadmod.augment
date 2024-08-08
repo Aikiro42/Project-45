@@ -23,6 +23,7 @@
     "ability": {
       "shiftAbilityType" : "project45gunfirereload",
       "shiftAbility": {
+        "name": "Shift Reload",
         "shiftActivates": true
       },
       "hasShiftAction": true

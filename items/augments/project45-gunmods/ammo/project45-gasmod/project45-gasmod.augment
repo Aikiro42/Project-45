@@ -21,7 +21,7 @@
     "conversion": "projectile",
     "ammo":{
       "archetype": "gas",
-
+      "elementalType": "poison",
       "projectileCount": 1,
       "projectileType": "project45gascloud",
       "projectileParameters": {

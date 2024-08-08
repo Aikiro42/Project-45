@@ -22,6 +22,7 @@
 
     "ammo": {
       "archetype": "bullet",
+      "elementalType": "poison",
       "projectileType": "project45stdpoisonbullet"
     }
     

@@ -4,6 +4,7 @@
   "maxStack" : 1,
   "rarity" : "Rare",
   "description" : "A compact hardlight emitter.",
+  "lore": "The Beamgun was well-received, so demand for a compact version increased.",
   "shortdescription" : "Cyclo",
   "tooltipKind" : "project45gun",
   "gunArchetype": "beam",

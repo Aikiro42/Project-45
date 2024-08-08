@@ -5,6 +5,7 @@
   "rarity" : "Essential",
   "isUnique": true,
   "description" : "An experimental revolver with a built-in pixel minter.",
+  "lore": "Highly favoured by the glitch; merely holding the weapon somehow gives them extreme mobility.",
   "shortdescription" : "^#fdd14d;Ultrakill Revolver^reset;",
   "tooltipKind" : "project45gun",
   "gunArchetype": "pistol",

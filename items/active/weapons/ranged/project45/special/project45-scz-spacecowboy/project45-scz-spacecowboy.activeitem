@@ -4,7 +4,8 @@
   "maxStack" : 1,
   "rarity" : "Essential",
   "isUnique": true,
-  "description" : "A railgun designed from blueprints found in a containment zone.",
+  "description" : "A sleek railgun that fires thermal projectiles.",
+  "lore": "Its design was based on blueprints found in a forsaken world under eternal nuclear winter.",
   "shortdescription" : "^#fdd14d;Space Cowboy^reset;",
   "tooltipKind" : "project45gun",
   "gunArchetype": "antiMateriel",
@@ -14,11 +15,10 @@
   "level" : 1,
   "muzzleFlashColor": [255, 255, 200],
   "inventoryIcon" : "project45-scz-spacecowboy-icon.png",
-
+  "elementalType": "fire",
   "project45GunModInfo": {
     "category": "special",
     "upgradeCapacity": 10
-
   },
 
   "animationParts" : {

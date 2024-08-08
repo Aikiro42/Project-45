@@ -61,6 +61,11 @@ function apply(output, augment)
     -- merge changes
     output:setInstanceValue("primaryAbility", sb.jsonMerge(oldPrimaryAbility, newPrimaryAbility))
 
+    -- elemental type
+    if augment.elementalType then
+      output:setInstanceValue("elementalType", augment.elementalType)
+    end
+
     return output
 
   end

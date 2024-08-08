@@ -20,6 +20,7 @@
     "category": "energy",
     "conversion": "hitscan",
     "ammo": {
+      "elementalType": "electric",
       "archetype": "laser",
       "muzzleFlashColor": [210, 156, 231],
       "hitscanParameters": {

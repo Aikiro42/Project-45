@@ -3,7 +3,8 @@
   "price" : 2500,
   "maxStack" : 1,
   "rarity" : "Rare",
-  "description" : "An highly modifiable automatic short rifle.",
+  "description" : "A short, automatic rifle.",
+  "lore": "Its selling point is its high degree of customizability.",
   "shortdescription" : "Carbine",
   "tooltipKind" : "project45gun",
   "gunArchetype": "smg",
@@ -52,7 +53,7 @@
 
   "project45GunModInfo":{
     "category": "ballistic",
-    "upgradeCapacity": 10,
+    "upgradeCapacity": 20,
     "incompatibleMods": [
       "project45-autofiremod"
     ],

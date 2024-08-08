@@ -4,6 +4,7 @@
   "maxStack" : 1,
   "rarity" : "Essential",
   "description" : "An prototype railgun redesigned to fire sharp disks.",
+  "lore": "Someone took the specification of \"projectile spin\" a little too literally.",
   "shortdescription" : "Sawblader",
   "gunArchetype": "antiMateriel",
   "tooltipKind" : "project45gun",
@@ -13,7 +14,6 @@
   "level" : 1,
   "muzzleFlashColor": [255, 255, 200],
   "inventoryIcon" : "project45-neo-sawblader-icon.png",
-
   "animationParts" : {
     "middle" : "project45-neo-sawblader.png",
     "middleFullbright" : "project45-neo-sawblader-fullbright.png",

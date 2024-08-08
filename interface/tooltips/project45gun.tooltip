@@ -68,35 +68,73 @@
     "maxSize" : [15, 15],
     "minSize" : [15, 15]
   },
+  "elementImage" : {
+    "type" : "image",
+    "position" : [142, 129],
+    "file" : "",
+    "centered" : true,
+    "maxSize" : [16, 16],
+    "minSize" : [16, 16]
+  },
 
-  /*
+  
   "altAbilityTitleLabel" : {
     "type" : "label",
-    "position" : [102, 89],
+    "position" : [196, 168],
     "hAnchor" : "left",
-    "value": "Special:"
-  },
-  */
+    "value": "Alt Ability"
+  }, 
   "altAbilityLabel" : {
     "type" : "label",
-    "position" : [192, 108],
-    "hAnchor" : "right",
+    "position" : [206, 158],
+    "hAnchor" : "left",
     "centered" : true,
     "wrapWidth" : 126
+  },
+  "shiftAbilityTitleLabel" : {
+    "type" : "label",
+    "position" : [196, 148],
+    "hAnchor" : "left",
+    "value": "Shift Ability"
+  }, 
+  "shiftAbilityLabel" : {
+    "type" : "label",
+    "position" : [206, 138],
+    "hAnchor" : "left",
+    "centered" : true,
+    "value": "Lorem Ipsum",
+    "wrapWidth" : 126
+  },
+  "technicalLabel": {
+    "type": "label",
+    "position": [196, 136],
+    "hAnchor": "left",
+    "vAnchor": "top",
+    "value": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+    "wrapWidth": 90
   },
 
   "descriptionLabel": {
     "type": "label",
-    "position": [102, 106],
+    "position": [102, 116],
     "hAnchor": "left",
     "vAnchor": "top",
     "wrapWidth": 90
   },
 
+  "bonusRatioTitleLabel": {
+    "type" : "label",
+    "position" : [215, 188.5],
+    "hAnchor" : "left",
+    "centered": true,
+    "wrapWidth" : 126,
+    "fontSize": 10,
+    "value": "^shadow;Stat Bonus"
+  },
   "bonusRatioLabel": {
     "type" : "label",
     //"position" : [150, 120],
-    "position" : [180, 183.5],
+    "position" : [210, 183.5],
     "hAnchor" : "right",
     "centered": true,
     "wrapWidth" : 126,
@@ -209,12 +247,14 @@
 
   "moneyIcon" : {
     "type" : "image",
-    "position" : [189, 3.5],
-    "file" : "/interface/project45-gunshop/pixels.png"
+    "position" : [282, 3.75],
+    "file" : "/interface/project45-gunshop/pixels.png",
+    "maxSize" : [7, 7],
+    "minSize" : [7, 7]
   },
   "priceLabel" : {
     "type" : "label",
-    "position" : [187, 6],
+    "position" : [280, 6],
     "hAnchor" : "right",
     "vAnchor": "mid",
     "value" : "tree"

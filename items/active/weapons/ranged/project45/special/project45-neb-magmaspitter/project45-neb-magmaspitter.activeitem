@@ -4,7 +4,8 @@
   "maxStack" : 1,
   "rarity" : "Essential",
   "isUnique": true,
-  "description" : "A revolver that shoots magma. How the cylinder holds the magma is a mystery.",
+  "description" : "A revolver that shoots magma.",
+  "lore": "How the cylinder holds the magma is a mystery.",
   "shortdescription" : "^#fdd14d;Magma Spitter^reset;",
   "tooltipKind" : "project45gun",
   "gunArchetype": "pistol",
@@ -14,7 +15,8 @@
   "level" : 1,
   "muzzleFlashColor": [255, 255, 200],
   "inventoryIcon" : "project45-neb-magmaspitter-icon.png",
-  
+  "elementalType": "fire",
+
   "project45GunModInfo": {
     "category": "experimental",
     "upgradeCapacity": 10

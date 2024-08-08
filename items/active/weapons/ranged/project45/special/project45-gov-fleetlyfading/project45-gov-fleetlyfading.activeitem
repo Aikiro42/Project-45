@@ -4,7 +4,8 @@
   "maxStack" : 1,
   "rarity" : "Essential",
   "isUnique": true,
-  "description" : "A katana forged from Godesium. Found in a raptured planet.",
+  "description" : "A Godesium katana.",
+  "lore": "Found in a planet overtaken by a mechanical species related to the Glitch.",
   "shortdescription" : "^#fdd14d;Fleetly Fading^reset;",
   "gunArchetype": "assaultRifle",
   "tooltipKind" : "project45gun",
@@ -13,6 +14,7 @@
   "itemTags" : ["weapon","ranged","assaultrifle"],
   "level" : 1,
   "inventoryIcon" : "project45-gov-fleetlyfading-icon.png",
+  "elementalType": "fire",
 
   "project45GunModInfo": {
     "category": "special",

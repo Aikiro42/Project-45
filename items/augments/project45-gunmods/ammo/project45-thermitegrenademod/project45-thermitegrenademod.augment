@@ -21,7 +21,7 @@
     "conversion": "projectile",
     "ammo": {
       "archetype": "grenade",
-
+      "elementalType": "fire",
       "projectileType": "project45thermitegrenade",
       "projectileParameters": {
         "speed": 50,

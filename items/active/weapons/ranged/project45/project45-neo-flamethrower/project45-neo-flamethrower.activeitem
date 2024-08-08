@@ -3,7 +3,8 @@
   "price" : 10000,
   "maxStack" : 1,
   "rarity" : "Essential",
-  "description" : "This is a flammenwerfer. It werfs flammens.",
+  "description": "This is a flammenwerfer.",
+  "lore" : "\n\nIt werfs flammens.",
   "shortdescription" : "Flamethrower",
   "tooltipKind" : "project45gun",
   "gunArchetype": "flamethrower",
@@ -13,6 +14,7 @@
   "level" : 1,
   "muzzleFlashColor": [255, 128, 0],
   "inventoryIcon" : "project45-neo-flamethrower-icon.png",
+  "elementalType": "fire",
 
   "animationParts" : {
     "middle" : "project45-neo-flamethrower.png",

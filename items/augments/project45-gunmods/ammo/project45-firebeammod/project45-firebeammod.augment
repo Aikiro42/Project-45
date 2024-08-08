@@ -20,21 +20,22 @@
     "category": "energy",
     "conversion": "beam",
     "ammo":{
-    "archetype": "beam",
-    
-    "muzzleFlashColor": [234,153,49],
-    "beamParameters":{
-      "beamDamageConfig":{
-        "damageSourceKind" : "fire",
-        "statusEffects":["burning"],
-        "knockback" : 2
+      "elementalType": "fire",
+      "archetype": "beam",
+      
+      "muzzleFlashColor": [234,153,49],
+      "beamParameters":{
+        "beamDamageConfig":{
+          "damageSourceKind" : "fire",
+          "statusEffects":["burning"],
+          "knockback" : 2
+        }
+      },
+      "customSounds": {
+        "fireStart": ["/sfx/gun/mech_beamsniper_fire1.ogg"],
+        "fireLoop": ["/sfx/gun/mech_beamdrill_loop.ogg"],
+        "fireEnd": ["/sfx/gun/mech_beamdrill_winddown.ogg"]
       }
-    },
-    "customSounds": {
-      "fireStart": ["/sfx/gun/mech_beamsniper_fire1.ogg"],
-      "fireLoop": ["/sfx/gun/mech_beamdrill_loop.ogg"],
-      "fireEnd": ["/sfx/gun/mech_beamdrill_winddown.ogg"]
-    }
     }
   },
 
