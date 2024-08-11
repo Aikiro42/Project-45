@@ -35,6 +35,7 @@
         "fireLoop": ["/sfx/project45neosfx/chargedrone/chargedrone-04.ogg"],
         "fireEnd": ["/sfx/project45neosfx/fire/start/firestart-switch1.ogg"]
       },
+      "muzzleFlashParticles": [],
 
       "hideMuzzleFlash": true,
       "hideMuzzleSmoke": true

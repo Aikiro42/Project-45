@@ -47,14 +47,26 @@ function apply(output, augment)
       output:setInstanceValue("muzzleFlashColor", augment.muzzleFlashColor)
     end
 
+    local customAnimation = false
+
     -- for audio
     if augment.customSounds then
-
+      customAnimation = true
       construct(input, "parameters", "animationCustom", "sounds")
       for soundName, soundArr in pairs(augment.customSounds) do
         input.parameters.animationCustom.sounds[soundName] = copy(soundArr)
       end
+    end
 
+    -- for muzzle flash
+    if augment.muzzleFlashParticles then
+      customAnimation = true
+      construct(input, "parameters", "animationCustom", "particleEmitters", "muzzleFlash")
+      -- fully replace
+      input.parameters.animationCustom.particleEmitters.muzzleFlash.particles = copy(augment.muzzleFlashParticles)
+    end
+
+    if customAnimation then
       output:setInstanceValue("animationCustom", input.parameters.animationCustom)
     end
 

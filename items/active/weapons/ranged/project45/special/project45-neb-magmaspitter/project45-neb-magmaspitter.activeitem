@@ -19,6 +19,7 @@
 
   "project45GunModInfo": {
     "category": "experimental",
+    "isSpecial": true,
     "upgradeCapacity": 10
   },
 
@@ -53,7 +54,9 @@
           {"particle": "rocketbarrelpuff"},
           {"particle": "project45muzzle"},
           {"particle": "project45muzzle"},
-          {"particle": "project45muzzle"}  
+          {"particle": "project45muzzle"},
+          {"particle": "project45flashbang-orange"},
+          {"particle": "project45shootsmoke"}  
         ]
       }
     },

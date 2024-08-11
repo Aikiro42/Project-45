@@ -37,7 +37,14 @@
         "fireStart": ["/assetmissing.wav"],
         "fireLoop": ["/assetmissing.wav"],
         "fireEnd": ["/assetmissing.wav"]
-      }
+      },
+      "muzzleFlashParticles": [
+        {"particle": "project45muzzle"},
+        {"particle": "project45muzzle"},
+        {"particle": "project45muzzle"},
+        {"particle": "project45flashbang-blue"},
+        {"particle": "project45shootsmoke"}  
+      ]
     }
 
 

@@ -52,6 +52,14 @@
       "magazine": {
         "particles": [
         ]
+      },
+      "muzzleFlash": {
+        "particles": [
+          {"particle": "project45muzzle"},
+          {"particle": "project45muzzle"},
+          {"particle": "project45muzzle"},
+          {"particle": "project45shootsmoke"}
+        ]
       }
     },
 

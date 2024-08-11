@@ -70,7 +70,6 @@
   "scripts" : ["/items/active/weapons/ranged/project45gunneo.lua"],
     
   "primaryAbilityType": "project45gunfire",
-  "balanceDamageMult": 1,
   "primaryAbility": {
 
     "passiveDescription": "HP -5% every 10 shots.\nHealth < 50%: Gain Rage buff.",

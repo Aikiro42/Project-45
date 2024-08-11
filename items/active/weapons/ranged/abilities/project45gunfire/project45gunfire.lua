@@ -13,6 +13,7 @@ local reloadRatingList = {"BAD", "OK", "GOOD", "PERFECT"}
 local ENERGY, AMMO = 0, 1  -- resource consumption modes
 
 local dps_debug = false
+local rng = sb.makeRandomSource()
 
 Project45GunFire = WeaponAbility:new()
 Passive = {}
@@ -62,8 +63,6 @@ function Project45GunFire:init()
   self.maxChargePitch = self.maxChargePitch or 2
 
   self.recoilOffsetProgress = 1
-
-  self.balanceDamageMult = config.getParameter("balanceDamageMult", 1)
 
   -- separate cock time and reload time
   -- self.reloadTime = self.reloadTime * 0.8
@@ -609,7 +608,7 @@ function Project45GunFire:prepareFiringStance()
   if self.stances.firing then
     local waitTime = 0
     if not self.weapon.allowRotate then
-      waitTime = 5*self.dt
+      waitTime = self.stances.firing.duration or 5*self.dt
     end
     self.weapon:setStance(self.stances.firing)
     util.wait(waitTime)
@@ -1232,6 +1231,7 @@ function Project45GunFire:muzzleFlash()
   if not self.hideMuzzleFlash then
     animator.setLightActive("muzzleFlash", true)
     animator.setPartTag("muzzleFlash", "variant", math.random(1, self.muzzleFlashVariants or 3))
+    -- animator.setPartTag("muzzleFlash", "variant", (rng:randu32() % (self.muzzleFlashVariants or 3)) + 1)
     if not config.getParameter("overrideMuzzleFlashDirectives") then
       animator.setPartTag("muzzleFlash", "directives", string.format("?fade=%02X%02X%02X",self.muzzleFlashColor[1], self.muzzleFlashColor[2], self.muzzleFlashColor[3]) .. "=1")
     end
@@ -2079,7 +2079,6 @@ function Project45GunFire:damagePerShot(noDLM)
   * critDmg -- this way, rounds deal crit damage individually
   * (self.passiveDamageMult or 1) -- provides a way for passives to modify damage
   * self.weapon.stockAmmoDamageMult
-  -- * (self.balanceDamageMult or 1)
   / self.projectileCount
 
   return finalDmg

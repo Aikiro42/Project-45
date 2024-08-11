@@ -4,7 +4,7 @@
   "maxStack" : 1,
   "rarity" : "Essential",
   "description" : "A prototype ^#96cbe7;nitrosteel^reset; magitek stave.",
-  "lore": "The Miniknog plagiarized its design from a Knightfall engineer.",
+  "lore": "The Miniknog inspired its design from one of Knightfall's prototype weapons.",
   "shortdescription" : "Powerstave",
   "tooltipKind" : "project45gun",
   "gunArchetype": "magic",
@@ -33,6 +33,15 @@
       },
       "magazine": {
         "particles": [
+        ]
+      },
+      "muzzleFlash": {
+        "particles": [
+          {"particle": "project45muzzle"},
+          {"particle": "project45muzzle"},
+          {"particle": "project45muzzle"},
+          {"particle": "project45flashbang-red"},
+          {"particle": "project45shootsmoke"}  
         ]
       }
     },

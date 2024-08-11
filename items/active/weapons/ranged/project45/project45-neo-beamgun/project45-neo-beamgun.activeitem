@@ -22,7 +22,7 @@
     "chargeFullbright": "project45-neo-beamgun-charge-fullbright.png",
     "magazine": "project45-neo-beamgun-mag.png",
     "magazineFullbright": "",
-    "muzzleFlash": "/items/active/weapons/ranged/muzzleflash.png"
+    "muzzleFlash": "/items/active/weapons/ranged/project45-muzzleflash.png"
   },
 
   "project45GunModInfo": {
@@ -56,6 +56,15 @@
       "ejectionPort": {
         "particles": [
 
+        ]
+      },
+      "muzzleFlash": {
+        "particles": [
+          {"particle": "project45muzzle"},
+          {"particle": "project45muzzle"},
+          {"particle": "project45muzzle"},
+          {"particle": "project45flashbang-white"},
+          {"particle": "project45shootsmoke"}  
         ]
       }
     },

@@ -1,8 +1,9 @@
 {
     "kind" : "project45muzzlesmoke",
     "definition" : {
-      "type" : "ember",
-      "size" : 1,
+      "type" : "textured",
+      "image" : "/particles/project45/vfx/project45muzzlesmoke/project45muzzlesmoke.png",
+      "size" : 0.25,
       "color" : [200, 200, 200, 255],
       "position": [0, 0],
       "initialVelocity" : [1, 5],
@@ -10,14 +11,15 @@
       "fade" : 1.5,
       "approach" : [1000, 1],
       "light" : [0, 0, 0],
-      "destructionAction": "shrink",
+      "destructionAction": "fade",
       "destructionTime" : 1.2,
       "layer" : "front",
       "collidesLiquid" : true,
       "variance" : {
+        "angularVelocity": 45,
         "initialVelocity" : [0.1, 0],
         "approach" : [1, 0],
-        "size" : 1
+        "size" : 0.05
       }
     }
   }

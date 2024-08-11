@@ -55,6 +55,17 @@
       "magazine": {
         "particles": [
         ]
+      },
+      "muzzleFlash": {
+        "particles": [
+          {"particle": "project45muzzle"},
+          {"particle": "project45muzzle"},
+          {"particle": "project45muzzle"},
+          {"particle": "rocketbarrelpuff"},
+          {"particle": "rocketbarrelpuff"},
+          {"particle": "rocketbarrelpuff"},  
+          {"particle": "project45shootsmoke"}  
+        ]
       }
     },
 
@@ -65,7 +76,8 @@
       ],
       "ejectMag": [ ],
       "boltPull" : ["/sfx/project45neosfx/boltpull/boltpull-shotgun1.ogg"],
-      "boltPush" : ["/sfx/project45neosfx/boltpush/boltpush-shotgun1.ogg"]
+      "boltPush" : ["/sfx/project45neosfx/boltpush/boltpush-shotgun1.ogg"],
+      "unjam": ["/sfx/project45neosfx/loadmag/loadmag-heavy1.ogg"]
     },
     "animatedParts": {
       "parts":{

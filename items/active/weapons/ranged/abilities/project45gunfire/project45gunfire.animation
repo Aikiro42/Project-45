@@ -446,7 +446,7 @@
 
       "muzzleFlash" : {
         "properties" : {
-          "zLevel" : -1,
+          "zLevel" : 1,
           "centered" : true,
           "offset" : [0.75, 0],
           "fullbright" : true,
@@ -473,7 +473,7 @@
 
       "altMuzzleFlash" : {
         "properties" : {
-          "zLevel" : -1,
+          "zLevel" : 1,
           "centered" : true,
           "offset" : [0, 0],
           "fullbright" : true,
@@ -571,7 +571,9 @@
       "particles" : [ 
         {"particle": "project45muzzle"},
         {"particle": "project45muzzle"},
-        {"particle": "project45muzzle"}
+        {"particle": "project45muzzle"},
+        {"particle": "project45flashbang-yellow"},
+        {"particle": "project45shootsmoke"}
       ]
     },
     "altMuzzleFlash" : {
@@ -581,7 +583,9 @@
       "particles" : [ 
         {"particle": "project45muzzle"},
         {"particle": "project45muzzle"},
-        {"particle": "project45muzzle"}
+        {"particle": "project45muzzle"},
+        {"particle": "project45flashbang-yellow"},
+        {"particle": "project45shootsmoke"}
       ]
     },
     "muzzleCrit" : {

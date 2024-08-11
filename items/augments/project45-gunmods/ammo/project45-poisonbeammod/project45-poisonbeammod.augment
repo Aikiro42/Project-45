@@ -33,7 +33,14 @@
         "fireStart": ["/sfx/gun/mech_beamsniper_fire1.ogg"],
         "fireLoop": ["/sfx/gun/mech_beamdrill_loop.ogg"],
         "fireEnd": ["/sfx/gun/mech_beamdrill_winddown.ogg"]
-      }
+      },
+      "muzzleFlashParticles": [
+        {"particle": "project45muzzle"},
+        {"particle": "project45muzzle"},
+        {"particle": "project45muzzle"},
+        {"particle": "project45flashbang-green"},
+        {"particle": "project45shootsmoke"}  
+      ]
     }
   },
 

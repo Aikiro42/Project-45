@@ -1,0 +1,19 @@
+"muzzleFlashParticles": [
+        {"particle": "project45muzzle"},
+        {"particle": "project45muzzle"},
+        {"particle": "project45muzzle"},
+        {"particle": "project45flashbang-purple"},
+        {"particle": "project45shootsmoke"}  
+      ]
+
+"backEjectionPort": { "particles": [] },
+
+"muzzleFlash": {
+        "particles": [
+          {"particle": "project45muzzle"},
+          {"particle": "project45muzzle"},
+          {"particle": "project45muzzle"},
+          {"particle": "project45flashbang-red"},
+          {"particle": "project45shootsmoke"}  
+        ]
+      }

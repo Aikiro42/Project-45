@@ -20,11 +20,11 @@
     "category": "ballistic",
     "conversion": "projectile",
     "ammo":{
-    "archetype": "rocket",
-    "projectileType": "project45homingrocket",
-    "projectileParameters": {
-      "bounces": 0
-    }
+      "archetype": "rocket",
+      "projectileType": "project45homingrocket",
+      "projectileParameters": {
+        "bounces": 0
+      }
     }
   },
 

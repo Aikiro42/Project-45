@@ -28,7 +28,7 @@
     "chargeFullbright": "",
     "magazine": "project45-cbp-malorian-mag.png",
     "magazineFullbright": "",
-    "muzzleFlash": "/items/active/weapons/ranged/muzzleflash.png"
+    "muzzleFlash": "/items/active/weapons/ranged/project45-muzzleflash.png"
   },
 
   "animationCustom": {
@@ -115,6 +115,7 @@
 
   "project45GunModInfo":{
     "category": "ballistic",
+    "isSpecial": true,
     "upgradeCapacity": 10,
     "allowsConversion": [
       "hitscan",

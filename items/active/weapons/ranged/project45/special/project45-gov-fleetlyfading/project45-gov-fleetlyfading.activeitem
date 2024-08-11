@@ -17,7 +17,8 @@
   "elementalType": "fire",
 
   "project45GunModInfo": {
-    "category": "special",
+    "category": "experimental",
+    "isSpecial": true,
     "upgradeCapacity": 10
   },
 
@@ -40,6 +41,14 @@
       "magazine": {
         "particles": [
 
+        ]
+      },
+      "muzzleFlash": {
+        "particles": [
+          {"particle": "project45muzzle"},
+          {"particle": "project45muzzle"},
+          {"particle": "project45muzzle"},
+          {"particle": "project45flashbang-white"}
         ]
       }
     },
@@ -72,7 +81,6 @@
   "scripts" : ["/items/active/weapons/ranged/project45gunneo.lua"],
     
   "primaryAbilityType": "project45gunfire",
-  "balanceDamageMult": 1,
   "overrideArchetypeDps": true,
   "primaryAbility": {
 
@@ -179,8 +187,9 @@
         "allowRotate": false,
         "lock": true,
         "weaponOffset": [-0.5, 0.5]
-      },
-      "firing": {
+      }
+      
+      ,"firing": {
         "frontArmFrame" : "jump.3",
         "backArmFrame" : "swim.3",
         "weaponRotation": 30,
@@ -188,8 +197,10 @@
         "lock": true,
         "allowRotate": false,
         "twoHanded": true,
+        "duration": 0,
         "weaponRotationCenter": [-1.125, 0]
       }
+      //*/
 
     }
 

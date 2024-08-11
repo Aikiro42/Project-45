@@ -22,7 +22,7 @@
     "chargeFullbright": "",
     "magazine": "project45-neo-amr-mag.png",
     "magazineFullbright": "",
-    "muzzleFlash": "/items/active/weapons/ranged/muzzleflash.png"
+    "muzzleFlash": "/items/active/weapons/ranged/project45-muzzleflash.png"
   },
 
   "project45GunModInfo": {
@@ -66,7 +66,9 @@
           {"particle": "project45muzzle"},
           {"particle": "rocketbarrelpuff"},
           {"particle": "rocketbarrelpuff"},
-          {"particle": "rocketbarrelpuff"}
+          {"particle": "rocketbarrelpuff"},
+          {"particle": "project45flashbang-yellow"},
+          {"particle": "project45shootsmoke"}
         ]
       }
     },

@@ -407,7 +407,11 @@ function build(directory, config, parameters, level, seed)
   -- populate tooltip fields
   if config.tooltipKind == "project45gun" then
     config.tooltipFields = config.tooltipFields or {}
-    config.tooltipFields.subtitle = generalTooltipConfig.categoryStrings[config.project45GunModInfo.category or "Generic"] -- .. "^#D1D1D1;" .. config.gunArchetype or config.category
+    if config.project45GunModInfo.isSpecial then
+      config.tooltipFields.subtitle = generalTooltipConfig.specialCategoryStrings[config.project45GunModInfo.category or "generic"] -- .. "^#D1D1D1;" .. config.gunArchetype or config.category
+    else
+      config.tooltipFields.subtitle = generalTooltipConfig.categoryStrings[config.project45GunModInfo.category or "generic"] -- .. "^#D1D1D1;" .. config.gunArchetype or config.category
+    end
     config.tooltipFields.levelLabel = util.round(currentLevel, 1)
     config.tooltipFields.rarityLabel = rarityConversions[configParameter("isUnique", false) and "unique" or string.lower(configParameter("rarity", "common"))]
     if elementalType ~= "physical" then
@@ -705,17 +709,6 @@ function build(directory, config, parameters, level, seed)
             string.format("%s%s %s\n", chargeDamageDesc, perfectChargeDamageDesc, descText)
           )
       end
-
-      --[[
-
-      config.tooltipFields.balanceDamageMultLabel = ""
-      if balanceDamageMult ~= 1 then
-        config.tooltipFields.balanceDamageMultLabel = project45util.colorText(balanceDamageMult > 1
-          and "#9dc6f5" or "#FF5050",
-          project45util.truncatef(balanceDamageMult, 2) .. "x") .. "\n"
-      end
-
-      --]]
       
       local modListDesc = ""
       if modList then

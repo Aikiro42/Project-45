@@ -24,6 +24,13 @@
       "archetype": "beam",
       
       "muzzleFlashColor": [234,153,49],
+      "muzzleFlashParticles": [
+        {"particle": "project45muzzle"},
+        {"particle": "project45muzzle"},
+        {"particle": "project45muzzle"},
+        {"particle": "project45flashbang-red"},
+        {"particle": "project45shootsmoke"}  
+      ],
       "beamParameters":{
         "beamDamageConfig":{
           "damageSourceKind" : "fire",

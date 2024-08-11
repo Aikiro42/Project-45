@@ -34,6 +34,15 @@
         "particles": [
           {"particle": "project45energygunmag"}
         ]
+      },
+      "muzzleFlash": {
+        "particles": [
+          {"particle": "project45muzzle"},
+          {"particle": "project45muzzle"},
+          {"particle": "project45muzzle"},
+          {"particle": "project45flashbang-purple"},
+          {"particle": "project45shootsmoke"}  
+        ]
       }
     },
 

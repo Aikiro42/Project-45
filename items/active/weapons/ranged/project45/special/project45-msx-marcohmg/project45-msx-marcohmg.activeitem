@@ -39,6 +39,11 @@
       "magazine": {
         "particles": [
         ]
+      },
+      "muzzleFlash": {
+        "particles": [
+
+        ]
       }
     },
 
@@ -57,7 +62,8 @@
   },
 
   "project45GunModInfo":{
-    "category": "special",
+    "category": "ballistic",
+    "isSpecial": true,
     "upgradeCapacity": 10
   },
 

@@ -18,6 +18,7 @@
 
   "project45GunModInfo":{
     "category": "experimental",
+    "isSpecial": true,
     "upgradeCapacity": 10
   },
 
@@ -39,6 +40,15 @@
       },
       "magazine": {
         "particles": [
+        ]
+      },
+      "muzzleFlash": {
+        "particles": [
+          {"particle": "project45muzzle"},
+          {"particle": "project45muzzle"},
+          {"particle": "project45muzzle"},
+          {"particle": "project45flashbang-blue"},
+          {"particle": "project45shootsmoke"}  
         ]
       }
     },

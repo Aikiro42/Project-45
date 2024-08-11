@@ -25,7 +25,10 @@
       "summonedProjectileType": "project45gravitygrenade",
       "summonedProjectileParameters":{
         "speed": 0
-      }
+      },
+      "muzzleFlashParticles": [
+        {"particle": "project45flashbang-purple"}
+      ]
     }
   },
 

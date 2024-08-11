@@ -17,7 +17,8 @@
   "inventoryIcon" : "project45-tcf-kineticarbiter-icon.png",
 
   "project45GunModInfo": {
-    "category": "special",
+    "category": "ballistic",
+    "isSpecial": true,
     "upgradeCapacity": 10,
     "acceptsModSlot": [
       "sights"
@@ -63,6 +64,15 @@
       "magazine": {
         "particles": [
           {"particle": "project45kineticarbitermag"}
+        ]
+      },
+      "muzzleFlash": {
+        "particles": [
+          {"particle": "project45muzzle"},
+          {"particle": "project45muzzle"},
+          {"particle": "project45muzzle"},
+          {"particle": "project45flashbang-blue"},
+          {"particle": "project45shootsmoke"}  
         ]
       }
     },

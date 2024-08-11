@@ -56,6 +56,16 @@
       "animationCustom": {
         "sounds": {
           "fire": ["/sfx/project45neosfx/fire/fire-silenced-generic1.ogg"]
+        },
+        "particleEmitters": {
+          "muzzleFlash": {
+            "particles": [
+              {"particle": "project45muzzle"},
+              {"particle": "project45muzzle"},
+              {"particle": "project45muzzle"},
+              {"particle": "project45shootsmoke"}    
+            ]
+          }
         }
       }
     }

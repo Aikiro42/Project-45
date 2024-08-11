@@ -18,6 +18,7 @@
 
   "project45GunModInfo": {
     "category": "universal",
+    "isSpecial": true,
     "incompatibleMods": [],
     "allowsConversion": [],
     "acceptsModSlot": [],
@@ -35,7 +36,7 @@
     "chargeFullbright": "",
     "magazine": "project45-mhf-boneshooter-mag.png",
     "magazineFullbright": "",
-    "muzzleFlash": "/items/active/weapons/ranged/muzzleflash.png"
+    "muzzleFlash": "/items/active/weapons/ranged/project45-muzzleflash.png"
   },
 
   "animationCustom": {

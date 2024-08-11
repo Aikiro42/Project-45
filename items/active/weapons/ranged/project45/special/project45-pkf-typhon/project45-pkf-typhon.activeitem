@@ -17,7 +17,8 @@
   "inventoryIcon" : "project45-pkf-typhon-icon.png",
 
   "project45GunModInfo": {
-    "category": "experimental",
+    "category": "energy",
+    "isSpecial": true,
     "upgradeCapacity": 10,
     "acceptsAmmoArchetype": [
     ],
@@ -88,7 +89,9 @@
                 "initialVelocity" : [5, 10]
               }
             }
-          }
+          },
+          {"particle": "project45flashbang-blue"},
+          {"particle": "project45shootsmoke"}
         ]
       }, 
       "ejectionPort": {

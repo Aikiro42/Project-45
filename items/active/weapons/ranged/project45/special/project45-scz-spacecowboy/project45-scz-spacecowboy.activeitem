@@ -17,7 +17,8 @@
   "inventoryIcon" : "project45-scz-spacecowboy-icon.png",
   "elementalType": "fire",
   "project45GunModInfo": {
-    "category": "special",
+    "category": "ballistic",
+    "isSpecial": true,
     "upgradeCapacity": 10
   },
 
@@ -87,7 +88,6 @@
   "scripts" : ["/items/active/weapons/ranged/project45gunneo.lua"],
     
   "primaryAbilityType": "project45gunfire",
-  "balanceDamageMult": 1,
   "primaryAbility": {
     "passiveDescription": "On Perfect Reload: First shot deals 2x damage.",
     "passiveScript": "/items/active/weapons/ranged/project45/special/project45-scz-spacecowboy/spacecowboypassive.lua",
