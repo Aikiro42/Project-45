@@ -24,8 +24,8 @@
   },
 
   "project45GunModInfo": {
-    "category": "experimental",
-    
+    "category": "ballistic",
+    "uniqueType": "experimental",
     "allowsConversion": [
       "projectile"
     ],

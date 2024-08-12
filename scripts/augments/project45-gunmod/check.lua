@@ -165,13 +165,24 @@ function Checker:check()
   self.compatible = compatible and not incompatible
 
   if not compatible then
+    -- non-experimental mods are compatible with experimental weapons
+    -- experimental mods are ONLY compatible with experimental weapons
+    local experimentalCompatibility =
+      augment.category ~= "experimental"
+      or (augment.category == "experimental" and modInfo.uniqueType == "experimental")
+      or (augment.category == "experimental" and modInfo.category == "experimental")
+
     -- Bad if mod has exclusive compatibility and is incompatible with weapon
     if augment.exclusiveCompatibility then
       self:addError(string.format("Mod incompatible with weapon"))
       self.checked = false
 
-      -- Bad if non-universal mod and weapon don't share the same category
-    elseif augment.category ~= "universal" and modInfo.category ~= "universal" and augment.category ~= modInfo.category then
+    -- Bad if non-universal mod and weapon don't share the same category
+    elseif augment.category ~= "universal"
+      and modInfo.category ~= "universal"
+      and augment.category ~= modInfo.category
+      and not experimentalCompatibility
+      then
       self:addError(string.format("Category mismatch"))
       self.checked = false
     end

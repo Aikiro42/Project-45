@@ -407,8 +407,8 @@ function build(directory, config, parameters, level, seed)
   -- populate tooltip fields
   if config.tooltipKind == "project45gun" then
     config.tooltipFields = config.tooltipFields or {}
-    if config.project45GunModInfo.isSpecial then
-      config.tooltipFields.subtitle = generalTooltipConfig.specialCategoryStrings[config.project45GunModInfo.category or "generic"] -- .. "^#D1D1D1;" .. config.gunArchetype or config.category
+    if config.project45GunModInfo.uniqueType then
+      config.tooltipFields.subtitle = generalTooltipConfig.categoryStringsX[config.project45GunModInfo.uniqueType][config.project45GunModInfo.category or "generic"]
     else
       config.tooltipFields.subtitle = generalTooltipConfig.categoryStrings[config.project45GunModInfo.category or "generic"] -- .. "^#D1D1D1;" .. config.gunArchetype or config.category
     end
@@ -709,19 +709,29 @@ function build(directory, config, parameters, level, seed)
             string.format("%s%s %s\n", chargeDamageDesc, perfectChargeDamageDesc, descText)
           )
       end
+
+      local availableModSlots = deepConfigParameter({nil}, "project45GunModInfo", "acceptsModSlot")
+      local availableExclude = set.new({"rail", "sights", "muzzle", "underbarrel", "stock"})
+      local acceptsModDesc = ""
+      for _, modSlot in ipairs(availableModSlots) do
+        if not (modList[modSlot] or availableExclude[modSlot]) then
+          acceptsModDesc = acceptsModDesc .. project45util.colorText(
+            "#9da8af",
+            string.format("No %s.\n", generalTooltipConfig.slotNames[modSlot] or modSlot)
+          )
+        end
+      end
       
       local modListDesc = ""
-      if modList then
-        local exclude = set.new({"passive","ability","manualReload", "shiftAbility","rail","sights","muzzle","underbarrel","stock","ammoType"})
-        for modSlot, modKind in pairs(modList) do
-          if not exclude[modSlot] and modKind[1] ~= "ability" then
-            descriptionScore = descriptionScore + 1
-            modListDesc = modListDesc .. project45util.colorText("#abfc6d", modKind[1]) .. "\n"
-          end
+      local exclude = set.new({"passive","ability","manualReload", "shiftAbility","rail","sights","muzzle","underbarrel","stock","ammoType"})
+      for modSlot, modKind in pairs(modList) do
+        if not exclude[modSlot] and modKind[1] ~= "ability" then
+          descriptionScore = descriptionScore + 1
+          modListDesc = modListDesc .. project45util.colorText("#abfc6d", modKind[1]) .. "\n"
         end
       end
 
-      local finalDescription = passiveDesc .. heavyDesc .. chargeDesc .. overchargeDesc .. multishotDesc .. modListDesc
+      local finalDescription = passiveDesc .. heavyDesc .. chargeDesc .. overchargeDesc .. multishotDesc .. acceptsModDesc .. modListDesc
       finalDescription = finalDescription == "" and project45util.colorText("#777777", "No notable qualities.") or finalDescription      
       config.tooltipFields.technicalLabel = finalDescription
 

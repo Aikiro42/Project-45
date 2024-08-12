@@ -119,14 +119,8 @@
   },
 
   "project45GunModInfo":{
-    "category": "experimental",
-    
-    "compatibleMods": [
-      "project45-elecammomod",
-      "project45-iceammomod",
-      "project45-firebeammod",
-      "project45-poisonbeammod"
-    ],
+    "category": "energy",
+    "uniqueType": "experimental",
     "allowsConversion": [
       "hitscan",
       "beam",

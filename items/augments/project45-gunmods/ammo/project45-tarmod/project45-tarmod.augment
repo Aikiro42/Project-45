@@ -36,6 +36,7 @@
         "fireEnd": ["/sfx/project45neosfx/fire/start/firestart-switch1.ogg"]
       },
       "muzzleFlashParticles": [],
+      "shootSmokeParticles": [],
 
       "hideMuzzleFlash": true,
       "hideMuzzleSmoke": true

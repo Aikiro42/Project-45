@@ -18,7 +18,7 @@
 
   "project45GunModInfo": {
     "category": "ballistic",
-    "isSpecial": true,
+    "uniqueType": "special",
     "upgradeCapacity": 10,
     "acceptsAmmoArchetype": [
       "bullet"

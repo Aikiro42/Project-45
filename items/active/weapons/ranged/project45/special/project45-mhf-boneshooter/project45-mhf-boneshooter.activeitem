@@ -18,7 +18,7 @@
 
   "project45GunModInfo": {
     "category": "universal",
-    "isSpecial": true,
+    "uniqueType": "special",
     "incompatibleMods": [],
     "allowsConversion": [],
     "acceptsModSlot": [],

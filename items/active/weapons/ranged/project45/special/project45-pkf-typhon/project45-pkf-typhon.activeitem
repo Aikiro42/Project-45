@@ -18,7 +18,7 @@
 
   "project45GunModInfo": {
     "category": "energy",
-    "isSpecial": true,
+    "uniqueType": "special",
     "upgradeCapacity": 10,
     "acceptsAmmoArchetype": [
     ],

@@ -55,7 +55,7 @@ Credits: 343 Industries, Bungie, Creative Assembly, Ensemble Studios
 
   "project45GunModInfo":{
     "category": "ballistic",
-    "isSpecial": true,
+    "uniqueType": "special",
     "upgradeCapacity": 9,
     "incompatibleMods": [
       "project45-autofiremod"

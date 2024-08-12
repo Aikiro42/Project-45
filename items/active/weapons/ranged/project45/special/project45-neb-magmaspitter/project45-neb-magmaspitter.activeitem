@@ -19,7 +19,7 @@
 
   "project45GunModInfo": {
     "category": "experimental",
-    "isSpecial": true,
+    "uniqueType": "special",
     "upgradeCapacity": 10
   },
 

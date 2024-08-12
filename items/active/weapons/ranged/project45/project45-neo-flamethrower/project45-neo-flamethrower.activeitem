@@ -27,7 +27,6 @@
 
   "project45GunModInfo": {
     "category": "experimental",
-    
     "allowsConversion": [
       "beam"
     ],
