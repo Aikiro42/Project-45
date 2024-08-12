@@ -28,9 +28,7 @@
         "speed": 50,
         "timeToLive": 0.75
       },
-      "muzzleFlashParticles": [
-        {"particle": "project45shootsmoke"}  
-      ],
+      "muzzleFlashParticles": [],
 
       "hideMuzzleFlash": true
     }

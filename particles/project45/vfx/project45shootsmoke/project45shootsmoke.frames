@@ -2,6 +2,6 @@
   "image" : "project45shootsmoke.png",
   "frameGrid" : {
     "size" : [34, 37],
-    "dimensions" : [7, 2]
+    "dimensions" : [7, 3]
   }
 }

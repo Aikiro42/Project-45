@@ -1,0 +1,26 @@
+{
+    "kind" : "project45shootsmoke3",
+    "definition" : {
+      "type" : "animated",
+      "image" : "/animations/project45shootsmoke/project45shootsmoke3.animation",
+      "size" : 0.5,
+      "color" : [200, 200, 200, 255],
+      "position": [0, 0],
+      "initialVelocity" : [15, 0],
+      "finalVelocity" : [0, 0],
+      "fade" : 1.5,
+      "timeToLive": 0,
+      "approach" : [10, 3],
+      "destructionAction": "fade",
+      "destructionTime" : 0.3,
+      "layer" : "front",
+      "collidesLiquid" : true,
+      "variance" : {
+        "initialVelocity" : [5, 3],
+        "finalVelocity" : [3, 3],
+        "approach" : [1, 1],
+        "size" : 0.1
+      }
+    }
+  }
+  

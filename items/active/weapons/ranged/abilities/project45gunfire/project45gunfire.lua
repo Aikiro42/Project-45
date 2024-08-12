@@ -1226,7 +1226,10 @@ function Project45GunFire:muzzleFlash()
     end
   end
   
-  if not self.performanceMode then animator.burstParticleEmitter("muzzleFlash") end
+  if not self.performanceMode then
+    animator.burstParticleEmitter("muzzleFlash")
+    animator.burstParticleEmitter("shootSmoke")
+  end
   
   if not self.hideMuzzleFlash then
     animator.setLightActive("muzzleFlash", true)

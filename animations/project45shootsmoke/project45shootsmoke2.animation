@@ -1,6 +1,6 @@
 {
-  "frames" : "project45shootsmoke.png",
-  "variants" : 3,
+  "frames" : "project45shootsmoke2.png",
+  "variants" : 1,
   "frameNumber" : 7,
   "animationCycle" : 0.3,
   "offset" : [0, 0]

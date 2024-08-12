@@ -40,8 +40,7 @@
           {"particle": "project45muzzle"},
           {"particle": "project45muzzle"},
           {"particle": "project45muzzle"},
-          {"particle": "project45flashbang-purple"},
-          {"particle": "project45shootsmoke"}  
+          {"particle": "project45flashbang-purple"}  
         ]
       }
     },

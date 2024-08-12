@@ -49,8 +49,7 @@
         "particles": [
           {"particle": "project45muzzle"},
           {"particle": "project45muzzle"},
-          {"particle": "project45muzzle"},
-          {"particle": "project45shootsmoke"}  
+          {"particle": "project45muzzle"}  
         ]
       }
     },

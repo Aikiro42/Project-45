@@ -90,8 +90,7 @@
               }
             }
           },
-          {"particle": "project45flashbang-blue"},
-          {"particle": "project45shootsmoke"}
+          {"particle": "project45flashbang-blue"}
         ]
       }, 
       "ejectionPort": {

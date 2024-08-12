@@ -47,8 +47,7 @@
         {"particle": "rocketbarrelpuff"},
         {"particle": "project45muzzle"},
         {"particle": "project45muzzle"},
-        {"particle": "project45muzzle"},
-        {"particle": "project45shootsmoke"}
+        {"particle": "project45muzzle"}
         ]},
       "ejectionPort": {
         "particles": [

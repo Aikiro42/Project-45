@@ -67,8 +67,7 @@
           {"particle": "rocketbarrelpuff"},
           {"particle": "rocketbarrelpuff"},
           {"particle": "rocketbarrelpuff"},
-          {"particle": "project45flashbang-yellow"},
-          {"particle": "project45shootsmoke"}
+          {"particle": "project45flashbang-yellow"}
         ]
       }
     },

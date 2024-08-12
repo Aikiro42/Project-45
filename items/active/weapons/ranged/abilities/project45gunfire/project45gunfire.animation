@@ -563,7 +563,16 @@
   },
 
   "particleEmitters" : {
-
+    "shootSmoke": {
+      "transformationGroups" : ["muzzle"],
+      "offsetRegion" : [0, 0, 0, 0],
+      "emissionRate" : 1,
+      "particles" : [
+        {"particle": "project45shootsmoke1"},
+        {"particle": "project45shootsmoke2"},
+        {"particle": "project45shootsmoke3"}
+      ]
+    },
     "muzzleFlash" : {
       "transformationGroups" : ["muzzle"],
       "offsetRegion" : [0, 0, 0, 0],
@@ -572,8 +581,7 @@
         {"particle": "project45muzzle"},
         {"particle": "project45muzzle"},
         {"particle": "project45muzzle"},
-        {"particle": "project45flashbang-yellow"},
-        {"particle": "project45shootsmoke"}
+        {"particle": "project45flashbang-yellow"}
       ]
     },
     "altMuzzleFlash" : {
@@ -584,8 +592,7 @@
         {"particle": "project45muzzle"},
         {"particle": "project45muzzle"},
         {"particle": "project45muzzle"},
-        {"particle": "project45flashbang-yellow"},
-        {"particle": "project45shootsmoke"}
+        {"particle": "project45flashbang-yellow"}
       ]
     },
     "muzzleCrit" : {

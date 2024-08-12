@@ -3,9 +3,9 @@
   "price" : 5000,
   "maxStack" : 1,
   "rarity" : "Legendary",
-  "description" : "A Force-Impulse Strike Technology gauntlet.",
-  "lore": "Some madman in the research facility managed to make a functioning gun-tlet that fires Mach 5 punches.",
-  "shortdescription" : "F.I.S.T. Gauntlet",
+  "description" : "Force-Impulse Strike Technology gauntlet.",
+  "lore": "Some madman in the research facility managed to make a functioning gunfist that fires Mach 5 punches.",
+  "shortdescription" : "F.I.S.T.\"Guntlet\"",
   "tooltipKind" : "project45gun",
   "gunArchetype": "shotgun",
   "category" : "fistWeapon",
@@ -40,13 +40,15 @@
 
         ]
       },
+      "shootSmoke": {
+        "particles": []
+      },
       "muzzleFlash": {
         "particles": [
           {"particle": "project45muzzle"},
           {"particle": "project45muzzle"},
           {"particle": "project45muzzle"},
-          {"particle": "project45flashbang-purple"},
-          {"particle": "project45shootsmoke"}  
+          {"particle": "project45flashbang-purple"}  
         ]
       }
     },

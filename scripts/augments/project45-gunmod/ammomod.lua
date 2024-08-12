@@ -66,6 +66,14 @@ function apply(output, augment)
       input.parameters.animationCustom.particleEmitters.muzzleFlash.particles = copy(augment.muzzleFlashParticles)
     end
 
+    -- for shoot smoke
+    if augment.shootSmokeParticles then
+      customAnimation = true
+      construct(input, "parameters", "animationCustom", "particleEmitters", "shootSmoke")
+      -- fully replace
+      input.parameters.animationCustom.particleEmitters.shootSmoke.particles = copy(augment.shootSmokeParticles)
+    end
+
     if customAnimation then
       output:setInstanceValue("animationCustom", input.parameters.animationCustom)
     end

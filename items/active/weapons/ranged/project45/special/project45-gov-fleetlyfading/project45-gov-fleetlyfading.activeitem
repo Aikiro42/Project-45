@@ -43,6 +43,9 @@
 
         ]
       },
+      "shootSmoke": {
+        "particles": []
+      },
       "muzzleFlash": {
         "particles": [
           {"particle": "project45muzzle"},
