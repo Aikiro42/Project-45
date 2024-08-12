@@ -4,7 +4,7 @@
   "maxStack" : 1,
   "rarity" : "Essential",
   "description" : "A powerful anti-materiel rifle.",
-  "lore": "The recoil is enough to throw you across a room, but it's worth eliminating anything in a general direction.",
+  "lore": "The recoil is enough to throw you across a room, but it's worth turning anything into pink mist. Shotgun shells fit the chamber.",
   "shortdescription" : "A.M.R.",
   "tooltipKind" : "project45gun",
   "gunArchetype": "antiMateriel",
@@ -38,7 +38,8 @@
       
       "material",
       "magazine",
-      "receiver"
+      "receiver",
+      "choke"
     ],
     "acceptsAmmoArchetype": [
       "bullet",

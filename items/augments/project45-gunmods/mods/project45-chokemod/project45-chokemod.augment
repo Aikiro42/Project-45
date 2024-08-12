@@ -1,0 +1,37 @@
+{
+  "itemName" : "project45-chokemod",
+  "price" : 5000,
+  "rarity" : "Rare",
+  "tooltipKind" : "project45gunmod2",
+  "modCategory" : "gunMod",
+  "category" : "uniqueWeapon",
+  "itemTags": ["weapon"],
+  "tooltipFields":{
+    "subtitle": "Gun Mod",
+    "objectImage": "/items/augments/project45-gunmods/mods/project45-chokemod/project45-chokemod.png"
+  },
+  "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-chokemod/project45-chokemodicon.png",
+  "description" : "Tightens the spread of pellets.",
+  "statInfo": "",
+  "shortdescription" : "Choke",
+
+  "augment":{
+    "modName": "Choke",
+    "category": "ballistic",
+    "slot": "choke",
+    "stat": {
+      "recoilAmount": {
+        "rebaseMult": 0.8
+      },
+      "spread": {
+        "rebaseMult": 0.5
+      }
+    }
+  },
+
+
+   
+
+  "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
+}

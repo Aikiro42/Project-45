@@ -64,7 +64,8 @@
       
       "magazine",
       "material",
-      "receiver"
+      "receiver",
+      "choke"
     ],
     "acceptsAmmoArchetype": [
       "shotgun"

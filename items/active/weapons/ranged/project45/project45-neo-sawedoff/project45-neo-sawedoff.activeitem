@@ -33,7 +33,8 @@
       "sights",
       "magazine",
 
-      "material"
+      "material",
+      "choke"
     ],
     "flipSlot": [
     ]
