@@ -16,6 +16,8 @@
 
   "projectileType" : "project45-enemyflare",
   "projectileConfig": {
-    "spawnRadius": 10
+    "spawnRadius": 10,
+    "npcTypes": ["project45goon"],
+    "npcRaces": ["human"]
   }
 }

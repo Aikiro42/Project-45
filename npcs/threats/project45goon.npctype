@@ -1,0 +1,79 @@
+{
+  "type" : "project45goon",
+  "baseType" : "hostile",
+
+  "levelVariance" : [1, 7],
+
+  "dropPools" : [ "project45-goon-drop", "money" ],
+  "innateStatusEffects" : [ "beamaway" ],
+  
+  "scripts" : [
+    "/npcs/project45-bmain.lua"
+  ],
+  "scriptConfig" : {
+    "behaviorConfig" : {
+      "friendlyNpcTypes" : ["crewmemberoutlaw"]
+    },
+    
+    "dialog" : {
+      "attack" : {
+        "default" : {
+          "default" : [
+            "Attack!"
+          ]
+        },
+        "human" : {
+          "default" : [
+            "I've been doing this for years, you've got no chance!",
+            "Get out of my way or you'll be sorry!",
+            "My skills far excel yours!",
+            "You're outta luck, bub!",
+            "You want a shootout with me? So be it!"
+          ]
+        }
+      }
+    }
+  },
+
+  "matchColorIndices" : true,
+  "items" : {
+    "override" : [
+      [0, [
+          {
+            "head" : [
+              { "name" : "humantier6ahead", "parameters" : { "colorIndex" : 1 } }
+            ],
+            "back" : [
+              { "name" : "survivalgearback", "parameters" : { "colorIndex" : 1 } }
+            ],
+            "chest" : [
+              { "name" : "humantier6achest", "parameters" : { "colorIndex" : 1 } }
+            ],
+            "legs" : [
+              { "name" : "humantier6apants", "parameters" : { "colorIndex" : 1 } }
+            ],
+            "primary" : [
+              "project45-neo-npc-shotgun",
+              "project45-neo-npc-combatrifle",
+              "project45-neo-npc-amr",
+              "project45-neo-npc-pistol"
+            ]
+          }
+        ] ]
+    ]
+  },
+
+  "statusControllerSettings" : {    
+    "stats" : {
+      "maxHealth" : {
+        "baseValue" : 100.0
+      },
+      "powerMultiplier" : {
+        "baseValue" : 1.0
+      },
+      "protection" : {
+        "baseValue" : 1.0
+      }
+    }
+  }
+}

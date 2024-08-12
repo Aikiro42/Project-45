@@ -92,6 +92,22 @@
       ],
       "allowDuplication" : false
     }]
+  ],
+
+  "project45-goon-drop": [
+    [0, {
+      "pool" : [
+        {"weight" : 0.50, "pool" : "project45-gacha-r"},
+        {"weight" : 0.46, "pool" : "project45-gacha-sr"},
+        {"weight" : 0.02, "pool" : "project45-gacha-ssr"},
+        {"weight" : 0.02, "pool" : "project45-gacha-xssr"}
+      ],
+      "poolRounds" : [
+        [0.75, 0],
+        [0.25, 1]
+      ],
+      "allowDuplication" : false
+    }]
   ]
 
 }

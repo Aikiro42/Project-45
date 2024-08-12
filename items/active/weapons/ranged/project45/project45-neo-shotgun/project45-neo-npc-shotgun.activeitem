@@ -1,30 +1,28 @@
 {
-  "itemName" : "project45-neo-npc-combatrifle",
+  "itemName" : "project45-neo-npc-shotgun",
   "price" : 1080,
   "maxStack" : 1,
   "rarity" : "Legendary",
   "description" : "Used by Letheia and Miniknog goons.",
-  "shortdescription" : "Combat Rifle",
+  "shortdescription" : "Shotgun",
   "category" : "uniqueWeapon",
-  "twoHanded" : true,
-  "itemTags" : ["weapon","ranged","assaultRifle"],
+  "twoHanded" : false,
+  "itemTags" : ["weapon","ranged","shotgun"],
   "level" : 6,
 
   "inventoryIcon" : [
-    { "image" : "project45-neo-combatrifle-icon.png" }
+    { "image" : "project45-neo-shotgun-icon.png" }
   ],
 
-  "animation" : "project45-neo-npc-combatrifle.animation",
+  "animation" : "project45-neo-npc-shotgun.animation",
   "animationParts" : {
-    "middle" : "project45-neo-combatrifle-icon.png",
+    "middle" : "project45-neo-shotgun-icon.png",
     "middleFullbright" : "",
-    "muzzleFlash": "/items/active/weapons/ranged/project45-muzzleflash.png"
+    "muzzleFlash": "/items/active/weapons/ranged/muzzleflash.png"
   },
   "animationCustom" : {
     "sounds" : {
-      "fire" : [
-        "/sfx/project45neosfx/fire/fire-rifle1.ogg"
-      ]
+      "fire" : ["/sfx/project45neosfx/npc/fire/fire-shotgun.ogg"]
     },
     "lights" : {
       "muzzleFlash" : {
@@ -33,8 +31,8 @@
     }
   },
 
-  "baseOffset" : [0.75, 0.25],
-  "muzzleOffset" : [2.125, 0.25],
+  "baseOffset" : [0.25, -0.25],
+  "muzzleOffset" : [2, 0.3125],
 
   "scripts" : ["/items/active/weapons/ranged/gun.lua"],
 
@@ -45,10 +43,10 @@
     "class" : "GunFire",
 
     "fireTime" : 0,
-    "baseDamage" : 0.5,
+    "baseDamage" : 7,
     "energyUsage" : 20,
-    "projectileCount" : 1,
-    "inaccuracy" : 0.01,
+    "projectileCount" : 5,
+    "inaccuracy" : 0.017,
     "fireType" : "auto",
 
     "projectileType" : "project45stdbullet",
@@ -58,7 +56,7 @@
       "idle" : {
         "armRotation" : 0,
         "weaponRotation" : 0,
-        "twoHanded" : true,
+        "twoHanded" : false,
 
         "allowRotate" : true,
         "allowFlip" : true
@@ -67,16 +65,16 @@
         "duration" : 0,
         "armRotation" : 4,
         "weaponRotation" : 4,
-        "twoHanded" : true,
+        "twoHanded" : false,
 
         "allowRotate" : false,
         "allowFlip" : false
       },
       "cooldown" : {
-        "duration" : 0.15,
+        "duration" : 0.8,
         "armRotation" : 4,
         "weaponRotation" : 4,
-        "twoHanded" : true,
+        "twoHanded" : false,
 
         "allowRotate" : false,
         "allowFlip" : false
