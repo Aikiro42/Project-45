@@ -15,6 +15,7 @@
       "destructionTime" : 0.3,
       "layer" : "front",
       "collidesLiquid" : true,
+      "collidesForeground" : true,
       "variance" : {
         "initialVelocity" : [5, 3],
         "finalVelocity" : [3, 3],

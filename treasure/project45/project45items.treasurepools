@@ -28,6 +28,7 @@
         // RARE
         {"weight" : 1, "item" : "project45-neo-bow"},
         {"weight" : 1, "item" : "project45-neo-smg"},
+        {"weight" : 1, "item" : "project45-neo-wristgun"},
         {"weight" : 1, "item" : "project45-neo-shotgun"},
         {"weight" : 1, "item" : "project45-neo-leveraction"},
         {"weight" : 1, "item" : "project45-neo-assaultrifle"},

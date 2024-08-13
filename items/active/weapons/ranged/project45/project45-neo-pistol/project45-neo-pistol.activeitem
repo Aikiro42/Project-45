@@ -32,6 +32,11 @@
           {"particle": "project45bulletcasesmall"}
         ]
       },
+      "backEjectionPort": {
+        "particles": [
+          {"particle": "project45bulletcasesmallback"}
+        ]
+      },
       "magazine": {
         "particles": [
           {"particle": "project45pistolmag"}

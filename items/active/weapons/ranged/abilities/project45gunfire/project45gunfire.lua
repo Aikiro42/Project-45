@@ -357,16 +357,14 @@ function Project45GunFire:renderModPositionDebug()
   
   local weaponPos = vec2.add(mcontroller.position(), activeItem.handPosition(vec2.rotate(self.weapon.weaponOffset, self.weapon.relativeWeaponRotation)))
 
-  local debugPointColors = self.debug.pointColors
-
-  local modPositions = {
-    rail=debugPointColors.rail or "gray",
-    sights=debugPointColors.sights or "gray",
-    underbarrel=debugPointColors.underbarrel or "gray",
-    stock=debugPointColors.stock or "gray",
+  local debugPointColors = self.debug.pointColors or {
+    rail="gray",
+    sights="gray",
+    underbarrel="gray",
+    stock="gray"
   }
 
-  for posName, color in pairs(modPositions) do
+  for posName, color in pairs(debugPointColors) do
     world.debugPoint(
       vec2.add(
         mcontroller.position(),
