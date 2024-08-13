@@ -328,7 +328,14 @@
     "recoilAmount": 0.5, // amount of recoil per shot, in degrees; arm and weapon will rotate by half of this
     "recoilMaxDeg": 5, // the most the arm and weapon will rotate, in degrees.
     "recoilMult": 1, // multiplies recoilAmount
-    "recoilCrouchMult": 0.5, // mulitplies recoil and recoilMaxDeg when crouching
+    "recoilCrouchMult": 0.5, // multiplies recoil and recoilMaxDeg when crouching
+
+    /*
+    offset added to muzzle position, [0, -1] by default
+    used for recoilWallMult checking via rectCollision 
+    */
+    // "recoilWallOffset": [0, 0],
+    "recoilWallMult": 0.5, // multiplies recoil and recoilMaxDeg when against wall
     
     "recoverTime": 1.5, // time it takes to recover aim completely, in seconds
     "recoverDelay": 0.1, // time before aim is recovered

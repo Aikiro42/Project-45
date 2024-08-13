@@ -258,7 +258,7 @@ function Project45GunFire:init()
   GunFire.updateMagVisuals = self.updateMagVisuals
   GunFire.updateAmmo = self.updateAmmo
   -- Override functions used by altAbility
-  GunFire.firePosition = self.firePosition
+  GunFire.firePosition = self.muzzlePosition
   GunFire.aimVector = self.aimVector
   GunFire.fireProjectile = self.fireProjectile
   GunFire.cooldown = self.cooldown
@@ -275,7 +275,7 @@ function Project45GunFire:init()
   AltFireAttack.updateMagVisuals = self.updateMagVisuals
   AltFireAttack.updateAmmo = self.updateAmmo
   -- Override functions used by altAbility
-  AltFireAttack.firePosition = self.firePosition
+  AltFireAttack.firePosition = self.muzzlePosition
   AltFireAttack.aimVector = self.aimVector
   AltFireAttack.fireProjectile = self.fireProjectile
   AltFireAttack.cooldown = self.cooldown
@@ -1184,9 +1184,9 @@ function Project45GunFire:muzzleProjectile(projectile, parameters, addOffset, sp
       projectile or self.muzzleProjectileType,
       parameters or self.muzzleProjectileParameters,
       nil,
-      self.muzzlePosition and self:muzzlePosition(nil, addOffset or self.muzzleProjectileOffset),
+      self:muzzlePosition(nil, addOffset or self.muzzleProjectileOffset),
       count or 1,
-      self.muzzleVector and self:muzzleVector(spread or 0, nil, self.muzzlePosition and self:muzzlePosition()),
+      self:muzzleVector(spread or 0, nil, self.muzzlePosition and self:muzzlePosition()),
       not self.muzzlePosition and (addOffset or self.muzzleProjectileOffset) or nil
     )
   else
@@ -1194,9 +1194,9 @@ function Project45GunFire:muzzleProjectile(projectile, parameters, addOffset, sp
       projectile or self.muzzleProjectileType,
       parameters or self.muzzleProjectileParameters,
       nil,
-      self.muzzlePosition and self:muzzlePosition(),
+      self:muzzlePosition(),
       count or 1,
-      self.muzzleVector and self:muzzleVector(spread or 0, nil, self.muzzlePosition and self:muzzlePosition()),
+      self:muzzleVector(spread or 0, nil, self.muzzlePosition and self:muzzlePosition()),
       addOffset or self.muzzleProjectileOffset
     )
   end
@@ -1369,6 +1369,8 @@ function Project45GunFire:recoil(down, mult, amount, recoverDelay)
   mult = down and -mult or mult
   local crouchMult = mcontroller.crouching() and self.recoilCrouchMult or 1
   mult = mult * crouchMult
+  local wallMult = self:isAgainstWall(self.recoilWallOffset) and self.recoilWallMult or 1
+  mult = mult * wallMult
 
   -- recoil (max defaults to 7.5 degrees, amount defaults to 1)
   if self.projectileKind ~= "summoned" then
@@ -1913,6 +1915,23 @@ end
 
 -- SECTION: EVAL FUNCTIONS
 
+-- Checks if the weapon is "against a wall" (i.e. uses a wall for stability)
+-- based on rect collision from the base to the specified offset
+function Project45GunFire:isAgainstWall(offset)
+  local base = vec2.add(activeItem.handPosition(), mcontroller.position())
+  local corner = vec2.add(self:muzzlePosition(), vec2.rotate(self:muzzleVector(), -math.pi/2))
+  corner = vec2.add(corner, offset or {-1, 0})
+  world.debugLine(base, corner, "red")
+  local result = world.rectTileCollision({
+    math.min(base[1], corner[1]),
+    math.min(base[2], corner[2]),
+    math.max(base[1], corner[1]),
+    math.max(base[2], corner[2]),
+  })
+  sb.logInfo(sb.printJson(result))
+  return result
+end
+
 function Project45GunFire:rerollProjectileIndex(projectileTypeListLength)
   storage.savedProjectileIndex = self.projectileFireSettings and self.projectileFireSettings.sequential and
   (storage.savedProjectileIndex % (projectileTypeListLength or #self.projectileType)) + 1
@@ -1975,6 +1994,10 @@ function Project45GunFire:evalProjectileKind()
 
   self.muzzleFlashColor = config.getParameter("muzzleFlashColor", {255, 255, 200})
   self.updateProjectileStack = function() end
+
+  self.firePosition = self.muzzlePosition
+  self.muzzleVector = self.aimVector
+  
   if self.projectileKind == "hitscan" then
     self.hitscanParameters.hitscanBrightness = util.clamp(self.hitscanParameters.hitscanBrightness or 0, 0, 1)
     self.fireProjectile = self.hitscanParameters.chain and hitscanLib.fireChain or hitscanLib.fireHitscan
@@ -1995,12 +2018,9 @@ function Project45GunFire:evalProjectileKind()
   elseif self.projectileKind == "summoned" then
     
     self.summonArea = hitscanLib.summonArea
-    self.muzzlePosition = self.firePosition
     self.firePosition = hitscanLib.summonPosition
     GunFire.firePosition = hitscanLib.summonPosition
     AltFireAttack.firePosition = hitscanLib.summonPosition
-
-    self.muzzleVector = self.aimVector
     self.aimVector = hitscanLib.summonVector
     
     self.muzzleObstructed = function()
@@ -2101,8 +2121,9 @@ function Project45GunFire:canTrigger()
   return (self.semi and not self.triggered) or not self.semi
 end
 
--- Returns the muzzle of the gun
-function Project45GunFire:firePosition(altOverride, addOffset)
+-- Returns the point where the projectile should spawn
+-- This variant of the function returns the position of the muzzle
+function Project45GunFire:muzzlePosition(altOverride, addOffset)
   local muzzleOffset = self.weapon.muzzleOffset
   if self.abilitySlot == "alt" or altOverride then
     muzzleOffset = config.getParameter("altMuzzleOffset", self.weapon.muzzleOffset)
