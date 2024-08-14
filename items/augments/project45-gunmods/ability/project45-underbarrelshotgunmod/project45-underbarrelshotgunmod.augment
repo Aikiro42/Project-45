@@ -20,11 +20,6 @@
     "category": "universal",
     "slot": "underbarrel",
     "ability": {
-      "animationCustom": {
-        "sounds": {
-          "altFire" : [ "/sfx/project45neosfx/fire/fire-shotgun1.ogg" ]
-        }
-      },
       "altAbilityType": "project45underbarrelgun",
       "altAbility": {
         "name": "Modular Shotgun",
@@ -38,6 +33,13 @@
       },
       "overrideTwoHanded": true,
       "twoHanded": true
+    },
+    "gun": {
+      "animationCustom": {
+        "sounds": {
+          "altFire" : [ "/sfx/project45neosfx/fire/fire-shotgun1.ogg" ]
+        }
+      }
     },
     "stat": {
       "recoverDelay": {

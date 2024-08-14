@@ -93,7 +93,7 @@
     Must be equal to the string used to distinguish front frames from back frames
     e.g. gun.png:idle.1.behind
     */
-    // "backHandFrame": ".behind",
+    // "backHandFrame": ".back",
     
     // "handGrip": "inside",
 

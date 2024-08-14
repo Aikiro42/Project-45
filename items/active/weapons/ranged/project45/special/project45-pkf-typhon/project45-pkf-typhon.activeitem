@@ -5,7 +5,7 @@
   "rarity" : "Essential",
   "isUnique": true,
   "description" : "A large plasma machine gun.",
-  "lore": "^#a8e6e2;Knightfall^reset; operatives were able to get their hands on Project 45 standard schematics and was able to create this beauty.",
+  "lore": "Knightfall operatives were able to get their hands on Project 45 standard schematics and was able to create this beauty.",
   "shortdescription" : "^#fdd14d;Typhon P45^reset;",
   "gunArchetype": "machineGun",
   "tooltipKind" : "project45gun",

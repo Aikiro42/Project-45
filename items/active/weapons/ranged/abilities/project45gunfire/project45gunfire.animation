@@ -648,7 +648,7 @@
       "offsetRegion" : [0, 0, 0, 0],
       "emissionRate" : 1,
       "particles" : [ 
-        {"particle": "project45bulletcasesmall"}
+        {"particle": "project45bulletcasesmallback"}
       ]
     },
 
