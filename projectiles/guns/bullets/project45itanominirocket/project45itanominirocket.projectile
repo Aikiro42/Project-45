@@ -9,34 +9,11 @@
   "fullbright" : true,
   "pointLight" : true,
   "piercing": true,
-  "periodicActions" : [
-    {
-      "time" : 0,
-      "repeat" : true,
-      "action" : "particle",
-      "rotate" : true,
-      
-      "specification" : {
-        "type" : "streak",
-        "layer" : "back",
-        "fullbright" : true,
-        "destructionAction" : "shrink",
-        "size" : 1,
-        "color" : [210, 156, 231, 255],
-        "collidesForeground" : false,
-        "length" : 13.5,
-        "position" : [0, 0],
-        "timeToLive" : 0,
-        "destructionTime" : 0.2,
-        "initialVelocity" : [0.001, 0],
-        "variance" : {
-          "length": 0
-        }
-      }
+  "tracerParameters": {
+    "color": [210, 156, 231],
+    "fullbright": true
+  },
 
-    }
-    //*/
-  ],
   "actionOnReap" : [
     {
       "action": "config",
@@ -55,5 +32,8 @@
   "searchRadius" : 50,
   "persistentAudio" : "/sfx/gun/rocket_fly.ogg",
 
-  "scripts" : [ "/projectiles/guns/bullets/project45itanominirocket/project45itanominirocket.lua" ]
+  "scripts" : [
+    "/projectiles/guns/bullets/project45itanominirocket/project45itanominirocket.lua",
+    "/projectiles/scripts/project45/project45tracer.lua"
+  ]
 }
