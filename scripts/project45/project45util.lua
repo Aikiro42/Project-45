@@ -312,3 +312,15 @@ function project45util.deepCompare(tbl1, tbl2)
 
 	return false
 end
+
+function project45util.printObject(x, tab)
+  tab = tab or ""
+  for key, val in pairs(x) do
+    if type(val) == "table" then
+      sb.logInfo(tab .. key .. " : ")
+      project45util.printObject(val, tab .. "  ")
+    else
+      sb.logInfo(tab .. key .. " : " .. sb.print(val))
+    end
+  end
+end
