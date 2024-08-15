@@ -1,0 +1,27 @@
+[
+  {
+    "op": "add",
+    "path": "/project45projectile",
+    "value":  {
+      
+      // laser
+      "gravityMultiplier" : 0.0,
+      "bounceFactor" : 1.0,
+      "stopOnFirstBounce" : true,
+      "maxMovementPerStep" : 0.4,
+      "ignorePlatformCollision" : true,
+      "groundFriction" : 0,
+      "airFriction" : 0,
+      "liquidFriction" : 0.0,
+      "speedLimit" : null,
+      "maximumCorrection" : 0.75,
+  
+
+      // sticky
+      "mass" : 1.0,
+      "stickyCollision" : true,
+      "stickyForce" : 20.0,
+      "collisionPoly" : [ [-0.1, -0.1], [0.1, -0.1], [0.1, 0.1], [-0.1, 0.1] ]
+    }
+  }
+]

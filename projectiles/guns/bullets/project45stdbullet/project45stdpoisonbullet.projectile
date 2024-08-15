@@ -26,32 +26,11 @@
   },
 
   "bounces" : 0,
-
-  "periodicActions" : [
-    {
-      "time" : 0.01,
-      "repeat" : true,
-      "action" : "particle",
-      "rotate" : true,
-      
-      "specification" : {
-        "type" : "streak",
-        "layer" : "back",
-        "fullbright" : true,
-        "destructionAction" : "shrink",
-        "size" : 1,
-        "color" : [178, 232, 157, 255],
-        "collidesForeground" : false,
-        "length" : 40,
-        "position" : [0, 0],
-        "timeToLive" : 0.01,
-        "destructionTime" : 0.2,
-        "initialVelocity" : [0.5, 0],
-        "variance" : {"length": 0}
-      }
-
-    }
-  ],
+  
+  "tracerParameters": {
+    "color": [178, 232, 157],
+    "fullbright": true
+  },
 
   "actionOnReap": [
     { 
