@@ -8,34 +8,10 @@
   "lightColor" : [50, 0, 0],
   "fullbright" : true,
   "pointLight" : true,
-  "periodicActions" : [
-    {
-      "time" : 0,
-      "repeat" : true,
-      "action" : "particle",
-      "rotate" : true,
-      
-      "specification" : {
-        "type" : "streak",
-        "layer" : "back",
-        "fullbright" : true,
-        "destructionAction" : "shrink",
-        "size" : 1,
-        "color" : [255, 0, 0, 255],
-        "collidesForeground" : false,
-        "length" : 13.5,
-        "position" : [0, 0],
-        "timeToLive" : 0,
-        "destructionTime" : 0.2,
-        "initialVelocity" : [0.001, 0],
-        "variance" : {
-          "length": 0
-        }
-      }
-
-    }
-    //*/
-  ],
+  "tracerParameters": {
+    "color": [255,0,0],
+    "fullbright": true
+  },
   
   "entityHitActionChance": 0.5,
   "entityHitActions": [
@@ -93,5 +69,8 @@
   "physics" : "default",
   "damageType": "damage",
   // "damageTeam": {"type": "indiscriminate"},
-  "scripts" : [ "/projectiles/guns/bullets/project45healingbullet/project45healingbullet.lua" ]
+  "scripts" : [
+    "/projectiles/guns/bullets/project45healingbullet/project45healingbullet.lua",
+    "/projectiles/scripts/project45/project45tracer.lua"
+  ]
 }
