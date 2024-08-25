@@ -1,7 +1,7 @@
 {
   "aikiro42-project45": {
     "name": "Project 45",
-    "bannerName" : "Who are you to deny your own nature?",
+    "bannerName" : "Project 45 Keybinds",
     "binds": {
       "project45-reload-keybind": {
         "default": [
@@ -11,7 +11,7 @@
             "mods": []
           } 
         ],
-        "name": "Reload Project 45 Weapon"
+        "name": "Reload Weapon"
       }
     }
   }
