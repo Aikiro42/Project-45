@@ -398,8 +398,6 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
   -- update timers
   self.cooldownTimer = math.max(0, self.cooldownTimer - self.dt)
 
-  -- world.debugPoint(self:firePosition(true), "cyan")
-
   -- update relevant stuff
   self:renderModPositionDebug()
   self:updateUI()
@@ -2094,7 +2092,8 @@ end
 function Project45GunFire:reloadTriggered()
   local reloadSignal = storage.reloadSignal
   storage.reloadSignal = false
-  return reloadSignal
+  local reloadKeyHeld = input.bindDown and input.bindDown("aikiro42-project45", "project45-reload-keybind")
+  return reloadSignal or reloadKeyHeld
 end
 
 function Project45GunFire:canTrigger()

@@ -103,7 +103,7 @@ function drawStreakImage(origin, destination, particleParameters, primaryParamet
 end
 
 function drawStaggeredStreakImage(origin, destination, particleParameters)
-  sb.logInfo(sb.printJson(destination))
+  -- sb.logInfo(sb.printJson(destination))
   local length = world.magnitude(destination, origin)
   local vector = vec2.norm(world.distance(destination, origin))
   local segments = math.max(1, math.floor(length/5))

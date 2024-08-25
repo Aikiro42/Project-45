@@ -250,8 +250,7 @@ end
 
 function hitscanLib:fireChain()
   -- TODO: make chainScan arguments dynamic
-  
-  sb.logInfo("hahahahaha")
+
   local punchThrough = self.hitscanParameters.punchThrough or 0
   local ignoresTerrain = self.hitscanParameters.ignoresTerrain
 

@@ -313,14 +313,16 @@ function project45util.deepCompare(tbl1, tbl2)
 	return false
 end
 
-function project45util.printObject(x, tab)
+function project45util.printObject(x, tab, depth)
+  depth = depth or 0
+  if depth > 5 then return end
   tab = tab or ""
   for key, val in pairs(x) do
     if type(val) == "table" then
-      sb.logInfo(tab .. key .. " : ")
-      project45util.printObject(val, tab .. "  ")
+      sb.logInfo(project45util.sanitize(tab .. key .. " : "))
+      project45util.printObject(val, tab .. "  ", depth + 1)
     else
-      sb.logInfo(tab .. key .. " : " .. sb.print(val))
+      sb.logInfo(project45util.sanitize(tab .. key .. " : " .. sb.print(val)))
     end
   end
 end

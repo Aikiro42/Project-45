@@ -267,7 +267,7 @@ function build(directory, config, parameters, level, seed)
   -- gun offsets
   if config.baseOffset then
 
-    local hiddenParts = set.new(deepConfigParameter({}, "project45GunModInfo", "hiddenSlots"))
+    local hiddenParts = set.new(deepConfigParameter({nil}, "project45GunModInfo", "hiddenSlots"))
     
     for modSlot, _ in pairs(hiddenParts) do
 
@@ -277,6 +277,7 @@ function build(directory, config, parameters, level, seed)
       construct(parameters, "animationCustom", "animatedParts", "parts", modSlot .. "Fullbright", "properties")
       parameters.animationCustom.animatedParts.parts[modSlot .. "Fullbright"].properties.image = ""
 
+      -- needed to reconfigure muzzle offset
       parameters[modSlot .. "Offset"] = vec2.add(config[modSlot .. "Offset"] or {0, 0}, config.baseOffset or {0, 0})
 
     end

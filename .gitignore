@@ -1,5 +1,6 @@
 scripts/vec2.lua
 .vscode
+configs/project45/project45_general.config.patch
 items/buildscripts/abilities.lua
 items/active/weapons/ranged/gunfire.lua
 items/active/weapons/ranged/beamfire.lua
