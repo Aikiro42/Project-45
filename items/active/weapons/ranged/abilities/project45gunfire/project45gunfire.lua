@@ -2092,7 +2092,10 @@ end
 function Project45GunFire:reloadTriggered()
   local reloadSignal = storage.reloadSignal
   storage.reloadSignal = false
-  local reloadKeyHeld = input.bindDown and input.bindDown("aikiro42-project45", "project45-reload-keybind")
+  local reloadKeyHeld = false
+  if input then
+    local reloadKeyHeld = input.bindDown("aikiro42-project45", "project45-reload-keybind")
+  end
   return reloadSignal or reloadKeyHeld
 end
 
