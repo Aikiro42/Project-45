@@ -57,6 +57,11 @@ function Project45GunFire:init()
   self.performanceMode = (player and player.getProperty or status.statusProperty)("project45_performanceMode", self.performanceMode)
   self.weapon.reloadFlashLasers = (player and player.getProperty or status.statusProperty)("project45_reloadFlashLasers", false)
   self.weapon.armFrameAnimations = (player and player.getProperty or status.statusProperty)("project45_armFrameAnimations", not self.performanceMode)
+  
+  local powerMultFactor = (player and player.getProperty or status.statusProperty)("project45_damageScaling", 0)
+  self.powerMultiplier = 1 + powerMultFactor * (activeItem.ownerPowerMultiplier() - 1)
+  
+  
   self.hideMuzzleSmoke = self.performanceMode or self.hideMuzzleSmoke
   self.weapon.startRecoil = 0
 
@@ -2083,7 +2088,7 @@ function Project45GunFire:damagePerShot(noDLM)
   * self.weapon.stockAmmoDamageMult
   / self.projectileCount
 
-  return finalDmg
+  return finalDmg * self.powerMultiplier
 end
 
 -- Returns whether the left click is held
