@@ -20,6 +20,9 @@ Passive = {}
 
 function Project45GunFire:init()
 
+  input = input or {}
+  input.bindDown = input.bindDown or function() end
+  
   if self.passiveScript then
     require(self.passiveScript)
   end
@@ -2092,10 +2095,7 @@ end
 function Project45GunFire:reloadTriggered()
   local reloadSignal = storage.reloadSignal
   storage.reloadSignal = false
-  local reloadKeyHeld = false
-  if input then
-    local reloadKeyHeld = input.bindDown("aikiro42-project45", "project45-reload-keybind")
-  end
+  local reloadKeyHeld = input.bindDown("aikiro42-project45", "project45-reload-keybind")
   return reloadSignal or reloadKeyHeld
 end
 
