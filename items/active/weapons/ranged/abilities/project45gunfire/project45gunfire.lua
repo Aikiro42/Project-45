@@ -15,6 +15,8 @@ local ENERGY, AMMO = 0, 1  -- resource consumption modes
 local dps_debug = false
 local rng = sb.makeRandomSource()
 
+local generalConfig = root.assetJson("/configs/project45/project45_general.config")
+
 Project45GunFire = WeaponAbility:new()
 Passive = {}
 
@@ -57,11 +59,18 @@ function Project45GunFire:init()
   self.performanceMode = (player and player.getProperty or status.statusProperty)("project45_performanceMode", self.performanceMode)
   self.weapon.reloadFlashLasers = (player and player.getProperty or status.statusProperty)("project45_reloadFlashLasers", false)
   self.weapon.armFrameAnimations = (player and player.getProperty or status.statusProperty)("project45_armFrameAnimations", not self.performanceMode)
-  
+
+  -- calculate power multiplier
   local powerMultFactor = (player and player.getProperty or status.statusProperty)("project45_damageScaling", 0)
   self.powerMultiplier = 1 + powerMultFactor * (activeItem.ownerPowerMultiplier() - 1)
   
-  
+  -- update damage per shot in tooltip
+  local tooltipFields = config.getParameter("tooltipFields", {})
+  local loDamage = self._tooltipData.loDamage * self.powerMultiplier
+  local hiDamage = self._tooltipData.hiDamage * self.powerMultiplier
+  tooltipFields.damagePerShotLabel = project45util.colorText("#FF9000", util.round(loDamage, 1) .. " - " .. util.round(hiDamage, 1))
+  activeItem.setInstanceValue("tooltipFields", tooltipFields)
+
   self.hideMuzzleSmoke = self.performanceMode or self.hideMuzzleSmoke
   self.weapon.startRecoil = 0
 
@@ -515,8 +524,6 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
 end
 
 function Project45GunFire:initUI()
-
-  local generalConfig = root.assetJson("/configs/project45/project45_general.config")
 
   local userSettings = {
     "renderBarsAtCursor",

@@ -595,9 +595,11 @@ function build(directory, config, parameters, level, seed)
         * math.max(table.unpack(primaryAbility("reloadRatingDamageMults", {0,0,0,0})))
         * (overchargeTime > 0 and perfectChargeDamageMult or 1)
 
-
+      config.primaryAbility._tooltipData = {}
+      config.primaryAbility._tooltipData.loDamage = loDamage
+      config.primaryAbility._tooltipData.hiDamage = hiDamage
       config.tooltipFields.damagePerShotLabel = project45util.colorText("#FF9000", util.round(loDamage, 1) .. " - " .. util.round(hiDamage, 1))
-      
+
       if primaryAbility("debug") then
         config.tooltipFields.damagePerShotLabel = project45util.colorText("#FF9000", primaryAbility("baseDamage", 0))
       end
