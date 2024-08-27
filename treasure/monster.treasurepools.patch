@@ -1,0 +1,7 @@
+[
+  {
+    "op": "add",
+    "path": "/basicMonsterTreasure/0/1/pool/-",
+    "value": {"weight" : 0.64, "pool" : "project45-stats-r"}
+  }
+]
