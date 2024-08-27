@@ -15,6 +15,8 @@ local ENERGY, AMMO = 0, 1  -- resource consumption modes
 local dps_debug = false
 local rng = sb.makeRandomSource()
 
+local generalConfig = root.assetJson("/configs/project45/project45_general.config")
+
 Project45GunFire = WeaponAbility:new()
 Passive = {}
 
@@ -58,7 +60,7 @@ function Project45GunFire:init()
   self.weapon.reloadFlashLasers = (player and player.getProperty or status.statusProperty)("project45_reloadFlashLasers", false)
   self.weapon.armFrameAnimations = (player and player.getProperty or status.statusProperty)("project45_armFrameAnimations", not self.performanceMode)
   
-  local powerMultFactor = (player and player.getProperty or status.statusProperty)("project45_damageScaling", 0)
+  local powerMultFactor = (player and player.getProperty or status.statusProperty)("project45_damageScaling", generalConfig.damageScaling or 0)
   self.powerMultiplier = 1 + powerMultFactor * (activeItem.ownerPowerMultiplier() - 1)
   
   
@@ -515,8 +517,6 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
 end
 
 function Project45GunFire:initUI()
-
-  local generalConfig = root.assetJson("/configs/project45/project45_general.config")
 
   local userSettings = {
     "renderBarsAtCursor",
