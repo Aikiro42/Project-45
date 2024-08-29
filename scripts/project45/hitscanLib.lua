@@ -594,6 +594,22 @@ function hitscanLib:fireHitscan(projectileType)
     for i, a in ipairs(self.hitscanParameters.hitscanActionOnHit) do
       table.insert(hitscanActionsOnReap, a)
     end
+
+    if self.hitscanParameters.tileDamageConfig then
+      local tileDamageConfig = self.hitscanParameters.tileDamageConfig
+      tileDamageConfig.action = "explosion"
+      table.insert(hitscanActionsOnReap,
+        sb.jsonMerge(
+          {
+            foregroundRadius=self.hitscanParameters.hitscanWidth/2,
+            backgroundRadius=self.hitscanParameters.hitscanWidth/4,
+            explosiveDamageAmount=finalDamage,
+            delaySteps=0
+          },
+          self.hitscanParameters.tileDamageConfig
+        )
+      )
+    end
     
     for _, hitscanInfo in ipairs(hitscanInfos) do
       world.spawnProjectile(
@@ -791,6 +807,22 @@ function hitscanLib:fireBeam()
           }
         }
       }
+
+      if self.beamParameters.tileDamageConfig then
+        local tileDamageConfig = self.beamParameters.tileDamageConfig
+        tileDamageConfig.action = "explosion"
+        table.insert(hitscanActionsOnReap,
+          sb.jsonMerge(
+            {
+              foregroundRadius=self.beamParameters.beamWidth/2,
+              backgroundRadius=self.beamParameters.beamWidth/4,
+              explosiveDamageAmount=beamDamageConfig.baseDamage,
+              delaySteps=5
+            },
+            self.beamParameters.tileDamageConfig
+          )
+        )
+      end
   
       world.spawnProjectile(
         "invisibleprojectile",
