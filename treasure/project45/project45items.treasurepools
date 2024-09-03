@@ -180,7 +180,8 @@
     [0, {
       "pool" : [
         // UNIQUE
-        {"weight" : 1, "item" : "project45-godmod"}
+        {"weight" : 0.9, "item" : "project45-godmod"},
+        {"weight" : 0.1, "item" : "project45-adminmod"}
       ],
       "poolRounds" : 1,
       "allowDuplication" : false

@@ -22,6 +22,7 @@
     "pureStatMod": true,
     
     "stat": {
+      "stackLimit": 1,
       "baseDamage": {
         "multiplicative": 32
       },

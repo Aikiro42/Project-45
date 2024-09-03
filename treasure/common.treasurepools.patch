@@ -1,7 +1,9 @@
 [
   {
     "op": "add",
-    "path": "/basicTreasure/0/1/pool/-",
-    "value": {"weight" : 0.64, "pool" : "project45-stats-r"}
+    "path": "/basicTreasure/0/1/fill",
+    "value": [
+      {"weight" : 1, "pool" : "project45-stat-drop"}
+    ]
   }
 ]
