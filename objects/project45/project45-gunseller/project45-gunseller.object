@@ -1,0 +1,54 @@
+{
+  "objectName" : "project45-gunseller",
+  "rarity" : "Essential",
+  "description" : "Contribute to Project 45 by providing materials and prototypes. ^#d29ce7;Sells items for full price.^reset;",
+  "shortdescription" : "^#FF9000;Reimburser^reset;",
+  "race" : "generic",
+  "category" : "shippingContainer",
+  "price" : 5000,
+  "objectType" : "container",
+  "printable" : false,
+
+  "apexDescription" : "I should submit some samples and weapon performance reports.",
+  "avianDescription" : "I wonder if the relics I own hold any value...",
+  "floranDescription" : "Floran put sssstuff in, sssell... Get money for food.",
+  "glitchDescription" : "Curious. Would my mechaphysiological modules be reimbursed?",
+  "humanDescription" : "\"Sells items for full price\"? What a deal!",
+  "hylotlDescription" : "It seems Letheia's outsourcing materials and data from basically anybody nowadays.",
+  "novakidDescription" : "Oh hey, a golden trash can.",
+
+
+  "scripts": ["/objects/scripts/project45-gunseller.lua"],
+  "scriptDelta": 5,
+
+  "openSounds" : [ "/sfx/objects/miningchest_open.ogg" ],
+  "closeSounds" : [ "/sfx/objects/miningchest_close.ogg" ],
+  "slotCount" : 40,
+  "uiConfig" : "/interface/scripted/project45-gunseller/project45-gunseller.config",
+  "frameCooldown" : 16,
+  "autoCloseCooldown" : 3600,
+
+  "inventoryIcon" : "project45-gunsellericon.png",
+  "orientations" : [
+    {
+      "imageLayers" : [
+        { "image" : "project45-gunseller.png:default.<key>"}
+      ],
+      "direction" : "left",
+      "imagePosition" : [-8, 0],
+      "spaces" : [[-1, 0], [0, 0], [-1, 1], [0, 1], [-1, 2], [0, 2]],
+      "anchors" : [ "bottom" ]
+    },
+    {
+      "imageLayers" : [
+        { "image" : "project45-gunseller.png:default.<key>"}
+      ],
+      "direction" : "right",
+      "flipImages" : true,
+      "imagePosition" : [-8, 0],
+      "spaces" : [[-1, 0], [0, 0], [-1, 1], [0, 1], [-1, 2], [0, 2]],
+      "anchors" : [ "bottom" ]
+    }
+  ]
+
+}

@@ -1,0 +1,16 @@
+{
+  "input" : [
+    { "item" : "money", "count" : 45 },
+    { "item" : "logblock", "count" : 2 },
+    { "item" : "corefragmentore", "count" : 1 },
+    { "item" : "ironore", "count" : 4 },
+    { "item" : "coalore", "count" : 4 },
+    { "item" : "sand2", "count" : 2 }
+  ],
+  "output" : {
+    "item" : "project45-neo-protector",
+    "count" : 1
+  },
+  "duration" : 1,
+  "groups" : [ "plain", "objects", "all", "tools" ]
+}

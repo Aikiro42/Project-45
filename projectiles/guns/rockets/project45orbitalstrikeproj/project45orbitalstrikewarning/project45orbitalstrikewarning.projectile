@@ -1,0 +1,30 @@
+{
+  "projectileName" : "project45orbitalstrikewarning",
+  "image" : "project45orbitalstrikewarning.png",
+  "frameNumber" : 1,
+  "speed" : 0,
+  "timeToLive": 3,
+  "damagePoly" : [ [-1, 1], [-1, -1], [1, -1], [1, 1]],
+  "animationLoops" : false,
+  "flippable" : true,
+  "damageTeam" : { "type" : "indiscriminate" },
+  "damageKind" : "default",
+  "movementSettings": {
+    "collisionEnabled": false
+  },
+  "ignoreTerrain": true,
+  "periodicActions": [
+    {
+      "action" : "particle",
+      "specification" : "project45warning",
+      "time" : 0,
+      "repeat" : false
+    },
+    {
+      "action" : "particle",
+      "specification" : "project45warning",
+      "time" : 1,
+      "repeat" : true
+    }
+  ]
+}

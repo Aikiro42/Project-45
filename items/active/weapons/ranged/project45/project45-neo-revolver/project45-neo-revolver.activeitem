@@ -3,7 +3,8 @@
   "price" : 5000,
   "maxStack" : 1,
   "rarity" : "Legendary",
-  "description" : "A big iron. Packs quite a punch, especially against red things.",
+  "description" : "A hi-power revolver.",
+  "lore": "Packs quite a punch. It is oddly effective against things that are even remotely colored red.",
   "shortdescription" : "Revolver",
   "tooltipKind" : "project45gun",
   "gunArchetype": "revolver",
@@ -21,12 +22,14 @@
     "chargeFullbright": "",
     "magazine": "",
     "magazineFullbright": "",
-    "muzzleFlash": "/items/active/weapons/ranged/muzzleflash.png"
+    "muzzleFlash": "/items/active/weapons/ranged/project45-muzzleflash.png"
   },
 
   "project45GunModInfo": {
     "category": "ballistic",
-    "upgradeCapacity": 5,
+    "compatibleMods": [
+      "project45-speedloadermod"
+    ],
     "allowsConversion": [
       "hitscan",
       "beam",
@@ -34,7 +37,7 @@
     ],
     "acceptsModSlot": [
       "stock",
-      
+      "magazine",
       "material"
     ],
     "acceptsAmmoArchetype": [

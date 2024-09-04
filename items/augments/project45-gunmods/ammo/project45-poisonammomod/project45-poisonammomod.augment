@@ -15,19 +15,22 @@
   "technicalInfo": "Fires projectiles that poisons the enemy while dealing poison damage.",
   "shortdescription" : "Mercury-tipped Bullets",
 
-  "conversion": "projectile",
   "augment":{
     "modName": "Mercury-tipped Bullets",
     "category": "ballistic",
-    "archetype": "bullet",
+    "conversion": "projectile",
 
-    "projectileType": "project45stdpoisonbullet"
+    "ammo": {
+      "archetype": "bullet",
+      "elementalType": "poison",
+      "projectileType": "project45stdpoisonbullet"
+    }
     
   },
 
 
    
 
-  "scripts" : [ "/scripts/augments/project45-gunmod/ammomod.lua" ],
+  "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
   "builder": "/items/buildscripts/buildproject45mod.lua"
 }

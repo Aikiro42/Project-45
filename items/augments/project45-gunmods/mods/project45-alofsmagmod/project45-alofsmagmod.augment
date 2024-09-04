@@ -26,30 +26,31 @@
     "exclusiveCompatibility": true,
     "category": "ballistic",
     "slot": "magazine",
-    "primaryAbility": {
-      "manualFeed": {
-        "operation": "replace",
-        "value": true
-      },
+    "gun": {
+      "primaryAbility": {
+        "manualFeed": {
+          "operation": "replace",
+          "value": true
+        },
+        "ejectCasingsWithMag": {
+          "operation": "replace",
+          "value": false
+        }
+      }
+    },
+    "stat": {
       "cockTime": {
-        "operation": "replace",
-        "value": 0.5
-      },
-      "ejectCasingsWithMag": {
-        "operation": "replace",
-        "value": false
+        "rebase": 0.5
       },
       "maxAmmo": {
-        "operation": "add",
-        "value": 4
+        "additive": 4
       },
       "bulletsPerReload": {
-        "operation": "replace",
-        "value": 1
+        "rebase": 1
       }
     }
   },
 
-  "scripts" : [ "/scripts/augments/project45-gunmod/gunmod.lua" ],
+  "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
   "builder": "/items/buildscripts/buildproject45mod.lua"
 }

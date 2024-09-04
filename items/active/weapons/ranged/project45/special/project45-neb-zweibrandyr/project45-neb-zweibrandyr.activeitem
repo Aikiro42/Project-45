@@ -4,7 +4,8 @@
   "maxStack" : 1,
   "rarity" : "Essential",
   "isUnique": true,
-  "description" : "A machine gun made out of ^#f4988c;raiizy^reset;-^#d29ce7;nebulox^reset; alloy.",
+  "description" : "A magazine-fed machine gun.",
+  "lore": "Fires bullets made out of ^#f4988c;raiizy^reset;-^#d29ce7;nebulox^reset; alloy.",
   "shortdescription" : "^#fdd14d;Zweibrandyr^reset;",
   "gunArchetype": "machineGun",
   "tooltipKind" : "project45gun",
@@ -17,6 +18,7 @@
 
   "project45GunModInfo": {
     "category": "ballistic",
+    "uniqueType": "special",
     "upgradeCapacity": 10,
     "acceptsAmmoArchetype": [
       "bullet"
@@ -34,7 +36,7 @@
     "chargeFullbright": "",
     "magazine": "project45-neb-zweibrandyr-mag.png",
     "magazineFullbright": "",
-    "muzzleFlash": "/items/active/weapons/ranged/muzzleflash.png"
+    "muzzleFlash": "/items/active/weapons/ranged/project45-muzzleflash.png"
   },
 
   "animationCustom": {

@@ -2,20 +2,20 @@
     "kind": "project45dashember1",
     "definition": {
         "type" : "ember",
-        "size" : 3.0,
+        "size" : 1.0,
         "color" : [210,156,231, 255],
-        "destructionAction" : "fade",
+        "destructionAction" : "shrink",
         "destructionTime" : 0.2,
         "initialVelocity" : [0, 0],
-        "finalVelocity" : [0, 0],
+        "finalVelocity" : [0, -50],
         "fullbright": true,
-        "approach" : [10, 10],
+        "approach" : [10, 50],
         "timeToLive" : 0.2,
         "layer" : "back",
         "variance" : {
-        "position" : [3, 3],
-        "initialVelocity" : [10, 10],
-        "size" : 2
+            "initialVelocity" : [10, 10],
+            "size" : 2,
+            "position": [1, 1]
         }
     }
 }

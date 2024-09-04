@@ -4,6 +4,7 @@
   "maxStack" : 1,
   "rarity" : "Essential",
   "description" : "An SMG that fires projectiles that home in on enemies.",
+  "lore": "A group of Miniknog soldiers felt too lazy to aim, and pooled their brainpower together to develop this.",
   "shortdescription" : "Smart Gun",
   "tooltipKind" : "project45gun",
   "gunArchetype": "smg",
@@ -53,6 +54,14 @@
         "particles": [
           {"particle": "project45smartgunmag"}
         ]
+      },
+      "muzzleFlash": {
+        "particles": [
+          {"particle": "project45muzzle"},
+          {"particle": "project45muzzle"},
+          {"particle": "project45muzzle"},
+          {"particle": "project45flashbang-purple"}  
+        ]
       }
     },
 
@@ -65,7 +74,7 @@
 
   "project45GunModInfo":{
     "category": "ballistic",
-    "upgradeCapacity": 7,
+    
     "acceptsModSlot": [
       "rail",
       "sights",

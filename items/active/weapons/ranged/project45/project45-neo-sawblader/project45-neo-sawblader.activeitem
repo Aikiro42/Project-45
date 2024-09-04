@@ -1,0 +1,204 @@
+{
+  "itemName" : "project45-neo-sawblader",
+  "price" : 10000,
+  "maxStack" : 1,
+  "rarity" : "Essential",
+  "description" : "An prototype railgun redesigned to fire sharp disks.",
+  "lore": "Someone took the specification of \"projectile spin\" a little too literally.",
+  "shortdescription" : "Sawblader",
+  "gunArchetype": "antiMateriel",
+  "tooltipKind" : "project45gun",
+  "category" : "sniperRifle",
+  "twoHanded" : true,
+  "itemTags" : ["weapon","ranged","sniperrifle"],
+  "level" : 1,
+  "muzzleFlashColor": [255, 255, 200],
+  "inventoryIcon" : "project45-neo-sawblader-icon.png",
+  "animationParts" : {
+    "middle" : "project45-neo-sawblader.png",
+    "middleFullbright" : "project45-neo-sawblader-fullbright.png",
+    "charge": "",
+    "chargeFullbright": "project45-neo-sawblader-charge-fullbright.png",
+    "magazine": "project45-neo-sawblader-mag.png",
+    "magazineFullbright": ""
+  },
+
+  "project45GunModInfo": {
+    "category": "ballistic",
+    "uniqueType": "experimental",
+    "allowsConversion": [
+      "projectile"
+    ],
+    "acceptsModSlot": [
+      "sights"
+    ],
+    "acceptsAmmoArchetype": [
+      "sawblade"
+    ]
+  },
+
+  "animationCustom": {
+    "particleEmitters": {
+      "magazine": {
+        "particles": [
+          {"particle": "project45sawbladermag"}
+        ]
+      },
+      "ejectionPort": {
+        "particles": []
+      },
+      "muzzleFlash": {
+        "particles": [
+          {"particle": "project45muzzle"},
+          {"particle": "project45muzzle"},
+          {"particle": "project45muzzle"}  
+        ]
+      }
+    },
+
+    "sounds": {
+      "chargeWhine" : ["/sfx/project45neosfx/chargewhine/chargewhine-02.ogg"],
+      "chargeDrone" : ["/sfx/melee/mech_drill_active1.ogg"],  
+      "fire" : ["/sfx/project45neosfx/fire/fire-energy5.ogg"],
+      "ejectMag": [ "/sfx/project45neosfx/ejectmag/ejectmag-heavy1.ogg"],
+      "reloadEnd": ["/sfx/project45neosfx/loadmag/loadmag-heavy2.ogg"]
+    },
+    "animatedParts": {
+      "parts":{
+        "chargeFullbright": {"properties": {
+          "zLevel": 2
+        }},
+        "middleFullbright": {"properties": {
+          "zLevel": 3
+        }}
+      },
+      "stateTypes": {
+        "charge":{
+          "states":{
+            "charging":{
+              "frames": 4
+            }
+          }
+        },
+        "gun": {
+          "states":{
+            "ejecting": {
+              "frames": 2
+            }
+          }
+        }
+      }
+    }
+  },
+
+  "baseOffset" : [1, -0.375],
+  "muzzleOffset" : [0, 0.375],
+  "chargeSmokeOffsetRegion": [0.5, 0, 0.5, 0],
+  "ejectionPortOffset": [-0.25, 0.5],
+  "magazineOffset": [0, -0.5],
+
+  "debugPointColors": {
+    "rail": "red",
+    "sights": "orange",
+    "underbarrel": "green"
+  },
+
+  "sightsOffset": [-0.45, 1],
+  "railOffset": [0.5, 0.625],
+
+  "scripts" : ["/items/active/weapons/ranged/project45gunneo.lua"],
+    
+  "primaryAbilityType": "project45gunfire",
+  "primaryAbility": {
+    "baseDamageMultiplier": 0.5,
+    "reloadCost": 75,
+    "critChance": 0.35,
+    "critDamageMult": 2,
+    "maxAmmo": 5,
+    "bulletsPerReload": 5,
+    "multishot": 1.1,
+    
+    "semi": true,
+    "manualFeed": false,
+    "slamFire": false,
+    "heavyWeapon": true,
+    "resetChargeOnFire": true,
+    "fireBeforeOvercharge": false,
+    "autoFireOnFullCharge": false,
+    "chargeWhenObstructed": true,
+
+    "projectileType": "project45sawblade",
+
+    "hideMuzzleSmoke": false,
+    "chargeSmoke": true,
+    "maxChargeVolume": 1,
+    "maxChargePitch": 3,
+    "chargePitchMult": 1,
+    "cycleTime": 0.25,
+    "chargeFrames": 4,
+    "chargeTime": 0.5,
+    "overchargeTime": 0.5,
+    "chargeDamageMult": 2.5,
+    
+    "inaccuracy": 0.05, // affects arm movement as the trigger is pulled
+    "recoilDelay": 0.25,
+    "recoilAmount": 1, // amount of recoil per shot, in degrees; arm and weapon will rotate by half of this
+    "recoilMaxDeg": 10, // the most the arm and weapon will rotate, in degrees.
+    "recoverTime": 3, // time it takes to recover aim completely, in seconds
+    "screenShakeAmount": 2, // amount of screenshake per shot
+    "chargeScreenShakeMult": 0.01, // amount of screenshake during charging
+
+    /*
+    "beamParameters": {
+      "consumeAmmoOverTime": false,
+      "ejectCasingsOnBeamEnd": true
+    }
+    */
+
+    "stances":{
+      "aimStance": {
+        "frontArmFrame": "run.3",
+        "backArmFrame": "fall.1"
+      },
+      "empty": {
+        "frontArmFrame": "run.3",
+        "backArmFrame": "fall.1"
+      },
+      "boltPull": {
+        "lite": true,
+        "armRotation": 0,
+        "weaponRotation": 0,
+        "frontArmFrame": "run.3",
+        "backArmFrame": "jump.2"
+      },
+      "boltPush": {
+        "lite": true,
+        "armRotation": 0,
+        "weaponRotation": 0,
+        "frontArmFrame": "run.3",
+        "backArmFrame": "fall.1"
+      },
+      "reloading": {
+        "armRotation": -15,
+        "weaponRotation": 0,
+        "frontArmFrame": "run.2",
+        "backArmFrame": "fall.1",
+        "flipWeapon": true,
+        "allowRotate": false,
+        "weaponOffset": [0, 0.5],
+        "twoHanded": true
+      },
+      "loadRound": {
+        "armRotation": -20,
+        "weaponRotation": 0,
+        "flipWeapon": true,
+        "allowRotate": false,
+        "weaponOffset": [0, 0.5],
+        "frontArmFrame": "rotation",
+        "backArmFrame": "fall.1"
+      }
+    }
+  },
+
+  "builder" : "/items/buildscripts/buildproject45neoneo.lua"
+}

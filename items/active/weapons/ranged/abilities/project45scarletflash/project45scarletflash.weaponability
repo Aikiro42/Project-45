@@ -1,0 +1,41 @@
+{
+
+  "animationCustom": {
+    
+    "sounds":{
+      
+      "activate": ["/sfx/project45neosfx/ability/project45scarletflash/scarletflash1.ogg"]
+
+    },
+
+    "particleEmitters" : {
+      "charging" : {
+        "active" : false,
+        "emissionRate" : 16,
+        "offsetRegion" : [0, 0, 0, 0],
+        "particles" : [
+          {"particle": "project45chargeparticle-white"}
+        ]
+      }
+    }
+  },
+
+  "ability" : {
+      "name" : "Scarlet Flash",
+      "type" : "project45scarletflash",
+      "scripts" : ["/items/active/weapons/ranged/abilities/project45scarletflash/project45scarletflash.lua"],
+      "class" : "Project45ScarletFlash",
+      
+      "cooldownTime": 1,
+      "energyScaleFactor": 0.5,
+      "healthScaleFactor": 0.5,
+      "explosionDelay": 2.33,
+
+      "slashDetectionRadius": 15,
+      "slashCount": 10,
+      "slashFuzz": [5, 2.5],
+      "slashSpawnDelay": 0.1
+
+  }
+}
+  

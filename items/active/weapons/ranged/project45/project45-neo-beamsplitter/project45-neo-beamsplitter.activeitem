@@ -3,7 +3,8 @@
   "price" : 2500,
   "maxStack" : 1,
   "rarity" : "Rare",
-  "description" : "An energy gun that splits high-amplitude low-frequency waves with a specially-cut crystal.",
+  "description" : "An energy shotgun.",
+  "lore": "Splits high-amplitude low-frequency waves with a specially-cut crystal.",
   "shortdescription" : "Beamsplitter",
   "tooltipKind" : "project45gun",
   "gunArchetype": "shotgun",
@@ -33,6 +34,14 @@
         "particles": [
           {"particle": "project45energygunmag"}
         ]
+      },
+      "muzzleFlash": {
+        "particles": [
+          {"particle": "project45muzzle"},
+          {"particle": "project45muzzle"},
+          {"particle": "project45muzzle"},
+          {"particle": "project45flashbang-red"}  
+        ]
       }
     },
 
@@ -44,7 +53,7 @@
 
   "project45GunModInfo":{
     "category": "energy",
-    "upgradeCapacity": 7,
+    
     "allowsConversion": [
       "projectile",
       "beam",

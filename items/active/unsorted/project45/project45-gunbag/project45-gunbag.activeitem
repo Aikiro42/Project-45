@@ -6,7 +6,7 @@
   "rarity" : "Essential",
   "category" : "mysteriousReward",
   "description" : "Contains a random item. Oddly replenishes and locks every time after it's closed.",
-  "shortdescription" : "Gun Bag",
+  "shortdescription" : "^#f4988c;(!)^reset; Gacha Bag",
   "twoHanded" : true,
 
   "inventoryIcon" : "project45-gunbag-icon.png",

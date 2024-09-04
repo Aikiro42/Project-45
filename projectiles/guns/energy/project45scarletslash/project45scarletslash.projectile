@@ -1,0 +1,55 @@
+{
+    "projectileName" : "project45scarletslash",
+    "timeToLive" : 1.27,
+    "image" : "project45scarletslash.png",
+    "animationCycle" : 0.1,
+    "frameNumber" : 1,
+    "windupFrames" : 3,
+    "winddownFrames" : 6,
+    "speed" : 0,
+    "power" : 1,
+    "damageKind": "electric",
+    "damageRepeatTimeout": 0.25,
+    
+    "renderLayer" : "Player+1",
+    "orientationLocked" : true,
+    "fullbright" : true,
+    "emitters" : ["project45chargeeffect-white"],
+    "periodicActions" : [
+      {
+        "time": 0,
+        "repeat": false,  
+        "action": "sound",
+        "options": [
+          "/sfx/project45neosfx/special/fleetlyfading/fleetlyfading_fire1.ogg",
+          "/sfx/project45neosfx/special/fleetlyfading/fleetlyfading_fire2.ogg",
+          "/sfx/project45neosfx/special/fleetlyfading/fleetlyfading_fire3.ogg"  
+        ]
+      },
+      {
+        "time": 1.26,
+        "repeat": false,  
+        "action": "sound",
+        "options": [
+          "/sfx/project45neosfx/special/fleetlyfading/fleetlyfading_fire1.ogg",
+          "/sfx/project45neosfx/special/fleetlyfading/fleetlyfading_fire2.ogg",
+          "/sfx/project45neosfx/special/fleetlyfading/fleetlyfading_fire3.ogg"  
+        ]
+      }
+    ],  
+    "actionOnReap": [
+      {
+        "action": "config",
+        "file": "/projectiles/explosions/project45_elecexplosion/project45_scarletflurryexplosion.config"
+      }
+    ],
+
+    "pointLight" : true,
+    "lightColor": [225, 0, 255],
+
+    "piercing": true,
+    "bounces" : -1,
+    "damagePoly" : [ [-94, 10], [94, 10], [94, -10], [-94, -10]]
+
+  }
+  

@@ -15,16 +15,18 @@
   "technicalInfo": "Fires projectiles that deal electric damage.",
   "shortdescription" : "Electric Arrows",
 
-  "conversion": "projectile",
   "augment":{
     "modName": "Electric Arrows",
     "category": "ballistic",
-    "archetype": "arrow",
-
-    "projectileType": "project45stdelecarrow"
+    "conversion": "projectile",
+    "ammo": {
+      "elementalType": "electric",
+      "archetype": "arrow",
+      "projectileType": "project45stdelecarrow"
+    }
     
   },
 
-  "scripts" : [ "/scripts/augments/project45-gunmod/ammomod.lua" ],
+  "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
   "builder": "/items/buildscripts/buildproject45mod.lua"
 }

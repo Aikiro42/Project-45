@@ -4,7 +4,8 @@
   "maxStack" : 1,
   "rarity" : "Essential",
   "isUnique": true,
-  "description" : "A gun that's oddly effective against Miniknog Zombies.",
+  "description" : "A lever-action energy gun.",
+  "lore": "Miniknog researchers use this as an effective termination tool for failed biological experiments.",
   "shortdescription" : "^#fdd14d;Warbolter^reset;",
   "tooltipKind" : "project45gun",
   "gunArchetype": "antiMateriel",
@@ -17,6 +18,7 @@
 
   "project45GunModInfo":{
     "category": "experimental",
+    "uniqueType": "special",
     "upgradeCapacity": 10
   },
 
@@ -38,6 +40,14 @@
       },
       "magazine": {
         "particles": [
+        ]
+      },
+      "muzzleFlash": {
+        "particles": [
+          {"particle": "project45muzzle"},
+          {"particle": "project45muzzle"},
+          {"particle": "project45muzzle"},
+          {"particle": "project45flashbang-blue"}  
         ]
       }
     },

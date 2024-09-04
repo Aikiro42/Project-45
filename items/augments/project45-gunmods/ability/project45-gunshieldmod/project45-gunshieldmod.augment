@@ -1,0 +1,48 @@
+{
+  "itemName" : "project45-gunshieldmod",
+  "price" : 7000,
+  "rarity" : "Legendary",
+  "tooltipKind" : "project45gunmod2",
+  "modCategory" : "abilityMod",
+  "category" : "uniqueWeapon",
+  "itemTags": ["weapon"],
+  "tooltipFields": {
+    "subtitle": "Ability Mod",
+    "objectImage": "/items/augments/project45-gunmods/ability/project45-gunshieldmod/project45-gunshieldmod.png"
+  },
+  "inventoryIcon" : "/items/augments/project45-gunmods/ability/project45-gunshieldmod/project45-gunshieldmodicon.png",
+  "description" : "A shield that can be attached on a gun.",
+  "technicalInfo": "Hits have a chance to break the shield and retaliate with a shockwave.",
+  "shortdescription" : "Gun Shield",
+  "archetype": "Shift Ability",
+  
+  "augment":{
+    "category": "universal",
+    "slot": "underbarrel",
+    "ability": {
+      "shiftAbilityType" : "project45gunshield"
+    },
+    "gun":{
+      "primaryAbility": {
+        "heavyWeapon": {
+          "operation": "replace",
+          "value": true
+        }
+      }
+    },
+    "stat": {
+      "recoverTime": {
+        "rebaseMult": 1.5
+      },
+      "recoilAmount":{
+        "rebaseMult": 0.5
+      },
+      "inaccuracy": {
+        "rebaseMult": 1.05
+      }
+    }
+  },
+
+  "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
+}

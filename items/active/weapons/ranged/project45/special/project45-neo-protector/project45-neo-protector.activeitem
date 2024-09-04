@@ -1,0 +1,124 @@
+{
+  "itemName" : "project45-neo-protector",
+  "price" : 100,
+  "maxStack" : 1,
+  "rarity" : "Essential",
+  "isUnique": true,
+  "description" : "A short, semi-auto personal defense weapon.",
+  "lore": "This weapon was commissioned by the now-lost Protectorate. The Matter Manpulator fabricates this using organic materials.",
+  "shortdescription" : "The Protector",
+  "tooltipKind" : "project45gun",
+  "gunArchetype": "smg",
+  "category" : "assaultRifle",
+  "twoHanded" : true,
+  "itemTags" : ["weapon","ranged","assaultrifle"],
+  "level" : 1,
+  "muzzleFlashColor": [255, 255, 200],
+  "inventoryIcon" : "project45-neo-protector-icon.png",
+
+  "animationParts" : {
+    "middle" : "project45-neo-protector.png",
+    "middleFullbright" : "",
+    "charge": "",
+    "chargeFullbright": "",
+    "magazine": "project45-neo-protector-mag.png",
+    "magazineFullbright": ""
+  },
+
+  "animationCustom": {
+    "particleEmitters": {
+      "ejectionPort": {
+        "particles": [
+          {"particle": "project45bulletcase"}
+        ]
+      },
+      "magazine": {
+        "particles": [
+          {"particle": "project45assaultriflemag"}
+        ]
+      }
+    },
+
+    "sounds": {
+      "fire" : [
+        "/sfx/project45neosfx/fire/fire-rifle5.ogg"
+      ],
+      "boltPull": [
+        "/sfx/project45neosfx/boltpull/boltpull-rifle1.ogg"
+      ],
+      "boltPush": [
+        "/sfx/project45neosfx/boltpush/boltpush-rifle1.ogg"
+      ]
+    }
+  },
+
+  "project45GunModInfo":{
+    "category": "universal",
+    "upgradeCapacity": 25,
+    "allowsConversion": [
+      "hitscan",
+      "beam",
+      "summoned"
+    ],
+    "acceptsAmmoArchetype": [
+      "bullet",
+      "shotgun",
+      "laser",
+      "beam"
+    ],
+    "acceptsModSlot": [
+      "rail",
+      "sights",
+      "muzzle",
+      "underbarrel",
+      "stock",
+      
+      "material",
+      "magazine",
+      "receiver",
+      "choke"
+    ]
+  },
+
+  "baseOffset" : [0.75, 0.125],
+  "muzzleOffset" : [1.5, 0.4375],
+  "ejectionPortOffset": [-0.25, 0.75],
+  "magazineOffset": [0, -0.25],
+
+  /*
+  "railOffset" : [1.5, 0.375],
+  "sightsOffset": [0.625, 0.75],
+  "stockOffset": [-0.5, 0.375],
+  "underbarrelOffset": [1.5, 0.125],
+  */
+  
+  "railOffset" : [0, 0.25],
+  "sightsOffset": [0.1875, 0.75],
+  "stockOffset": [-1.5, 0.3125],
+  "underbarrelOffset": [1, 0.125],
+
+  "scripts" : ["/items/active/weapons/ranged/project45gunneo.lua"],
+    
+  "primaryAbilityType": "project45gunfire",
+  "primaryAbility": {
+
+    "reloadCost": 20,
+    "maxAmmo": 18,
+    "bulletsPerReload": 18,
+    "semi": true,
+    "burstCount": 1,
+    "inaccuracy": 1,
+
+    "recoilAmount": 1,
+    "recoilMaxDeg": 7.5,
+    "recoverDelay": 0.05,
+    
+    "backHandFrame": ".back",
+
+    "cycleTime": 0.1,
+    "projectileKind": "projectile"
+
+  },
+  
+  "builder" : "/items/buildscripts/buildproject45neoneo.lua"
+}

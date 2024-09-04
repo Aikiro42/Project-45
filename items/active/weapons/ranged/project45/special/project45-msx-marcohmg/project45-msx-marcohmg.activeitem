@@ -4,7 +4,8 @@
   "maxStack" : 1,
   "rarity" : "Essential",
   "isUnique": true,
-  "description" : "A simple machine gun, effective against Big Ape's constructs.",
+  "description" : "A simple machine gun.",
+  "lore": "Oddly effective against Big Ape's constructs. Its designer is still persecuted.",
   "shortdescription" : "^#fdd14d;Marco's HMG^reset;",
   "tooltipKind" : "project45gun",
   "gunArchetype": "machineGun",
@@ -38,6 +39,16 @@
       "magazine": {
         "particles": [
         ]
+      },
+      "shootSmoke": {
+        "particles": [
+
+        ]
+      },
+      "muzzleFlash": {
+        "particles": [
+
+        ]
       }
     },
 
@@ -56,7 +67,8 @@
   },
 
   "project45GunModInfo":{
-    "category": "special",
+    "category": "ballistic",
+    "uniqueType": "special",
     "upgradeCapacity": 10
   },
 

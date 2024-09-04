@@ -78,8 +78,10 @@
         "project45-neo-pistol",
         "project45-neo-revolver",
         "project45-neo-deagle",
+        "project45-neo-wristgun",
         
         // SMGs
+        "project45-neo-tmp",
         "project45-neo-smg",
         "project45-neo-smartgun",
         
@@ -100,36 +102,48 @@
         "project45-neo-servicerifle",
         "project45-neo-huntingrifle",
         "project45-neo-sniper",
+        "project45-neo-crossbow",
 
         // Machine guns
         "project45-neo-machinegun",
         
         // Heavies
         "project45-neo-amr",
+        "project45-neo-handmortar",
         "project45-neo-grenadelauncher",
         "project45-neo-rocketlauncher",
         "project45-neo-minigun",
+        "project45-neo-autocannon",
         "project45-neo-flamethrower",
         "project45-neo-gaussrifle",
         
         // Energy Guns
         "project45-neo-cyclo",
+        "project45-neo-covalence",
         "project45-neo-accelerator",
         "project45-neo-beamsplitter",
         "project45-neo-beamgun",
         "project45-neo-gazer",
 
-        // Special/Experimental
+        // Experimental
         "project45-neo-powerstave",
+        "project45-neo-gunfist",
+        "project45-neo-sawblader",
+
+        // Special
         "project45-neb-zweibrandyr",
         "project45-neb-warbolter",
         "project45-neb-magmaspitter",
         "project45-msx-marcohmg",
         "project45-scz-spacecowboy",
-        "project45-gov-scarlet",
+        "project45-gov-fleetlyfading",
         "project45-tcf-kineticarbiter",
         "project45-pkf-typhon",
-        "project45-hlo-maxx"
+        "project45-hlo-maxx",
+        "project45-wfm-kuvabramma",
+        "project45-mhf-boneshooter",
+        "project45-cbp-malorian",
+        "project45-utk-revolver"
 
       ],
       "mods": [
@@ -139,10 +153,12 @@
         "project45-gunscopemod",
         "project45-supergunscopemod",
         "project45-mlgscopemod",
+        "project45-orbitaltranspondermod",
         "project45-enemyradarmod",
         "project45-flashlasermod",
         "project45-grenadelaunchermod",
         "project45-underbarrelshotgunmod",
+        "project45-armadillomod",
         "project45-phaseshiftmod",
 
         // sights
@@ -161,6 +177,10 @@
         "project45-alofsmagmod",
         "project45-overampmod",
 
+        // magwell
+        "project45-speedloadermod",
+        "project45-syringeloadermod",
+
         // bowstring
         "project45-customnockmod",  
         "project45-multinockmod",
@@ -171,10 +191,17 @@
         "project45-extendedbarrelmod",
         "project45-convergermod",
         "project45-splittermod",
+        "project45-chokemod",
+        
+        // underbarrel mods
+        "project45-gripmod",
+        "project45-gunshieldmod",
         
         // misc mods
-        "project45-gripmod",
-        "project45-weightmod",
+        "project45-aegisaltmod",
+        "project45-feroziummod",
+        "project45-violiummod",
+        "project45-solariummod",
         "project45-stockmod"
       ],
 
@@ -182,16 +209,16 @@
         "project45-wildcardstatmod",
         "project45-levelmod",
         "project45-maxlevelmod",
-        "project45-reloadcostaddmod",
-        "project45-reloadcostmultmod",
-        "project45-firetimeaddmod",
-        "project45-firetimemultmod",
-        "project45-damageaddmod",
-        "project45-damagemultmod",
-        "project45-critdamageaddmod",
-        "project45-critdamagemultmod",
-        "project45-critchanceaddmod",
-        "project45-critchancemultmod"
+        "project45-reloadcostaddmod1",
+        "project45-reloadcostmultmod1",
+        "project45-firetimeaddmod1",
+        "project45-firetimemultmod1",
+        "project45-damageaddmod1",
+        "project45-damagemultmod1",
+        "project45-critdamageaddmod1",
+        "project45-critdamagemultmod1",
+        "project45-critchanceaddmod1",
+        "project45-critchancemultmod1"
       ],
       
       "ammo": [
@@ -211,6 +238,7 @@
         "project45-flechettemod",
         "project45-slugshellsmod",
         "project45-dragonsbreathmod",
+        "project45-fourgaugemod",
 
         // energy ammo
         "project45-iceammomod",
@@ -227,6 +255,7 @@
         // grenade ammo
         "project45-clustergrenademod",
         "project45-thermitegrenademod",
+        "project45-jumpgrenademod",
 
         // rocket ammo
         "project45-homingrocketmod",
@@ -235,21 +264,32 @@
         // experimental ammo
         "project45-gasmod",
         "project45-tarmod",
-        "project45-gravbombmod"
+
+        "project45-gravbombmod",
+        "project45-haloburstmod"
         
       ],
 
       "util": [
         "project45manual-codex",
         "project45-gundisassembler",
+        "project45-gunseller",
+
+        "project45-portablegdk",
         "project45-gunrepairkit",
         "project45-ammostock",
-
-        "project45-gunbag",        
+        "project45-elementoil",
+        "project45-essentialgunoil",
+        "project45-modhider",
+        
+        "project45-riotshield",
+        "project45-supplytransponder",
         "project45-gachapull",
         "project45-gachapull10",
         
         "project45-energystim",
+        "project45-enemyflare",
+        
         "nanowrap",        
         "manipulatormodule",
         "techcard",

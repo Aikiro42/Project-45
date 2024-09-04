@@ -15,19 +15,21 @@
   "technicalInfo": "Fires projectiles that burns the enemy while dealing fire damage.",
   "shortdescription" : "Incendiary Bullets",
 
-  "conversion": "projectile",
   "augment":{
     "modName": "Incendiary Bullets",
     "category": "ballistic",
-    "archetype": "bullet",
-
-    "projectileType": "project45stdfirebullet"
+    "conversion": "projectile",
+    "ammo": {
+      "archetype": "bullet",
+      "elementalType": "fire",
+      "projectileType": "project45stdfirebullet"
+    }
     
   },
 
 
    
 
-  "scripts" : [ "/scripts/augments/project45-gunmod/ammomod.lua" ],
+  "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
   "builder": "/items/buildscripts/buildproject45mod.lua"
 }

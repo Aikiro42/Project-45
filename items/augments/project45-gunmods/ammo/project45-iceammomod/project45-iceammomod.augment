@@ -15,25 +15,35 @@
   "technicalInfo" : "Fires hitscans that freeze enemies and deal ice damage.",
   "shortdescription" : "Cryo Lasers",
 
-  "conversion": "hitscan",
   "augment":{
     "modName": "Cryo Lasers",
     "category": "energy",
-    "archetype": "laser",
-    "spread": 0.01,
-    "muzzleFlashColor": [150,203,231],
-    "hitscanParameters":{
-      "hitscanColor": [150,203,231],
-      "hitscanBrightness": 0.5,
-      "hitscanDamageConfig":{
-        "damageSourceKind": "ice",
-        "statusEffects":["frostsnare", "frostslow", "project45freeze"]
-      }
-    },
-    "customSounds": {
-      "fireStart": ["/assetmissing.wav"],
-      "fireLoop": ["/assetmissing.wav"],
-      "fireEnd": ["/assetmissing.wav"]
+    "conversion": "hitscan",
+
+    "ammo":{
+      "archetype": "laser",
+      "elementalType": "ice",
+      "spread": 0.01,
+      "muzzleFlashColor": [150,203,231],
+      "hitscanParameters":{
+        "hitscanColor": [150,203,231],
+        "hitscanBrightness": 0.5,
+        "hitscanDamageConfig":{
+          "damageSourceKind": "ice",
+          "statusEffects":["frostsnare", "frostslow", "project45freeze"]
+        }
+      },
+      "customSounds": {
+        "fireStart": ["/assetmissing.wav"],
+        "fireLoop": ["/assetmissing.wav"],
+        "fireEnd": ["/assetmissing.wav"]
+      },
+      "muzzleFlashParticles": [
+        {"particle": "project45muzzle"},
+        {"particle": "project45muzzle"},
+        {"particle": "project45muzzle"},
+        {"particle": "project45flashbang-blue"}  
+      ]
     }
 
 
@@ -42,6 +52,6 @@
 
    
 
-  "scripts" : [ "/scripts/augments/project45-gunmod/ammomod.lua" ],
+  "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
   "builder": "/items/buildscripts/buildproject45mod.lua"
 }

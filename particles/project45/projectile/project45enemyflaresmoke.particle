@@ -1,0 +1,21 @@
+{
+  "kind" : "project45enemyflaresmoke",
+  "definition" : {
+    "type" : "animated",
+    "animation": "/animations/lightsmoke/lightsmoke.animation",
+    "position" : [0, -0.5],
+    "initialVelocity" : [-20, 0],
+    "finalVelocity" : [0, 10],
+    "color": [255,255,255,128],
+    "approach" : [10, 5],
+    "fullbright": false,
+    "destructionAction" : "shrink",
+    "destructionTime" : 1.5,
+    "size" : 1,
+    "timeToLive" : 0.5,
+    "variance" : {
+      "initialVelocity" : [0.5, 3],
+      "rotation": 180
+    }
+  }
+}

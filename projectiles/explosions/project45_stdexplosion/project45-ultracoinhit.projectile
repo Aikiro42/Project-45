@@ -1,0 +1,17 @@
+{
+  "projectileName" : "project45-ultracoinhit",
+  "image" : "project45-stdexplosionshockwave.png",
+  "animationCycle" : 0.2,
+  "frameNumber" : 6,
+  "speed" : 0,
+  "damagePoly" : [
+    [ 1, 0 ],
+    [ 0, 1 ],
+    [ -1, 0 ],
+    [ 0, -1 ]
+  ],
+  "animationLoops" : false,
+  "piercing" : true,
+  "flippable" : true,
+  "damageKind" : "default"
+}

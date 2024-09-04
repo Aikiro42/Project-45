@@ -3,7 +3,8 @@
   "price" : 2500,
   "maxStack" : 1,
   "rarity" : "Rare",
-  "description" : "A fast-firing submachine gun.",
+  "description" : "A fast-firing sub-caliber machine gun.",
+  "lore": "Very popular among the Miniknog. Frequent cause of workplace and home accidents.",
   "shortdescription" : "SMG",
   "tooltipKind" : "project45gun",
   "gunArchetype": "smg",
@@ -49,7 +50,7 @@
 
   "project45GunModInfo":{
     "category": "ballistic",
-    "upgradeCapacity": 8,
+    
     "allowsConversion": [
       "hitscan",
       "summoned"

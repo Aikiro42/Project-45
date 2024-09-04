@@ -1,0 +1,22 @@
+{
+  "itemName" : "project45-supplytransponder",
+  "price" : 20000,
+  "level" : 1,
+  "maxStack" : 1,
+  "rarity" : "Essential",
+  "category" : "mysteriousReward",
+  "description" : "Call in a random item over an encrypted channel.^#d29ce7;Requires cipher keys to use.^reset;",
+  "shortdescription" : "Supply Transponder",
+  "itemTags": ["project45"],
+  "twoHanded" : false,
+
+  "inventoryIcon" : "project45-supplytransponder.png",
+  "scripts" : ["/items/active/weapons/ranged/gun.lua"],
+  
+  "primaryAbilityType": "project45supplydrop",
+  "primaryAbility": {
+    "hardPity": 25,
+    "pullEssenceCost": 300
+  },
+  "builder" : "/items/buildscripts/buildunrandweapon.lua"
+}

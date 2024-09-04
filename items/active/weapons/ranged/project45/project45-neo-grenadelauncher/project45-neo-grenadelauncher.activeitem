@@ -3,7 +3,8 @@
   "price" : 5000,
   "maxStack" : 1,
   "rarity" : "Legendary",
-  "description" : "This is a grenade launcher. It launches grenades.",
+  "description" : "A revolver-type launcher.",
+  "lore": "A team of drunkards designed this weapon, and the outcome was surprisingly reliable.",
   "shortdescription" : "Grenade Launcher",
   "tooltipKind" : "project45gun",
   "gunArchetype": "grenadeLauncher",
@@ -21,12 +22,12 @@
     "chargeFullbright": "",
     "magazine": "",
     "magazineFullbright": "",
-    "muzzleFlash": "/items/active/weapons/ranged/muzzleflash.png"
+    "muzzleFlash": "/items/active/weapons/ranged/project45-muzzleflash.png"
   },
 
   "project45GunModInfo": {
     "category": "ballistic",
-    "upgradeCapacity": 5,
+    
     "acceptsModSlot": [
       "rail",
       // "sights",

@@ -28,6 +28,17 @@
         {"particle": "project45dashember2"},
         {"particle": "project45dashember2"}
       ]
+    },
+    "phased": {
+      "emissionRate": 10,
+      "particles": [
+        {"particle": "project45dashphase1"},
+        {"particle": "project45dashphase1"},
+        {"particle": "project45dashphase1"},
+        {"particle": "project45dashphase2"},
+        {"particle": "project45dashphase2"},
+        {"particle": "project45dashphase2"}
+      ]
     }
   },
   "lights": {

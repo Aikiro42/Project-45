@@ -3,8 +3,9 @@
   "price" : 10000,
   "maxStack" : 1,
   "rarity" : "Essential",
-  "description" : "An anti-materiel rifle. The recoil is enough to throw you across a room.",
-  "shortdescription" : "AMR",
+  "description" : "A powerful anti-materiel rifle.",
+  "lore": "The recoil is enough to throw you across a room, but it's worth turning anything into pink mist. Shotgun shells fit the chamber.",
+  "shortdescription" : "A.M.R.",
   "tooltipKind" : "project45gun",
   "gunArchetype": "antiMateriel",
   "category" : "sniperRifle",
@@ -21,12 +22,11 @@
     "chargeFullbright": "",
     "magazine": "project45-neo-amr-mag.png",
     "magazineFullbright": "",
-    "muzzleFlash": "/items/active/weapons/ranged/muzzleflash.png"
+    "muzzleFlash": "/items/active/weapons/ranged/project45-muzzleflash.png"
   },
 
   "project45GunModInfo": {
     "category": "ballistic",
-    "upgradeCapacity": 8,
     "allowsConversion": [
       "hitscan",
       "summoned"
@@ -38,7 +38,8 @@
       
       "material",
       "magazine",
-      "receiver"
+      "receiver",
+      "choke"
     ],
     "acceptsAmmoArchetype": [
       "bullet",
@@ -66,7 +67,8 @@
           {"particle": "project45muzzle"},
           {"particle": "rocketbarrelpuff"},
           {"particle": "rocketbarrelpuff"},
-          {"particle": "rocketbarrelpuff"}
+          {"particle": "rocketbarrelpuff"},
+          {"particle": "project45flashbang-yellow"}
         ]
       }
     },

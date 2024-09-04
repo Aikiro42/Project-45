@@ -15,22 +15,24 @@
   "technicalInfo" : "Fires grenades that burst into flames on impact.",
   "shortdescription" : "Thermite Grenades",
 
-  "conversion": "projectile",
   "augment":{
     "modName": "Thermite Grenades",
     "category": "ballistic",
-    "archetype": "grenade",
-
-    "projectileType": "project45thermitegrenade",
-    "projectileParameters": {
-      "speed": 50,
-      "bounces": 0
+    "conversion": "projectile",
+    "ammo": {
+      "archetype": "grenade",
+      "elementalType": "fire",
+      "projectileType": "project45thermitegrenade",
+      "projectileParameters": {
+        "speed": 50,
+        "bounces": 0
+      }
     }
   
   },
 
    
 
-  "scripts" : [ "/scripts/augments/project45-gunmod/ammomod.lua" ],
+  "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
   "builder": "/items/buildscripts/buildproject45mod.lua"
 }

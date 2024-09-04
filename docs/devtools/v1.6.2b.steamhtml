@@ -1,0 +1,63 @@
+[h1]v1.6.2b[/h1]
+
+[h2]User-side[/h2]
+
+[h3]New Features[/h3]
+
+[list]
+    [*]Added the [b]Hand Mortar[/b], a single-shot grenade launcher.
+    [*]Added the [b]Speedloader[/b], a full loader for revolvers.
+    [*]Added the [b]Syringe Loader[/b], a quick loader for shotguns.
+    [*]Added the [b]Crossbow[/b], an automatic crossbow with a top-loaded 5-bolt magazine.
+    [*]Added the [b]Attachment Glamour[/b], an appliable item that makes visible weapon mods invisible.
+[/list]
+
+[h3]General Changes[/h3]
+
+[list]
+    [*]Renamed the [b]Gacha Key[/b] and [b]Gacha Key Bundle[/b] to "Partial Cipher Key" and "Full Cipher Key", respectively.[list]
+    [*]Changed description of these items, as well as the [b]Supply Transponder[/b].
+[/list]
+    [*]Enabled the Magazine slot of the Revolver.
+[/list]
+
+[h3]Bug Fixes[/h3]
+
+[list]
+    [*]Fixed the Pump-Action Shotgun not rotatable after slam-firing.
+    [*]Improve arrow trail visuals.
+    [*]Fixed the Hi-tech Scope using the regular scope's sprite.
+[/list]
+
+[h3]Balance Changes[/h3]
+
+[list]
+    [*]Changed the P-45 Riot Shield's rarity to Legendary.
+[/list]
+
+
+[h2]Dev-side[/h2]
+
+[h3]New Features[/h3]
+
+[list]
+    [*]Added new damage types: 'project45dark' and 'project45holy', resisted by 'darkResistance' and 'holyResistance'.[quote]Resistances are identified as such to increase odds of this mod being compatible with other mods that employ the same resistances.[/quote]
+
+
+    [*]Added a "magic number" in 'project45_general.config'.
+[/list]
+
+[h3]General changes[/h3]
+
+[list]
+    [*]Added new handling for the 'bulletsPerReload' stat; it can now be rebased to a value of '"full"', which causes the weapon it's modded onto to load the maximum amount of ammo when reloading (i.e. magazine reload).
+    [*]Removed printlines from 'project45-enemyflare.lua'
+    [*]Added documentation for the primary ability's 'debug' field.
+    [*]Renamed 'gunArchetypeDamages' to 'gunArchetypeDps'
+[/list]
+
+[h3]Bug Fixes[/h3]
+
+[list]
+    [*]Fixed bug where whitelisting weapons/mods does virtually nothing
+[/list]

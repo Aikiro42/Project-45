@@ -2,12 +2,12 @@ require "/scripts/util.lua"
 require "/scripts/vec2.lua"
 
 local textSize = 0.5
-
+tester_oldUpdate = update or function() end
 function update()
 
     localAnimator.clearDrawables()
     localAnimator.clearLightSources()
-
+    tester_oldUpdate()
     -- laser
     local laser = {}
     laser.origin = animationConfig.animationParameter("testLaserOrigin")

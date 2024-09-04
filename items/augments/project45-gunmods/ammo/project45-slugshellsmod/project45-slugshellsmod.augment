@@ -16,22 +16,24 @@
   "statInfo": "Spread: 1 deg.",
   "shortdescription" : "Slug shells",
 
-  "conversion": "projectile",
   "augment":{
     "modName": "Slug shells",
     "category": "ballistic",
-    "archetype": "shotgun",
-    "spread": 1,
-    "projectileCount": 1,
-    "projectileType": "project45stdbullet",
-    "projectileParameters": {
-      "speed" : 150
+    "conversion": "projectile",
+    "ammo": {
+      "archetype": "shotgun",
+      "spread": 1,
+      "projectileCount": 1,
+      "projectileType": "project45stdbullet",
+      "projectileParameters": {
+        "speed" : 150
+      }
     }
   
   },
 
    
 
-  "scripts" : [ "/scripts/augments/project45-gunmod/ammomod.lua" ],
+  "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
   "builder": "/items/buildscripts/buildproject45mod.lua"
 }

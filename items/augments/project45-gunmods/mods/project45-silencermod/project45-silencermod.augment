@@ -1,76 +1,75 @@
 {
-  "itemName" : "project45-silencermod",
-  "price" : 7000,
-  "rarity" : "Rare",
-  "tooltipKind" : "project45gunmod2",
-  "modCategory" : "gunMod",
-  "category" : "uniqueWeapon",
+  "itemName": "project45-silencermod",
+  "price": 7000,
+  "rarity": "Rare",
+  "tooltipKind": "project45gunmod2",
+  "modCategory": "gunMod",
+  "category": "uniqueWeapon",
   "itemTags": ["weapon"],
-  "tooltipFields":{
+  "tooltipFields": {
     "subtitle": "Gun Mod",
     "objectImage": "/items/augments/project45-gunmods/mods/project45-silencermod/project45-silencermod.png"
   },
-  "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-silencermod/project45-silencermodicon.png",
-  "description" : "Dissipates existing gas, reducing gunshot noise and recoil. Also hides muzzle flash.",
-  "statInfo": "Recoil x0.9",
-  "shortdescription" : "Silencer",
+  "inventoryIcon": "/items/augments/project45-gunmods/mods/project45-silencermod/project45-silencermodicon.png",
+  "description": "Dissipates existing gas, reducing gunshot noise and recoil. Also hides muzzle flash.",
+  "statInfo": "Recoil -0.1x",
+  "shortdescription": "Silencer",
 
-  "augment":{
+  "augment": {
     "modName": "Silencer",
     "category": "ballistic",
     "slot": "muzzle",
-    "muzzleOffset": [1, 0],
-    "primaryAbility": {
-      "flashHidden": {
-        "operation": "replace",
-        "value": true
+    "stat": {
+      "recoilAmount": {
+        "rebaseMult": 1.1
       },
-      "hideMuzzleFlash": {
-        "operation": "replace",
-        "value": true
-      },
-      "hollowSoundMult": {
-        // suppressors are kinda hard on weapons because they keep air in the barrel
-        // and increase internal pressure
-        "operation": "replace",
-        "value": 1.1
-      },
-      "recoilMult": {
-        "operation": "multiply",
-        "value": 0.9
+      "critChance": {
+        "rebaseMult": 1.5
       }
     },
+    "gun": {
+      "muzzleOffset": [1, 0],
+      "primaryAbility": {
+        "flashHidden": {
+          "operation": "replace",
+          "value": true
+        },
+        "hideMuzzleFlash": {
+          "operation": "replace",
+          "value": true
+        },
+        // TODO: turn me into a stat?
+        "hollowSoundMult": {
+          // suppressors are kinda hard on weapons because they keep air in the barrel
+          // and increase internal pressure
+          "operation": "replace",
+          "value": 1.1
+        }
+      },
 
-    "sprite": {
-      "image": "/items/augments/project45-gunmods/mods/project45-silencermod/project45-silencermodsprite.png",
-      "zLevel" : 5,
-      "offset" : [0.5, -0.0625]
-    }
+      "sprite": {
+        "image": "/items/augments/project45-gunmods/mods/project45-silencermod/project45-silencermodsprite.png",
+        "zLevel": 5,
+        "offset": [0.5, -0.0625]
+      },
 
-    ,"animationCustom": {
-      "sounds": {
-        "fire" : ["/sfx/project45neosfx/fire/fire-silenced-generic1.ogg"]
-      }
-      /*
-      ,
-      "animatedParts" : { "parts" : {
-        "muzzle" : {
-          "properties" : {
-            "zLevel" : 5,
-            "centered" : true,
-            "offset" : [-0.5, 0],
-            "transformationGroups" : ["muzzle"],
-            "image" : "/items/augments/project45-gunmods/mods/project45-silencermod/project45-silencermodsprite.png<directives>"
+      "animationCustom": {
+        "sounds": {
+          "fire": ["/sfx/project45neosfx/fire/fire-silenced-generic1.ogg"]
+        },
+        "particleEmitters": {
+          "muzzleFlash": {
+            "particles": [
+              {"particle": "project45muzzle"},
+              {"particle": "project45muzzle"},
+              {"particle": "project45muzzle"}
+            ]
           }
-        }}}
-      */
+        }
+      }
     }
-    
   },
 
-
-   
-
-  "scripts" : [ "/scripts/augments/project45-gunmod/gunmod.lua" ],
+  "scripts": ["/scripts/augments/project45-gunmod/apply.lua"],
   "builder": "/items/buildscripts/buildproject45mod.lua"
 }

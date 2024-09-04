@@ -1,0 +1,32 @@
+{
+  "itemName" : "project45-essentialgunoil",
+  "price" : 10000,
+  "rarity" : "Essential",
+  "tooltipKind" : "project45gunmod",
+  "category" : "uniqueWeapon",
+  "itemTags": ["weapon"],
+  "tooltipFields":{
+    "subtitle": "Applied Utility",
+    "objectImage": "/items/augments/project45-gunmods/util/project45-essentialgunoil/project45-essentialgunoil.png"
+  },
+  "inventoryIcon" : "/items/augments/project45-gunmods/util/project45-essentialgunoil/project45-essentialgunoilicon.png",
+  "description" : "Gun oil made from Ancient Essence. ^#d29ce7;Allows your weapon to be upgraded in an Upgrade Anvil.^reset;",
+  "shortdescription" : "Essential Gun Oil",
+  
+  "applyBeforeBuild": true,
+
+  "augment": {
+    "upgradeParameters": {
+      "seed": 69420,
+      "level": 1,
+      // "isRandomized": false, // necessary to regenerate the stats on upgrade
+      "isModded": true // allows for immediate disassembly
+    }
+  },
+
+  // do not modify if any of the stuff in checks
+  "checks": [
+    "upgradeParameters"
+  ],
+  "scripts" : [ "/scripts/augments/project45-generic.lua" ]
+}

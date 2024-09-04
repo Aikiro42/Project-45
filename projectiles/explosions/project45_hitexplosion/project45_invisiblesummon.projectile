@@ -1,0 +1,26 @@
+{
+  "projectileName" : "project45_invisiblesummon",
+  "image" : "/projectiles/invisibleprojectile/invisibleprojectile.png",
+  "frameNumber" : 1,
+  "timeToLive": 0,
+  "speed" : 0,
+  "renderLayer": "MiddleParticle",
+  "damagePoly" : [
+    /*
+    [0.5, 0.5],
+    [0.5, -0.5],
+    [-0.5, -0.5],
+    [-0.5, 0.5]
+    */
+    [0, 0],
+    [0, -0],
+    [-0, -0],
+    [-0, 0]
+  ],
+  "animationLoops" : false,
+  "piercing" : false,
+  "bounces" : -1,
+  "flippable" : true,
+  "power": 1,
+  "damageKind" : "standardbullet"
+}

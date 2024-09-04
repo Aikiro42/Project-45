@@ -1,0 +1,142 @@
+{
+  "animatedParts" : {
+    "stateTypes" : {
+      "shield" : {
+        "default" : "activating",
+        "states" : {
+          "inactive" : {},
+          "activating" : {
+            "frames" : 12,
+            "cycle" : 0.5,
+            "mode" : "transition",
+            "transition" : "active"
+          },
+          "hit1": {
+            "frames": 4,
+            "cycle": 0.2,
+            "mode": "transition",
+            "transition": "active"
+          },
+          "hit2": {
+            "frames": 4,
+            "cycle": 0.2,
+            "mode": "transition",
+            "transition": "active"
+          },
+          "hit3": {
+            "frames": 4,
+            "cycle": 0.2,
+            "mode": "transition",
+            "transition": "active"
+          },
+          "deactivating" : {
+            "frames" : 12,
+            "cycle" : 0.5,
+            "mode" : "transition",
+            "transition" : "inactive"
+          },
+          "breaking" : {
+            "frames" : 1,
+            "cycle" : 0.2,
+            "mode" : "transition",
+            "transition" : "inactive"
+          },
+          "active" : {}
+        }
+      }
+    },
+    "parts" : {
+      "shieldPart" : {
+        "properties" : {
+          "zLevel" : 0
+        },
+        "partStates" : {
+          "shield" : {
+            "activating" : {
+              "properties" : {
+                "image" : "project45armadilloeffect2.png:activating.<frame>",
+                "fullbright": true
+              }
+            },
+            "deactivating" : {
+              "properties" : {
+                "image" : "project45armadilloeffect2.png:deactivating.<frame>",
+                "fullbright": true
+              }
+            },
+            "active" : {
+              "properties" : {
+                "image" : "project45armadilloeffect2.png:idle.1",
+                "fullbright": true
+              }
+            },
+            "hit1" : {
+              "properties" : {
+                "image" : "project45armadilloeffect2.png:hit1.<frame>",
+                "fullbright": true
+              }
+            },
+            "hit2" : {
+              "properties" : {
+                "image" : "project45armadilloeffect2.png:hit2.<frame>",
+                "fullbright": true
+              }
+            },
+            "hit3" : {
+              "properties" : {
+                "image" : "project45armadilloeffect2.png:hit3.<frame>",
+                "fullbright": true
+              }
+            },
+            "breaking" : {
+              "properties" : {
+                "image" : "project45armadilloeffect2.png:breaking.<frame>",
+                "fullbright": true
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "sounds": {
+    "activate": ["/sfx/melee/elemental_aura_activate.ogg"],
+    "loop": ["/sfx/melee/elemental_aura.ogg"],
+    "hit": [
+      "/sfx/statuseffects/project45/project45armadilloeffect/shieldhit1.ogg",
+      "/sfx/statuseffects/project45/project45armadilloeffect/shieldhit2.ogg",
+      "/sfx/statuseffects/project45/project45armadilloeffect/shieldhit3.ogg",
+      "/sfx/statuseffects/project45/project45armadilloeffect/shieldhit4.ogg"
+    ],
+    "deactivate": [ "/sfx/tech/mech_explosion_windup.ogg" ],
+    "break": ["/sfx/melee/shield_break_ice.ogg"]
+  },
+  "particleEmitters" : {
+    "shieldAura" : {
+      "active" : true,
+      "emissionRate" : 15,
+      "offsetRegion" : [-3.0, -3.0, 3.0, 3.0],
+      "particles" : [
+        { "particle" : "project45armadillospark1"},
+        { "particle" : "project45armadillospark1"},
+        { "particle" : "project45armadillospark1"},
+        { "particle" : "project45armadillospark1"},
+        { "particle" : "project45armadillospark1"},
+        { "particle" : "project45armadillospark1"}
+      ]
+    },
+    "hitParticles" : {
+      "active" : false,
+      "emissionRate" : 1000,
+      "offsetRegion" : [-2.0, -2.0, 2.0, 2.0],
+      "particles" : [
+        { "particle" : "project45armadillohitspark"},
+        { "particle" : "project45armadillohitspark"},
+        { "particle" : "project45armadillohitspark"},
+        { "particle" : "project45armadillohitspark"},
+        { "particle" : "project45armadillohitspark"},
+        { "particle" : "project45armadillohitspark"}
+      ]
+    }
+  }
+}

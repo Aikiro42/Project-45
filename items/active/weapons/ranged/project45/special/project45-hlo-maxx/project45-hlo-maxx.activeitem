@@ -4,10 +4,11 @@ Credits: 343 Industries, Bungie, Creative Assembly, Ensemble Studios
 */
 {
   "itemName" : "project45-hlo-maxx",
-  "price" : 5000,
+  "price" : 50000,
   "maxStack" : 1,
   "rarity" : "Essential",
-  "description" : "A reliable AR favored by ODSTs.",
+  "description" : "A reliable assault rifle.",
+  "lore": "Favored by ODSTs and elite Miniknog shock troopers.",
   "shortdescription" : "^#fdd14d;MAXX Assault Rifle^reset;",
   "isUnique": true,
   "tooltipKind" : "project45gun",
@@ -54,6 +55,7 @@ Credits: 343 Industries, Bungie, Creative Assembly, Ensemble Studios
 
   "project45GunModInfo":{
     "category": "ballistic",
+    "uniqueType": "special",
     "upgradeCapacity": 9,
     "incompatibleMods": [
       "project45-autofiremod"

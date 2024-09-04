@@ -11,8 +11,9 @@
     "objectImage": "/items/augments/project45-gunmods/mods/project45-multithreadermod/project45-multithreadermod.png"
   },
   "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-multithreadermod/project45-multithreadermodicon.png",
-  "description": "Turns semi/burst weapons full auto. Just don't tell the UATF you installed this gun mod.",
+  "description": "Turns semi/burst energy weapons full auto. It's hard on the ammo capacitor.",
   "technicalInfo" : "Manual-feed weapons auto-feed.\nCharge weapons automatically fire when fully charged.",
+  "statInfo": "Max Ammo x0.5",
   "shortdescription" : "Multithreader",
 
    
@@ -21,36 +22,41 @@
     "modName": "Multithreader",
     "category": "energy",
     "slot": "receiver",
-    "primaryAbility": {
-      /*
-      "projectileKind": {
-        "operation": "replace",
-        "value": "hitscan"
-      },
-      */
-      "semi": {
-        "operation": "replace",
-        "value": false
-      },
-      "manualFeed": {
-        "operation": "replace",
-        "value": false
-      },
-      "autoFireAfterCharge": {
-        "operation": "replace",
-        "value": true
+    "gun": {
+      "primaryAbility": {
+        "semi": {
+          "operation": "replace",
+          "value": false
+        },
+        "manualFeed": {
+          "operation": "replace",
+          "value": false
+        },
+        "autoFireAfterCharge": {
+          "operation": "replace",
+          "value": true
+        }
+      }
+    },
+    "stat": {
+      "maxAmmo": {
+        "rebaseMult": 0.5
       },
       "burstCount": {
-        "operation": "replace",
-        "value": 1
+        "rebase": 1
       },
       "fireTime": {
-        "operation": "replace",
-        "value": 0.1
+        "rebaseMult": 0.5
+      },
+      "cycleTime": {
+        "rebaseMult": 0.5
+      },
+      "fireTimeGroup": {
+        "additive": 0.01
       }
     }
   },
 
-  "scripts" : [ "/scripts/augments/project45-gunmod/gunmod.lua" ],
+  "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
   "builder": "/items/buildscripts/buildproject45mod.lua"
 }

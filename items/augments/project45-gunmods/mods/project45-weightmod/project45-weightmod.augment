@@ -12,25 +12,33 @@
   },
   "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-weightmod/project45-weightmodicon.png",
   "description" : "Replacement parts made from a lightweight alloy.",
-  "statInfo": "Heavy: Removes mobility penalties.\nNon-heavy: Mobility x1.15",
-  "shortdescription" : "Aegisalt Alloy Parts",
+  "statInfo": "Heavy: Removes mobility penalties.\nMobility +0.15x",
+  "shortdescription" : "^#d93a3a;(!)^reset; Aegisalt Alloy Parts",
 
   "augment":{
-    "modName": "Aegisalt Alloy Parts",
+    "modName": "^#d93a3a;(!)^reset; Aegisalt Alloy Parts",
     "category": "universal",
     "slot": "material",
-    "primaryAbility": {
-      "heavyWeapon": {
-        "operation": "replace",
-        "value": false
-      },
+    "stat": {
       "movementSpeedFactor": {
-        "operation": "multiply",
-        "value": 1.15
+        "multiplicative": 0.15
       },
       "jumpHeightFactor": {
-        "operation": "multiply",
-        "value": 1.15
+        "multiplicative": 0.15
+      },
+      "recoverTime": {
+        "rebaseMult": 0.8
+      },
+      "recoilAmount": {
+        "rebaseMult": 1.1
+      }
+    },
+    "gun":{
+      "primaryAbility": {
+        "heavyWeapon": {
+          "operation": "replace",
+          "value": false
+        }
       }
     }
   },
@@ -38,6 +46,6 @@
 
    
 
-  "scripts" : [ "/scripts/augments/project45-gunmod/gunmod.lua" ],
+  "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
   "builder": "/items/buildscripts/buildproject45mod.lua"
 }

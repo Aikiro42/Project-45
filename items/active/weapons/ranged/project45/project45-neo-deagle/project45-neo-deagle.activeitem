@@ -3,7 +3,8 @@
   "price" : 1250,
   "maxStack" : 1,
   "rarity" : "Legendary",
-  "description" : "Fires an impractically powerful caliber, but reliable nonetheless.",
+  "description" : "A high-caliber pistol.",
+  "lore": "Fires impractically powerful bullets, but reliable nonetheless. Its solarium variant is frequently bought.",
   "shortdescription" : "Handcannon",
   "tooltipKind" : "project45gun",
   "gunArchetype": "revolver",
@@ -21,7 +22,7 @@
     "chargeFullbright": "",
     "magazine": "project45-neo-deagle-mag.png",
     "magazineFullbright": "",
-    "muzzleFlash": "/items/active/weapons/ranged/muzzleflash.png"
+    "muzzleFlash": "/items/active/weapons/ranged/project45-muzzleflash.png"
   },
 
   "animationCustom": {
@@ -71,7 +72,7 @@
 
   "project45GunModInfo":{
     "category": "ballistic",
-    "upgradeCapacity": 9,
+    
     "allowsConversion": [
       "hitscan",
       "beam",

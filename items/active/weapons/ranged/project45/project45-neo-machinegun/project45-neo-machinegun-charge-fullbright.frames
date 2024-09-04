@@ -10,5 +10,12 @@
         "charging.4"
       ]
     ]
+  },
+
+  "aliases": {
+    "charging.1.back": "charging.1",
+    "charging.2.back": "charging.2",
+    "charging.3.back": "charging.3",
+    "charging.4.back": "charging.4"
   }
 }

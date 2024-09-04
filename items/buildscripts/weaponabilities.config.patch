@@ -36,8 +36,23 @@
     },
     {
         "op": "add",
+        "path": "/project45orbitalstrike",
+        "value": "/items/active/weapons/ranged/abilities/project45orbitalstrike/project45orbitalstrike.weaponability"
+    },
+    {
+        "op": "add",
         "path": "/project45mlgnoscope",
         "value": "/items/active/weapons/ranged/abilities/project45mlgnoscope/project45mlgnoscope.weaponability"
+    },
+    {
+        "op": "add",
+        "path": "/project45armadillo",
+        "value": "/items/active/weapons/ranged/abilities/project45armadillo/project45armadillo.weaponability"
+    },
+    {
+        "op": "add",
+        "path": "/project45gunshield",
+        "value": "/items/active/weapons/ranged/abilities/project45armadillo/project45gunshield.weaponability"
     },
     {
         "op": "add",
@@ -46,7 +61,27 @@
     },
     {
         "op": "add",
+        "path": "/project45gunfireswitch",
+        "value": "/items/active/weapons/ranged/abilities/project45gunfireswitch/project45gunfireswitch.weaponability"
+    },
+    {
+        "op": "add",
+        "path": "/project45supplydrop",
+        "value": "/items/active/unsorted/project45/project45-supplytransponder/project45supplydrop/project45supplydrop.weaponability"
+    },
+    {
+        "op": "add",
         "path": "/project45tester",
         "value": "/items/active/weapons/ranged/abilities/project45tester/project45tester.weaponability"
+    },
+    {
+        "op": "add",
+        "path": "/project45ultracoin",
+        "value": "/items/active/weapons/ranged/abilities/project45ultracoin/project45ultracoin.weaponability"
+    },
+    {
+        "op": "add",
+        "path": "/project45scarletflash",
+        "value": "/items/active/weapons/ranged/abilities/project45scarletflash/project45scarletflash.weaponability"
     }
 ]

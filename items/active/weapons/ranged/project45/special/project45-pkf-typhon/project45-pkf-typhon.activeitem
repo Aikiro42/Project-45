@@ -4,7 +4,8 @@
   "maxStack" : 1,
   "rarity" : "Essential",
   "isUnique": true,
-  "description" : "A large plasma machine gun made out of ^#a8e6e2;nitrosteel^reset;.",
+  "description" : "A large plasma machine gun.",
+  "lore": "Knightfall operatives were able to get their hands on Project 45 standard schematics and was able to create this beauty.",
   "shortdescription" : "^#fdd14d;Typhon P45^reset;",
   "gunArchetype": "machineGun",
   "tooltipKind" : "project45gun",
@@ -16,7 +17,8 @@
   "inventoryIcon" : "project45-pkf-typhon-icon.png",
 
   "project45GunModInfo": {
-    "category": "experimental",
+    "category": "energy",
+    "uniqueType": "special",
     "upgradeCapacity": 10,
     "acceptsAmmoArchetype": [
     ],
@@ -87,7 +89,8 @@
                 "initialVelocity" : [5, 10]
               }
             }
-          }
+          },
+          {"particle": "project45flashbang-blue"}
         ]
       }, 
       "ejectionPort": {

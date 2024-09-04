@@ -1,0 +1,18 @@
+{
+  "itemName" : "project45-elementoil",
+  "price" : 1000,
+  "rarity" : "Rare",
+  "tooltipKind" : "project45gunmod",
+  "category" : "uniqueWeapon",
+  "itemTags": ["weapon"],
+  "tooltipFields":{
+    "subtitle": "Applied Utility",
+    "objectImage": "/items/augments/project45-gunmods/other/project45-elementoil/project45-elementoil.png"
+  },
+  "inventoryIcon" : "/items/augments/project45-gunmods/other/project45-elementoil/project45-elementoilicon.png",
+  "description" : "Applies a random vanilla element onto a weapon. Brought to you by Letheia Corp.",
+  "shortdescription" : "Elementoil© Vanilla Flavour",
+
+  "scripts" : [ "/items/augments/project45-gunmods/other/project45-elementoil/project45-elementoil.lua" ]
+
+}

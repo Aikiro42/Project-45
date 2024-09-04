@@ -3,7 +3,8 @@
   "price" : 2500,
   "maxStack" : 1,
   "rarity" : "Rare",
-  "description" : "The latest iteration of a reliable rifle design, complete with the iconic *ping*.",
+  "description": "A reliable battle rifle.",
+  "lore" : "The latest iteration of a reliable rifle design, complete with the iconic *ping*.",
   "shortdescription" : "Service Rifle",
   "tooltipKind" : "project45gun",
   "gunArchetype": "rifle",
@@ -16,7 +17,7 @@
 
   "project45GunModInfo":{
     "category": "ballistic",
-    "upgradeCapacity": 9,
+    
     "allowsConversion": [
       "hitscan",
       "summoned"
@@ -43,7 +44,7 @@
     "chargeFullbright": "",
     "magazine": "project45-neo-servicerifle-mag.png",
     "magazineFullbright": "",
-    "muzzleFlash": "/items/active/weapons/ranged/muzzleflash.png"
+    "muzzleFlash": "/items/active/weapons/ranged/project45-muzzleflash.png"
   },
 
   "animationCustom": {

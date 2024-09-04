@@ -1,0 +1,19 @@
+{
+  "kind" : "project45realityshard01",
+  "definition" : {
+    "type" : "animated",
+    "animation" : "/animations/project45realityshard/project45realityshard01.animation",
+    "fullbright": true,
+    "position" : [-1.5, 0.4375],
+    "finalVelocity" : [0, 0],
+    "approach" : [5, 5],
+    "fade" : 1,
+    "size" : 1,
+    "layer" : "front",
+    "timeToLive" : 5,
+    "variance" : {
+      "initialVelocity": [10, 10],
+      "angularVelocity": 10
+    }
+  }
+}

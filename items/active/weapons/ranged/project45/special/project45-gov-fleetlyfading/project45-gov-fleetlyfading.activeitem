@@ -1,0 +1,215 @@
+{
+  "itemName" : "project45-gov-fleetlyfading",
+  "price" : 50000,
+  "maxStack" : 1,
+  "rarity" : "Essential",
+  "isUnique": true,
+  "description" : "A Godesium katana.",
+  "lore": "Found in a planet overtaken by a mechanical species related to the Glitch.",
+  "shortdescription" : "^#fdd14d;Fleetly Fading^reset;",
+  "gunArchetype": "assaultRifle",
+  "tooltipKind" : "project45gun",
+  "category" : "uniqueWeapon",
+  "twoHanded" : true,
+  "itemTags" : ["weapon","ranged","assaultrifle"],
+  "level" : 1,
+  "inventoryIcon" : "project45-gov-fleetlyfading-icon.png",
+  "elementalType": "fire",
+
+  "project45GunModInfo": {
+    "category": "experimental",
+    "uniqueType": "special",
+    "upgradeCapacity": 10
+  },
+
+  "animationParts" : {
+    "middle" : "project45-gov-fleetlyfading.png",
+    "middleFullbright" : "project45-gov-fleetlyfadingfullbright.png",
+    "charge": "",
+    "chargeFullbright": "",
+    "magazine": "",
+    "magazineFullbright": ""
+  },
+
+  "animationCustom": {
+    "particleEmitters": {
+      "ejectionPort": {
+        "particles": [
+
+        ]
+      },
+      "magazine": {
+        "particles": [
+
+        ]
+      },
+      "shootSmoke": {
+        "particles": []
+      },
+      "muzzleFlash": {
+        "particles": [
+          {"particle": "project45muzzle"},
+          {"particle": "project45muzzle"},
+          {"particle": "project45muzzle"},
+          {"particle": "project45flashbang-white"}
+        ]
+      }
+    },
+
+    "sounds": {
+      "fire" : [
+        "/sfx/project45neosfx/special/fleetlyfading/fleetlyfading_fire1.ogg",
+        "/sfx/project45neosfx/special/fleetlyfading/fleetlyfading_fire2.ogg",
+        "/sfx/project45neosfx/special/fleetlyfading/fleetlyfading_fire3.ogg"
+      ],
+      "reloadStart": [
+        "/sfx/project45neosfx/special/fleetlyfading/fleetlyfading_reloadstart.ogg"
+      ],
+      "reloadEnd": [
+        "/sfx/project45neosfx/special/fleetlyfading/fleetlyfading_reloadend.ogg"
+      ],
+      "ejectMag" : [],
+      "boltPull" : [ "/sfx/melee/charge_traildash2.ogg" ],
+      "boltPush" : [],
+      "click": []
+    }
+  },
+
+  "muzzleFlashColor": [255,128,255],
+  "baseOffset" : [-1.75, -0.25],
+  "muzzleOffset" : [1.875, 0.5],
+  "ejectionPortOffset": [-0.1, 0.7],
+  "magazineOffset": [-0.1, 0.7],
+
+  "scripts" : ["/items/active/weapons/ranged/project45gunneo.lua"],
+    
+  "primaryAbilityType": "project45gunfire",
+  "overrideArchetypeDps": true,
+  "primaryAbility": {
+
+    "baseDps": 50,
+
+    "passiveDescription": "HP -5% every 10 shots.\nHealth < 50%: Gain Rage buff.",
+    "passiveScript": "/items/active/weapons/ranged/project45/special/project45-gov-fleetlyfading/fleetlyfadingpassive.lua",
+
+    "critDamageMult": 2,
+    "reloadCost": 65,
+
+    "projectileKind": "summoned",
+    "summonedProjectileType": "project45_fleetlyfadingexplosion",
+    "cycleTime": 0.075,
+    "semi": false,
+    "hideMuzzleFlash": true,
+    "hideMuzzleSmoke": true,
+    
+    "internalMag": true,
+    "closeBoltOnEmpty": true,
+    "loadRoundsThroughBolt": true,
+    "reloadOnEjectMag": true,
+    
+    "jamChances": [0, 0, 0, 0],
+    "reloadRatingDamageMults": [0.8, 1, 1.25, 1.5],
+    "inaccuracy": 2.5,
+
+    "disableRecoil": true,
+    
+    "spread": 1,
+    "maxAmmo": 20,
+    "bulletsPerReload": 20,
+    "reloadTime": 2.30,
+
+    "laser": {
+      "enabled": true,
+      "color": [200, 0, 255, 128]
+    },
+
+    "stances": {
+      
+      "aimStance": {
+        "frontArmFrame" : "jump.3",
+        "backArmFrame" : "fall.1",
+        "weaponRotation": 15,
+        "lock": true,
+        "allowRotate": false,
+        "weaponOffset": [0, 0],
+        "aimAngle": 0,
+        "twoHanded": true,
+        "weaponRotationCenter": [-1.125, 0]
+      },
+      "empty": {
+        "frontArmFrame" : "jump.3",
+        "backArmFrame" : "fall.1",
+        "weaponRotation": 15,
+        "armRotation": 0,
+        "lock": true,
+        "allowRotate": false,
+        "weaponOffset": [0, 0],
+        "aimAngle": 0,
+        "weaponRotationCenter": [-1.125, 0]
+      },
+      "ejectmag": {
+        "frontArmFrame" : "idle.4",
+        "backArmFrame" : "fall.1",
+        "weaponRotation": 0,
+        "lock": true,
+        "allowRotate": false,
+        "weaponOffset": [0, 0],
+        "weaponRotationCenter": [-0.5, -0.25]
+      },
+      "boltPull": {
+        "frontArmFrame" : "idle.4",
+        "backArmFrame" : "fall.1",
+        "weaponRotation": 15,
+        "lock": true,
+        "allowRotate": false,
+        "weaponOffset": [0, 0]
+      },
+      "boltPush": {
+        "frontArmFrame" : "idle.4",
+        "backArmFrame" : "fall.1",
+        "weaponRotation": 15,
+        "lock": true,
+        "allowRotate": false,
+        "weaponOffset": [0, 0]
+      },
+      "reloading": {
+        "frontArmFrame" : "idle.4",
+        "backArmFrame" : "swim.3",
+        "weaponRotation": 15,
+        "armRotation": 15,
+        "lock": true,
+        "allowRotate": false,
+        "weaponOffset": [0, 0],
+        "weaponRotationCenter": [-0.5, -0.25]
+      },
+      "reloaded": {
+        "frontArmFrame" : "idle.4",
+        "backArmFrame" : "jump.4",
+        "weaponRotation": 30,
+        "armRotation": 10,
+        "allowRotate": false,
+        "lock": true,
+        "weaponOffset": [-0.5, 0.5]
+      }
+      
+      ,"firing": {
+        "frontArmFrame" : "jump.3",
+        "backArmFrame" : "swim.3",
+        "weaponRotation": 30,
+        "armRotation": 5,
+        "lock": true,
+        "allowRotate": false,
+        "twoHanded": true,
+        "duration": 0,
+        "weaponRotationCenter": [-1.125, 0]
+      }
+      //*/
+
+    }
+
+  },
+
+  "altAbilityType": "project45scarletflash",
+
+  "builder" : "/items/buildscripts/buildproject45neoneo.lua"
+}

@@ -1,6 +1,6 @@
 {
   "itemName" : "project45-godmod",
-  "price" : 30000,
+  "price" : 3000,
   "rarity" : "Essential",
   "isUnique": true,
   "tooltipKind" : "project45gunmod2",
@@ -18,22 +18,33 @@
   "shortdescription" : "^#fdd14d;The God Mod^reset;",
 
   "augment":{
-    "upgradeCost": 3,
-    "baseDamage": {
-      "multiplicative": 0.4
-    },
-    "critChance": {
-      "additive": 0.10
-    },
-    "critDamage": {
-      "additive": 0.12
-    },
-    "fireTime": {
-      "multiplicative": 0.08
+    "cost": 3,
+    "pureStatMod": true,
+    
+    "stat": {
+      "stackLimit": 3,
+      "baseDamage": {
+        "multiplicative": 1
+      },
+      "critChance": {
+        "additive": 0.50
+      },
+      "critDamage": {
+        "additive": 0.25
+      },
+      "fireTimeGroup": {
+        "multiplicative": 0.75
+      },
+      "multishot":{
+        "multiplicative": 0.5
+      },
+      "ammoConsumeChance": {
+        "additive": -0.15
+      }
     }
   },
 
-  "scripts" : [ "/scripts/augments/project45-gunmod/statmod.lua" ],
+  "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
   "builder": "/items/buildscripts/buildproject45mod.lua"
 
 }

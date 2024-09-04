@@ -1,0 +1,24 @@
+{
+  "itemName" : "project45-disassembledguncase",
+  "price" : 20000,
+  "level" : 1,
+  "maxStack" : 1,
+  "rarity" : "Essential",
+  "category" : "mysteriousReward",
+  "description" : "Left-click to retrieve the disassembled gun.",
+  "shortdescription" : "Disassembled Gun Case",
+  "twoHanded" : true,
+  "tooltipKind" : "project45gun",
+  "tooltipFields":{
+    "subtitle": "Disassembled Gun Case"
+  },
+
+  "inventoryIcon" : "project45-disassembledguncase-icon.png",
+  "animation" : "project45-disassembledguncase.animation",
+  
+  "animationCustom" : { },
+  "scripts" : ["project45-disassembledguncase.lua"],
+  "fireTime" : 0.1,
+  "fireOffset" : [1.0, 0.0]
+
+}

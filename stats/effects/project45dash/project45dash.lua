@@ -4,9 +4,8 @@ function init()
   effect.addStatModifierGroup({{stat = "invulnerable", amount = 1}})
   effect.addStatModifierGroup({{stat = "powerMultiplier", effectiveMultiplier = 0}})
   self.maxDuration = effect.duration()
-  animator.setParticleEmitterBurstCount("explosion", 10)
   animator.burstParticleEmitter("explosion")
-  animator.setParticleEmitterActive("explosion", true)
+  animator.setParticleEmitterActive("phased", true)
   -- turn BLUE and become transparent
   -- self.direk = "?fade=FFFFFF=1?multiply=000000FA?outline=1;BE00FFCC;00000000"
   self.direk = "?fade=FFFFFF=0.1?multiply=54007199"
@@ -36,5 +35,34 @@ function update(dt)
 end
 
 function uninit()
-  
+  animator.burstParticleEmitter("explosion")
+  world.spawnProjectile(
+        "invisibleprojectile",
+        mcontroller.position(),
+        activeItem.ownerEntityId(),
+        {1, 0},
+        false,
+        {
+            power=0,
+            timeToLive=0,
+            actionOnReap={
+                {
+                    action="particle",
+                    specification="project45realityshard01"
+                },
+                {
+                    action="particle",
+                    specification="project45realityshard02"
+                },
+                {
+                    action="particle",
+                    specification="project45realityshard03"
+                },
+                {
+                    action="particle",
+                    specification="project45realityshard04"
+                },
+            }
+        }
+    )
 end

@@ -1,0 +1,38 @@
+[
+  {
+    "op": "add",
+    "path": "/basicMonsterTreasure/0/1/fill",
+    "value": [
+      {"weight" : 1, "pool" : "project45-stat-drop"}
+    ]
+  },
+  {
+    "op": "add",
+    "path": "/flyingMonsterTreasure/0/1/fill",
+    "value": [
+      {"weight" : 1, "pool" : "project45-stat-drop"}
+    ]
+  },
+  {
+    "op": "add",
+    "path": "/robotTreasure/0/1/fill",
+    "value": [
+      {"weight" : 1, "pool" : "project45-stat-drop"}
+    ]
+  },
+  {
+    "op": "add",
+    "path": "/noMeatMonsterTreasure/0/1/fill",
+    "value": [
+      {"weight" : 1, "pool" : "project45-stat-drop"}
+    ]
+  },
+  {
+    "op": "add",
+    "path": "/weaklingMonsterTreasure/0/1/fill",
+    "value": [
+      {"weight" : 1, "pool" : "project45-stat-drop"}
+    ]
+  }
+
+]

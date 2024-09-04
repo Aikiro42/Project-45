@@ -4,7 +4,8 @@
   "maxStack" : 1,
   "rarity" : "Essential",
   "isUnique": true,
-  "description" : "A railgun found in the forests of Fortuna III.",
+  "description" : "A military-grade railgun.",
+  "lore": "Found buried in a wandering fragment of Fortuna III, a world destroyed by the Ruin.",
   "shortdescription" : "^#fdd14d;Kinetic Arbiter^reset;",
   "tooltipKind" : "project45gun",
   "gunArchetype": "antiMateriel",
@@ -16,7 +17,8 @@
   "inventoryIcon" : "project45-tcf-kineticarbiter-icon.png",
 
   "project45GunModInfo": {
-    "category": "special",
+    "category": "ballistic",
+    "uniqueType": "special",
     "upgradeCapacity": 10,
     "acceptsModSlot": [
       "sights"
@@ -62,6 +64,14 @@
       "magazine": {
         "particles": [
           {"particle": "project45kineticarbitermag"}
+        ]
+      },
+      "muzzleFlash": {
+        "particles": [
+          {"particle": "project45muzzle"},
+          {"particle": "project45muzzle"},
+          {"particle": "project45muzzle"},
+          {"particle": "project45flashbang-blue"}  
         ]
       }
     },

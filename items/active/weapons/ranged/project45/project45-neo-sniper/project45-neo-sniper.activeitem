@@ -4,6 +4,7 @@
   "maxStack" : 1,
   "rarity" : "Legendary",
   "description" : "A semi-auto bullpup marksman rifle.",
+  "lore": "Designed for those unqualified to bear anti-materiel rifles.",
   "shortdescription" : "Sniper",
   "tooltipKind" : "project45gun",
   "gunArchetype": "sniper",
@@ -46,7 +47,7 @@
 
   "project45GunModInfo":{
     "category": "ballistic",
-    "upgradeCapacity": 8,
+    
     "allowsConversion": [
       "hitscan",
       "summoned"

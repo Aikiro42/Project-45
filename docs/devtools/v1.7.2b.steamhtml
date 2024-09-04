@@ -1,0 +1,27 @@
+[h1]v1.7.2b[/h1]
+
+[h2]User Side[/h2]
+
+[h3]New Features[/h3]
+
+[list]
+    [*]Add damage scaling option to Project 45 configuration menu (requires Quickbar Mini)
+[/list][h3]Fixes[/h3]
+
+[list]
+    [*]Fixed script error when trying to render error messages
+    [*]Fixed reload keybind not working post-hotfix
+[/list][h3]Balance Changes[/h3]
+
+[list]
+    [*]Added R-rarity stat mods in common treasure and monster drops [i](0.64 weight)[/i]
+[/list][h3]General Changes[/h3]
+
+[h2]Dev Side[/h2]
+
+[h3]New Features[/h3]
+
+[list]
+    [*]Added files for making quick hotfix changelogs
+    [*]Add 'damageScaling' field to project45_general.config
+[/list]

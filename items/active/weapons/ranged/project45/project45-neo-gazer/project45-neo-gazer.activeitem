@@ -4,6 +4,7 @@
   "maxStack" : 1,
   "rarity" : "Legendary",
   "description" : "An sleek, energy marksman rifle.",
+  "lore": "This is the result of the successful conversion of the Covalence into a high-powered hardlight emitter.",
   "shortdescription" : "Gazer",
   "tooltipKind" : "project45gun",
   "gunArchetype": "sniper",
@@ -44,7 +45,7 @@
 
   "project45GunModInfo":{
     "category": "energy",
-    "upgradeCapacity": 9,
+    
     "allowsConversion": [
       "projectile",
       "beam",
@@ -102,7 +103,13 @@
     "spread": 0.001,
 
     "hitscanParameters": {
-      "hitscanWidth": 3
+      "chain": true,
+      "hitscanWidth": 3,
+      "punchThrough": 3
+    },
+
+    "beamParameters": {
+      "chain": true
     },
 
     // "reloadTime": 10,

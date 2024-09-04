@@ -1,0 +1,31 @@
+{
+  "itemName" : "project45-damageaddmod3",
+  "price" : 1000,
+  "rarity" : "Legendary",
+  "tooltipKind" : "project45gunmod2",
+  "tooltipFields": {
+    "subtitle": "Stat Mod"
+  },
+  "modCategory" : "statMod",
+  "category" : "uniqueWeapon",
+  "itemTags": ["weapon"],
+  "inventoryIcon" : "/items/augments/project45-gunmods/stat/project45-damagemod/project45-damageaddmod.png",
+  "statInfo" : "^#EA9931;Base Damage +0.8^reset;",
+  "description": "Increases Base Damage by 0.8.",
+  "shortdescription" : "^#EA9931;Base Damage T3",
+  "slot": "baseDamage",
+  "archetype": "Additive",
+  "augment":{
+    "cost": 3,
+    "pureStatMod": true,
+    
+    "stat":{
+      "baseDamage": {
+        "additive": 0.8
+      }
+    }
+  },
+
+  "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
+}

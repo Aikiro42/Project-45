@@ -1,0 +1,5 @@
+[h1]v1.7.1b Hotfix[/h1]
+
+[list]
+    [*]Fixed script error in games when StarExtensions is not installed.
+[/list]

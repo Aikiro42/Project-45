@@ -1,0 +1,181 @@
+{
+  "itemName" : "project45-neo-wristgun",
+  "price" : 1900,
+  "maxStack" : 1,
+  "rarity" : "Rare",
+  "description" : "A Wrist-mounted pistol.",
+  "lore": "A popular weapon among spies. Has a specialized trigger mechanism inspired from weapons of ancient assassins.",
+  "shortdescription" : "Wristgun",
+  "tooltipKind" : "project45gun",
+  "gunArchetype": "pistol",
+  "category" : "fistWeapon",
+  "twoHanded" : false,
+  "itemTags" : ["weapon","ranged","fistWeapon"],
+  "level" : 1,
+  "muzzleFlashColor": [255, 255, 200],
+  "inventoryIcon" : "project45-neo-wristgun-icon.png",
+
+  "animationParts" : {
+    "middle" : "project45-neo-wristgun.png",
+    "middleFullbright" : "",
+    "charge": "",
+    "chargeFullbright": "",
+    "magazine": "project45-neo-wristgun-mag.png",
+    "magazineFullbright": ""
+  },
+
+  "animationCustom": {
+    "particleEmitters": {
+      "ejectionPort": {
+        "particles": [
+          {"particle": "project45bulletcasesmallback"}
+        ]
+      },
+      "backEjectionPort": {
+        "particles": [
+          {"particle": "project45bulletcasesmall"}
+        ]
+      },
+      "magazine": {
+        "particles": [
+          {"particle": "project45pistolmag"}
+        ]
+      }
+    },
+
+    "sounds": {
+      "fire" : ["/sfx/project45neosfx/fire/fire-pistol1.ogg"]
+    }
+  },
+
+  "project45GunModInfo":{
+    "category": "ballistic",
+    "incompatibleMods": [
+      "project45-gunshieldmod"
+    ],
+    "allowsConversion": [
+      "hitscan",
+      "beam",
+      "summoned"
+    ],
+    "acceptsAmmoArchetype":[
+      "bullet"
+    ],
+    "acceptsModSlot": [
+      "sights",
+      "muzzle",
+      "rail",
+      "underbarrel",
+      "receiver",
+      "material",
+      "magazine"
+    ]
+  },
+
+  "baseOffset" : [-0.125, 0],
+  "muzzleOffset" : [0.6875, 0.3125],
+  "ejectionPortOffset": [0, 0],
+  "magazineOffset": [0, 0],
+  
+  "sightsOffset": [-0.1875, 0.625],
+  "railOffset": [-0.1875, 0],
+  "underbarrelOffset": [-0.125, -0.25],
+  
+  "debugPointColors": {
+    "rail": "red",
+    "sights": "orange",
+    "underbarrel": "green"
+  },
+
+  "scripts" : ["/items/active/weapons/ranged/project45gunneo.lua"],
+    
+  "primaryAbilityType": "project45gunfire",
+  "primaryAbility": {
+    "reloadCost": 25,
+    "maxAmmo": 16,
+    "bulletsPerReload": 16,
+    "inaccuracy": 1,
+    "inaccuracyMults": {
+      "mobile": 1,
+      "walking": 0.75,
+      "stationary": 0.5,
+      "crouching": 0.25
+    },
+
+    "recoilAmount": 1.75,
+    "recoilMaxDeg": 15,
+    "recoverDelay": 0,
+    "recoverTime": 0.65,
+    
+    "semi": true,
+    "cycleTime": 0.1,
+    "projectileKind": "projectile",
+
+    "backHandFrame": ".back",
+    "handGrip": "wrap",
+
+    "stances": {
+      "aimStance": {
+        "twoHanded": false
+      },
+      "empty": {
+        "armRotation" : -45,
+        "twoHanded": false,
+        "allowRotate" : false,
+        "allowFlip" : true
+      },
+      "ejectmag" : {
+        "armRotation" : -90,
+        "twoHanded" : false,
+        "allowRotate" : false,
+        "allowFlip" : false
+      },
+      "reloading" : {
+                
+        "armRotation" : 0,
+        "weaponRotation" : 45,
+        // "weaponRotationCenter" : [-1.0, 0.0],
+        "weaponOffset" : [-0.25, 0.25],
+        "twoHanded": false,
+        "aimAngle": 0,
+        "allowRotate" : false,
+        "allowFlip" : true,
+        "snap": true,
+        "frontArmFrame" : "run.2",
+        "backArmFrame" : "jump.3"
+
+      },
+      "reloaded" : {
+                
+        "armRotation" : 0,
+        "weaponRotation" : 45,
+        // "weaponRotationCenter" : [-1.0, 0.0],
+        "weaponOffset" : [-0.25, 0.25],
+        "twoHanded": true,
+        "aimAngle": 0,
+        "allowRotate" : false,
+        "allowFlip" : true,
+        "snap": true,
+        "frontArmFrame" : "run.2",
+        "backArmFrame" : "jump.3"
+
+      },
+      "boltPull": {
+        "twoHanded": false
+      },
+      "boltPush": {
+        "twoHanded": false
+      },
+      "jammed": {
+        "twoHanded": false
+      },
+      "unjam": {
+        "armRotation": -45,
+        "frontArmFrame": "rotation",
+        "twoHanded": false      
+      }
+    }
+  },
+
+  "builder" : "/items/buildscripts/buildproject45neoneo.lua"
+}

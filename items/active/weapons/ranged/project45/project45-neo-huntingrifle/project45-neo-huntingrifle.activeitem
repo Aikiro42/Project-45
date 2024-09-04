@@ -3,7 +3,8 @@
   "price" : 1250,
   "maxStack" : 1,
   "rarity" : "Uncommon",
-  "description" : "A hunting rifle of timeless design. Favored by Novakids.",
+  "description" : "A bolt-action rifle.",
+  "lore": "Made out of cheap materials, but is very reliable and feels good to shoot. Favored by Novakids.",
   "shortdescription" : "Hunting Rifle",
   "tooltipKind" : "project45gun",
   "gunArchetype": "rifle",
@@ -16,7 +17,7 @@
 
   "project45GunModInfo":{
     "category": "ballistic",
-    "upgradeCapacity": 8,
+    
     "allowsConversion": [
       "hitscan",
       "summoned"
@@ -42,7 +43,7 @@
     "chargeFullbright": "",
     "magazine": "project45-neo-huntingrifle-mag.png",
     "magazineFullbright": "",
-    "muzzleFlash": "/items/active/weapons/ranged/muzzleflash.png"
+    "muzzleFlash": "/items/active/weapons/ranged/project45-muzzleflash.png"
   },
 
   "animationCustom": {

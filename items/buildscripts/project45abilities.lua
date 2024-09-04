@@ -56,3 +56,5 @@ function setupAbility(config, parameters, abilitySlot, builderConfig, seed)
   return {}
 
 end
+
+setupAbility_original = setupAbility

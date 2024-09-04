@@ -1,0 +1,96 @@
+{
+  "animationCustom": {
+    "animatedParts": {
+      "stateTypes": {
+        "project45orbitalstrike" : {
+          "default" : "cooldown",
+          "states" : {
+            "cooldown" : {},
+            "ready" : {}
+          }
+        }
+      },
+      "parts": {
+        "rail": {
+          "properties": {
+            "zLevel": 5,
+            "centered": true,
+            "transformationGroups": ["weapon"],
+            "image": "/items/active/weapons/ranged/abilities/project45orbitalstrike/project45orbitalstrike.png<directives>"
+          }
+        },
+        "railFullbright": {
+          "properties": {
+            "zLevel": 6,
+            "centered": true,
+            "transformationGroups": ["weapon"],
+            "fullbright": true
+          },
+          "partStates": {
+            "project45orbitalstrike" : {
+
+              "cooldown" : {
+                "properties" : {
+                  "image" : ""
+                }
+              },
+              "ready" : {
+                "properties" : {
+                  "image": "/items/active/weapons/ranged/abilities/project45orbitalstrike/project45orbitalstrikefullbright.png<directives>"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "sounds": {
+      "ping": ["/sfx/interface/sniper_mark_pitch1.ogg"],
+      "lockPing": ["/sfx/interface/rocket_lockon.ogg"],
+      "ready" : [ "/sfx/interface/nav_panning_loop.ogg" ],
+      "loading": [ "/sfx/interface/nav_scanning_single.ogg" ],
+
+      // https://freesound.org/people/KIZILSUNGUR/sounds/70299/
+      "locked": ["/sfx/project45neosfx/sonar.ogg"],
+      "error": ["/sfx/interface/clickon_error.ogg"]
+    }
+  },
+
+  "animationScripts": [
+    "/items/active/weapons/ranged/abilities/project45orbitalstrike/project45orbitalstrikeanimation.lua"
+  ],
+
+  "ability": {
+    "name": "Orbital Strike",
+    "type": "project45orbitalstrike",
+    "scripts": [
+      "/items/active/weapons/ranged/abilities/project45orbitalstrike/project45orbitalstrike.lua"
+    ],
+    "class": "Project45OrbitalStrike",
+
+    "cooldownTime": 3,
+    "energyCost": 300,
+
+    // range that the strike hits
+    "orbitalRadius": 20,
+    
+    "strikeHeight": 50,
+    // time to lock on in seconds
+    "lockOnTime": 1,
+    
+    "launcherCount": 5,
+    "launcherTimeToLive": 3,
+    "launcherFireTime": 0.5,
+
+    "projectileType": "project45orbitalstrikeproj",
+    "spaceProjectileType": "project45orbitalstrikespace",
+    "projectileParameters": {},
+    "deviation": 1, // deviation in degrees
+
+
+    "gravThreshold": 0,
+    "minimumUsableWorldHeightRatio": 0.125  // 1/8 of world height away from bottom
+
+  }
+}

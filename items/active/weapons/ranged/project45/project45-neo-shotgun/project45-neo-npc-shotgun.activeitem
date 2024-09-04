@@ -1,0 +1,86 @@
+{
+  "itemName" : "project45-neo-npc-shotgun",
+  "price" : 1080,
+  "maxStack" : 1,
+  "rarity" : "Legendary",
+  "description" : "Used by Letheia and Miniknog goons.",
+  "shortdescription" : "Shotgun",
+  "category" : "uniqueWeapon",
+  "twoHanded" : false,
+  "itemTags" : ["weapon","ranged","shotgun"],
+  "level" : 6,
+
+  "inventoryIcon" : [
+    { "image" : "project45-neo-shotgun-icon.png" }
+  ],
+
+  "animation" : "project45-neo-npc-shotgun.animation",
+  "animationParts" : {
+    "middle" : "project45-neo-shotgun-icon.png",
+    "middleFullbright" : "",
+    "muzzleFlash": "/items/active/weapons/ranged/muzzleflash.png"
+  },
+  "animationCustom" : {
+    "sounds" : {
+      "fire" : ["/sfx/project45neosfx/npc/fire/fire-shotgun.ogg"]
+    },
+    "lights" : {
+      "muzzleFlash" : {
+        "color" : [255, 255, 200]
+      }
+    }
+  },
+
+  "baseOffset" : [0.25, -0.25],
+  "muzzleOffset" : [2, 0.3125],
+
+  "scripts" : ["/items/active/weapons/ranged/gun.lua"],
+
+  "elementalType" : "physical",
+
+  "primaryAbility" : {
+    "scripts" : ["/items/active/weapons/ranged/gunfire.lua"],
+    "class" : "GunFire",
+
+    "fireTime" : 0,
+    "baseDamage" : 7,
+    "energyUsage" : 20,
+    "projectileCount" : 5,
+    "inaccuracy" : 0.017,
+    "fireType" : "auto",
+
+    "projectileType" : "project45stdbullet",
+    "muzzleFlashVariants" : 3,
+
+    "stances" : {
+      "idle" : {
+        "armRotation" : 0,
+        "weaponRotation" : 0,
+        "twoHanded" : false,
+
+        "allowRotate" : true,
+        "allowFlip" : true
+      },
+      "fire" : {
+        "duration" : 0,
+        "armRotation" : 4,
+        "weaponRotation" : 4,
+        "twoHanded" : false,
+
+        "allowRotate" : false,
+        "allowFlip" : false
+      },
+      "cooldown" : {
+        "duration" : 0.8,
+        "armRotation" : 4,
+        "weaponRotation" : 4,
+        "twoHanded" : false,
+
+        "allowRotate" : false,
+        "allowFlip" : false
+      }
+    }
+  },
+
+  "builder" : "/items/buildscripts/buildunrandweapon.lua"
+}

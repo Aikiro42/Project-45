@@ -3,35 +3,47 @@
   "price" : 1000,
   "rarity" : "Common",
   "tooltipKind" : "project45gunmod2",
-  "modCategory" : "passiveMod",
+  "modCategory" : "abilityMod",
   "category" : "uniqueWeapon",
   "itemTags": ["weapon"],
   "tooltipFields": {
-    "subtitle": "Passive Mod"
+    "subtitle": "Ability Mod"
   },
   "inventoryIcon" : "/items/augments/project45-gunmods/passive/project45-shiftreloadmod/project45-shiftreloadmod.png",
   "description" : "Enables you to manually reload your weapon. ^#d93a3a;Overrides crouch actions of ability mods.^reset;",
   "technicalInfo": "- Tap crouch (shift) to reload.",
   "shortdescription" : "Shift Reload",
-  "archetype": "Passive Ability",
+  "archetype": "Shift Ability",
   
   "augment":{
     "modName": "Shift Reload",
-    "upgradeCost": 0,
+    "cost": 0,
     "category": "universal",
-    "slot": "passive",
-    "passiveScript" : "/items/augments/project45-gunmods/passive/project45-shiftreloadmod/project45-shiftreloadmod.lua",
-    "passiveParameters": {},
-    "passiveDescription": "Shift Reload",
-    "animationCustom": {
-      "sounds":{
-        "shiftReloadError": ["/sfx/interface/clickon_error.ogg"]
-      }
-    },
-    "hasShiftAction": true,
-    "overrideShiftAction": true
+    "slot": "manualReload",
+    "ability": {
+      "shiftAbilityType" : "project45gunfirereload",
+      "shiftAbility": {
+        "name": "Shift Reload",
+        "shiftActivates": true
+      },
+      "hasShiftAction": true
+    }
+    /*
+    "passive": {
+      "passiveScript" : "/items/augments/project45-gunmods/passive/project45-shiftreloadmod/project45-shiftreloadmod.lua",
+      "passiveParameters": {},
+      "passiveDescription": "Shift Reload",
+      "animationCustom": {
+        "sounds":{
+          "shiftReloadError": ["/sfx/interface/clickon_error.ogg"]
+        }
+      },
+      "hasShiftAction": true,
+      "overrideShiftAction": true
+    }
+    */
   },
 
-  "scripts" : [ "/scripts/augments/project45-gunmod/passivemod.lua" ],
+  "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
   "builder": "/items/buildscripts/buildproject45mod.lua"
 }

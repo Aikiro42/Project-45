@@ -1,0 +1,23 @@
+{
+  "kind" : "project45flashbang-yellow",
+  "definition" : {
+    "type" : "textured",
+    "image" : "/particles/project45/vfx/project45flashbang/project45flashbang.png:3",
+    "fade" : 0.9,
+    "position" : [0, 0],
+    "size" : 1.0,
+    "initialVelocity" : [0, 0],
+    "finalVelocity" : [0, 0],
+    
+    "timeToLive" : 0,
+    "layer" : "front",
+    "destructionTime" : 0.05,
+    "destructionAction": "shrink",
+    "fullbright": true,
+    "collidesForeground" : false,
+    "rotation": 0,
+	  "variance" : {
+      "size": 0.25
+    }
+  }
+}

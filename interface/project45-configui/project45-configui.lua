@@ -3,7 +3,7 @@ require "/scripts/project45/project45util.lua"
 	
 local invSettings = {
 	"useAmmoCounterImages",
-	"accurateBars",
+	-- "accurateBars",
 	"reloadFlashLasers",
 	"armFrameAnimations"
 }
@@ -13,17 +13,17 @@ function promptRestart()
 end
 
 function toggleCursorBars()
-	status.setStatusProperty("project45_renderBarsAtCursor", widget.getChecked("btnToggleCursorBars"))
+	player.setProperty("project45_renderBarsAtCursor", widget.getChecked("btnToggleCursorBars"))
   promptRestart()
 end
 
 function togglePerformanceMode()
-	status.setStatusProperty("project45_performanceMode", widget.getChecked("btnTogglePerformanceMode"))
+	player.setProperty("project45_performanceMode", widget.getChecked("btnTogglePerformanceMode"))
 	
 	for _, setting in ipairs(invSettings) do
 	
 		if widget.getChecked("btnTogglePerformanceMode") then
-			status.setStatusProperty("project45_" .. setting, false)
+			player.setProperty("project45_" .. setting, false)
 			widget.setChecked("btn" .. project45util.capitalize(setting), false)
 			widget.setFontColor("lbl" .. project45util.capitalize(setting), "gray")
 		else
@@ -36,8 +36,8 @@ function togglePerformanceMode()
 end
 
 function toggleArmFrameAnimations()
-	if not status.statusProperty("project45_performanceMode") then
-		status.setStatusProperty("project45_armFrameAnimations", widget.getChecked("btnArmFrameAnimations"))
+	if not player.getProperty("project45_performanceMode") then
+		player.setProperty("project45_armFrameAnimations", widget.getChecked("btnArmFrameAnimations"))
   	promptRestart()
 	else
 		widget.setChecked("btnArmFrameAnimations", false)
@@ -45,8 +45,8 @@ function toggleArmFrameAnimations()
 end
 
 function toggleReloadFlashLasers()
-	if not status.statusProperty("project45_performanceMode") then
-		status.setStatusProperty("project45_reloadFlashLasers", widget.getChecked("btnReloadFlashLasers"))
+	if not player.getProperty("project45_performanceMode") then
+		player.setProperty("project45_reloadFlashLasers", widget.getChecked("btnReloadFlashLasers"))
   	promptRestart()
 	else
 		widget.setChecked("btnReloadFlashLasers", false)
@@ -54,26 +54,47 @@ function toggleReloadFlashLasers()
 end
 
 function toggleUseAmmoCounterImages()
-	if not status.statusProperty("project45_performanceMode") then
-		status.setStatusProperty("project45_useAmmoCounterImages", widget.getChecked("btnUseAmmoCounterImages"))
+	if not player.getProperty("project45_performanceMode") then
+		player.setProperty("project45_useAmmoCounterImages", widget.getChecked("btnUseAmmoCounterImages"))
   	promptRestart()
 	else
 		widget.setChecked("btnUseAmmoCounterImages", false)
 	end
 end
 
+--[[
 function toggleAccurateBars()
-	if not status.statusProperty("project45_performanceMode") then
-		status.setStatusProperty("project45_accurateBars", widget.getChecked("btnAccurateBars"))
+	if not player.getProperty("project45_performanceMode") then
+		player.setProperty("project45_accurateBars", widget.getChecked("btnAccurateBars"))
   	promptRestart()
 	else
 		widget.setChecked("btnAccurateBars", false)
 	end
 end
+--]]
+
+function updateDamageScaling()
+	local sliderVal = widget.getSliderValue("sldDamageScaling") or 0
+	widget.setText("lblDamageScaling", "Damage Scaling: " .. sliderVal .."%")
+
+	local newValue = (widget.getSliderValue("sldDamageScaling") or 0)/100
+	local oldValue = player.getProperty("project45_damageScaling", 0)
+	if newValue ~= oldValue then
+		player.setProperty("project45_damageScaling", newValue)
+  	promptRestart()
+	end
+end
 
 function init()
-	widget.setChecked("btnTogglePerformanceMode", status.statusProperty("project45_performanceMode", false))
-	widget.setChecked("btnToggleCursorBars", status.statusProperty("project45_renderBarsAtCursor", true))
+	
+	-- sldDamageScaling
+	widget.setSliderRange("sldDamageScaling", 0, 100)
+	local sldDamageScalingVal = math.floor(player.getProperty("project45_damageScaling", 0)*100)
+	widget.setSliderValue("sldDamageScaling", sldDamageScalingVal)
+	widget.setText("lblDamageScaling", "Damage Scaling: " .. sldDamageScalingVal .."%")
+
+	widget.setChecked("btnTogglePerformanceMode", player.getProperty("project45_performanceMode", false))
+	widget.setChecked("btnToggleCursorBars", player.getProperty("project45_renderBarsAtCursor", true))
 
 	for _, setting in ipairs(invSettings) do	
 		if widget.getChecked("btnTogglePerformanceMode") then
@@ -82,7 +103,7 @@ function init()
 		else
 			widget.setChecked(
 				"btn" .. project45util.capitalize(setting),
-			status.statusProperty("project45_" .. setting, true))
+				player.getProperty("project45_" .. setting, true))
 		end
 	end
 

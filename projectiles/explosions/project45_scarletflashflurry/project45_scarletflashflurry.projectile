@@ -1,0 +1,44 @@
+{
+  "projectileName" : "project45_scarletflashflurry",
+  "image" : "project45_scarletflashflurry.png",
+  "animationCycle" : 0.3,
+  "frameNumber" : 34,
+  "timeToLive": 0.3,
+  "speed" : 0,
+  "orientationLocked" : false,
+  "scripts": ["/projectiles/explosions/project45_scarletflashflurry/project45_scarletflashflurry.lua"],
+  "damagePoly" : [
+    [80.00,0.00],
+    [56.57,56.57],
+    [0.00,80.00],
+    [-56.57,56.57],
+    [-80.00,0.00],
+    [-56.57,-56.57],
+    [-0.00,-80.00],
+    [56.57,-56.57]
+  ],
+  "damageRepeatTimeout": 0.06,
+  "actionOnSpawn": [
+    {
+      "inheritDamageFactor": 1,
+      "angleAdjust": 0,
+      "fuzzAngle": 360,
+      "type": "project45-stdexplosionshockwave",
+      "action": "projectile"
+    }
+  ],
+  "spawnSound": "/sfx/project45neosfx/ability/project45scarletflash/scarletflash2.ogg",
+  "animationLoops" : true,
+  "piercing" : true,
+  "bounces" : -1,
+  "flippable" : true,
+  "damageKind" : "electric",
+  "lightColor" : [125, 0, 0],
+  "fullbright" : true,
+  "statusEffects" : [],
+  "knockback" : 1,
+  "knockbackDirectional" : true,
+  "movementSettings":{
+    "collisionEnabled": false
+  }
+}

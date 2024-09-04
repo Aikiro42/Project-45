@@ -26,6 +26,7 @@ Effective functions:
 
 "init"
 "update"
+"uninit"
 
 "onFire": runs when gun enters firing state
 "onEject": runs when gun enters ejecting state
@@ -38,5 +39,10 @@ Effective functions:
 "onLoadRound": runs when rounds are loaded (only works on guns that load by batches)
 "onReloadEnd": runs when reload ends
 "onCrit": runs when evaluating a crit shot (crit doesn't necessarily have to hit the enemy)
+
+The passive has access to the following variables
+
+- self.passiveParameters
+- self.passiveDamageMult
 
 ]]

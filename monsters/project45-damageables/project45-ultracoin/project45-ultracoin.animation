@@ -1,0 +1,221 @@
+{
+  "animatedParts" : {
+    "stateTypes" : {
+      "body" : {
+        "priority" : 0,
+        "default" : "idle",
+        "states" : {
+          "idle" : {
+            "frames" : 1,
+            "cycle" : 0.2,
+            "mode" : "loop"
+          },
+          "walk" : {
+            "frames" : 1,
+            "cycle" : 0.2,
+            "mode" : "loop"
+          },
+          "fall" : {
+            "frames" : 1,
+            "cycle" : 0.2,
+            "mode" : "loop"
+          }
+        }
+      },
+      "damage" : {
+        "priority" : 3,
+        "default" : "none",
+        "states" : {
+          "none" : {
+            "frames" : 1
+          },
+          "stunned" : {
+            "frames" : 1,
+            "cycle" : 0.2,
+            "mode" : "loop"
+          }
+        }
+      },
+      "releaseParticles" : {
+        "default" : "off",
+        "states" : {
+          "off" : {
+            "frames" : 1,
+            "properties" : {
+              "particleEmittersOff" : [ "releaseParticles" ]
+            }
+          },
+          "on" : {
+            "frames" : 1,
+            "cycle" : 0.1,
+            "mode" : "transition",
+            "transition" : "off",
+            "properties" : {
+              "particleEmittersOn" : [ "releaseParticles" ]
+            }
+          }
+        }
+      }
+    },
+
+    "parts" : {
+      "body" : {
+        "properties" : {
+          "transformationGroups" : [ "body" ],
+          "fullbright" : true,
+          "offset" : [0, 0]
+        },
+        "partStates" : {
+          "body" : {
+            "idle" : {
+              "properties" : {
+                "image" : "<partImage>:idle.<frame>"
+              }
+            },
+            "walk" : {
+              "properties" : {
+                "image" : "<partImage>:walk.<frame>"
+              }
+            },
+            "fall" : {
+              "properties" : {
+                "image" : "<partImage>:walk.<frame>"
+              }
+            }
+          },
+          "damage" : {
+            "stunned" : {
+              "properties" : {
+                "image" : "<partImage>:hurt.<frame>"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+
+  "transformationGroups" : {
+    "body" : { "interpolated" : true }
+  },
+
+  "effects" : {
+    "blink" : {
+      "type" : "flash",
+      "time" : 0,
+      "directives" : "fade=ffffff;0.5"
+    }
+  },
+
+  "lights" : {
+    "glow" : {
+      "active" : true,
+      "position" : [0, 0],
+      "color" : [25, 20, 10]
+    }
+  },
+
+  "particleEmitters" : {
+    "spindust" : {
+      "emissionRate" : 15,
+      "offsetRegion" : [ -0.0, -0.0, 0.0, 0.0 ],
+      "particles" : [
+        { "particle" : "mandrafloradust" }
+      ]
+    },
+    "deathPoof" : {
+      "particles" : [
+        { "particle" : "deathfizz1left" },
+        { "particle" : "deathfizz1right" },
+        { "particle" : "deathfizz2left" },
+        { "particle" : "deathfizz2right" },
+        { "particle" : "deathfizz3left" },
+        { "particle" : "deathfizz3right" },
+        { "particle" : "deathfizz4left" },
+        { "particle" : "deathfizz4right" }
+      ]
+    },
+    "hitPoof" : {
+      "offsetRegion" : [ -0.0, -0.0, 0.0, 0.0 ],
+      "particles" : [
+        { "particle" : "project45shineparticle-white" },
+        { "particle" : "project45shineparticle-white" },
+        { "particle" : "project45shineparticle-white" },
+        { "particle" : "project45shineimpact" }
+      ]
+    },
+    "twinkle" : {
+      "offsetRegion" : [ -0.0, -0.0, 0.0, 0.0 ],
+      "particles" : [
+        { "particle" : {
+          "type" : "animated",
+          "image" : "/animations/1hswordhitspark/1hswordhitspark.animation",
+          "fullbright": true,
+          "size" : 1.0,
+          "color" : [255, 255, 200, 255],
+          "destructionAction" : "shrink",
+          "destructionTime" : 0.3,
+          "fade" : 0.9,
+          "angularVelocity": 1800,
+          "timeToLive" : 0,
+          "variance" : {
+            "size" : 0.05
+          }
+        }
+      }
+      ]
+    },
+    "captureParticles" : {
+      "particles" : [
+        {
+          "particle" : {
+            "type" : "animated",
+            "animation" : "/animations/energy/energy.animation",
+            "size" : 1,
+            "angularVelocity" : 35,
+            "fade" : 1,
+            "destructionTime" : 1,
+            "position" : [0, 0],
+            "initialVelocity" : [0, 0],
+            "finalVelocity" : [0, 0],
+            "approach" : [1, 1],
+            "timeToLive" : 0.4,
+            "layer" : "middle"
+          }
+        }
+      ]
+    },
+    "releaseParticles" : {
+      "particles" : [
+        { "particle" : "monsterrelease" }
+      ]
+    },
+    "teleportOut" : {
+      "particles" : [
+        { "particle" : "monstercapture" }
+      ]
+    },
+    "teleportIn" : {
+      "particles" : [
+        { "particle" : "monsterrelease" }
+      ]
+    },
+    "levelUp" : {
+      "particles" : [
+        { "particle" : "monsterlevelup" }
+      ]
+    }
+  },
+
+  "sounds" : {
+    "drop" : [ "/sfx/project45neosfx/ability/project45ultracoin/coindrop.ogg" ],
+    "hit": [
+      "/sfx/project45neosfx/ability/project45ultracoin/coinhit1.ogg",
+      "/sfx/project45neosfx/ability/project45ultracoin/coinhit2.ogg"
+    ],
+    "twinkle": [ "/sfx/project45neosfx/ability/project45ultracoin/twinkle.ogg" ],
+    "refreshHit": [
+      "/sfx/project45neosfx/ability/project45ultracoin/coinflip.ogg"
+    ]
+  }
+}

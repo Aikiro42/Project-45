@@ -1,0 +1,321 @@
+[h1]If your game crashes on load, you probably had items in your world that don't exist anymore; the crash should only cause the game to replace them with Perfectly Generic Items. Loading up the world again should be fine; post in the [url=https://steamcommunity.com/workshop/filedetails/discussion/3117517322/4208120159993814179/]Bug Reports[/url] discussion if you encounter any problems.[/h1]
+
+[h2]User-side[/h2]
+
+[h3]UI Changes[/h3]
+[list]
+	[*] Look of weapon UI has been updated. 
+	[*] Bonus ratio is now more visible in weapon tooltip, separated from the description.
+	[*] Weapons now remember their bonus ratio. If bonus ratio changed (e.g. seed changed and generated bonus is different) then their bonus ratio will appear as "??%" but colored depending on the newly generated bonus ratio.
+	[*] Removed setting to toggle accurate bars now that image transformation is utilized.
+[/list]
+
+[h3]New Features[/h3]
+[list]
+	[*] Weapons can now be [b]perfectly charged[/b]. If a weapon [i]can be[/i] and [i]is[/i] perfectly charged, it will multiply its damage by 1, the overcharge multiplier, or the perfect charge multiplier, whichever is greater. The following weapons thus have the respective overcharge and perfect charge damage multipliers:
+	[table]
+		[tr]
+			[th]Weapon Name[/th]
+			[th]Overcharge Mult.[/th]
+			[th]Perfect Charge Mult.[/th]
+		[/tr]
+		[tr]
+			[td]Neo-compound Bow[/td]
+			[td]1.0x[/td]
+			[td]2.0x[/td]
+		[/tr]
+		[tr]
+			[td]Gauss Rifle[/td]
+			[td]2.0x[/td]
+			[td]N/A[/td]
+		[/tr]
+		[tr]
+			[td]Machine Gun[/td]
+			[td]0.5x[/td]
+			[td]N/A[/td]
+		[/tr]
+		[tr]
+			[td]Minigun[/td]
+			[td]0.7x[/td]
+			[td]N/A[/td]
+		[/tr]
+		[tr]
+			[td]Rocket Launcher[/td]
+			[td]1.25x[/td]
+			[td]N/A[/td]
+		[/tr]
+		[tr]
+			[td]Accelerator[/td]
+			[td]1.0x[/td]
+			[td]N/A[/td]
+		[/tr]
+	[/table]
+	[*] New weapons have been added, namely:
+	[list]
+		[*] Autocannon
+		[*] Covalence
+		[*] MAXX Assault Rifle (Halo Series)
+		[*] Kuva Bramma (Warframe)
+		[*] Bone Shooter (Monster Hunter Freedom Unite)
+	[/list]
+	[*] New mods have been added, namely:
+	[list]
+		[*] Manual Reload[list]
+			[*] Ejects the current magazine when right-clicking, allowing the user to reload.
+			[*] Can be used to trigger active reloads.
+		[/list]
+		[*] Shift Reload[list]
+			[*] Ejects the current magazine when tapping shift, allowing the user to reload.
+			[*] Can be used to trigger active reloads.
+		[/list]
+		[*] A.R.M.D.L.O. Shield [list]
+			[*] Passively protects the user from frontal attacks.
+			[*] If the shield is hit shortly after equipping the weapon, it retaliates with a stasis shockwave.
+			[*] The shield has a 5% chance to allow damage through for 0.5s, shortly after which the shield is ready to retaliate on the next attack.
+			[*] Right-clicking gives the user a persistent, omnidirectional shield based on their health and energy.
+		[/list]
+		[*] Orbital Transponder [list]
+			[*] Calls in bunker buster missiles in a zone. Cooldown of 3s.
+			[*] Can work underground, up until an eighth of the world height away from the core.
+		[/list]
+		[*] Ferozium Alloy Parts [list]
+			[*] Gives persistent energy regen.
+			[*] Gives a +0.05x (5%) increase in damage per piece of Manipulator armor equipped.
+		[/list]
+		[*] Violium Alloy Parts [list]
+			[*] Gives a +0.2x (20%) increase in damage per piece of Separator armor equipped.
+		[/list]
+		[*] Solarium Alloy Parts [list]
+			[*] Gives a +0.02x (2%) increase in damage per piece of Tier 5/6 armor equipped.
+			[*] Gives a 4.5% chance to give the user 45 pixels on crit.
+		[/list]
+		[*] 4 GA. Shells
+		[*] Jump Grenades
+		[*] SSR Wildcard Mod (only obtainable via gacha)
+	[/list]
+	[*] Added [b]Stock Ammo[/b].
+	[list]
+		[*] A weapon's stocked ammo serves as a substitute for energy when it comes to reloading, allowing you to reload even when your energy is locked.
+		[*] A weapon can store up to 6 times its maximum magazine size in stock ammo.
+		[*] Weapon damage is increased based on the amount of stocked ammo, up to 1.1x.
+		[*] Stock ammo can be stacked on each other, up to 300 ammo in a stack.
+		[list]
+			[*] You cannot "stack" on a stack of Stock ammo.
+			[*] You cannot "stack" on Stock Ammo if the "stacking" results in 300 max ammo and the subject has less ammo (For item stacks, the sum of their ammo is considered).
+			[*] You cannot "stack" on Stock Ammo with the maximum "stack".
+			[*] The price of Stock Ammo scales with the amount of ammo the item holds.
+		[/list]
+		[*] Disassembling a weapon with stock ammo also yields a Stock Ammo item containing the same amount of stocked ammo (can go past the 300 max)
+	[/list]
+	[*] Weapons can now be upgraded with a Weapon Upgrade Anvil, bringing its bonus ratio up to 100%.
+	[list]
+		[*] To be able to upgrade a weapon, [b]Essential Gun Oil[/b] must first be applied on the weapon. [b]This cannot be undone.[/b]
+		[*] Weapons lower than the maximum upgrade level (tier 7 in vanilla Starbound) can only be upgraded.
+		[*] Tooltip now indicates if weapon is upgradeable
+	[/list]
+	[*] Added the [b]Reimburser[/b], an object that sells items for their full price. [b]This will be nerfed in a future update.[/b]
+	[*] Added the [b]Portable G.D.K.[/b], a portable, appliable and consumable version of the Gun Disassembly Kit allowing you to dismantle your guns on the fly.
+	[list]
+		[*] This item turns your gun into a consumable case that gives the unmodded gun and its previously installed mods separately.
+	[/list]
+	[*] Added higher tiers of additive and multiplicative mods. Tiers II and III can only be obtained via the gacha.
+	[*] Added the [b]Enemy Flare[/b]. This throwable summons ten tier 6 enemies around its vicinity over a period of time.
+[/list]
+
+[h3]Balance changes[/h3]
+[list]
+	[*] [b]Weapon damage is now unaffected by your Power stat.[/b]
+	[list]
+		[*] Stat mods are made cheaper and marginally more powerful to compensate for this change.
+	[/list]
+  [*] Added and applied DPS calculation for weapons.
+	[*] Factored in mid-cock delay when applying firetime stat mods in statmod.lua
+	[*] The [b][u]Gazer[/u][/b] now shoots a chaining hitscan that distributes damage between the targets.
+	[*] Added base damage multipliers to the following weapons (those not listed have a 1x multiplier):
+	[table]
+		[tr]
+			[th]Weapon Name[/th]
+			[th]Base Damage Multiplier[/th]
+		[/tr]
+		[tr]
+			[td]Revolver[/td]
+			[td]1.5x[/td]
+		[/tr]
+		[tr]
+			[td]Sawed-off Shotgun[/td]
+			[td]1.7x[/td]
+		[/tr]
+		[tr]
+			[td]Pump-action Shotgun[/td]
+			[td]0.8x[/td]
+		[/tr]
+		[tr]
+			[td]Double-barrel Shotgun[/td]
+			[td]1.75x[/td]
+		[/tr]
+		[tr]
+			[td]Automatic Shotgun[/td]
+			[td]0.7x[/td]
+		[/tr]
+		[tr]
+			[td]Assault Rifle[/td]
+			[td]1.5x[/td]
+		[/tr]
+		[tr]
+			[td]Combat Rifle[/td]
+			[td]2.0x[/td]
+		[/tr]
+		[tr]
+			[td]AMR[/td]
+			[td]1.1x[/td]
+		[/tr]
+		[tr]
+			[td]Autocannon[/td]
+			[td]1.2x[/td]
+		[/tr]
+		[tr]
+			[td]Accelerator[/td]
+			[td]0.8x[/td]
+		[/tr]
+		[tr]
+			[td]Space Cowboy[/td]
+			[td]2.0x[/td]
+		[/tr]
+		[tr]
+			[td]MAXX Assault Rifle[/td]
+			[td]2.5x[/td]
+		[/tr]
+		[tr]
+			[td]Bone Shooter[/td]
+			[td]1.2x[/td]
+		[/tr]
+	[/table]
+	[*] The [b]Automatic Receiver[/b] now has the following effects:
+	[list]
+		[*] rebases fireTime to 0.01
+		[*] rebases cycleTime to 0.1
+		[*] gives an additive increase of 0.01s to the overall fireTime
+	[/list]
+	[*] Reidentified [b]Aegisalt Alloy Parts[/b]. [b]Sell weapons that have this mod installed.[/b]
+	[list]
+		[*] Aegisalt Alloy Parts now increase your weapon damage based on the number of Accelerator armor pieces you have equipped, +5% per armor.
+	[/list]
+	[*] The [b]Multithreader[/b] now halves a weapon's maximum ammo.
+	[*] The [b]Converger[/b] now multiplies damage by 1.1x.
+	[*] Upgrade capacity is now automatically generated for all weapons unless specified (see Mod-side section); the base upgrade capacity is
+		[code]10 + the number of available mod slots + the number of allowed ammo conversions[/code].
+		This number increases by 1 if the weapon accepts at least one ammo archetype.
+	[*] Removed flashlight spread lighting. Thus, when using the [b]Military flashlight[/b] in the dark, and given that you've installed a mod that removes player light, yyour character will not be illuminated.
+	[*] Halved price of the Energy Stimulant from 1000px to 500px.
+	[*] Changed default cost of ability mods from 1 to 0
+	[*] Imposed application limits (read: number of similar mods you can apply) on Wildcard Stat Mods (Regular has an application limit of 2, SSR has limit of 4)
+[/list]
+[h3]General Changes[/h3]
+[list]
+	[*] [b]Overhauled gun modding. Mods existing prior to this update are considered obsolete and should be rid of.[/b]
+	[*] Changed naming convention of mods from "(*)" and "(+)" to "X<tier>" and "T<tier>" respectively.
+	[*] Reidentified [i](read: changed item ID of)[/i] [b][u]Fleetly Fading[/u][/b]. The original still exists in the mod, but is marked as obsolete. This item will be deleted in a future update; it is thus recommended to sell it.
+	[*] Overhauled the [b]Gun Bag[/b] with the new [b]Supply Transponder[/b].
+	[list]
+		[*] The Supply Transponder now drops in breakable supply capsules instead of just giving the items to you.
+		[*] Gacha Keys are still compatible with the Supply Transponder.
+		[*] The Supply Transponder now has improved UI, indicating how many pulls you have and how many pulls until hard pity.
+		[*] The supply transponder can now pull with Ancient Essence (300 essence per pull)
+		[*] R (blue) and SR (purple) pulls now give supplies (SSR and XSSR pulls don't)
+		[*] The original Gun Bag still exists in the mod, but will be removed in a future update.
+	[/list]
+	[*] Renamed "Gun Bag Key" to "Gacha Bag Key" for consistency. Similar change made to "Gun Back Key Bundle".
+	[*] Modified Gacha Bag Key sprite to be consistent with that of new Gacha Bag sprite
+	[*] You can now eject your magazine while your energy is locked, given you've installed mods that (or use guns that) that allow you to eject your magazine.
+	[*] Changed some visual parameters of the [b]Minigun[/b] and [b]Fleetly Fading[/b]
+	[*] Adjusted muzzle offset of the Covalence
+	[*] Improved VFX of some explosions
+	[*] Improved Dragon's Breath projectiles.
+[/list]
+[h3]Bugfixes[/h3]
+[list]
+	[*] Weapon UI should now be rendered client-side. No more seeing another person's ammo counter!
+	[*] Made firetime stat modding distribution consistent with semicharge weapons.
+	[*] Improved post-animation ejection (`ejectAfterAnimation`) logic; instead of ejecting casings after waiting for some time, it now happens when the animation state of the gun is not "ejecting"/"bolt-pulling" anymore.
+	[*] [b]Guns now update their price based on installed mods.[/b] Selling them via the [b]Reimburser[/b] should compensate you for their full value.
+	[*] Fixed lightweight-modded weapons becoming heavy and vice versa when applying weight-affecting mods in different orders.
+[/list]
+
+[h2]Mod-side[/h2]
+
+[h3]Bugfixes[/h3]
+[list]
+	[*] Fixed `hitscanParameters.hitscanColor` not affecting color of hitscan projectiles
+	[*] Fixed ammomod.lua crashing when weapon config hitscan/beamParameters is nil
+	[*] Fixed script crash when attempting to apply a gun mod with an uncapitalized rarity string.
+[/list]
+
+[h3]General Changes[/h3]
+[list]
+	[list]
+		[*]	Mod buildscripts have been changed to accomodate the rework
+		[*] added project45_statmod.config, read by statmod.lua and gunmod.lua
+	[/list]
+	[*] Update metadata
+	[*] Renamed `ejectBeforeAnimation` to `ejectAfterAnimation` so that it makes sense to not include an optional setting in the config
+	[*] Improved the `openBolt()` action function and `cocking()` state function. `openBolt()` now functions more similarly to the `ejecting()` state function.
+	[*] Added new parameters to the `openBolt()` action function.
+	[*] Removed a vestigial variable (`self.stanceLocked`)
+	[*] Improved hitscan logic: 
+	[list]
+		[*] moved punchThough, scanLength, ignoresTerrain and scanUntilCursor evaluation outside of the core hitscan() function
+		[*] added scanUntilCursor field
+	[/list]
+	[*] Rename function `moddedStat` to `getModifiedStat`
+	[*] add tentative code to set non-animating arm frames to the aimstance arm frame
+	[*] project45neoweapon.lua now calls the `init` and `update` functions of the original weapon.lua. The refactored script sets variables _before_ running `init`, and runs `update` before running its own update procedures.
+[/list]
+
+[h3]New Features[/h3]
+[list]
+	[*] Modders can now set whether their gun closes its bolt when firing the last round or not. This is overridden to `false` if the gun is manual-fed.
+	[*] Added general setting for max ammo stored per weapon.
+	[*] Added `project45sabotshell` and `project45sabotshellsmall` particles
+	[*] Weapons can be made to be upgradeable in the weapon upgrade anvil; the upgrade parameters should be set to
+	[code]
+	{
+		"seed": 69420,  // seed required for 100%
+		"isModded": true
+	}
+	[/code]
+	This way, when the weapon is upgraded at an anvil, it will get a permanent 100% bonus. Disassembly is required to update the stats; the weapon is otherwise unaffected.
+	[*] Added the `split()` function in the utility functions (project45util.lua)
+	[*] add new projectile `project45stdcannonshell`
+	[*] add new sfx `/fire/fire-cannon1.ogg`
+	[*] update samplepassive.lua to document available passive hook fields
+	[*] add `uninit()` function among available passive functions
+	[*] Completely reformatted gun augment structure.
+	[list]
+		[*] You can now modify group stats individually; they can now be rebase, rebaseMulted, added and multiplied to. The additive and multiplicative bonuses applied to individual stats will add to those in their respective group.
+		[*] There are now two kinds of stats: individual stats (those not belonging to a group) and member stats (those that do).
+		[*] Depending on the member stat, they now have their own entries in `statModifiers` separate from their group.
+		[*] the member stat entries do not have a `base` field, since their base value is stored in their respective group entry.
+		[*] Renamed the "fireTime" group to "fireTimeGroup".
+		[*] Refactored memoizing logic of rebase, rebaseMult, additive and multiplicative modifications.
+		[*] implemented statAliases
+		[*] removed fireTimeStat alias
+		[*] renamed project45_generalconfig.config to project45_general.config
+		[*] renamed project45_statmod.config to project45_generalstat.config
+		[*] backed up old gunmod tooltip by renaming project45-gunmod2 and its files to project45-gunmod-old
+		[*] removed commented json from project45-supergunscopemod.augment
+		[*] removed legacy json from project45-convergermod.augment
+		[*] removed legacy json from project45-silencermod.augment and project45-stockmod.augment
+		[*] renamed stat name in project45-wildcardstatmod.augment
+		[*] added nil value guards to check.lua
+		[*] added stat formatting settings to generalstat.config
+		[*] added new stat names to project45_generalstat.config
+		[*] rewrite stats of some mods
+		[*] added text indicating absence of technical info
+		[*] added baseMult field to statModifiers
+	[/list]
+	[*] gun inaccuracy is now calculated from `inaccuracyMults`; `inaccuracy` is now a strictly numerical value
+	[*] inaccuracy is now a modifiable stat
+	[*] added gradient function in project45util
+	[*] Unified disassembly script of gun disassembly kit UI script and portable GDK application script
+	[*] add `uiFontParams` field to configs to make it easier to apply custom ammo counter fonts
+[/list]

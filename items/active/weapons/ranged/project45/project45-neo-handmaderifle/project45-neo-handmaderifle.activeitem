@@ -4,6 +4,7 @@
   "maxStack" : 1,
   "rarity" : "Uncommon",
   "description" : "A reliable, maintainable assault rifle.",
+  "lore": "Favored by Miniknog Rebels. Much to the chagrin of the Institute, Letheia refuses to compromise its quality.",
   "shortdescription" : "Handmade Rifle",
   "tooltipKind" : "project45gun",
   "gunArchetype": "assaultRifle",
@@ -47,7 +48,7 @@
 
   "project45GunModInfo":{
     "category": "ballistic",
-    "upgradeCapacity": 9,
+    
     "incompatibleMods": [
       "project45-autofiremod"
     ],

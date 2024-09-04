@@ -2,7 +2,8 @@
   "globalTagDefaults" : {
     "paletteSwaps" : "",
     "chargeFrame": "1",
-    "directives": ""
+    "directives": "",
+    "behind": ""
   },
 
   "animatedParts" : {
@@ -243,62 +244,62 @@
           "gun" : {
             "idle" : {
               "properties" : {
-                "image" : "<partImage>:idle.<frame>"
+                "image" : "<partImage>:idle.<frame><behind>"
               }
             },
             "open" : {
               "properties" : {
-                "image" : "<partImage>:open.<frame>"
+                "image" : "<partImage>:open.<frame><behind>"
               }
             },
             "firing" : {
               "properties" : {
-                "image" : "<partImage>:firing.<frame>"
+                "image" : "<partImage>:firing.<frame><behind>"
               }
             },
             "fired" : {
               "properties" : {
-                "image" : "<partImage>:fired.<frame>"
+                "image" : "<partImage>:fired.<frame><behind>"
               }
             },
             "firingLoop" : {
               "properties" : {
-                "image" : "<partImage>:firing.<frame>"
+                "image" : "<partImage>:firing.<frame><behind>"
               }
             },
             "ejecting" : {
               "properties" : {
-                "image" : "<partImage>:ejecting.<frame>"
+                "image" : "<partImage>:ejecting.<frame><behind>"
               }
             },
             "boltPulling" : {
               "properties" : {
-                "image" : "<partImage>:ejecting.<frame>"
+                "image" : "<partImage>:ejecting.<frame><behind>"
               }
             },
             "ejected" : {
               "properties" : {
-                "image" : "<partImage>:ejected.<frame>"
+                "image" : "<partImage>:ejected.<frame><behind>"
               }
             },
             "feeding" : {
               "properties" : {
-                "image" : "<partImage>:feeding.<frame>"
+                "image" : "<partImage>:feeding.<frame><behind>"
               }
             },
             "boltPushing" : {
               "properties" : {
-                "image" : "<partImage>:feeding.<frame>"
+                "image" : "<partImage>:feeding.<frame><behind>"
               }
             },
             "jammed" : {
               "properties" : {
-                "image" : "<partImage>:jammed.<frame>"
+                "image" : "<partImage>:jammed.<frame><behind>"
               }
             },
             "unjamming" : {
               "properties" : {
-                "image" : "<partImage>:unjamming.<frame>"
+                "image" : "<partImage>:unjamming.<frame><behind>"
               }
             }
             
@@ -324,12 +325,12 @@
             },
             "charging": {
               "properties": {
-                "image": "<partImage>:charging.<frame>"
+                "image": "<partImage>:charging.<frame><behind>"
               }
             },
             "chargingProg": {
               "properties": {
-                "image": "<partImage>:charging.<chargeFrame>"
+                "image": "<partImage>:charging.<chargeFrame><behind>"
               }
             }
           }
@@ -354,12 +355,12 @@
             },
             "charging": {
               "properties": {
-                "image": "<partImage>:charging.<frame>"
+                "image": "<partImage>:charging.<frame><behind>"
               }
             },
             "chargingProg": {
               "properties": {
-                "image": "<partImage>:charging.<chargeFrame>"
+                "image": "<partImage>:charging.<chargeFrame><behind>"
               }
             }
           }
@@ -380,62 +381,62 @@
           "gun" : {
             "idle" : {
               "properties" : {
-                "image" : "<partImage>:idle.<frame>"
+                "image" : "<partImage>:idle.<frame><behind>"
               }
             },
             "open" : {
               "properties" : {
-                "image" : "<partImage>:open.<frame>"
+                "image" : "<partImage>:open.<frame><behind>"
               }
             },
             "firing" : {
               "properties" : {
-                "image" : "<partImage>:firing.<frame>"
+                "image" : "<partImage>:firing.<frame><behind>"
               }
             },
             "fired" : {
               "properties" : {
-                "image" : "<partImage>:fired.<frame>"
+                "image" : "<partImage>:fired.<frame><behind>"
               }
             },
             "firingLoop" : {
               "properties" : {
-                "image" : "<partImage>:firing.<frame>"
+                "image" : "<partImage>:firing.<frame><behind>"
               }
             },
             "ejecting" : {
               "properties" : {
-                "image" : "<partImage>:ejecting.<frame>"
+                "image" : "<partImage>:ejecting.<frame><behind>"
               }
             },
             "boltPulling" : {
               "properties" : {
-                "image" : "<partImage>:ejecting.<frame>"
+                "image" : "<partImage>:ejecting.<frame><behind>"
               }
             },
             "ejected" : {
               "properties" : {
-                "image" : "<partImage>:ejected.<frame>"
+                "image" : "<partImage>:ejected.<frame><behind>"
               }
             },
             "feeding" : {
               "properties" : {
-                "image" : "<partImage>:feeding.<frame>"
+                "image" : "<partImage>:feeding.<frame><behind>"
               }
             },
             "boltPushing" : {
               "properties" : {
-                "image" : "<partImage>:feeding.<frame>"
+                "image" : "<partImage>:feeding.<frame><behind>"
               }
             },
             "jammed" : {
               "properties" : {
-                "image" : "<partImage>:jammed.<frame>"
+                "image" : "<partImage>:jammed.<frame><behind>"
               }
             },
             "unjamming" : {
               "properties" : {
-                "image" : "<partImage>:unjamming.<frame>"
+                "image" : "<partImage>:unjamming.<frame><behind>"
               }
             }
             
@@ -445,7 +446,7 @@
 
       "muzzleFlash" : {
         "properties" : {
-          "zLevel" : -1,
+          "zLevel" : 1,
           "centered" : true,
           "offset" : [0.75, 0],
           "fullbright" : true,
@@ -472,7 +473,7 @@
 
       "altMuzzleFlash" : {
         "properties" : {
-          "zLevel" : -1,
+          "zLevel" : 1,
           "centered" : true,
           "offset" : [0, 0],
           "fullbright" : true,
@@ -500,7 +501,7 @@
         "properties":{
           "zLevel": 0,
           "centered" : true,
-          "image" : "<partImage>:present.<ammo>",
+          "image" : "<partImage>:present.<ammo><behind>",
           "offset" : [0, 0], // x offset is set dynamically
           "transformationGroups" : ["weapon"]
         },
@@ -508,7 +509,7 @@
           "magazine": {
             "present": {
               "properties" : {
-                "image" : "<partImage>:present.<ammo>"
+                "image" : "<partImage>:present.<ammo><behind>"
               }
             },
             "absent":{
@@ -532,7 +533,7 @@
           "magazine": {
             "present": {
               "properties" : {
-                "image" : "<partImage>:present.<ammo>"
+                "image" : "<partImage>:present.<ammo><behind>"
               }
             },
             "absent":{
@@ -562,7 +563,16 @@
   },
 
   "particleEmitters" : {
-
+    "shootSmoke": {
+      "transformationGroups" : ["muzzle"],
+      "offsetRegion" : [0, 0, 0, 0],
+      "emissionRate" : 1,
+      "particles" : [
+        {"particle": "project45shootsmoke1"},
+        {"particle": "project45shootsmoke2"},
+        {"particle": "project45shootsmoke3"}
+      ]
+    },
     "muzzleFlash" : {
       "transformationGroups" : ["muzzle"],
       "offsetRegion" : [0, 0, 0, 0],
@@ -570,7 +580,19 @@
       "particles" : [ 
         {"particle": "project45muzzle"},
         {"particle": "project45muzzle"},
-        {"particle": "project45muzzle"}
+        {"particle": "project45muzzle"},
+        {"particle": "project45flashbang-yellow"}
+      ]
+    },
+    "altMuzzleFlash" : {
+      "transformationGroups" : ["muzzle"],
+      "offsetRegion" : [0, 0, 0, 0],
+      "emissionRate" : 100,
+      "particles" : [ 
+        {"particle": "project45muzzle"},
+        {"particle": "project45muzzle"},
+        {"particle": "project45muzzle"},
+        {"particle": "project45flashbang-yellow"}
       ]
     },
     "muzzleCrit" : {
@@ -621,6 +643,14 @@
         {"particle": "project45bulletcasesmall"}
       ]
     },
+    "backEjectionPort" : {
+      "transformationGroups" : ["ejectionPort"],
+      "offsetRegion" : [0, 0, 0, 0],
+      "emissionRate" : 1,
+      "particles" : [ 
+        {"particle": "project45bulletcasesmallback"}
+      ]
+    },
 
     // compatibility
     "beamCollision" : {
@@ -657,11 +687,6 @@
     // plays every time the gun fires
     "fire": ["/sfx/project45neosfx/fire/fire-pistol1.ogg"],
     "perfectChargeFire": [],
-
-    // functions as expected of vanilla starbound
-    "fireStart": [ ],
-    "fireLoop": [ ],
-    "fireEnd": [ ],
 
     // plays when the gun isn't jammed and cannot be fired.
     "click": ["/sfx/project45neosfx/click/click-01.ogg"],
@@ -724,7 +749,11 @@
     "chargeEnd": [ ],
     
     // properties present for compatibility
-    "beamImpact": []
+    "beamImpact": [],
+    "altFire": [ ],
+    "fireStart": [ ],
+    "fireLoop": [ ],
+    "fireEnd": [ ]
     
   }
 }

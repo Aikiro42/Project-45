@@ -3,7 +3,8 @@
   "price" : 3000,
   "maxStack" : 1,
   "rarity" : "Rare",
-  "description" : "A compound bow designed with quickdraw bow techniques in mind.",
+  "description" : "A modern compound bow.",
+  "lore": "A Floran researcher named \"Larsss\" spearheaded its development.",
   "shortdescription" : "Neo-compound Bow",
   "tooltipKind" : "project45gun",
   "gunArchetype": "bow",
@@ -16,7 +17,7 @@
 
   "project45GunModInfo": {
     "category": "ballistic",
-    "upgradeCapacity": 7,
+    
     "allowsConversion": [
       "hitscan"
     ],
@@ -50,6 +51,13 @@
       },
       "magazine": {
         "particles": [
+        ]
+      },
+      "muzzleFlash": {
+        "particles": [
+          {"particle": "project45muzzle"},
+          {"particle": "project45muzzle"},
+          {"particle": "project45muzzle"}
         ]
       }
     },
@@ -119,7 +127,7 @@
 
     "critChance": 0.2,
     "critDamageMult": 2.5,
-    "reloadCost": 10,
+    "reloadCost": 50,
     "maxAmmo": 1,
     "bulletsPerReload": 1,
     "semi": true,

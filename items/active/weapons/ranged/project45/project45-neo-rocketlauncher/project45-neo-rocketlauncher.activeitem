@@ -3,7 +3,8 @@
   "price" : 10000,
   "maxStack" : 1,
   "rarity" : "Essential",
-  "description" : "An over-engineered rocket launcher. Still deadly, either way.",
+  "description" : "A massive yet lightweight rocket launcher.",
+  "lore": "Overengineered, but who cares? Rocket go boom either way.",
   "shortdescription" : "Rocket Launcher",
   "gunArchetype": "rocketLauncher",
   "tooltipKind" : "project45gun",
@@ -16,7 +17,7 @@
 
   "project45GunModInfo": {
     "category": "ballistic",
-    "upgradeCapacity": 5,
+    
     "acceptsAmmoArchetype": [
       "rocket",
       "grenade"
@@ -36,7 +37,7 @@
     "chargeFullbright": "",
     "magazine": "",
     "magazineFullbright": "",
-    "muzzleFlash": "/items/active/weapons/ranged/muzzleflash.png"
+    "muzzleFlash": "/items/active/weapons/ranged/project45-muzzleflash.png"
   },
 
   "animationCustom": {

@@ -6,7 +6,7 @@
   "animation": "/items/active/weapons/ranged/abilities/project45gunfire/project45gunfire.animation",
 
   "ability" : {
-    "name" : "Reload",
+    "name" : "_Project45GunFire_",
     "type" : "project45gunfire",
     "scripts" : ["/items/active/weapons/ranged/abilities/project45gunfire/project45gunfire.lua"],
     "class" : "Project45GunFire",
@@ -20,7 +20,7 @@
 
     "baseDamage": 5,
     "reloadCost": 50,
-    "reloadTime": 1,   // 80% actual reload time, 20% cocking time
+    "reloadTime": 1,   // 80% actual reload time, 20% cocking time -- TESTME: Verify!
     "critChance": 0.1,
     "critDamageMult": 1.5,
 
@@ -58,7 +58,21 @@
     - muzzle particles
     */
     // "performanceMode": false,
-    // "debug": false,
+    
+    /*
+    "debug": {
+      // if true, causes the weapon to continuously spit particles from their ejection port and magazine port
+      "emitParticles": false,
+
+      "pointColors": {
+        "rail": "red",
+        "sights": "orange",
+        "underbarrel": "green",
+        "stock": "gray"
+      },
+
+    },
+    */
 
     /*
     Hide Muzzle Flash & Smoke
@@ -73,6 +87,15 @@
     Makes gun spawn particles when firing a projectile that crits
     */
     // "enableMuzzleCritParticles": false,
+
+    /*
+    string; Causes the sprite to be rendered similar to shields (requires "behind" frames).
+    Must be equal to the string used to distinguish front frames from back frames
+    e.g. gun.png:idle.1.behind
+    */
+    // "backHandFrame": ".back",
+    
+    // "handGrip": "inside",
 
     // ____________________________________[ SECTION: Projectile Config ]____________________________________
     
@@ -133,19 +156,13 @@
     */
 
     /*
-    You can make the muzzle shoot an additional projectile this way.
+    Offset when firing muzzle projectiles; sometimes the firePosition is way back into the barrel
+    like in project45-neo-gaussrifle, so you'd want to move the muzzle projectile forward
     */
-    // "muzzleProjectileType": null,
-    /*
-    "muzzleProjectileParameters": {
-
-    },
-
-    // Offset when firing muzzle projectiles; sometimes the firePosition is way back into the barrel
-    // like in project45-neo-gaussrifle, so you'd want to move the muzzle projectile forward
-    "muzzleProjectileOffset": [0, 0],
+    // "muzzleProjectileOffset": [0, 0],
 
     // List of Projectile VFX that will be spawned from the projectile tip
+    /*
     "muzzleProjectiles": [{
         "type": "project45_muzzleshockwave",
         "offset": [5, 0],
@@ -182,10 +199,26 @@
       // baseDamage is calculated by self:damagePerShot() * crit / activeItem.ownerPowerMultiplier()
       // but can be overridden; it's recommended that it shouldn't be overridden
       // "hitscanBrightness": 0, // % width of white line inside visual hitscan line, max 1 (equal width)
+      // "scanUntilCursor": false
       "hitscanDamageConfig": {
         "damageKind": "physical",
         "statusEffects": []
       },
+
+      // if non-null, damages terrain at end of hitscan if true.
+      // All fields are optional. tileDamageConfig can be an empty table and the weapon
+      // will still end up dealing tile damage.
+      // Note: the hitscan only deals tile damage at the point where it terminates!
+      /*
+      "tileDamageConfig": {
+        "action" : "explosion", // always an explosion
+        "foregroundRadius" : 4, // calculated as `beamParameters.beamWidth / 2` by default
+        "backgroundRadius" : 0, // calculated as `beamParameters.beamWidth / 4` by default
+        "explosiveDamageAmount" : 140, // calculated as the beam's final damage by default
+        "delaySteps" : 5
+      },
+      */
+
       // actions to be executed at the end of the hitscan line
       "hitscanActionOnHit": []
       
@@ -216,6 +249,24 @@
         "knockback" : 2,
         "timeout": 0.1
       },
+
+      // if non-null, damages terrain at end of beam if true.
+      // All fields are optional. tileDamageConfig can be an empty table and the weapon
+      // will still end up dealing tile damage.
+      // Note: the beam only deals tile damage at the point where it terminates!
+      /*
+      "tileDamageConfig": {
+        "action" : "explosion", // always an explosion
+        "foregroundRadius" : 4, // calculated as `beamParameters.beamWidth / 2` by default
+        "backgroundRadius" : 0, // calculated as `beamParameters.beamWidth / 4` by default
+        "explosiveDamageAmount" : 140, // calculated as the beam's final damage by default
+        "delaySteps" : 5
+      }
+      */
+      
+      // "damagesTerrain": false,
+
+      // "scanUntilCursor": false
       
       // if true, consumes ammo over time.
       // Otherwise, will only consume ammo every time the beam starts
@@ -224,7 +275,6 @@
 
       // determines if gun transists to ejecting state if trigger is released
       // "ejectCasingsOnBeamEnd": false
-
 
     },
 
@@ -239,7 +289,7 @@
     // Reload and Magazine Config
 
     // "audibleEjection": false, // if true, plays bolt pulling sound when ejecting casings
-    "ejectBeforeAnimation": true, // ejects casings before animationState is set to "ejecting"
+    // "ejectAfterAnimation": true, // ejects casings before animationState is set to "ejecting"
     // "ejectCasingsAfterBurst": false, // ejects casings after burst is finished
     // "ejectCasingsWithMag": false, // for revolvers, etc.; casings are not ejected until magazine is ejected
     // "closeBoltOnEmpty": false, // closes bolt when magazine is empty
@@ -260,10 +310,21 @@
     // "ejectMagOnReload": false, // ejects mag every (active) reload, like loading a strip and discarding the metal
     
     // "internalMag": false, // whether the "magazine" is a strip or a clip (makes magazine invisible)
-    // "loadRoundsThroughBolt": false, // whether the bolt must be opened before doing the reload sequence.
+    
+    // whether the bolt must be opened before doing the reload sequence.
+    // If internalMag is falsy, this is forced to become false.
+    // "loadRoundsThroughBolt": false,
 
     // "postReloadDelay": null, // float; time to wait before cocking in seconds, cockTime/8 by default
-    
+
+    /*
+    float; time to wait before being able to fire after cocking (read: manually feeding the round), in seconds
+    this does not apply if the gun is slam-fired.
+    This setting exists to allow the option to prevent players from firing the gun while the weapon's boltpush
+    stance transition/"animation" is in progress (see project45-cbp-malorian)
+    */
+    // "postCockCooldown": 0
+
     // determines whether the gun is break-action, i.e. breaks open when ejecting the mag
     // dictates whether the gun animation accesses the "open" state
     // "breakAction": false,
@@ -283,8 +344,17 @@
     // ____________________________________[ SECTION: Accuracy and Recoil Config ] ____________________________________
 
     // standard deviation of random arm movement as the gun recoils (in degrees, not radians)
-    // note that this deviation is eliminated if the player crouches
-    "inaccuracy": 3, 
+    "inaccuracy": 3,
+    /*
+    // value multiplied to inaccuracy depending on movement state
+    "inaccuracyMults:" {
+      "mobile": 2,
+      "walking": 1,
+      "stationary": 0.5,
+      "crouching": 0.25
+    }
+    */
+
     // "recoilUpOnly": false, // forces inaccuracy to cause the weapon to go upwards only
     "recoilAmount": 0.5, // amount of recoil per shot, in degrees; arm and weapon will rotate by half of this
     "recoilMaxDeg": 5, // the most the arm and weapon will rotate, in degrees.
@@ -393,7 +463,9 @@
     
     "progressiveCharge": true, // whether the charge animation loops or is dependent on charge progress
     "chargeFrames": 1, // only matters if progressiveCharge is true
-
+    
+    // "chargeScreenShakeMult": 1 // shakes screen as you charge up the weapon
+    
     // makes the gun fire once the charge timer hits/passes chargeTime
     // "fireBeforeOvercharge": false,
     

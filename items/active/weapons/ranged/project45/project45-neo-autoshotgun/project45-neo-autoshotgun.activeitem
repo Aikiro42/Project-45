@@ -3,7 +3,8 @@
   "price" : 5000,
   "maxStack" : 1,
   "rarity" : "Legendary",
-  "description" : "A redeveloped prototype of an obsolete shotgun design.",
+  "description" : "A shotgun inspired by an obsolete prototype.",
+  "lore": "A particular armorer had to be put down for impeding its development.",
   "shortdescription" : "Automatic Shotgun",
   "tooltipKind" : "project45gun",
   "gunArchetype": "shotgun",
@@ -48,7 +49,7 @@
 
   "project45GunModInfo":{
     "category": "ballistic",
-    "upgradeCapacity": 9,
+    
     "incompatibleMods":[
       "project45-autofiremod"
     ],
@@ -69,7 +70,8 @@
 
       "receiver",
       "magazine",
-      "material"
+      "material",
+      "choke"
     ]
   },
 

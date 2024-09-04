@@ -15,26 +15,29 @@
   "technicalInfo": "Spews gas clouds that deal poison damage.",
   "shortdescription" : "Gas Tank",
 
-  "conversion": "projectile",
   "augment":{
     "modName": "Gas Tank",
     "category": "experimental",
-    "archetype": "gas",
+    "conversion": "projectile",
+    "ammo":{
+      "archetype": "gas",
+      "elementalType": "poison",
+      "projectileCount": 1,
+      "projectileType": "project45gascloud",
+      "projectileParameters": {
+        "speed": 50,
+        "timeToLive": 0.75
+      },
+      "muzzleFlashParticles": [],
 
-    "projectileCount": 1,
-    "projectileType": "project45gascloud",
-    "projectileParameters": {
-      "speed": 50,
-      "timeToLive": 0.75
-    },
-
-    "hideMuzzleFlash": true
+      "hideMuzzleFlash": true
+    }
   
   },
 
    
 
-  "scripts" : [ "/scripts/augments/project45-gunmod/ammomod.lua" ],
+  "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
   "builder": "/items/buildscripts/buildproject45mod.lua"
 
 }

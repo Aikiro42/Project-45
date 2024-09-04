@@ -7,8 +7,9 @@ require "/items/buildscripts/project45abilities.lua"
 
 function build(directory, config, parameters, level, seed)
   
-  local generalConfig = root.assetJson("/configs/project45/project45_generalconfig.config")
-
+  local generalConfig = root.assetJson("/configs/project45/project45_general.config")
+  local generalTooltipConfig = root.assetJson("/configs/project45/project45_generaltooltip.config")
+  
   local rarityConversions = {
     common = project45util.colorText("#96cbe7", "R (Common)"),
     uncommon = project45util.colorText("#96cbe7", "R (Uncommon)"),
@@ -30,8 +31,6 @@ function build(directory, config, parameters, level, seed)
       return defaultValue
     end
   end
-
-  --[[ These functions work, but are unused in this script. TODO: Utilize me.
   
   local deepConfigParameterT = function(t, ...)
     local retval = nil
@@ -55,9 +54,9 @@ function build(directory, config, parameters, level, seed)
     if retval ~= nil then return retval end
     return defaultValue
   end
-
   --]]
 
+  -- TODO: get rid of me
   local primaryAbility = function(keyName, defaultValue, set)
     if set then
       config.primaryAbility[keyName] = defaultValue
@@ -72,6 +71,23 @@ function build(directory, config, parameters, level, seed)
     end
   end
 
+  -- update item tags
+  local currentItemTags = configParameter("itemTags", {})
+
+  if parameters.upgradeParameters then
+    config.upgradeParameters = sb.jsonMerge(config.upgradeParameters or {}, parameters.upgradeParameters)
+    if not set.new(currentItemTags)["upgradeableWeapon"] then
+      table.insert(currentItemTags, "upgradeableWeapon")
+    end
+  end
+
+  if not set.new(currentItemTags)["project45"] then
+    table.insert(currentItemTags, "project45")
+  end
+
+  config.itemTags = currentItemTags
+
+
   -- generate seed if supposed to be seeded
   -- and seed is not established
   if not (parameters.noSeed or configParameter("seed", seed)) then
@@ -80,7 +96,7 @@ function build(directory, config, parameters, level, seed)
   end
 
   -- configure seed
-  local randStatBonus = 0
+  local randStatBonus = parameters.randStatBonus or 0
   if configParameter("seed", seed) then
     parameters.seed = configParameter("seed", seed)
     -- sb.logInfo(string.format("Seed of %s: %d", config.itemName, parameters.seed))
@@ -92,67 +108,138 @@ function build(directory, config, parameters, level, seed)
       local rng = sb.makeRandomSource(parameters.seed)
       randStatBonus = rng:randf(0, 1) * (parameters.bought and generalConfig.boughtRandBonusMult or 1)
     end
+
+    if parameters.randStatBonus == nil then
+      parameters.randStatBonus = randStatBonus
+    end
+
+    if parameters.randStatBonus ~= randStatBonus then
+      parameters.requireRebuild = true
+    end
+
   end
 
   if level and not configParameter("fixedLevel", true) then
     parameters.level = level
   end
-  -- calculate mod capacity
+  local currentLevel = configParameter("level", 1)
+
   construct(config, "project45GunModInfo")
   construct(parameters, "project45GunModInfo")
-  parameters.project45GunModInfo.upgradeCapacity = (config.project45GunModInfo.upgradeCapacity or 0) + (configParameter("level", 1) - 1)
+  
+  -- calculate mod capacity
+  local gunmodCapacity = 0
+  local visualMods = set.new({"rail", "sights", "muzzle", "underbarrel", "stock"})
+  for _, k in ipairs(deepConfigParameter({},"project45GunModInfo", "acceptsModSlot")) do
+    if not visualMods[k] then
+      gunmodCapacity = gunmodCapacity + 1
+    end
+  end
+  local baseUpgradeCapacity = config.project45GunModInfo.upgradeCapacity
+    or 10 + gunmodCapacity
+      + (
+          #deepConfigParameter({},"project45GunModInfo", "allowsConversion") +
+          #deepConfigParameter({},"project45GunModInfo", "acceptsAmmoArchetype") > 0
+          and 1 or 0
+        )
+
+
+  parameters.project45GunModInfo.upgradeCapacity = baseUpgradeCapacity + (currentLevel - 1)
   
   -- sb.logInfo(string.format("Generated %s", configParameter("itemName")))
 
   -- recalculate rarity
-  local rarityLevel = configParameter("level", 1)/10
-  local levelRarityAssoc = {"Common", "Uncommon", "Rare", "Legendary", "Essential"}
-  local rarityLevelAssoc = {Essential=1,Legendary=0.8,Rare=0.6,Uncommon=0.4,Common=0.2}
-  if rarityLevelAssoc[configParameter("rarity", "Common")] < rarityLevel then
+  local rarityLevel = currentLevel/10
+  local levelRarityAssoc = {"common", "uncommon", "rare", "legendary", "essential"}
+  local rarityLevelAssoc = {essential=1,legendary=0.8,rare=0.6,uncommon=0.4,common=0.2}
+  if rarityLevelAssoc[string.lower(configParameter("rarity", "common"))] < rarityLevel then
     parameters.rarity = levelRarityAssoc[math.ceil(rarityLevel * #levelRarityAssoc)]
   end
 
   parameters.shortdescription = configParameter("shortdescription", "?")
   parameters.project45GunModInfo = configParameter("project45GunModInfo")
-  
-  if configParameter("level", 1) >= 10 then
-    parameters.shortdescription = config.shortdescription .. " ^yellow;^reset;"
-  end
 
+  if currentLevel >= 10 then
+    parameters.shortdescription = config.shortdescription .. " ^yellow;^reset;"
+  elseif currentLevel > 1 then
+    local maxUpgradeLevel = root.assetJson("/interface/scripted/weaponupgrade/weaponupgradegui.config:upgradeLevel")
+    local levelColor = currentLevel < maxUpgradeLevel and "^#96cbe7;" or "^yellow;"
+    parameters.shortdescription = config.shortdescription .. string.format(" %sT%d^reset;", levelColor, currentLevel)
+  end
 
   -- retrieve ability animation scripts
+  local compiledAnimationScripts = {}
   local primaryAnimationScripts = setupAbility(config, parameters, "primary")
   local altAnimationScripts = setupAbility(config, parameters, "alt")
+  local shiftAnimationScripts = setupAbility(config, parameters, "shift")
+  -- alt <- shift <- primary <- config
 
-  -- append config animation scripts
-  -- to altAnimationScripts
-  -- (if anything is appended, altAnimationScripts is usually empty)
-  for i, animationScript in ipairs(config.animationScripts or {}) do
-    if not project45util.isItemInList(altAnimationScripts, animationScript) then
-      table.insert(altAnimationScripts, animationScript)
+  
+  -- alt
+  for i, animationScript in ipairs(altAnimationScripts) do
+    if not project45util.isItemInList(compiledAnimationScripts, animationScript) then
+      table.insert(compiledAnimationScripts, animationScript)
     end
   end
 
-  -- append primary animation scripts
-  -- to altAnimationScripts
+  --[[
+  -- local shiftPrimaryAnimationScripts = setupAbility(config, parameters, "shiftPrimary")
+  -- local shiftAltAnimationScripts = setupAbility(config, parameters, "shiftAlt")
+  -- shiftPrimary
+  for i, animationScript in ipairs(shiftPrimaryAnimationScripts) do
+    if not project45util.isItemInList(compiledAnimationScripts, animationScript) then
+      table.insert(compiledAnimationScripts, animationScript)
+    end
+  end
+
+  -- shiftAlt
+  for i, animationScript in ipairs(shiftAltAnimationScripts) do
+    if not project45util.isItemInList(compiledAnimationScripts, animationScript) then
+      table.insert(compiledAnimationScripts, animationScript)
+    end
+  end
+  --]]
+
+  -- shift
+  for i, animationScript in ipairs(shiftAnimationScripts) do
+    if not project45util.isItemInList(compiledAnimationScripts, animationScript) then
+      table.insert(compiledAnimationScripts, animationScript)
+    end
+  end
+
+  -- config
+  for i, animationScript in ipairs(configParameter("animationScripts", {})) do
+    if not project45util.isItemInList(compiledAnimationScripts, animationScript) then
+      table.insert(compiledAnimationScripts, animationScript)
+    end
+  end
+
+  -- primary
   for i, animationScript in ipairs(primaryAnimationScripts) do
-    if not project45util.isItemInList(altAnimationScripts, animationScript) then
-      table.insert(altAnimationScripts, animationScript)
+    if not project45util.isItemInList(compiledAnimationScripts, animationScript) then
+      table.insert(compiledAnimationScripts, animationScript)
     end
   end
   
-  config.animationScripts = altAnimationScripts
+  config.animationScripts = compiledAnimationScripts
   
   -- elemental type and config (for alt ability)
   local elementalType = configParameter("elementalType", "physical")
-
   replacePatternInData(config, nil, "<elementalType>", elementalType)
   if config.altAbility and config.altAbility.elementalConfig then
     util.mergeTable(config.altAbility, config.altAbility.elementalConfig[elementalType])
   end
 
+  -- elemental type and config (for shift ability)
+  local elementalType = configParameter("elementalType", "physical")
+
+  replacePatternInData(config, nil, "<elementalType>", elementalType)
+  if config.shiftAbility and config.shiftAbility.elementalConfig then
+    util.mergeTable(config.shiftAbility, config.shiftAbility.elementalConfig[elementalType])
+  end
+
   -- calculate damage level multiplier
-  config.damageLevelMultiplier = root.evalFunction("weaponDamageLevelMultiplier", configParameter("level", 1)) * generalConfig.globalDamageMultiplier
+  config.damageLevelMultiplier = root.evalFunction("weaponDamageLevelMultiplier", currentLevel) * generalConfig.globalDamageMultiplier
 
   -- palette swaps
   config.paletteSwaps = ""
@@ -179,6 +266,21 @@ function build(directory, config, parameters, level, seed)
 
   -- gun offsets
   if config.baseOffset then
+
+    local hiddenParts = set.new(deepConfigParameter({nil}, "project45GunModInfo", "hiddenSlots"))
+    
+    for modSlot, _ in pairs(hiddenParts) do
+
+      construct(parameters, "animationCustom", "animatedParts", "parts", modSlot, "properties")
+      parameters.animationCustom.animatedParts.parts[modSlot].properties.image = ""
+
+      construct(parameters, "animationCustom", "animatedParts", "parts", modSlot .. "Fullbright", "properties")
+      parameters.animationCustom.animatedParts.parts[modSlot .. "Fullbright"].properties.image = ""
+
+      -- needed to reconfigure muzzle offset
+      parameters[modSlot .. "Offset"] = vec2.add(config[modSlot .. "Offset"] or {0, 0}, config.baseOffset or {0, 0})
+
+    end
 
     local parts = {
       "middle",
@@ -221,9 +323,9 @@ function build(directory, config, parameters, level, seed)
       "underbarrel",
       "stock"
     }
-
+    
     for _, modPart in ipairs(modParts) do
-      if config[modPart .. "Offset"] then
+      if config[modPart .. "Offset"] and not hiddenParts[modPart] then
           config[modPart .. "Offset"] = vec2.add(config.baseOffset, config[modPart .. "Offset"])
           construct(config, "animationCustom", "animatedParts", "parts", modPart, "properties")
           construct(config, "animationCustom", "animatedParts", "parts", modPart .. "Fullbright", "properties")
@@ -262,21 +364,34 @@ function build(directory, config, parameters, level, seed)
 
   if config.primaryAbility then
 
+    local cycleTime = primaryAbility("cycleTime", 0.1)
+    if type(cycleTime) == "table" then
+      cycleTime = math.min(cycleTime[1], cycleTime[2])
+    end
+    
+    -- [[
     -- sync cycle animation
     local fireTimeRelatedStates = {
       "ejecting",
       "feeding"
     }
-    local cycleTime = primaryAbility("cycleTime", 0.1)
-    if type(cycleTime) == "table" then
-      cycleTime = math.min(cycleTime[1], cycleTime[2])
-    end
+    
     local stateCycleTime = cycleTime / (#fireTimeRelatedStates + (primaryAbility("loopFiringAnimation", false) and 0 or 1))
+
     for _, state in ipairs(fireTimeRelatedStates) do
       construct(config, "animationCustom", "animatedParts", "stateTypes", "gun", "states", state)
       config.animationCustom.animatedParts.stateTypes.gun.states[state].cycle = stateCycleTime
       -- sb.logInfo(config.animationCustom.animatedParts.stateTypes.gun.states[state].cycle)
     end
+    --]]
+    
+    --[[
+    local stateCycleTime = cycleTime / (primaryAbility("loopFiringAnimation", false) and 3 or 2)
+    construct(config, "animationCustom", "animatedParts", "stateTypes", "gun", "states", "ejecting")
+    config.animationCustom.animatedParts.stateTypes.gun.states.ejecting.cycle = stateCycleTime
+    construct(config, "animationCustom", "animatedParts", "stateTypes", "gun", "states", "feeding")
+    config.animationCustom.animatedParts.stateTypes.gun.states.feeding.cycle = stateCycleTime
+    --]]
 
     construct(config, "animationCustom", "animatedParts", "stateTypes", "gun", "states", "firing")
     config.animationCustom.animatedParts.stateTypes.gun.states.firing.cycle = primaryAbility("loopFiringAnimation", false) and cycleTime or stateCycleTime
@@ -299,12 +414,20 @@ function build(directory, config, parameters, level, seed)
   -- populate tooltip fields
   if config.tooltipKind == "project45gun" then
     config.tooltipFields = config.tooltipFields or {}
-    config.tooltipFields.subtitle = generalConfig.categoryStrings[config.project45GunModInfo.category or "Generic"] -- .. "^#D1D1D1;" .. config.gunArchetype or config.category
-    config.tooltipFields.levelLabel = util.round(configParameter("level", 1), 1)
+    if config.project45GunModInfo.uniqueType then
+      config.tooltipFields.subtitle = generalTooltipConfig.categoryStringsX[config.project45GunModInfo.uniqueType][config.project45GunModInfo.category or "generic"]
+    else
+      config.tooltipFields.subtitle = generalTooltipConfig.categoryStrings[config.project45GunModInfo.category or "generic"] -- .. "^#D1D1D1;" .. config.gunArchetype or config.category
+    end
+    config.tooltipFields.levelLabel = util.round(currentLevel, 1)
     config.tooltipFields.rarityLabel = rarityConversions[configParameter("isUnique", false) and "unique" or string.lower(configParameter("rarity", "common"))]
+    if elementalType ~= "physical" then
+      config.tooltipFields.elementImage = "/interface/elements/"..elementalType..".png"
+    end
 
     local modList = parameters.modSlots or config.modSlots or {}
     if config.project45GunModInfo then
+  
       local acceptedModSlots = set.new(config.project45GunModInfo.acceptsModSlot or {})
       local mods = {
         "sights",
@@ -331,46 +454,17 @@ function build(directory, config, parameters, level, seed)
     
     if config.primaryAbility then
       
-      if config.project45GunModInfo and config.project45GunModInfo.upgradeCapacity
-      then
-        if config.project45GunModInfo.upgradeCapacity > -1 then
-          local count = parameters.upgradeCount or 0
-          local max = parameters.project45GunModInfo.upgradeCapacity
-          config.tooltipFields.upgradeCapacityLabel = (count < max and "^#96cbe7;" or "^#777777;") .. (max - count) .. "/" .. max .. "^reset;"
-        else
-          config.tooltipFields.upgradeCapacityLabel = project45util.colorText("#96cbe7","Unlimited")
-        end
+      local upgradeCapacity = deepConfigParameter(nil, "project45GunModInfo", "upgradeCapacity")
+      if upgradeCapacity > -1 then
+        local count = parameters.upgradeCount or 0
+        local max = parameters.project45GunModInfo.upgradeCapacity
+        config.tooltipFields.upgradeCapacityLabel = (count < max and "^#96cbe7;" or "^#777777;") .. (max - count) .. "/" .. max .. "^reset;"
       else
-        config.tooltipFields.upgradeCapacityLabel = project45util.colorText("#777777", "0/0")
-      end
-
-      -- recalculate baseDamage
-      if config.gunArchetype then
-        local archetypeDamage = generalConfig.gunArchetypeDamages[config.gunArchetype]
-        -- sb.logInfo(string.format("%s (%s): %s",config.shortdescription, config.gunArchetype, sb.printJson(archetypeDamage)))
-        config.primaryAbility.baseDamage = (archetypeDamage or config.primaryAbility.baseDamage)
-      end
-      config.primaryAbility.baseDamage = config.primaryAbility.baseDamage * primaryAbility("baseDamageMultiplier", 1)
-      
-      -- generate random stats
-      if randStatBonus > 0 and not configParameter("isRandomized") then
-        -- sb.logInfo(string.format("\t{%s} Base damage: %f", configParameter("itemName", ""), primaryAbility("baseDamage", 0)))
-        -- sb.logInfo(string.format("\t{%s} Base damage Multiplier: %f", configParameter("itemName", ""), (generalConfig.maxRandBonuses.baseDamage * randStatBonus + 1)))
-
-        parameters.primaryAbility.baseDamage = primaryAbility("baseDamage", 0) * (generalConfig.maxRandBonuses.baseDamage * randStatBonus + 1)
-        parameters.primaryAbility.critChance = primaryAbility("critChance", 0) * (generalConfig.maxRandBonuses.critChance * randStatBonus + 1)
-        parameters.primaryAbility.critDamageMult = primaryAbility("critDamageMult", 1) * (generalConfig.maxRandBonuses.critDamageMult * randStatBonus + 1)
-        
-        -- sb.logInfo(string.format("\t{%s} Amped damage: %f", configParameter("itemName", ""), parameters.primaryAbility.baseDamage))
-        
-        parameters.isRandomized = true
-
+        config.tooltipFields.upgradeCapacityLabel = project45util.colorText("#96cbe7","Unlimited")
       end
       
-      -- sb.logInfo(string.format("{%s} Base damage: %f x %f = %f)", configParameter("itemName", ""), primaryAbility("baseDamage", 0), config.damageLevelMultiplier, primaryAbility("baseDamage", 0) * config.damageLevelMultiplier))
-
-      --[[ fire time calculation:
-
+      --[[
+      
       chargeTime* = chargeTime
       If gun is auto, chargeTime* = 0
 
@@ -379,7 +473,7 @@ function build(directory, config, parameters, level, seed)
       else:
         fireTime* = cycleTime + fireTime + chargeTime*
       
-      ]]--
+      --]]
       
       local actualCycleTime = primaryAbility("manualFeed", false)
         and primaryAbility("midCockDelay", 0) + primaryAbility("cockTime", 0.1) / (primaryAbility("slamFire") and 2 or 1)
@@ -397,32 +491,91 @@ function build(directory, config, parameters, level, seed)
       
       local loFireTime = math.max(actualCycleTime[1], primaryAbility("fireTime", 0.1)) + chargeTime
       local hiFireTime = math.max(actualCycleTime[2], primaryAbility("fireTime", 0.1)) + chargeTime
-      --[[
 
-      local balanceDamageMult = configParameter("balanceDamageMult", 1)
-      if balanceDamageMult == 1 then  -- balance multiplier
-  
+      -- get DPS from gun archetype
+      if config.gunArchetype and not config.overrideArchetypeDps then
+        local archetypeDps = generalConfig.gunArchetypeDps[config.gunArchetype]
+        config.primaryAbility.baseDps = (archetypeDps or config.primaryAbility.baseDamage)
+      end
 
-        local maxAmmo = primaryAbility("maxAmmo", 1)
-        local ammoBalance = math.max(0, (generalConfig.standardMaxAmmo - maxAmmo) / (generalConfig.standardMaxAmmo - 1))
-        local reloadBalance = (maxAmmo - primaryAbility("bulletsPerReload", 1)) / maxAmmo
-        local reloadBalance = 0
-        local firemodeBalance = primaryAbility("semi") and 0.75 or 0
-  
-        -- fire time balance is average firetime / (standard fire time * burst count)
-        -- local fireTimeBalance = math.max(generalConfig.minimumFireTime, ((loFireTime + hiFireTime) / 2)) / (generalConfig.standardFireTime * primaryAbility("burstCount", 1))
-        local fireTimeBalance = 0.01 * (loFireTime + hiFireTime / 2) / generalConfig.minimumFireTime - 0.02
-        balanceDamageMult = 1 + fireTimeBalance
-        parameters.balanceDamageMult = balanceDamageMult
+      -- convert DPS to Base Damage
+      local baseDps = config.primaryAbility.baseDps
+      if baseDps then
         
-        parameters.balanceDamageMult = 1
+        -- AVERAGE FIRE TIME
+        -- get midpoint of low and high firetime
+        local dpsFiretime = math.max(loFireTime + hiFireTime / 2, generalConfig.minimumFireTime)
+        if config.primaryAbility.semi then -- add average human seconds per click
+          dpsFiretime = dpsFiretime + math.max(0.16, config.primaryAbility.fireTime)
+        end
+        if config.primaryAbility.manualFeed then -- add another average human seconds per click
+          dpsFiretime = dpsFiretime + math.max(0.16, config.primaryAbility.fireTime)
+        end
+        if config.primaryAbility.burstCount > 1 then
+          dpsFiretime = dpsFiretime / config.primaryAbility.burstCount
+        end
+        -- reloads after every shot
+        --[[
+        if config.primaryAbility.ammoPerShot >= config.primaryAbility.maxAmmo then
+          dpsFiretime = dpsFiretime + config.primaryAbility.reloadTime/2 
+        end
+        --]]
+        
+        -- EXPECTED CRIT DAMAGE MULTIPLIER
+        -- get crit stats
+        local critChance = config.primaryAbility.critChance or 0
+        local critDamage = config.primaryAbility.critDamageMult or 1
+
+        -- calculate crit and non-crit damage (multiplier)
+        local critTier = math.floor(critChance)
+        local baseCritDamageMult = critTier > 0 and (critDamage + critTier - 1) or 0
+        critDamage = math.max(1, baseCritDamageMult + (critTier > 0 and 1 or critDamage))
+        local nCritDamage = math.max(1, baseCritDamageMult)
+        
+        -- restrict critChance within [0, 1]
+        critChance = critChance - critTier
+        local nCritChance = 1 - critChance
+
+        -- calculate expected crit damage (multiplier)
+        local expectedCritDamage = nCritChance * nCritDamage + critChance * critDamage
+
+        -- AVERAGE CHARGE DAMAGE MULTIPLIER
+        -- (exclude perfect charge damage)
+        local averageChargeDamageMult = 1
+        if config.primaryAbility.overchargeTime > 0 then
+          averageChargeDamageMult = (
+            (config.primaryAbility.chargeDamageMult or 1)
+            + (config.primaryAbility.perfectChargeDamageMult or 1)
+            + 1
+          ) / 3
+        end
+
+        -- AVERAGE RELOAD RATING MULTIPLIER
+        local reloadMultArr = config.primaryAbility.reloadRatingDamageMults or {1, 1, 1, 1}
+        local reloadMult = 0
+        for i=1, #reloadMultArr do
+          reloadMult = reloadMult + reloadMultArr[i]
+        end
+        reloadMult = reloadMult / #reloadMultArr
+
+        -- FINAL: BASE DAMAGE
+        config.primaryAbility.baseDamage = baseDps * dpsFiretime / (reloadMult * expectedCritDamage * averageChargeDamageMult)
 
       end
+
+      config.primaryAbility.baseDamage = (config.primaryAbility.baseDamage or 0) * primaryAbility("baseDamageMultiplier", 1)
       
-      --]]
-      
-      -- damage per shot
-      -- recalculate
+      -- generate random stats
+      -- Apply Random Stat Bonuses AFTER damage calculation
+      -- these are _bonus_ stats, after all
+      if randStatBonus > 0 and not configParameter("isRandomized") then
+        parameters.primaryAbility.baseDamage = primaryAbility("baseDamage", 0) * (generalConfig.maxRandBonuses.baseDamage * randStatBonus + 1)
+        parameters.primaryAbility.critChance = primaryAbility("critChance", 0) * (generalConfig.maxRandBonuses.critChance * randStatBonus + 1)
+        parameters.primaryAbility.critDamageMult = primaryAbility("critDamageMult", 1) * (generalConfig.maxRandBonuses.critDamageMult * randStatBonus + 1)
+        parameters.isRandomized = true
+      end
+
+      -- get charge-related numbers for calculation of displayed stat
       local overchargeTime = primaryAbility("overchargeTime", 0)
       local chargeDamageMult = primaryAbility("chargeDamageMult", 1)
       local perfectChargeDamageMult = math.max(
@@ -484,9 +637,10 @@ function build(directory, config, parameters, level, seed)
       end
 
       config.tooltipFields.bonusRatioLabel = ""
+      config.tooltipFields.bonusRatioTitleLabel = ""
       config.tooltipFields.bonusRatioShadowLabel = ""
       if randStatBonus > 0 and parameters.isRandomized then
-        local bonusDesc = string.format("^shadow;%d%%", math.floor(randStatBonus * 100))
+        local bonusDesc = parameters.randStatBonus == randStatBonus and string.format("^shadow;%d%%", math.floor(randStatBonus * 100)) or "^shadow;??%"
         local bonusColor = "#777777"
         if randStatBonus > 0.75 then
           bonusColor = "#fdd14d"
@@ -496,6 +650,7 @@ function build(directory, config, parameters, level, seed)
           bonusColor = "#60b8ea"
         end
         config.tooltipFields.bonusRatioLabel = project45util.colorText(bonusColor, bonusDesc)
+        config.tooltipFields.bonusRatioTitleLabel = project45util.colorText(bonusColor, "^shadow;Stat Bonus")
         config.tooltipFields.bonusRatioShadowLabel = project45util.colorText("#a0a0a0", bonusDesc)
       end
 
@@ -562,55 +717,59 @@ function build(directory, config, parameters, level, seed)
           )
       end
 
-      --[[
-
-      config.tooltipFields.balanceDamageMultLabel = ""
-      if balanceDamageMult ~= 1 then
-        config.tooltipFields.balanceDamageMultLabel = project45util.colorText(balanceDamageMult > 1
-          and "#9dc6f5" or "#FF5050",
-          project45util.truncatef(balanceDamageMult, 2) .. "x") .. "\n"
+      local availableModSlots = deepConfigParameter({nil}, "project45GunModInfo", "acceptsModSlot")
+      local availableExclude = set.new({"rail", "sights", "muzzle", "underbarrel", "stock"})
+      local acceptsModDesc = ""
+      for _, modSlot in ipairs(availableModSlots) do
+        if not (modList[modSlot] or availableExclude[modSlot]) then
+          acceptsModDesc = acceptsModDesc .. project45util.colorText(
+            "#9da8af",
+            string.format("No %s.\n", generalTooltipConfig.slotNames[modSlot] or modSlot)
+          )
+        end
       end
-
-      --]]
       
       local modListDesc = ""
-      if modList then
-        local exclude = set.new({"passive","ability","rail","sights","muzzle","underbarrel","stock","ammoType"})
-        for modSlot, modKind in pairs(modList) do
-          if not exclude[modSlot] and modKind[1] ~= "ability" then
-            descriptionScore = descriptionScore + 1
-            modListDesc = modListDesc .. project45util.colorText("#abfc6d", modKind[1]) .. "\n"
-          end
+      local exclude = set.new({"passive","ability","manualReload", "shiftAbility","rail","sights","muzzle","underbarrel","stock","ammoType"})
+      for modSlot, modKind in pairs(modList) do
+        if not exclude[modSlot] and modKind[1] ~= "ability" then
+          descriptionScore = descriptionScore + 1
+          modListDesc = modListDesc .. project45util.colorText("#abfc6d", modKind[1]) .. "\n"
         end
       end
 
-      local finalDescription = passiveDesc .. heavyDesc .. chargeDesc .. overchargeDesc .. multishotDesc .. modListDesc -- .. config.description
-      finalDescription = finalDescription == "" and project45util.colorText("#777777", "No notable qualities.") or finalDescription
-      
-      descriptionScore = descriptionScore + math.ceil((#config.description)/18)
-      
-      if descriptionScore <= 7 then
-        config.description = config.description .. "\n" .. finalDescription
-      else
-        config.description = "Highly modified.\n" .. finalDescription
+      local finalDescription = passiveDesc .. heavyDesc .. chargeDesc .. overchargeDesc .. multishotDesc .. acceptsModDesc .. modListDesc
+      finalDescription = finalDescription == "" and project45util.colorText("#777777", "No notable qualities.") or finalDescription      
+      config.tooltipFields.technicalLabel = finalDescription
+
+      if config.lore then
+        config.description = config.description .. " " .. project45util.colorText("#9da8af", config.lore)
       end
 
     end
 
     if parameters.altAbility then
-      config.tooltipFields.altAbilityLabel = ("^#ABD2FF;" .. (parameters.altAbility.name or "Unknown"))
+      config.tooltipFields.altAbilityLabel = ("^#ffffa7;" .. (parameters.altAbility.name or "Unknown"))
     elseif config.altAbility then
-      config.tooltipFields.altAbilityLabel = ("^#ABD2FF;" .. (config.altAbility.name or "Unknown"))
+      config.tooltipFields.altAbilityLabel = ("^#ffffa7;" .. (config.altAbility.name or "Unknown"))
     else
       config.tooltipFields.altAbilityLabel = "^#777777;None"
+    end
+
+    if parameters.shiftAbility then
+      config.tooltipFields.shiftAbilityLabel = ("^#a8e6e2;" .. (parameters.shiftAbility.name or "Unknown"))
+    elseif config.shiftAbility then
+      config.tooltipFields.shiftAbilityLabel = ("^#a8e6e2;" .. (config.shiftAbility.name or "Unknown"))
+    else
+      config.tooltipFields.shiftAbilityLabel = "^#777777;None"
     end
 
   end
 
   -- set price
   -- should this be handled elsewhere?
-  config.price = (config.price or 0) * root.evalFunction("itemLevelPriceMultiplier", configParameter("level", 1))
-  parameters.price = config.price -- needed for gunshop
+  config.price = (config.price or 0) * root.evalFunction("itemLevelPriceMultiplier", currentLevel)
+  parameters.price = config.price + (parameters.moddedPrice or 0) -- needed for gunshop
 
   return config, parameters
 end

@@ -3,7 +3,8 @@
   "price" : 2500,
   "maxStack" : 1,
   "rarity" : "Rare",
-  "description" : "A lever-action coach gun. Oddly favored by the Glitch.",
+  "description" : "A lever-action coach gun.",
+  "lore": "It's fun to cock this. While favored by the Novakids, this is also oddly favored by the Glitch.",
   "shortdescription" : "Lever Action",
   "tooltipKind" : "project45gun",
   "gunArchetype": "rifle",
@@ -16,7 +17,7 @@
 
   "project45GunModInfo":{
     "category": "ballistic",
-    "upgradeCapacity": 8,
+    
     "allowsConversion": [
       "hitscan",
       "summoned"
