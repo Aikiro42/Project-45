@@ -4,24 +4,20 @@
       "path": "/upgradeStages/2/addonConfig/usesAddons/-",
       "value": {
           "name": "project45ReplicatorAddon",
-          "position": [
-              0,
-              3
-          ],
+          "position": [0, 3],
           "addonData": {
               "animationState": "project45replicator",
               "interactData": {
-                  "paneLayoutOverride": {
-                      "windowtitle": {
-                          "title": "Gunsmith's Table",
-                          "icon": {
-                              "file": "/interface/crafting/project45replicatortable.png"
-                          }
-                      }
-                  },
-                  "filter": [
-                      "project45craftable"
-                  ]
+                "config" : "/interface/project45-materializer/project45-materializer.config",
+                "paneLayoutOverride": {
+                    "windowtitle": {
+                        "title": "Gunsmith's Table",
+                        "icon": {
+                            "file": "/interface/crafting/project45replicatortable.png"
+                        }
+                    }
+                },
+                "filter": [ "project45craftable" ]
               }
           }
       }
