@@ -4,8 +4,8 @@
   "rarity" : "Legendary",
   "category" : "crafting",
   "price" : 1250,
-  "description" : "A module that adds Project 45 miscellany to the replicator.",
-  "shortdescription" : "^orange;Project 45 Addon^white;",
+  "description" : "A module that adds Project 45 items and miscellany to the replicator.",
+  "shortdescription" : "^orange;Gunsmith Addon^white;",
   "race" : "generic",
 
   "apexDescription" : "How useful, this will add additional Project 45 combat equipment to the replicator.",
