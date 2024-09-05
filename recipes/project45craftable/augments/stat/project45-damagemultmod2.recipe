@@ -1,0 +1,11 @@
+{
+  "input" : [
+    { "item" : "project45-damagemultmod1", "count" : 10 }
+  ],
+  "output" : {
+    "item" : "project45-damagemultmod2",
+    "count" : 1
+  },
+  "duration" : 5,
+  "groups" : [ "project45craftable" ]
+}

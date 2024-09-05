@@ -10,12 +10,12 @@
   "modCategory" : "statMod",
   "category" : "uniqueWeapon",
   "itemTags": ["weapon"],
-  "inventoryIcon" : "/items/augments/project45-gunmods/stat/project45-godmod/project45-godmod.png",
+  "inventoryIcon" : "/items/augments/project45-gunmods/stat/project45-godmod/project45-adminmod.png",
   "statInfo" : "You're not supposed to have this.",
   "description": "You're not supposed to have this.",
   "slot": "multiple",
   "archetype": "Mixed",
-  "shortdescription" : "^#fdd14d;Admin Mod^reset;",
+  "shortdescription" : "^#fdd14d;The Admin Mod^reset;",
 
   "augment":{
     "cost": 0,
@@ -24,7 +24,7 @@
     "stat": {
       "stackLimit": 1,
       "baseDamage": {
-        "multiplicative": 32
+        "multiplicative": 8
       },
       "critChance": {
         "additive": 3
@@ -33,10 +33,10 @@
         "additive": 1
       },
       "recoilAmount": {
-        "rebaseMult": 0.1
+        "rebaseMult": 0.25
       },
       "inaccuracy": {
-        "rebaseMult": 0.1
+        "rebaseMult": 0.25
       }
     }
   },

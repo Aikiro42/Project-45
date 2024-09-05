@@ -1,0 +1,11 @@
+{
+  "input" : [
+    { "item" : "dubloon", "count" : 100 }
+  ],
+  "output" : {
+    "item" : "project45-scz-spacecowboy",
+    "count" : 1
+  },
+  "duration" : 5,
+  "groups" : [ "project45craftable" ]
+}
