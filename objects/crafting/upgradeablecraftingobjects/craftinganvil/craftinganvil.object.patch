@@ -11,9 +11,10 @@
                 "config" : "/interface/project45-materializer/project45-materializer.config",
                 "paneLayoutOverride": {
                     "windowtitle": {
-                        "title": "Gunsmith's Table",
+                        "title": " Gunsmith's Table",
+                        "subtitle" : " ^#b9b5b2;Project 45 Items",
                         "icon": {
-                            "file": "/interface/crafting/project45replicatortable.png"
+                            "file": "/interface/project45-materializer/project45-materializer-icon.png"
                         }
                     }
                 },
