@@ -8,3 +8,4 @@ items/active/weapons/ranged/abilities/altfire.lua
 interface/scripted/weaponupgrade/weaponupgradegui.lua
 docs/devtools/node_modules
 docs/devtools/packed
+objects/crafting/upgradeablecraftingobjects/craftinganvil/craftinganvil.object

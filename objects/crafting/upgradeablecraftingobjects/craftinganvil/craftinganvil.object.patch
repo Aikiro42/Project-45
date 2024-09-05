@@ -6,6 +6,7 @@
           "name": "project45ReplicatorAddon",
           "position": [0, 3],
           "addonData": {
+              "magicNumber": "@aikiro42/project45",
               "animationState": "project45replicator",
               "interactData": {
                 "config" : "/interface/project45-materializer/project45-materializer.config",
@@ -22,5 +23,11 @@
               }
           }
       }
+  },
+
+  {
+    "op": "add",
+    "path": "/scripts/-",
+    "value": "/objects/crafting/upgradeablecraftingobjects/craftinganvil/addons/project45replicatoraddon/project45replicatorupgrade.lua"
   }
 ]
