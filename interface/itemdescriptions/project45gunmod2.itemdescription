@@ -42,53 +42,41 @@
     "hAnchor" : "left",
     "value" : "tree"
   },
-  
-  "categoryTitleLabel" : {
+
+  "archetypeLabel" : {
     "type" : "label",
-    "position" : [16, 83],
-    "hAnchor" : "left",
-    "value" : "Category:"
-  },
-  "categoryLabel" : {
-    "type" : "label",
-    "position" : [133, 83],
+    // "position" : [134, 65],
+    "position" : [69, 65],
     "hAnchor" : "right",
-    "centered" : true,
     "wrapWidth" : 126
   },
-
+  "archetypeTitleLabel" : {
+    "type" : "label",
+    // "position" : [16, 65],
+    "position" : [71, 65],
+    "hAnchor" : "left",
+    "value" : "SAMPLE"
+  },
   
-  "slotTitleLabel" : {
+  "itemDescriptionUpgradeCostLabel" : {
+    "type" : "label",
+    "position" : [140, 169],
+    "hAnchor" : "right",
+    "value" : "COST: 99"
+  },
+
+  "categoryLabel" : {
     "type" : "label",
     "position" : [16, 74],
     "hAnchor" : "left",
-    "value" : "Slot:"
+    "centered" : true,
+    "wrapWidth" : 126
   },
   "slotLabel" : {
     "type" : "label",
-    "position" : [134, 74],
+    "position" : [133, 74],
     "hAnchor" : "right",
     "wrapWidth" : 126
-  },
-  
-  "archetypeTitleLabel" : {
-    "type" : "label",
-    "position" : [16, 65],
-    "hAnchor" : "left",
-    "value" : "Type:"
-  },
-  "archetypeLabel" : {
-    "type" : "label",
-    "position" : [134, 65],
-    "hAnchor" : "right",
-    "wrapWidth" : 126
-  },
-
-  "upgradeCostLabel" : {
-    "type" : "label",
-    "position" : [16, 56],
-    "hAnchor" : "left",
-    "value" : "COST: 99"
   },
 
   "rarityLabel" : {

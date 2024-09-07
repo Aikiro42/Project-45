@@ -19,7 +19,17 @@
                         }
                     }
                 },
-                "filter": [ "project45craftable" ]
+                
+                "filter": []
+                /*
+                // handled in `/objects/crafting/upgradeablecraftingobjects/addons/project45replicatoraddon/project45replicatorupgrade.lua`
+                "filter": [
+                  "project45craftable-guns",
+                  "project45craftable-mods",
+                  "project45craftable-ammo",
+                  "project45craftable-stat"
+                ]
+                */
               }
           }
       }

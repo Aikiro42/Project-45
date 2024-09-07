@@ -1,9 +1,9 @@
 {
   "input" : [
-    { "item" : "project45-godmod", "count" : 45 }
+    { "item" : "project45-firetimeaddmod1", "count" : 10 }
   ],
   "output" : {
-    "item" : "project45-adminmod",
+    "item" : "project45-firetimeaddmod2",
     "count" : 1
   },
   "duration" : 5,

@@ -1,11 +1,14 @@
 {
   "input" : [
-    { "item" : "dubloon", "count" : 100 }
+    { "item" : "dubloon", "count" : 45 }
   ],
   "output" : {
     "item" : "project45-msx-marcohmg",
+    "parameters": {
+      "seed": 69420
+    },
     "count" : 1
   },
   "duration" : 5,
-  "groups" : [ "project45craftable" ]
+  "groups" : [ "project45craftable-guns" ]
 }

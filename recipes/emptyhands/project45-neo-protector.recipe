@@ -9,6 +9,9 @@
   ],
   "output" : {
     "item" : "project45-neo-protector",
+    "parameters": {
+      "seed": 69420
+    },
     "count" : 1
   },
   "duration" : 1,

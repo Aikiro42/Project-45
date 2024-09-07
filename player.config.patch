@@ -1,6 +1,52 @@
 [
     { "op" : "add", "path" : "/defaultBlueprints/tier1/-", "value" : { "item" : "project45-gunshop" } },
     { "op" : "add", "path" : "/defaultBlueprints/tier1/-", "value" : { "item" : "project45-neo-protector" } },
+    { "op" : "add", "path" : "/defaultBlueprints/tier1/-", "value" : { "item" : "project45replicatoraddon" } },
+    
+    // craftable guns
+    { "op" : "add", "path" : "/defaultBlueprints/tier1/-", "value" : { "item" : "project45-cbp-malorian" } },
+    { "op" : "add", "path" : "/defaultBlueprints/tier1/-", "value" : { "item" : "project45-gov-fleetlyfading" } },
+    { "op" : "add", "path" : "/defaultBlueprints/tier1/-", "value" : { "item" : "project45-hlo-maxx" } },
+    { "op" : "add", "path" : "/defaultBlueprints/tier1/-", "value" : { "item" : "project45-mhf-boneshooter" } },
+    { "op" : "add", "path" : "/defaultBlueprints/tier1/-", "value" : { "item" : "project45-msx-marchohmg" } },
+    { "op" : "add", "path" : "/defaultBlueprints/tier1/-", "value" : { "item" : "project45-scz-spacecowboy" } },
+    { "op" : "add", "path" : "/defaultBlueprints/tier1/-", "value" : { "item" : "project45-tcf-kineticarbiter" } },
+    { "op" : "add", "path" : "/defaultBlueprints/tier1/-", "value" : { "item" : "project45-utk-revolver" } },
+    { "op" : "add", "path" : "/defaultBlueprints/tier1/-", "value" : { "item" : "project45-wfm-kuvabramma" } },
+
+    // stats
+    { "op" : "add", "path" : "/defaultBlueprints/tier1/-", "value" : { "item" : "project45-godmod" } },
+    { "op" : "add", "path" : "/defaultBlueprints/tier1/-", "value" : { "item" : "project45-adminmod" } },
+    
+    { "op" : "add", "path" : "/defaultBlueprints/tier1/-", "value" : { "item" : "project45-maxlevelmod" } },
+    
+    { "op" : "add", "path" : "/defaultBlueprints/tier1/-", "value" : { "item" : "project45-damageaddmod2" } },
+    { "op" : "add", "path" : "/defaultBlueprints/tier1/-", "value" : { "item" : "project45-damageaddmod3" } },
+    { "op" : "add", "path" : "/defaultBlueprints/tier1/-", "value" : { "item" : "project45-damagemultmod2" } },
+    { "op" : "add", "path" : "/defaultBlueprints/tier1/-", "value" : { "item" : "project45-damagemultmod3" } },
+    
+    { "op" : "add", "path" : "/defaultBlueprints/tier1/-", "value" : { "item" : "project45-critchanceaddmod2" } },
+    { "op" : "add", "path" : "/defaultBlueprints/tier1/-", "value" : { "item" : "project45-critchanceaddmod3" } },
+    { "op" : "add", "path" : "/defaultBlueprints/tier1/-", "value" : { "item" : "project45-critchancemultmod2" } },
+    { "op" : "add", "path" : "/defaultBlueprints/tier1/-", "value" : { "item" : "project45-critchancemultmod3" } },
+    
+    { "op" : "add", "path" : "/defaultBlueprints/tier1/-", "value" : { "item" : "project45-critdamageaddmod2" } },
+    { "op" : "add", "path" : "/defaultBlueprints/tier1/-", "value" : { "item" : "project45-critdamageaddmod3" } },
+    { "op" : "add", "path" : "/defaultBlueprints/tier1/-", "value" : { "item" : "project45-critdamagemultmod2" } },
+    { "op" : "add", "path" : "/defaultBlueprints/tier1/-", "value" : { "item" : "project45-critdamagemultmod3" } },
+    
+    { "op" : "add", "path" : "/defaultBlueprints/tier1/-", "value" : { "item" : "project45-firetimeaddmod2" } },
+    { "op" : "add", "path" : "/defaultBlueprints/tier1/-", "value" : { "item" : "project45-firetimeaddmod3" } },
+    { "op" : "add", "path" : "/defaultBlueprints/tier1/-", "value" : { "item" : "project45-firetimemultmod2" } },
+    { "op" : "add", "path" : "/defaultBlueprints/tier1/-", "value" : { "item" : "project45-firetimemultmod3" } },
+    
+    { "op" : "add", "path" : "/defaultBlueprints/tier1/-", "value" : { "item" : "project45-reloadcostaddmod2" } },
+    { "op" : "add", "path" : "/defaultBlueprints/tier1/-", "value" : { "item" : "project45-reloadcostaddmod3" } },
+    { "op" : "add", "path" : "/defaultBlueprints/tier1/-", "value" : { "item" : "project45-reloadcostmultmod2" } },
+    { "op" : "add", "path" : "/defaultBlueprints/tier1/-", "value" : { "item" : "project45-reloadcostmultmod3" } },
+
+    // other
+    
     {
         "op": "add",
         "path": "/deploymentConfig/scripts/-",

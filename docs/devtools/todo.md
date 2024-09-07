@@ -3,6 +3,7 @@
 
 # Changes
 - [ ] Improve ballistic shield
+- [ ] Move balance closer to early game
 
 # Ammo Mods
 ## Sawblades

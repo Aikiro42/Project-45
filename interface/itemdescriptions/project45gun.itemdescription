@@ -40,21 +40,37 @@
     "hAnchor" : "left",
     "value" : "Reload Cost:"
   },
-  "reloadCostLabel" : {
+  "reloadLabel" : {
     "type" : "label",
     "position" : [134, 65],
     "hAnchor" : "right",
     "wrapWidth" : 126
   },
+  "critTitleLabel" : {
+    "type" : "label",
+    // "position" : [16, 56],
+    "position" : [16, 56],
+    "hAnchor" : "left",
+    "value" : "CC/CD:"
+  },
+  "critLabel" : {
+    "type" : "label",
+    "position" : [133, 56],
+    "hAnchor" : "right",
+    "centered" : true,
+    "wrapWidth" : 126,
+    "value" : "9999% (9999x)"
+  },
   "altAbilityTitleLabel" : {
     "type" : "label",
-    "position" : [16, 56],
+    // "position" : [16, 56],
+    "position" : [16, 47],
     "hAnchor" : "left",
     "value" : "Alt Ability:"
   },
   "altAbilityLabel" : {
     "type" : "label",
-    "position" : [133, 56],
+    "position" : [133, 47],
     "hAnchor" : "right",
     "centered" : true,
     "wrapWidth" : 126

@@ -619,6 +619,7 @@ function build(directory, config, parameters, level, seed)
       local actualReloadTime = bulletReloadTime * math.max(1, maxAmmo / bulletsPerReload)
       
       config.tooltipFields.reloadTimeLabel = util.round((actualReloadTime or 0), 1) .. "s"
+      config.tooltipFields.reloadLabel = config.tooltipFields.reloadCostLabel .. " (" .. config.tooltipFields.reloadTimeLabel .. ")" 
 
       -- crit chance
       local critChance = primaryAbility("critChance", 0)
@@ -630,11 +631,16 @@ function build(directory, config, parameters, level, seed)
 
       -- crit damage
       local critDamage = primaryAbility("critDamageMult", 1)
+      local itemDescriptionCritDamage = ""
       if critChance > 0 then
         config.tooltipFields.critDamageLabel = project45util.colorText("#FF6767", util.round(critDamage, 1) .. "x")
+        itemDescriptionCritDamage = project45util.colorText("#FF6767", " (" .. util.round(critDamage, 1) .. "x" .. ")")
       else
         config.tooltipFields.critDamageLabel = project45util.colorText("#777777", util.round(critDamage, 1) .. "x")
+        itemDescriptionCritDamage = project45util.colorText("#777777", " (" .. util.round(critDamage, 1) .. "x" .. ")")
+
       end
+      config.tooltipFields.critLabel = config.tooltipFields.critChanceLabel .. itemDescriptionCritDamage
 
       config.tooltipFields.bonusRatioLabel = ""
       config.tooltipFields.bonusRatioTitleLabel = ""
