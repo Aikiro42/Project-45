@@ -7,7 +7,12 @@
   "interactAction" : "OpenCraftingInterface",
   "interactData" : {
     "config" : "/interface/project45-materializer/project45-materializer.config",
-    "filter" : [ "project45craftable" ]
+    "filter": [
+      "project45craftable-guns",
+      "project45craftable-mods",
+      "project45craftable-ammo",
+      "project45craftable-stat"
+    ]  
   },
   "description" : "Embers dance away from the campfire, warming the air. The heat can be used for cooking.",
   "shortdescription" : "^orange;Project 45 Materializer^white;",

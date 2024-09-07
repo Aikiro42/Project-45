@@ -436,9 +436,12 @@ function build(directory, config, parameters, level, seed)
         "underbarrel",
         "stock"
       }
-      for _, modSlot in ipairs(mods) do
+      for i, modSlot in ipairs(mods) do
         if acceptedModSlots[modSlot] then
           config.tooltipFields[modSlot .. "Image"] = modList[modSlot] and modList[modSlot][3] or ""
+          config.tooltipFields["itemDescription-" .. modSlot .. "Image"] = "/interface/itemdescriptions/project45gun/modslots/" .. modSlot .. ".png"
+        else
+          config.tooltipFields["itemDescription-" .. modSlot .. "Image"] = "/interface/itemdescriptions/project45gun/modslots/off-" .. modSlot .. ".png"
         end
       end
       
@@ -447,7 +450,10 @@ function build(directory, config, parameters, level, seed)
         and #(config.project45GunModInfo.acceptsAmmoArchetype or {}) == 0
       )
       then
-        config.tooltipFields.ammoTypeImage = modList.ammoType and modList.ammoType[3] or ""        
+        config.tooltipFields.ammoTypeImage = modList.ammoType and modList.ammoType[3] or ""
+        config.tooltipFields["itemDescription-ammoImage"] = "/interface/itemdescriptions/project45gun/modslots/ammo.png"
+      else
+        config.tooltipFields["itemDescription-ammoImage"] = "/interface/itemdescriptions/project45gun/modslots/off-ammo.png"
       end
 
     end
@@ -459,6 +465,7 @@ function build(directory, config, parameters, level, seed)
         local count = parameters.upgradeCount or 0
         local max = parameters.project45GunModInfo.upgradeCapacity
         config.tooltipFields.upgradeCapacityLabel = (count < max and "^#96cbe7;" or "^#777777;") .. (max - count) .. "/" .. max .. "^reset;"
+        config.tooltipFields.itemDescriptionUpgradeCapLabel = project45util.colorText("#96cbe7", "U. Cap: " .. parameters.project45GunModInfo.upgradeCapacity)
       else
         config.tooltipFields.upgradeCapacityLabel = project45util.colorText("#96cbe7","Unlimited")
       end
