@@ -234,8 +234,9 @@
         {"weight" : 0.5, "item" : "project45-flashlasermod"},
         {"weight" : 0.5, "item" : "project45-autofiremod"},
         {"weight" : 0.5, "item" : "project45-multithreadermod"},
-        {"weight" : 0.5, "item" : "project45-splittermod"}
-
+        {"weight" : 0.5, "item" : "project45-splittermod"},
+        {"weight" : 0.5, "item" : "project45-bayonetgripmod"}
+        
       ],
       "poolRounds" : 1,
       "allowDuplication" : false

@@ -1,0 +1,191 @@
+{
+  "animationCustom" : {
+      
+      "transformationGroups" : {
+        "swoosh" : {}
+      },  
+
+      "sounds":{
+        "ready": ["/sfx/interface/sniper_mark_pitch1.ogg"],
+        "fire1": ["/sfx/melee/swing_dagger.ogg"]
+      },
+
+      "animatedParts": {
+
+        "stateTypes": {
+
+          "swoosh": {
+            "default": "idle",
+            "states":{
+              "idle" : {
+              
+              },
+              "fire1" : {
+                "frames" : 3,
+                "cycle" : 0.1,
+                "mode" : "transition",
+                "transition" : "idle"
+              },
+              "fire2" : {
+                "frames" : 3,
+                "cycle" : 0.1,
+                "mode" : "transition",
+                "transition" : "idle"
+              }
+            }
+          }
+          
+        },
+        
+        "parts": {
+          
+          /*
+          "underbarrel" : {
+            "properties" : {
+                "zLevel" : -1,
+                "centered" : true,
+                "offset": [0.75, -0.25],
+                "transformationGroups" : ["weapon"],
+                "image" : "/items/active/weapons/ranged/abilities/project45meleeswipe/project45bayonetsprite.png<directives>"
+            }
+          },
+          */
+
+          "swoosh": {
+            
+            "properties": {
+              "zLevel" : 99,
+              "centered" : true,
+              "transformationGroups" : ["swoosh"],
+              "rotationCenter" : [0, 0]
+            },
+
+            "partStates" : {
+              "swoosh" : {
+                "idle" : {
+                  "properties" : {
+                    "image" : ""
+                  }
+                },
+                "fire1" : {
+                  "properties" : {
+                    "image" : "/items/active/weapons/melee/broadsword/swoosh/physicalswoosh.png:<frame>"
+                  }
+                },
+                "fire2" : {
+                  "properties" : {
+                    "image" : "/items/active/weapons/melee/broadsword/swoosh3/physicalswoosh.png:<frame>"
+                  }
+                }
+              }   
+            }
+
+          }
+        }
+      }
+  
+  },
+
+  "ability" : {
+    "name" : "Melee Swipe",
+    "type" : "project45meleeswipe",
+    "scripts" : ["/items/active/weapons/ranged/abilities/project45meleeswipe/project45meleeswipe.lua"],
+    "class" : "Project45MeleeSwipe",
+
+    "energyCost": 10,
+    "cooldown": 0.1,
+    "comboGracePeriod": 0.5,
+    "offsetParameter": "baseOffset",
+
+    "combo": [
+      [
+        ///*
+        {
+          "armRotation": 90,
+          "weaponRotation": 90,
+          // "armRotation": 0,
+          // "weaponRotation": 0,
+          
+          "twoHanded": true,
+          "duration": 0.2
+        },
+        //*/
+        {
+          "armRotation": -35,
+          "weaponRotation": -15,
+          // "armRotation": 0,
+          // "weaponRotation": 0,
+  
+          "twoHanded": true,
+          "snap": true,
+          "duration": 0.1,
+          "animationStates": {
+            "swoosh": "fire1"
+          },
+          "playSounds": ["fire1"],
+          "damage": {
+            "config": {
+              "baseDamageFactor": 2,
+              "damageSourceKind" : "dagger",
+              "statusEffects" : [ ],
+              "knockbackMode" : "facing",
+              "knockback" : 10,
+              "timeout": 0.1
+            },
+            "area": [[-5, 2], [-2.5, 3], [1, 3], [4, 1.75], [5, -0.25], [5, -2.25], [4, -3.25], [0, -2.5]],
+            "offset": [-1.75, 1.75]
+          }
+        },
+        {
+          "armRotation": -45,
+          "weaponRotation": 45,
+          "twoHanded": true,
+          "allowRotate": true,
+          "allowFlip": true
+        }
+      ],
+      [
+        {
+          "armRotation": -75,
+          "weaponRotation": 75,
+          "weaponOffset": [-0.25, 0],
+          "twoHanded": true,
+          "duration": 0.2
+        },
+        {
+          "armRotation": 0,
+          "weaponRotation": 0,
+          "weaponOffset": [1, 0],
+          // "armRotation": 0,
+          // "weaponRotation": 0,
+  
+          "twoHanded": true,
+          "snap": true,
+          "duration": 0.1,
+          "animationStates": {
+            "swoosh": "fire2"
+          },
+          "playSounds": ["fire1"],
+          "damage": {
+            "config": {
+              "damageSourceKind" : "dagger",
+              "statusEffects" : [ ],
+              "knockbackMode" : "facing",
+              "knockback" : 40,
+              "timeout": 0.1
+            },
+            "area": [[-4.75, 1.5], [3, 1], [3, -1], [-4.75, -1.5]],
+            "offset": [0.5, 0]
+          }
+        },
+        {
+          "armRotation": 0,
+          "weaponRotation": 0,
+          "twoHanded": true,
+          "allowRotate": true,
+          "allowFlip": true
+        }
+      ]
+    ]
+  }
+}

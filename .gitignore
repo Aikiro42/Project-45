@@ -9,3 +9,8 @@ interface/scripted/weaponupgrade/weaponupgradegui.lua
 docs/devtools/node_modules
 docs/devtools/packed
 objects/crafting/upgradeablecraftingobjects/craftinganvil/craftinganvil.object
+items/active/weapons/ranged/project45/project45-neo-amr/project45-neo-amr.activeitem.patch
+items/active/weapons/ranged/project45/project45-neo-assaultrifle/project45-neo-assaultrifle.activeitem.patch
+items/active/weapons/ranged/project45/project45-neo-carbine/project45-neo-carbine.activeitem.patch
+items/active/weapons/ranged/project45/project45-neo-handmaderifle/project45-neo-handmaderifle.activeitem.patch
+items/active/weapons/ranged/project45/project45-neo-shotgun/project45-neo-shotgun.activeitem.patch
