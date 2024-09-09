@@ -18,6 +18,8 @@ function Weapon:init()
 
   self.armFrameAnimations = true
 
+  self.stanceInterpolationMethod = "sin"
+
   oldWeaponInit(self)
 
   self.oldWeaponOffset = self.weaponOffset
@@ -34,16 +36,16 @@ function Weapon:update(dt, fireMode, shiftHeld)
     self.stanceProgress = math.min(1, self.stanceProgress + dt*(self.stanceTransitionSpeedMult or 4))
 
     if self.armAngularVelocity == 0 then
-      self.baseArmRotation = interp.sin(self.stanceProgress, self.oldArmRotation or 0, self.newArmRotation)
+      self.baseArmRotation = interp[self.stanceInterpolationMethod](self.stanceProgress, self.oldArmRotation or 0, self.newArmRotation)
     end
 
     if self.weaponAngularVelocity == 0 then
-      self.baseWeaponRotation = interp.sin(self.stanceProgress, self.oldWeaponRotation or 0, self.newWeaponRotation)
+      self.baseWeaponRotation = interp[self.stanceInterpolationMethod](self.stanceProgress, self.oldWeaponRotation or 0, self.newWeaponRotation)
     end
 
     self.weaponOffset = {
-      interp.sin(self.stanceProgress, self.oldWeaponOffset[1], self.newWeaponOffset[1]),
-      interp.sin(self.stanceProgress, self.oldWeaponOffset[2], self.newWeaponOffset[2])
+      interp[self.stanceInterpolationMethod](self.stanceProgress, self.oldWeaponOffset[1], self.newWeaponOffset[1]),
+      interp[self.stanceInterpolationMethod](self.stanceProgress, self.oldWeaponOffset[2], self.newWeaponOffset[2])
     }
 
   end
@@ -122,6 +124,8 @@ function Weapon:setStance(stance)
   self.newWeaponRotation = util.toRadians(stance.weaponRotation or 0)
   self.newWeaponOffset = stance.weaponOffset or {0, 0}
   self.newArmRotation = util.toRadians(stance.armRotation or 0)
+
+  self.stanceInterpolationMethod = stance.interpolationMethod or "sin"
   
   -- snap if was rotating
   self.oldWeaponRotation = snapWeapon and self.newWeaponRotation or self.relativeWeaponRotation
