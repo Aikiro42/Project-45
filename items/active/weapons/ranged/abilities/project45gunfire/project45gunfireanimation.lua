@@ -5,7 +5,7 @@ require "/scripts/actions/status.lua"
 require "/scripts/project45/project45util.lua"
 
 local warningTriggered, renderBarsAtCursor, runAnimUpdateScript, accurateBars
-local messagesToRender = {}
+local messagesToRender = {nil}
 local renderMessageTimer = 0
 local prevReloadTimer = 0
 local animTable = {
@@ -33,7 +33,7 @@ synthethikmechanics_altUpdate = update or function()
 
 function init()
   synthethikmechanics_altInit()
-  messagesToRender = animationConfig.animationParameter("project45GunFireMessages")
+  messagesToRender = animationConfig.animationParameter("project45GunFireMessages", {nil})
   renderBarsAtCursor = animationConfig.animationParameter("renderBarsAtCursor")
   runAnimUpdateScript = runAnimUpdateScript or animationConfig.animationParameter("useAmmoCounterImages")
 end

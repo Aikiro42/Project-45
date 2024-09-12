@@ -267,12 +267,19 @@ function build(directory, config, parameters, level, seed)
   -- gun offsets
   if config.baseOffset then
 
-    local hiddenParts = set.new(deepConfigParameter({}, "project45GunModInfo", "hiddenSlots"))
+    local hiddenParts = set.new(deepConfigParameter({nil}, "project45GunModInfo", "hiddenSlots"))
     
     for modSlot, _ in pairs(hiddenParts) do
+
       construct(parameters, "animationCustom", "animatedParts", "parts", modSlot, "properties")
       parameters.animationCustom.animatedParts.parts[modSlot].properties.image = ""
-      parameters[modSlot .. "Offset"] = vec2.add(config[modSlot .. "Offset"], config.baseOffset)
+
+      construct(parameters, "animationCustom", "animatedParts", "parts", modSlot .. "Fullbright", "properties")
+      parameters.animationCustom.animatedParts.parts[modSlot .. "Fullbright"].properties.image = ""
+
+      -- needed to reconfigure muzzle offset
+      parameters[modSlot .. "Offset"] = vec2.add(config[modSlot .. "Offset"] or {0, 0}, config.baseOffset or {0, 0})
+
     end
 
     local parts = {
@@ -429,9 +436,12 @@ function build(directory, config, parameters, level, seed)
         "underbarrel",
         "stock"
       }
-      for _, modSlot in ipairs(mods) do
+      for i, modSlot in ipairs(mods) do
         if acceptedModSlots[modSlot] then
           config.tooltipFields[modSlot .. "Image"] = modList[modSlot] and modList[modSlot][3] or ""
+          config.tooltipFields["itemDescription-" .. modSlot .. "Image"] = "/interface/itemdescriptions/project45gun/modslots/" .. modSlot .. ".png"
+        else
+          config.tooltipFields["itemDescription-" .. modSlot .. "Image"] = "/interface/itemdescriptions/project45gun/modslots/off-" .. modSlot .. ".png"
         end
       end
       
@@ -440,7 +450,10 @@ function build(directory, config, parameters, level, seed)
         and #(config.project45GunModInfo.acceptsAmmoArchetype or {}) == 0
       )
       then
-        config.tooltipFields.ammoTypeImage = modList.ammoType and modList.ammoType[3] or ""        
+        config.tooltipFields.ammoTypeImage = modList.ammoType and modList.ammoType[3] or ""
+        config.tooltipFields["itemDescription-ammoImage"] = "/interface/itemdescriptions/project45gun/modslots/ammo.png"
+      else
+        config.tooltipFields["itemDescription-ammoImage"] = "/interface/itemdescriptions/project45gun/modslots/off-ammo.png"
       end
 
     end
@@ -452,6 +465,7 @@ function build(directory, config, parameters, level, seed)
         local count = parameters.upgradeCount or 0
         local max = parameters.project45GunModInfo.upgradeCapacity
         config.tooltipFields.upgradeCapacityLabel = (count < max and "^#96cbe7;" or "^#777777;") .. (max - count) .. "/" .. max .. "^reset;"
+        config.tooltipFields.itemDescriptionUpgradeCapLabel = project45util.colorText("#96cbe7", "U. Cap: " .. parameters.project45GunModInfo.upgradeCapacity)
       else
         config.tooltipFields.upgradeCapacityLabel = project45util.colorText("#96cbe7","Unlimited")
       end
@@ -612,6 +626,7 @@ function build(directory, config, parameters, level, seed)
       local actualReloadTime = bulletReloadTime * math.max(1, maxAmmo / bulletsPerReload)
       
       config.tooltipFields.reloadTimeLabel = util.round((actualReloadTime or 0), 1) .. "s"
+      config.tooltipFields.reloadLabel = config.tooltipFields.reloadCostLabel .. " (" .. config.tooltipFields.reloadTimeLabel .. ")" 
 
       -- crit chance
       local critChance = primaryAbility("critChance", 0)
@@ -623,11 +638,16 @@ function build(directory, config, parameters, level, seed)
 
       -- crit damage
       local critDamage = primaryAbility("critDamageMult", 1)
+      local itemDescriptionCritDamage = ""
       if critChance > 0 then
         config.tooltipFields.critDamageLabel = project45util.colorText("#FF6767", util.round(critDamage, 1) .. "x")
+        itemDescriptionCritDamage = project45util.colorText("#FF6767", " (" .. util.round(critDamage, 1) .. "x" .. ")")
       else
         config.tooltipFields.critDamageLabel = project45util.colorText("#777777", util.round(critDamage, 1) .. "x")
+        itemDescriptionCritDamage = project45util.colorText("#777777", " (" .. util.round(critDamage, 1) .. "x" .. ")")
+
       end
+      config.tooltipFields.critLabel = config.tooltipFields.critChanceLabel .. itemDescriptionCritDamage
 
       config.tooltipFields.bonusRatioLabel = ""
       config.tooltipFields.bonusRatioTitleLabel = ""

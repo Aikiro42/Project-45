@@ -1,0 +1,11 @@
+{
+  "input" : [
+    { "item" : "money", "count" : 45 }
+  ],
+  "output" : {
+    "item" : "project45-elecarrowsmod",
+    "count" : 1
+  },
+  "duration" : 5,
+  "groups" : [ "project45craftable-stat" ]
+}

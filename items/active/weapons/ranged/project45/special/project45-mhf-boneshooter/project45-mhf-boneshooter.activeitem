@@ -249,14 +249,17 @@
       },
       "empty": {
         "frontArmFrame" : "run.3",
-        "backArmFrame" : "swim.1"
+        "backArmFrame" : "swim.1",
+        "weaponOffset": [-1, 0]
       },
       "reloading": {
-        "backArmFrame" : "swim.1"
+        "backArmFrame" : "swim.1",
+        "weaponOffset": [-1, 0]
       },
       "reloaded": {
         "frontArmFrame" : "rotation",
-        "backArmFrame" : "swim.1"
+        "backArmFrame" : "swim.1",
+        "weaponOffset": [-1, 0]
       },
       "boltPull": {
         "armRotation": 0,

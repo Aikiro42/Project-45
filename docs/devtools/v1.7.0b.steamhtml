@@ -1,0 +1,92 @@
+[h1]v1.7.0b[/h1]
+
+[h2]User-side[/h2]
+
+[h3]New Features[/h3]
+
+[list]
+    [*]Added "shift abilities", which is a separate implementation from PsyNy's Ability Extender. These abilities are either passive or activated by tapping the shift key.[quote]Technically they can be activated with right click depending on how they're coded. They're essentially secondary alt abilities.[/quote]
+
+
+    [*]Added the [b]Gun Shield[/b], a passive regular variant of the A.R.M.D.L.O shield.
+    [*]Added the [b]F.I.S.T. Gauntlet[/b], an experimental close-range punching weapon.
+    [*]Added the [b]Wrist Gun[/b], a wrist-mounted pistol that can accept underbarrel mods.
+    [*]Added [b]The Protector[/b], a hand-craftable and highly-modifiable weapon.
+    [*]Added the [b]Elementoil© Vanilla Flavour[/b], an applied utility that changes the weapon's elemental type into a random vanilla one. (Beyond improving compatibility with PsyNy's Retrofitting Station, it has no effect on the weapon.)
+    [*]Added the [b]Choke[/b] mod for shotguns.
+    [*]Added an explosive burst alt ability to the [b]Malorian Arms 3516[/b].
+    [*]Added a custom alt ability to [b]Fleetly Fading[/b], "Scarlet Flash":[list]
+    [*]Scarlet Flash shoots an initial "slash" projectile in the direction of the mouse, then distributes 10 slashes among nearby enemies.
+    [*]Its damage is calculated as such: [code]AD (ability damage) = baseDamage * reloadRatingMult * stockAmmoMult * passiveDamageMult * critDamage{reloadRating} * healthMult[/code]
+    [*]If Scarlet Flash is not used with Project 45 weapons, it scales off energy instead.
+[/list]
+    [*][b]If you have StarExtensions or OpenStarbound, you can now reload your weapons with the "V" key![/b] You can rebind this key by typing '/binds' in the chat.
+[/list][h3]General Changes[/h3]
+
+[list]
+    [*]Improved tooltip layout:[list]
+    [*]Added a separate pane for a weapon's technical properties.
+    [*]The tooltip now hints the mods a weapon accepts.
+[/list]
+    [*]Improved the description of each weapon.
+    [*]Improved the way categories are conveyed:[list]
+    [*]All weapons now state their respective category as-is. ("Universal", "Ballistic", "Energy", "Experimental", "Special")
+    [*]Special and Experimental weapons (that are actually Ballistic/Energy weapons) have a different flair to their categories.
+[/list]
+    [*]Renamed "Enemy Radar Mod" to "[b]Enemy Radar[/b]", and changed it to a shift ability mod
+    [*]Changed [b]Shift Reload[/b] to a shift ability mod
+    [*]Improved ammo mods: they should now apply an elemental type on the weapon.
+    [*]The [b]Enemy Flare[/b] now spawns a custom NPC type equipped with Project 45 weapons.[list]
+    [*]Improved spawn algorithm of the Enemy Flare.
+[/list]
+    [*]Added innate 'manualReload' slot for the manual reload "enabler" mods
+    [*]Changed [b]Phase Shift[/b] ability VFX.
+    [*]Improved gunfire VFX.
+    [*]Improved gunfire SFX of the [b]Service Rifle[/b]
+    [*]Improved [b]Machine Gun[/b] rendering.
+[/list][h3]Bug Fixes[/h3]
+
+[list]
+    [*]Added rudimentary compatibility with Psyny's Ability Extender.
+    [*]Fixed a sprite error on the Itano Missiles.
+    [*]Fixed a sprite error on arrows fired by some Project 45 weapons.
+    [*]Fixed perfect charge range not appearing in ui if the range starts from the very beginning of overcharge (i.e. 0%)
+    [*]Fixed the Underbarrel Shotgun using pistol sounds when firing.
+[/list]  
+[h3]Balance Changes[/h3]
+
+[list]
+    [*]Removed cheat code from the A.R.M.D.L.O Shield.
+    [*]Decreased spread of the [b]Kuva Bramma[/b].
+    [*]Removed two-handed override of the [b]Phase Shifter[/b]. When the mod is applied on two-handed weapons, the player is given access to its prolonged phase shift ability. Otherwise, the player can only dodge with the mod on.
+[/list][h2]Dev-side[/h2]
+
+[h3]New Features[/h3]
+
+[list]
+    [*]Added "shiftAbility" as a valid ability slot for ability mods[list]
+    [*]made buildscript properly archetype shift ability mods
+[/list]
+    [*]Added pre-installation checkers for the shift ability
+    [*]Added code that applies shift abilities on weapon
+    [*]Added 'project45scarletflash', a new projectile for the upcoming alt ability of Fleetly Fading
+    [*]Added 'project45blot' particles for the aforementioned alt ability
+    [*]Added back hand rendering for to guns so that they look different depending on which direction the player is facing (similar to shields)
+[/list][h3]General Changes[/h3]
+
+[list]
+    [*]Adjusted disassembly code to accomodate shift ability changes
+    [*]Removed shift reload passive script in accordance with the shift ability changes
+    [*]Changed 'project45armadillo' to a shift ability[list]
+    [*]Changed modCategory of project45-shiftreload
+[/list]
+    [*]Refactored primary ability crit calculation.
+[/list][h3]Bug Fixes[/h3]
+
+[list]
+    [*]Added handler for null stances passed to [code]weapon:setStance()[/code]
+    [*]Removed redundant code from project45gunneo.lua
+    [*]Improved animation script compilation logic of buildscript
+    [*]Improved animation scripts of enemy radar, flash laser, grenade launcher and gun scope so that they call the old update function
+    [*]Commented out some loginfo calls
+[/list]

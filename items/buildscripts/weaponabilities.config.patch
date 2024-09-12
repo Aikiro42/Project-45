@@ -83,5 +83,10 @@
         "op": "add",
         "path": "/project45scarletflash",
         "value": "/items/active/weapons/ranged/abilities/project45scarletflash/project45scarletflash.weaponability"
+    },
+    {
+        "op": "add",
+        "path": "/project45meleeswipe",
+        "value": "/items/active/weapons/ranged/abilities/project45meleeswipe/project45meleeswipe.weaponability"
     }
 ]

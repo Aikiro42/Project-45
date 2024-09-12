@@ -73,7 +73,25 @@ function toggleAccurateBars()
 end
 --]]
 
+function updateDamageScaling()
+	local sliderVal = widget.getSliderValue("sldDamageScaling") or 0
+	widget.setText("lblDamageScaling", "Damage Scaling: " .. sliderVal .."%")
+
+	local newValue = (widget.getSliderValue("sldDamageScaling") or 0)/100
+	local oldValue = player.getProperty("project45_damageScaling", 0)
+	if newValue ~= oldValue then
+		player.setProperty("project45_damageScaling", newValue)
+  	promptRestart()
+	end
+end
+
 function init()
+	
+	-- sldDamageScaling
+	widget.setSliderRange("sldDamageScaling", 0, 100)
+	local sldDamageScalingVal = math.floor(player.getProperty("project45_damageScaling", 0)*100)
+	widget.setSliderValue("sldDamageScaling", sldDamageScalingVal)
+	widget.setText("lblDamageScaling", "Damage Scaling: " .. sldDamageScalingVal .."%")
 
 	widget.setChecked("btnTogglePerformanceMode", player.getProperty("project45_performanceMode", false))
 	widget.setChecked("btnToggleCursorBars", player.getProperty("project45_renderBarsAtCursor", true))

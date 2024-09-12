@@ -204,6 +204,21 @@
         "damageKind": "physical",
         "statusEffects": []
       },
+
+      // if non-null, damages terrain at end of hitscan if true.
+      // All fields are optional. tileDamageConfig can be an empty table and the weapon
+      // will still end up dealing tile damage.
+      // Note: the hitscan only deals tile damage at the point where it terminates!
+      /*
+      "tileDamageConfig": {
+        "action" : "explosion", // always an explosion
+        "foregroundRadius" : 4, // calculated as `beamParameters.beamWidth / 2` by default
+        "backgroundRadius" : 0, // calculated as `beamParameters.beamWidth / 4` by default
+        "explosiveDamageAmount" : 140, // calculated as the beam's final damage by default
+        "delaySteps" : 5
+      },
+      */
+
       // actions to be executed at the end of the hitscan line
       "hitscanActionOnHit": []
       
@@ -234,6 +249,23 @@
         "knockback" : 2,
         "timeout": 0.1
       },
+
+      // if non-null, damages terrain at end of beam if true.
+      // All fields are optional. tileDamageConfig can be an empty table and the weapon
+      // will still end up dealing tile damage.
+      // Note: the beam only deals tile damage at the point where it terminates!
+      /*
+      "tileDamageConfig": {
+        "action" : "explosion", // always an explosion
+        "foregroundRadius" : 4, // calculated as `beamParameters.beamWidth / 2` by default
+        "backgroundRadius" : 0, // calculated as `beamParameters.beamWidth / 4` by default
+        "explosiveDamageAmount" : 140, // calculated as the beam's final damage by default
+        "delaySteps" : 5
+      }
+      */
+      
+      // "damagesTerrain": false,
+
       // "scanUntilCursor": false
       
       // if true, consumes ammo over time.
@@ -243,7 +275,6 @@
 
       // determines if gun transists to ejecting state if trigger is released
       // "ejectCasingsOnBeamEnd": false
-
 
     },
 

@@ -281,15 +281,6 @@ function die()
       isFinal = true
     end
 
-    --[[
-    sb.logInfo(string.format("\tCan %d split shot (%.2f <= %.2f)? %s",
-      entity.id(),
-      self.timeToLive,
-      self.splitShotParameters.time,
-      canSplitShot() and "yes" or "no"))
-    sb.logInfo(string.format("\tIs %d last in chain? %s", entity.id(), isFinal and "yes" or "no"))
-    --]]
-
     -- hit target if split shot process
     -- or if there are no more coins
     local splitShot = canSplitShot()

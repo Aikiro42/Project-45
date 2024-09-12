@@ -1,0 +1,9 @@
+[
+  {
+    "op": "add",
+    "path": "/basicTreasure/0/1/fill",
+    "value": [
+      {"weight" : 1, "pool" : "project45-stat-drop"}
+    ]
+  }
+]

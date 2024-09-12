@@ -1,0 +1,11 @@
+{
+  "input" : [
+    { "item" : "project45-firetimeaddmod2", "count" : 10 }
+  ],
+  "output" : {
+    "item" : "project45-firetimeaddmod3",
+    "count" : 1
+  },
+  "duration" : 5,
+  "groups" : [ "project45craftable-stat" ]
+}
