@@ -1,7 +1,7 @@
 {
   "projectileName" : "project45stdfirearrow",
   "image" : "project45stdarrow.png",
-  "scripts": ["/projectiles/scripts/project45-killprojectileonstick.lua"],
+  "scripts": ["/projectiles/scripts/project45/project45tracer.lua"],
   "physics" : "arrow",
   "animationCycle" : 0.25,
   "frameNumber" : 1,
@@ -25,33 +25,10 @@
     "collisionEnabled": true
   },
   "bounces" : 0,
-
-  "periodicActions" : [
-    {
-      "time" : 0.01,
-      "repeat" : true,
-      "action" : "particle",
-      "rotate" : true,
-      
-      "specification" : {
-        "type" : "streak",
-        "layer" : "back",
-        "fullbright" : true,
-        "destructionAction" : "shrink",
-        "size" : 1,
-        "color" : [255, 170, 0, 255],
-        "collidesForeground" : false,
-        "length" : 20,
-        "position" : [0, 0],
-        "timeToLive" : 0,
-        "destructionTime" : 0.2,
-        "initialVelocity" : [0.001, 0],
-        "variance" : {"length": 0}
-      }
-
-    }
-    //*/
-  ],
+  "tracerParameters": {
+    "color": [234,153,49],
+    "fullbright": true
+  },
   "actionOnReap": [
     { 
       "action" : "sound",

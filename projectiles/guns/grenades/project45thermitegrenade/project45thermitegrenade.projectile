@@ -7,31 +7,12 @@
     "pointLight" : false,
     "speed" : 180,
     "damagePoly" : [ [-6, 0], [-4, -4], [0, -6], [4, -4], [6, 0], [4, 4], [0, 6], [-4, 4] ],
-    "periodicActions" : [
-      {
-        "time" : 0.01,
-        "repeat" : true,
-        "action" : "particle",
-        "rotate" : true,
-        
-        "specification" : {
-          "type" : "streak",
-          "layer" : "back",
-          "fullbright" : false,
-          "destructionAction" : "shrink",
-          "size" : 2,
-          "color" : [255, 200, 0, 255],
-          "collidesForeground" : false,
-          "length" : 7,
-          "position" : [0, 0],
-          "timeToLive" : 0.01,
-          "destructionTime" : 0.2,
-          "initialVelocity" : [0.5, 0],
-          "variance" : {"length": 0}
-        }
-  
-      }
-    ],
+    "tracerParameters": {
+      "color": [255, 200, 0, 128],
+      "fullbright": false,
+      "width": 4
+    },
+    "scripts": ["/projectiles/scripts/project45/project45tracer.lua"],
     "actionOnReap" : [
       { 
         "action" : "sound",
