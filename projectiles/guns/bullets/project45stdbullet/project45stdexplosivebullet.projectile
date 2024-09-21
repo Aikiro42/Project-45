@@ -2,7 +2,7 @@
   "projectileName" : "project45explosivebullet",
   "image" : "project45stdbullet.png",
   "scripts": ["/projectiles/scripts/project45/project45tracer.lua"],
-  "physics" : "sticky",
+  "physics" : "project45projectile",
   "animationCycle" : 0.25,
   "frameNumber" : 1,
   "damageKind" : "standardbullet",

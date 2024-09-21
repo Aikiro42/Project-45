@@ -6,31 +6,11 @@
   "damageKindImage" : "icon.png",
   "lightColor" : [128, 128, 189],
   "pointLight" : true,
-  "periodicActions" : [
-    {
-      "time" : 0.01,
-      "repeat" : true,
-      "action" : "particle",
-      "rotate" : true,
-      
-      "specification" : {
-        "type" : "streak",
-        "layer" : "back",
-        "fullbright" : true,
-        "destructionAction" : "shrink",
-        "size" : 2,
-        "color" : [200, 255, 255, 255],
-        "collidesForeground" : false,
-        "length" : 13,
-        "position" : [0, 0],
-        "timeToLive" : 0,
-        "destructionTime" : 0.1,
-        "initialVelocity" : [0.5, 0],
-        "variance" : {"length": 0}
-      }
-
-    }
-  ],
+  "tracerParameters": {
+    "color": [200, 255, 255],
+    "fullbright": true,
+    "width": 3
+  },
   "actionOnReap" : [
     {
       "action" : "config",
@@ -46,7 +26,10 @@
   "damageType" : "NoDamage",
   "damageKind" : "default",
 
-  "scripts" : [ "project45stdrocket.lua" ],
+  "scripts" : [
+    "project45stdrocket.lua",
+    "/projectiles/scripts/project45/project45tracer.lua"
+  ],
   "maxSpeed" : 100,
   "controlForce" : 100,
 
