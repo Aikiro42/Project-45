@@ -1,8 +1,8 @@
 {
   "projectileName" : "project45stdpoisonbullet",
   "image" : "project45stdbullet.png?multiply=AAFF00FF",
-  "scripts": ["/projectiles/scripts/project45-killprojectileonstick.lua"],
-  "physics" : "sticky",
+  "scripts": ["/projectiles/scripts/project45/project45tracer.lua"],
+  "physics" : "project45projectile",
   "animationCycle" : 0.25,
   "frameNumber" : 1,
   "damageKind" : "poison",
