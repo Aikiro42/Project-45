@@ -20,13 +20,14 @@ function init()
     color={255,255,255},
     -- light={25,25,0},
     -- fullbright=true,
-    timeToLive=0.2
+    timeToLive=0.2,
+    width=1
   },
   config.getParameter("tracerParameters", {}))
   self.prevPosition = mcontroller.position()
   self.punchThrough = config.getParameter("punchThrough", 0)
-  project45util.printObject(_ENV)
-  chat.addMessage("bitch")
+  -- project45util.printObject(_ENV)
+  -- chat.addMessage("bitch")
 end
 
 function update(dt)
@@ -75,7 +76,7 @@ function renderStreak(origin, destination, useProjectile)
     destructionAction = "shrink",
     destructionTime = self.tracerParameters.timeToLive,
     fade=0.1,
-    size = 1,
+    size = self.tracerParameters.width,
     rotate = true,
     fullbright = self.tracerParameters.fullbright,
     collidesForeground = false,
