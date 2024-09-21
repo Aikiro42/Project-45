@@ -7,32 +7,10 @@
   "pointLight" : true,
   "piercing": true,
   "timeToLive": 0.5,
-  "periodicActions" : [
-    
-    {
-      "time" : 0.01,
-      "repeat" : true,
-      "action" : "particle",
-      "rotate" : true,
-      
-      "specification" : {
-        "type" : "streak",
-        "layer" : "back",
-        "fullbright" : true,
-        "destructionAction" : "shrink",
-        "size" : 2,
-        "color" : [200, 255, 255, 255],
-        "collidesForeground" : false,
-        "length" : 13,
-        "position" : [0, 0],
-        "timeToLive" : 0,
-        "destructionTime" : 0.1,
-        "initialVelocity" : [0.5, 0],
-        "variance" : {"length": 0}
-      }
-
-    }
-  ],
+  "tracerParameters": {
+    "color": [200, 255, 255],
+    "fullbright": true
+  },
   "actionOnReap" : [
     {
       "action" : "projectile",
@@ -65,7 +43,10 @@
   "damageType" : "NoDamage",
   "damageKind" : "default",
   // "approach": [0, 50],
-  "scripts" : [ "/projectiles/guns/rockets/project45stdrocket/project45stdrocket.lua" ],
+  "scripts" : [
+    "/projectiles/guns/rockets/project45stdrocket/project45stdrocket.lua",
+    "/projectiles/scripts/project45/project45tracer.lua"
+  ],
   "maxSpeed" : 25,
   "controlForce" : 100,
 
