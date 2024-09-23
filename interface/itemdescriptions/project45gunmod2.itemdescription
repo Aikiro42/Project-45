@@ -9,6 +9,15 @@
     "showRarity" : false,
     "showBackingImageWhenFull" : true
   },
+
+  "statsPaneBackgroundImage" : {
+    "type" : "image",
+    "position" : [200, 105],
+    "file" : "/interface/project45-materializer/project45-materializer-statspane.png",
+    "zlevel": -999,
+    "centered" : true
+  },
+
   "title" : {
     "type" : "label",
     "position" : [35, 179],
@@ -93,7 +102,122 @@
     "centered" : true,
     "maxSize" : [16, 16],
     "minSize" : [16, 16]
+  },
+
+  "stat1ItemDescriptionTitleLabel": {
+    "type" : "label",
+    // "position" : [202, 149],
+    // -41, 17
+    "position" : [161, 166],
+    "hAnchor" : "left",
+    "wrapWidth" : 85,
+    "value": "^#FF9000;--"
+  },
+  "stat1ItemDescriptionLabel": {
+    "type" : "label",
+    // "position" : [283, 139],
+    // -41, 17
+    "position" : [242, 156],
+    "hAnchor" : "right",
+    "wrapWidth" : 38,
+    "value": "^#190700;--"
+  },
+  
+  "stat2ItemDescriptionTitleLabel": {
+    "position": [161, 146],
+    "value": "^#FF9000;--",
+    "type": "label",
+    "hAnchor" : "left",
+    "wrapWidth" : 85
+  },
+  "stat2ItemDescriptionLabel": {
+    "position": [242, 136],
+    "value": "^#190700;--",
+    "type": "label",
+    "hAnchor" : "right",
+    "wrapWidth" : 85
+  },
+  
+  "stat3ItemDescriptionTitleLabel": {
+    "position": [161, 126],
+    "value": "^#FF9000;--",
+    "type": "label",
+    "hAnchor" : "left",
+    "wrapWidth" : 85
+  },
+  
+  "stat3ItemDescriptionLabel": {
+    "position": [242, 116],
+    "value": "^#190700;--",
+    "type": "label",
+    "hAnchor" : "right",
+    "wrapWidth" : 85
+  },
+  
+  "stat4ItemDescriptionTitleLabel": {
+    "position": [161, 106],
+    "value": "^#FF9000;--",
+    "type": "label",
+    "hAnchor" : "left",
+    "wrapWidth" : 85
+  },
+  
+  "stat4ItemDescriptionLabel": {
+    "position": [242, 96],
+    "value": "^#190700;--",
+    "type": "label",
+    "hAnchor" : "right",
+    "wrapWidth" : 85
+  },
+  
+  "stat5ItemDescriptionTitleLabel": {
+    "position": [161, 86],
+    "value": "^#FF9000;--",
+    "type": "label",
+    "hAnchor" : "left",
+    "wrapWidth" : 85
+  },
+  
+  "stat5ItemDescriptionLabel": {
+    "position": [242, 76],
+    "value": "^#190700;--",
+    "type": "label",
+    "hAnchor" : "right",
+    "wrapWidth" : 85
+  },
+  
+  "stat6ItemDescriptionTitleLabel": {
+    "position": [161, 66],
+    "value": "^#FF9000;--",
+    "type": "label",
+    "hAnchor" : "left",
+    "wrapWidth" : 85
+  },
+  
+  "stat6ItemDescriptionLabel": {
+    "position": [242, 56],
+    "value": "^#190700;--",
+    "type": "label",
+    "hAnchor" : "right",
+    "wrapWidth" : 85
+  },
+  
+  "stat7ItemDescriptionTitleLabel": {
+    "position": [161, 46],
+    "value": "^#FF9000;--",
+    "type": "label",
+    "hAnchor" : "left",
+    "wrapWidth" : 85
+  },
+  
+  "stat7ItemDescriptionLabel": {
+    "position": [242, 36],
+    "value": "^#190700;--",
+    "type": "label",
+    "hAnchor" : "right",
+    "wrapWidth" : 85
   }
+
 
 
 }

@@ -79,7 +79,7 @@ function build(directory, config, parameters, level, seed)
   -- @param override: causes the function to set formattedVal to be exactly val,
   --  used if val can possibly be a string
   -- @return formattedStat: string, formattedVal: string
-  local formatStat = function(stat, op, val, override)
+  local formatStat = function(stat, op, val, override, isItemDescription)
     --[[
     config.tooltipFields["stat" .. stats .. "TitleLabel"] = "^#d29ce7;???"
     config.tooltipFields["stat" .. stats .. "Label"] = "^#d29ce7;???"
@@ -94,7 +94,7 @@ function build(directory, config, parameters, level, seed)
     if override then
       formattedVal = project45util.colorText(statColor, string.format("%s", val))
     else
-      formattedVal = type(val) ~= "table" and string.format("%.1f", val) or "^#d29ce7;???"
+      formattedVal = type(val) ~= "table" and string.format("%.1f", val) or project45util.colorText(isItemDescription and "#190700" or "#d29ce7", "???")
     end
 
     local statGroup = generalStatConfig.statGroupAssignments
@@ -114,7 +114,7 @@ function build(directory, config, parameters, level, seed)
       statName = generalStatConfig.statNames[stat] or generalStatConfig.groupNames[group] or statName
     
     end
-    formattedStat = project45util.colorText(type(val) == "table" and "#d29ce7" or statColor, statName)
+    formattedStat = project45util.colorText(isItemDescription and "#FF9000" or (type(val) == "table" and "#d29ce7" or statColor), statName)
 
     if override then
       return formattedStat, formattedVal
@@ -155,7 +155,7 @@ function build(directory, config, parameters, level, seed)
           val,
           op == "multiplicative" and (isBad and 'd' or 'x') or '')
       end
-      formattedVal = project45util.colorText(statColor, formattedVal)
+      formattedVal = project45util.colorText(isItemDescription and "#190700" or statColor, formattedVal)
     end
 
     return formattedStat, formattedVal
@@ -275,6 +275,11 @@ function build(directory, config, parameters, level, seed)
           local formattedStat, formattedVal = formatStat(stat, mod, val, type(val) == "string")
           config.tooltipFields["stat" .. stats .. "TitleLabel"] = formattedStat
           config.tooltipFields["stat" .. stats .. "Label"] = formattedVal
+
+          formattedStat, formattedVal = formatStat(stat, mod, val, type(val) == "string", true)
+          config.tooltipFields["stat" .. stats .. "ItemDescriptionTitleLabel"] = formattedStat
+          config.tooltipFields["stat" .. stats .. "ItemDescriptionLabel"] = formattedVal
+
           stats = stats + 1
           registeredRandomStats[stat] = isRandomStats
         end
@@ -282,6 +287,10 @@ function build(directory, config, parameters, level, seed)
       if stats > statLimit then
         config.tooltipFields.stat7TitleLabel = "^#7e7e7e;..."
         config.tooltipFields.stat7Label = "^#7e7e7e;..."
+
+        config.tooltipFields.stat7ItemDescriptionTitleLabel = "^shadow;^#7e7e7e;..."
+        config.tooltipFields.stat7ItemDescriptionLabel = "^shadow;^#7e7e7e;..."
+
         break
       end
 
@@ -289,10 +298,18 @@ function build(directory, config, parameters, level, seed)
       if stats + 1 <= statLimit then
         config.tooltipFields["stat" .. stats .. "TitleLabel"] = "^#a8e6e2;Level"
         config.tooltipFields["stat" .. stats .. "Label"] = "^#a8e6e2;+" .. op
+        
+        config.tooltipFields["stat" .. stats .. "ItemDescriptionTitleLabel"] = "^shadow;^#a8e6e2;Level"
+        config.tooltipFields["stat" .. stats .. "ItemDescriptionLabel"] = "^shadow;^#a8e6e2;+" .. op
+
         stats = stats + 1
       else
         config.tooltipFields.stat7TitleLabel = "^#7e7e7e;..."
         config.tooltipFields.stat7Label = "^#7e7e7e;..."
+
+        config.tooltipFields.stat7ItemDescriptionTitleLabel = "^shadow;^#7e7e7e;..."
+        config.tooltipFields.stat7ItemDescriptionLabel = "^shadow;^#7e7e7e;..."
+
         break
       end
     end
