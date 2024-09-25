@@ -3,14 +3,16 @@
     "op": "add",
     "path": "/capsule/0/1/fill",
     "value": [
-      {"weight" : 1, "pool" : "project45-natural-spawns"}
+      {"weight" : 1, "pool" : "project45-natural-spawns"},
+      {"weight" : 1, "pool" : "project45-portablegdk-drop"}
     ]
   },
   {
     "op": "add",
     "path": "/capsule/1/1/fill",
     "value": [
-      {"weight" : 1, "pool" : "project45-natural-spawns"}
+      {"weight" : 1, "pool" : "project45-natural-spawns"},
+      {"weight" : 1, "pool" : "project45-portablegdk-drop"}
     ]
   },
 
@@ -18,21 +20,24 @@
     "op": "add",
     "path": "/ancientPotSmall/0/1/fill",
     "value": [
-      {"weight" : 1, "pool" : "project45-natural-spawns"}
+      {"weight" : 1, "pool" : "project45-natural-spawns"},
+      {"weight" : 1, "pool" : "project45-portablegdk-drop"}
     ]
   },
   {
     "op": "add",
     "path": "/ancientPotMedium/0/1/fill",
     "value": [
-      {"weight" : 1, "pool" : "project45-natural-spawns"}
+      {"weight" : 1, "pool" : "project45-natural-spawns"},
+      {"weight" : 1, "pool" : "project45-portablegdk-drop"}
     ]
   },
   {
     "op": "add",
     "path": "/ancientPotLarge/0/1/fill",
     "value": [
-      {"weight" : 1, "pool" : "project45-natural-spawns"}
+      {"weight" : 1, "pool" : "project45-natural-spawns"},
+      {"weight" : 1, "pool" : "project45-portablegdk-drop"}
     ]
   }
 ]
