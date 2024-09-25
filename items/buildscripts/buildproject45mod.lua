@@ -68,59 +68,54 @@ function build(directory, config, parameters, level, seed)
     level = "^#a8e6e2;Level"
   }
 
+  -- OPTIMIZE: Reduce root.assetJson calls
   local generalModConfig = root.assetJson("/configs/project45/project45_generalmod.config", {})
   local generalTooltipConfig = root.assetJson("/configs/project45/project45_generaltooltip.config", {})
   local generalStatConfig = root.assetJson("/configs/project45/project45_generalstat.config", {})
 
-  -- Formats a stat and modifier value to be displayed in the tooltip.
+  -- Provides the format for a stat and modifier value to be displayed in the tooltip.
   -- @param stat: string
   -- @param op: string
   -- @param val: number
-  -- @param override: causes the function to set formattedVal to be exactly val,
-  --  used if val can possibly be a string
-  -- @return formattedStat: string, formattedVal: string
-  local formatStat = function(stat, op, val, override, isItemDescription)
-    --[[
-    config.tooltipFields["stat" .. stats .. "TitleLabel"] = "^#d29ce7;???"
-    config.tooltipFields["stat" .. stats .. "Label"] = "^#d29ce7;???"
-    stats = stats + 1
-    --]]
+  -- @param override: boolean - 'causes the function to set formattedVal to be exactly val; used if val can possibly be a string'
+  -- @return formattedStat: string, formattedVal: string, formatColor: hex color string
+  local getStatFormat = function(stat, op, val, override)
     
     -- values to be changed and returned
     local formattedStat = stat
-    local statColor = generalStatConfig.statColors.default
-
     local formattedVal
+    local formatColor = generalStatConfig.statColors.default
+    
+    -- format value as is
     if override then
-      formattedVal = project45util.colorText(statColor, string.format("%s", val))
+      formattedVal = string.format("%s", val)
     else
-      formattedVal = type(val) ~= "table" and string.format("%.1f", val) or project45util.colorText(isItemDescription and "#190700" or "#d29ce7", "???")
+      formattedVal = type(val) == "table" and "???" or string.format("%.1f", val)
     end
 
     local statGroup = generalStatConfig.statGroupAssignments
-    local isMember = statGroup
+    local isMember = statGroup -- for readability
     local isGroup = set.new(generalStatConfig.statGroups)
     
-    -- format stat
+    -- format stat name; format color is determined here
     local statName = project45util.capitalize(stat)
-    if not isMember[stat] and not isGroup[stat] then -- individual stat
-      statColor = generalStatConfig.statColors[stat] or statColor
-      statName = generalStatConfig.statNames[stat] or statName
-    
-    else -- member/group stat
+    if not isMember[stat] and not isGroup[stat] then
+      -- individual stat
+      formatColor = generalStatConfig.statColors[stat] or formatColor
+      formattedStat = generalStatConfig.statNames[stat] or statName
+    else
+      -- member/group stat
       local group = statGroup[stat] or stat
-      statColor = generalStatConfig.statColors[stat] or generalStatConfig.groupColors[group] or statColor
-
-      statName = generalStatConfig.statNames[stat] or generalStatConfig.groupNames[group] or statName
+      formatColor = generalStatConfig.statColors[stat] or generalStatConfig.groupColors[group] or formatColor
+      formattedStat = generalStatConfig.statNames[stat] or generalStatConfig.groupNames[group] or statName
+    end
+    formatColor = type(val) == "table" and generalStatConfig.statColors.unknown or formatColor
     
-    end
-    formattedStat = project45util.colorText(isItemDescription and "#FF9000" or (type(val) == "table" and "#d29ce7" or statColor), statName)
-
     if override then
-      return formattedStat, formattedVal
+      return formattedStat, formattedVal, formatColor
     end
 
-    -- format mod val
+    -- format value
     if type(val) ~= "table" then
       if op == "additive" or op == "rebase" then
         local isIntegerStat = set.new(generalStatConfig.integerStats or {})
@@ -155,10 +150,9 @@ function build(directory, config, parameters, level, seed)
           val,
           op == "multiplicative" and (isBad and 'd' or 'x') or '')
       end
-      formattedVal = project45util.colorText(isItemDescription and "#190700" or statColor, formattedVal)
     end
 
-    return formattedStat, formattedVal
+    return formattedStat, formattedVal, formatColor
   end
 
   construct(config, "augment")  -- make sure config.augment exists
@@ -257,7 +251,6 @@ function build(directory, config, parameters, level, seed)
   config.tooltipFields.rarityLabel = rarityConversions[configParameter("isUnique", false) and "unique" or string.lower(configParameter("rarity", "common"))]
 
   -- change stats field
-  -- TODO: Refactor the following code, it look ugly as fuck!
   local statLimit = 7
   local stats = 1
   local specialField = set.new({"level", "pureStatMod", "randomStatParams", "stackLimit"})
@@ -265,57 +258,49 @@ function build(directory, config, parameters, level, seed)
   local isRandomStats = deepConfigParameter(false, "augment", "stat", "randomStatParams")
   local registeredRandomStats = {}
 
+  -- item description
+  local IDFGColor, IDBGColor = "#FF9000", "#190700"
+  
   for stat, op in pairs(deepConfigParameter({}, "augment", "stat")) do
+    
+    -- break if beyond stat limit
+    if stats > statLimit then
+      config.tooltipFields.stat7TitleLabel = "^#7e7e7e;..."
+      config.tooltipFields.stat7Label = "^#7e7e7e;..."
+      config.tooltipFields.ID_stat7TitleLabel = "^#FF9000;..."
+      config.tooltipFields.ID_stat7Label = "^#190700;..."    
+      break
+    end
+
+    -- do not process special stat mod fields...
     if not specialField[stat] then
       for mod, val in pairs(op) do
+
+        -- do not reformat random stats that have already been formatted
         if not registeredRandomStats[stat] then
-          -- DELETE: remove this if statement?
+          
           if stats > statLimit then
-            config.tooltipFields.stat7TitleLabel = "^#7e7e7e;..."
-            config.tooltipFields.stat7Label = "^#7e7e7e;..."
-            config.tooltipFields.ID_stat7TitleLabel = "^#FF9000;..."
-            config.tooltipFields.ID_stat7Label = "^#190700;..."    
             break
           end
-          local formattedStat, formattedVal = formatStat(stat, mod, val, type(val) == "string")
-          config.tooltipFields["stat" .. stats .. "TitleLabel"] = formattedStat
-          config.tooltipFields["stat" .. stats .. "Label"] = formattedVal
-
-          formattedStat, formattedVal = formatStat(stat, mod, val, type(val) == "string", true)
-          config.tooltipFields["ID_stat" .. stats .. "TitleLabel"] = formattedStat
-          config.tooltipFields["ID_stat" .. stats .. "Label"] = formattedVal
+          
+          local formattedStat, formattedVal, formatColor = getStatFormat(stat, mod, val, type(val) == "string")
+          config.tooltipFields["stat" .. stats .. "TitleLabel"] = project45util.colorText(formatColor, formattedStat)
+          config.tooltipFields["stat" .. stats .. "Label"] = project45util.colorText(formatColor, formattedVal)
+          config.tooltipFields["ID_stat" .. stats .. "TitleLabel"] = project45util.colorText(IDFGColor, formattedStat)
+          config.tooltipFields["ID_stat" .. stats .. "Label"] = project45util.colorText(IDBGColor, formattedVal)
 
           stats = stats + 1
           registeredRandomStats[stat] = isRandomStats
         end
       end
 
-      if stats > statLimit then
-        config.tooltipFields.stat7TitleLabel = "^#7e7e7e;..."
-        config.tooltipFields.stat7Label = "^#7e7e7e;..."
-        config.tooltipFields.ID_stat7TitleLabel = "^#FF9000;..."
-        config.tooltipFields.ID_stat7Label = "^#190700;..."
-        break
-      end
-
+    -- ...except level
     elseif stat == "level" then
-      if stats + 1 <= statLimit then
-        config.tooltipFields["stat" .. stats .. "TitleLabel"] = "^#a8e6e2;Level"
-        config.tooltipFields["stat" .. stats .. "Label"] = "^#a8e6e2;+" .. op
-        
-        config.tooltipFields["ID_stat" .. stats .. "TitleLabel"] = "^shadow;^#a8e6e2;Level"
-        config.tooltipFields["ID_stat" .. stats .. "Label"] = "^shadow;^#a8e6e2;+" .. op
-
-        stats = stats + 1
-      else
-        config.tooltipFields.stat7TitleLabel = "^#7e7e7e;..."
-        config.tooltipFields.stat7Label = "^#7e7e7e;..."
-
-        config.tooltipFields.ID_stat7TitleLabel = "^#FF9000;..."
-        config.tooltipFields.ID_stat7Label = "^#190700;..."
-
-        break
-      end
+      config.tooltipFields["stat" .. stats .. "TitleLabel"] = project45util.colorText(generalStatConfig.statColors.level, "Level")
+      config.tooltipFields["stat" .. stats .. "Label"] = project45util.colorText(generalStatConfig.statColors.level, "+" .. op)
+      config.tooltipFields["ID_stat" .. stats .. "TitleLabel"] = project45util.colorText(IDFGColor, "Level")
+      config.tooltipFields["ID_stat" .. stats .. "Label"] = project45util.colorText(IDBGColor, "+" .. op)
+      stats = stats + 1
     end
   end
 
