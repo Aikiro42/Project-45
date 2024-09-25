@@ -238,12 +238,13 @@ function build(directory, config, parameters, level, seed)
       config.tooltipFields.archetypeLabel = "Generic"
     end
   end
+  config.tooltipFields.ID_archetypeTitleLabel = config.tooltipFields.archetypeTitleLabel .. ":"
   config.tooltipFields.archetypeLabel = project45util.colorText("#ea9931", config.tooltipFields.archetypeLabel or "???")
 
   -- Append upgrade cost (default 0)
   local upgradeCost = deepConfigParameter( 0, "augment", "cost")
   config.tooltipFields.upgradeCostLabel = project45util.colorText(upgradeCost > 0 and "#96cbe7" or "#777777", string.format("^shadow;Upgrade Cost: %d", upgradeCost))
-  config.tooltipFields.itemDescriptionUpgradeCostLabel = project45util.colorText(upgradeCost > 0 and "#96cbe7" or "#777777", string.format("^shadow;U. Cost: %d", upgradeCost))
+  config.tooltipFields.ID_upgradeCostLabel = project45util.colorText(upgradeCost > 0 and "#96cbe7" or "#777777", string.format("^shadow;U. Cost: %d", upgradeCost))
 
   -- Append technical info
   local techInfo = configParameter("technicalInfo")
@@ -256,6 +257,7 @@ function build(directory, config, parameters, level, seed)
   config.tooltipFields.rarityLabel = rarityConversions[configParameter("isUnique", false) and "unique" or string.lower(configParameter("rarity", "common"))]
 
   -- change stats field
+  -- TODO: Refactor the following code, it look ugly as fuck!
   local statLimit = 7
   local stats = 1
   local specialField = set.new({"level", "pureStatMod", "randomStatParams", "stackLimit"})
@@ -267,9 +269,12 @@ function build(directory, config, parameters, level, seed)
     if not specialField[stat] then
       for mod, val in pairs(op) do
         if not registeredRandomStats[stat] then
+          -- DELETE: remove this if statement?
           if stats > statLimit then
             config.tooltipFields.stat7TitleLabel = "^#7e7e7e;..."
             config.tooltipFields.stat7Label = "^#7e7e7e;..."
+            config.tooltipFields.ID_stat7TitleLabel = "^#FF9000;..."
+            config.tooltipFields.ID_stat7Label = "^#190700;..."    
             break
           end
           local formattedStat, formattedVal = formatStat(stat, mod, val, type(val) == "string")
@@ -277,20 +282,19 @@ function build(directory, config, parameters, level, seed)
           config.tooltipFields["stat" .. stats .. "Label"] = formattedVal
 
           formattedStat, formattedVal = formatStat(stat, mod, val, type(val) == "string", true)
-          config.tooltipFields["stat" .. stats .. "ItemDescriptionTitleLabel"] = formattedStat
-          config.tooltipFields["stat" .. stats .. "ItemDescriptionLabel"] = formattedVal
+          config.tooltipFields["ID_stat" .. stats .. "TitleLabel"] = formattedStat
+          config.tooltipFields["ID_stat" .. stats .. "Label"] = formattedVal
 
           stats = stats + 1
           registeredRandomStats[stat] = isRandomStats
         end
       end
+
       if stats > statLimit then
         config.tooltipFields.stat7TitleLabel = "^#7e7e7e;..."
         config.tooltipFields.stat7Label = "^#7e7e7e;..."
-
-        config.tooltipFields.stat7ItemDescriptionTitleLabel = "^shadow;^#7e7e7e;..."
-        config.tooltipFields.stat7ItemDescriptionLabel = "^shadow;^#7e7e7e;..."
-
+        config.tooltipFields.ID_stat7TitleLabel = "^#FF9000;..."
+        config.tooltipFields.ID_stat7Label = "^#190700;..."
         break
       end
 
@@ -299,16 +303,16 @@ function build(directory, config, parameters, level, seed)
         config.tooltipFields["stat" .. stats .. "TitleLabel"] = "^#a8e6e2;Level"
         config.tooltipFields["stat" .. stats .. "Label"] = "^#a8e6e2;+" .. op
         
-        config.tooltipFields["stat" .. stats .. "ItemDescriptionTitleLabel"] = "^shadow;^#a8e6e2;Level"
-        config.tooltipFields["stat" .. stats .. "ItemDescriptionLabel"] = "^shadow;^#a8e6e2;+" .. op
+        config.tooltipFields["ID_stat" .. stats .. "TitleLabel"] = "^shadow;^#a8e6e2;Level"
+        config.tooltipFields["ID_stat" .. stats .. "Label"] = "^shadow;^#a8e6e2;+" .. op
 
         stats = stats + 1
       else
         config.tooltipFields.stat7TitleLabel = "^#7e7e7e;..."
         config.tooltipFields.stat7Label = "^#7e7e7e;..."
 
-        config.tooltipFields.stat7ItemDescriptionTitleLabel = "^shadow;^#7e7e7e;..."
-        config.tooltipFields.stat7ItemDescriptionLabel = "^shadow;^#7e7e7e;..."
+        config.tooltipFields.ID_stat7TitleLabel = "^#FF9000;..."
+        config.tooltipFields.ID_stat7Label = "^#190700;..."
 
         break
       end
