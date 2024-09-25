@@ -276,6 +276,7 @@ function build(directory, config, parameters, level, seed)
     if not specialField[stat] then
       for mod, val in pairs(op) do
 
+        
         -- do not reformat random stats that have already been formatted
         if not registeredRandomStats[stat] then
           
