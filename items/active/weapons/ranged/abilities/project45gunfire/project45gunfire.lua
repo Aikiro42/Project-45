@@ -1435,7 +1435,7 @@ function Project45GunFire:openBolt(ammoDiscard, mute, openGun, ejectCasings, man
 
     -- animate bolt pulling if not a break-action weapon
     -- if it's a break-action but is a manual-feed, animate it anyway
-    -- TESTME:
+    -- TEST:
     if not self.breakAction or self.manualFeed then
       self.weapon:setStance(self.stances.boltPull)
     end
@@ -1744,7 +1744,7 @@ end
 
 function Project45GunFire:updateChamberState(newChamberState)
   if newChamberState then animator.setAnimationState("chamber", newChamberState) end
-  -- TESTME: need primaryChamberState?
+  -- TEST: need primaryChamberState?
   world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UIField" .. self.infoSide, "chamberState", animator.animationState("chamber"))
 end
 
