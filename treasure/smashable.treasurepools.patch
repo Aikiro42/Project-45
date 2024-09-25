@@ -1,0 +1,38 @@
+[
+  {
+    "op": "add",
+    "path": "/capsule/0/1/fill",
+    "value": [
+      {"weight" : 1, "pool" : "project45-natural-spawns"}
+    ]
+  },
+  {
+    "op": "add",
+    "path": "/capsule/1/1/fill",
+    "value": [
+      {"weight" : 1, "pool" : "project45-natural-spawns"}
+    ]
+  },
+
+  {
+    "op": "add",
+    "path": "/ancientPotSmall/0/1/fill",
+    "value": [
+      {"weight" : 1, "pool" : "project45-natural-spawns"}
+    ]
+  },
+  {
+    "op": "add",
+    "path": "/ancientPotMedium/0/1/fill",
+    "value": [
+      {"weight" : 1, "pool" : "project45-natural-spawns"}
+    ]
+  },
+  {
+    "op": "add",
+    "path": "/ancientPotLarge/0/1/fill",
+    "value": [
+      {"weight" : 1, "pool" : "project45-natural-spawns"}
+    ]
+  }
+]

@@ -156,6 +156,48 @@
       ],
       "allowDuplication" : false
     }]
+  ],
+
+  "project45-natural-spawns": [
+    [0, {
+      "pool": [
+        {"weight" : 1, "pool" : "project45-guns-r"},
+        {"weight" : 1, "pool" : "project45-stats-r"},
+        {"weight" : 1, "pool" : "project45-mods-r"}
+      ],
+      "poolRounds" : [
+        [0.5, 0],
+        [0.25, 1],
+        [0.125, 2],
+        [0.125, 3]
+      ],
+      "allowDuplication": true
+    }],
+    [1.9, {
+      "pool": [
+        {"weight" : 1, "pool" : "project45-guns-sr"},
+        {"weight" : 1, "pool" : "project45-stats-sr"},
+        {"weight" : 1, "pool" : "project45-mods-sr"}
+      ],
+      "poolRounds" : [
+        [0.33, 0],
+        [0.34, 1],
+        [0.33, 2]
+      ],
+      "allowDuplication": true
+    }],
+    [3.9, {
+      "pool": [
+        {"weight" : 1, "pool" : "project45-guns-ssr"},
+        {"weight" : 1, "pool" : "project45-stats-ssr"},
+        {"weight" : 1, "pool" : "project45-mods-ssr"}
+      ],
+      "poolRounds" : [
+        [0.5, 0],
+        [0.5, 1]
+      ],
+      "allowDuplication": false
+    }]
   ]
 
 }
