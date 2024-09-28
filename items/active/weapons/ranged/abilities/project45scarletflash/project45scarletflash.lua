@@ -108,7 +108,7 @@ function Project45ScarletFlash:activating()
         detectedEntities = {activeItem.ownerEntityId()}
     end
 
-    local slashedEntities=set.new(detectedEntities)
+    local slashedEntities = set.new(detectedEntities)
 
     local slashAngle = 2*math.pi/slashes
     local damagePerSlash = abilityDamage/5
@@ -118,7 +118,7 @@ function Project45ScarletFlash:activating()
         local entityIndex = (i % #detectedEntities) + 1
         local id = detectedEntities[entityIndex]
         local position
-        if not world.entityExists(id) and id ~= activeItem.ownerEntityId() then
+        if not world.entityExists(id) and world.entityCanDamage(activeItem.ownerEntityId(), id) then
             id = activeItem.ownerEntityId()
             position = vec2.add(
                 savedPosition,
