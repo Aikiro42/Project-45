@@ -2269,6 +2269,8 @@ function Project45GunFire:loadGunState()
   end
   animator.setAnimationState("gun", loadedGunState.gunAnimation)
 
+  world.sendEntityMessage(activeItem.ownerEntityId(), "resetProject45UI" .. self.infoSide)
+
 end
 
 -- SECTION: HELPER FUNCTIONS

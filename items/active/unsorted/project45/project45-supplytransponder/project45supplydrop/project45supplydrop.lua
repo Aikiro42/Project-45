@@ -64,6 +64,8 @@ function Project45SupplyDrop:init()
     allowRotate = false
   })
 
+  world.sendEntityMessage(activeItem.ownerEntityId(), "resetProject45UI" .. self.infoSide)
+
 end
 
 function Project45SupplyDrop:triggering()

@@ -44,6 +44,13 @@ function init()
     self.gunStatusR = sb.jsonMerge(self.gunStatusR or {}, gunStatus)
   end)
 
+  message.setHandler("resetProject45UIL", function()
+    self.gunStatusL = {}
+  end)
+  message.setHandler("resetProject45UIR", function()
+    self.gunStatusR = {}
+  end)
+
 end
 
 function update(dt)
@@ -153,13 +160,8 @@ function renderSide(dt, side)
 end
 
 function wieldsProject45Weapon(side)
-  if side == "L" then
-    local primaryTags = set.new(player.primaryHandItemTags() or {})
-    return primaryTags.project45  
-  else
-    local altTags = set.new(player.altHandItemTags() or {})
-    return altTags.project45
-  end
+  local tags = side == "L" and set.new(player.primaryHandItemTags() or {}) or set.new(player.altHandItemTags() or {})
+  return tags.project45
 end
 
 function renderAmmoCounter(uiPosition, offset, reloadRating, ammo, isReloading, side)
