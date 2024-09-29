@@ -30,7 +30,14 @@
     "hAnchor" : "left",
     "color" : [185, 181, 178],
     "value" : ""
+  },    
+  "ID_upgradeCostLabel" : {
+    "type" : "label",
+    "position" : [140, 169],
+    "hAnchor" : "right",
+    "value" : "COST: 99"
   },
+
   "objectImage" : {
     "type" : "image",
     "position" : [74, 128],
@@ -39,6 +46,54 @@
     "maxSize" : [125, 64],
     "minSize" : [125, 64]
   },
+
+  "ID_archetypeTitleLabel" : {
+    "type" : "label",
+    // "position" : [16, 65],
+    "position" : [16, 84],
+    "fontSize": 7,
+    "hAnchor" : "left",
+    "value" : "SAMPLE"
+  },
+  "archetypeLabel" : {
+    "type" : "label",
+    // "position" : [134, 65],
+    "position" : [134, 84],
+    "hAnchor" : "right",
+    "wrapWidth" : 126
+  },
+
+  "categoryTitleLabel": {
+    "type" : "label",
+    // "position" : [16, 65],
+    "position" : [16, 74],
+    "fontSize": 7,
+    "hAnchor" : "left",
+    "value" : "Category:"
+  },
+  "categoryLabel" : {
+    "type" : "label",
+    "position" : [134, 74],
+    "hAnchor" : "right",
+    "centered" : true,
+    "wrapWidth" : 126
+  },
+
+  "slotTitleLabel": {
+    "type" : "label",
+    // "position" : [16, 65],
+    "position" : [16, 64],
+    "fontSize": 7,
+    "hAnchor" : "left",
+    "value" : "Slot:"
+  },
+  "slotLabel" : {
+    "type" : "label",
+    "position" : [134, 64],
+    "hAnchor" : "right",
+    "wrapWidth" : 126
+  },
+
 
   "moneyIcon" : {
     "type" : "image",
@@ -50,42 +105,6 @@
     "position" : [115, 30],
     "hAnchor" : "left",
     "value" : "tree"
-  },
-
-  "archetypeLabel" : {
-    "type" : "label",
-    // "position" : [134, 65],
-    "position" : [69, 65],
-    "hAnchor" : "right",
-    "wrapWidth" : 126
-  },
-  "archetypeTitleLabel" : {
-    "type" : "label",
-    // "position" : [16, 65],
-    "position" : [71, 65],
-    "hAnchor" : "left",
-    "value" : "SAMPLE"
-  },
-  
-  "itemDescriptionUpgradeCostLabel" : {
-    "type" : "label",
-    "position" : [140, 169],
-    "hAnchor" : "right",
-    "value" : "COST: 99"
-  },
-
-  "categoryLabel" : {
-    "type" : "label",
-    "position" : [16, 74],
-    "hAnchor" : "left",
-    "centered" : true,
-    "wrapWidth" : 126
-  },
-  "slotLabel" : {
-    "type" : "label",
-    "position" : [133, 74],
-    "hAnchor" : "right",
-    "wrapWidth" : 126
   },
 
   "rarityLabel" : {
@@ -104,7 +123,7 @@
     "minSize" : [16, 16]
   },
 
-  "stat1ItemDescriptionTitleLabel": {
+  "ID_stat1TitleLabel": {
     "type" : "label",
     // "position" : [202, 149],
     // -41, 17
@@ -113,7 +132,7 @@
     "wrapWidth" : 85,
     "value": "^#FF9000;--"
   },
-  "stat1ItemDescriptionLabel": {
+  "ID_stat1Label": {
     "type" : "label",
     // "position" : [283, 139],
     // -41, 17
@@ -123,14 +142,14 @@
     "value": "^#190700;--"
   },
   
-  "stat2ItemDescriptionTitleLabel": {
+  "ID_stat2TitleLabel": {
     "position": [161, 146],
     "value": "^#FF9000;--",
     "type": "label",
     "hAnchor" : "left",
     "wrapWidth" : 85
   },
-  "stat2ItemDescriptionLabel": {
+  "ID_stat2Label": {
     "position": [242, 136],
     "value": "^#190700;--",
     "type": "label",
@@ -138,7 +157,7 @@
     "wrapWidth" : 85
   },
   
-  "stat3ItemDescriptionTitleLabel": {
+  "ID_stat3TitleLabel": {
     "position": [161, 126],
     "value": "^#FF9000;--",
     "type": "label",
@@ -146,7 +165,7 @@
     "wrapWidth" : 85
   },
   
-  "stat3ItemDescriptionLabel": {
+  "ID_stat3Label": {
     "position": [242, 116],
     "value": "^#190700;--",
     "type": "label",
@@ -154,7 +173,7 @@
     "wrapWidth" : 85
   },
   
-  "stat4ItemDescriptionTitleLabel": {
+  "ID_stat4TitleLabel": {
     "position": [161, 106],
     "value": "^#FF9000;--",
     "type": "label",
@@ -162,7 +181,7 @@
     "wrapWidth" : 85
   },
   
-  "stat4ItemDescriptionLabel": {
+  "ID_stat4Label": {
     "position": [242, 96],
     "value": "^#190700;--",
     "type": "label",
@@ -170,7 +189,7 @@
     "wrapWidth" : 85
   },
   
-  "stat5ItemDescriptionTitleLabel": {
+  "ID_stat5TitleLabel": {
     "position": [161, 86],
     "value": "^#FF9000;--",
     "type": "label",
@@ -178,7 +197,7 @@
     "wrapWidth" : 85
   },
   
-  "stat5ItemDescriptionLabel": {
+  "ID_stat5Label": {
     "position": [242, 76],
     "value": "^#190700;--",
     "type": "label",
@@ -186,7 +205,7 @@
     "wrapWidth" : 85
   },
   
-  "stat6ItemDescriptionTitleLabel": {
+  "ID_stat6TitleLabel": {
     "position": [161, 66],
     "value": "^#FF9000;--",
     "type": "label",
@@ -194,7 +213,7 @@
     "wrapWidth" : 85
   },
   
-  "stat6ItemDescriptionLabel": {
+  "ID_stat6Label": {
     "position": [242, 56],
     "value": "^#190700;--",
     "type": "label",
@@ -202,7 +221,7 @@
     "wrapWidth" : 85
   },
   
-  "stat7ItemDescriptionTitleLabel": {
+  "ID_stat7TitleLabel": {
     "position": [161, 46],
     "value": "^#FF9000;--",
     "type": "label",
@@ -210,14 +229,12 @@
     "wrapWidth" : 85
   },
   
-  "stat7ItemDescriptionLabel": {
+  "ID_stat7Label": {
     "position": [242, 36],
     "value": "^#190700;--",
     "type": "label",
     "hAnchor" : "right",
     "wrapWidth" : 85
   }
-
-
 
 }

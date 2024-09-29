@@ -48,7 +48,7 @@ function build(directory, config, parameters, level, seed)
   local nStats = math.min(#possibleStats, randomStatParams.chosenStatCount or math.ceil(#possibleStats / 2))
   local costPerStat = randomStatParams.costPerStat or 1
   config.augment.cost = math.ceil(costPerStat * nStats)
-
+  
   if parameters.seed
   and not parameters.augment.stat.randomized
   and config.augment.stat.randomStatParams then
@@ -99,7 +99,9 @@ function build(directory, config, parameters, level, seed)
     parameters.augment.stat = config.augment.stat
     parameters.shortdescription = string.format("%s%s", config.shortdescription, parameters.seed and (" #" .. parameters.seed) or "")
   else
-    config.augment.stat = parameters.augment.stat
+    -- TEST: 
+    -- config.augment.stat = parameters.augment.stat
+    parameters.augment.stat = nil
   end
   return unrandBuild(directory, config, parameters, level, seed)
 end
