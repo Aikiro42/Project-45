@@ -12,7 +12,7 @@
   },
   "inventoryIcon": "/items/augments/project45-gunmods/ammo/project45-flechettemod/project45-flechettemodicon.png",
   "description": "Flechette-filled shells for maximum penetration.",
-  "technicalInfo": "Fires 5 penetrating shotgun pellets.",
+  "technicalInfo": "Fires 4 penetrating shotgun darts. Inflicts bleed.",
   "statInfo": "Multishot: 1.1\nHitscan Pen.: 3",
   "shortdescription": "Flechette Shells",
 
@@ -23,15 +23,19 @@
     "ammo": {
       "archetype": "shotgun",
       "projectileParameters": {
-        "piercing": true
+        "piercing": true,
+        "statusEffects": ["project45bleed"]
       }
     },
     "stat": {
+      "baseDamage": {
+        "multiplicative": 0.8
+      },
       "multishot": {
         "rebaseMult": 1.1
       },
       "projectileCount": {
-        "rebaseMult": 5
+        "rebase": 4
       }
     }
   },
