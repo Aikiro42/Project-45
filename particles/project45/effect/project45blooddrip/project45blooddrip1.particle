@@ -1,0 +1,21 @@
+{
+  "kind" : "project45blooddrip1",
+  "definition" : {
+    "type" : "ember",
+    "position" : [0, 0],
+    "color" : [158, 33, 24, 255],
+    "initialVelocity" : [0.2, -10],
+    "finalVelocity" : [0.1, -50],
+    "approach" : [0, 10],
+    "fade" : 0.5,
+    "destructionAction" : "shrink",
+    "destructionTime" : 2,
+    "size" : 1.0,
+    "timeToLive" : 3,
+    "variance" : {
+      "size": 0.5,
+      "position" : [1, 1],
+      "initialVelocity" : [0, 4]
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "name" : "project45bleed",
+  "effectConfig" : {},
+  "defaultDuration" : 7,
+
+  "scripts" : [
+    "project45bleed.lua"
+  ],
+
+  "label" : "Bleeding: 3% health damage per second.",
+  "icon" : "/interface/statuses/absorb.png",
+
+  "animationConfig" : "project45bleed.animation"
+
+}

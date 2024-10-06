@@ -1,0 +1,21 @@
+{
+  "particleEmitters" : {
+    "bleed": {
+      "emissionRate": 15,
+      "particles": [
+        {"particle": "project45blooddrip1"},
+        {"particle": "project45blooddrip1"},
+        {"particle": "project45blooddrip2"},
+        {"particle": "project45blooddrip2"},
+        {"particle": "project45blooddrip3"}
+      ]
+    }
+  },
+  "sounds" : {
+    "wound": [
+      "/sfx/melee/1h_sword_kill_organic1.ogg",
+      "/sfx/melee/1h_sword_kill_organic2.ogg"
+    ],
+    "bleed": [ "/sfx/blocks/footstep_brains.ogg" ]
+  }
+}
