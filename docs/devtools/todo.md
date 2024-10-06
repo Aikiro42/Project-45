@@ -1,5 +1,5 @@
 # Features
-- [ ] Bleed Status Effect
+- [x] Bleed Status Effect
 
 # Changes
 - [ ] Improve ballistic shield
