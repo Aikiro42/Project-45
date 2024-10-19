@@ -290,9 +290,9 @@ function build(directory, config, parameters, level, seed)
 
     for _, part in ipairs(parts) do
       construct(config, "animationCustom", "animatedParts", "parts", part, "properties")
-      config.animationCustom.animatedParts.parts[part].properties.offset = config.baseOffset
+      config.animationCustom.animatedParts.parts[part].properties.offset = config.vanillaBaseOffset or config.baseOffset
       construct(config, "animationCustom", "animatedParts", "parts", part .. "Fullbright", "properties")
-      config.animationCustom.animatedParts.parts[part .. "Fullbright"].properties.offset = config.baseOffset
+      config.animationCustom.animatedParts.parts[part .. "Fullbright"].properties.offset = config.vanillaBaseOffset or config.baseOffset
     end
 
     -- set transformation group offsets
