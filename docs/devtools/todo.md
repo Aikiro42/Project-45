@@ -5,6 +5,9 @@
 - [ ] Improve ballistic shield
 - [ ] Move balance closer to early game
 
+# Gun Mods
+- [x] Underbarrel Chainsaw
+
 # Ammo Mods
 ## Sawblades
 - [ ] Homing Saws
