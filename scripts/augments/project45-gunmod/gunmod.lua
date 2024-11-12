@@ -105,7 +105,9 @@ function apply(output, augment)
     local flipSlots = set.new(modInfo.flipSlot or {})
     if augment.sprite then
       newAnimationCustom = newAnimationCustom or {}
+
       construct(newAnimationCustom, "animatedParts", "parts", augment.slot, "properties")
+      
       newAnimationCustom.animatedParts.parts[augment.slot].properties.zLevel = augment.sprite.zLevel or 0
       newAnimationCustom.animatedParts.parts[augment.slot].properties.centered = true
       newAnimationCustom.animatedParts.parts[augment.slot].properties.transformationGroups = {"weapon"}
@@ -122,17 +124,20 @@ function apply(output, augment)
           augment.sprite.image .. flipDirective .. "<directives>"
 
       if augment.sprite.imageFullbright then
-        construct(newAnimationCustom, "animatedParts", "parts", augment.slot .. "Fullbright", "properties")
-        newAnimationCustom.animatedParts.parts[augment.slot .. "Fullbright"].properties.zLevel =
-            (augment.sprite.zLevel or 0) + 1
-        newAnimationCustom.animatedParts.parts[augment.slot].properties.centered = true
-        newAnimationCustom.animatedParts.parts[augment.slot].properties.transformationGroups = {"weapon"}
-        newAnimationCustom.animatedParts.parts[augment.slot].properties.offset = vec2.add(
+        
+        local fullbrightSlot = augment.slot .. "Fullbright"
+
+        construct(newAnimationCustom, "animatedParts", "parts", fullbrightSlot, "properties")
+        
+        newAnimationCustom.animatedParts.parts[fullbrightSlot].properties.zLevel = (augment.sprite.zLevel or 0) + 1
+        newAnimationCustom.animatedParts.parts[fullbrightSlot].properties.centered = true
+        newAnimationCustom.animatedParts.parts[fullbrightSlot].properties.transformationGroups = {"weapon"}
+        newAnimationCustom.animatedParts.parts[fullbrightSlot].properties.fullbright = true
+        
+        newAnimationCustom.animatedParts.parts[fullbrightSlot].properties.offset = vec2.add(
             output.config[augment.slot .. "Offset"] or {0, 0}, augment.sprite.offset or {0, 0})
-        newAnimationCustom.animatedParts.parts[augment.slot .. "Fullbright"].properties.image = augment.sprite
-                                                                                                    .imageFullbright ..
-                                                                                                    flipDirective ..
-                                                                                                    "<directives>"
+        newAnimationCustom.animatedParts.parts[fullbrightSlot].properties.image =
+          augment.sprite.imageFullbright .. flipDirective .. "<directives>"
       end
     elseif flipSlots[augment.slot] then
       -- if the sprite is set up in the weaponability and we need to fiddle with it,

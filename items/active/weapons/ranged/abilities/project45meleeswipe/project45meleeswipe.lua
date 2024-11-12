@@ -55,28 +55,33 @@ function Project45MeleeSwipe:slashing(comboStep)
     
     self.weapon:setStance(stance)
     
+    local offset, rotation, damageConfig
+    
     if stance.damage then
       
-      local damageConfig = stance.damage.config
+      damageConfig = stance.damage.config
       damageConfig.baseDamage =
           world.threatLevel()
         * (activeItem.ownerPowerMultiplier()^2)
         * (damageConfig.baseDamageFactor or 1)
 
-      local offset = vec2.add(self.defaultOffset, stance.damage.offset or {0, 0})
-      local rotation = util.toRadians(stance.damage.rotate or 0)
+      offset = vec2.add(self.defaultOffset, stance.damage.offset or {0, 0})
+      rotation = util.toRadians(stance.damage.rotate or 0)
 
       animator.resetTransformationGroup("swoosh")
       animator.rotateTransformationGroup("swoosh", rotation)
       animator.translateTransformationGroup("swoosh", offset)
-      self.weapon:setDamage(
-        damageConfig,
-        poly.translate(poly.rotate(stance.damage.area, rotation), offset)
-      )
 
     end
 
-    util.wait(stance.duration or 0)
+    util.wait(stance.duration or 0, function()
+      if offset and rotation and damageConfig then
+        self.weapon:setDamage(
+          damageConfig,
+          poly.translate(poly.rotate(stance.damage.area, rotation), offset)
+        )
+      end
+    end)
     
     coroutine.yield()
   end

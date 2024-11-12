@@ -249,6 +249,7 @@
         // ESSENTIAL
         {"weight" : 1, "item" : "project45-gunscopemod"},
         {"weight" : 1, "item" : "project45-enemyradarmod"},
+        {"weight" : 1, "item" : "project45-chainsawmod"},
         {"weight" : 1, "item" : "project45-grenadelaunchermod"},
         {"weight" : 1, "item" : "project45-underbarrelshotgunmod"},
         {"weight" : 1, "item" : "project45-solariummod"}

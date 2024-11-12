@@ -1,0 +1,160 @@
+{
+  "itemName" : "project45-chainsawmod",
+  "price" : 10000,
+  "rarity" : "Essential",
+  "tooltipKind" : "project45gunmod2",
+  "modCategory" : "abilityMod",
+  "category": "uniqueWeapon",
+  "itemTags": ["weapon"],
+  "tooltipFields":{
+    "subtitle": "Ability Mod",
+    "objectImage": "/items/augments/project45-gunmods/ability/project45-chainsawmod/project45-chainsawmod.png"
+  },
+  "inventoryIcon" : "/items/augments/project45-gunmods/ability/project45-chainsawmod/project45-chainsawmodicon.png",
+  "description" : "A portable chainsaw with gears customized for warfare.",
+  "technicalInfo": "Right-click to attack. Damage scales with squared power mult times world level.",
+  "shortdescription" : "Underbarrel Chainsaw",
+  "archetype": "Active Ability",
+
+  "augment": {
+    "category": "universal",
+    "slot": "underbarrel",
+    "ability":{
+      "altAbilityType": "project45meleeswipe",
+      "altAbility": {
+        "name": "Melee Swipe",
+        "offsetParameter": "underbarrelOffset",
+        "combo": [
+          [
+            {
+              "armRotation": -75,
+              "weaponRotation": 75,
+              "weaponOffset": [-0.25, 0],
+              "twoHanded": true,
+              "duration": 0.1
+            },
+            {
+              "armRotation": 0,
+              "weaponRotation": 10,
+              "armAngularVelocity": 30,
+              "weaponOffset": [1, 0],
+              "twoHanded": true,
+              "allowRotate": true,
+              "snap": true,
+              "duration": 0.3,
+
+              "animationStates": {
+                "swoosh": "fire2",
+                "chainsaw": "on"
+              },
+              "playSounds": ["chainsaw"],
+              "damage": {
+                "config": {
+                  "damageSourceKind" : "dagger",
+                  "statusEffects" : [ ],
+                  "knockbackMode" : "facing",
+                  "knockback" : 1,
+                  "baseDamageFactor": 0.3,
+                  "timeout": 0.01
+                },
+                "area": [[-0.75, 1.5], [3, 1], [3, -1], [-0.75, -1.5]],
+                "offset": [0.5, 0.25]
+              }
+            },
+            {
+              "armRotation": 0,
+              "weaponRotation": 0,
+              "twoHanded": true,
+              "allowRotate": true,
+              "allowFlip": true,
+              "animationStates": {
+                "chainsaw": "off"
+              }
+            }
+          ]
+        ]
+      },
+      "overrideTwoHanded": true,
+      "twoHanded": true
+    },
+    "stat": {
+      "recoverDelay":{
+        "rebaseMult": 1.1
+      },
+      "recoverTime":{
+        "rebaseMult": 1.1
+      },
+      "recoilAmount":{
+        "rebaseMult": 0.75
+      }
+    },
+    "gun": {
+      "animationCustom": {
+        "animatedParts": {
+          "stateTypes": {
+            "chainsaw": {
+              "default": "off",
+              "states": {
+                "off": {
+
+                },
+                "on": {
+                  "frames" : 2,
+                  "cycle" : 0.07,
+                  "mode" : "loop"
+                }
+              }
+            }
+          },
+          "parts": {
+            "underbarrelFullbright": {
+              "partStates": {
+                "chainsaw": {
+                  
+                  "off": {
+                    "properties": {
+                      "image" : ""
+                    }
+                  },
+                  "on": {
+                    "properties": {
+                      "image" : "/items/augments/project45-gunmods/ability/project45-chainsawmod/project45chainsawmodsprite-fullbright.png:on.<frame>",
+                      "fullbright": true
+                    }
+                  }
+                }
+              }
+            },
+            "swoosh": {
+              "partStates": {
+                "swoosh":{
+                  "fire2": {
+                    "properties" : {
+                      "image" : "/items/active/weapons/melee/broadsword/swoosh3/fireswoosh.png:<frame>",
+                      "fullbright": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "sounds": {
+          "chainsaw": ["/sfx/tools/chainsaw_swing2.ogg"]
+        }
+      },
+
+      "sprite": {
+        "image": "/items/augments/project45-gunmods/ability/project45-chainsawmod/project45chainsawmodsprite.png",
+        "imageFullbright": "",
+        "offset": [0.75, -0.25],
+        "zLevel": -1
+      }
+    }
+
+  },
+
+  "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
+
+}
