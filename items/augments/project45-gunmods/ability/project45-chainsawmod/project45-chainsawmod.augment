@@ -31,7 +31,11 @@
               "weaponRotation": 75,
               "weaponOffset": [-0.25, 0],
               "twoHanded": true,
-              "duration": 0.1
+              "playSounds": ["chainsawRevUp"],
+              "duration": 0.1,
+              "animationStates": {
+                "chainsaw": "on"
+              }
             },
             {
               "armRotation": 0,
@@ -47,14 +51,14 @@
                 "swoosh": "fire2",
                 "chainsaw": "on"
               },
-              "playSounds": ["chainsaw"],
+              "playSounds": ["chainsawSwing", "fire2"],
               "damage": {
                 "config": {
                   "damageSourceKind" : "dagger",
-                  "statusEffects" : [ ],
+                  "statusEffects" : [ "project45bleed" ],
                   "knockbackMode" : "facing",
-                  "knockback" : 1,
-                  "baseDamageFactor": 0.3,
+                  "knockback" : 10,
+                  "baseDamageFactor": 0.5,
                   "timeout": 0.01
                 },
                 "area": [[-0.75, 1.5], [3, 1], [3, -1], [-0.75, -1.5]],
@@ -69,7 +73,8 @@
               "allowFlip": true,
               "animationStates": {
                 "chainsaw": "off"
-              }
+              },
+              "playSounds": ["chainsawRevDown"]
             }
           ]
         ]
@@ -140,14 +145,21 @@
           }
         },
         "sounds": {
-          "chainsaw": ["/sfx/tools/chainsaw_swing2.ogg"]
+          "chainsawRevUp": ["/sfx/tools/chainsaw_rev_up.ogg"],
+          "chainsawSwing": ["/sfx/tools/chainsaw_swing2.ogg"],
+          "fire2": [
+            "/sfx/melee/swing_axe_fire1.ogg",
+            "/sfx/melee/swing_axe_fire2.ogg",
+            "/sfx/melee/swing_axe_fire3.ogg"
+          ],
+          "chainsawRevDown": ["/sfx/tools/chainsaw_rev_down2.ogg"]
         }
       },
 
       "sprite": {
         "image": "/items/augments/project45-gunmods/ability/project45-chainsawmod/project45chainsawmodsprite.png",
         "imageFullbright": "",
-        "offset": [0.75, -0.25],
+        "offset": [0.75, -0.5],
         "zLevel": -1
       }
     }
