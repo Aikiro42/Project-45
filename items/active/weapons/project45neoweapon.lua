@@ -20,7 +20,14 @@ function Weapon:init()
 
   self.stanceInterpolationMethod = "sin"
 
+  self.defaultMuzzleOffset = self.muzzleOffset
+  
+  self.crouchOffset = config.getParameter("crouchOffset", {0, 0})
+
   oldWeaponInit(self)
+
+  self.altMuzzleOffset = config.getParameter("altMuzzleOffset", self.muzzleOffset)
+  self.defaultAltMuzzleOffset = self.altMuzzleOffset
 
   self.oldWeaponOffset = self.weaponOffset
   self.newWeaponOffset = self.weaponOffset
@@ -49,6 +56,15 @@ function Weapon:update(dt, fireMode, shiftHeld)
     }
 
   end
+
+  if mcontroller.crouching() then
+    self.weaponOffset = vec2.add(self.weaponOffset, self.crouchOffset)
+    self.muzzleOffset = vec2.add(self.defaultMuzzleOffset, self.crouchOffset)
+    self.altMuzzleOffset = vec2.add(self.defaultAltMuzzleOffset, self.crouchOffset)
+  else
+    self.muzzleOffset = self.defaultMuzzleOffset
+    self.altMuzzleOffset = self.defaultAltMuzzleOffset
+  end
   
   self.relativeArmRotation = self.baseArmRotation + self.recoilAmount/2
   self.relativeWeaponRotation = self.baseWeaponRotation + self.recoilAmount/2
@@ -64,19 +80,23 @@ end
 function Weapon:updateAim()
   for _,group in pairs(self.transformationGroups) do
     animator.resetTransformationGroup(group.name)
+    sb.logInfo(string.format("%s : %s", group.name, group.offset))
     animator.translateTransformationGroup(group.name, group.offset)
     animator.rotateTransformationGroup(group.name, group.rotation, group.rotationCenter)
     animator.translateTransformationGroup(group.name, self.weaponOffset)
     animator.rotateTransformationGroup(group.name, self.relativeWeaponRotation, self.relativeWeaponRotationCenter)
   end
 
-  local aimAngle, aimDirection = activeItem.aimAngleAndDirection(self.aimOffset, activeItem.ownerAimPosition())
+  local aimOffset = self.aimOffset + (mcontroller.crouching() and self.crouchOffset[2] or 0)
+  local aimPosition = activeItem.ownerAimPosition()
+  local aimAngle, aimDirection = activeItem.aimAngleAndDirection(aimOffset, aimPosition)
 
   if self.stance.allowRotate then
     self.aimAngle = aimAngle
   elseif self.stance.aimAngle then
     self.aimAngle = self.stance.aimAngle
   end
+  
   activeItem.setArmAngle(self.aimAngle + self.baseArmRotation + self.recoilAmount/2)
 
   local isPrimary = activeItem.hand() == "primary"

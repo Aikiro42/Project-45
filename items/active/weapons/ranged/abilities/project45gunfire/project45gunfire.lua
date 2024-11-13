@@ -2112,7 +2112,7 @@ end
 function Project45GunFire:firePosition(altOverride, addOffset)
   local muzzleOffset = self.weapon.muzzleOffset
   if self.abilitySlot == "alt" or altOverride then
-    muzzleOffset = config.getParameter("altMuzzleOffset", self.weapon.muzzleOffset)
+    muzzleOffset = self.weapon.altMuzzleOffset
   end
 
   if addOffset then
@@ -2137,7 +2137,7 @@ function Project45GunFire:aimVector(spread, degAdd, firePosition)
   
   local muzzleOffset = self.weapon.muzzleOffset
   if self.abilitySlot == "alt" then
-    muzzleOffset = config.getParameter("altMuzzleOffset", self.weapon.muzzleOffset)
+    muzzleOffset = self.weapon.altMuzzleOffset
   end
 
   local firePos = firePosition or self:firePosition()

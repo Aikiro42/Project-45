@@ -149,6 +149,8 @@
   "sightsOffset": [0.25, 1],
   // "stockOffset": [-1.75, 0.75],
 
+  "crouchOffset": [0, 0.5],
+
   "debugPointColors": {
     "rail": "red",
     "sights": "orange",
