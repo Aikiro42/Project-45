@@ -74,7 +74,7 @@ end
 function project45util.colorText(color, text)
   if not color then return text end
   if type(color) == "table" then
-    color = "#" .. rgbToHex(color)
+    color = "#" .. project45util.rgbToHex(color)
   end
   return "^" .. color .. ";" .. text .. "^reset;"
 end
@@ -291,7 +291,7 @@ function project45util.deepCompare(tbl1, tbl2)
 				return false
 			elseif value1 ~= value2 then
 				if type(value1) == "table" and type(value2) == "table" then
-					if not deep_compare(value1, value2) then
+					if not project45util.deepCompare(value1, value2) then
 						return false
 					end
 				else

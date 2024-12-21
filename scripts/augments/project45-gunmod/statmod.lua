@@ -306,8 +306,8 @@ function apply(output, augment)
         -- apply group modification + member modification
         primaryAbilityMod[substat] = getModifiedStat(
           substatBaseValue,
-          statModifiers[group].additive or 0 + substatAdditive,
-          statModifiers[group].multiplicative or 0 + substatMultiplicative,
+          (statModifiers[group].additive or 0) + substatAdditive,
+          (statModifiers[group].multiplicative or 0) + substatMultiplicative,
           isBadStat[substat],
           isIntegerStat[substat],
           statBounds[substat]

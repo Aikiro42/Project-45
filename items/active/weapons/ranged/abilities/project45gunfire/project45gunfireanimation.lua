@@ -256,6 +256,8 @@ end
 
 function renderBeamChain()
   local beamChain = animationConfig.animationParameter("beamChain", {nil})
+  local beamFuzz = animationConfig.animationParameter("beamFuzz", 0.5)
+  
   if not beamChain then return end
   if #beamChain < 2 then return end
 

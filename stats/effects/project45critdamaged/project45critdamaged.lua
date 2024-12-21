@@ -6,7 +6,7 @@ function init()
     if #notifications > 0 then
       for _, notification in pairs(notifications) do
         if notification.healthLost > 0 and world.entityExists(notification.targetEntityId) then
-          spawnCritVFX(notification.targetEntityId)
+          -- spawnCritVFX(notification.targetEntityId)
           effect.expire()
         end
       end

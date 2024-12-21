@@ -455,8 +455,7 @@ function hitscanLib:chainScan(scanLength, ignoresTerrain, punchThrough, scanUnti
     end
 
     if #chain - 1 ~= #chainEntityIds then
-      sb.logError("ERROR: CHAIN DOES NOT CORRESPOND TO HIT ENTITIES")
-      makeJesusTakeWheel()
+      assert(false, "ERROR: CHAIN DOES NOT CORRESPOND TO HIT ENTITIES")
     end
 
     return {chain, chainEntityIds}
@@ -1014,6 +1013,7 @@ function hitscanLib:alteredDamageSourceFunc(damageConfig, damageArea, damageTime
   if damageArea then
     local knockback = damageConfig.knockback
     if knockback and damageConfig.knockbackDirectional ~= false then
+      ---@diagnostic disable-next-line: redundant-parameter
       knockback = knockbackMomentum(damageConfig.knockback, damageConfig.knockbackMode, self.aimAngle, self.aimDirection)
     end
     local damage = damageConfig.baseDamage * self.damageLevelMultiplier
@@ -1036,6 +1036,7 @@ function hitscanLib:alteredDamageSourceFunc(damageConfig, damageArea, damageTime
       statusEffects = damageConfig.statusEffects,
       knockback = knockback or 0,
       rayCheck = true,
+      ---@diagnostic disable-next-line: undefined-global
       damageRepeatGroup = damageRepeatGroup(damageConfig.timeoutGroup),
       damageRepeatTimeout = damageTimeout or damageConfig.timeout
     }

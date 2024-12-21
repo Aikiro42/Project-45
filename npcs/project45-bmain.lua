@@ -1,3 +1,4 @@
+---@diagnostic disable: undefined-global
 require "/scripts/behavior.lua"
 require "/scripts/pathing.lua"
 require "/scripts/util.lua"

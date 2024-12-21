@@ -12,7 +12,7 @@ function update(dt)
     self.targetPosition = world.entityPosition(self.target)
   else
     if self.findTargetTimer <= 0 then
-      findTarget(nil)
+      findTarget()
       self.findTargetTimer = 60 -- query target every ~1s
     end
   end

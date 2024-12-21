@@ -207,5 +207,5 @@ function Project45GrenadeLauncher:uninit()
 end
 
 function Project45GrenadeLauncher:screenShake(amount, shakeTime, random)
-    Project45Gunfire.screenShake(self, amount, shakeTime, random)
+    Project45GunFire.screenShake(self, amount, shakeTime, random)
 end

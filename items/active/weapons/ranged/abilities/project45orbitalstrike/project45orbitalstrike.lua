@@ -8,7 +8,7 @@ Project45OrbitalStrike = WeaponAbility:new()
 
 function Project45OrbitalStrike:init()
   self.strikeHeight = self.strikeHeight or 50
-  self.minimumUsableWorldHeightRatio = self.minimumUsableWorldHeightRatio or 1/6
+  self.minimumUsableWorldHeightRatio = self.minimumUsableWorldHeightRatio or (1/6)
   self.minimumUsableHeight = self.minimumUsableHeight or world.size()[2] * self.minimumUsableWorldHeightRatio
 
   if mcontroller.position()[2] < self.minimumUsableHeight then
@@ -35,7 +35,12 @@ function Project45OrbitalStrike:init()
 
   self.orbitalRadius = self.orbitalRadius or 20
   self.orbitalTheta = 0
-  self.orbitalOffsets = {0, 0, 0, 0}
+  self.orbitalOffsets = {
+    {0, 0},
+    {0, 0},
+    {0, 0},
+    {0, 0}
+  }
   self.orbitalPhases = {0, 0.5*math.pi, math.pi,  1.5*math.pi, 2*math.pi}
   self.orbitSpeedMult = 0.33
   self.orbitalColor = self.orbitalColor or {255, 128, 0}
@@ -253,7 +258,10 @@ function Project45OrbitalStrike:drawOrbitalLaser(radius, laserWidth, laserAlpha)
   self.orbitalTheta = (self.orbitalTheta + self.orbitSpeedMult/math.pi) % math.pi
   if radius > 0 then
     for i, orbitalPhase in ipairs(self.orbitalPhases) do
-      self.orbitalOffsets[i] = {radius * math.cos(self.orbitalTheta + orbitalPhase), 0 * radius * math.sin(self.orbitalTheta + orbitalPhase)}
+      self.orbitalOffsets[i] = {
+        radius * math.cos(self.orbitalTheta + orbitalPhase),
+        0 * radius * math.sin(self.orbitalTheta + orbitalPhase)
+      }
     end
   end
 

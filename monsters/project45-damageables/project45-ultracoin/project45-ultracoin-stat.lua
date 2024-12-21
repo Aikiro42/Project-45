@@ -23,7 +23,8 @@ function applyDamageRequest(damageRequest)
     end
   end
 
-  if world.getProperty("nonCombat") or grounded then
+  --if world.getProperty("nonCombat") or grounded then
+  if world.getProperty("nonCombat") then
     return {}
   end
 

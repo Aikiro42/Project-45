@@ -23,7 +23,7 @@ Passive = {}
 function Project45GunFire:init()
 
   input = input or {}
-  input.bindDown = input.bindDown or function() end
+  input.bindDown = input.bindDown or function(_, _) end
   
   if self.passiveScript then
     require(self.passiveScript)
@@ -612,7 +612,7 @@ function Project45GunFire:prepareFiringStance()
   if self.stances.firing then
     local waitTime = 0
     if not self.weapon.allowRotate then
-      waitTime = self.stances.firing.duration or 5*self.dt
+      waitTime = self.stances.firing.duration or (5 * self.dt)
     end
     self.weapon:setStance(self.stances.firing)
     util.wait(waitTime)
@@ -2055,7 +2055,7 @@ function Project45GunFire:crit()
   if not storage.currentCritChance then return 1 end
 
   local critTier = math.floor(storage.currentCritChance);
-  local isCrit = project45util.diceroll(storage.currentCritChance - critTier, "Crit: ")
+  local isCrit = project45util.diceroll(storage.currentCritChance - critTier)
   self.critFlag = isCrit or critTier > 0
   if self.critFlag then
     self:onCritPassive()
@@ -2175,14 +2175,14 @@ function Project45GunFire:saveGunState()
 
     ejecting = "ejected",
     boltPulling = "ejected",
-    
+
     feeding = "idle",
     boltPushing = "idle",
 
     firing = "idle",
     firingLoop = "idle",
     fired = "fired",
-    
+
     unjamming = storage.jamAmount > 0 and "jammed" or "idle",
   }
 
