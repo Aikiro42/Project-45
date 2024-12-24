@@ -1709,8 +1709,12 @@ end
 
 function Project45GunFire:updateStockAmmo(delta, willReplace)
   storage.stockAmmo = willReplace and delta or math.max(0, storage.stockAmmo + delta)
-  self.weapon.stockAmmoDamageMult = 1 + (storage.stockAmmo * 0.1 / self.maxAmmo * 3)
+  self.weapon.stockAmmoDamageMult = self:calculateStockAmmoDamageMult(storage.stockAmmo, self.maxAmmo)
   world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UIField" .. self.infoSide, "stockAmmo", storage.stockAmmo)
+end
+
+function Project45GunFire:calculateStockAmmoDamageMult(stockAmmo, maxAmmo)
+  return 1 + (stockAmmo * 0.1 / maxAmmo * 3)
 end
 
 -- Updates the gun's ammo:
@@ -2197,7 +2201,6 @@ function Project45GunFire:saveGunState()
     jamAmount = storage.jamAmount,
     savedProjectileIndex = storage.savedProjectileIndex,
     lastUsedTime = os.time(),
-    loadSuccess = true
   }
   activeItem.setInstanceValue("savedGunState", gunState)
 end
@@ -2216,7 +2219,6 @@ function Project45GunFire:validateState()
     jamAmount = 0,
     savedProjectileIndex = 1,
     lastUsedTime = os.time(),
-    loadSuccess = false
   }
   
   for k, v in pairs(defaultGunState) do
@@ -2245,7 +2247,7 @@ function Project45GunFire:loadGunState()
   end
 
   storage.stockAmmo = storage.stockAmmo or loadedGunState.stockAmmo
-  self.weapon.stockAmmoDamageMult = 1 + (storage.stockAmmo * 0.1 / self.maxAmmo * 3)
+  self.weapon.stockAmmoDamageMult = self:calculateStockAmmoDamageMult(storage.stockAmmo, self.maxAmmo)
 
   storage.savedProjectileIndex = storage.savedProjectileIndex or loadedGunState.savedProjectileIndex
 
