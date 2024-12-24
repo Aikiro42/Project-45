@@ -1,3 +1,4 @@
+---@diagnostic disable: lowercase-global
 require "/scripts/util.lua"
 require "/scripts/project45/project45disassemble.lua"
 

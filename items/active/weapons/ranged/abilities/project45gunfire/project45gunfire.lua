@@ -1,3 +1,4 @@
+---@diagnostic disable: duplicate-set-field
 require "/scripts/util.lua"
 require "/scripts/interp.lua"
 require "/scripts/poly.lua"
@@ -7,6 +8,8 @@ require "/scripts/project45/project45util.lua"
 
 require "/items/active/weapons/ranged/gunfire.lua"
 require "/items/active/weapons/ranged/abilities/altfire.lua"
+
+require "/items/active/weapons/ranged/abilities/project45gunfire/formulas.lua"
 
 local BAD, OK, GOOD, PERFECT = 1, 2, 3, 4
 local reloadRatingList = {"BAD", "OK", "GOOD", "PERFECT"}
@@ -810,8 +813,8 @@ function Project45GunFire:feeding()
   end
 
   if (self.manualFeed                              -- if gun is cocked every shot
-  and storage.burstCounter >= self.burstCount        -- and the gun is done bursting
-  or self.weapon.reloadTimer >= 0)                         -- or the gun was just reloaded/is cocking
+  and storage.burstCounter >= self.burstCount      -- and the gun is done bursting
+  or self.weapon.reloadTimer >= 0)                 -- or the gun was just reloaded/is cocking
   or self.isCocking
   then
 
@@ -1709,12 +1712,8 @@ end
 
 function Project45GunFire:updateStockAmmo(delta, willReplace)
   storage.stockAmmo = willReplace and delta or math.max(0, storage.stockAmmo + delta)
-  self.weapon.stockAmmoDamageMult = self:calculateStockAmmoDamageMult(storage.stockAmmo, self.maxAmmo)
+  self.weapon.stockAmmoDamageMult = formulas.stockAmmoDamageMult(storage.stockAmmo, self.maxAmmo)
   world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UIField" .. self.infoSide, "stockAmmo", storage.stockAmmo)
-end
-
-function Project45GunFire:calculateStockAmmoDamageMult(stockAmmo, maxAmmo)
-  return 1 + (stockAmmo * 0.1 / maxAmmo * 3)
 end
 
 -- Updates the gun's ammo:
@@ -2064,35 +2063,25 @@ function Project45GunFire:crit()
   if self.critFlag then
     self:onCritPassive()
   end
-  return self:calculateCritDamage(isCrit, critTier)
-end
-
-function Project45GunFire:calculateCritDamage(isCrit, critTier)
-  critTier = critTier or math.floor(storage.currentCritChance)
-  if critTier == 0 then -- base
-    return isCrit and self.critDamageMult or 1
-  end
-  -- crit tier = floor(crit chance)
-  -- crit damage = base crit damage + crit tier
-  -- crit damage + 1 if super crit; crit damage + 0 otherwise
-  return math.max(1, self.critDamageMult + critTier + (isCrit and 1 or 0))
+  return formulas.critDamage(storage.currentCritChance, self.critDamageMult, isCrit, critTier)
 end
 
 -- Calculates the damage per shot of the weapon.
 function Project45GunFire:damagePerShot(noDLM)
 
-  local critDmg = self:crit()
+  return formulas.damagePerShot(
+    self.baseDamage,
+    {
+      damageLevelMultiplier = (noDLM and 1 or config.getParameter("damageLevelMultiplier", 1)),
+      powerMultiplier = self.powerMultiplier,
+      critDamageMult = self:crit(),
+      chargeDamageMult = self.currentChargeDamage,
+      reloadDamageMult = self.reloadRatingDamage,
+      stockAmmoDamageMult = self.weapon.stockAmmoDamageMult,
+      passiveDamageMult = self.passiveDamageMult or 1,
+    }
+  )
 
-  local finalDmg = self.baseDamage
-  * (noDLM and 1 or config.getParameter("damageLevelMultiplier", 1))
-  * self.currentChargeDamage -- up to 2x at full overcharge
-  * self.reloadRatingDamage -- as low as 0.8 (bad), as high as 1.5 (perfect)
-  * critDmg -- this way, rounds deal crit damage individually
-  * (self.passiveDamageMult or 1) -- provides a way for passives to modify damage
-  * self.weapon.stockAmmoDamageMult
-  / self.projectileCount
-
-  return finalDmg * self.powerMultiplier
 end
 
 -- Returns whether the left click is held
@@ -2247,7 +2236,7 @@ function Project45GunFire:loadGunState()
   end
 
   storage.stockAmmo = storage.stockAmmo or loadedGunState.stockAmmo
-  self.weapon.stockAmmoDamageMult = self:calculateStockAmmoDamageMult(storage.stockAmmo, self.maxAmmo)
+  self.weapon.stockAmmoDamageMult = formulas.stockAmmoDamageMult(storage.stockAmmo, self.maxAmmo)
 
   storage.savedProjectileIndex = storage.savedProjectileIndex or loadedGunState.savedProjectileIndex
 

@@ -1,3 +1,4 @@
+---@diagnostic disable: lowercase-global
 require "/scripts/vec2.lua"
 require "/items/active/unsorted/rewardbag/rewardbag.lua"
 require "/scripts/project45/project45util.lua"

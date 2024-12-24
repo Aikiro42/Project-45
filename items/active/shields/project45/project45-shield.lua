@@ -1,3 +1,4 @@
+---@diagnostic disable: lowercase-global
 require "/scripts/util.lua"
 require "/scripts/status.lua"
 require "/items/active/shields/shield.lua"
