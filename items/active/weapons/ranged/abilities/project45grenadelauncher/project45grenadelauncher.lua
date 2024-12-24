@@ -103,6 +103,7 @@ function Project45GrenadeLauncher:fire()
     self:fireProjectile()
     self:setGrenadeLauncherState(EMPTY)
     self:muzzleFlash()
+    self:screenShake(self.screenShakeAmount)
     self:recoil()
 end
 

@@ -108,6 +108,7 @@
       "fireTime": 0.3,
       "chargeTime": 0.3,
       "projectileCount": 1,
+      "screenShakeAmount": 0.8,
       "inaccuracy": 0.01,
       "energyUsagePercent": 0.3,
 

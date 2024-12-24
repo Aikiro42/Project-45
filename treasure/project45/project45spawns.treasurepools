@@ -135,5 +135,18 @@
       ],
       "allowDuplication": true
     }]
+  ],
+
+  "project45-devtestkit": [
+    [0, {
+      "fill" : [
+        {"weight" : 1, "item" : {"name": "project45-neo-combatrifle", "parameters": {"seed": 69420}}},
+        {"weight" : 1, "item" : {"name": "project45-portablegdk", "count": 50}},
+        {"weight" : 1, "item" : {"name": "project45-ammostock", "count": 10}},
+        {"weight" : 1, "item" : {"name": "project45-adminmod", "count": 10}},
+        {"weight" : 1, "item" : {"name": "project45-enemyflare", "count": 100}},
+        {"weight" : 1, "item" : "project45-maxlevelmod"}
+      ]
+    }]
   ]
 }
