@@ -1035,7 +1035,7 @@ function Project45GunFire:reloading()
 
   self.weapon:setStance(self.stances.reloaded)
   if self.projectileFireSettings.resetProjectileIndexOnReload then
-    storage.savedProjectileIndex = 1
+    storage.project45GunState.savedProjectileIndex = 1
   end
   animator.setAnimationState("magazine", self.internalMag and "absent" or "present")
   
@@ -1302,7 +1302,7 @@ function Project45GunFire:fireProjectile(projectileType, projectileParameters, i
   selectedProjectileType = projectileType
   
   if type(projectileType) == "table" then
-    selectedProjectileType = projectileType[storage.savedProjectileIndex]
+    selectedProjectileType = projectileType[storage.project45GunState.savedProjectileIndex]
     if not self.projectileFireSettings or not self.projectileFireSettings.batchFire then
       self:rerollProjectileIndex(#projectileType)
     end
@@ -1923,8 +1923,8 @@ end
 -- SECTION: EVAL FUNCTIONS
 
 function Project45GunFire:rerollProjectileIndex(projectileTypeListLength)
-  storage.savedProjectileIndex = self.projectileFireSettings and self.projectileFireSettings.sequential and
-  (storage.savedProjectileIndex % (projectileTypeListLength or #self.projectileType)) + 1
+  storage.project45GunState.savedProjectileIndex = self.projectileFireSettings and self.projectileFireSettings.sequential and
+  (storage.project45GunState.savedProjectileIndex % (projectileTypeListLength or #self.projectileType)) + 1
   or math.random(projectileTypeListLength or #self.projectileType)
 end
 
@@ -2188,7 +2188,7 @@ function Project45GunFire:saveGunState()
     reloadRating = storage.project45GunState.reloadRating,
     unejectedCasings = storage.project45GunState.unejectedCasings,
     jamAmount = storage.project45GunState.jamAmount,
-    savedProjectileIndex = storage.savedProjectileIndex,
+    savedProjectileIndex = storage.project45GunState.savedProjectileIndex,
     lastUsedTime = os.time(),
   }
   activeItem.setInstanceValue("savedGunState", gunState)
@@ -2241,12 +2241,12 @@ function Project45GunFire:loadGunState()
   storage.project45GunState.stockAmmo = storage.project45GunState.stockAmmo or loadedGunState.stockAmmo
   self.weapon.stockAmmoDamageMult = formulas.stockAmmoDamageMult(storage.project45GunState.stockAmmo, self.maxAmmo)
 
-  storage.savedProjectileIndex = storage.savedProjectileIndex or loadedGunState.savedProjectileIndex
+  storage.project45GunState.savedProjectileIndex = storage.project45GunState.savedProjectileIndex or loadedGunState.savedProjectileIndex
 
   -- saved projectile index validation
   local projectiles = self.projectileKind == "summoned" and self.summonedProjectileType or self.projectileType
-  if type(projectiles) == "table" and storage.savedProjectileIndex > #projectiles then
-    storage.savedProjectileIndex = #projectiles
+  if type(projectiles) == "table" and storage.project45GunState.savedProjectileIndex > #projectiles then
+    storage.project45GunState.savedProjectileIndex = #projectiles
   end
 
   storage.project45GunState.reloadRating = storage.project45GunState.reloadRating or loadedGunState.reloadRating
