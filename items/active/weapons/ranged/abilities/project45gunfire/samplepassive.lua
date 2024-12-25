@@ -13,7 +13,7 @@ function Passive:update(dt, fireMode, shiftheld)
   and storage.project45GunState.ammo > 0 then
     local replenished = math.floor(self.maxAmmo/2)
     self:updateAmmo(replenished)
-    storage.unejectedCasings = math.max(0, storage.unejectedCasings - replenished)
+    storage.project45GunState.unejectedCasings = math.max(0, storage.project45GunState.unejectedCasings - replenished)
     self.passiveTimer = self.passiveTime
   end
   self.passiveTimer = self.passiveTimer - dt

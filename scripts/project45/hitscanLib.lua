@@ -82,7 +82,7 @@ function hitscanLib:fireChainBeam()
       ammoConsumeTimer = 0
       if self.beamParameters.consumeAmmoOverTime or not consumedAmmo then
         self:updateAmmo(project45util.diceroll(self.ammoConsumeChance) and -self.ammoPerShot or 0)
-        storage.unejectedCasings = storage.unejectedCasings + math.min(storage.project45GunState.ammo, self.ammoPerShot)
+        storage.project45GunState.unejectedCasings = storage.project45GunState.unejectedCasings + math.min(storage.project45GunState.ammo, self.ammoPerShot)
         consumedAmmo = true
       end
 
@@ -711,7 +711,7 @@ function hitscanLib:fireBeam()
         ammoConsumeTimer = 0
         if self.beamParameters.consumeAmmoOverTime or not consumedAmmo then
           self:updateAmmo(project45util.diceroll(self.ammoConsumeChance) and -self.ammoPerShot or 0)
-          storage.unejectedCasings = storage.unejectedCasings + math.min(storage.project45GunState.ammo, self.ammoPerShot)
+          storage.project45GunState.unejectedCasings = storage.project45GunState.unejectedCasings + math.min(storage.project45GunState.ammo, self.ammoPerShot)
           consumedAmmo = true
         end
   

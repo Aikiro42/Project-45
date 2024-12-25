@@ -676,7 +676,7 @@ function Project45GunFire:firing() -- state
 
   -- add unejected casings
 
-  storage.unejectedCasings = storage.unejectedCasings + (self.casingsPerShot or math.min(self.ammoPerShot, storage.project45GunState.ammo))
+  storage.project45GunState.unejectedCasings = storage.project45GunState.unejectedCasings + (self.casingsPerShot or math.min(self.ammoPerShot, storage.project45GunState.ammo))
   self:updateAmmo(project45util.diceroll(self.ammoConsumeChance) and -self.ammoPerShot or 0)
   
   self.triggered = storage.project45GunState.ammo == 0 or self.triggered
@@ -1167,7 +1167,7 @@ function Project45GunFire:jam()
     animator.setAnimationState("bolt", "jammed")
     animator.setAnimationState("gun", "jammed")
     self:updateChamberState("filled")
-    storage.unejectedCasings = math.min(storage.project45GunState.ammo, storage.unejectedCasings + (self.casingsPerShot or self.ammoPerShot))
+    storage.project45GunState.unejectedCasings = math.min(storage.project45GunState.ammo, storage.project45GunState.unejectedCasings + (self.casingsPerShot or self.ammoPerShot))
     self:updateAmmo(-self.ammoPerShot)
     
     -- prevent triggering and firing
@@ -1350,18 +1350,18 @@ end
 function Project45GunFire:discardCasings(numCasings)
 
   if self.performanceMode then
-    storage.unejectedCasings = 0
+    storage.project45GunState.unejectedCasings = 0
     return
   end
 
-  if storage.unejectedCasings > 0 or numCasings then
-    animator.setParticleEmitterBurstCount(self.isBehind and "backEjectionPort" or "ejectionPort", numCasings or storage.unejectedCasings)
+  if storage.project45GunState.unejectedCasings > 0 or numCasings then
+    animator.setParticleEmitterBurstCount(self.isBehind and "backEjectionPort" or "ejectionPort", numCasings or storage.project45GunState.unejectedCasings)
     animator.burstParticleEmitter(self.isBehind and "backEjectionPort" or "ejectionPort")
-    for casing = numCasings or storage.unejectedCasings, 0, -1 do
+    for casing = numCasings or storage.project45GunState.unejectedCasings, 0, -1 do
       animator.setSoundPitch("ejectCasing", sb.nrand(0.075, 1))
       animator.playSound("ejectCasing")
     end
-    storage.unejectedCasings = 0
+    storage.project45GunState.unejectedCasings = 0
   end
 end
 
@@ -1407,7 +1407,7 @@ function Project45GunFire:openBolt(ammoDiscard, mute, openGun, ejectCasings, man
   if ammoDiscard > 0 then
     self:onEjectPassive()
     self:updateAmmo(-ammoDiscard)
-    storage.unejectedCasings = storage.unejectedCasings + ammoDiscard
+    storage.project45GunState.unejectedCasings = storage.project45GunState.unejectedCasings + ammoDiscard
   end
 
   if ejectCasings then
@@ -1480,7 +1480,7 @@ function Project45GunFire:ejectMag()
   self.weapon:setStance(self.stances.empty)
 
   if animator.animationState("chamber") == "ready" then
-    storage.unejectedCasings = storage.unejectedCasings + (self.casingsPerShot or self.ammoPerShot)
+    storage.project45GunState.unejectedCasings = storage.project45GunState.unejectedCasings + (self.casingsPerShot or self.ammoPerShot)
   end
 
   if self.ejectCasingsWithMag or
@@ -2186,7 +2186,7 @@ function Project45GunFire:saveGunState()
     ammo = storage.project45GunState.ammo,
     stockAmmo = storage.project45GunState.stockAmmo or 0,
     reloadRating = storage.project45GunState.reloadRating,
-    unejectedCasings = storage.unejectedCasings,
+    unejectedCasings = storage.project45GunState.unejectedCasings,
     jamAmount = storage.project45GunState.jamAmount,
     savedProjectileIndex = storage.savedProjectileIndex,
     lastUsedTime = os.time(),
@@ -2250,7 +2250,7 @@ function Project45GunFire:loadGunState()
   end
 
   storage.project45GunState.reloadRating = storage.project45GunState.reloadRating or loadedGunState.reloadRating
-  storage.unejectedCasings = storage.unejectedCasings or loadedGunState.unejectedCasings
+  storage.project45GunState.unejectedCasings = storage.project45GunState.unejectedCasings or loadedGunState.unejectedCasings
   
   storage.project45GunState.jamAmount = storage.project45GunState.jamAmount or loadedGunState.jamAmount
   animator.setAnimationState("bolt", loadedGunState.bolt)
