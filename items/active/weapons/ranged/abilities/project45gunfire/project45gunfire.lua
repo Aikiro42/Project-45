@@ -556,7 +556,7 @@ function Project45GunFire:updateUI()
   
   world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UI" .. self.infoSide, {
     currentAmmo = storage.project45GunState.ammo,
-    stockAmmo = storage.stockAmmo,
+    stockAmmo = storage.project45GunState.stockAmmo,
     reloadRating = reloadRatingList[storage.reloadRating],
     chamberState = animator.animationState("chamber"),
     jamAmount = storage.project45GunState.jamAmount,
@@ -901,7 +901,7 @@ function Project45GunFire:reloading()
 
   -- abort reload and click if energy is locked i.e. regenerating
   -- or if there is not enough stock ammo to reload
-  if status.resourceLocked("energy") and storage.stockAmmo <= 0 then
+  if status.resourceLocked("energy") and storage.project45GunState.stockAmmo <= 0 then
       animator.playSound("click")
       self.triggered = true
       return
@@ -993,7 +993,7 @@ function Project45GunFire:reloading()
       end
       local reloadedBullets = storage.project45GunState.ammo -- prevents energy overconsumption when reloaded bullets is greater than max ammo
       if status.resourceLocked("energy") then
-        self:updateAmmo(math.min(self.bulletsPerReload, storage.stockAmmo))
+        self:updateAmmo(math.min(self.bulletsPerReload, storage.project45GunState.stockAmmo))
       else
         self:updateAmmo(self.bulletsPerReload)
       end
@@ -1002,7 +1002,7 @@ function Project45GunFire:reloading()
       -- proportionally consume energy; break out of loop once out of energy
       self:consumeEnergy(AMMO, reloadedBullets)
 
-      if status.resourceLocked("energy") and storage.stockAmmo <= 0 then
+      if status.resourceLocked("energy") and storage.project45GunState.stockAmmo <= 0 then
         energyDepletedFlag = true
         self.weapon.isReloading = false
         break
@@ -1698,7 +1698,7 @@ function Project45GunFire:consumeEnergy(mode, amount)
     energyConsumed = amount
 
   elseif mode == AMMO then
-    energyConsumed = self.reloadCost * (math.min(0, (storage.stockAmmo - amount)) / self.maxAmmo) * -1
+    energyConsumed = self.reloadCost * (math.min(0, (storage.project45GunState.stockAmmo - amount)) / self.maxAmmo) * -1
     self:updateStockAmmo(-amount)
   end
   
@@ -1711,9 +1711,9 @@ function Project45GunFire:consumeEnergy(mode, amount)
 end
 
 function Project45GunFire:updateStockAmmo(delta, willReplace)
-  storage.stockAmmo = willReplace and delta or math.max(0, storage.stockAmmo + delta)
-  self.weapon.stockAmmoDamageMult = formulas.stockAmmoDamageMult(storage.stockAmmo, self.maxAmmo)
-  world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UIField" .. self.infoSide, "stockAmmo", storage.stockAmmo)
+  storage.project45GunState.stockAmmo = willReplace and delta or math.max(0, storage.project45GunState.stockAmmo + delta)
+  self.weapon.stockAmmoDamageMult = formulas.stockAmmoDamageMult(storage.project45GunState.stockAmmo, self.maxAmmo)
+  world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UIField" .. self.infoSide, "stockAmmo", storage.project45GunState.stockAmmo)
 end
 
 -- Updates the gun's ammo:
@@ -2184,7 +2184,7 @@ function Project45GunFire:saveGunState()
     bolt = animator.animationState("bolt"),
     gunAnimation = newGunAnimState[animator.animationState("gun")],
     ammo = storage.project45GunState.ammo,
-    stockAmmo = storage.stockAmmo or 0,
+    stockAmmo = storage.project45GunState.stockAmmo or 0,
     reloadRating = storage.reloadRating,
     unejectedCasings = storage.unejectedCasings,
     jamAmount = storage.project45GunState.jamAmount,
@@ -2238,8 +2238,8 @@ function Project45GunFire:loadGunState()
     self:updateAmmoRecharge(rechargeTimeDelta)
   end
 
-  storage.stockAmmo = storage.stockAmmo or loadedGunState.stockAmmo
-  self.weapon.stockAmmoDamageMult = formulas.stockAmmoDamageMult(storage.stockAmmo, self.maxAmmo)
+  storage.project45GunState.stockAmmo = storage.project45GunState.stockAmmo or loadedGunState.stockAmmo
+  self.weapon.stockAmmoDamageMult = formulas.stockAmmoDamageMult(storage.project45GunState.stockAmmo, self.maxAmmo)
 
   storage.savedProjectileIndex = storage.savedProjectileIndex or loadedGunState.savedProjectileIndex
 
