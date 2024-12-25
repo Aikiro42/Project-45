@@ -1,4 +1,7 @@
-Passive = {}
+---@diagnostic disable: duplicate-set-field
+require "/items/active/weapons/ranged/abilities/project45gunfire/project45passive.lua"
+
+Passive = Project45Passive:new()
 
 function Passive:init()
   self.shiftReloadTimer = -1

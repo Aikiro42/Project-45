@@ -21,7 +21,6 @@ local rng = sb.makeRandomSource()
 local generalConfig = root.assetJson("/configs/project45/project45_general.config")
 
 Project45GunFire = GunFire:new()
-Passive = {}
 
 function Project45GunFire:init()
 
@@ -30,30 +29,18 @@ function Project45GunFire:init()
   
   if self.passiveScript then
     require(self.passiveScript)
+    self.passiveClass = Passive
+  else
+    require("/items/active/weapons/ranged/abilities/project45gunfire/project45passive.lua")
+    self.passiveClass = Project45Passive:new()
   end
 
-  for _, f in ipairs({
-    "init",
-    "update",
-    "uninit",
-    "onFire",
-    "onEject",
-    "onFeed",
-    "onJam",
-    "onUnjam",
-    "onFullUnjam",
-    "onEjectMag",
-    "onReloadStart",
-    "onLoadRound",
-    "onReloadEnd",
-    "onCrit"
-  }) do
-    self[f .. "Passive"] = Passive[f] or function(...) end
-  end
+  --[[
+  --]]
   
   self.weapon.overrideShiftAction = self.overrideShiftAction
   
-  self:initPassive()
+  self.passiveClass.init(self)
 
   -- INITIALIZATIONS
   self.isFiring = false
@@ -410,7 +397,7 @@ end
 function Project45GunFire:update(dt, fireMode, shiftHeld)
 
   WeaponAbility.update(self, dt, fireMode, shiftHeld)
-  self:updatePassive(dt, fireMode, shiftHeld)
+  self.passiveClass.update(self, dt, fireMode, shiftHeld)
 
   -- update timers
   self.cooldownTimer = math.max(0, self.cooldownTimer - self.dt)
@@ -582,7 +569,7 @@ function Project45GunFire:updateUI()
 end
 
 function Project45GunFire:uninit()
-  self:uninitPassive()
+  self.passiveClass.uninit(self)
   self:saveGunState()
   -- world.sendEntityMessage(activeItem.ownerEntityId(), "clearProject45UI")
   activeItem.setScriptedAnimationParameter("beamChain", nil)
@@ -646,7 +633,7 @@ function Project45GunFire:firing() -- state
     return
   end
 
-  self:onFirePassive()
+  self.passiveClass.onFire(self)
   
   self.isFiring = true
   animator.setAnimationState("gun", self.loopFiringAnimation and "firingLoop" or "firing")
@@ -737,7 +724,7 @@ end
 
 function Project45GunFire:ejecting()
 
-  self:onEjectPassive()
+  self.passiveClass.onEject(self)
 
   if not self.ejectCasingsWithMag then
     
@@ -813,7 +800,7 @@ end
 function Project45GunFire:feeding()
 
   if storage.project45GunState.ammo > 0 then
-    self:onFeedPassive()
+    self.passiveClass.onFeed(self)
   end
 
   if (self.manualFeed                              -- if gun is cocked every shot
@@ -901,7 +888,7 @@ end
 
 function Project45GunFire:reloading()
 
-  self:onReloadStartPassive()
+  self.passiveClass.onReloadStart(self)
 
   -- abort reload and click if energy is locked i.e. regenerating
   -- or if there is not enough stock ammo to reload
@@ -992,7 +979,7 @@ function Project45GunFire:reloading()
       
       -- update ammo
       if self.bulletsPerReload < self.maxAmmo then
-        self:onLoadRoundPassive()
+        self.passiveClass.onLoadRound(self)
         self.weapon:setStance(self.stances.loadRound)  -- player visually loads round
       end
       local reloadedBullets = storage.project45GunState.ammo -- prevents energy overconsumption when reloaded bullets is greater than max ammo
@@ -1045,7 +1032,7 @@ function Project45GunFire:reloading()
   
   -- if there hasn't been any input, just load round
   if storage.project45GunState.ammo < self.maxAmmo and not energyDepletedFlag then
-    self:onLoadRoundPassive()
+    self.passiveClass.onLoadRound(self)
     sumRating = sumRating + 0.5 -- OK: 0.5
     reloads = reloads + 1 -- we did a reload
     animator.playSound("loadRound")
@@ -1060,7 +1047,7 @@ function Project45GunFire:reloading()
     self:consumeEnergy(AMMO, reloadedBullets)
   end
   
-  self:onReloadEndPassive()
+  self.passiveClass.onReloadEnd(self)
 
   -- begin final reload evaluation
   --                     MAX AVERAGE
@@ -1144,12 +1131,12 @@ function Project45GunFire:unjamming()
   self.weapon:setStance(self.stances.unjam)
   util.wait(self.cockTime/4)
   self.weapon:setStance(self.stances.jammed)
-  self:onUnjamPassive()
+  self.passiveClass.onUnjam(self)
 
   self:updateJamAmount(sb.nrand(self.unjamStDev, -self.unjamAmount))
   if storage.project45GunState.jamAmount <= 0 then
     -- animator.playSound("click")
-    self:onFullUnjamPassive()
+    self.passiveClass.onFullUnjam(self)
     self:updateReloadRating(OK)
     animator.setAnimationState("bolt", "closed")
     self:updateChamberState("filled")
@@ -1163,7 +1150,7 @@ end
 -- Returns true if the weapon successfully jammed.
 function Project45GunFire:jam()
   if project45util.diceroll(self.jamChances[storage.project45GunState.reloadRating]) then
-    self:onJamPassive()
+    self.passiveClass.onJam(self)
 
     self:stopFireLoop()
     animator.playSound("jam")
@@ -1409,7 +1396,7 @@ function Project45GunFire:openBolt(ammoDiscard, mute, openGun, ejectCasings, man
   ammoDiscard = ammoDiscard or 0
   -- discard ammo and trigger onEjectPassive
   if ammoDiscard > 0 then
-    self:onEjectPassive()
+    self.passiveClass.onEject(self)
     self:updateAmmo(-ammoDiscard)
     storage.project45GunState.unejectedCasings = storage.project45GunState.unejectedCasings + ammoDiscard
   end
@@ -1457,7 +1444,7 @@ end
 -- can immediately begin reloading minigame
 function Project45GunFire:ejectMag()
 
-  self:onEjectMagPassive()
+  self.passiveClass.onEjectMag(self)
 
   self.triggered = true
   storage.burstCounter = 0
@@ -2065,7 +2052,7 @@ function Project45GunFire:crit()
   local isCrit = project45util.diceroll(storage.currentCritChance - critTier)
   self.critFlag = isCrit or critTier > 0
   if self.critFlag then
-    self:onCritPassive()
+    self.passiveClass.onCrit(self)
   end
   return formulas.critDamage(storage.currentCritChance, self.critDamageMult, isCrit, critTier)
 end
