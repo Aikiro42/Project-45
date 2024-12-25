@@ -248,7 +248,7 @@ function Project45GunFire:init()
   -- grab stored data
   self:loadGunState()
   storage.recoilProgress = storage.recoilProgress or 0 -- stance progress is stored in storage so that other abilities may recoil the gun
-  self.reloadRatingDamage = self.reloadRatingDamageMults[storage.reloadRating]
+  self.reloadRatingDamage = self.reloadRatingDamageMults[storage.project45GunState.reloadRating]
 
   -- initialize timers
   self.chargeTimer = 0
@@ -557,7 +557,7 @@ function Project45GunFire:updateUI()
   world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UI" .. self.infoSide, {
     currentAmmo = storage.project45GunState.ammo,
     stockAmmo = storage.project45GunState.stockAmmo,
-    reloadRating = reloadRatingList[storage.reloadRating],
+    reloadRating = reloadRatingList[storage.project45GunState.reloadRating],
     chamberState = animator.animationState("chamber"),
     jamAmount = storage.project45GunState.jamAmount,
 
@@ -1077,7 +1077,7 @@ function Project45GunFire:reloading()
   end
   self:updateReloadRating(finalReloadRating)
 
-  self.reloadRatingDamage = self.reloadRatingDamageMults[storage.reloadRating]
+  self.reloadRatingDamage = self.reloadRatingDamageMults[storage.project45GunState.reloadRating]
   animator.playSound("reloadEnd")  -- sound of magazine inserted
 
   if self.postReloadDelay then
@@ -1158,7 +1158,7 @@ end
 
 -- Returns true if the weapon successfully jammed.
 function Project45GunFire:jam()
-  if project45util.diceroll(self.jamChances[storage.reloadRating]) then
+  if project45util.diceroll(self.jamChances[storage.project45GunState.reloadRating]) then
     self:onJamPassive()
 
     self:stopFireLoop()
@@ -1736,7 +1736,7 @@ function Project45GunFire:updateAmmo(delta, willReplace)
 end
 
 function Project45GunFire:updateReloadRating(newReloadRating)
-  storage.reloadRating = newReloadRating
+  storage.project45GunState.reloadRating = newReloadRating
   world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UIField" .. self.infoSide, "reloadRating", reloadRatingList[newReloadRating])
 end
 
@@ -2185,7 +2185,7 @@ function Project45GunFire:saveGunState()
     gunAnimation = newGunAnimState[animator.animationState("gun")],
     ammo = storage.project45GunState.ammo,
     stockAmmo = storage.project45GunState.stockAmmo or 0,
-    reloadRating = storage.reloadRating,
+    reloadRating = storage.project45GunState.reloadRating,
     unejectedCasings = storage.unejectedCasings,
     jamAmount = storage.project45GunState.jamAmount,
     savedProjectileIndex = storage.savedProjectileIndex,
@@ -2249,7 +2249,7 @@ function Project45GunFire:loadGunState()
     storage.savedProjectileIndex = #projectiles
   end
 
-  storage.reloadRating = storage.reloadRating or loadedGunState.reloadRating
+  storage.project45GunState.reloadRating = storage.project45GunState.reloadRating or loadedGunState.reloadRating
   storage.unejectedCasings = storage.unejectedCasings or loadedGunState.unejectedCasings
   
   storage.project45GunState.jamAmount = storage.project45GunState.jamAmount or loadedGunState.jamAmount

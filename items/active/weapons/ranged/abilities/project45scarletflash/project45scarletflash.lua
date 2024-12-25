@@ -196,7 +196,7 @@ function Project45ScarletFlash:calculateDamage(ability)
             * ability.reloadRatingDamage
             * (ability.passiveDamageMult or 1)
             * self.weapon.stockAmmoDamageMult
-            * ability:calculateCritDamage(false, storage.reloadRating)
+            * ability:calculateCritDamage(false, storage.project45GunState.reloadRating)
     else
         self.baseDamage = status.resourceMax("energy") * self.energyScaleFactor
     end
