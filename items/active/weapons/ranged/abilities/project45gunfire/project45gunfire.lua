@@ -29,8 +29,6 @@ function Project45GunFire:init()
     self.passiveClass = Project45Passive:new()
   end
 
-  --[[
-  --]]
   self.cooldownTimer = self.fireTime  -- Compatibility
 
   self.weapon.overrideShiftAction = self.overrideShiftAction
@@ -245,24 +243,6 @@ function Project45GunFire:init()
   -- animator.setSoundVolume("ejectCasing", 0.8)
   
   activeItem.setScriptedAnimationParameter("performanceMode", self.performanceMode)
-  
-  -- Add functions used by this primaryAbility to altAbility
-  --[[
-  GunFire.infoSide = self.infoSide
-  GunFire.recoil = self.recoil
-  GunFire.rollMultishot = self.rollMultishot -- not working??
-  GunFire.updateMagVisuals = self.updateMagVisuals
-  GunFire.updateAmmo = self.updateAmmo
-  -- Override functions used by altAbility
-  GunFire.firePosition = self.firePosition
-  GunFire.aimVector = self.aimVector
-  GunFire.fireProjectile = self.fireProjectile
-  GunFire.cooldown = self.cooldown
-  GunFire.auto = self.auto
-  GunFire.burst = self.burst
-  GunFire.energyPerShot = function() return self.ammoPerShot or 0 end
-  GunFire.screenShake = self.screenShake
-  --]]
 
   -- Add functions used by this primaryAbility to altAbility
   
@@ -274,17 +254,6 @@ function Project45GunFire:init()
   AltFireAttack.muzzleFlash = self.altMuzzleFlash
   AltFireAttack.screenShake = self.screenShake
   
-  -- Override functions used by altAbility
-  --[[
-  AltFireAttack.firePosition = self.firePosition
-  AltFireAttack.aimVector = self.aimVector
-  AltFireAttack.fireProjectile = self.fireProjectile
-  AltFireAttack.cooldown = self.cooldown
-  AltFireAttack.auto = self.auto
-  AltFireAttack.burst = self.burst
-  AltFireAttack.energyPerShot = function() return self.ammoPerShot or 0 end
-  --]]
-
   self:evalProjectileKind()
   self:updateMagVisuals()
   self:updateChamberState()
