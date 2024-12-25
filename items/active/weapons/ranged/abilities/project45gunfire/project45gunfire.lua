@@ -10,7 +10,6 @@ require "/items/active/weapons/ranged/gunfire.lua"
 require "/items/active/weapons/ranged/abilities/altfire.lua"
 
 require "/items/active/weapons/ranged/abilities/project45gunfire/formulas.lua"
-local rng = sb.makeRandomSource()
 
 local generalConfig = root.assetJson("/configs/project45/project45_general.config")
 
@@ -31,7 +30,8 @@ function Project45GunFire:init()
 
   --[[
   --]]
-  
+  self.cooldownTimer = self.fireTime  -- Compatibility
+
   self.weapon.overrideShiftAction = self.overrideShiftAction
   
   self.passiveClass.init(self)
@@ -1423,7 +1423,6 @@ function Project45GunFire:openBolt(ammoDiscard, mute, openGun, ejectCasings, man
 
     -- animate bolt pulling if not a break-action weapon
     -- if it's a break-action but is a manual-feed, animate it anyway
-    -- TEST:
     if not self.breakAction or self.manualFeed then
       self.weapon:setStance(self.stances.boltPull)
     end
@@ -1732,7 +1731,7 @@ end
 
 function Project45GunFire:updateChamberState(newChamberState)
   if newChamberState then animator.setAnimationState("chamber", newChamberState) end
-  -- TEST: need primaryChamberState?
+  -- need primaryChamberState?
   world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UIField" .. self.infoSide, "chamberState", animator.animationState("chamber"))
 end
 
@@ -2282,16 +2281,9 @@ function chooseRandomProjectile(projectileList, discreteOdds)
 end
 --]]
 
--- SECTION: Legacy Functions
-
-function GunFire:init()
-  self.cooldownTimer = self.fireTime
-
-  self.weapon.onLeaveAbility = function() end
-end
+-- SECTION: Compatibility Functions
 
 function Project45GunFire:cooldown()
-  -- disable gunfire cooldown of alt abilities
 end
 
 function Project45GunFire:energyPerShot()
