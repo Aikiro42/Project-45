@@ -337,7 +337,7 @@ function Project45GunFire:init()
   }
 
   if storage.jamAmount <= 0
-  and storage.ammo >= 0
+  and storage.project45GunState.ammo >= 0
   then
     self.weapon:setStance(sb.jsonMerge(self.stances.aimStance, initStance))
     self.weapon:setStance(self.stances.aimStance)
@@ -346,7 +346,7 @@ function Project45GunFire:init()
       self.weapon:setStance(sb.jsonMerge(self.stances.jammed, initStance))
       self:setState(self.jammed)
     end
-    if storage.ammo < 0 then
+    if storage.project45GunState.ammo < 0 then
       self.weapon:setStance(sb.jsonMerge(self.stances.empty, initStance))
       self.weapon:setStance(self.stances.empty)
     end
@@ -448,13 +448,13 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
 
   -- manual/shift reload
   if self:reloadTriggered() and not self.weapon.isReloading then
-      if storage.ammo >= 0 and not self.triggered then
+      if storage.project45GunState.ammo >= 0 and not self.triggered then
         if storage.jamAmount > 0 then
           self:updateJamAmount(0, true)
-          self:openBolt(self.breakAction and storage.ammo or 0,
+          self:openBolt(self.breakAction and storage.project45GunState.ammo or 0,
             false, self.breakAction, true, true)
         else
-          self:openBolt(self.breakAction and storage.ammo or math.min(storage.ammo, self.ammoPerShot),
+          self:openBolt(self.breakAction and storage.project45GunState.ammo or math.min(storage.project45GunState.ammo, self.ammoPerShot),
             false, self.breakAction, true, true)
         end
         if self.internalMag then
@@ -475,7 +475,7 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
   then
     if storage.jamAmount <= 0 then
 
-      if storage.ammo > 0 then
+      if storage.project45GunState.ammo > 0 then
 
           if animator.animationState("chamber") == "ready"
           and not self.triggered then
@@ -494,7 +494,7 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
             self:setState(self.cocking)
 
           end
-      elseif storage.ammo == 0 and not self.triggered then
+      elseif storage.project45GunState.ammo == 0 and not self.triggered then
         if self.loadRoundsThroughBolt then
           self:openBolt(animator.animationState("chamber") == "ready" and self.ammoPerShot, false, true, true, true)
         end
@@ -555,7 +555,7 @@ function Project45GunFire:updateUI()
   local aimPosition = world.distance(activeItem.ownerAimPosition(), mcontroller.position())
   
   world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UI" .. self.infoSide, {
-    currentAmmo = storage.ammo,
+    currentAmmo = storage.project45GunState.ammo,
     stockAmmo = storage.stockAmmo,
     reloadRating = reloadRatingList[storage.reloadRating],
     chamberState = animator.animationState("chamber"),
@@ -625,7 +625,7 @@ end
 
 function Project45GunFire:firing() -- state
   
-  self.triggered = self.semi or storage.ammo == 0
+  self.triggered = self.semi or storage.project45GunState.ammo == 0
   self.ammoRechargeDelayTimer = self.ammoRechargeDelayTime
 
   if self:jam() then return end
@@ -676,16 +676,16 @@ function Project45GunFire:firing() -- state
 
   -- add unejected casings
 
-  storage.unejectedCasings = storage.unejectedCasings + (self.casingsPerShot or math.min(self.ammoPerShot, storage.ammo))
+  storage.unejectedCasings = storage.unejectedCasings + (self.casingsPerShot or math.min(self.ammoPerShot, storage.project45GunState.ammo))
   self:updateAmmo(project45util.diceroll(self.ammoConsumeChance) and -self.ammoPerShot or 0)
   
-  self.triggered = storage.ammo == 0 or self.triggered
+  self.triggered = storage.project45GunState.ammo == 0 or self.triggered
   
   self:updateChamberState("filled")
   
   -- if gun fires a loop
   if self.loopFiringAnimation
-  and self:triggering() and storage.ammo > 0 then
+  and self:triggering() and storage.project45GunState.ammo > 0 then
     util.wait(self.currentCycleTime)
     self:setState(self.firing)
     return
@@ -705,13 +705,13 @@ function Project45GunFire:postFiringTransitionHandler()
     then
       if self.ejectCasingsAfterBurst
       and storage.burstCounter < self.burstCount
-      and storage.ammo > 0
+      and storage.project45GunState.ammo > 0
       then
         util.wait(self.currentCycleTime)
         self:setState(self.firing)
       else
         util.wait(self.currentCycleTime/3)
-        if storage.ammo == 0 and self.ejectMagOnEmpty and self.ejectMagOnEmpty == "firing" then
+        if storage.project45GunState.ammo == 0 and self.ejectMagOnEmpty and self.ejectMagOnEmpty == "firing" then
           self:ejectMag()
           self:stopFireLoop()
           self.cooldownTimer = self.fireTime
@@ -722,7 +722,7 @@ function Project45GunFire:postFiringTransitionHandler()
       end
     -- otherwise, stop the cycle process
     else
-      if storage.ammo == 0 and self.ejectMagOnEmpty and self.ejectMagOnEmpty == "firing" then
+      if storage.project45GunState.ammo == 0 and self.ejectMagOnEmpty and self.ejectMagOnEmpty == "firing" then
         self:ejectMag()
       end
       self:stopFireLoop()
@@ -753,7 +753,7 @@ function Project45GunFire:ejecting()
   or self.weapon.reloadTimer >= 0)
   or self.isCocking
   then
-    if self.loadRoundsThroughBolt and storage.ammo <= 0 then
+    if self.loadRoundsThroughBolt and storage.project45GunState.ammo <= 0 then
       self:screenShake(0.5)
     end
     animator.setAnimationState("gun", "boltPulling")
@@ -787,7 +787,7 @@ function Project45GunFire:ejecting()
   self:updateChamberState("empty") -- empty chamber
 
   -- if gun has ammo, feed
-  if storage.ammo > 0 or self.closeBoltOnEmpty then
+  if storage.project45GunState.ammo > 0 or self.closeBoltOnEmpty then
     self:setState(self.feeding)
   
   -- otherwise, reset burst counter (set it to burstcount)
@@ -808,7 +808,7 @@ end
 
 function Project45GunFire:feeding()
 
-  if storage.ammo > 0 then
+  if storage.project45GunState.ammo > 0 then
     self:onFeedPassive()
   end
 
@@ -830,7 +830,7 @@ function Project45GunFire:feeding()
 
   if self.slamFire
   and self.manualFeed
-  and storage.ammo > 0
+  and storage.project45GunState.ammo > 0
   and self.weapon.reloadTimer < 0
   and storage.burstCounter >= self.burstCount
   and self:triggering() then
@@ -869,7 +869,7 @@ function Project45GunFire:feeding()
   self.weapon:setStance(self.stances.aimStance)
   
   animator.setAnimationState("bolt", "closed")
-  if storage.ammo > 0 then
+  if storage.project45GunState.ammo > 0 then
     self:updateChamberState("ready")
   end
 
@@ -888,7 +888,7 @@ function Project45GunFire:feeding()
   end
 
   -- prevent triggering
-  self.triggered = self.semi or self.weapon.reloadTimer >= 0 or (self.closeBoltOnEmpty and storage.ammo <= 0)
+  self.triggered = self.semi or self.weapon.reloadTimer >= 0 or (self.closeBoltOnEmpty and storage.project45GunState.ammo <= 0)
   
   self:updateReloadTimer(-1, true)  -- mark end of reload
   activeItem.setScriptedAnimationParameter("reloadTimer", self.weapon.reloadTimer)
@@ -926,7 +926,7 @@ function Project45GunFire:reloading()
   local displayResetTimer = 0
   local displayResetTime = self.reloadTime / 2
   activeItem.setScriptedAnimationParameter("reloadRating", "")
-  if storage.ammo < 0 then storage.ammo = 0 end
+  if storage.project45GunState.ammo < 0 then storage.project45GunState.ammo = 0 end
   
   if not self.reloadOnEjectMag then
     self.weapon:setStance(self.stances.reloading)
@@ -939,7 +939,7 @@ function Project45GunFire:reloading()
     self.weapon.isReloading = true
     activeItem.setScriptedAnimationParameter("reloadTimer", self.weapon.reloadTimer)
 
-    if displayResetTimer <= 0 and storage.ammo < self.maxAmmo then
+    if displayResetTimer <= 0 and storage.project45GunState.ammo < self.maxAmmo then
       self:updateReloadRating(OK)
       if self.internalMag then
         animator.setAnimationState("magazine", "present") -- insert mag, hiding it from view
@@ -952,7 +952,7 @@ function Project45GunFire:reloading()
     
     -- process left click
     -- do not process left click if (full) bad reload has been attempted
-    if (self:reloadTriggered() or self:triggering() or self.endReloadSignal) and not self.triggered and storage.ammo < self.maxAmmo then
+    if (self:reloadTriggered() or self:triggering() or self.endReloadSignal) and not self.triggered and storage.project45GunState.ammo < self.maxAmmo then
       self.endReloadSignal = false
       -- audiovisual stuff; play load round if the mag isn't loaded in one go
       if self.bulletsPerReload < self.maxAmmo then animator.playSound("loadRound") end
@@ -991,13 +991,13 @@ function Project45GunFire:reloading()
         self:onLoadRoundPassive()
         self.weapon:setStance(self.stances.loadRound)  -- player visually loads round
       end
-      local reloadedBullets = storage.ammo -- prevents energy overconsumption when reloaded bullets is greater than max ammo
+      local reloadedBullets = storage.project45GunState.ammo -- prevents energy overconsumption when reloaded bullets is greater than max ammo
       if status.resourceLocked("energy") then
         self:updateAmmo(math.min(self.bulletsPerReload, storage.stockAmmo))
       else
         self:updateAmmo(self.bulletsPerReload)
       end
-      reloadedBullets = storage.ammo - reloadedBullets
+      reloadedBullets = storage.project45GunState.ammo - reloadedBullets
 
       -- proportionally consume energy; break out of loop once out of energy
       self:consumeEnergy(AMMO, reloadedBullets)
@@ -1009,7 +1009,7 @@ function Project45GunFire:reloading()
       end
 
       -- if mag isn't fully loaded, reset minigame
-      if storage.ammo < self.maxAmmo then
+      if storage.project45GunState.ammo < self.maxAmmo then
         self:updateReloadTimer(0, true)
       
       --[[
@@ -1040,7 +1040,7 @@ function Project45GunFire:reloading()
   animator.setAnimationState("magazine", self.internalMag and "absent" or "present")
   
   -- if there hasn't been any input, just load round
-  if storage.ammo < self.maxAmmo and not energyDepletedFlag then
+  if storage.project45GunState.ammo < self.maxAmmo and not energyDepletedFlag then
     self:onLoadRoundPassive()
     sumRating = sumRating + 0.5 -- OK: 0.5
     reloads = reloads + 1 -- we did a reload
@@ -1048,9 +1048,9 @@ function Project45GunFire:reloading()
     if self.ejectMagOnReload then
       animator.burstParticleEmitter("magazine") -- throw mag strip
     end
-    local reloadedBullets = storage.ammo -- prevents energy overconsumption when reloaded bullets is greater than max ammo
+    local reloadedBullets = storage.project45GunState.ammo -- prevents energy overconsumption when reloaded bullets is greater than max ammo
     self:updateAmmo(self.bulletsPerReload)
-    reloadedBullets = storage.ammo - reloadedBullets
+    reloadedBullets = storage.project45GunState.ammo - reloadedBullets
 
     -- proportionally consume energy; break out of loop once out of energy
     self:consumeEnergy(AMMO, reloadedBullets)
@@ -1167,7 +1167,7 @@ function Project45GunFire:jam()
     animator.setAnimationState("bolt", "jammed")
     animator.setAnimationState("gun", "jammed")
     self:updateChamberState("filled")
-    storage.unejectedCasings = math.min(storage.ammo, storage.unejectedCasings + (self.casingsPerShot or self.ammoPerShot))
+    storage.unejectedCasings = math.min(storage.project45GunState.ammo, storage.unejectedCasings + (self.casingsPerShot or self.ammoPerShot))
     self:updateAmmo(-self.ammoPerShot)
     
     -- prevent triggering and firing
@@ -1222,7 +1222,7 @@ function Project45GunFire:muzzleFlash()
     -- play fire and hollow sound if the gun isn't firing a beam
     if not self.performanceMode then
       animator.setSoundPitch("fire", sb.nrand(0.01, 1))
-      animator.setSoundVolume("hollow", util.clamp((1 - storage.ammo/self.maxAmmo) * self.hollowSoundMult, 0, self.hollowSoundMult))
+      animator.setSoundVolume("hollow", util.clamp((1 - storage.project45GunState.ammo/self.maxAmmo) * self.hollowSoundMult, 0, self.hollowSoundMult))
     end
     animator.playSound("fire")
     if self.perfectlyCharged then
@@ -1423,7 +1423,7 @@ function Project45GunFire:openBolt(ammoDiscard, mute, openGun, ejectCasings, man
   if animator.animationState("bolt") ~= "open" then
 
     -- Screen shake if rounds are to be loaded through bolt
-    if self.loadRoundsThroughBolt and storage.ammo <= 0 then
+    if self.loadRoundsThroughBolt and storage.project45GunState.ammo <= 0 then
       self:screenShake(0.5)
     end
     
@@ -1462,7 +1462,7 @@ function Project45GunFire:ejectMag()
     not self.ejectMagOnEmpty
     or (self.ejectMagOnEmpty ~= "firing" and self.ejectMagOnEmpty ~= "ejecting")
   )
-  and not (self.loadRoundsThroughBolt and storage.ammo <= 0)
+  and not (self.loadRoundsThroughBolt and storage.project45GunState.ammo <= 0)
   then
     self:screenShake(0.5)
     -- self:recoil(true) -- Removed; recoil now dictated via the stance's armRecoil and weaponRecoil
@@ -1495,8 +1495,8 @@ function Project45GunFire:ejectMag()
     end
   end
 
-  if storage.ammo > 0 then
-    self:updateStockAmmo(storage.ammo)
+  if storage.project45GunState.ammo > 0 then
+    self:updateStockAmmo(storage.project45GunState.ammo)
   end
   self:updateAmmo(-1, true)
   if self.resetChargeOnEject then
@@ -1557,8 +1557,8 @@ function Project45GunFire:updateAmmoRecharge(timeDelta)
   end
   
   if self.ammoRechargeDelayTimer <= 0
-  and storage.ammo > 0
-  and storage.ammo <= self.maxAmmo
+  and storage.project45GunState.ammo > 0
+  and storage.project45GunState.ammo <= self.maxAmmo
   and storage.jamAmount <= 0
   and self.weapon.reloadTimer < 0 then
     self.ammoRechargeTimer = math.max(0, self.ammoRechargeTimer - self.dt)
@@ -1585,7 +1585,7 @@ function Project45GunFire:updateCharge()
   and not self.triggered
   and storage.jamAmount <= 0
   and self.weapon.reloadTimer < 0
-  and (self.maintainChargeOnEmpty or storage.ammo > 0)
+  and (self.maintainChargeOnEmpty or storage.project45GunState.ammo > 0)
   and (self.chargeWhenObstructed or not self:muzzleObstructed())
   and (self.manualFeed and animator.animationState("chamber") == "ready" or not self.manualFeed)
   then
@@ -1724,15 +1724,15 @@ end
 function Project45GunFire:updateAmmo(delta, willReplace)
 
   if not self.maxAmmo then
-    storage.ammo = math.max(0, storage.ammo + delta)
-    world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UIField" .. self.infoSide, "currentAmmo", storage.ammo)
+    storage.project45GunState.ammo = math.max(0, storage.project45GunState.ammo + delta)
+    world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UIField" .. self.infoSide, "currentAmmo", storage.project45GunState.ammo)
     return
   end
   
-  storage.ammo = willReplace and delta or util.clamp(storage.ammo + delta, 0, self.maxAmmo)
+  storage.project45GunState.ammo = willReplace and delta or util.clamp(storage.project45GunState.ammo + delta, 0, self.maxAmmo)
   -- update visual info
   self:updateMagVisuals()
-  world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UIField" .. self.infoSide, "currentAmmo", storage.ammo)
+  world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UIField" .. self.infoSide, "currentAmmo", storage.project45GunState.ammo)
 end
 
 function Project45GunFire:updateReloadRating(newReloadRating)
@@ -1753,7 +1753,7 @@ end
 
 function Project45GunFire:updateMagVisuals()
 
-  if storage.ammo < 0
+  if storage.project45GunState.ammo < 0
   or self.internalMag
   then
     if self.internalMag then animator.setPartTag("magazine", "ammo", "default") end
@@ -1762,7 +1762,7 @@ function Project45GunFire:updateMagVisuals()
   end
 
   if not self.magFrames
-  or (self.magFrames == 1 and storage.ammo >= 0 or self.performanceMode) then
+  or (self.magFrames == 1 and storage.project45GunState.ammo >= 0 or self.performanceMode) then
     animator.setPartTag("magazine", "ammo", "default")
     animator.setAnimationState("magazine", "present")
     return
@@ -1770,13 +1770,13 @@ function Project45GunFire:updateMagVisuals()
 
   local ammoFrame
   if self.magVisualPercentage then
-    local ammoPercent = math.ceil(storage.ammo * 100 / self.maxAmmo)
+    local ammoPercent = math.ceil(storage.project45GunState.ammo * 100 / self.maxAmmo)
     ammoFrame = "present." .. math.floor(ammoPercent * self.magFrames)
   else
-    if storage.ammo > self.magAmmoRange[2] then
-      ammoFrame = "loop." .. storage.ammo % self.magLoopFrames
-    elseif storage.ammo >= self.magAmmoRange[1] then
-      ammoFrame = storage.ammo
+    if storage.project45GunState.ammo > self.magAmmoRange[2] then
+      ammoFrame = "loop." .. storage.project45GunState.ammo % self.magLoopFrames
+    elseif storage.project45GunState.ammo >= self.magAmmoRange[1] then
+      ammoFrame = storage.project45GunState.ammo
     else
       ammoFrame = self.magAmmoRange[1]
     end
@@ -1824,7 +1824,7 @@ function Project45GunFire:updateScreenShake()
   and not self.triggered
   and storage.jamAmount <= 0
   and self.weapon.reloadTimer < 0
-  and storage.ammo > 0
+  and storage.project45GunState.ammo > 0
   and not self:muzzleObstructed()
   and (self.manualFeed and animator.animationState("chamber") == "ready" or not self.manualFeed)
   and self.chargeTimer > self.chargeTime
@@ -2183,7 +2183,7 @@ function Project45GunFire:saveGunState()
     chamber = animator.animationState("chamber"),
     bolt = animator.animationState("bolt"),
     gunAnimation = newGunAnimState[animator.animationState("gun")],
-    ammo = storage.ammo,
+    ammo = storage.project45GunState.ammo,
     stockAmmo = storage.stockAmmo or 0,
     reloadRating = storage.reloadRating,
     unejectedCasings = storage.unejectedCasings,
@@ -2208,6 +2208,7 @@ function Project45GunFire:validateState()
     jamAmount = 0,
     savedProjectileIndex = 1,
     lastUsedTime = os.time(),
+    damageMultipliers = {}
   }
   
   for k, v in pairs(defaultGunState) do
@@ -2227,8 +2228,10 @@ function Project45GunFire:loadGunState()
   end
 
   self:updateChamberState(loadedGunState.chamber)
-    
-  storage.ammo = storage.ammo or loadedGunState.ammo
+
+  storage.project45GunState = loadedGunState
+
+  storage.project45GunState.ammo = storage.project45GunState.ammo or loadedGunState.ammo
 
   local rechargeTimeDelta = math.abs(os.time() - loadedGunState.lastUsedTime)
   if rechargeTimeDelta > 0 then
@@ -2255,7 +2258,7 @@ function Project45GunFire:loadGunState()
   if loadedGunState.bolt == "open" then
     loadedGunState.gunAnimation = (self.breakAction and not loadedGunState.loadSuccess) and "open" or "ejected"
   end
-  if storage.ammo < 0 and self.breakAction then
+  if storage.project45GunState.ammo < 0 and self.breakAction then
     loadedGunState.gunAnimation = "open"
   end
   animator.setAnimationState("gun", loadedGunState.gunAnimation)
@@ -2311,7 +2314,7 @@ function Project45GunFire:energyPerShot()
 end
 
 function Project45GunFire:auto()
-  if storage.ammo <= 0
+  if storage.project45GunState.ammo <= 0
   or storage.jamAmount > 0
   then
     -- animator.playSound("click")
@@ -2335,7 +2338,7 @@ end
 
 function Project45GunFire:burst()
   
-  if storage.ammo <= 0
+  if storage.project45GunState.ammo <= 0
   or storage.jamAmount > 0
   then
     -- animator.playSound("click")
@@ -2353,7 +2356,7 @@ function Project45GunFire:burst()
     self:recoil(nil, nil, self.recoilAmount)
     
     self:updateAmmo(-(self.ammoPerShot or 1))
-    if storage.ammo <= 0
+    if storage.project45GunState.ammo <= 0
     then break end
 
     util.wait(self.burstTime)

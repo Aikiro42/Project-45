@@ -64,7 +64,7 @@ end
 -- draws laser from gun to crosshair
 function Project45GunScope:drawLaser(trigger)
   if not self.laser then return
-  elseif not self.weapon.reloadFlashLasers and (storage.ammo < 0 or self.weapon.reloadTimer >= 0) then
+  elseif not self.weapon.reloadFlashLasers and (storage.project45GunState.ammo < 0 or self.weapon.reloadTimer >= 0) then
     activeItem.setScriptedAnimationParameter("altLaserEnabled", false)
     return
   end

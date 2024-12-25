@@ -26,7 +26,7 @@ function Passive:update(dt, fireMode, shiftheld)
       then
   
           if not status.resourceLocked("energy")
-          or storage.stockAmmo + math.max(storage.ammo, 0) > 0 then              
+          or storage.stockAmmo + math.max(storage.project45GunState.ammo, 0) > 0 then              
             storage.reloadSignal = true
           else
               animator.playSound("shiftReloadError")
@@ -40,7 +40,7 @@ function Passive:update(dt, fireMode, shiftheld)
     self.shiftReloadTimer = -1
   end
 
-  if storage.ammo == self.maxAmmo and storage.reloadRating == 4 then
+  if storage.project45GunState.ammo == self.maxAmmo and storage.reloadRating == 4 then
     self.passiveDamageMult = 2
     self.recoilMomentum = 50
   else
@@ -50,7 +50,7 @@ function Passive:update(dt, fireMode, shiftheld)
 end
 
 function Passive:onFire()
-  if storage.ammo == self.maxAmmo and storage.reloadRating == 4  then
+  if storage.project45GunState.ammo == self.maxAmmo and storage.reloadRating == 4  then
     animator.playSound("firstFire")
   end
 end

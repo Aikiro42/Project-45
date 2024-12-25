@@ -23,7 +23,7 @@ function hitscanLib:fireChainBeam()
   end
 
   self:startFireLoop()
-  if storage.ammo > 0 then
+  if storage.project45GunState.ammo > 0 then
     self:recoil(false, 0.1)
     self:screenShake(self.currentScreenShake * 4)
   end
@@ -52,7 +52,7 @@ function hitscanLib:fireChainBeam()
     and self.chargeTimer > 0
     and self.semi
   ))
-  and (not self.beamParameters.consumeAmmoOverTime or storage.ammo > 0)
+  and (not self.beamParameters.consumeAmmoOverTime or storage.project45GunState.ammo > 0)
   and not world.lineTileCollision(mcontroller.position(), self:firePosition())
   do
 
@@ -82,7 +82,7 @@ function hitscanLib:fireChainBeam()
       ammoConsumeTimer = 0
       if self.beamParameters.consumeAmmoOverTime or not consumedAmmo then
         self:updateAmmo(project45util.diceroll(self.ammoConsumeChance) and -self.ammoPerShot or 0)
-        storage.unejectedCasings = storage.unejectedCasings + math.min(storage.ammo, self.ammoPerShot)
+        storage.unejectedCasings = storage.unejectedCasings + math.min(storage.project45GunState.ammo, self.ammoPerShot)
         consumedAmmo = true
       end
 
@@ -240,7 +240,7 @@ function hitscanLib:fireChainBeam()
   if self.beamParameters.ejectCasingsOnBeamEnd then
     self:setState(self.ejecting)
   else
-    if storage.ammo <= 0 then
+    if storage.project45GunState.ammo <= 0 then
       self.triggered = true
       animator.setAnimationState("chamber", "filled")
     end
@@ -668,7 +668,7 @@ function hitscanLib:fireBeam()
     end
 
     self:startFireLoop()
-    if storage.ammo > 0 then
+    if storage.project45GunState.ammo > 0 then
       self:recoil(false, 0.1)
       self:screenShake(self.currentScreenShake * 4)
     end
@@ -696,7 +696,7 @@ function hitscanLib:fireBeam()
       and self.chargeTimer > 0
       and self.semi
     ))
-    and (not self.beamParameters.consumeAmmoOverTime or storage.ammo > 0)
+    and (not self.beamParameters.consumeAmmoOverTime or storage.project45GunState.ammo > 0)
     and not world.lineTileCollision(mcontroller.position(), self:firePosition())
     do
       self.isFiring = true
@@ -711,7 +711,7 @@ function hitscanLib:fireBeam()
         ammoConsumeTimer = 0
         if self.beamParameters.consumeAmmoOverTime or not consumedAmmo then
           self:updateAmmo(project45util.diceroll(self.ammoConsumeChance) and -self.ammoPerShot or 0)
-          storage.unejectedCasings = storage.unejectedCasings + math.min(storage.ammo, self.ammoPerShot)
+          storage.unejectedCasings = storage.unejectedCasings + math.min(storage.project45GunState.ammo, self.ammoPerShot)
           consumedAmmo = true
         end
   
@@ -869,7 +869,7 @@ function hitscanLib:fireBeam()
     if self.beamParameters.ejectCasingsOnBeamEnd then
       self:setState(self.ejecting)
     else
-      if storage.ammo <= 0 then
+      if storage.project45GunState.ammo <= 0 then
         self.triggered = true
         animator.setAnimationState("chamber", "filled")
       end
@@ -946,7 +946,7 @@ end
 
 function hitscanLib:updateLaser()
   if not self.laser.enabled then return
-  elseif not self.weapon.reloadFlashLasers and (storage.ammo < 0 or self.weapon.reloadTimer >= 0) then
+  elseif not self.weapon.reloadFlashLasers and (storage.project45GunState.ammo < 0 or self.weapon.reloadTimer >= 0) then
     activeItem.setScriptedAnimationParameter("primaryLaserEnabled", false)
     return
   end
@@ -974,7 +974,7 @@ function hitscanLib:updateSummonAreaIndicator()
   if not (self.laser.enabled or storage.altLaserEnabled) then
     activeItem.setScriptedAnimationParameter("primarySummonArea", nil)
     return
-  elseif storage.ammo < 0 or self.weapon.reloadTimer >= 0 then
+  elseif storage.project45GunState.ammo < 0 or self.weapon.reloadTimer >= 0 then
     activeItem.setScriptedAnimationParameter("primaryLaserEnabled", false)
     activeItem.setScriptedAnimationParameter("primarySummonArea", nil)
     return

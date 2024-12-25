@@ -54,7 +54,7 @@ function update(dt, fireMode, shiftHeld)
   self.weapon:update(dt, fireMode, shiftHeld)
 
   --[[
-  if (storage.ammo > 0 and self.weapon.reloadTimer < 0)
+  if (storage.project45GunState.ammo > 0 and self.weapon.reloadTimer < 0)
   or not status.resourceLocked("energy") then
     status.setResource("energyRegenBlock", 1)
   end

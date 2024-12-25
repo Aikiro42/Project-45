@@ -29,7 +29,7 @@ function Project45Ultracoin:update(dt, fireMode, shiftHeld)
     then
         if self.pixelCost < player.currency("money")
         and status.consumeResource("energy", self.energyCost)
-        and ((self.ammoPerToss > 0 and (storage.ammo or 2) > 1) or self.ammoPerToss == 0)
+        and ((self.ammoPerToss > 0 and (storage.project45GunState.ammo or 2) > 1) or self.ammoPerToss == 0)
         and self:currentEntityCount() < self.entityThreshold
         then
 
@@ -48,8 +48,8 @@ function Project45Ultracoin:update(dt, fireMode, shiftHeld)
                     ownerDamageTeam = world.entityDamageTeam(activeItem.ownerEntityId())
                 }))
             player.consumeCurrency("money", self.pixelCost)
-            if storage.ammo then
-                storage.ammo = storage.ammo - self.ammoPerToss
+            if storage.project45GunState.ammo then
+                storage.project45GunState.ammo = storage.project45GunState.ammo - self.ammoPerToss
             end
         else
             animator.playSound("error")        

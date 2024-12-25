@@ -55,7 +55,7 @@ end
 
 function Project45GunFireReload:sendReloadSignal()
     if not status.resourceLocked("energy")
-    or storage.stockAmmo + math.max(storage.ammo, 0) > 0 then
+    or storage.stockAmmo + math.max(storage.project45GunState.ammo, 0) > 0 then
         storage.reloadSignal = true
     else
         animator.playSound("error")
