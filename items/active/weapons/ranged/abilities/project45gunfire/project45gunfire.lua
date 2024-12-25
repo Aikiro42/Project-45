@@ -20,7 +20,7 @@ local rng = sb.makeRandomSource()
 
 local generalConfig = root.assetJson("/configs/project45/project45_general.config")
 
-Project45GunFire = WeaponAbility:new()
+Project45GunFire = GunFire:new()
 Passive = {}
 
 function Project45GunFire:init()
@@ -265,6 +265,7 @@ function Project45GunFire:init()
   activeItem.setScriptedAnimationParameter("performanceMode", self.performanceMode)
   
   -- Add functions used by this primaryAbility to altAbility
+  --[[
   GunFire.infoSide = self.infoSide
   GunFire.recoil = self.recoil
   GunFire.rollMultishot = self.rollMultishot -- not working??
@@ -279,6 +280,7 @@ function Project45GunFire:init()
   GunFire.burst = self.burst
   GunFire.energyPerShot = function() return self.ammoPerShot or 0 end
   GunFire.screenShake = self.screenShake
+  --]]
 
   -- Add functions used by this primaryAbility to altAbility
   
@@ -287,16 +289,18 @@ function Project45GunFire:init()
   AltFireAttack.rollMultishot = self.rollMultishot
   AltFireAttack.updateMagVisuals = self.updateMagVisuals
   AltFireAttack.updateAmmo = self.updateAmmo
+  AltFireAttack.muzzleFlash = self.altMuzzleFlash
+  AltFireAttack.screenShake = self.screenShake
+  
   -- Override functions used by altAbility
+  --[[
   AltFireAttack.firePosition = self.firePosition
   AltFireAttack.aimVector = self.aimVector
   AltFireAttack.fireProjectile = self.fireProjectile
   AltFireAttack.cooldown = self.cooldown
   AltFireAttack.auto = self.auto
   AltFireAttack.burst = self.burst
-  AltFireAttack.muzzleFlash = self.altMuzzleFlash
   AltFireAttack.energyPerShot = function() return self.ammoPerShot or 0 end
-  AltFireAttack.screenShake = self.screenShake
   --]]
 
   self:evalProjectileKind()
