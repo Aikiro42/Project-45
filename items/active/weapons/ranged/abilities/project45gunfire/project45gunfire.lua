@@ -10,12 +10,6 @@ require "/items/active/weapons/ranged/gunfire.lua"
 require "/items/active/weapons/ranged/abilities/altfire.lua"
 
 require "/items/active/weapons/ranged/abilities/project45gunfire/formulas.lua"
-
-local BAD, OK, GOOD, PERFECT = 1, 2, 3, 4
-local reloadRatingList = {"BAD", "OK", "GOOD", "PERFECT"}
-local ENERGY, AMMO = 0, 1  -- resource consumption modes
-
-local dps_debug = false
 local rng = sb.makeRandomSource()
 
 local generalConfig = root.assetJson("/configs/project45/project45_general.config")
@@ -548,7 +542,7 @@ function Project45GunFire:updateUI()
   world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UI" .. self.infoSide, {
     currentAmmo = storage.project45GunState.ammo,
     stockAmmo = storage.project45GunState.stockAmmo,
-    reloadRating = reloadRatingList[storage.project45GunState.reloadRating],
+    reloadRating = ReloadRatingList[storage.project45GunState.reloadRating],
     chamberState = animator.animationState("chamber"),
     jamAmount = storage.project45GunState.jamAmount,
 
@@ -1728,7 +1722,7 @@ end
 
 function Project45GunFire:updateReloadRating(newReloadRating)
   storage.project45GunState.reloadRating = newReloadRating
-  world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UIField" .. self.infoSide, "reloadRating", reloadRatingList[newReloadRating])
+  world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UIField" .. self.infoSide, "reloadRating", ReloadRatingList[newReloadRating])
 end
 
 function Project45GunFire:updateReloadTimer(delta, willReplace)
