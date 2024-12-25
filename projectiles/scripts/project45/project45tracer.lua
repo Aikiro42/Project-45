@@ -32,7 +32,7 @@ end
 
 function update(dt)
   oldUpdate(dt)
-  renderStreak(self.prevPosition, mcontroller.position())
+  renderStreak(self.prevPosition, mcontroller.position(), self.tracerParameters.useProjectile)
   self.prevPosition = mcontroller.position()
   
   if projectile.collision() or mcontroller.isCollisionStuck() or mcontroller.isColliding() then
