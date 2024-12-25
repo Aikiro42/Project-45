@@ -364,6 +364,66 @@ function build(directory, config, parameters, level, seed)
 
   if config.primaryAbility then
 
+    -- VALUE VALIDATIONS: These validations serve to convert values to correct ones, if not already correct
+    -- Validate primary ability fields
+    parameters.primaryAbility.projectileCount = math.floor(primaryAbility("projectileCount"))
+    parameters.primaryAbility.movementSpeedFactor = primaryAbility("movementSpeedFactor", 1)
+    parameters.primaryAbility.jumpHeightFactor = primaryAbility("jumpHeightFactor", 1)
+    parameters.primaryAbility.unjamAmount = primaryAbility("unjamAmount", 0.2)
+    parameters.primaryAbility.unjamStDev = primaryAbility("unjamStDev" or 0.05)
+    
+    -- SETTING VALIDATIONS: These validations serve to reduce firing conditions and allow consistent logic.
+    
+    local semi = primaryAbility("semi")
+    local manualFeed = primaryAbility("manualFeed")
+    
+    -- autoFireOnFullCharge only matters if the gun is semifire
+    -- if an autofire gun is the kind that's charged, the charge is essentially it winding up.
+    parameters.primaryAbility.autoFireOnFullCharge = (semi and primaryAbility("projectileKind") ~= "beam")
+      and primaryAbility("autoFireOnFullCharge")
+    
+    -- self.fireBeforeOvercharge only matters if the gun is auto
+    -- If this setting is false,
+    -- then the gun only autofires at max charge, defeating the purpose of
+    -- the overcharge providing bonus damage...
+    -- Unless the gun continues firing until the gun is undercharged. (Should this be implemented?)
+    parameters.primaryAbility.fireBeforeOvercharge = not semi
+    parameters.primaryAbility.closeBoltOnEmpty = not manualFeed
+      and primaryAbility("closeBoltOnEmpty")
+
+    if primaryAbility("perfectChargeRange") then
+      parameters.primaryAbility.perfectChargeDamageMult = math.max(
+          primaryAbility("perfectChargeDamageMult", primaryAbility("chargeDamageMult")),
+          primaryAbility("chargeDamageMult"),
+          1
+        )
+    end
+    
+    -- self.resetChargeOnFire only matters if gun doesn't fire before overcharge
+    -- otherwise, the gun will never overcharge
+    -- If this is false and the gun is semifire, then the charge is maintained (while left click is held) and
+    -- the gun can be quickly fired again after self.triggered is false
+    parameters.primaryAbility.resetChargeOnFire = not primaryAbility("fireBeforeOvercharge")
+      and primaryAbility("resetChargeOnFire")
+    
+    -- self.manualFeed only matters if the gun is semifire.
+    -- Can you imagine an automatic bolt-action gun?
+    parameters.primaryAbility.manualFeed = semi and manualFeed
+
+    -- self.slamFire only matters if the gun is manual-fed (bolt-action)
+    parameters.primaryAbility.slamFire = manualFeed and primaryAbility("slamFire")
+    
+    -- Let recoilMult affect recoilMaxDeg
+    parameters.primaryAbility.recoilMaxDeg = primaryAbility("recoilMaxDeg") * primaryAbility("recoilMult")
+    
+    -- only load rounds through bolt if gun has internal mag
+    parameters.primaryAbility.loadRoundsThroughBolt = primaryAbility("internalMag")
+      and primaryAbility("loadRoundsThroughBolt")
+
+    parameters.primaryAbility.bulletsPerReload = math.max(1, primaryAbility("bulletsPerReload"))
+    parameters.primaryAbility.muzzleSmokeTime = primaryAbility("muzzleSmokeTime", 1.5)
+    parameters.primaryAbility.burstCount = math.max(primaryAbility("burstCount"), 1)
+  
     local cycleTime = primaryAbility("cycleTime", 0.1)
     if type(cycleTime) == "table" then
       cycleTime = math.min(cycleTime[1], cycleTime[2])

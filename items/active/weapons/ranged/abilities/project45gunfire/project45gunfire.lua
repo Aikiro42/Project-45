@@ -46,7 +46,6 @@ function Project45GunFire:init()
   local powerMultFactor = (player and player.getProperty or status.statusProperty)("project45_damageScaling", generalConfig.damageScaling or 0)
   self.powerMultiplier = 1 + powerMultFactor * (activeItem.ownerPowerMultiplier() - 1)
   
-  
   self.hideMuzzleSmoke = self.performanceMode or self.hideMuzzleSmoke
   self.weapon.startRecoil = 0
 
@@ -78,62 +77,6 @@ function Project45GunFire:init()
   --- initialize charge time storage for alt abilities that use charge time (project45mlgnoscope)
   storage.primaryChargeTime = self.chargeTime + self.overchargeTime
   
-  -- VALIDATIONS
-
-  -- VALUE VALIDATIONS: These validations serve to convert values to correct ones, if not already correct
-  self.projectileCount = math.floor(self.projectileCount)
-  self.movementSpeedFactor = self.movementSpeedFactor or 1
-  self.jumpHeightFactor = self.jumpHeightFactor or 1
-
-  self.unjamAmount = self.unjamAmount or 0.2
-  self.unjamStDev = self.unjamStDev or 0.05
-
-
-  -- SETTING VALIDATIONS: These validations serve to reduce firing conditions and allow consistent logic.
-
-  -- self.autoFireOnFullCharge only matters if the gun is semifire
-  -- if an autofire gun is the kind that's charged, the charge is essentially it winding up.
-  self.autoFireOnFullCharge = (self.semi and self.projectileKind ~= "beam") and self.autoFireOnFullCharge
-
-  -- self.fireBeforeOvercharge only matters if the gun is auto
-  -- If this setting is false,
-  -- then the gun only autofires at max charge, defeating the purpose of
-  -- the overcharge providing bonus damage...
-  -- Unless the gun continues firing until the gun is undercharged. (Should this be implemented?)
-  self.fireBeforeOvercharge = not self.semi
-
-  self.closeBoltOnEmpty = not self.manualFeed and self.closeBoltOnEmpty
-
-  if self.perfectChargeRange then
-    self.perfectChargeDamageMult = math.max(
-        self.perfectChargeDamageMult or self.chargeDamageMult,
-        self.chargeDamageMult,
-        1
-      )
-  end
-
-  -- self.resetChargeOnFire only matters if gun doesn't fire before overcharge
-  -- otherwise, the gun will never overcharge
-  -- If this is false and the gun is semifire, then the charge is maintained (while left click is held) and
-  -- the gun can be quickly fired again after self.triggered is false
-  self.resetChargeOnFire = not self.fireBeforeOvercharge and self.resetChargeOnFire
-
-  -- self.manualFeed only matters if the gun is semifire.
-  -- Can you imagine an automatic bolt-action gun?
-  self.manualFeed = self.semi and self.manualFeed
-
-  -- self.slamFire only matters if the gun is manual-fed (bolt-action)
-  self.slamFire = self.manualFeed and self.slamFire
-
-  -- Let recoilMult affect recoilMaxDeg
-  self.recoilMaxDeg = self.recoilMaxDeg * self.recoilMult
-
-  -- only load rounds through bolt if gun has internal mag
-  self.loadRoundsThroughBolt = self.internalMag and self.loadRoundsThroughBolt
-
-  self.bulletsPerReload = math.max(1, self.bulletsPerReload)
-  self.muzzleSmokeTime = self.muzzleSmokeTime or 1.5
-
   -- ammo recharge
   self.hasRechargingAmmo = self.ammoRechargeDelay or self.ammoRechargeTime
   if self.hasRechargingAmmo then
@@ -143,7 +86,6 @@ function Project45GunFire:init()
     self._ammoRechargeTime = self.ammoRechargeTime / self.maxAmmo
     self.ammoRechargeTimer = 0
   end
-
 
   -- always enable laser if debug is on
   self.laser.enabled = self.debug or self.laser.enabled
@@ -188,6 +130,7 @@ function Project45GunFire:init()
     self.currentCycleTime = self.cycleTime
   end
 
+  -- explicitly set implicit charge arm frames
   if self.chargeArmFrames and self.weapon.armFrameAnimations then
     self.chargeArmFrames[1].frontArmFrame = self.chargeArmFrames[1].frontArmFrame or self.stances.aimStance.frontArmFrame
     self.chargeArmFrames[1].backArmFrame = self.chargeArmFrames[1].backArmFrame or self.stances.aimStance.backArmFrame
@@ -213,9 +156,6 @@ function Project45GunFire:init()
     self.currentScreenShake = self.screenShakeAmount
   end
 
-  -- burst count must be positive
-  self.burstCount = math.max(1, self.burstCount)
-
   -- validate quick reload timeframe;
   -- perfect reload must be within bounds of good reload
   -- and quick reload time frame array must be an increasing sequence
@@ -227,6 +167,7 @@ function Project45GunFire:init()
 
   -- grab stored data
   self:loadGunState()
+  
   storage.recoilProgress = storage.recoilProgress or 0 -- stance progress is stored in storage so that other abilities may recoil the gun
   self.reloadRatingDamage = self.reloadRatingDamageMults[storage.project45GunState.reloadRating]
 
