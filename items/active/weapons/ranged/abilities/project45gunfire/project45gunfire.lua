@@ -1246,13 +1246,17 @@ function Project45GunFire:fireProjectile(projectileType, projectileParameters, i
       params.timeToLive = util.randomInRange(params.timeToLive)
     end
 
+    local projectileRandomSpeedFactor = math.abs(sb.nrand(0.1, 1))
+    local finalParams = self.critFlag and sb.jsonMerge(params, {statusEffects = {"project45critdamaged"}}) or params
+    finalParams.speed = finalParams.speed * projectileRandomSpeedFactor
+
     projectileId = world.spawnProjectile(
       selectedProjectileType,
       firePosition or self:firePosition(nil, addOffset),
       activeItem.ownerEntityId(),
       aimVector or self:aimVector(inaccuracy or self.spread),
       false,
-      self.critFlag and sb.jsonMerge(params, {statusEffects = {"project45critdamaged"}}) or params
+      finalParams
     )
 
   end
@@ -1883,15 +1887,16 @@ function Project45GunFire:evalProjectileKind()
         activeItem.setScriptedAnimationParameter("primaryLaserColor", self.laser.color)
         activeItem.setScriptedAnimationParameter("primaryLaserWidth", self.laser.width)
       end
+      
+      local projectileType = type(self.projectileType) == "table" and self.projectileType[1] or self.projectileType
+      self.projectileParameters = util.mergeTable(root.projectileConfig(projectileType), self.projectileParameters)
+      self.projectileParameters.speed = self.projectileParameters.speed or 50
 
       if self.projectileKind == "projectile" then          
-        local projectileType = type(self.projectileType) == "table" and self.projectileType[1] or self.projectileType
-        local projectileConfig = util.mergeTable(root.projectileConfig(projectileType), self.projectileParameters)
-        local projSpeed = projectileConfig.speed or 50
         if root.projectileGravityMultiplier(projectileType) ~= 0 then
           activeItem.setScriptedAnimationParameter("primaryLaserArcSteps", self.laser.trajectoryConfig.renderSteps)
-          activeItem.setScriptedAnimationParameter("primaryLaserArcSpeed", projSpeed)
-          activeItem.setScriptedAnimationParameter("primaryLaserArcRenderTime", projectileConfig.timeToLive)
+          activeItem.setScriptedAnimationParameter("primaryLaserArcSpeed", self.projectileParameters.speed)
+          activeItem.setScriptedAnimationParameter("primaryLaserArcRenderTime", self.projectileParameters.timeToLive)
           activeItem.setScriptedAnimationParameter("primaryLaserArcGravMult", root.projectileGravityMultiplier(projectileType))
         end
       else
