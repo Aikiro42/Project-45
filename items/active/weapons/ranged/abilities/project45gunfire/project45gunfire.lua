@@ -336,13 +336,13 @@ function Project45GunFire:init()
     snap = true
   }
 
-  if storage.jamAmount <= 0
+  if storage.project45GunState.jamAmount <= 0
   and storage.project45GunState.ammo >= 0
   then
     self.weapon:setStance(sb.jsonMerge(self.stances.aimStance, initStance))
     self.weapon:setStance(self.stances.aimStance)
   else
-    if storage.jamAmount > 0 then
+    if storage.project45GunState.jamAmount > 0 then
       self.weapon:setStance(sb.jsonMerge(self.stances.jammed, initStance))
       self:setState(self.jammed)
     end
@@ -449,7 +449,7 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
   -- manual/shift reload
   if self:reloadTriggered() and not self.weapon.isReloading then
       if storage.project45GunState.ammo >= 0 and not self.triggered then
-        if storage.jamAmount > 0 then
+        if storage.project45GunState.jamAmount > 0 then
           self:updateJamAmount(0, true)
           self:openBolt(self.breakAction and storage.project45GunState.ammo or 0,
             false, self.breakAction, true, true)
@@ -473,7 +473,7 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
   and self.cooldownTimer == 0
   and not self.isFiring
   then
-    if storage.jamAmount <= 0 then
+    if storage.project45GunState.jamAmount <= 0 then
 
       if storage.project45GunState.ammo > 0 then
 
@@ -559,7 +559,7 @@ function Project45GunFire:updateUI()
     stockAmmo = storage.stockAmmo,
     reloadRating = reloadRatingList[storage.reloadRating],
     chamberState = animator.animationState("chamber"),
-    jamAmount = storage.jamAmount,
+    jamAmount = storage.project45GunState.jamAmount,
 
     aimPosition = aimPosition,
     uiPosition = self.modSettings.renderBarsAtCursor and aimPosition or {0, 0},
@@ -1143,7 +1143,7 @@ function Project45GunFire:unjamming()
   self:onUnjamPassive()
 
   self:updateJamAmount(sb.nrand(self.unjamStDev, -self.unjamAmount))
-  if storage.jamAmount <= 0 then
+  if storage.project45GunState.jamAmount <= 0 then
     -- animator.playSound("click")
     self:onFullUnjamPassive()
     self:updateReloadRating(OK)
@@ -1559,7 +1559,7 @@ function Project45GunFire:updateAmmoRecharge(timeDelta)
   if self.ammoRechargeDelayTimer <= 0
   and storage.project45GunState.ammo > 0
   and storage.project45GunState.ammo <= self.maxAmmo
-  and storage.jamAmount <= 0
+  and storage.project45GunState.jamAmount <= 0
   and self.weapon.reloadTimer < 0 then
     self.ammoRechargeTimer = math.max(0, self.ammoRechargeTimer - self.dt)
     if self.ammoRechargeTimer <= 0 then
@@ -1583,7 +1583,7 @@ function Project45GunFire:updateCharge()
 
   if self:triggering()
   and not self.triggered
-  and storage.jamAmount <= 0
+  and storage.project45GunState.jamAmount <= 0
   and self.weapon.reloadTimer < 0
   and (self.maintainChargeOnEmpty or storage.project45GunState.ammo > 0)
   and (self.chargeWhenObstructed or not self:muzzleObstructed())
@@ -1787,7 +1787,7 @@ end
 -- Updates the gun's jam amount.
 -- Amount is clamped between 0 and 1.
 function Project45GunFire:updateJamAmount(delta, set)
-  storage.jamAmount = set and delta or util.clamp(storage.jamAmount + delta, 0, 1)
+  storage.project45GunState.jamAmount = set and delta or util.clamp(storage.project45GunState.jamAmount + delta, 0, 1)
 end
 
 function Project45GunFire:updateCycleTime()
@@ -1822,7 +1822,7 @@ function Project45GunFire:updateScreenShake()
   if self:triggering()
   --[[
   and not self.triggered
-  and storage.jamAmount <= 0
+  and storage.project45GunState.jamAmount <= 0
   and self.weapon.reloadTimer < 0
   and storage.project45GunState.ammo > 0
   and not self:muzzleObstructed()
@@ -2176,7 +2176,7 @@ function Project45GunFire:saveGunState()
     firingLoop = "idle",
     fired = "fired",
 
-    unjamming = storage.jamAmount > 0 and "jammed" or "idle",
+    unjamming = storage.project45GunState.jamAmount > 0 and "jammed" or "idle",
   }
 
   local gunState = {
@@ -2187,7 +2187,7 @@ function Project45GunFire:saveGunState()
     stockAmmo = storage.stockAmmo or 0,
     reloadRating = storage.reloadRating,
     unejectedCasings = storage.unejectedCasings,
-    jamAmount = storage.jamAmount,
+    jamAmount = storage.project45GunState.jamAmount,
     savedProjectileIndex = storage.savedProjectileIndex,
     lastUsedTime = os.time(),
   }
@@ -2252,7 +2252,7 @@ function Project45GunFire:loadGunState()
   storage.reloadRating = storage.reloadRating or loadedGunState.reloadRating
   storage.unejectedCasings = storage.unejectedCasings or loadedGunState.unejectedCasings
   
-  storage.jamAmount = storage.jamAmount or loadedGunState.jamAmount
+  storage.project45GunState.jamAmount = storage.project45GunState.jamAmount or loadedGunState.jamAmount
   animator.setAnimationState("bolt", loadedGunState.bolt)
   
   if loadedGunState.bolt == "open" then
@@ -2315,7 +2315,7 @@ end
 
 function Project45GunFire:auto()
   if storage.project45GunState.ammo <= 0
-  or storage.jamAmount > 0
+  or storage.project45GunState.jamAmount > 0
   then
     -- animator.playSound("click")
     self.cooldownTimer = self.fireTime
@@ -2339,7 +2339,7 @@ end
 function Project45GunFire:burst()
   
   if storage.project45GunState.ammo <= 0
-  or storage.jamAmount > 0
+  or storage.project45GunState.jamAmount > 0
   then
     -- animator.playSound("click")
     self.cooldownTimer = self.fireTime
