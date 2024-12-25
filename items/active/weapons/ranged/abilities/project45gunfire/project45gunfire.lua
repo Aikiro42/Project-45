@@ -10,6 +10,7 @@ require "/items/active/weapons/ranged/gunfire.lua"
 require "/items/active/weapons/ranged/abilities/altfire.lua"
 
 require "/items/active/weapons/ranged/abilities/project45gunfire/formulas.lua"
+require "/items/active/weapons/ranged/abilities/project45gunfire/constants.lua"
 
 local generalConfig = root.assetJson("/configs/project45/project45_general.config")
 
