@@ -63,7 +63,6 @@ function Project45GunFire:init()
 
   -- initialize charge damage
   self.chargeDamageMult = math.max(self.chargeDamageMult or 1, 0)
-  -- self.currentChargeDamage = 1
 
   -- initialize burst counter
   storage.burstCounter = storage.burstCounter or self.burstCount
@@ -103,7 +102,7 @@ function Project45GunFire:init()
     stationary = self.inaccuracy * self.inaccuracyMults.stationary,
     crouching = self.inaccuracy * self.inaccuracyMults.crouching,
   }
-  self.currentInaccuracy = self.inaccuracyValues.mobile
+  -- self.currentInaccuracy = self.inaccuracyValues.mobile
 
   activeItem.setCursor("/cursors/project45-neo-cursor-mobile.cursor")
 
@@ -340,7 +339,7 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
   
   -- accuracy settings
   local movementState = self:getMovementState()
-  self.currentInaccuracy = self.inaccuracyValues[movementState]
+  storage.project45GunState.current.inaccuracy = self.inaccuracyValues[movementState]
   self.currentRecoverTime = self.recoverTime[movementState] * self.recoverMult
   activeItem.setCursor("/cursors/project45-neo-cursor-" .. movementState .. ".cursor")
 
@@ -1287,7 +1286,7 @@ function Project45GunFire:recoil(down, mult, amount, recoverDelay)
   self.weapon.weaponOffset = {-0.125, 0}
 
   -- inaccuracy (defaults to 3 degrees)
-  local inaccuracy = util.toRadians(sb.nrand(self.currentInaccuracy or 3, 0) * mult)
+  local inaccuracy = util.toRadians(sb.nrand(storage.project45GunState.current.inaccuracy or 3, 0) * mult)
   if self.recoilUpOnly and self.projectileKind ~= "summoned" then
     inaccuracy = math.abs(inaccuracy)
   end
@@ -2112,7 +2111,8 @@ function Project45GunFire:validateState()
     jamAmount = 0,
     savedProjectileIndex = 1,
     lastUsedTime = os.time(),
-    damageModifiers = {}
+    damageModifiers = {},
+    current = {}
   }
   
   for k, v in pairs(defaultGunState) do
@@ -2139,7 +2139,9 @@ function Project45GunFire:loadGunState()
     type = "mult",
     value = 1
   }
-
+  
+  storage.project45GunState.current.inaccuracy = self.inaccuracyValues.mobile
+  
   storage.project45GunState.ammo = storage.project45GunState.ammo or loadedGunState.ammo
 
   local rechargeTimeDelta = math.abs(os.time() - loadedGunState.lastUsedTime)
