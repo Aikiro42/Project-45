@@ -102,7 +102,6 @@ function Project45GunFire:init()
     stationary = self.inaccuracy * self.inaccuracyMults.stationary,
     crouching = self.inaccuracy * self.inaccuracyMults.crouching,
   }
-  -- self.currentInaccuracy = self.inaccuracyValues.mobile
 
   activeItem.setCursor("/cursors/project45-neo-cursor-mobile.cursor")
 
@@ -115,7 +114,6 @@ function Project45GunFire:init()
       crouching = self.recoverTime/2 -- halved recover time while crouching
     }
   end
-  -- self.currentRecoverTime = self.recoverTime.mobile * self.recoverMult
 
   -- initialize self.cycleTimer if cycleTimer is
   -- set to be dynamic
@@ -143,16 +141,6 @@ function Project45GunFire:init()
     end
   end
   
-  -- initialize self.screenShakeTimer if cycleTimer is
-  -- set to be dynamic
-  if type(self.screenShakeAmount) == "table" then
-    self.screenShakeDiff = self.screenShakeAmount[2] - self.screenShakeAmount[1]
-    self.screenShakeTimer = 0
-    self.currentScreenShake = self.screenShakeAmount[1]
-  else
-    self.currentScreenShake = self.screenShakeAmount
-  end
-
   -- validate quick reload timeframe;
   -- perfect reload must be within bounds of good reload
   -- and quick reload time frame array must be an increasing sequence
@@ -1413,7 +1401,7 @@ function Project45GunFire:screenShake(amount, shakeTime, random)
   or self.performanceMode
   then return end
   
-  local amount = amount or self.currentScreenShake or 0.1
+  local amount = amount or storage.project45GunState.current.screenShakeAmount or 0.1
   if amount == 0 then return end
 
   local source = mcontroller.position()
@@ -1539,7 +1527,7 @@ function Project45GunFire:updateCharge()
   animator.setSoundPitch("chargeWhine", 1 + self.chargePitchMult * math.min(chargeProgress, self.maxChargePitch))
   animator.setSoundVolume("chargeWhine", 0.25 + self.chargeVolumeMult * math.min(chargeProgress, self.maxChargeVolume))
   if self.chargeScreenShakeMult then
-    self:screenShake(chargeProgress * self.currentScreenShake * self.chargeScreenShakeMult, nil, true)
+    self:screenShake(chargeProgress * storage.project45GunState.current.screenShakeAmount * self.chargeScreenShakeMult, nil, true)
   end
 
   -- start/stop sounds accordingly
@@ -1734,7 +1722,7 @@ function Project45GunFire:updateScreenShake()
   end
 
   local screenShakeProgress = self.screenShakeTimer / self.maxScreenShakeTime
-  self.currentScreenShake = self.screenShakeAmount[1] + self.screenShakeDiff * screenShakeProgress
+  storage.project45GunState.current.screenShakeAmount = self.screenShakeAmount[1] + self.screenShakeDiff * screenShakeProgress
 end
 
 function Project45GunFire:updateMovementControlModifiers(shiftHeld)
@@ -2142,6 +2130,15 @@ function Project45GunFire:loadGunState()
   
   storage.project45GunState.current.inaccuracy = self.inaccuracyValues.mobile
   storage.project45GunState.current.recoverTime = self.recoverTime.mobile * self.recoverMult
+  -- initialize self.screenShakeTimer if cycleTimer is
+  -- set to be dynamic
+  if type(self.screenShakeAmount) == "table" then
+    self.screenShakeDiff = self.screenShakeAmount[2] - self.screenShakeAmount[1]
+    self.screenShakeTimer = 0
+    storage.project45GunState.current.screenShakeAmount = self.screenShakeAmount[1]
+  else
+    storage.project45GunState.current.screenShakeAmount = self.screenShakeAmount
+  end
 
   storage.project45GunState.ammo = storage.project45GunState.ammo or loadedGunState.ammo
 
