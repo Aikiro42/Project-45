@@ -1680,6 +1680,7 @@ function Project45GunFire:updateCycleTime()
   -- don't bother updating cycle time if cycleTimeProgress wasn't even instantiated
   -- or if there's no difference between the cycle times
   -- this means that the cycle time is expected to be constant
+  -- TODO: Add UI bar to cycle time
   if not self.cycleTimer
   or self.cycleTimeDiff == 0
   then return end
