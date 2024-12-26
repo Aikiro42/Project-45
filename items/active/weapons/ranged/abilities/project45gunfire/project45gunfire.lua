@@ -115,7 +115,7 @@ function Project45GunFire:init()
       crouching = self.recoverTime/2 -- halved recover time while crouching
     }
   end
-  self.currentRecoverTime = self.recoverTime.mobile * self.recoverMult
+  -- self.currentRecoverTime = self.recoverTime.mobile * self.recoverMult
 
   -- initialize self.cycleTimer if cycleTimer is
   -- set to be dynamic
@@ -340,7 +340,7 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
   -- accuracy settings
   local movementState = self:getMovementState()
   storage.project45GunState.current.inaccuracy = self.inaccuracyValues[movementState]
-  self.currentRecoverTime = self.recoverTime[movementState] * self.recoverMult
+  storage.project45GunState.current.recoverTime = self.recoverTime[movementState] * self.recoverMult
   activeItem.setCursor("/cursors/project45-neo-cursor-" .. movementState .. ".cursor")
 
   -- manual/shift reload
@@ -1791,13 +1791,13 @@ function Project45GunFire:updateRecoil()
     self.recoverDelayTimer = self.recoverDelayTimer - self.dt
   else
     self.weapon.recoilAmount = interp.sin(storage.recoilProgress, self.weapon.startRecoil, 0)
-    storage.recoilProgress = math.min(1, storage.recoilProgress + self.dt / self.currentRecoverTime)
+    storage.recoilProgress = math.min(1, storage.recoilProgress + self.dt / storage.project45GunState.current.recoverTime)
   end
 
 end
 
 function Project45GunFire:updateCursor()
-  self.currentRecoverTime = 
+  storage.project45GunState.current.recoverTime = 
     (not mcontroller.groundMovement() and self.recoverTime.mobile)     or
         (mcontroller.walking()        and self.recoverTime.walking)    or 
         (mcontroller.crouching()      and self.recoverTime.crouching)  or
@@ -2141,7 +2141,8 @@ function Project45GunFire:loadGunState()
   }
   
   storage.project45GunState.current.inaccuracy = self.inaccuracyValues.mobile
-  
+  storage.project45GunState.current.recoverTime = self.recoverTime.mobile * self.recoverMult
+
   storage.project45GunState.ammo = storage.project45GunState.ammo or loadedGunState.ammo
 
   local rechargeTimeDelta = math.abs(os.time() - loadedGunState.lastUsedTime)
