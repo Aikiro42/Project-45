@@ -33,8 +33,6 @@ function Project45GunFire:init()
 
   self.weapon.overrideShiftAction = self.overrideShiftAction
   
-  self.passiveClass.init(self)
-
   -- INITIALIZATIONS
   self.isFiring = false
   self.infoSide = activeItem.hand() == "primary" and "L" or "R"
@@ -65,7 +63,7 @@ function Project45GunFire:init()
 
   -- initialize charge damage
   self.chargeDamageMult = math.max(self.chargeDamageMult or 1, 0)
-  self.currentChargeDamage = 1
+  -- self.currentChargeDamage = 1
 
   -- initialize burst counter
   storage.burstCounter = storage.burstCounter or self.burstCount
@@ -167,10 +165,14 @@ function Project45GunFire:init()
 
   -- grab stored data
   self:loadGunState()
-  
-  storage.recoilProgress = storage.recoilProgress or 0 -- stance progress is stored in storage so that other abilities may recoil the gun
-  self.reloadRatingDamage = self.reloadRatingDamageMults[storage.project45GunState.reloadRating]
+  self.passiveClass.init(self)
 
+  storage.recoilProgress = storage.recoilProgress or 0 -- stance progress is stored in storage so that other abilities may recoil the gun
+  -- self.reloadRatingDamage = self.reloadRatingDamageMults[storage.project45GunState.reloadRating]
+  storage.project45GunState.damageModifiers["reloadDamageMult"] = {
+    type = "mult",
+    value = self.reloadRatingDamageMults[storage.project45GunState.reloadRating]
+  }
   -- initialize timers
   self.chargeTimer = 0
   self.dischargeDelayTimer = 0
@@ -1521,11 +1523,13 @@ function Project45GunFire:updateCharge()
   -- update charge damage multiplier
   if self.overchargeTime > 0 then
     local progress = (self.chargeTimer - self.chargeTime) / self.overchargeTime
-    self.currentChargeDamage = 1 + progress * (self.chargeDamageMult - 1)
+    -- self.currentChargeDamage = 1 + progress * (self.chargeDamageMult - 1)
+    storage.project45GunState.damageModifiers["chargeDamageMult"].value = 1 + progress * (self.chargeDamageMult - 1)
     if self.perfectChargeRange then
       self.perfectlyCharged = self.perfectChargeRange[1] <= progress and self.perfectChargeRange[2] >= progress
       if self.perfectlyCharged then
-        self.currentChargeDamage = self.perfectChargeDamageMult
+        -- self.currentChargeDamage = self.perfectChargeDamageMult
+        storage.project45GunState.damageModifiers["chargeDamageMult"].value = self.perfectChargeDamageMult
       end
     end
   end
@@ -1966,15 +1970,20 @@ function Project45GunFire:damagePerShot(noDLM)
 
   return formulas.damagePerShot(
     self.baseDamage,
-    {
-      damageLevelMultiplier = (noDLM and 1 or config.getParameter("damageLevelMultiplier", 1)),
-      powerMultiplier = self.powerMultiplier,
-      critDamageMult = self:crit(),
-      chargeDamageMult = self.currentChargeDamage,
-      reloadDamageMult = self.reloadRatingDamage,
-      stockAmmoDamageMult = self.weapon.stockAmmoDamageMult,
-      passiveDamageMult = self.passiveDamageMult or 1,
-    }
+    sb.jsonMerge({
+      damageLevelMultiplier = {
+        type = "mult",
+        value = (noDLM and 1 or config.getParameter("damageLevelMultiplier", 1))
+      },
+      powerMultiplier = {
+        type = "mult",
+        value = self.powerMultiplier
+      },
+      critDamageMult = {
+        type="mult",
+        value = self:crit()
+      }
+    }, storage.project45GunState.damageModifiers)
   )
 
 end
@@ -2103,7 +2112,7 @@ function Project45GunFire:validateState()
     jamAmount = 0,
     savedProjectileIndex = 1,
     lastUsedTime = os.time(),
-    damageMultipliers = {}
+    damageModifiers = {}
   }
   
   for k, v in pairs(defaultGunState) do
@@ -2125,6 +2134,11 @@ function Project45GunFire:loadGunState()
   self:updateChamberState(loadedGunState.chamber)
 
   storage.project45GunState = loadedGunState
+  
+  storage.project45GunState.damageModifiers["chargeDamageMult"] = {
+    type = "mult",
+    value = 1
+  }
 
   storage.project45GunState.ammo = storage.project45GunState.ammo or loadedGunState.ammo
 
@@ -2134,7 +2148,11 @@ function Project45GunFire:loadGunState()
   end
 
   storage.project45GunState.stockAmmo = storage.project45GunState.stockAmmo or loadedGunState.stockAmmo
-  self.weapon.stockAmmoDamageMult = formulas.stockAmmoDamageMult(storage.project45GunState.stockAmmo, self.maxAmmo)
+  -- self.weapon.stockAmmoDamageMult = formulas.stockAmmoDamageMult(storage.project45GunState.stockAmmo, self.maxAmmo)
+  storage.project45GunState.damageModifiers['stockAmmoDamageMult'] = {
+    type = "mult",
+    value = formulas.stockAmmoDamageMult(storage.project45GunState.stockAmmo, self.maxAmmo)
+  }
 
   storage.project45GunState.savedProjectileIndex = storage.project45GunState.savedProjectileIndex or loadedGunState.savedProjectileIndex
 

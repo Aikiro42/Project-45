@@ -46,8 +46,11 @@ function Passive:update(dt, fireMode, shiftheld)
   end
 
   if status.resourcePercentage("health") < 0.5 then
-    status.addEphemeralEffect("rage")  
+    storage.project45GunState.damageModifiers["fleetlyFadingPassiveMult"] = {type="mult", value=1.3}
+  else
+    storage.project45GunState.damageModifiers["fleetlyFadingPassiveMult"] = nil
   end
+
 end
 
 function Passive:onFire()

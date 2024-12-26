@@ -46,6 +46,5 @@ Effective functions:
 The passive has access to the following variables
 
 - self.passiveParameters
-- self.passiveDamageMult
 
 ]]

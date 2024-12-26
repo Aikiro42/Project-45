@@ -20,7 +20,10 @@ function Passive:init()
     damageMultAdd = damageMultAdd + (isHead and self.passiveParameters.pieceDamage or 0)
     damageMultAdd = damageMultAdd + (isChest and self.passiveParameters.pieceDamage or 0)
     damageMultAdd = damageMultAdd + (isLegs and self.passiveParameters.pieceDamage or 0)
-    self.passiveDamageMult = 1 + damageMultAdd
+    storage.project45GunState.damageModifiers["feroziumDamageMult"] = {
+      type = "mult",
+      value= 1 + damageMultAdd
+    }
   end
 end
 

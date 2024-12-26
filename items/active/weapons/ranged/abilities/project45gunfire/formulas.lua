@@ -19,7 +19,7 @@ end
 -- Calculates the damage per shot of the weapon.
 function formulas.damagePerShot(
   baseDamage,
-  multiplicatives
+  damageModifiers
   )
 
   --[[
@@ -38,14 +38,21 @@ function formulas.damagePerShot(
   return finalDamage * self.powerMultiplier
   --]]
 
-  local finalDamage = baseDamage
+  local adds = 0
+  local mults = 1
 
-  if multiplicatives then
-    for _, v in pairs(multiplicatives) do
-      finalDamage = finalDamage * v
+  if type(damageModifiers) == "table" then
+    -- sb.logInfo("-------------------------------------------------")
+    for k, v in pairs(damageModifiers) do
+      -- sb.logInfo(string.format("%s %s to damage", v.type or "???", k))
+      if v.type == "mult" then
+        mults = mults * (v.value or 1)
+      elseif v.type == "add" then
+        adds = adds + (v.value or 0)
+      end
     end
   end
   
-  return finalDamage
+  return baseDamage * mults + adds
 
 end
