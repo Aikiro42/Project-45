@@ -5,6 +5,8 @@ require "/items/active/weapons/project45neoweapon.lua"
 require "/scripts/project45/project45util.lua"
 -- require "/items/active/weapons/ranged/gunfire.lua"
 
+require "/items/active/weapons/ranged/abilities/project45gunfire/formulas.lua"
+
 Project45ScarletFlash = WeaponAbility:new()
 
 function Project45ScarletFlash:init()
@@ -196,7 +198,9 @@ function Project45ScarletFlash:calculateDamage(ability)
             * ability.reloadRatingDamage
             * (ability.passiveDamageMult or 1)
             * self.weapon.stockAmmoDamageMult
-            * ability:calculateCritDamage(false, storage.project45GunState.reloadRating)
+            -- * ability:calculateCritDamage(false, storage.project45GunState.reloadRating)
+            * formulas.critDamage(0, ability.critDamageMult, false, storage.project45GunState.reloadRating)
+
     else
         self.baseDamage = status.resourceMax("energy") * self.energyScaleFactor
     end

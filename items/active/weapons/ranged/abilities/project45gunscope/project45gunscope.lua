@@ -187,6 +187,7 @@ end
 -- Shakes screen opposite direction of aim.
 -- It does this by briefly spawning a projectile that has a short time to live,
 -- and setting the cam's focus on that projectile.
+---@diagnostic disable-next-line: duplicate-set-field
 function Project45GunFire:screenShake(amount, shakeTime, random)
   
   if self.usedByNPC
