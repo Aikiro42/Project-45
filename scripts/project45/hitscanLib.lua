@@ -528,7 +528,7 @@ function hitscanLib:fireHitscan(projectileType)
       table.insert(finalDamageSources, self.weapon:damageSource(hitscanInfo[1], hitscanInfo[2]))
     end
     activeItem.setDamageSources(finalDamageSources)
-    self:onFirePassive()  -- trigger onFirePassive when finally generating the damage sources
+    self.passiveClass.onFire(self)  -- trigger onFirePassive when finally generating the damage sources
     
     -- bullet trail info inserted to projectile stack that's being passed to the animation script
     -- each bullet trail in the stack is rendered, and the lifetime is updated in this very script too
@@ -707,7 +707,7 @@ function hitscanLib:fireBeam()
   
       if ammoConsumeTimer >= beamTimeout then
         if self:jam() then break end
-        self:onFirePassive()  -- trigger onFirePassive on tick
+        self.passiveClass.onFire(self)  -- trigger onFirePassive on tick
         ammoConsumeTimer = 0
         if self.beamParameters.consumeAmmoOverTime or not consumedAmmo then
           self:updateAmmo(project45util.diceroll(self.ammoConsumeChance) and -self.ammoPerShot or 0)

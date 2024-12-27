@@ -176,12 +176,19 @@ function Project45GunFire:init()
 
   -- Add functions used by this primaryAbility to altAbility
   
+  AltFireAttack.firePosition = self.firePosition
+  AltFireAttack.aimVector = self.aimVector
+  AltFireAttack.fireProjectile = self.fireProjectile
+  AltFireAttack.cooldown = self.cooldown
+  AltFireAttack.auto = self.auto
+  AltFireAttack.burst = self.burst
+
   AltFireAttack.infoSide = self.infoSide
   AltFireAttack.recoil = self.recoil
   AltFireAttack.rollMultishot = self.rollMultishot
   AltFireAttack.updateMagVisuals = self.updateMagVisuals
   AltFireAttack.updateAmmo = self.updateAmmo
-  AltFireAttack.muzzleFlash = self.altMuzzleFlash
+  -- AltFireAttack.muzzleFlash = self.altMuzzleFlash
   AltFireAttack.screenShake = self.screenShake
   
   self:evalProjectileKind()
@@ -209,10 +216,10 @@ function Project45GunFire:init()
   self.stances.aimStance = util.mergeTable(defaultAimStance, finalAimStance)
   
   -- compatibility stances
-  self.stances.idle = self.stances.aimStance
-  self.stances.charge = self.stances.aimStance
-  self.stances.fire = self.stances.aimStance
-  self.stances.cooldown = self.stances.aimStance
+  for _, vanillaStance in ipairs({"idle", "charge", "fire", "cooldown"}) do
+    self.stances[vanillaStance] = self.stances.aimStance
+    self.stances[vanillaStance].duration = 0.1
+  end
 
   self.recoverDelayTimer = 0
     
@@ -1109,7 +1116,13 @@ function Project45GunFire:muzzleFlash()
       animator.setSoundPitch("fire", sb.nrand(0.01, 1))
       animator.setSoundVolume("hollow", util.clamp((1 - storage.project45GunState.ammo/self.maxAmmo) * self.hollowSoundMult, 0, self.hollowSoundMult))
     end
-    animator.playSound("fire")
+    
+    if self.usePrimaryFireSound == false then
+      animator.playSound("altFire")
+    else
+      animator.playSound("fire")
+    end
+
     if self.perfectlyCharged then
       animator.playSound("perfectChargeFire")
     end
@@ -2213,6 +2226,15 @@ end
 
 -- SECTION: Compatibility Functions
 
+-- AltFireAttack = Project45GunFire:new()
+
+--[[
+function AltFireAttack:new(abilityConfig)
+  local primary = config.getParameter("primaryAbility")
+  return Project45GunFire.new(self, sb.jsonMerge(primary, abilityConfig))
+end
+--]]
+
 function Project45GunFire:cooldown()
 end
 
@@ -2272,7 +2294,7 @@ function Project45GunFire:burst()
   self.cooldownTimer = (self.fireTime - self.burstTime) * self.burstCount
 end
 
-function Project45GunFire:altMuzzleFlash()
+function AltFireAttack:muzzleFlash()
   if not self.hidePrimaryMuzzleFlash then
     animator.setPartTag("muzzleFlash", "variant", math.random(1, 3))
     animator.setAnimationState("firing", "fire")
