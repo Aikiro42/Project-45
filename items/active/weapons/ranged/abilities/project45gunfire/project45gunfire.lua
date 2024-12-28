@@ -174,22 +174,37 @@ function Project45GunFire:init()
   
   activeItem.setScriptedAnimationParameter("performanceMode", self.performanceMode)
 
-  -- Add functions used by this primaryAbility to altAbility
-  
-  AltFireAttack.firePosition = self.firePosition
-  AltFireAttack.aimVector = self.aimVector
-  AltFireAttack.fireProjectile = self.fireProjectile
-  AltFireAttack.cooldown = self.cooldown
-  AltFireAttack.auto = self.auto
-  AltFireAttack.burst = self.burst
+  -- Add vanilla altAbility fields
+  local newFields = {
+    "infoSide",
+    "recoil",
+    "rollMultishot",
+    "updateMagVisuals",
+    "updateAmmo",
+    "screenShake"
+  }
+  for _, field in ipairs(newFields) do
+    GunFire[field] = self[field]
+    AltFireAttack[field] = self[field]
+  end
 
-  AltFireAttack.infoSide = self.infoSide
-  AltFireAttack.recoil = self.recoil
-  AltFireAttack.rollMultishot = self.rollMultishot
-  AltFireAttack.updateMagVisuals = self.updateMagVisuals
-  AltFireAttack.updateAmmo = self.updateAmmo
-  -- AltFireAttack.muzzleFlash = self.altMuzzleFlash
-  AltFireAttack.screenShake = self.screenShake
+  -- Override vanilla altAbility functions
+  local replaceFunctions = {
+    "firePosition",
+    "aimVector",
+    "fireProjectile",
+    "cooldown",
+    "auto",
+    "burst",
+    "energyPerShot"
+  }
+  for _, field in ipairs(replaceFunctions) do
+    GunFire[field] = self[field]
+    AltFireAttack[field] = self[field]
+  end
+  AltFireAttack.muzzleFlash = self.altMuzzleFlash
+  
+  --]]
   
   self:evalProjectileKind()
   self:updateMagVisuals()
@@ -219,6 +234,8 @@ function Project45GunFire:init()
   for _, vanillaStance in ipairs({"idle", "charge", "fire", "cooldown"}) do
     self.stances[vanillaStance] = self.stances.aimStance
     self.stances[vanillaStance].duration = 0.1
+    self.stances[vanillaStance].allowRotate = true
+    self.stances[vanillaStance].allowFlip = true
   end
 
   self.recoverDelayTimer = 0
@@ -2239,7 +2256,7 @@ function Project45GunFire:cooldown()
 end
 
 function Project45GunFire:energyPerShot()
-  return 0
+  return self.ammoPerShot or 0
 end
 
 function Project45GunFire:auto()
@@ -2294,7 +2311,7 @@ function Project45GunFire:burst()
   self.cooldownTimer = (self.fireTime - self.burstTime) * self.burstCount
 end
 
-function AltFireAttack:muzzleFlash()
+function Project45GunFire:altMuzzleFlash()
   if not self.hidePrimaryMuzzleFlash then
     animator.setPartTag("muzzleFlash", "variant", math.random(1, 3))
     animator.setAnimationState("firing", "fire")
