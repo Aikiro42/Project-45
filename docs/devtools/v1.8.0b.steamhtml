@@ -1,0 +1,80 @@
+[h1]v1.8.0b[/h1]
+
+[h2]User Side[/h2]
+
+[h3]New Features[/h3]
+
+[list]
+    [*]Added stat mods to monster and treasure drop tables.[list]
+    [*]Added [b]The Admin Mod[/b] to the possible XSSR stat mod drops. (10% chance)
+    [*]Added stack limit of 1 to The Admin Mod.
+[/list]
+    [*]Added the [b]Gunsmith Addon[/b], a craftable replicator addon that allows you to craft rare Project 45 items.
+    [*]Added the [b]Bayonet[/b], a weapon ability that deals world-level-scaling damage over two strikes:[code]
+totalDamage = worldLevel * powerMultiplier^2
+[/code]
+    [*]Added the [b]Underbarrel Chainsaw[/b], a more powerful "Bayonet" that also inflicts [i]Bleeding[/i].
+    [*]Added the [b]Bladed Arrows[/b] mod, which inflicts the [i]Bleeding[/i] status effect.[list]
+    [*][i]Bleeding[/i] deals 0.5% max HP as true damage every . This status effect stacks on reapplication.
+[/list]
+    [*]
+[/list] 
+
+[h3]Fixes[/h3]
+
+[list]
+    [*]Improved visuals when weapon switches stances.
+    [*]Fixed wildcard stat mods not showing which stats they can potentially give before being given a seed.
+    [*]Fixed Scarlet Flash slashes appearing on allies.
+    [*]Fixed weapon cursor UI not disappearing when switching to the Supply Transponder.
+    [*]Fixed bug related to fullbright gun mod sprites.
+    [*]Fixed bug allowing Phase Shifted players to deal damage.
+    [*]Fixed script crash in project45status effect.
+    [*]Fixed bug that prevented click sounds to trigger when attempting to fire a vanilla alt ability.
+    [*]Fixed bug that prevented Fleetly Fading's passive from working.
+[/list]
+
+[h3]Balance Changes[/h3]
+
+[list]
+    [*]Reduced Neo-Compound Bow's reload cost from 50 to 10
+    [*]Added more sources of Project 45 Item Spawns:[list]
+    [*]capsules now have a 50% chance to spawn project 45 items of rarity based on world level
+    [*]ancient pots now have a 50% chance to spawn project 45 items of rarity based on world level
+[/list]
+    [*]Portable G.D.K.s now drop occasionally.
+    [*]The projectiles from the Flechette Shells mod now inflict [i]Bleeding[/i].[list]
+    [*]Decreased projectile count from 5 to 4.
+    [*]Added a 0.8x base damage modifier.
+[/list]
+[/list]
+
+[h3]General Changes[/h3]
+
+[h2]Dev Side[/h2]
+
+[h3]New Features[/h3]
+
+[list]
+    [*]Implemented hitscan and beam tile damage.
+    [*]Added an object that will allow you to craft Project 45 items from recipes with the 'project45craftable' tag
+    [*]Added support for 'project45craftable'-tagged recipes
+    [*]Added element images for Project 45 Dark and Holy elements
+    [*]optimized tooltip formatter function of buildproject45mod.lua
+    [*]Add partial support for randomized weapons by adding a 'vanillaOffset' field, which overrides the 'baseOffset' field; useful for positioning the "middle" animated parts of (vanilla) guns.
+    [*]Added support for multiple final damage modifiers.
+[/list]
+
+[h3]Changes[/h3]
+
+[list]
+    [*]Changed how the '/project45-test' macro works; it now spawns a developer test kit reward bag containing a combat rifle, ammo stocks, an admin mod, a max level mod and enemy flares.
+    [*]Changed how passives are implemented; they must now inherit the 'Project45Passive' class.
+    [*]Changed how damage per shot is calculated, enabling support for applying final damage modifiers in an organized manner.
+[/list]
+
+[h3]Fixes[/h3]
+
+[list]
+    [*]Refactored code; please consult the commits for details on the refactors.
+[/list]
