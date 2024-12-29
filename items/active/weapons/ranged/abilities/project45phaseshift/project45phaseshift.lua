@@ -7,6 +7,8 @@ Project45PhaseShift = WeaponAbility:new()
 function Project45PhaseShift:init()
     self.phasing = false
     self.shiftHeldTimer = -1
+
+    storage.project45GunState.damageModifiers['phaseShiftDamageMult'] = nil
     
     storage.dodjiboru = storage.dodjiboru or self.dodgeCooldownTime
 
@@ -100,6 +102,7 @@ function Project45PhaseShift:dodge()
         {
             power=0,
             timeToLive=0,
+            damageType="NoDamage",
             actionOnReap={
                 {
                     action="particle",
@@ -158,6 +161,7 @@ function Project45PhaseShift:beginPhaseShift()
         {
             power= 0,
             timeToLive=0,
+            damageType="NoDamage",
             actionOnReap={
                 {
                     action="particle",
@@ -178,6 +182,10 @@ function Project45PhaseShift:beginPhaseShift()
             }
         }
     )
+    storage.project45GunState.damageModifiers['phaseShiftDamageMult'] = {
+        type="mult",
+        value=0
+    }
     animator.playSound("phaseStart")
     animator.playSound("phaseLoop", -1)
 end
@@ -216,10 +224,12 @@ function Project45PhaseShift:endPhaseShift()
     if not status.resourcePositive("energy") then
         animator.playSound("noEnergy")
     end
+    storage.project45GunState.damageModifiers['phaseShiftDamageMult'] = nil
     animator.playSound("phaseEnd")
     animator.stopAllSounds("phaseLoop")
 end
 
 function Project45PhaseShift:uninit()
     animator.stopAllSounds("phaseLoop")
+    storage.project45GunState.damageModifiers['phaseShiftDamageMult'] = nil
 end

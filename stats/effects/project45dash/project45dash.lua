@@ -39,12 +39,13 @@ function uninit()
   world.spawnProjectile(
         "invisibleprojectile",
         mcontroller.position(),
-        activeItem.ownerEntityId(),
+        entity.id(),
         {1, 0},
         false,
         {
             power=0,
             timeToLive=0,
+            damageType="NoDamage",
             actionOnReap={
                 {
                     action="particle",
