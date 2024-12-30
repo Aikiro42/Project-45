@@ -1,0 +1,97 @@
+{
+  "itemName" : "project45-40k-boltgun",
+  "price" : 40000,
+  "maxStack" : 1,
+  "rarity" : "Essential",
+  "description" : "A heavy assault rifle that fires blessed explosive mass-reactive bolts.",
+  "lore": "By the God-Emperor's blessing, this gun shall not falter.",
+  "shortdescription" : "^#fdd14d;Boltgun^reset;",
+  "tooltipKind" : "project45gun",
+  "gunArchetype": "rocketLauncher",
+  "category" : "rocketLauncher",
+  "twoHanded" : true,
+  "isUnique": true,
+  "itemTags" : ["weapon","ranged","rocketlauncher"],
+  "level" : 1,
+  "muzzleFlashColor": [255, 255, 200],
+  "inventoryIcon" : "project45-40k-boltgun-icon.png",
+
+  "animationParts" : {
+    "middle" : "project45-40k-boltgun.png",
+    "middleFullbright" : "",
+    "charge": "",
+    "chargeFullbright": "",
+    "magazine": "project45-40k-boltgun-mag.png",
+    "magazineFullbright": ""
+  },
+
+  "animationCustom": {
+    "particleEmitters": {
+      "ejectionPort": {
+        "particles": [
+          {"particle": "project45bulletcase"}
+        ]
+      },
+      "magazine": {
+        "particles": [
+          {"particle": "project45combatriflemag"}
+        ]
+      }
+    },
+
+    "sounds": {
+      "fire" : ["/sfx/project45neosfx/special/boltgun/boltgun_fire.ogg"],
+      "ejectMag": ["/sfx/project45neosfx/special/boltgun/boltgun_ejectmag.ogg"],
+      "reloadStart": ["/sfx/project45neosfx/special/boltgun/boltgun_getmag.ogg"],
+      "reloadEnd": ["/sfx/project45neosfx/special/boltgun/boltgun_loadmag.ogg"],
+      "boltPull": ["/sfx/project45neosfx/special/boltgun/boltgun_boltpull.ogg"],
+      "boltPush": ["/sfx/project45neosfx/special/boltgun/boltgun_boltpush.ogg"]
+    }
+  },
+
+  "project45GunModInfo":{
+    "category": "unique",
+    "acceptsModSlot": []
+  },
+
+  "baseOffset" : [0.875, 0.125],
+  "muzzleOffset" : [1.1875, 0.3125],
+  "ejectionPortOffset": [0, 0.875],
+  "magazineOffset": [-0.25, -0.375],
+
+  "railOffset" : [0.75, 0.125],
+  "sightsOffset": [0, 0.5625],
+  "underbarrelOffset": [0.875, -0.05],
+
+  "debugPointColors": {
+    "rail": "red",
+    "sights": "orange",
+    "underbarrel": "green"
+  },
+
+  "scripts" : ["/items/active/weapons/ranged/project45gunneo.lua"],
+    
+  "primaryAbilityType": "project45gunfire",
+  "primaryAbility": {
+    "critDamageMult": 2.5,
+    "baseDamageMultiplier": 3,
+    "maxAmmo": 20,
+    "bulletsPerReload": 20,
+    "semi": false,
+    "burstCount": 1,
+    "inaccuracy": 1.625,
+    
+    "jamChances": [0, 0, 0, 0],
+
+    "recoilAmount": 10,
+    "recoilMaxDeg": 45,
+    "recoverDelay": 0.05,
+    "recoverTime": 2,
+    
+    "cycleTime": 0.1125,
+    "projectileKind": "projectile",
+    "projectileType": "project45massreactivebolt"
+  },
+  
+  "builder" : "/items/buildscripts/buildproject45neoneo.lua"
+}

@@ -1,0 +1,136 @@
+{
+  "projectileName" : "project45massreactivebolt",
+  "image" : "project45massreactivebolt.png",
+  "scripts": ["/projectiles/scripts/project45-killprojectileonstick.lua"],
+  "physics" : "sticky",
+  "animationCycle" : 0.25,
+  "frameNumber" : 1,
+  "damageKind" : "standardbullet",
+  "pointLight" : true,
+  "lightColor": [75, 75, 75],
+  "fullbright": true,
+  "flippable" : true,
+  "statusEffects" : [ ],
+  "power" : 25.0,
+  "speed" : 221,
+  "knockback" : 0,
+  "collisionPoly": [
+    [-8.5, 0],
+    [0, 1.5],
+    [8.5, 0],
+    [0, -1.5]
+  ],
+  "movementSettings":{
+    "collisionEnabled": true
+  },
+  "bounces" : 0,
+
+  "periodicActions" : [
+    {
+      "time" : 0,
+      "repeat" : true,
+      "action" : "particle",
+      "rotate" : true,
+      "specification" : {
+        "type" : "textured",
+        "image" : "/particles/project45/vfx/project45muzzlesmoke/project45muzzlesmoke.png",
+        "size" : 1,
+        "color" : [200, 200, 200, 255],
+        "position": [5, 0],
+        "initialVelocity" : [10, 1],
+        "finalVelocity" : [0, 3],
+        "fade" : 1.5,
+        "approach" : [10, 1],
+        "light" : [0, 0, 0],
+        "destructionAction": "fade",
+        "destructionTime" : 1.2,
+        "layer" : "front",
+        "collidesLiquid" : true,
+        "variance" : {
+          "angularVelocity": 45,
+          "initialVelocity" : [0.1, 0],
+          "approach" : [1, 0],
+          "position": [10, 0],
+          "size" : 0.05
+        }
+      }
+    },
+    {
+      "time" : 0.01,
+      "repeat" : true,
+      "action" : "particle",
+      "rotate" : true,
+      
+      "specification" : {
+        "type" : "streak",
+        "layer" : "back",
+        "fullbright" : true,
+        "destructionAction" : "shrink",
+        "size" : 1,
+        "color" : [128, 200, 255, 64],
+        "collidesForeground" : false,
+        "length" : 29,
+        "position" : [0, 0],
+        "timeToLive" : 0.01,
+        "destructionTime" : 0.2,
+        "initialVelocity" : [0.5, 0],
+        "variance" : {"length": 0}
+      }
+
+    }
+  ],
+  "actionOnReap": [
+    { 
+      "action" : "sound",
+      "options" : [
+        "/sfx/project45neosfx/bulletimpact/bulletimpact-generic1.ogg",
+        "/sfx/project45neosfx/bulletimpact/bulletimpact-generic2.ogg",
+        "/sfx/project45neosfx/bulletimpact/bulletimpact-generic3.ogg"
+      ]
+    },
+    /*
+    
+    {
+      "action": "config",
+      "file": "/projectiles/explosions/project45_hitexplosion/project45_hitexplosion.config"
+    },
+    
+    */
+    {
+      "action": "config",
+      "file": "/projectiles/explosions/regularexplosion/regularexplosion.config"
+    },
+    {
+      "action" : "loop",
+      "count" : 6,
+      "body" : [
+        {
+          "action" : "particle",
+          "specification" : {
+            "type" : "ember",
+            "size" : 1,
+            "color" : [255, 255, 200, 255],
+            "light" : [65, 65, 51],
+            "fullbright" : true,
+            "destructionTime" : 0.2,
+            "destructionAction" : "shrink",
+            "fade" : 0.9,
+            "initialVelocity" : [0, 5],
+            "finalVelocity" : [0, -50],
+            "approach" : [0, 30], 
+            "timeToLive" : 0,
+            "layer" : "middle",
+            "variance" : {
+              "position" : [0.25, 0.25],
+              "size" : 0.5,
+              "initialVelocity" : [10, 10],
+              "timeToLive" : 0.2
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "persistentAudio" : "/sfx/gun/rocket_fly.ogg"
+  
+}
