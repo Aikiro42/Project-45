@@ -357,27 +357,11 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
   storage.project45GunState.current.recoverTime = self.recoverTime[movementState] * self.recoverMult
   activeItem.setCursor("/cursors/project45-neo-cursor-" .. movementState .. ".cursor")
 
-  -- manual/shift reload
-  if self:reloadTriggered() and not self.weapon.isReloading then
-      if storage.project45GunState.ammo >= 0 and not self.triggered then
-        if storage.project45GunState.jamAmount > 0 then
-          self:updateJamAmount(0, true)
-          self:openBolt(self.breakAction and storage.project45GunState.ammo or 0,
-            false, self.breakAction, true, true)
-        else
-          self:openBolt(self.breakAction and storage.project45GunState.ammo or math.min(storage.project45GunState.ammo, self.ammoPerShot),
-            false, self.breakAction, true, true)
-        end
-        if self.internalMag then
-          self:setState(self.reloading)
-        else
-          self:ejectMag()
-        end  
-      elseif self.weapon.reloadTimer < 0 then
-        self:setState(self.reloading)
-      end
+  -- Manual reload (keybind)
+  if input.bindDown("aikiro42-project45", "project45-reload-keybind") and not self.weapon.isReloading then
+    self:ejectMag()
   end
-
+  
   -- trigger i/o logic
   if self:triggering()
   and not self.weapon.currentAbility
@@ -1026,6 +1010,7 @@ function Project45GunFire:cocking()
   --]]
 
   -- [[
+  sb.logInfo(animator.animationState("chamber"))
   self:openBolt(animator.animationState("chamber") == "ready" and self.ammoPerShot or 0, false, false, not self.ejectCasingsWithMag, true)
   util.wait(self.cockTime/2)
   
@@ -1368,6 +1353,26 @@ end
 -- Ejects mag
 -- can immediately begin reloading minigame
 function Project45GunFire:ejectMag()
+
+  if not self.weapon.isReloading then
+      if storage.project45GunState.ammo >= 0 and not self.triggered then
+        if storage.project45GunState.jamAmount > 0 then
+          self:updateJamAmount(0, true)
+          self:openBolt(self.breakAction and storage.project45GunState.ammo or 0,
+            false, self.breakAction, true, true)
+        else
+          self:openBolt(self.breakAction and storage.project45GunState.ammo or math.min(storage.project45GunState.ammo, self.ammoPerShot),
+            false, self.breakAction, true, true)
+        end
+        if self.internalMag then
+          self:setState(self.reloading)
+          return
+        end
+      elseif storage.project45GunState.ammo < 0 then
+        self:setState(self.reloading)
+        return
+      end
+  end
 
   self.passiveClass.onEjectMag(self)
 
