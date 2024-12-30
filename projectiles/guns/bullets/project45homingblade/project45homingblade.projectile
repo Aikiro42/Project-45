@@ -1,0 +1,91 @@
+{
+  // copied from unbound
+  "projectileName" : "project45homingblade",
+  "image" : "project45homingblade.png",
+  "animationCycle" : 0.2,
+  "frameNumber" : 2,
+  "damageKindImage" : "icon.png",
+  "lightColor" : [72, 52, 79],
+  "fullbright" : true,
+  "pointLight" : true,
+  "periodicActions" : [
+    {
+      "time" : 0,
+      "repeat" : true,
+      "action" : "particle",
+      "rotate" : true,
+      
+      "specification" : {
+        "type" : "streak",
+        "layer" : "back",
+        "fullbright" : true,
+        "destructionAction" : "shrink",
+        "size" : 1,
+        "color" : [225, 83, 73, 128],
+        "collidesForeground" : false,
+        "length" : 20,
+        "position" : [0, 0],
+        "timeToLive" : 0,
+        "destructionTime" : 0.2,
+        "initialVelocity" : [0.001, 0],
+        "variance" : {
+          "length": 0
+        }
+      }
+
+    }
+    //*/
+  ],
+  "actionOnReap" : [
+    { 
+      "action" : "sound",
+      "options" : [
+        "/sfx/project45neosfx/bulletimpact/bulletimpact-generic1.ogg",
+        "/sfx/project45neosfx/bulletimpact/bulletimpact-generic2.ogg",
+        "/sfx/project45neosfx/bulletimpact/bulletimpact-generic3.ogg"
+      ]
+    },
+    {
+      "action" : "loop",
+      "count" : 6,
+      "body" : [
+        {
+          "action" : "particle",
+          "specification" : {
+            "type" : "ember",
+            "size" : 1,
+            "color" : [225, 83, 73, 128],
+            "light" : [82, 8, 3],
+            "fullbright" : true,
+            "destructionTime" : 0.2,
+            "destructionAction" : "shrink",
+            "fade" : 0.9,
+            "initialVelocity" : [0, 5],
+            "finalVelocity" : [0, -50],
+            "approach" : [0, 30],
+            "timeToLive" : 0,
+            "layer" : "middle",
+            "variance" : {
+              "position" : [0.25, 0.25],
+              "size" : 0.5,
+              "initialVelocity" : [10, 10],
+              "timeToLive" : 0.2
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "power" : 10.0,
+  "speed" : 150.0,
+  "physics" : "default",
+  "rotationRate" : 10.0,
+  "trackingLimit" : 2.0,
+  "homingStartDelay": 0.125,
+  "homingStyle" : "controlVelocity",
+  "baseHomingControlForce" : 10,
+  "constantSpeed" : true,
+  "searchRadius" : 7.5,
+  "persistentAudio" : "/projectiles/guns/bullets/project45homingblade/project45homingbladeloop.ogg",
+  "scripts" : [ "/projectiles/guns/bullets/project45smartbullet/project45smartbullet.lua" ]
+}

@@ -1,0 +1,45 @@
+{
+  "itemName" : "project45-gravpullmod",
+  "price" : 5000,
+  "rarity" : "Legendary",
+  "tooltipKind" : "project45gunmod2",
+  "modCategory" : "ammoMod",
+  "category" : "uniqueWeapon",
+  "itemTags": ["weapon"],
+  "tooltipFields":{
+    "subtitle": "Ammo Mod",
+    "objectImage": "/items/augments/project45-gunmods/ammo/project45-gravpullmod/project45-gravpullmod.png"
+  },
+  "inventoryIcon" : "/items/augments/project45-gunmods/ammo/project45-gravpullmod/project45-gravpullmodicon.png",
+  "description": "Developed based on ancient knowledge. Does not seem to affect the user.",
+  "technicalInfo" : "Releases bursts that deal Dark damage and pull entities into them.",
+  "shortdescription" : "Gravipulls",
+
+  "augment":{
+    "modName": "Gravipulls",
+    "category": "experimental",
+
+    "conversion": "summoned",
+    "ammo":{
+      "archetype": "summoned",
+      "summonedProjectileType": "project45_gravpull",
+      "muzzleFlashColor": [106,34,132],
+      "summonedProjectileParameters":{
+        "speed": 0
+      },
+      "muzzleFlashParticles": [
+        {"particle": "project45flashbang-purple"}
+      ],
+      "shootSmokeParticles": [],
+      "hideMuzzleSmoke": true 
+    },
+    "stat": {
+      "baseDamage": {
+        "multiplicative": 0.8
+      }
+    }
+  },
+
+  "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
+}

@@ -194,7 +194,7 @@ function Project45GunFire:screenShake(amount, shakeTime, random)
   or self.performanceMode
   then return end
   
-  local amount = amount or self.currentScreenShake or 0.1
+  local amount = amount or storage.project45GunState.current.screenShakeAmount or 0.1
   if amount == 0 then return end
   
   if storage.cameraProjectile and world.entityExists(storage.cameraProjectile) then
