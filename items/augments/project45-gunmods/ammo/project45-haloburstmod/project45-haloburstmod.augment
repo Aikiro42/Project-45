@@ -28,7 +28,9 @@
       },
       "muzzleFlashParticles": [
         {"particle": "project45flashbang-yellow"}
-      ]
+      ],
+      "shootSmokeParticles": [],
+      "hideMuzzleSmoke": true
     }
   },
 

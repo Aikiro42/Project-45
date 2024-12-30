@@ -1,0 +1,95 @@
+{
+  "projectileName" : "project45_gravpull",
+  "image" : "project45_gravpull.png",
+  "animationCycle" : 0.5,
+  "timeToLive": 0.5,
+  "fullbright": true,
+  "frameNumber" : 14,
+  "speed" : 0,
+  "renderLayer": "MiddleParticle",
+  "damagePoly" : [
+    [16.00,0.00],
+    [9.98,12.51],
+    [-3.56,15.60],
+    [-14.42,6.94],
+    [-14.42,-6.94],
+    [-3.56,-15.60],
+    [9.98,-12.51]
+  ],
+  "animationLoops" : false,
+  "piercing" : true,
+  "bounces" : -1,
+  "flippable" : true,
+  "power": 1,
+  "damageType" : "IgnoresDef",
+  "damageKind" : "project45dark",
+  "periodicActions": [
+    {
+      "time": 0.3,
+      "repeat": false,
+      "action" : "loop",
+      "count": 15,
+      "body" : [
+        {
+          "action" : "option",
+          "options" : [
+            {
+              "action" : "particle",
+              "specification" : {
+                "type" : "ember",
+                "size" : 1.0,
+                "color" : [106,34,132,128],
+                "light" : [50,12,64],
+                "destructionAction" : "fade",
+                "destructionTime" : 0.2,
+                "initialVelocity" : [0, 0],
+                "finalVelocity" : [0, 0],
+                "approach" : [25, 25],
+                "fullbright": true,
+                "timeToLive" : 0.2,
+                "layer" : "back",
+                "variance" : {
+                  "initialVelocity" : [25, 25]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "action" : "option",
+          "options" : [
+            {
+              "action" : "particle",
+              "specification" : {
+                "type" : "ember",
+                "size" : 1.0,
+                "color" : [210,156,231,255],
+                "destructionAction" : "fade",
+                "destructionTime" : 0.1,
+                "initialVelocity" : [0, 0],
+                "finalVelocity" : [0, 0],
+                "approach" : [25, 25],
+                "fullbright": true,
+                "timeToLive" : 0,
+                "layer" : "back",
+                "variance" : {
+                  "initialVelocity" : [50, 50]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "physicsForces" : {
+    "vacuum" : {
+      "type" : "RadialForceRegion",
+      "outerRadius" : 100,
+      "innerRadius" : 0,
+      "targetRadialVelocity" : -50,
+      "controlForce" : 100,
+      "categoryWhitelist" : ["monster", "npc", "vehicle", "itemdrop"]
+    }
+  }
+}
