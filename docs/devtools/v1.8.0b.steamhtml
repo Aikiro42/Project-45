@@ -17,8 +17,9 @@ totalDamage = worldLevel * powerMultiplier^2
     [*]Added the [b]Bladed Arrows[/b] mod, which inflicts the [i]Bleeding[/i] status effect.[list]
     [*][i]Bleeding[/i] deals 0.5% max HP as true damage every . This status effect stacks on reapplication.
 [/list]
-    [*]
-[/list] 
+    [*]Added the [b]Homing Blades[/b] ammo mod for the Sawblader.
+    [*]Added the [b]Gravipulls[/b] ammo mod, a weaker version of the Gravibombs ammo mod.
+[/list]
 
 [h3]Fixes[/h3]
 
@@ -27,6 +28,8 @@ totalDamage = worldLevel * powerMultiplier^2
     [*]Fixed wildcard stat mods not showing which stats they can potentially give before being given a seed.
     [*]Fixed Scarlet Flash slashes appearing on allies.
     [*]Fixed weapon cursor UI not disappearing when switching to the Supply Transponder.
+    [*]Fixed some Powerstave ammo mods having inappropriate muzzle flashes.
+    [*]Fixed bug preventing the MLG Scope damage buff from applying
     [*]Fixed bug related to fullbright gun mod sprites.
     [*]Fixed bug allowing Phase Shifted players to deal damage.
     [*]Fixed script crash in project45status effect.
@@ -43,6 +46,7 @@ totalDamage = worldLevel * powerMultiplier^2
     [*]ancient pots now have a 50% chance to spawn project 45 items of rarity based on world level
 [/list]
     [*]Portable G.D.K.s now drop occasionally.
+    [*]Incrased the base damage multiplier of the Gravibombs ammo mod from 1x to 1.1x
     [*]The projectiles from the Flechette Shells mod now inflict [i]Bleeding[/i].[list]
     [*]Decreased projectile count from 5 to 4.
     [*]Added a 0.8x base damage modifier.
