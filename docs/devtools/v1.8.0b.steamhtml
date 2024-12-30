@@ -19,6 +19,7 @@ totalDamage = worldLevel * powerMultiplier^2
 [/list]
     [*]Added the [b]Homing Blades[/b] ammo mod for the Sawblader.
     [*]Added the [b]Gravipulls[/b] ammo mod, a weaker version of the Gravibombs ammo mod.
+    [*]Added the [b]Boltgun[/b] from Warhammer 40K.
 [/list]
 
 [h3]Fixes[/h3]
