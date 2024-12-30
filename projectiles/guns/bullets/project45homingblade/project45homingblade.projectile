@@ -86,6 +86,6 @@
   "baseHomingControlForce" : 10,
   "constantSpeed" : true,
   "searchRadius" : 7.5,
-
+  "persistentAudio" : "/projectiles/guns/bullets/project45homingblade/project45homingbladeloop.ogg",
   "scripts" : [ "/projectiles/guns/bullets/project45smartbullet/project45smartbullet.lua" ]
 }
