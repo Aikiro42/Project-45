@@ -29,6 +29,7 @@ function Project45MLGNoScope:update(dt, fireMode, shiftHeld)
     end
 
     if self.noscopeTimer <= 0 and not self.rotating then
+        storage.project45GunState.damageModifiers["noScopeMult"] = nil
         animator.stopAllSounds("noscopeProgressLoop")
         activeItem.setScriptedAnimationParameter("altTotalAngle", nil)
     end
@@ -125,6 +126,10 @@ function Project45MLGNoScope:threesixty()
         activeItem.setScriptedAnimationParameter("altTotalAngle", 360)
         self.noscopeTimer = self.noscopeTime
         status.addEphemeralEffect("project45noscopedamagebonus", self.noscopeTime)
+        storage.project45GunState.damageModifiers["noScopeMult"] = {
+            type="mult",
+            value=4.2
+        }
         status.overConsumeResource("energy", status.resourceMax("energy"))
         
     else

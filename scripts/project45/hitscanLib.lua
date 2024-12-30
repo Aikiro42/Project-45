@@ -25,7 +25,7 @@ function hitscanLib:fireChainBeam()
   self:startFireLoop()
   if storage.project45GunState.ammo > 0 then
     self:recoil(false, 0.1)
-    self:screenShake(self.currentScreenShake * 4)
+    self:screenShake(storage.project45GunState.current.screenShakeAmount * 4)
   end
 
   animator.setAnimationState("gun", "firingLoop")
@@ -124,7 +124,7 @@ function hitscanLib:fireChainBeam()
     
     recoilTimer = recoilTimer + self.dt
     if recoilTimer >= 0.1 then
-      self:screenShake(self.currentScreenShake, 0.01)
+      self:screenShake(storage.project45GunState.current.screenShakeAmount, 0.01)
       recoilTimer = 0
     end
     self:recoil(false, self.recoilMult * 0.1)
@@ -670,7 +670,7 @@ function hitscanLib:fireBeam()
     self:startFireLoop()
     if storage.project45GunState.ammo > 0 then
       self:recoil(false, 0.1)
-      self:screenShake(self.currentScreenShake * 4)
+      self:screenShake(storage.project45GunState.current.screenShakeAmount * 4)
     end
 
     animator.setAnimationState("gun", "firingLoop")
@@ -765,7 +765,7 @@ function hitscanLib:fireBeam()
       
       recoilTimer = recoilTimer + self.dt
       if recoilTimer >= 0.1 then
-        self:screenShake(self.currentScreenShake, 0.01)
+        self:screenShake(storage.project45GunState.current.screenShakeAmount, 0.01)
         recoilTimer = 0
       end
       self:recoil(false, self.recoilMult * 0.1)
@@ -985,7 +985,7 @@ function hitscanLib:updateSummonAreaIndicator()
 end
 
 function hitscanLib:summonArea()
-  return project45util.circle(math.tan(util.toRadians((self.currentInaccuracy or 7.5) + (self.spread or 0.01))) * world.magnitude(activeItem.ownerAimPosition(), mcontroller.position()))
+  return project45util.circle(math.tan(util.toRadians((self.storage.project45GunState.current.inaccuracy or 7.5) + (self.spread or 0.01))) * world.magnitude(activeItem.ownerAimPosition(), mcontroller.position()))
 end
 
 --[[
@@ -998,7 +998,7 @@ end
 
 function hitscanLib:summonPosition()
   local randRotate = math.random() * math.pi * 2
-  local randRadius = math.random() * math.tan(util.toRadians((self.currentInaccuracy or 7.5) + (self.spread or 0.01))) * world.magnitude(activeItem.ownerAimPosition(), mcontroller.position())
+  local randRadius = math.random() * math.tan(util.toRadians((self.storage.project45GunState.current.inaccuracy or 7.5) + (self.spread or 0.01))) * world.magnitude(activeItem.ownerAimPosition(), mcontroller.position())
   randRadius = math.abs(randRadius)
   local randVector = vec2.rotate({randRadius, 0}, randRotate)
   return vec2.add(randVector, activeItem.ownerAimPosition())
