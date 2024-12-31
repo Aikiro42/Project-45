@@ -1,3 +1,4 @@
+---@diagnostic disable: lowercase-global
 require '/scripts/vec2.lua'
 require '/scripts/project45/project45util.lua'
 

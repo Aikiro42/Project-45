@@ -1,7 +1,7 @@
 {
   "projectileName" : "project45splitblade",
   "image" : "project45splitblade.png",
-  "scripts": ["/projectiles/scripts/project45-killprojectileonstick.lua"],
+  "scripts": ["/projectiles/scripts/project45/project45tracer.lua"],
   "physics" : "grenade",
   "animationCycle" : 0.1,
   "frameNumber" : 2,
@@ -26,6 +26,10 @@
     "collisionEnabled": true
   },
   "bounces" : 0,
+  "tracerParameters": {
+    "color": [255, 255, 255, 200],
+    "fullbright": false
+  },
 
   "periodicActions" : [
     {
