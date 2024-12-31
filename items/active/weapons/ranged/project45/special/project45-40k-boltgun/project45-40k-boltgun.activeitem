@@ -34,7 +34,7 @@
       },
       "magazine": {
         "particles": [
-          {"particle": "project45combatriflemag"}
+          {"particle": "project45boltgunmag"}
         ]
       }
     },
@@ -55,7 +55,7 @@
   },
 
   "baseOffset" : [0.875, 0.125],
-  "muzzleOffset" : [1.1875, 0.3125],
+  "muzzleOffset" : [1.4375, 0.3125],
   "ejectionPortOffset": [0, 0.875],
   "magazineOffset": [-0.25, -0.375],
 
@@ -80,13 +80,16 @@
     "semi": false,
     "burstCount": 1,
     "inaccuracy": 1.625,
+
+    "screenShakeAmount": 0.8,
+    "recoilUpOnly": false,
     
     "jamChances": [0, 0, 0, 0],
 
     "recoilAmount": 10,
-    "recoilMaxDeg": 45,
-    "recoverDelay": 0.05,
-    "recoverTime": 2,
+    "recoilMaxDeg": 30,
+    "recoverDelay": 0.01,
+    "recoverTime": 1,
     
     "cycleTime": 0.1125,
     "projectileKind": "projectile",
