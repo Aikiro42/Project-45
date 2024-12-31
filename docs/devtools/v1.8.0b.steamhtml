@@ -18,6 +18,7 @@ totalDamage = worldLevel * powerMultiplier^2
     [*][i]Bleeding[/i] deals 0.5% max HP as true damage every . This status effect stacks on reapplication.
 [/list]
     [*]Added the [b]Homing Blades[/b] ammo mod for the Sawblader.
+    [*]Added the [b]Splitblades[/b] ammo mod for the Sawblader, which fires a blade that splits into three a short time after being launched.
     [*]Added the [b]Gravipulls[/b] ammo mod, a weaker version of the Gravibombs ammo mod.
     [*]Added the [b]Boltgun[/b] from Warhammer 40K.
 [/list]
