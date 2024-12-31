@@ -1,8 +1,8 @@
 {
   "projectileName" : "project45massreactivebolt",
   "image" : "project45massreactivebolt.png",
-  "scripts": ["/projectiles/scripts/project45-killprojectileonstick.lua"],
-  "physics" : "sticky",
+  "scripts": ["/projectiles/scripts/project45/project45tracer.lua"],
+  "physics" : "project45projectile",
   "animationCycle" : 0.25,
   "frameNumber" : 1,
   "damageKind" : "standardbullet",
@@ -24,6 +24,11 @@
     "collisionEnabled": true
   },
   "bounces" : 0,
+
+  "tracerParameters": {
+    "color" : [128, 200, 255, 64],
+    "fullbright": true
+  },
 
   "periodicActions" : [
     {
@@ -54,29 +59,6 @@
           "size" : 0.05
         }
       }
-    },
-    {
-      "time" : 0.01,
-      "repeat" : true,
-      "action" : "particle",
-      "rotate" : true,
-      
-      "specification" : {
-        "type" : "streak",
-        "layer" : "back",
-        "fullbright" : true,
-        "destructionAction" : "shrink",
-        "size" : 1,
-        "color" : [128, 200, 255, 64],
-        "collidesForeground" : false,
-        "length" : 29,
-        "position" : [0, 0],
-        "timeToLive" : 0.01,
-        "destructionTime" : 0.2,
-        "initialVelocity" : [0.5, 0],
-        "variance" : {"length": 0}
-      }
-
     }
   ],
   "actionOnReap": [

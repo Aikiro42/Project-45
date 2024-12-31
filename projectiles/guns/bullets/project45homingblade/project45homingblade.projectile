@@ -8,6 +8,10 @@
   "lightColor" : [72, 52, 79],
   "fullbright" : true,
   "pointLight" : true,
+  "tracerParameters": {
+    "color": [225, 83, 73, 128],
+    "fullbright": true
+  },
   "periodicActions" : [
     {
       "time" : 0,
@@ -87,5 +91,8 @@
   "constantSpeed" : true,
   "searchRadius" : 7.5,
   "persistentAudio" : "/projectiles/guns/bullets/project45homingblade/project45homingbladeloop.ogg",
-  "scripts" : [ "/projectiles/guns/bullets/project45smartbullet/project45smartbullet.lua" ]
+  "scripts" : [
+    "/projectiles/guns/bullets/project45smartbullet/project45smartbullet.lua",
+    "projectiles/scripts/project45/project45tracer"
+  ]
 }
