@@ -30,7 +30,7 @@
   },
   "bounces" : 0,
   "tracerParameters": {
-    "color": [255,255,200],
+    "color": [255,255,200,128],
     "fullbright": true
   },
   "periodicActions" : [
