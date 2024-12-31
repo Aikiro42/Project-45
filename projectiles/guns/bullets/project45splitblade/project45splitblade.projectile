@@ -1,0 +1,127 @@
+{
+  "projectileName" : "project45splitblade",
+  "image" : "project45splitblade.png",
+  "scripts": ["/projectiles/scripts/project45-killprojectileonstick.lua"],
+  "physics" : "grenade",
+  "animationCycle" : 0.1,
+  "frameNumber" : 2,
+  "timeToLive": 0.05,
+  "damageKind" : "standardbullet",
+  "pointLight" : true,
+  "lightColor": [75, 36, 0],
+  "fullbright": true,
+  "flippable" : true,
+  "piercing": true,
+  "statusEffects" : [ ],
+  "power" : 5.0,
+  "speed" : 150,
+  "knockback" : 0,
+  "collisionPoly": [
+    [-8.5, 0],
+    [0, 1.5],
+    [8.5, 0],
+    [0, -1.5]
+  ],
+  "movementSettings":{
+    "collisionEnabled": true
+  },
+  "bounces" : 0,
+
+  "periodicActions" : [
+    {
+      "time" : 0,
+      "repeat" : true,
+      "action" : "particle",
+      "rotate" : true,
+      
+      "specification" : {
+        "type" : "streak",
+        "layer" : "back",
+        "fullbright" : true,
+        "destructionAction" : "shrink",
+        "size" : 1,
+        // "color" : [154, 93, 160, 128],
+        "color" : [255, 255, 255, 200],
+        "collidesForeground" : false,
+        "length" : 20,
+        "position" : [0, 0],
+        "timeToLive" : 0,
+        "destructionTime" : 0.2,
+        "initialVelocity" : [0.001, 0],
+        "variance" : {
+          "length": 0
+        }
+      }
+
+    }
+    //*/
+  ],
+  "actionOnReap": [
+    {
+      "action" : "projectile",
+      "inheritDamageFactor" : 0.33,
+      "type" : "project45splitbladefragment",
+      "fuzzAngle" : 5,
+      "angleAdjust" : 5
+    },
+    {
+      "action" : "projectile",
+      "inheritDamageFactor" : 0.33,
+      "type" : "project45splitbladefragment",
+      "fuzzAngle" : 0,
+      "angleAdjust" : 0
+    },
+    {
+      "action" : "projectile",
+      "inheritDamageFactor" : 0.33,
+      "type" : "project45splitbladefragment",
+      "fuzzAngle" : 5,
+      "angleAdjust" : -5
+    },
+    { 
+      "action" : "sound",
+      "options" : [
+        "/sfx/project45neosfx/fire/fire-pistol1.ogg"
+      ]
+    },
+    /*
+    
+    {
+      "action": "config",
+      "file": "/projectiles/explosions/project45_hitexplosion/project45_hitexplosion.config"
+    },
+    
+    */
+    {
+      "action" : "loop",
+      "count" : 6,
+      "body" : [
+        {
+          "action" : "particle",
+          "specification" : {
+            "type" : "ember",
+            "size" : 1,
+            "color" : [255, 255, 200, 255],
+            "light" : [65, 65, 51],
+            "fullbright" : true,
+            "destructionTime" : 0.2,
+            "destructionAction" : "shrink",
+            "fade" : 0.9,
+            "initialVelocity" : [0, 5],
+            "finalVelocity" : [0, -50],
+            "approach" : [0, 30],
+            "timeToLive" : 0,
+            "layer" : "middle",
+            "variance" : {
+              "position" : [0.25, 0.25],
+              "size" : 0.5,
+              "initialVelocity" : [10, 10],
+              "timeToLive" : 0.2
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "persistentAudio" : "/sfx/tools/chainsaw_cut_metal.ogg"
+}
