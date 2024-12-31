@@ -4,74 +4,89 @@
 
 # Todo
 
+## General Changes
+
+- [ ] Version Control System for Weapons to avoid necessitating wipes
+- [ ] Ability to stack ammo mods
+  > out of scope?
+- [x] Settings menu
+
 ## Balance Changes
 
-- [ ] Nerf overpowered damage of guns
+- [ ] Balance Economy
+- [x] Nerf overpowered damage of guns
   - Make them be on par with other popular gun mods like Project Knightfall, Starforge, Raizzys Guns, Feast of Fire and Smoke
-- [ ] Strengthen Base Guns?
+- [x] Strengthen Base Guns?
+  - New hand-craftable gun, "The Protector", added
+  - mods now drop from enemies
 
 ## Compatibility
 
-- [ ] Make fix for Enhanced Elemental Effects as a separate mod
-
-- [ ] Wildfire Compatibility
-
-- [ ] Weapon Retrofitting Syste
+- [ ] Weapon Retrofitting System
   - Should Rework passives?
+- [ ] Feast of Fire and Smoke (FFS) Ammo mods
+- [x] Wildfire Compatibility
 
 ## Bugfixes
 
 - [ ] Test Vanilla Altfire Compatibility with current iteration of gunfire mechanics
+- [ ] Enemy flares are usable in B.Y.O.S. Ships
+- [ ] Energy weapon upgrades applicable on ballistic weapons
+
+## Docs
+
+- [ ] `project45gunfire` documentation
+- [ ] Item Catalog
 
 ## New Features
 
-- [ ] Rework Gunmod Application System (G.A.S.)
-- [ ] Portable Gun Disassembly Kit
-- [ ] Version Control System for Weapons to avoid necessitating wipes
+### General
+- [x] Project 45 Item Crafting
+  - Possible via the craftable Gunsmith Addon (Inventor's Table)
+- [x] Portable Gun Disassembly Kit
+- [x] Ballistic Shield
+- [x] Manual Reload
+
+### Guns
+- [ ] Plasma Launcher
+- [ ] Energy Grenade Launcher
+- [x] Autocannon
+- [x] Drum-fed Shotgun
+- [x] Mortar Launcher
+- [x] Wrist blaster
+- [x] Crossbow
+- [x] Sawblade Launcher
 
 ### Abilities:
 - [ ] Drone
   - lets a drone fly around and target nearby enemies
   - make projectile modifiable, make it able to fire hitscans
-- [ ] Melee Swipe
-  - projectile that looks like a melee swipe
-  - high-damage melee swipe but short range.
-- [ ] Cover
-  - status effect that impedes movement but renders user invisible
-  - generate shield
-- [ ] Ultracoin
-  - Ultrakill coin
+- [ ] Underbarrel Micromissile Laundher
+- [x] Bayonet
+- [x] Underbarrel Chainsaw
+- [x] Melee Swipe
+- [x] Shield
+- [x] Ultrakill Coin
 
 ### Mods
-- Double Slit (muzzle)
+- [ ] Intrabarrel Splitter (ballistic, muzzle)
   - increases multishot
-- Pneumatic Mechanism (receiver)
+- [ ] Pneumatic Mechanism (receiver)
   - increases projectile time to live and range
-- Rotary Barrel
-  - may require overhaul of modding system, not just a rework
+- [ ] Conversion Kit (multiple slots)
+  - Gun-specific; converts select guns into SMGs, etc.
 
 ### Ammo
-- [ ] Rocket Jump Ammo
-  > Should this be an ability instead?
-- [ ] Localized Gravity Ammo Mod
-  - Earlygame version of black hole magic ammo mod; deals weak damage to enemies but has strong pull for utility
-- [ ] 4 Gau Shotgun Shells
-  - stat mod for shotguns; increases damage and recoil
-  - requires G.A.S. rework
-
-### Stat
-- [ ] Wildcard Variants
-  - Basic Wildcard (current)
-  - Advanced Wildcard (requires G.A.S. Rework)
-
-### Guns
-- ~~M249 SAW~~
-- Plasma Launcher
-- Energy Grenade Launcher
-- Autocannon
+- [ ] Defense-ignoring ammo
+- [ ] Tree-cutting sawblades
+- [ ] "Volatile Erchius Rods": Explosive Gauss Rifle Ammo
+- [ ] "Slag": Flamethrower ammo that makes it fire lava blobs
+- [x] Rocket Jump Ammo
+- [x] Localized Gravity Ammo Mod
+- [x] 4 Gau Shotgun Shells
 
 ## Multiplayer
 - [ ] Zweibrandyr crashes when buffed?
 - [ ] God mod stats are missing?
-- [ ] Ammo readouts of other players is visible?
 - [ ] Mod buildscript error?
+- [x] Ammo readouts of other players is visible?
