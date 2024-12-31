@@ -62,7 +62,7 @@
         "op": "add",
         "path": "/project45-spawnenemy",
         "value": [
-            "/spawnnpc human arenafighter"
+            "/spawnnpc human project45goon"
         ]
     },
     {
