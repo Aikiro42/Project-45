@@ -11,6 +11,8 @@ end
 
 Checker = {}
 
+local generalModConfig = root.assetJson("/configs/project45/project45_generalmod.config")
+
 function Checker:new(input, augmentConfig)
   self.input = input
   self.output = Item.new(input)
@@ -109,12 +111,12 @@ function Checker:check()
 
   -- Bad if weapon does not accept mod slot
   local acceptsModSlot = set.new(modInfo.acceptsModSlot or {})
-  set.insert(acceptsModSlot, "ability")
-  set.insert(acceptsModSlot, "passive")
-  set.insert(acceptsModSlot, "intrinsic")
-  set.insert(acceptsModSlot, "stat")
-  set.insert(acceptsModSlot, "ammoType")
-  set.insert(acceptsModSlot, "manualReload")
+  
+  -- FIXME: is there no set.union or table.append or something?
+  for slot in generalModConfig.innateSlots do
+    set.insert(acceptsModSlot, slot)
+  end
+  
   if not acceptsModSlot[augment.slot] then
     self:addError(string.format("Weapon does not accept %s mods", augment.slot))
     self.checked = false
