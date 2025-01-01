@@ -1,0 +1,61 @@
+{
+  "itemName" : "project45-incineratemod",
+  "price" : 1250,
+  "rarity" : "Uncommon",
+  "tooltipKind" : "project45gunmod2",
+  "modCategory" : "ammoMod",
+  "category" : "uniqueWeapon",
+  "itemTags": ["weapon"],
+  "tooltipFields":{
+    "subtitle": "Ammo Mod",
+    "objectImage": "/items/augments/project45-gunmods/ammo/project45-incineratemod/project45-incineratemod.png"
+  },
+  "inventoryIcon" : "/items/augments/project45-gunmods/ammo/project45-incineratemod/project45-incineratemodicon.png",
+  "description" : "Powerstave protocol that resynthesizes air molecules into a combustible gas.",
+  "technicalInfo": "Spews flames.",
+  "shortdescription" : "Incinerate",
+
+  "augment":{
+    "modName": "Incinerate",
+    "category": "experimental",
+    "conversion": "projectile",
+    "slot": "ammoType",
+    "ammo": {
+      "archetype": "magic",
+      "elementalType": "fire",
+      "projectileType": "flamethrower",
+      "customSounds": {
+        "fire": [],
+        "fireStart" : ["/sfx/gun/flamethrower_start.ogg"],
+        "fireLoop" : ["/sfx/gun/flamethrower_loop.ogg"],
+        "fireEnd" : ["/sfx/gun/flamethrower_stop.ogg"]
+      }
+    },
+    "gun": {
+      "primaryAbility": {
+        "loopFiringAnimation": {
+          "operation": "replace",
+          "value": true
+        },
+        "screenShakeAmount": {
+          "operation": "replace",
+          "value": [0.3, 0.1]
+        }
+      }
+    },
+    "stat": {
+      "maxAmmo": {
+        "rebase": 100
+      },
+      "cycleTime": {
+        "rebase": 0.05
+      },
+      "recoilAmount": {
+        "rebase": 0.5
+      }
+    }
+  },
+
+  "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
+}
