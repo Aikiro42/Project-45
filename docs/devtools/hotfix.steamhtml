@@ -1,5 +1,7 @@
-[h1]v1.7.1b Hotfix[/h1]
+[h1]v1.8.2b Hotfix[/h1]
 
 [list]
-    [*]Fixed script error in games when StarExtensions is not installed.
+    [*]Added stat formatting entry for spread in project45_generalstat.config
+    [*]Fixed ammo mods wrongly affecting spread; adjusted ammo mods to accommodate the change
+    [*]Fixed rebaseMults not stacking properly in stat mod application script
 [/list]
