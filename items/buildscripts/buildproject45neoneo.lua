@@ -803,7 +803,7 @@ function build(directory, config, parameters, level, seed)
       end
       
       local modListDesc = ""
-      local exclude = set.new({"passive","ability","manualReload", "shiftAbility","rail","sights","muzzle","underbarrel","stock","ammoType"})
+      local exclude = set.new(generalTooltipConfig.techDisplayExcludedSlots or {})
       for modSlot, modKind in pairs(modList) do
         if not exclude[modSlot] and modKind[1] ~= "ability" then
           descriptionScore = descriptionScore + 1
