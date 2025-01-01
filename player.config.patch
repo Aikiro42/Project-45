@@ -13,6 +13,7 @@
     { "op" : "add", "path" : "/defaultBlueprints/tier1/-", "value" : { "item" : "project45-tcf-kineticarbiter" } },
     { "op" : "add", "path" : "/defaultBlueprints/tier1/-", "value" : { "item" : "project45-utk-revolver" } },
     { "op" : "add", "path" : "/defaultBlueprints/tier1/-", "value" : { "item" : "project45-wfm-kuvabramma" } },
+    { "op" : "add", "path" : "/defaultBlueprints/tier1/-", "value" : { "item" : "project45-40k-boltgun" } },
 
     // stats
     { "op" : "add", "path" : "/defaultBlueprints/tier1/-", "value" : { "item" : "project45-godmod" } },
