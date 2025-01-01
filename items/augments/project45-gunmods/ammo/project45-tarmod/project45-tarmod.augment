@@ -27,8 +27,6 @@
       "projectileParameters": {
         "physics": "grenade"
       },
-      "spread": 1.5,
-      "multishot": 1,
 
       "customSounds": {
         "fireStart": ["/sfx/project45neosfx/fire/start/firestart-switch1.ogg"],
@@ -40,6 +38,14 @@
 
       "hideMuzzleFlash": true,
       "hideMuzzleSmoke": true
+    },
+    "stat": {
+      "spread": {
+        "rebaseMult": 1.5
+      },
+      "multishot": {
+        "rebase": 1
+      }
     }
   },
 

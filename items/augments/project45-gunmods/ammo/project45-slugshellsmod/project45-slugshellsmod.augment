@@ -22,11 +22,15 @@
     "conversion": "projectile",
     "ammo": {
       "archetype": "shotgun",
-      "spread": 1,
       "projectileCount": 1,
       "projectileType": "project45stdbullet",
       "projectileParameters": {
         "speed" : 150
+      }
+    },
+    "stat": {
+      "spread": {
+        "rebaseMult": 1
       }
     }
   

@@ -27,7 +27,6 @@
         "ammoPerShot": 5,
         "fireTime": 0.25,
         "projectileCount": 5,
-        "spread": 2.5,
         "screenShakeAmount": 0.5,
         "recoilAmount": 5
       },
@@ -47,6 +46,9 @@
       },
       "recoverTime": {
         "rebaseMult": 1.1
+      },
+      "spread": {
+        "rebaseMult": 2.5
       }
     }
 

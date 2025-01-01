@@ -20,12 +20,15 @@ function apply(output, augment)
     local newPrimaryAbility = output:instanceValue("primaryAbility", {})
 
     -- alter general projectile settings
+    --[[
     local projectileSettingsList = {"multishot", "projectileCount", "spread"}
     for _, v in ipairs(projectileSettingsList) do
       if augment[v] then
+        sb.logInfo(v .. ': ' .. augment[v])
         newPrimaryAbility[v] = augment[v] -- or oldPrimaryAbility[v]
       end
     end
+    --]]
 
     -- alter specific projectile settings
     -- newPrimaryAbility.projectileKind = augment.projectileKind or oldPrimaryAbility.projectileKind -- no need; conversion already done

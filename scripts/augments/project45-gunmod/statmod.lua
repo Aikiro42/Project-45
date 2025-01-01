@@ -97,7 +97,7 @@ function apply(output, augment)
       multiplicative = statGroup[stat] and 0 or 1
     }
     statModifiers[stat].baseOrig = rebase or statModifiers[stat].baseOrig or baseStat(stat)
-    statModifiers[stat].baseMult = (statModifiers.baseMult or 1) * (rebaseMult or 1)
+    statModifiers[stat].baseMult = (statModifiers[stat].baseMult or 1) * (rebaseMult or 1)
     
     local recalculatedBase = statModifiers[stat].baseOrig * statModifiers[stat].baseMult
     if statGroup[stat] then
