@@ -42,7 +42,9 @@ function Project45GunFire:init()
   self.weapon.armFrameAnimations = (player and player.getProperty or status.statusProperty)("project45_armFrameAnimations", not self.performanceMode)
   
   local powerMultFactor = (player and player.getProperty or status.statusProperty)("project45_damageScaling", generalConfig.damageScaling or 0)
+  local challengeMultFactor = (player and player.getProperty or status.statusProperty)("project45_challengeScaling", generalConfig.challengeScaling or 0)
   self.powerMultiplier = 1 + powerMultFactor * (activeItem.ownerPowerMultiplier() - 1)
+  storage.challengeMultiplier = util.clamp(challengeMultFactor, 0, 0.9)
   
   self.hideMuzzleSmoke = self.performanceMode or self.hideMuzzleSmoke
   self.weapon.startRecoil = 0
@@ -1996,6 +1998,10 @@ function Project45GunFire:damagePerShot(noDLM)
       powerMultiplier = {
         type = "mult",
         value = self.powerMultiplier
+      },
+      challengeMultiplier = {
+        type = "mult",
+        value = (1 - storage.challengeMultiplier)
       },
       critDamageMult = {
         type="mult",

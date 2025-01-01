@@ -1,0 +1,34 @@
+{
+  "itemName" : "project45-challengerswillmod",
+  "price" : 1000,
+  "rarity" : "Rare",
+  "tooltipKind" : "project45gunmod2",
+  "modCategory" : "abilityMod",
+  "category" : "uniqueWeapon",
+  "itemTags": ["weapon"],
+  "tooltipFields": {
+    "subtitle": "Ability Mod"
+  },
+  "inventoryIcon" : "/items/augments/project45-gunmods/passive/project45-challengerswillmod/project45-challengerswillmod.png",
+  "description" : "An incentive for Challenge Scaling.",
+  "technicalInfo": "- Rewards currency based on the Challenge Scaling, min. 20%.\n- If no Quickbar installed, final damage decrease and reward scaling is 20%",
+  "shortdescription" : "Challenger's Will",
+  "archetype": "Shift Ability",
+  
+  "augment":{
+    "modName": "Challenger's Will",
+    "cost": 0,
+    "category": "universal",
+    "slot": "challenger",
+    "ability": {
+      "shiftAbilityType" : "project45challenger",
+      "shiftAbility": {
+        "name": "Challenger's Will"
+      },
+      "hasShiftAction": false
+    }
+  },
+
+  "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
+}

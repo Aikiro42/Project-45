@@ -1,3 +1,4 @@
+---@diagnostic disable: lowercase-global
 require "/scripts/project45/project45util.lua"
 
 	
@@ -9,6 +10,8 @@ local invSettings = {
 }
 
 function promptRestart()
+	-- If this function is ever called, then players have the ability to set the mod's settings
+	player.setProperty("project45_canSetSettings", true)
   widget.setText("lblRestartToSave", "^red;Restart Game to Apply Changes.")
 end
 
@@ -85,6 +88,18 @@ function updateDamageScaling()
 	end
 end
 
+function updateChallengeScaling()
+	local sliderVal = widget.getSliderValue("sldChallengeScaling") or 0
+	widget.setText("lblChallengeScaling", "Challenge Scaling: " .. sliderVal .."%")
+
+	local newValue = (widget.getSliderValue("sldChallengeScaling") or 0)/100
+	local oldValue = player.getProperty("project45_challengeScaling", 0)
+	if newValue ~= oldValue then
+		player.setProperty("project45_challengeScaling", newValue)
+  	promptRestart()
+	end
+end
+
 function init()
 	
 	-- sldDamageScaling
@@ -92,6 +107,11 @@ function init()
 	local sldDamageScalingVal = math.floor(player.getProperty("project45_damageScaling", 0)*100)
 	widget.setSliderValue("sldDamageScaling", sldDamageScalingVal)
 	widget.setText("lblDamageScaling", "Damage Scaling: " .. sldDamageScalingVal .."%")
+
+	widget.setSliderRange("sldChallengeScaling", 0, 90)
+	local sldChallengeScalingVal = math.floor(player.getProperty("project45_challengeScaling", 0)*100)
+	widget.setSliderValue("sldChallengeScaling", sldChallengeScalingVal)
+	widget.setText("lblChallengeScaling", "Challenge Scaling: " .. sldChallengeScalingVal .."%")
 
 	widget.setChecked("btnTogglePerformanceMode", player.getProperty("project45_performanceMode", false))
 	widget.setChecked("btnToggleCursorBars", player.getProperty("project45_renderBarsAtCursor", true))

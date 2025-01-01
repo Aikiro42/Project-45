@@ -81,6 +81,9 @@
     "stat": {
       "baseDamage": {
         "rebaseMult": 1.5
+      },
+      "recoilAmount": {
+        "additive": -3
       }
     }
   },
