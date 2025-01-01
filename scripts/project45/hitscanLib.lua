@@ -985,7 +985,7 @@ function hitscanLib:updateSummonAreaIndicator()
 end
 
 function hitscanLib:summonArea()
-  return project45util.circle(math.tan(util.toRadians((self.storage.project45GunState.current.inaccuracy or 7.5) + (self.spread or 0.01))) * world.magnitude(activeItem.ownerAimPosition(), mcontroller.position()))
+  return project45util.circle(math.tan(util.toRadians((storage.project45GunState.current.inaccuracy or 7.5) + (self.spread or 0.01))) * world.magnitude(activeItem.ownerAimPosition(), mcontroller.position()))
 end
 
 --[[
@@ -998,7 +998,7 @@ end
 
 function hitscanLib:summonPosition()
   local randRotate = math.random() * math.pi * 2
-  local randRadius = math.random() * math.tan(util.toRadians((self.storage.project45GunState.current.inaccuracy or 7.5) + (self.spread or 0.01))) * world.magnitude(activeItem.ownerAimPosition(), mcontroller.position())
+  local randRadius = math.random() * math.tan(util.toRadians((storage.project45GunState.current.inaccuracy or 7.5) + (self.spread or 0.01))) * world.magnitude(activeItem.ownerAimPosition(), mcontroller.position())
   randRadius = math.abs(randRadius)
   local randVector = vec2.rotate({randRadius, 0}, randRotate)
   return vec2.add(randVector, activeItem.ownerAimPosition())
