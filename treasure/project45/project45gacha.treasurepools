@@ -39,9 +39,9 @@
   "project45-gacha-xssr": [
     [0, {
       "pool" : [
-        {"weight" : 0.34, "pool" : "project45-guns-xssr"},
-        {"weight" : 0.33, "pool" : "project45-stats-xssr"},
-        {"weight" : 0.33, "pool" : "project45-mods-xssr"}
+        {"weight" : 0.49, "pool" : "project45-guns-xssr"},
+        {"weight" : 0.01, "pool" : "project45-stats-xssr"},
+        {"weight" : 0.50, "pool" : "project45-mods-xssr"}
       ],
       "poolRounds" : 1,
       "allowDuplication" : false

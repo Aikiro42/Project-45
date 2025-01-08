@@ -42,7 +42,7 @@
       ]
     }],
     [6.9, {
-      "poolRounds" : [[0.9, 0], [0.1, 1]],
+      "poolRounds" : [[0.99, 0], [0.01, 1]],
       "pool" : [
         {"weight" : 1, "pool" : "project45-stats-xssr"}
       ]
@@ -58,8 +58,8 @@
         {"weight" : 0.02, "pool" : "project45-gacha-xssr"}
       ],
       "poolRounds" : [
-        [0.5, 0],
-        [0.5, 1]
+        [0.8, 0],
+        [0.2, 1]
       ],
       "allowDuplication" : false
     }]
@@ -84,9 +84,9 @@
   "project45-natural-spawns": [
     [0, {
       "pool": [
-        {"weight" : 1, "pool" : "project45-guns-r"},
-        {"weight" : 1, "pool" : "project45-stats-r"},
-        {"weight" : 1, "pool" : "project45-mods-r"}
+        {"weight" : 0.25, "pool" : "project45-guns-r"},
+        {"weight" : 0.5, "pool" : "project45-stats-r"},
+        {"weight" : 0.25, "pool" : "project45-mods-r"}
       ],
       "poolRounds" : [
         [0.75, 0],
@@ -98,9 +98,9 @@
     }],
     [1.9, {
       "pool": [
-        {"weight" : 1, "pool" : "project45-guns-sr"},
-        {"weight" : 1, "pool" : "project45-stats-sr"},
-        {"weight" : 1, "pool" : "project45-mods-sr"}
+        {"weight" : 0.25, "pool" : "project45-guns-sr"},
+        {"weight" : 0.5, "pool" : "project45-stats-sr"},
+        {"weight" : 0.25, "pool" : "project45-mods-sr"}
       ],
       "poolRounds" : [
         [0.85, 0],
@@ -111,9 +111,9 @@
     }],
     [3.9, {
       "pool": [
-        {"weight" : 1, "pool" : "project45-guns-ssr"},
-        {"weight" : 1, "pool" : "project45-stats-ssr"},
-        {"weight" : 1, "pool" : "project45-mods-ssr"}
+        {"weight" : 0.25, "pool" : "project45-guns-ssr"},
+        {"weight" : 0.5, "pool" : "project45-stats-ssr"},
+        {"weight" : 0.25, "pool" : "project45-mods-ssr"}
       ],
       "poolRounds" : [
         [0.95, 0],
@@ -130,10 +130,10 @@
         {"weight" : 1, "item" : "project45-portablegdk"}
       ],
       "poolRounds" : [
-        [0.95, 0],
-        [0.05, 1]
+        [0.99, 0],
+        [0.01, 1]
       ],
-      "allowDuplication": true
+      "allowDuplication": false
     }]
   ],
 
