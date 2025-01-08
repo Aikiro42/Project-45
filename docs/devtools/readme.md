@@ -1,7 +1,7 @@
 # Converting markdown to Steam HTML
 ```bash
 cd docs/devtools
-npx steamdown < markdown.md > markdown.steamhtml
+npx steamdown < hotfix.md > hotfix.steamhtml
 ```
 
 ```bash
