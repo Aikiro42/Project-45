@@ -472,371 +472,370 @@ function build(directory, config, parameters, level, seed)
 
   -- tooltip
   -- populate tooltip fields
-  if config.tooltipKind == "project45gun" then
-    config.tooltipFields = config.tooltipFields or {}
-    if config.project45GunModInfo.uniqueType then
-      config.tooltipFields.subtitle = generalTooltipConfig.categoryStringsX[config.project45GunModInfo.uniqueType][config.project45GunModInfo.category or "generic"]
-    else
-      config.tooltipFields.subtitle = generalTooltipConfig.categoryStrings[config.project45GunModInfo.category or "generic"] -- .. "^#D1D1D1;" .. config.gunArchetype or config.category
-    end
-    config.tooltipFields.levelLabel = util.round(currentLevel, 1)
-    config.tooltipFields.rarityLabel = rarityConversions[configParameter("isUnique", false) and "unique" or string.lower(configParameter("rarity", "common"))]
-    if elementalType ~= "physical" then
-      config.tooltipFields.elementImage = "/interface/elements/"..elementalType..".png"
-    end
+  parameters.tooltipKind = "project45gun"
 
-    local modList = parameters.modSlots or config.modSlots or {}
-    if config.project45GunModInfo then
-  
-      local acceptedModSlots = set.new(config.project45GunModInfo.acceptsModSlot or {})
-      local mods = {
-        "sights",
-        "rail",
-        "muzzle",
-        "underbarrel",
-        "stock"
-      }
-      for i, modSlot in ipairs(mods) do
-        if acceptedModSlots[modSlot] then
-          config.tooltipFields[modSlot .. "Image"] = modList[modSlot] and modList[modSlot][3] or ""
-          config.tooltipFields["itemDescription-" .. modSlot .. "Image"] = "/interface/itemdescriptions/project45gun/modslots/" .. modSlot .. ".png"
-        else
-          config.tooltipFields["itemDescription-" .. modSlot .. "Image"] = "/interface/itemdescriptions/project45gun/modslots/off-" .. modSlot .. ".png"
-        end
-      end
-      
-      if not (
-        #(config.project45GunModInfo.allowsConversion or {}) == 0
-        and #(config.project45GunModInfo.acceptsAmmoArchetype or {}) == 0
-      )
-      then
-        config.tooltipFields.ammoTypeImage = modList.ammoType and modList.ammoType[3] or ""
-        config.tooltipFields["itemDescription-ammoImage"] = "/interface/itemdescriptions/project45gun/modslots/ammo.png"
+  parameters.tooltipFields = parameters.tooltipFields or {}
+  if config.project45GunModInfo.uniqueType then
+    parameters.tooltipFields.subtitle = generalTooltipConfig.categoryStringsX[config.project45GunModInfo.uniqueType][config.project45GunModInfo.category or "generic"]
+  else
+    parameters.tooltipFields.subtitle = generalTooltipConfig.categoryStrings[config.project45GunModInfo.category or "generic"] -- .. "^#D1D1D1;" .. config.gunArchetype or config.category
+  end
+  parameters.tooltipFields.levelLabel = util.round(currentLevel, 1)
+  parameters.tooltipFields.rarityLabel = rarityConversions[configParameter("isUnique", false) and "unique" or string.lower(configParameter("rarity", "common"))]
+  if elementalType ~= "physical" then
+    parameters.tooltipFields.elementImage = "/interface/elements/"..elementalType..".png"
+  end
+
+  local modList = parameters.modSlots or config.modSlots or {}
+  if config.project45GunModInfo then
+
+    local acceptedModSlots = set.new(config.project45GunModInfo.acceptsModSlot or {})
+    local mods = {
+      "sights",
+      "rail",
+      "muzzle",
+      "underbarrel",
+      "stock"
+    }
+    for i, modSlot in ipairs(mods) do
+      if acceptedModSlots[modSlot] then
+        parameters.tooltipFields[modSlot .. "Image"] = modList[modSlot] and modList[modSlot][3] or ""
+        parameters.tooltipFields["itemDescription-" .. modSlot .. "Image"] = "/interface/itemdescriptions/project45gun/modslots/" .. modSlot .. ".png"
       else
-        config.tooltipFields["itemDescription-ammoImage"] = "/interface/itemdescriptions/project45gun/modslots/off-ammo.png"
+        parameters.tooltipFields["itemDescription-" .. modSlot .. "Image"] = "/interface/itemdescriptions/project45gun/modslots/off-" .. modSlot .. ".png"
       end
-
     end
     
-    if config.primaryAbility then
-      
-      local upgradeCapacity = deepConfigParameter(nil, "project45GunModInfo", "upgradeCapacity")
-      if upgradeCapacity > -1 then
-        local count = parameters.upgradeCount or 0
-        local max = parameters.project45GunModInfo.upgradeCapacity
-        config.tooltipFields.upgradeCapacityLabel = (count < max and "^#96cbe7;" or "^#777777;") .. (max - count) .. "/" .. max .. "^reset;"
-        config.tooltipFields.itemDescriptionUpgradeCapLabel = project45util.colorText("#96cbe7", "U. Cap: " .. parameters.project45GunModInfo.upgradeCapacity)
-      else
-        config.tooltipFields.upgradeCapacityLabel = project45util.colorText("#96cbe7","Unlimited")
-      end
-      
-      --[[
-      
-      chargeTime* = chargeTime
-      If gun is auto, chargeTime* = 0
+    if not (
+      #(config.project45GunModInfo.allowsConversion or {}) == 0
+      and #(config.project45GunModInfo.acceptsAmmoArchetype or {}) == 0
+    )
+    then
+      parameters.tooltipFields.ammoTypeImage = modList.ammoType and modList.ammoType[3] or ""
+      parameters.tooltipFields["itemDescription-ammoImage"] = "/interface/itemdescriptions/project45gun/modslots/ammo.png"
+    else
+      parameters.tooltipFields["itemDescription-ammoImage"] = "/interface/itemdescriptions/project45gun/modslots/off-ammo.png"
+    end
 
-      If gun is manualFeed:
-        fireTime* = cockTime (+ midCockDelay) + fireTime + chargeTime*
-      else:
-        fireTime* = cycleTime + fireTime + chargeTime*
+  end
+  
+  if config.primaryAbility then
+    
+    local upgradeCapacity = deepConfigParameter(nil, "project45GunModInfo", "upgradeCapacity")
+    if upgradeCapacity > -1 then
+      local count = parameters.upgradeCount or 0
+      local max = parameters.project45GunModInfo.upgradeCapacity
+      parameters.tooltipFields.upgradeCapacityLabel = (count < max and "^#96cbe7;" or "^#777777;") .. (max - count) .. "/" .. max .. "^reset;"
+      parameters.tooltipFields.itemDescriptionUpgradeCapLabel = project45util.colorText("#96cbe7", "U. Cap: " .. parameters.project45GunModInfo.upgradeCapacity)
+    else
+      parameters.tooltipFields.upgradeCapacityLabel = project45util.colorText("#96cbe7","Unlimited")
+    end
+    
+    --[[
+    
+    chargeTime* = chargeTime
+    If gun is auto, chargeTime* = 0
+
+    If gun is manualFeed:
+      fireTime* = cockTime (+ midCockDelay) + fireTime + chargeTime*
+    else:
+      fireTime* = cycleTime + fireTime + chargeTime*
+    
+    --]]
+    
+    local actualCycleTime = primaryAbility("manualFeed", false)
+      and primaryAbility("midCockDelay", 0) + primaryAbility("cockTime", 0.1) / (primaryAbility("slamFire") and 2 or 1)
+      or primaryAbility("cycleTime", 0.1)
+
+    local chargeTime = primaryAbility("chargeTime", 0)
+    
+    if type(actualCycleTime) ~= "table" then
+      actualCycleTime = {actualCycleTime, actualCycleTime}
+    end
+
+    if not primaryAbility("semi", true) then
+      chargeTime = 0
+    end
+    
+    local loFireTime = math.max(actualCycleTime[1], primaryAbility("fireTime", 0.1)) + chargeTime
+    local hiFireTime = math.max(actualCycleTime[2], primaryAbility("fireTime", 0.1)) + chargeTime
+
+    -- get DPS from gun archetype
+    if config.gunArchetype and not config.overrideArchetypeDps then
+      local archetypeDps = generalConfig.gunArchetypeDps[config.gunArchetype]
+      config.primaryAbility.baseDps = (archetypeDps or config.primaryAbility.baseDamage)
+    end
+
+    -- convert DPS to Base Damage
+    local baseDps = config.primaryAbility.baseDps
+    if baseDps then
       
+      -- AVERAGE FIRE TIME
+      -- get midpoint of low and high firetime
+      local dpsFiretime = math.max(loFireTime + hiFireTime / 2, generalConfig.minimumFireTime)
+      if config.primaryAbility.semi then -- add average human seconds per click
+        dpsFiretime = dpsFiretime + math.max(0.16, config.primaryAbility.fireTime)
+      end
+      if config.primaryAbility.manualFeed then -- add another average human seconds per click
+        dpsFiretime = dpsFiretime + math.max(0.16, config.primaryAbility.fireTime)
+      end
+      if config.primaryAbility.burstCount > 1 then
+        dpsFiretime = dpsFiretime / config.primaryAbility.burstCount
+      end
+      -- reloads after every shot
+      --[[
+      if config.primaryAbility.ammoPerShot >= config.primaryAbility.maxAmmo then
+        dpsFiretime = dpsFiretime + config.primaryAbility.reloadTime/2 
+      end
       --]]
       
-      local actualCycleTime = primaryAbility("manualFeed", false)
-        and primaryAbility("midCockDelay", 0) + primaryAbility("cockTime", 0.1) / (primaryAbility("slamFire") and 2 or 1)
-        or primaryAbility("cycleTime", 0.1)
+      -- EXPECTED CRIT DAMAGE MULTIPLIER
+      -- get crit stats
+      local critChance = config.primaryAbility.critChance or 0
+      local critDamage = config.primaryAbility.critDamageMult or 1
 
-      local chargeTime = primaryAbility("chargeTime", 0)
+      -- calculate crit and non-crit damage (multiplier)
+      local critTier = math.floor(critChance)
+      local baseCritDamageMult = critTier > 0 and (critDamage + critTier - 1) or 0
+      critDamage = math.max(1, baseCritDamageMult + (critTier > 0 and 1 or critDamage))
+      local nCritDamage = math.max(1, baseCritDamageMult)
       
-      if type(actualCycleTime) ~= "table" then
-        actualCycleTime = {actualCycleTime, actualCycleTime}
+      -- restrict critChance within [0, 1]
+      critChance = critChance - critTier
+      local nCritChance = 1 - critChance
+
+      -- calculate expected crit damage (multiplier)
+      local expectedCritDamage = nCritChance * nCritDamage + critChance * critDamage
+
+      -- AVERAGE CHARGE DAMAGE MULTIPLIER
+      -- (exclude perfect charge damage)
+      local averageChargeDamageMult = 1
+      if config.primaryAbility.overchargeTime > 0 then
+        averageChargeDamageMult = (
+          (config.primaryAbility.chargeDamageMult or 1)
+          + (config.primaryAbility.perfectChargeDamageMult or 1)
+          + 1
+        ) / 3
       end
 
-      if not primaryAbility("semi", true) then
-        chargeTime = 0
+      -- AVERAGE RELOAD RATING MULTIPLIER
+      local reloadMultArr = config.primaryAbility.reloadRatingDamageMults or {1, 1, 1, 1}
+      local reloadMult = 0
+      for i=1, #reloadMultArr do
+        reloadMult = reloadMult + reloadMultArr[i]
       end
-      
-      local loFireTime = math.max(actualCycleTime[1], primaryAbility("fireTime", 0.1)) + chargeTime
-      local hiFireTime = math.max(actualCycleTime[2], primaryAbility("fireTime", 0.1)) + chargeTime
+      reloadMult = reloadMult / #reloadMultArr
 
-      -- get DPS from gun archetype
-      if config.gunArchetype and not config.overrideArchetypeDps then
-        local archetypeDps = generalConfig.gunArchetypeDps[config.gunArchetype]
-        config.primaryAbility.baseDps = (archetypeDps or config.primaryAbility.baseDamage)
-      end
-
-      -- convert DPS to Base Damage
-      local baseDps = config.primaryAbility.baseDps
-      if baseDps then
-        
-        -- AVERAGE FIRE TIME
-        -- get midpoint of low and high firetime
-        local dpsFiretime = math.max(loFireTime + hiFireTime / 2, generalConfig.minimumFireTime)
-        if config.primaryAbility.semi then -- add average human seconds per click
-          dpsFiretime = dpsFiretime + math.max(0.16, config.primaryAbility.fireTime)
-        end
-        if config.primaryAbility.manualFeed then -- add another average human seconds per click
-          dpsFiretime = dpsFiretime + math.max(0.16, config.primaryAbility.fireTime)
-        end
-        if config.primaryAbility.burstCount > 1 then
-          dpsFiretime = dpsFiretime / config.primaryAbility.burstCount
-        end
-        -- reloads after every shot
-        --[[
-        if config.primaryAbility.ammoPerShot >= config.primaryAbility.maxAmmo then
-          dpsFiretime = dpsFiretime + config.primaryAbility.reloadTime/2 
-        end
-        --]]
-        
-        -- EXPECTED CRIT DAMAGE MULTIPLIER
-        -- get crit stats
-        local critChance = config.primaryAbility.critChance or 0
-        local critDamage = config.primaryAbility.critDamageMult or 1
-
-        -- calculate crit and non-crit damage (multiplier)
-        local critTier = math.floor(critChance)
-        local baseCritDamageMult = critTier > 0 and (critDamage + critTier - 1) or 0
-        critDamage = math.max(1, baseCritDamageMult + (critTier > 0 and 1 or critDamage))
-        local nCritDamage = math.max(1, baseCritDamageMult)
-        
-        -- restrict critChance within [0, 1]
-        critChance = critChance - critTier
-        local nCritChance = 1 - critChance
-
-        -- calculate expected crit damage (multiplier)
-        local expectedCritDamage = nCritChance * nCritDamage + critChance * critDamage
-
-        -- AVERAGE CHARGE DAMAGE MULTIPLIER
-        -- (exclude perfect charge damage)
-        local averageChargeDamageMult = 1
-        if config.primaryAbility.overchargeTime > 0 then
-          averageChargeDamageMult = (
-            (config.primaryAbility.chargeDamageMult or 1)
-            + (config.primaryAbility.perfectChargeDamageMult or 1)
-            + 1
-          ) / 3
-        end
-
-        -- AVERAGE RELOAD RATING MULTIPLIER
-        local reloadMultArr = config.primaryAbility.reloadRatingDamageMults or {1, 1, 1, 1}
-        local reloadMult = 0
-        for i=1, #reloadMultArr do
-          reloadMult = reloadMult + reloadMultArr[i]
-        end
-        reloadMult = reloadMult / #reloadMultArr
-
-        -- FINAL: BASE DAMAGE
-        config.primaryAbility.baseDamage = baseDps * dpsFiretime / (reloadMult * expectedCritDamage * averageChargeDamageMult)
-
-      end
-
-      config.primaryAbility.baseDamage = (config.primaryAbility.baseDamage or 0) * primaryAbility("baseDamageMultiplier", 1)
-      
-      -- generate random stats
-      -- Apply Random Stat Bonuses AFTER damage calculation
-      -- these are _bonus_ stats, after all
-      if randStatBonus > 0 and not configParameter("isRandomized") then
-        parameters.primaryAbility.baseDamage = primaryAbility("baseDamage", 0) * (generalConfig.maxRandBonuses.baseDamage * randStatBonus + 1)
-        parameters.primaryAbility.critChance = primaryAbility("critChance", 0) * (generalConfig.maxRandBonuses.critChance * randStatBonus + 1)
-        parameters.primaryAbility.critDamageMult = primaryAbility("critDamageMult", 1) * (generalConfig.maxRandBonuses.critDamageMult * randStatBonus + 1)
-        parameters.isRandomized = true
-      end
-
-      -- get charge-related numbers for calculation of displayed stat
-      local overchargeTime = primaryAbility("overchargeTime", 0)
-      local chargeDamageMult = primaryAbility("chargeDamageMult", 1)
-      local perfectChargeDamageMult = math.max(
-        primaryAbility("perfectChargeDamageMult", chargeDamageMult),
-        chargeDamageMult,
-        1
-      )
-
-      local baseDamage = primaryAbility("baseDamage", 0) * config.damageLevelMultiplier
-      -- low damage = base damage * worst reload damage ( * chargeDamageMult if it's less than 1)
-      local loDamage = baseDamage
-        * math.min(table.unpack(primaryAbility("reloadRatingDamageMults", {0,0,0,0})))
-        * ((overchargeTime > 0 and chargeDamageMult < 1) and chargeDamageMult or 1)
-      
-      -- high damage = base damage * best reload damage * overcharge mult
-      local hiDamage = baseDamage
-        * math.max(table.unpack(primaryAbility("reloadRatingDamageMults", {0,0,0,0})))
-        * (overchargeTime > 0 and perfectChargeDamageMult or 1)
-
-
-      config.tooltipFields.damagePerShotLabel = project45util.colorText("#FF9000", util.round(loDamage, 1) .. " - " .. util.round(hiDamage, 1))
-      
-      if primaryAbility("debug") then
-        config.tooltipFields.damagePerShotLabel = project45util.colorText("#FF9000", primaryAbility("baseDamage", 0))
-      end
-
-      if loFireTime == hiFireTime then
-        config.tooltipFields.fireTimeLabel = project45util.colorText("#FFD400", util.round(loFireTime*1000, 1) .. "ms")
-      else
-        config.tooltipFields.fireTimeLabel = project45util.colorText("#FFD400",
-          util.round(loFireTime*1000, 1) .. " - " .. util.round(hiFireTime*1000, 1) .. "ms")
-      end
-      
-      -- reload cost
-      config.tooltipFields.reloadCostLabel = project45util.colorText("#b0ff78", util.round(primaryAbility("reloadCost", 0), 1))
-
-      -- reload time
-      local bulletReloadTime = primaryAbility("reloadTime", 0.1)
-      local bulletsPerReload = primaryAbility("bulletsPerReload", 1)
-      local maxAmmo = primaryAbility("maxAmmo")
-      local actualReloadTime = bulletReloadTime * math.max(1, maxAmmo / bulletsPerReload)
-      
-      config.tooltipFields.reloadTimeLabel = util.round((actualReloadTime or 0), 1) .. "s"
-      config.tooltipFields.reloadLabel = config.tooltipFields.reloadCostLabel .. " (" .. config.tooltipFields.reloadTimeLabel .. ")" 
-
-      -- crit chance
-      local critChance = primaryAbility("critChance", 0)
-      if critChance > 0 then
-        config.tooltipFields.critChanceLabel = project45util.colorText("#FF6767", util.round(critChance*100, 1) .. "%")
-      else
-        config.tooltipFields.critChanceLabel = project45util.colorText("#777777", util.round(critChance*100, 1) .. "%")
-      end
-
-      -- crit damage
-      local critDamage = primaryAbility("critDamageMult", 1)
-      local itemDescriptionCritDamage = ""
-      if critChance > 0 then
-        config.tooltipFields.critDamageLabel = project45util.colorText("#FF6767", util.round(critDamage, 1) .. "x")
-        itemDescriptionCritDamage = project45util.colorText("#FF6767", " (" .. util.round(critDamage, 1) .. "x" .. ")")
-      else
-        config.tooltipFields.critDamageLabel = project45util.colorText("#777777", util.round(critDamage, 1) .. "x")
-        itemDescriptionCritDamage = project45util.colorText("#777777", " (" .. util.round(critDamage, 1) .. "x" .. ")")
-
-      end
-      config.tooltipFields.critLabel = config.tooltipFields.critChanceLabel .. itemDescriptionCritDamage
-
-      config.tooltipFields.bonusRatioLabel = ""
-      config.tooltipFields.bonusRatioTitleLabel = ""
-      config.tooltipFields.bonusRatioShadowLabel = ""
-      if randStatBonus > 0 and parameters.isRandomized then
-        local bonusDesc = parameters.randStatBonus == randStatBonus and string.format("^shadow;%d%%", math.floor(randStatBonus * 100)) or "^shadow;??%"
-        local bonusColor = "#777777"
-        if randStatBonus > 0.75 then
-          bonusColor = "#fdd14d"
-        elseif randStatBonus > 0.5 then
-          bonusColor = "#d29ce7"
-        elseif randStatBonus > 0.25 then
-          bonusColor = "#60b8ea"
-        end
-        config.tooltipFields.bonusRatioLabel = project45util.colorText(bonusColor, bonusDesc)
-        config.tooltipFields.bonusRatioTitleLabel = project45util.colorText(bonusColor, "^shadow;Stat Bonus")
-        config.tooltipFields.bonusRatioShadowLabel = project45util.colorText("#a0a0a0", bonusDesc)
-      end
-
-      local descriptionScore = 0
-      
-      local passiveDesc = ""
-      if primaryAbility("passiveDescription") then
-        passiveDesc = primaryAbility("passiveDescription")
-        descriptionScore = descriptionScore + math.ceil((#passiveDesc)/18)
-        passiveDesc = project45util.colorText("#ffd495", passiveDesc) .. "\n"
-      end
-
-      local heavyDesc = ""
-      if primaryAbility("heavyWeapon", false) then
-        descriptionScore = descriptionScore + 1
-        heavyDesc = project45util.colorText("#FF5050", "Heavy") .. "\n"
-      end
-
-      local multishotDesc = ""
-      local multishot = primaryAbility("multishot", 1)
-      if multishot ~= 1 then
-        descriptionScore = descriptionScore + 1
-        multishotDesc = project45util.colorText(multishot > 1 and "#9dc6f5" or "#FF5050", util.round(multishot, 1) .. "x multishot") .. "\n"
-      end
-
-      local chargeDesc = ""
-      if primaryAbility("chargeTime", 0) > 0 then
-        descriptionScore = descriptionScore + 1
-        chargeDesc = project45util.colorText("#FF5050", project45util.truncatef(primaryAbility("chargeTime", 0), 2) .. "s charge time.") .. "\n"
-      end
-
-      local overchargeDesc = ""
-      if primaryAbility("overchargeTime", 0) > 0 and (chargeDamageMult ~= 1 or perfectChargeDamageMult ~= 1) then
-        
-        descriptionScore = descriptionScore + 1
-        
-        local chargeDamageDesc = chargeDamageMult ~= 1
-          and project45util.colorText(
-            chargeDamageMult > 1 and "#9dc6f5"
-            or chargeDamageMult == 1 and "#A0A0A0"
-            or "#FF5050",
-            string.format("%.1fx", chargeDamageMult)
-          )
-          or ""
-        
-        local perfectChargeDamageDesc =
-          (perfectChargeDamageMult ~= 1 and perfectChargeDamageMult ~= chargeDamageMult)
-          and project45util.colorText(
-            perfectChargeDamageMult > 1 and "#ffffa7"
-            or "#FF5050",
-            string.format(chargeDamageMult ~= 1 and " (%.1fx)" or "%.1fx", perfectChargeDamageMult)
-          )
-          or ""
-
-        local descText = project45util.colorText(
-            (chargeDamageMult > 1 or perfectChargeDamageMult > 1) and "#9dc6f5" or "#FF5050",
-            chargeDamageMult ~= 1 and "Overcharge damage."
-            or perfectChargeDamageMult ~= chargeDamageMult and "Perfect charge dmg."
-          )
-
-        overchargeDesc = project45util.colorText(
-            (chargeDamageMult > 1 or perfectChargeDamageMult > 1) and "#9dc6f5" or "#FF5050",
-            string.format("%s%s %s\n", chargeDamageDesc, perfectChargeDamageDesc, descText)
-          )
-      end
-
-      local availableModSlots = deepConfigParameter({nil}, "project45GunModInfo", "acceptsModSlot")
-      local availableExclude = set.new({"rail", "sights", "muzzle", "underbarrel", "stock"})
-      local acceptsModDesc = ""
-      for _, modSlot in ipairs(availableModSlots) do
-        if not (modList[modSlot] or availableExclude[modSlot]) then
-          acceptsModDesc = acceptsModDesc .. project45util.colorText(
-            "#9da8af",
-            string.format("No %s.\n", generalTooltipConfig.slotNames[modSlot] or modSlot)
-          )
-        end
-      end
-      
-      local modListDesc = ""
-      local exclude = set.new(generalTooltipConfig.techDisplayExcludedSlots or {})
-      for modSlot, modKind in pairs(modList) do
-        if not exclude[modSlot] and modKind[1] ~= "ability" then
-          descriptionScore = descriptionScore + 1
-          modListDesc = modListDesc .. project45util.colorText("#abfc6d", modKind[1]) .. "\n"
-        end
-      end
-
-      local finalDescription = passiveDesc .. heavyDesc .. chargeDesc .. overchargeDesc .. multishotDesc .. acceptsModDesc .. modListDesc
-      finalDescription = finalDescription == "" and project45util.colorText("#777777", "No notable qualities.") or finalDescription      
-      config.tooltipFields.technicalLabel = finalDescription
-
-      if config.lore then
-        config.description = config.description .. " " .. project45util.colorText("#9da8af", config.lore)
-      end
+      -- FINAL: BASE DAMAGE
+      config.primaryAbility.baseDamage = baseDps * dpsFiretime / (reloadMult * expectedCritDamage * averageChargeDamageMult)
 
     end
 
-    if parameters.altAbility then
-      config.tooltipFields.altAbilityLabel = ("^#ffffa7;" .. (parameters.altAbility.name or "Unknown"))
-    elseif config.altAbility then
-      config.tooltipFields.altAbilityLabel = ("^#ffffa7;" .. (config.altAbility.name or "Unknown"))
+    config.primaryAbility.baseDamage = (config.primaryAbility.baseDamage or 0) * primaryAbility("baseDamageMultiplier", 1)
+    
+    -- generate random stats
+    -- Apply Random Stat Bonuses AFTER damage calculation
+    -- these are _bonus_ stats, after all
+    if randStatBonus > 0 and not configParameter("isRandomized") then
+      parameters.primaryAbility.baseDamage = primaryAbility("baseDamage", 0) * (generalConfig.maxRandBonuses.baseDamage * randStatBonus + 1)
+      parameters.primaryAbility.critChance = primaryAbility("critChance", 0) * (generalConfig.maxRandBonuses.critChance * randStatBonus + 1)
+      parameters.primaryAbility.critDamageMult = primaryAbility("critDamageMult", 1) * (generalConfig.maxRandBonuses.critDamageMult * randStatBonus + 1)
+      parameters.isRandomized = true
+    end
+
+    -- get charge-related numbers for calculation of displayed stat
+    local overchargeTime = primaryAbility("overchargeTime", 0)
+    local chargeDamageMult = primaryAbility("chargeDamageMult", 1)
+    local perfectChargeDamageMult = math.max(
+      primaryAbility("perfectChargeDamageMult", chargeDamageMult),
+      chargeDamageMult,
+      1
+    )
+
+    local baseDamage = primaryAbility("baseDamage", 0) * config.damageLevelMultiplier
+    -- low damage = base damage * worst reload damage ( * chargeDamageMult if it's less than 1)
+    local loDamage = baseDamage
+      * math.min(table.unpack(primaryAbility("reloadRatingDamageMults", {0,0,0,0})))
+      * ((overchargeTime > 0 and chargeDamageMult < 1) and chargeDamageMult or 1)
+    
+    -- high damage = base damage * best reload damage * overcharge mult
+    local hiDamage = baseDamage
+      * math.max(table.unpack(primaryAbility("reloadRatingDamageMults", {0,0,0,0})))
+      * (overchargeTime > 0 and perfectChargeDamageMult or 1)
+
+
+    parameters.tooltipFields.damagePerShotLabel = project45util.colorText("#FF9000", util.round(loDamage, 1) .. " - " .. util.round(hiDamage, 1))
+    
+    if primaryAbility("debug") then
+      parameters.tooltipFields.damagePerShotLabel = project45util.colorText("#FF9000", primaryAbility("baseDamage", 0))
+    end
+
+    if loFireTime == hiFireTime then
+      parameters.tooltipFields.fireTimeLabel = project45util.colorText("#FFD400", util.round(loFireTime*1000, 1) .. "ms")
     else
-      config.tooltipFields.altAbilityLabel = "^#777777;None"
+      parameters.tooltipFields.fireTimeLabel = project45util.colorText("#FFD400",
+        util.round(loFireTime*1000, 1) .. " - " .. util.round(hiFireTime*1000, 1) .. "ms")
     end
+    
+    -- reload cost
+    parameters.tooltipFields.reloadCostLabel = project45util.colorText("#b0ff78", util.round(primaryAbility("reloadCost", 0), 1))
 
-    if parameters.shiftAbility then
-      config.tooltipFields.shiftAbilityLabel = ("^#a8e6e2;" .. (parameters.shiftAbility.name or "Unknown"))
-    elseif config.shiftAbility then
-      config.tooltipFields.shiftAbilityLabel = ("^#a8e6e2;" .. (config.shiftAbility.name or "Unknown"))
+    -- reload time
+    local bulletReloadTime = primaryAbility("reloadTime", 0.1)
+    local bulletsPerReload = primaryAbility("bulletsPerReload", 1)
+    local maxAmmo = primaryAbility("maxAmmo")
+    local actualReloadTime = bulletReloadTime * math.max(1, maxAmmo / bulletsPerReload)
+    
+    parameters.tooltipFields.reloadTimeLabel = util.round((actualReloadTime or 0), 1) .. "s"
+    parameters.tooltipFields.reloadLabel = parameters.tooltipFields.reloadCostLabel .. " (" .. parameters.tooltipFields.reloadTimeLabel .. ")" 
+
+    -- crit chance
+    local critChance = primaryAbility("critChance", 0)
+    if critChance > 0 then
+      parameters.tooltipFields.critChanceLabel = project45util.colorText("#FF6767", util.round(critChance*100, 1) .. "%")
     else
-      config.tooltipFields.shiftAbilityLabel = "^#777777;None"
+      parameters.tooltipFields.critChanceLabel = project45util.colorText("#777777", util.round(critChance*100, 1) .. "%")
     end
 
+    -- crit damage
+    local critDamage = primaryAbility("critDamageMult", 1)
+    local itemDescriptionCritDamage = ""
+    if critChance > 0 then
+      parameters.tooltipFields.critDamageLabel = project45util.colorText("#FF6767", util.round(critDamage, 1) .. "x")
+      itemDescriptionCritDamage = project45util.colorText("#FF6767", " (" .. util.round(critDamage, 1) .. "x" .. ")")
+    else
+      parameters.tooltipFields.critDamageLabel = project45util.colorText("#777777", util.round(critDamage, 1) .. "x")
+      itemDescriptionCritDamage = project45util.colorText("#777777", " (" .. util.round(critDamage, 1) .. "x" .. ")")
+
+    end
+    parameters.tooltipFields.critLabel = parameters.tooltipFields.critChanceLabel .. itemDescriptionCritDamage
+
+    parameters.tooltipFields.bonusRatioLabel = ""
+    parameters.tooltipFields.bonusRatioTitleLabel = ""
+    parameters.tooltipFields.bonusRatioShadowLabel = ""
+    if randStatBonus > 0 and parameters.isRandomized then
+      local bonusDesc = parameters.randStatBonus == randStatBonus and string.format("^shadow;%d%%", math.floor(randStatBonus * 100)) or "^shadow;??%"
+      local bonusColor = "#777777"
+      if randStatBonus > 0.75 then
+        bonusColor = "#fdd14d"
+      elseif randStatBonus > 0.5 then
+        bonusColor = "#d29ce7"
+      elseif randStatBonus > 0.25 then
+        bonusColor = "#60b8ea"
+      end
+      parameters.tooltipFields.bonusRatioLabel = project45util.colorText(bonusColor, bonusDesc)
+      parameters.tooltipFields.bonusRatioTitleLabel = project45util.colorText(bonusColor, "^shadow;Stat Bonus")
+      parameters.tooltipFields.bonusRatioShadowLabel = project45util.colorText("#a0a0a0", bonusDesc)
+    end
+
+    local descriptionScore = 0
+    
+    local passiveDesc = ""
+    if primaryAbility("passiveDescription") then
+      passiveDesc = primaryAbility("passiveDescription")
+      descriptionScore = descriptionScore + math.ceil((#passiveDesc)/18)
+      passiveDesc = project45util.colorText("#ffd495", passiveDesc) .. "\n"
+    end
+
+    local heavyDesc = ""
+    if primaryAbility("heavyWeapon", false) then
+      descriptionScore = descriptionScore + 1
+      heavyDesc = project45util.colorText("#FF5050", "Heavy") .. "\n"
+    end
+
+    local multishotDesc = ""
+    local multishot = primaryAbility("multishot", 1)
+    if multishot ~= 1 then
+      descriptionScore = descriptionScore + 1
+      multishotDesc = project45util.colorText(multishot > 1 and "#9dc6f5" or "#FF5050", util.round(multishot, 1) .. "x multishot") .. "\n"
+    end
+
+    local chargeDesc = ""
+    if primaryAbility("chargeTime", 0) > 0 then
+      descriptionScore = descriptionScore + 1
+      chargeDesc = project45util.colorText("#FF5050", project45util.truncatef(primaryAbility("chargeTime", 0), 2) .. "s charge time.") .. "\n"
+    end
+
+    local overchargeDesc = ""
+    if primaryAbility("overchargeTime", 0) > 0 and (chargeDamageMult ~= 1 or perfectChargeDamageMult ~= 1) then
+      
+      descriptionScore = descriptionScore + 1
+      
+      local chargeDamageDesc = chargeDamageMult ~= 1
+        and project45util.colorText(
+          chargeDamageMult > 1 and "#9dc6f5"
+          or chargeDamageMult == 1 and "#A0A0A0"
+          or "#FF5050",
+          string.format("%.1fx", chargeDamageMult)
+        )
+        or ""
+      
+      local perfectChargeDamageDesc =
+        (perfectChargeDamageMult ~= 1 and perfectChargeDamageMult ~= chargeDamageMult)
+        and project45util.colorText(
+          perfectChargeDamageMult > 1 and "#ffffa7"
+          or "#FF5050",
+          string.format(chargeDamageMult ~= 1 and " (%.1fx)" or "%.1fx", perfectChargeDamageMult)
+        )
+        or ""
+
+      local descText = project45util.colorText(
+          (chargeDamageMult > 1 or perfectChargeDamageMult > 1) and "#9dc6f5" or "#FF5050",
+          chargeDamageMult ~= 1 and "Overcharge damage."
+          or perfectChargeDamageMult ~= chargeDamageMult and "Perfect charge dmg."
+        )
+
+      overchargeDesc = project45util.colorText(
+          (chargeDamageMult > 1 or perfectChargeDamageMult > 1) and "#9dc6f5" or "#FF5050",
+          string.format("%s%s %s\n", chargeDamageDesc, perfectChargeDamageDesc, descText)
+        )
+    end
+
+    local availableModSlots = deepConfigParameter({nil}, "project45GunModInfo", "acceptsModSlot")
+    local availableExclude = set.new({"rail", "sights", "muzzle", "underbarrel", "stock"})
+    local acceptsModDesc = ""
+    for _, modSlot in ipairs(availableModSlots) do
+      if not (modList[modSlot] or availableExclude[modSlot]) then
+        acceptsModDesc = acceptsModDesc .. project45util.colorText(
+          "#9da8af",
+          string.format("No %s.\n", generalTooltipConfig.slotNames[modSlot] or modSlot)
+        )
+      end
+    end
+    
+    local modListDesc = ""
+    local exclude = set.new(generalTooltipConfig.techDisplayExcludedSlots or {})
+    for modSlot, modKind in pairs(modList) do
+      if not exclude[modSlot] and modKind[1] ~= "ability" then
+        descriptionScore = descriptionScore + 1
+        modListDesc = modListDesc .. project45util.colorText("#abfc6d", modKind[1]) .. "\n"
+      end
+    end
+
+    local finalDescription = passiveDesc .. heavyDesc .. chargeDesc .. overchargeDesc .. multishotDesc .. acceptsModDesc .. modListDesc
+    finalDescription = finalDescription == "" and project45util.colorText("#777777", "No notable qualities.") or finalDescription      
+    parameters.tooltipFields.technicalLabel = finalDescription
+
+    if config.lore then
+      config.description = config.description .. " " .. project45util.colorText("#9da8af", config.lore)
+    end
+
+  end
+
+  if parameters.altAbility then
+    parameters.tooltipFields.altAbilityLabel = ("^#ffffa7;" .. (parameters.altAbility.name or "Unknown"))
+  elseif config.altAbility then
+    parameters.tooltipFields.altAbilityLabel = ("^#ffffa7;" .. (config.altAbility.name or "Unknown"))
+  else
+    parameters.tooltipFields.altAbilityLabel = "^#777777;None"
+  end
+
+  if parameters.shiftAbility then
+    parameters.tooltipFields.shiftAbilityLabel = ("^#a8e6e2;" .. (parameters.shiftAbility.name or "Unknown"))
+  elseif config.shiftAbility then
+    parameters.tooltipFields.shiftAbilityLabel = ("^#a8e6e2;" .. (config.shiftAbility.name or "Unknown"))
+  else
+    parameters.tooltipFields.shiftAbilityLabel = "^#777777;None"
   end
 
   -- set price
