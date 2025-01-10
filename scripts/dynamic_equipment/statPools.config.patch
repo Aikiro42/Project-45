@@ -1,39 +1,39 @@
 [
   {
     "op": "add", "path": "/statPools/project45", "value": []
-  },
+  }
 
-  { "op": "add", "path": "/statPools/project45/-", "value": {
+  ,{ "op": "add", "path": "/statPools/project45/-", "value": {
     "name" : "baseDamage",
     "check" : "primaryAbility.baseDamage",
     "valueRange" : [ 1, 1000 ],
     "valueFactor" : 0.01,
-    "addToTooltip" : "Dmg/Shot",
+    "addToTooltip" : "^#FF9000;Dmg/Shot^reset;",
     "processMethod" : "processDirect",
     "processParam" : [ "primaryAbility.baseDamage", 0, 65536 ]
-  }},
+  }}
   
-  { "op": "add", "path": "/statPools/project45/-", "value": {
+  ,{ "op": "add", "path": "/statPools/project45/-", "value": {
     "name" : "critChance",
     "check" : "primaryAbility.critChance",
     "valueRange" : [ 1, 99 ],
     "valueFactor" : 0.01,
-    "addToTooltip" : "Crit Chance",
+    "addToTooltip" : "^#FF6767;Crit Chance^reset;",
     "processMethod" : "processDirect",
     "processParam" : [ "primaryAbility.critChance", 0, 9999 ]
-  }},
+  }}
 
-  { "op": "add", "path": "/statPools/project45/-", "value": {
+  ,{ "op": "add", "path": "/statPools/project45/-", "value": {
     "name" : "critDamage",
     "check" : "primaryAbility.critDamageMult",
     "valueRange" : [ 100, 300 ],
     "valueFactor" : 0.01,
-    "addToTooltip" : "Crit Damage",
+    "addToTooltip" : "^#FF6767;Crit Damage^reset;",
     "processMethod" : "processDirect",
     "processParam" : [ "primaryAbility.critDamageMult", 0, 9999 ]
-  }},
+  }}
 
-  { "op": "add", "path": "/statPools/project45/-", "value": {
+  ,{ "op": "add", "path": "/statPools/project45/-", "value": {
     "name" : "multishot",
     "check" : "primaryAbility.multishot",
     "valueRange" : [ 1, 120 ],
@@ -41,17 +41,39 @@
     "addToTooltip" : "Multishot",
     "processMethod" : "processDirect",
     "processParam" : [ "primaryAbility.multishot", 0, 10 ]
-  }},
+  }}
 
-  { "op": "add", "path": "/statPools/project45/-", "value": {
+  ,{ "op": "add", "path": "/statPools/project45/-", "value": {
     "name" : "ammoConsumeChance",
     "check" : "primaryAbility.ammoConsumeChance",
     "valueRange" : [ 1, 90 ],
     "valueFactor" : -0.01,
-    "addToTooltip" : "Ammo Cnsm. Chance",
+    "addToTooltip" : "^#b0ff78;Ammo Cnsm. Chance^reset;",
     "processMethod" : "processDirect",
     "processParam" : [ "primaryAbility.ammoConsumeChance", 0, 1 ]
   }}
+
+  ,{ "op": "add", "path": "/statPools/project45/-", "value": {
+    "name" : "upgradeCapacity",
+    "check" : "LRDEProject45.upgradeCapacity",
+    "valueRange" : [ 1, 10 ],
+    "valueFactor" : 1,
+    "addToTooltip" : "^#96cbe7;Upgrade Capacity^reset;",
+    "processMethod" : "processDirect",
+    "processParam" : [ "LRDEProject45.upgradeCapacity", 0, 9999 ]
+  }}
+  
+  /*
+  ,{ "op": "add", "path": "/statPools/project45/-", "value": {
+    "name" : "randStatBonus",
+    "check" : "LRDEProject45.randStatBonus",
+    "valueRange" : [ 1, 25 ],
+    "valueFactor" : 0.01,
+    "addToTooltip" : "^magenta;Stat Bonus^reset;",
+    "processMethod" : "processDirect",
+    "processParam" : [ "LRDEProject45.randStatBonus", 0, 1 ]
+  }}
+  */
 
 
 ]
