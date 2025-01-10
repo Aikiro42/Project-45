@@ -692,8 +692,18 @@ function build(directory, config, parameters, level, seed)
       -- Write to firetime field
       
       local fireTime = math.floor(1000 * primaryAbility("fireTime", 0))
-      local manualFeed = primaryAbility("manualFeed", false) 
+      local manualFeed = primaryAbility("manualFeed", false)
       local cycleTime = primaryAbility(manualFeed and "cockTime" or "cycleTime", 0)
+      
+      
+      if manualFeed and primaryAbility("slamFire", false) then
+        cycleTime = cycleTime / 2
+      end
+
+      if manualFeed then
+        cycleTime = cycleTime + primaryAbility("midCockDelay", 0)
+      end
+
       
       if manualFeed then
         config.tooltipFields.cycleTimeTitleLabel = "Cock Time"
