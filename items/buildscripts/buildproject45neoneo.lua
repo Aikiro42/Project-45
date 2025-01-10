@@ -689,12 +689,47 @@ function build(directory, config, parameters, level, seed)
         config.tooltipFields.damagePerShotLabel = project45util.colorText("#FF9000", primaryAbility("baseDamage", 0))
       end
 
-      if loFireTime == hiFireTime then
-        config.tooltipFields.fireTimeLabel = project45util.colorText("#FFD400", util.round(loFireTime*1000, 1) .. "ms")
-      else
-        config.tooltipFields.fireTimeLabel = project45util.colorText("#FFD400",
-          util.round(loFireTime*1000, 1) .. " - " .. util.round(hiFireTime*1000, 1) .. "ms")
+      -- Write to firetime field
+      
+      local fireTime = math.floor(1000 * primaryAbility("fireTime", 0))
+      local manualFeed = primaryAbility("manualFeed", false) 
+      local cycleTime = primaryAbility(manualFeed and "cockTime" or "cycleTime", 0)
+      
+      local fireTimeLabel = ""
+      local fireTimeTitleLabel = ""
+
+      if chargeTime > 0 then
+        fireTimeTitleLabel = fireTimeTitleLabel .. "Chrg. | "
+        fireTimeLabel = fireTimeLabel .. " " .. project45util.colorText("#f4988c", string.format("%.1fs", chargeTime))
       end
+      
+      if manualFeed then
+        fireTimeTitleLabel = fireTimeTitleLabel .. "Cock"
+      else
+        fireTimeTitleLabel = fireTimeTitleLabel .. "Cyc."
+      end
+
+      if type(cycleTime) == "table" then
+        fireTimeLabel = fireTimeLabel .. " " .. project45util.colorText("#FFD400",
+          string.format(
+            "%d-%dms"
+          , math.floor(cycleTime[1] * 1000)
+          , math.floor(cycleTime[2] * 1000)
+          )
+        )
+      else
+        fireTimeLabel = fireTimeLabel .. " " .. project45util.colorText("#FFD400",
+          string.format("%dms", math.floor(cycleTime * 1000))
+        )
+      end
+
+      if fireTime > 0 then
+        fireTimeTitleLabel = fireTimeTitleLabel .. " | Trg. Time"
+        fireTimeLabel = fireTimeLabel .. project45util.colorText("#9da8af", string.format(" %dms", fireTime))
+      end
+      
+      config.tooltipFields.fireTimeTitleLabel = fireTimeTitleLabel
+      config.tooltipFields.fireTimeLabel = fireTimeLabel
       
       -- reload cost
       config.tooltipFields.reloadCostLabel = project45util.colorText("#b0ff78", util.round(primaryAbility("reloadCost", 0), 1))
