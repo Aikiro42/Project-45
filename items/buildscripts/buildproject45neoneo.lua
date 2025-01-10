@@ -695,22 +695,14 @@ function build(directory, config, parameters, level, seed)
       local manualFeed = primaryAbility("manualFeed", false) 
       local cycleTime = primaryAbility(manualFeed and "cockTime" or "cycleTime", 0)
       
-      local fireTimeLabel = ""
-      local fireTimeTitleLabel = ""
-
-      if chargeTime > 0 then
-        fireTimeTitleLabel = fireTimeTitleLabel .. "Chrg. | "
-        fireTimeLabel = fireTimeLabel .. " " .. project45util.colorText("#f4988c", string.format("%.1fs", chargeTime))
-      end
-      
       if manualFeed then
-        fireTimeTitleLabel = fireTimeTitleLabel .. "Cock"
+        config.tooltipFields.cycleTimeTitleLabel = "Cock Time"
       else
-        fireTimeTitleLabel = fireTimeTitleLabel .. "Cyc."
+        config.tooltipFields.cycleTimeTitleLabel = "Cycle Time"
       end
 
       if type(cycleTime) == "table" then
-        fireTimeLabel = fireTimeLabel .. " " .. project45util.colorText("#FFD400",
+        config.tooltipFields.cycleTimeLabel = project45util.colorText("#FFD400",
           string.format(
             "%d-%dms"
           , math.floor(cycleTime[1] * 1000)
@@ -718,19 +710,21 @@ function build(directory, config, parameters, level, seed)
           )
         )
       else
-        fireTimeLabel = fireTimeLabel .. " " .. project45util.colorText("#FFD400",
+        config.tooltipFields.cycleTimeLabel = project45util.colorText("#FFD400",
           string.format("%dms", math.floor(cycleTime * 1000))
         )
       end
 
-      if fireTime > 0 then
-        fireTimeTitleLabel = fireTimeTitleLabel .. " | Trg. Time"
-        fireTimeLabel = fireTimeLabel .. project45util.colorText("#9da8af", string.format(" %dms", fireTime))
+      if chargeTime > 0 then
+        config.tooltipFields.chargeTimeLabel = project45util.colorText("#f4988c", string.format("%.1fs", chargeTime))
+      else
+        config.tooltipFields.chargeTimeLabel = project45util.colorText("#777777", "--")
       end
-      
-      config.tooltipFields.fireTimeTitleLabel = fireTimeTitleLabel
-      config.tooltipFields.fireTimeLabel = fireTimeLabel
-      
+
+      if fireTime > 0 then
+        config.tooltipFields.triggerTimeLabel = project45util.colorText("#9da8af", string.format(" %dms", fireTime))
+      end
+            
       -- reload cost
       config.tooltipFields.reloadCostLabel = project45util.colorText("#b0ff78", util.round(primaryAbility("reloadCost", 0), 1))
 
@@ -804,12 +798,6 @@ function build(directory, config, parameters, level, seed)
         multishotDesc = project45util.colorText(multishot > 1 and "#9dc6f5" or "#FF5050", util.round(multishot, 1) .. "x multishot") .. "\n"
       end
 
-      local chargeDesc = ""
-      if primaryAbility("chargeTime", 0) > 0 then
-        descriptionScore = descriptionScore + 1
-        chargeDesc = project45util.colorText("#FF5050", project45util.truncatef(primaryAbility("chargeTime", 0), 2) .. "s charge time.") .. "\n"
-      end
-
       local overchargeDesc = ""
       if primaryAbility("overchargeTime", 0) > 0 and (chargeDamageMult ~= 1 or perfectChargeDamageMult ~= 1) then
         
@@ -866,7 +854,7 @@ function build(directory, config, parameters, level, seed)
         end
       end
 
-      local finalDescription = passiveDesc .. heavyDesc .. chargeDesc .. overchargeDesc .. multishotDesc .. acceptsModDesc .. modListDesc
+      local finalDescription = passiveDesc .. heavyDesc .. overchargeDesc .. multishotDesc .. acceptsModDesc .. modListDesc
       finalDescription = finalDescription == "" and project45util.colorText("#777777", "No notable qualities.") or finalDescription      
       config.tooltipFields.technicalLabel = finalDescription
 
