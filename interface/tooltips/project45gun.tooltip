@@ -8,7 +8,7 @@
   
   "objectImage" : {
     "type" : "image",
-    "position" : [82, 167.5],
+    "position" : [82, 179.5],
     "file" : "/interface/tooltips/project45gun/project45tooltipimage.png",
     "centered" : true,
     "maxSize" : [142, 51],
@@ -17,7 +17,7 @@
 
   "sightsImage": {
     "type" : "image",
-    "position" : [167, 187],
+    "position" : [167, 199],
     "file" : "/interface/tooltips/project45gun/project45gun-cannotmod.png",
     "centered" : true,
     "maxSize" : [15, 15],
@@ -26,7 +26,7 @@
 
   "railImage": {
     "type" : "image",
-    "position" : [187, 187],
+    "position" : [187, 199],
     "file" : "/interface/tooltips/project45gun/project45gun-cannotmod.png",
     "centered" : true,
     "maxSize" : [15, 15],
@@ -35,7 +35,7 @@
 
   "muzzleImage": {
     "type" : "image",
-    "position" : [167, 167],
+    "position" : [167, 179],
     "file" : "/interface/tooltips/project45gun/project45gun-cannotmod.png",
     "centered" : true,
     "maxSize" : [15, 15],
@@ -44,7 +44,7 @@
 
   "underbarrelImage": {
     "type" : "image",
-    "position" : [187, 167],
+    "position" : [187, 179],
     "file" : "/interface/tooltips/project45gun/project45gun-cannotmod.png",
     "centered" : true,
     "maxSize" : [15, 15],
@@ -53,7 +53,7 @@
 
   "stockImage": {
     "type" : "image",
-    "position" : [167, 147],
+    "position" : [167, 159],
     "file" : "/interface/tooltips/project45gun/project45gun-cannotmod.png",
     "centered" : true,
     "maxSize" : [15, 15],
@@ -62,7 +62,7 @@
 
   "ammoTypeImage": {
     "type" : "image",
-    "position" : [187, 147],
+    "position" : [187, 159],
     "file" : "/interface/tooltips/project45gun/project45gun-cannotmod.png",
     "centered" : true,
     "maxSize" : [15, 15],
@@ -71,7 +71,7 @@
 
   "bonusRatioTitleLabel": {
     "type" : "label",
-    "position" : [215, 208.5],
+    "position" : [215, 220.5],
     "hAnchor" : "left",
     "centered": true,
     "wrapWidth" : 126,
@@ -81,7 +81,7 @@
   "bonusRatioLabel": {
     "type" : "label",
     //"position" : [150, 120],
-    "position" : [210, 203.5],
+    "position" : [210, 215.5],
     "hAnchor" : "right",
     "centered": true,
     "wrapWidth" : 126,
@@ -91,7 +91,7 @@
 
   "elementImage" : {
     "type" : "image",
-    "position" : [146, 149],
+    "position" : [146, 161],
     "file" : "",
     "centered" : true,
     "maxSize" : [16, 16],
@@ -101,26 +101,26 @@
   
   "altAbilityTitleLabel" : {
     "type" : "label",
-    "position" : [200, 187],
+    "position" : [200, 199],
     "hAnchor" : "left",
     "value": "Alt Ability"
   }, 
   "altAbilityLabel" : {
     "type" : "label",
-    "position" : [210, 175],
+    "position" : [210, 187],
     "hAnchor" : "left",
     "centered" : true,
     "wrapWidth" : 126
   },
   "shiftAbilityTitleLabel" : {
     "type" : "label",
-    "position" : [200, 163],
+    "position" : [200, 175],
     "hAnchor" : "left",
     "value": "Shift Ability"
   }, 
   "shiftAbilityLabel" : {
     "type" : "label",
-    "position" : [210, 151],
+    "position" : [210, 163],
     "hAnchor" : "left",
     "centered" : true,
     "value": "Lorem Ipsum",
@@ -128,7 +128,7 @@
   },
   "technicalTitleLabel" : {
     "type" : "label",
-    "position" : [200, 139],
+    "position" : [200, 151],
     "hAnchor" : "left",
     "centered" : true,
     "value": "Technical Info",
@@ -136,7 +136,7 @@
   },
   "technicalLabel": {
     "type": "label",
-    "position": [203, 134],
+    "position": [203, 146],
     "hAnchor": "left",
     "vAnchor": "top",
     "value": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
@@ -145,7 +145,7 @@
 
   "descriptionLabel": {
     "type": "label",
-    "position": [108, 134],
+    "position": [108, 146],
     "hAnchor": "left",
     "vAnchor": "top",
     "wrapWidth": 88
@@ -153,7 +153,7 @@
   
   "upgradeCapacityTitleLabel": {
     "type" : "label",
-    "position" : [9, 128],
+    "position" : [9, 140],
     "hAnchor" : "left",
     "centered": true,
     "wrapWidth" : 126,
@@ -162,7 +162,7 @@
 
   "upgradeCapacityLabel": {
     "type" : "label",
-    "position" : [20, 116],
+    "position" : [20, 128],
     "hAnchor" : "left",
     "centered": true,
     "wrapWidth" : 126,
@@ -171,7 +171,7 @@
 
   "damageTitleLabel": {
     "type" : "label",
-    "position" : [9, 104],
+    "position" : [9, 116],
     "hAnchor" : "left",
     "centered": true,
     "wrapWidth" : 126,
@@ -180,26 +180,43 @@
 
   "damagePerShotLabel" : {
     "type" : "label",
-    "position" : [20, 92],
+    "position" : [20, 104],
     "hAnchor" : "left",
     "wrapWidth" : 126
   },
 
-  "fireTimeTitleLabel": {
+  "cycleTimeTitleLabel": {
     "type" : "label",
-    "position" : [9, 80],
+    "position" : [9, 92],
     "hAnchor" : "left",
     "centered": true,
     "wrapWidth" : 126,
     "value": "Fire Time"
   },
-  "fireTimeLabel": {
+  "cycleTimeLabel": {
     "type" : "label",
-    "position" : [20, 68],
+    "position" : [20, 80],
     "hAnchor" : "left",
     "centered": true,
     "wrapWidth" : 126
   },
+  "chargeTimeLabel": {
+    "type" : "label",
+    "position" : [20, 68],
+    "hAnchor" : "left",
+    "centered": true,
+    "wrapWidth" : 126,
+    "value": "9999s"
+  },
+  "triggerTimeLabel": {
+    "type" : "label",
+    "position" : [67, 68],
+    "hAnchor" : "left",
+    "centered": true,
+    "wrapWidth" : 126,
+    "value": "99ms"
+  },
+
 
   "reloadTitleLabel": {
     "type" : "label",
