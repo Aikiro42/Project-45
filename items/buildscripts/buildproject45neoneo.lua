@@ -816,6 +816,10 @@ function build(directory, config, parameters, level, seed)
     finalDescription = finalDescription == "" and project45util.colorText("#777777", "No notable qualities.") or finalDescription      
     parameters.tooltipFields.technicalLabel = finalDescription
 
+    if parameters.tooltipFields.customStatsLabel then
+      parameters.tooltipFields.technicalLabel = parameters.tooltipFields.technicalLabel .. "^cyan;Custom Built.^reset;\n"
+    end
+
     if config.lore then
       config.description = config.description .. " " .. project45util.colorText("#9da8af", config.lore)
     end
