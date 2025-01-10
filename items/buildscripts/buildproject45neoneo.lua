@@ -86,6 +86,17 @@ function build(directory, config, parameters, level, seed)
   end
 
   config.itemTags = currentItemTags
+  config.LRDEProject45 = config.LRDEProject45 or {
+    upgradeCapacity=0,
+    randStatBonus=0
+  }
+
+  parameters.tooltipFields = parameters.tooltipFields or {}
+
+  -- LR's Dynamic Equipment: Turn gun to unique if awakened
+  if parameters.tooltipFields.customStatsLabel then
+    parameters.isUnique = true
+  end
 
 
   -- generate seed if supposed to be seeded
@@ -135,6 +146,7 @@ function build(directory, config, parameters, level, seed)
       gunmodCapacity = gunmodCapacity + 1
     end
   end
+
   local baseUpgradeCapacity = config.project45GunModInfo.upgradeCapacity
     or 10 + gunmodCapacity
       + (
@@ -143,10 +155,9 @@ function build(directory, config, parameters, level, seed)
           and 1 or 0
         )
 
-
-  parameters.project45GunModInfo.upgradeCapacity = baseUpgradeCapacity + (currentLevel - 1)
-  
-  -- sb.logInfo(string.format("Generated %s", configParameter("itemName")))
+  parameters.project45GunModInfo.upgradeCapacity =
+      baseUpgradeCapacity + (currentLevel - 1)
+    + (configParameter("LRDEProject45", {}).upgradeCapacity or 0)  -- LR's Dynamic Equipment: modify upgrade cap
 
   -- recalculate rarity
   local rarityLevel = currentLevel/10
@@ -526,7 +537,14 @@ function build(directory, config, parameters, level, seed)
       if upgradeCapacity > -1 then
         local count = parameters.upgradeCount or 0
         local max = parameters.project45GunModInfo.upgradeCapacity
-        config.tooltipFields.upgradeCapacityLabel = (count < max and "^#96cbe7;" or "^#777777;") .. (max - count) .. "/" .. max .. "^reset;"
+        -- LR's Dynamic Equipment: update cap color, can possibly be negative
+        local upgradeCapColor = "^#96cbe7;"
+        if count == max then
+          upgradeCapColor = "^#777777;"
+        elseif count > max then
+          upgradeCapColor = "^#FF0A0A;"
+        end
+        config.tooltipFields.upgradeCapacityLabel = upgradeCapColor .. (max - count) .. "/" .. max .. "^reset;"
         config.tooltipFields.itemDescriptionUpgradeCapLabel = project45util.colorText("#96cbe7", "U. Cap: " .. parameters.project45GunModInfo.upgradeCapacity)
       else
         config.tooltipFields.upgradeCapacityLabel = project45util.colorText("#96cbe7","Unlimited")
