@@ -239,7 +239,8 @@ function build(directory, config, parameters, level, seed)
   end
 
   -- calculate damage level multiplier
-  config.damageLevelMultiplier = root.evalFunction("weaponDamageLevelMultiplier", currentLevel) * generalConfig.globalDamageMultiplier
+  config.damageLevelMultiplier = (root.evalFunction("weaponDamageLevelMultiplier", currentLevel) + (parameters.damageLevelMultiplier or 0))
+    * generalConfig.globalDamageMultiplier
 
   -- palette swaps
   config.paletteSwaps = ""
@@ -472,7 +473,8 @@ function build(directory, config, parameters, level, seed)
 
   -- tooltip
   -- populate tooltip fields
-  if config.tooltipKind == "project45gun" then
+  parameters.tooltipKind = "project45gun"
+  if configParameter("tooltipKind") == "project45gun" then
     config.tooltipFields = config.tooltipFields or {}
     if config.project45GunModInfo.uniqueType then
       config.tooltipFields.subtitle = generalTooltipConfig.categoryStringsX[config.project45GunModInfo.uniqueType][config.project45GunModInfo.category or "generic"]
@@ -814,6 +816,10 @@ function build(directory, config, parameters, level, seed)
       local finalDescription = passiveDesc .. heavyDesc .. chargeDesc .. overchargeDesc .. multishotDesc .. acceptsModDesc .. modListDesc
       finalDescription = finalDescription == "" and project45util.colorText("#777777", "No notable qualities.") or finalDescription      
       config.tooltipFields.technicalLabel = finalDescription
+
+      if parameters.tooltipFields.customStatsLabel then
+        config.tooltipFields.technicalLabel = config.tooltipFields.technicalLabel .. "^cyan;Awakened.^reset;\n"
+      end
 
       if config.lore then
         config.description = config.description .. " " .. project45util.colorText("#9da8af", config.lore)
