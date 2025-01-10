@@ -1051,7 +1051,7 @@ function Project45GunFire:unjamming()
   self.weapon:setStance(self.stances.jammed)
   self.passiveClass.onUnjam(self)
 
-  self:updateJamAmount(sb.nrand(self.unjamStDev, -self.unjamAmount))
+  self:updateJamAmount(-self.unjamAmount * math.abs(sb.nrand(self.unjamStDev, 1)))
   if storage.project45GunState.jamAmount <= 0 then
     -- animator.playSound("click")
     self.passiveClass.onFullUnjam(self)
