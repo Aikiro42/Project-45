@@ -77,7 +77,8 @@
   "project45GunModInfo":{
     "category": "ballistic",
     "allowsConversion": [
-      "projectile"
+      "projectile",
+      "summoned"
     ],
     "acceptsModSlot": [
       "material",
@@ -119,10 +120,10 @@
       "crouching": 0.25
     },
     "jamChances": [0, 0, 0, 0],
-    "recoilAmount": 1.75,
-    "recoilMaxDeg": 15,
+    "recoilAmount": 0.75,
+    "recoilMaxDeg": 10,
     "recoverDelay": 0,
-    "recoverTime": 0.65,
+    "recoverTime": 0.4,
     
     "semi": true,
     "burstCount": 3,
