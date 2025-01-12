@@ -1,11 +1,12 @@
 {
   "itemName" : "project45-cop-auto9",
-  "price" : 1250,
+  "price" : 50000,
   "maxStack" : 1,
-  "rarity" : "Uncommon",
+  "rarity" : "Essential",
+  "isUnique": true,
   "description" : "A good ol' handgun.",
   "lore": "Reliable, deadly. The recommended gateway weapon into the world of Project 45.",
-  "shortdescription" : "Auto-9",
+  "shortdescription" : "^#fdd14d;Auto-9^reset;",
   "tooltipKind" : "project45gun",
   "gunArchetype": "pistol",
   "category" : "pistol",
@@ -13,14 +14,14 @@
   "itemTags" : ["weapon","ranged","pistol"],
   "level" : 1,
   "muzzleFlashColor": [255, 255, 200],
-  "inventoryIcon" : "project45-neo-pistol-icon.png",
+  "inventoryIcon" : "project45-cop-auto9-icon.png",
   
   "animationParts" : {
-    "middle" : "project45-neo-pistol.png",
+    "middle" : "project45-cop-auto9.png",
     "middleFullbright" : "",
     "charge": "",
     "chargeFullbright": "",
-    "magazine": "project45-neo-pistol-mag.png",
+    "magazine": "project45-cop-auto9-mag.png",
     "magazineFullbright": "",
     "muzzleFlash": "/items/active/weapons/ranged/project45-muzzleflash.png"
   },
@@ -76,31 +77,20 @@
   "project45GunModInfo":{
     "category": "ballistic",
     "allowsConversion": [
-      "hitscan",
-      "beam",
-      "summoned"
+      "projectile"
     ],
     "acceptsModSlot": [
-      "rail",
-      "sights",
-      "muzzle",
-      "stock",
-      
-      "magazine",
       "material",
       "receiver"
     ],
     "acceptsAmmoArchetype":[
       "bullet"
-    ],
-    "flipSlot": [
-      "stock"
     ]
   },
 
   "baseOffset" : [0.375, 0.125],
-  "muzzleOffset" : [1, 0.25],
-  "ejectionPortOffset": [-0.625, 0.5],
+  "muzzleOffset" : [1.4375, 0.4375],
+  "ejectionPortOffset": [-0.5, 0.625],
   "magazineOffset": [-0.5, -0.25],
 
   "railOffset": [0.625, 0],
@@ -129,8 +119,6 @@
       "crouching": 0.25
     },
 
-    "backHandFrame": ".back",
-
     "recoilAmount": 1.75,
     "recoilMaxDeg": 15,
     "recoverDelay": 0,
@@ -139,7 +127,7 @@
     "semi": true,
     "burstCount": 3,
     "cycleTime": 0.01,
-    "projectileKind": "projectile",
+    "projectileKind": "hitscan",
 
     // "reloadTime": 10,
     
