@@ -4,8 +4,8 @@
   "maxStack" : 1,
   "rarity" : "Essential",
   "isUnique": true,
-  "description" : "A good ol' handgun.",
-  "lore": "Reliable, deadly. The recommended gateway weapon into the world of Project 45.",
+  "description" : "A fast-firing burst pistol.",
+  "lore": "The Peacekeepers commissioned a weapon that their Glitch members could use on patrols. This was the result.",
   "shortdescription" : "^#fdd14d;Auto-9^reset;",
   "tooltipKind" : "project45gun",
   "gunArchetype": "pistol",
@@ -118,7 +118,7 @@
       "stationary": 0.5,
       "crouching": 0.25
     },
-
+    "jamChances": [0, 0, 0, 0],
     "recoilAmount": 1.75,
     "recoilMaxDeg": 15,
     "recoverDelay": 0,
