@@ -5,7 +5,7 @@
   "rarity" : "Essential",
   "isUnique": true,
   "description" : "A fast-firing burst pistol.",
-  "lore": "The Peacekeepers commissioned a weapon that their Glitch members could use on patrols. This was the result.",
+  "lore": "The Peacekeepers commissioned a pistol that their Glitch members could use on patrols. This was the result.",
   "shortdescription" : "^#fdd14d;Auto-9^reset;",
   "tooltipKind" : "project45gun",
   "gunArchetype": "pistol",
@@ -81,6 +81,12 @@
       "summoned"
     ],
     "acceptsModSlot": [
+      "rail",
+      "sights",
+      "muzzle",
+      "underbarrel",
+      "stock",
+      
       "material",
       "receiver"
     ],
@@ -89,14 +95,15 @@
     ]
   },
 
-  "baseOffset" : [0.375, 0.125],
+  "baseOffset" : [0.75, 0.125],
   "muzzleOffset" : [1.4375, 0.4375],
   "ejectionPortOffset": [-0.5, 0.625],
   "magazineOffset": [-0.5, -0.25],
 
   "railOffset": [0.625, 0],
-  "sightsOffset": [0.125, 0.55],
-  "stockOffset": [-0.75, -0.25],
+  "sightsOffset": [0.5, 0.75],
+  "underbarrelOffset": [0.75, 0],
+  "stockOffset": [-1.0625, -0.25],
 
   "debugPointColors": {
     "rail": "red",
@@ -119,7 +126,7 @@
       "stationary": 0.5,
       "crouching": 0.25
     },
-    "jamChances": [0, 0, 0, 0],
+    "jamChances": [0.075, 0.013, 0, 0],
     "recoilAmount": 0.75,
     "recoilMaxDeg": 10,
     "recoverDelay": 0,
