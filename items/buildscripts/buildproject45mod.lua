@@ -179,11 +179,13 @@ function build(directory, config, parameters, level, seed)
       config.tooltipFields.slotLabel = "Ammo"
     elseif deepConfigParameter(nil, "augment", "passive") then
       config.tooltipFields.slotLabel = "Passive"
-    elseif deepConfigParameter(nil, "augment", "stat") then
+    elseif deepConfigParameter(nil, "augment", "stat") or deepConfigParameter(nil, "augment", "randomStat") then
       config.tooltipFields.slotLabel = "Stats"
     end
   end
   config.tooltipFields.slotLabel = project45util.colorText("#9da8af", config.tooltipFields.slotLabel)
+
+  local randomStats = deepConfigParameter(nil, "augment", "randomStat")
 
   -- Change archetype and subtitle
   local modCategory = configParameter("modCategory")
@@ -217,8 +219,7 @@ function build(directory, config, parameters, level, seed)
     elseif modCategory == "statMod" then
       config.tooltipFields.subtitle = "Stat Mod"
       config.tooltipFields.archetypeTitleLabel = "Stat Type"
-      local random = deepConfigParameter(nil, "augment", "stat", "randomStatParams")
-      config.tooltipFields.archetypeLabel = random and "Random" or "Static"
+      config.tooltipFields.archetypeLabel = randomStats ~= nil and "Random" or "Static"
 
     elseif modCategory == "passiveMod" then
       config.tooltipFields.subtitle = "Passive Mod"
@@ -253,15 +254,13 @@ function build(directory, config, parameters, level, seed)
   -- change stats field
   local statLimit = 7
   local stats = 1
-  local specialField = set.new({"level", "pureStatMod", "randomStatParams", "stackLimit"})
-  local specialCases = set.new({"bulletsPerReload"})
-  local isRandomStats = deepConfigParameter(false, "augment", "stat", "randomStatParams")
+  local specialField = set.new({"level", "pureStatMod", "stackLimit"})
   local registeredRandomStats = {}
 
   -- item description
   local IDFGColor, IDBGColor = "#FF9000", "#190700"
   
-  for stat, op in pairs(deepConfigParameter({}, "augment", "stat")) do
+  for stat, op in pairs(deepConfigParameter(randomStats, "augment", "stat") or {}) do
     
     -- break if beyond stat limit
     if stats > statLimit then
@@ -276,7 +275,6 @@ function build(directory, config, parameters, level, seed)
     if not specialField[stat] then
       for mod, val in pairs(op) do
 
-        
         -- do not reformat random stats that have already been formatted
         if not registeredRandomStats[stat] then
           
@@ -291,7 +289,7 @@ function build(directory, config, parameters, level, seed)
           config.tooltipFields["ID_stat" .. stats .. "Label"] = project45util.colorText(IDBGColor, formattedVal)
 
           stats = stats + 1
-          registeredRandomStats[stat] = isRandomStats
+          registeredRandomStats[stat] = randomStats ~= nil
         end
       end
 
