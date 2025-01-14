@@ -136,6 +136,8 @@ function build(directory, config, parameters, level, seed)
     randomStatConfig.parameters = nil
 
     construct(parameters, "augment")
+    config.augment.randomStat = {}
+    parameters.augment.randomStat = {}
     parameters.augment.stat = randomStatConfig
   end
 
