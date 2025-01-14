@@ -52,10 +52,12 @@ function build(directory, config, parameters, level, seed)
   -- generate seed if supposed to be seeded
   -- but seed is not established
   if not useSeed then
-    parameters.seed = math.floor(math.random() * 2147483647)
+    useSeed = math.floor(math.random() * 2147483647)
+    parameters.seed = useSeed
   end
 
   if configParameter("noSeed") then
+    useSeed = nil
     config.seed = nil
     parameters.seed = nil
   end
