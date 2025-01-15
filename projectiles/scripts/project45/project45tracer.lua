@@ -33,8 +33,11 @@ end
 
 function update(dt)
   oldUpdate(dt)
-  renderStreak(self.prevPosition, mcontroller.position(), self.tracerParameters.useProjectile)
-  self.prevPosition = mcontroller.position()
+
+  if self.tracerParameters.enabled ~= false then
+    renderStreak(self.prevPosition, mcontroller.position(), self.tracerParameters.useProjectile)
+    self.prevPosition = mcontroller.position()
+  end
   
   if projectile.collision() or mcontroller.isCollisionStuck() or mcontroller.isColliding() then
 	  projectile.die()
@@ -52,7 +55,9 @@ function hit(entityId)
 end
 
 function uninit()
-  renderStreak(self.prevPosition, mcontroller.position(), true)
+  if self.tracerParameters.enabled ~= false then
+    renderStreak(self.prevPosition, mcontroller.position(), true)
+  end
   oldUninit()
 end
 
