@@ -1231,9 +1231,12 @@ function Project45GunFire:fireProjectile(projectileType, projectileParameters, i
       params.timeToLive = util.randomInRange(params.timeToLive)
     end
 
-    local projectileRandomSpeedFactor = math.abs(sb.nrand(0.1, 1))
+    local randomSpeedFactor = 1
+    if self.projectileKind == "projectile" then
+      randomSpeedFactor = math.abs(sb.nrand(params.randomSpeed or 0.1, 1))
+    end
     local finalParams = self.critFlag and sb.jsonMerge(params, {statusEffects = {"project45critdamaged"}}) or params
-    finalParams.speed = finalParams.speed * projectileRandomSpeedFactor
+    finalParams.speed = finalParams.speed * randomSpeedFactor
 
     projectileId = world.spawnProjectile(
       selectedProjectileType,

@@ -138,7 +138,7 @@
     */
 
     "projectileParameters": {
-
+      "randomSpeed": 0.05  // Standard deviation applied to speed of each individual projectile
     },
 
     /*
