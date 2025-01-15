@@ -48,6 +48,7 @@ function build(directory, config, parameters, level, seed)
 
 
   construct(config, "augment") -- make sure config.augment exists
+  construct(parameters, "augment") -- make sure config.augment exists
   
   -- generate seed if supposed to be seeded
   -- but seed is not established
@@ -82,7 +83,7 @@ function build(directory, config, parameters, level, seed)
   -- set upgrade cost to be 1/2 of modified stats
   local nStats = math.min(#possibleStats, randomStatParams.chosenStatCount or math.ceil(#possibleStats / 2))
   local costPerStat = randomStatParams.costPerStat or 1
-  config.augment.cost = math.ceil(costPerStat * nStats)  
+  parameters.augment.cost = math.ceil(costPerStat * nStats)
 
   local rng = sb.makeRandomSource(useSeed or 0)
 
@@ -135,9 +136,6 @@ function build(directory, config, parameters, level, seed)
     -- done constructing stats, remove parameters
     randomStatConfig.parameters = nil
 
-    construct(parameters, "augment")
-    config.augment.randomStat = {}
-    parameters.augment.randomStat = {}
     parameters.augment.stat = randomStatConfig
   end
 

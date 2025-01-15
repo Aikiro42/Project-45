@@ -254,7 +254,7 @@ function build(directory, config, parameters, level, seed)
   -- change stats field
   local statLimit = 7
   local stats = 1
-  local specialField = set.new({"level", "pureStatMod", "stackLimit"})
+  local specialField = set.new({"level", "pureStatMod", "stackLimit", "parameters"})
   local registeredRandomStats = {}
 
   -- item description
