@@ -1,0 +1,34 @@
+{
+  "itemName" : "project45-oldattachecase",
+  "price" : 100,
+  "level" : 1,
+  "maxStack" : 999,
+  "rarity" : "Rare",
+  "category" : "mysteriousReward",
+  "description" : "A case that used to belong to a Project 45 researcher. ^#eab3db;Open it to receive a Project 45 item.^reset;",
+  "shortdescription" : "Old Attache Case",
+  "twoHanded" : false,
+
+  "inventoryIcon" : "project45-oldattachecase.png",
+  "animation" : "/items/active/unsorted/superrewardbag/superrewardbag.animation",
+  "animationCustom" : {
+    "animatedParts": {
+      "parts": {
+        "gun": {
+          "properties": {
+            "image": "project45-oldattachecase.png"
+          }
+        }
+      }
+    }
+  },
+  "scripts" : ["/items/active/unsorted/superrewardbag/superrewardbag.lua"],
+
+  "fireTime" : 2.0,
+  "fireOffset" : [1.0, 0.0],
+
+  "treasure" : {
+    "pool" : "project45-enemy-drop",
+    "level": 1
+  }
+}
