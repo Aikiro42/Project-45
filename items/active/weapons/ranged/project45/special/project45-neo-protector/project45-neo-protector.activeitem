@@ -85,6 +85,8 @@
   "ejectionPortOffset": [-0.25, 0.75],
   "magazineOffset": [0, -0.25],
 
+  "seed": 69420,
+
   /*
   "railOffset" : [1.5, 0.375],
   "sightsOffset": [0.625, 0.75],

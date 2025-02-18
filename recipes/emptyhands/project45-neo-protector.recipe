@@ -7,13 +7,15 @@
     { "item" : "coalore", "count" : 4 },
     { "item" : "sand2", "count" : 2 }
   ],
+  /*
   "output" : {
     "item" : "project45-neo-protector",
     "parameters": {
       "seed": 69420
-    },
-    "count" : 1
+    }
   },
+  //*/
+  "output": "project45-neo-protector",
   "duration" : 1,
-  "groups" : [ "plain", "objects", "all", "tools" ]
+  "groups" : [ "plain", "all", "weapons", "craftingstations" ]
 }
