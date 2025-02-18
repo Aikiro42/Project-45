@@ -1,3 +1,4 @@
+---@diagnostic disable: lowercase-global
 require "/scripts/project45/project45util.lua"
 require "/scripts/versioningutils.lua"
 require "/scripts/util.lua"
@@ -20,25 +21,60 @@ function build(directory, config, parameters, level, seed)
     end
   end
 
-  construct(config, "augment", "stat") -- make sure config.augment.stat exists
-  construct(parameters, "augment", "stat") -- make sure config.augment.stat exists
+  local deepConfigParameterT = function(t, ...)
+    local retval = nil
+    for _,child in ipairs({...}) do
+      if t[child] then
+        retval = t[child]
+        t = t[child]
+      else
+        retval = nil
+        break
+      end
+    end
+    return retval
+  end
+
+  -- Lovechild of construct() and configParameter().
+  local deepConfigParameter = function(defaultValue, ...)
+    local retval = deepConfigParameterT(parameters, ...)
+    if retval ~= nil then return retval end
+    retval = deepConfigParameterT(config, ...)
+    if retval ~= nil then return retval end
+    return defaultValue
+  end
+
+  local useSeed = configParameter("seed", seed)
+
+
+  construct(config, "augment") -- make sure config.augment exists
+  construct(parameters, "augment") -- make sure config.augment exists
   
   -- generate seed if supposed to be seeded
   -- but seed is not established
-  if not (parameters.noSeed or configParameter("seed", seed)) then
-    parameters.seed = math.floor(math.random() * 2147483647)
+  if not useSeed then
+    useSeed = math.floor(math.random() * 2147483647)
+    parameters.seed = useSeed
   end
 
-  local randomStatParams = config.augment.stat.randomStatParams or {}
+  if configParameter("noSeed") then
+    useSeed = nil
+    config.seed = nil
+    parameters.seed = nil
+  end
+
+  local randomStatConfig = deepConfigParameter({}, "augment", "randomStat")
+  local randomStatParams = randomStatConfig.parameters or {}
   local specialField = {
-    randomStatParams = true,
+    parameters = true,
     pureStatMod = true,
     stackLimit = true
   }
   
+
   -- get list of possible stats to modify
   local possibleStats = {nil}    
-  for stat, modifier in pairs(config.augment.stat) do
+  for stat, modifier in pairs(randomStatConfig or {}) do
     if not specialField[stat] then
       table.insert(possibleStats, stat)
     end
@@ -47,20 +83,22 @@ function build(directory, config, parameters, level, seed)
   -- set upgrade cost to be 1/2 of modified stats
   local nStats = math.min(#possibleStats, randomStatParams.chosenStatCount or math.ceil(#possibleStats / 2))
   local costPerStat = randomStatParams.costPerStat or 1
-  config.augment.cost = math.ceil(costPerStat * nStats)
-  
-  if parameters.seed
-  and not parameters.augment.stat.randomized
-  and config.augment.stat.randomStatParams then
+  parameters.augment.cost = math.ceil(costPerStat * nStats)
+
+  local rng = sb.makeRandomSource(useSeed or 0)
+
+  if useSeed
+  and not deepConfigParameter(nil, "augment", "stat")
+  and randomStatConfig
+  then
 
     -- init seeded rng
-    local rng = sb.makeRandomSource(parameters.seed)
-    
+
     -- choose n/2 stats from n possible stats, put in `modifications` table
     local modifications = {}
     for n=1, nStats do
       local chosenStat = table.remove(possibleStats, (rng:randu32() % #possibleStats) + 1)
-      modifications[chosenStat] = config.augment.stat[chosenStat]
+      modifications[chosenStat] = randomStatConfig[chosenStat]
     end
 
     -- For each chosen stat and its operations
@@ -80,11 +118,11 @@ function build(directory, config, parameters, level, seed)
         -- choose one among them and apply
         local chosenOp = table.remove(possibleOps, (rng:randu32() % #possibleOps) + 1)
         local chosenValueVector = modification[chosenOp]
-        config.augment.stat[stat][chosenOp] = generateRandomStat(chosenValueVector, rng)
+        randomStatConfig[stat][chosenOp] = generateRandomStat(chosenValueVector, rng)
 
         -- nullify unchosen random ops
         for _, op in ipairs(possibleOps) do
-          config.augment.stat[stat][op] = nil
+          randomStatConfig[stat][op] = nil
         end
       end
 
@@ -92,17 +130,17 @@ function build(directory, config, parameters, level, seed)
 
     -- nullify unchosen stats
     for _, stat in ipairs(possibleStats) do
-      config.augment.stat[stat] = nil
+      randomStatConfig[stat] = nil
     end
     
-    parameters.augment.stat.randomized = true
-    parameters.augment.stat = config.augment.stat
-    parameters.shortdescription = string.format("%s%s", config.shortdescription, parameters.seed and (" #" .. parameters.seed) or "")
-  else
-    -- TEST: 
-    -- config.augment.stat = parameters.augment.stat
-    parameters.augment.stat = nil
+    -- done constructing stats, remove parameters
+    randomStatConfig.parameters = nil
+
+    parameters.augment.stat = randomStatConfig
   end
+
+  parameters.shortdescription = string.format("%s%s", config.shortdescription, useSeed and (" #" .. useSeed) or "")
+
   return unrandBuild(directory, config, parameters, level, seed)
 end
 

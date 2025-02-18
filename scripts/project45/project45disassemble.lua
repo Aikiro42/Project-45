@@ -30,12 +30,12 @@ function disassemble(input)
               name = k,
               count = v})
           else
-            for wildcardItemId, savedSeeds in pairs(v) do
-              for _, seed in ipairs(savedSeeds) do
+            for wildcardItemId, savedAugmentConfigs in pairs(v) do
+              for _, augmentConfig in ipairs(savedAugmentConfigs) do
                 table.insert(disassembledItems, {
                   name = wildcardItemId,
                   parameters = {
-                    seed = seed
+                    augment = augmentConfig
                 }})
               end
             end

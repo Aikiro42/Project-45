@@ -19,10 +19,9 @@
   "augment":{
     "cost": 5,
     "pureStatMod": true,
-    
-    "stat": {
+    "randomStat": {
       "stackLimit": 4,
-      "randomStatParams": {
+      "parameters": {
         "costPerStat": 0.6,
         "chosenStatCount": 3
       },
