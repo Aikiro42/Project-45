@@ -5,7 +5,7 @@
   "physics" : "arrow",
   "animationCycle" : 0.25,
   "frameNumber" : 1,
-  "damageKind" : "standardbullet",
+  "damageKind" : "bow",
   "pointLight" : true,
   "lightColor": [1, 1, 1],
   "fullbright": true,
