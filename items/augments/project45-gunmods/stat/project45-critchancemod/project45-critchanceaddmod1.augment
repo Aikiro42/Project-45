@@ -1,7 +1,7 @@
 {
   // bonus + bonus * 1.5 * (cost - 1)
   "itemName" : "project45-critchanceaddmod1",
-  "price" : 250,
+  "price" : 25,
   "rarity" : "Uncommon",
   "tooltipKind" : "project45gunmod2",
   "tooltipFields": {
