@@ -1,6 +1,6 @@
 {
   "itemName" : "project45-neo-custom-x",
-  "price" : 1000,
+  "price" : 100,
   "maxStack" : 1,
   "rarity" : "Essential",
   "description" : "A bizarre firearm used to test features.",

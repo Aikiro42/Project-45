@@ -1,6 +1,6 @@
 {
   "itemName" : "project45-neo-flamethrower",
-  "price" : 10000,
+  "price" : 1000,
   "maxStack" : 1,
   "rarity" : "Essential",
   "description": "This is a flammenwerfer.",
