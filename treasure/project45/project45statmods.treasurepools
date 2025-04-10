@@ -1,0 +1,74 @@
+{
+  // SECTION: STATS
+  
+  "project45-unknownstatmod1": [
+    [0, {
+      "pool" : [
+        // 1
+        {"weight" : 1, "item" : "project45-critchanceaddmod1"},
+        {"weight" : 1, "item" : "project45-critdamageaddmod1"},
+        {"weight" : 1, "item" : "project45-damageaddmod1"},
+        {"weight" : 1, "item" : "project45-firetimeaddmod1"},
+        {"weight" : 1, "item" : "project45-reloadcostaddmod1"},
+
+        {"weight" : 1, "item" : "project45-critchancemultmod1"},
+        {"weight" : 1, "item" : "project45-critdamagemultmod1"},
+        {"weight" : 1, "item" : "project45-damagemultmod1"},
+        {"weight" : 1, "item" : "project45-firetimemultmod1"},
+        {"weight" : 1, "item" : "project45-reloadcostmultmod1"},
+        
+        {"weight" : 1, "item" : "project45-wildcardstatmod"}
+
+      ],
+      "poolRounds" : 1,
+      "allowDuplication" : false
+    }]
+  ],
+
+  "project45-unknownstatmod2": [
+    [0, {
+      "pool" : [
+        // 2
+        {"weight" : 1, "item" : "project45-critchanceaddmod2"},
+        {"weight" : 1, "item" : "project45-critdamageaddmod2"},
+        {"weight" : 1, "item" : "project45-damageaddmod2"},
+        {"weight" : 1, "item" : "project45-firetimeaddmod2"},
+        {"weight" : 1, "item" : "project45-reloadcostaddmod2"},
+
+        {"weight" : 1, "item" : "project45-critchancemultmod2"},
+        {"weight" : 1, "item" : "project45-critdamagemultmod2"},
+        {"weight" : 1, "item" : "project45-damagemultmod2"},
+        {"weight" : 1, "item" : "project45-firetimemultmod2"},
+        {"weight" : 1, "item" : "project45-reloadcostmultmod2"},
+
+        {"weight" : 1, "item" : "project45-wildcardstatmod"}
+      ],
+      "poolRounds" : 1,
+      "allowDuplication" : false
+    }]
+  ],
+
+  "project45-unknownstatmod3": [
+    [0, {
+      "pool" : [
+        // 3
+        {"weight" : 1, "item" : "project45-critchanceaddmod3"},
+        {"weight" : 1, "item" : "project45-critdamageaddmod3"},
+        {"weight" : 1, "item" : "project45-damageaddmod3"},
+        {"weight" : 1, "item" : "project45-firetimeaddmod3"},
+        {"weight" : 1, "item" : "project45-reloadcostaddmod3"},
+
+        {"weight" : 1, "item" : "project45-critchancemultmod3"},
+        {"weight" : 1, "item" : "project45-critdamagemultmod3"},
+        {"weight" : 1, "item" : "project45-damagemultmod3"},
+        {"weight" : 1, "item" : "project45-firetimemultmod3"},
+        {"weight" : 1, "item" : "project45-reloadcostmultmod3"},
+
+        {"weight" : 1, "item" : "project45-wildcardstatmodssr"}
+      ],
+      "poolRounds" : 1,
+      "allowDuplication" : false
+    }]
+  ]
+  
+}

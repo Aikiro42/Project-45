@@ -4,46 +4,47 @@
     [0, {
       "poolRounds" : [[0.7, 0], [0.15, 1], [0.15, 2]],
       "pool" : [
-        {"weight" : 0.75, "pool" : "project45-stats-r"},
+        {"weight" : 0.75, "item" : "project45-unknownstatmod1"},
         {"weight" : 0.25, "item" : "project45-levelmod"}
       ]
     }],
     [1.9, {
       "poolRounds" : [[0.7, 0], [0.15, 1], [0.15, 2]],
       "pool" : [
-        {"weight" : 0.75, "pool" : "project45-stats-r"},
+        {"weight" : 0.75, "item" : "project45-unknownstatmod1"},
         {"weight" : 0.25, "item" : "project45-levelmod"}
       ]
     }],
     [2.9, {
       "poolRounds" : [[0.7, 0], [0.3, 1]],
       "pool" : [
-        {"weight" : 0.85, "pool" : "project45-stats-sr"},
+        {"weight" : 0.75, "item" : "project45-unknownstatmod2"},
         {"weight" : 0.15, "item" : "project45-levelmod"}
       ]
     }],
     [3.9, {
       "poolRounds" : [[0.7, 0], [0.3, 1]],
       "pool" : [
-        {"weight" : 0.85, "pool" : "project45-stats-sr"},
+        {"weight" : 0.85, "item" : "project45-unknownstatmod2"},
         {"weight" : 0.15, "item" : "project45-levelmod"}
       ]
     }],
     [4.9, {
       "poolRounds" : [[0.8, 0], [0.2, 1]],
       "pool" : [
-        {"weight" : 1, "pool" : "project45-stats-ssr"}
+        {"weight" : 1, "item" : "project45-unknownstatmod3"}
       ]
     }],
     [5.9, {
       "poolRounds" : [[0.8, 0], [0.2, 1]],
       "pool" : [
-        {"weight" : 1, "pool" : "project45-stats-ssr"}
+        {"weight" : 1, "item" : "project45-unknownstatmod3"}
       ]
     }],
     [6.9, {
       "poolRounds" : [[0.99, 0], [0.01, 1]],
       "pool" : [
+        {"weight" : 0.25, "item" : "project45-unknownstatmod3"},
         {"weight" : 1, "pool" : "project45-stats-xssr"}
       ]
     }]
