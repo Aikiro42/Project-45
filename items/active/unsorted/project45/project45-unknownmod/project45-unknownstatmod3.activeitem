@@ -1,0 +1,34 @@
+{
+  "itemName" : "project45-unknownstatmod3",
+  "price" : 4,
+  "level" : 1,
+  "maxStack" : 999,
+  "rarity" : "Legendary",
+  "category" : "mysteriousReward",
+  "description" : "Use this to open it and receive a Project 45 Series III Stat Mod.",
+  "shortdescription" : "Unknown Stat Mod III",
+  "twoHanded" : true,
+
+  "inventoryIcon" : "project45-unknownstatmod3.png",
+  "animation" : "/items/active/unsorted/rewardbag/rewardbag.animation",
+  "animationCustom" : {
+    "animatedParts": {
+      "parts": {
+        "gun": {
+          "properties": {
+            "image": "project45-unknownstatmod3.png"
+          }
+        }
+      }
+    }
+  },
+  "scripts" : ["/items/active/unsorted/rewardbag/rewardbag.lua"],
+
+  "fireTime" : 0.1,
+  "fireOffset" : [1.0, 0.0],
+
+  "treasure" : {
+    "pool" : "project45-unknownstatmod3",
+    "level" : 1
+  }
+}
