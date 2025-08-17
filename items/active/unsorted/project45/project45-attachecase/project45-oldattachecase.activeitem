@@ -10,7 +10,7 @@
   "twoHanded" : false,
 
   "inventoryIcon" : "project45-oldattachecase.png",
-  "animation" : "/items/active/unsorted/superrewardbag/superrewardbag.animation",
+  "animation" : "/items/active/unsorted/project45/project45-attachecase/project45-attachecase.animation",
   "animationCustom" : {
     "animatedParts": {
       "parts": {
