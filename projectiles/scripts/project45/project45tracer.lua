@@ -27,6 +27,7 @@ function init()
   config.getParameter("tracerParameters", {}))
   self.prevPosition = mcontroller.position()
   self.punchThrough = config.getParameter("punchThrough", 0)
+  self.physics = config.getParameter("physics", "laser")
   -- project45util.printObject(_ENV)
   -- chat.addMessage("bitch")
 end
@@ -39,7 +40,7 @@ function update(dt)
     self.prevPosition = mcontroller.position()
   end
   
-  if projectile.collision() or mcontroller.isCollisionStuck() or mcontroller.isColliding() then
+  if self.physics == "project45projectile" and (projectile.collision() or mcontroller.isCollisionStuck() or mcontroller.isColliding()) then
 	  projectile.die()
   end
 

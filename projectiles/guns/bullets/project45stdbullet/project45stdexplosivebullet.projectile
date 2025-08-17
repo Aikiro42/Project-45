@@ -1,6 +1,6 @@
 {
   "projectileName" : "project45explosivebullet",
-  "image" : "project45stdbullet.png",
+  "image" : "project45stdexplosivebullet.png",
   "scripts": ["/projectiles/scripts/project45/project45tracer.lua"],
   "physics" : "project45projectile",
   "animationCycle" : 0.25,
@@ -26,7 +26,7 @@
   "bounces" : 0,
 
   "tracerParameters": {
-    "color": [255,255,200],
+    "color": [255,255,200,64],
     "fullbright": true
   },
 

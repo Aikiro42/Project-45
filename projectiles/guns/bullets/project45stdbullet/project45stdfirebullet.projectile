@@ -1,15 +1,19 @@
 {
   "projectileName" : "project45stdfirebullet",
-  "image" : "project45stdbullet.png",
-  "scripts": ["/projectiles/scripts/project45/project45tracer.lua"],
+  "image" : "project45stdfirebullet.png",
+  "scripts": [
+    "/scripts/project45/dummy.lua",
+    "/projectiles/scripts/project45/project45tracer.lua"
+  ],
   "physics" : "project45projectile",
   "animationCycle" : 0.25,
-  "frameNumber" : 1,
+  "frameNumber" : 8,
   "damageKind" : "fire",
   "pointLight" : true,
   "lightColor": [175, 78, 0],
   "fullbright": true,
   "flippable" : true,
+  "piercing": false,
   "statusEffects" : ["burning"],
   "power" : 5.0,
   "speed" : 300,
@@ -27,7 +31,7 @@
   "bounces" : 0,
 
   "tracerParameters": {
-    "color": [255, 170, 0],
+    "color": [255, 170, 0, 128],
     "fullbright": true
   },
 
