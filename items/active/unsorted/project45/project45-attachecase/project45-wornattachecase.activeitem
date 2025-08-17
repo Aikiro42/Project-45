@@ -5,7 +5,7 @@
   "maxStack" : 999,
   "rarity" : "Uncommon",
   "category" : "mysteriousReward",
-  "description" : "A case that used to belong to a Project 45 researcher. ^#eab3db;Open it to receive a Project 45 item.^reset;",
+  "description" : "A worn Project 45 case. Still has some kinda gunk on it. ^#eab3db;Open it to receive a gun mod.^reset;",
   "shortdescription" : "Worn Attache Case",
   "twoHanded" : false,
 
@@ -28,7 +28,7 @@
   "fireOffset" : [1.0, 0.0],
 
   "treasure" : {
-    "pool" : "project45-enemy-drop",
+    "pool" : "project45-unknowngunmod1",
     "level": 1
   }
 }

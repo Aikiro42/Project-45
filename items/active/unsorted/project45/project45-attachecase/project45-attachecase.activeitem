@@ -1,11 +1,11 @@
 {
   "itemName" : "project45-attachecase",
-  "price" : 100,
+  "price" : 400,
   "level" : 1,
   "maxStack" : 999,
   "rarity" : "Legendary",
   "category" : "mysteriousReward",
-  "description" : "A case that used to belong to a Project 45 researcher. ^#eab3db;Open it to receive a Project 45 item.^reset;",
+  "description" : "A case typically carried around by Project 45 mercs. ^#eab3db;Open it to receive a gun mod.^reset;",
   "shortdescription" : "Attache Case",
   "twoHanded" : false,
 
@@ -28,7 +28,7 @@
   "fireOffset" : [1.0, 0.0],
 
   "treasure" : {
-    "pool" : "project45-enemy-drop",
+    "pool" : "project45-unknowngunmod3",
     "level": 1
   }
 }

@@ -1,22 +1,22 @@
 {
-  "itemName" : "project45-oldattachecase",
-  "price" : 200,
+  "itemName" : "project45-prototypecase",
+  "price" : 800,
   "level" : 1,
   "maxStack" : 999,
-  "rarity" : "Rare",
+  "rarity" : "Essential",
   "category" : "mysteriousReward",
-  "description" : "An old case that's seen better days. ^#eab3db;Open it to receive a gun mod.^reset;",
-  "shortdescription" : "Old Attache Case",
+  "description" : "A durable case that belonged to a Letheia researcher. ^#eab3db;Open it to receive a gun mod.^reset;",
+  "shortdescription" : "Prototype Case",
   "twoHanded" : false,
 
-  "inventoryIcon" : "project45-oldattachecase.png",
+  "inventoryIcon" : "project45-prototypecase.png",
   "animation" : "/items/active/unsorted/superrewardbag/superrewardbag.animation",
   "animationCustom" : {
     "animatedParts": {
       "parts": {
         "gun": {
           "properties": {
-            "image": "project45-oldattachecase.png"
+            "image": "project45-prototypecase.png"
           }
         }
       }
@@ -28,7 +28,7 @@
   "fireOffset" : [1.0, 0.0],
 
   "treasure" : {
-    "pool" : "project45-unknowngunmod2",
+    "pool" : "project45-unknowngunmod4",
     "level": 1
   }
 }
