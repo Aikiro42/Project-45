@@ -1,15 +1,16 @@
 {
   // copied from unbound
   "projectileName" : "project45healingbullet",
-  "image" : "project45healingbullet.png?setcolor=FFA0A0",
-  "animationCycle" : 0.2,
+  "image" : "project45healingbullet.png",
+  "animationCycle" : 0.5,
+  "windupFrames": 7,
   "frameNumber" : 1,
   "damageKindImage" : "icon.png",
   "lightColor" : [50, 0, 0],
   "fullbright" : true,
   "pointLight" : true,
   "tracerParameters": {
-    "color": [255,0,0],
+    "color": [255,0,0,64],
     "fullbright": true
   },
   
