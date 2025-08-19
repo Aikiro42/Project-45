@@ -2,15 +2,16 @@
   // copied from unbound
   "projectileName" : "project45smartbullet",
   "image" : "project45smartbullet.png",
-  "animationCycle" : 0.2,
+  "animationCycle" : 0.3,
   "frameNumber" : 1,
+  "windupFrames" : 7,
   "damageKindImage" : "icon.png",
   "lightColor" : [72, 52, 79],
   "fullbright" : true,
   "pointLight" : true,
 
   "tracerParameters": {
-    "color": [210, 156, 231],
+    "color": [210, 156, 231, 64],
     "fullbright": true
   },
 
