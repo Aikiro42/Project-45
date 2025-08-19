@@ -1206,12 +1206,15 @@ end
 
 function Project45GunFire:fireProjectile(projectileType, projectileParameters, inaccuracy, firePosition, projectileCount, aimVector, addOffset)
   local params = sb.jsonMerge(
-       self.projectileKind == "summoned" and self.summonedProjectileParameters
-    or self.projectileParameters, projectileParameters
-    or {
-      speed = 0
-    }
+       self.projectileKind == "summoned" and (self.summonedProjectileParameters or {speed = 0})
+    or self.projectileParameters,
+    projectileParameters or {}
   )
+  
+  if not params.speed then
+    params.speed = 0
+  end
+
   params.power = self:damagePerShot()
   -- params.powerMultiplier = activeItem.ownerPowerMultiplier()
   params.powerMultiplier = 1
