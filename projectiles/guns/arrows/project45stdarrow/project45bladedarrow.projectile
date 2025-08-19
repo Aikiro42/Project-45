@@ -1,9 +1,10 @@
 {
   "projectileName" : "project45bladedarrow",
-  "image" : "project45stdarrow.png",
+  "image" : "project45bladedarrow.png",
   "scripts": ["/projectiles/scripts/project45/project45tracer.lua"],
   "physics" : "arrow",
-  "animationCycle" : 0.25,
+  "animationCycle" : 0.1,
+  "windupFrames": 3,
   "frameNumber" : 1,
   "damageKind" : "bow",
   "pointLight" : true,

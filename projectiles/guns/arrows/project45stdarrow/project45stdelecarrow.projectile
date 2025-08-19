@@ -1,9 +1,10 @@
 {
   "projectileName" : "project45stdelecarrow",
-  "image" : "project45stdarrow.png?multiply=FF00AAFF",
+  "image" : "project45stdelecarrow.png",
   "scripts": ["/projectiles/scripts/project45/project45tracer.lua"],
   "physics" : "arrow",
-  "animationCycle" : 0.25,
+  "animationCycle" : 0.1,
+  "windupFrames": 3,
   "frameNumber" : 1,
   "damageKind" : "electric",
   "pointLight" : false,
@@ -26,8 +27,8 @@
   },
   "bounces" : 0,
   "tracerParameters": {
-    "color": [164,81,196],
-    "fullbright": false
+    "color": [164,81,196,128],
+    "fullbright": true
   },
 
   "actionOnReap": [

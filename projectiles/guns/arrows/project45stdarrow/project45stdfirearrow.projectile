@@ -3,7 +3,8 @@
   "image" : "project45stdarrow.png",
   "scripts": ["/projectiles/scripts/project45/project45tracer.lua"],
   "physics" : "arrow",
-  "animationCycle" : 0.25,
+  "animationCycle" : 0.1,
+  "windupFrames": 3,
   "frameNumber" : 1,
   "damageKind" : "fire",
   "pointLight" : true,
@@ -26,7 +27,7 @@
   },
   "bounces" : 0,
   "tracerParameters": {
-    "color": [234,153,49],
+    "color": [234,153,49,128],
     "fullbright": true
   },
   "actionOnReap": [
