@@ -1190,11 +1190,21 @@ function Project45GunFire:stopFireLoop()
 end
 
 function Project45GunFire:fireProjectile(projectileType, projectileParameters, inaccuracy, firePosition, projectileCount, aimVector, addOffset)
-  local params = sb.jsonMerge(self.projectileKind == "summoned" and self.summonedProjectileParameters or self.projectileParameters, projectileParameters or {})
+  local params = sb.jsonMerge(
+       self.projectileKind == "summoned" and self.summonedProjectileParameters
+    or self.projectileParameters, projectileParameters
+    or {
+      speed = 0
+    }
+  )
   params.power = self:damagePerShot()
   -- params.powerMultiplier = activeItem.ownerPowerMultiplier()
   params.powerMultiplier = 1
-  params.speed = util.randomInRange(params.speed)
+
+  if type(params.speed) == "table" then
+    params.speed = util.randomInRange(params.speed)
+  end
+  
   local selectedProjectileType = nil
 
   if not projectileType then
