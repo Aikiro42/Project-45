@@ -12,34 +12,6 @@
     "color": [225, 83, 73, 128],
     "fullbright": true
   },
-  "periodicActions" : [
-    {
-      "time" : 0,
-      "repeat" : true,
-      "action" : "particle",
-      "rotate" : true,
-      
-      "specification" : {
-        "type" : "streak",
-        "layer" : "back",
-        "fullbright" : true,
-        "destructionAction" : "shrink",
-        "size" : 1,
-        "color" : [225, 83, 73, 128],
-        "collidesForeground" : false,
-        "length" : 20,
-        "position" : [0, 0],
-        "timeToLive" : 0,
-        "destructionTime" : 0.2,
-        "initialVelocity" : [0.001, 0],
-        "variance" : {
-          "length": 0
-        }
-      }
-
-    }
-    //*/
-  ],
   "actionOnReap" : [
     { 
       "action" : "sound",
@@ -93,6 +65,6 @@
   "persistentAudio" : "/projectiles/guns/bullets/project45homingblade/project45homingbladeloop.ogg",
   "scripts" : [
     "/projectiles/guns/bullets/project45smartbullet/project45smartbullet.lua",
-    "projectiles/scripts/project45/project45tracer"
+    "/projectiles/scripts/project45/project45tracer.lua"
   ]
 }
