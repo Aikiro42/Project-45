@@ -4,6 +4,7 @@
   "scripts": ["/projectiles/scripts/project45/project45tracer.lua"],
   "physics" : "project45projectile",
   "animationCycle" : 0.25,
+  "windupFrames": 7,
   "frameNumber" : 1,
   "damageKind" : "standardbullet",
   "pointLight" : true,
