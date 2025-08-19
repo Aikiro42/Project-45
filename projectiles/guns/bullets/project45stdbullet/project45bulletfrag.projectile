@@ -9,7 +9,8 @@
   "statusEffects" : [ ],
 
   "animationCycle" : 0.25,
-  "frameNumber" : 8,
+  "windupFrames": 7,
+  "frameNumber" : 1,
   "pointLight" : true,
   "lightColor": [75, 75, 75],
   "fullbright": true,
