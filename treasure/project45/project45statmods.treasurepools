@@ -5,7 +5,8 @@
     [0, {
       "pool" : [
         // 1
-        {"weight" : 1, "pool" : "project45-stats-r"}
+        {"weight" : 0.75, "pool" : "project45-stats-r"},
+        {"weight" : 0.25, "item" : "project45-levelmod"}
       ],
       "poolRounds" : 1,
       "allowDuplication" : false
