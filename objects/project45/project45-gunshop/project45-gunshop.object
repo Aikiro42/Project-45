@@ -144,13 +144,15 @@
         "project45-mhf-boneshooter",
         "project45-cbp-malorian",
         "project45-utk-revolver",
-        "project45-40k-boltgun"
+        "project45-40k-boltgun",
+        "project45-cop-auto9"
 
       ],
       "mods": [
         // abilities
         "project45-manualreloadmod",
         "project45-shiftreloadmod",
+        "project45-challengerswillmod",
         "project45-gunscopemod",
         "project45-supergunscopemod",
         "project45-mlgscopemod",
@@ -274,7 +276,8 @@
 
         "project45-gravbombmod",
         "project45-gravpullmod",
-        "project45-haloburstmod"
+        "project45-haloburstmod",
+        "project45-incineratemod"
         
       ],
 

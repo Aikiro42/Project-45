@@ -1,0 +1,201 @@
+{
+  "itemName" : "project45-cop-auto9",
+  "price" : 50000,
+  "maxStack" : 1,
+  "rarity" : "Essential",
+  "isUnique": true,
+  "description" : "A fast-firing burst pistol.",
+  "lore": "The Peacekeepers commissioned a pistol that their Glitch members could use on patrols. This was the result.",
+  "shortdescription" : "^#fdd14d;Auto-9^reset;",
+  "tooltipKind" : "project45gun",
+  "gunArchetype": "pistol",
+  "category" : "pistol",
+  "twoHanded" : false,
+  "itemTags" : ["weapon","ranged","pistol"],
+  "level" : 1,
+  "muzzleFlashColor": [255, 255, 200],
+  "inventoryIcon" : "project45-cop-auto9-icon.png",
+  
+  "animationParts" : {
+    "middle" : "project45-cop-auto9.png",
+    "middleFullbright" : "",
+    "charge": "",
+    "chargeFullbright": "",
+    "magazine": "project45-cop-auto9-mag.png",
+    "magazineFullbright": "",
+    "muzzleFlash": "/items/active/weapons/ranged/project45-muzzleflash.png"
+  },
+
+  "animationCustom": {
+    "particleEmitters": {
+      "ejectionPort": {
+        "particles": [
+          {"particle": "project45bulletcasesmall"}
+        ]
+      },
+      "backEjectionPort": {
+        "particles": [
+          {"particle": "project45bulletcasesmallback"}
+        ]
+      },
+      "magazine": {
+        "particles": [
+          {"particle": "project45pistolmag"}
+        ]
+      }
+    },
+
+    "sounds": {
+      "fire" : ["/sfx/project45neosfx/fire/fire-pistol1.ogg"]
+    },
+    "animatedParts": {
+      "parts":{
+        "charge":{
+          "partStates":{
+            "charge":{
+              "off": {
+                "properties": {
+                  "image": "<partImage>:charging.1"
+                }
+              }
+            }
+          }
+        }
+      },
+      "stateTypes": {
+        "charge":{
+          "states":{
+            "charging":{
+              "frames": 2
+            }
+          }
+        }
+      }
+    }
+  },
+
+  "project45GunModInfo":{
+    "category": "ballistic",
+    "allowsConversion": [
+      "projectile",
+      "summoned"
+    ],
+    "acceptsModSlot": [
+      "rail",
+      "sights",
+      "muzzle",
+      "underbarrel",
+      "stock",
+      
+      "material",
+      "receiver"
+    ],
+    "acceptsAmmoArchetype":[
+      "bullet"
+    ]
+  },
+
+  "baseOffset" : [0.75, 0.125],
+  "muzzleOffset" : [1.4375, 0.4375],
+  "ejectionPortOffset": [-0.5, 0.625],
+  "magazineOffset": [-0.5, -0.25],
+
+  "railOffset": [0.625, 0],
+  "sightsOffset": [0.5, 0.75],
+  "underbarrelOffset": [0.75, 0],
+  "stockOffset": [-1.0625, -0.25],
+
+  "debugPointColors": {
+    "rail": "red",
+    "sights": "orange",
+    "underbarrel": "green",
+    "stock": "magenta"
+  },
+
+  "scripts" : ["/items/active/weapons/ranged/project45gunneo.lua"],
+    
+  "primaryAbilityType": "project45gunfire",
+  "primaryAbility": {
+    "reloadCost": 40,
+    "maxAmmo": 50,
+    "bulletsPerReload": 50,
+    "inaccuracy": 1,
+    "inaccuracyMults": {
+      "mobile": 1,
+      "walking": 0.75,
+      "stationary": 0.5,
+      "crouching": 0.25
+    },
+    "jamChances": [0.075, 0.013, 0, 0],
+    "recoilAmount": 0.75,
+    "recoilMaxDeg": 10,
+    "recoverDelay": 0,
+    "recoverTime": 0.4,
+    
+    "semi": true,
+    "burstCount": 3,
+    "cycleTime": 0.01,
+    "projectileKind": "hitscan",
+
+    // "reloadTime": 10,
+    
+    "laser":{
+      "enabled": false
+    },
+  
+    "stances":{
+
+      "idleneo": {
+        "twoHanded": false
+      },
+      "aim": {
+        "twoHanded": false
+      },
+      "empty": {
+        "twoHanded": false
+      },
+      "ejectmag" : {
+        "armRotation" : -45,
+        "weaponRotation" : 45,
+        "twoHanded" : false,
+        "allowRotate" : false,
+        "allowFlip" : false
+      },
+      "reloading" : {
+        "armRotation" : 45,
+        "weaponRotation" : 0,
+        "weaponAngularVelocity": 3600,
+        "frontArmFrame": "rotation",
+        "twoHanded": false
+      },
+      "reloaded" : {
+        "armRotation" : -45,
+        "weaponRotation" : 0,
+        "frontArmFrame": "rotation",
+        "twoHanded" : false,
+        "allowRotate" : false,
+        "allowFlip" : false
+        ,"snap": true
+      },
+      "boltPull": {
+        "twoHanded": false
+      },
+      "boltPush": {
+        "twoHanded": false
+      },
+      "jammed": {
+        "twoHanded": false
+      },
+      "unjam": {
+        "armRotation": -45,
+        "weaponRotation": -5,
+        "frontArmFrame": "rotation",
+        "twoHanded": false      
+      }
+    }
+  },
+  
+  // "shiftAbilityType": "project45enemyradar",
+
+  "builder" : "/items/buildscripts/buildproject45neoneo.lua"
+}

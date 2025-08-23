@@ -63,6 +63,7 @@ function disassemble(input)
 
       output:setInstanceValue("description", string.format("Left-click to reobtain the gun and mods.\n^#96cbe7;Contains %d distinct items.^reset;", 1 + #disassembledItems))
 
+      gun.config.tooltipFields = sb.jsonMerge(gun.config.tooltipFields, gun.parameters.tooltipFields or {})
       gun.config.tooltipFields.subtitle = "^#d93a3a;Disassembled Gun^reset;"
       gun.config.tooltipFields.objectImage = gun.directory .. gun.config.inventoryIcon
       output:setInstanceValue("tooltipFields", gun.config.tooltipFields)
