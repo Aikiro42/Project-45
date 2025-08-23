@@ -100,7 +100,7 @@ function build(directory, config, parameters, level, seed)
   if configParameter("seed", seed) then
     parameters.seed = configParameter("seed", seed)
     -- sb.logInfo(string.format("Seed of %s: %d", config.itemName, parameters.seed))
-    if parameters.seed == 69420 then
+    if parameters.seed == 69420 or configParameter("itemName") == "project45-neo-protector" then
       randStatBonus = 1
     elseif parameters.seed == 42069 then
       randStatBonus = 0
