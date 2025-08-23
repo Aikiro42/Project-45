@@ -1,3 +1,4 @@
-# v1.8.6b Hotfix
-- Changed how properties of wildcard stat mods are preserved on application. Applying wildcards now add the `augment` config to the weapon instance's parameters. (Somehow, despite preserving the seed, wildcards regenerate different stats on the weapon's disassembly. Need to look into this further.)
-- Decreased chance of stat mods dropping from 100% to 30% in T3 environments and under.
+# v1.8.7b Hotfix
+- The damage types of bladed arrows, regular arrows and Kuva Bramma arrows (and the bomblets) are changed to 'bow', allowing them to be used for hunting. The damage type of explosive arrows remain unchanged.
+- Fixed bug where The Protector is uncraftable.
+- Modified the buildscript to give The Protector a 100% stat bonus
