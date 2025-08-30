@@ -5,6 +5,15 @@ require "/items/active/weapons/project45neoweapon.lua"
 Project45GunFireReload = WeaponAbility:new()
 
 function Project45GunFireReload:init()
+
+    -- find altAbility
+    for i, ability in ipairs(self.weapon.abilities) do
+        if ability.name == "_Project45GunFire_" then
+        self.abilityIndex = i
+        break
+        end
+    end
+
     self.shiftTriggerTime = self.shiftTriggerTime or 0.2
     self.shiftTriggerTimer = -1
 end
@@ -22,10 +31,11 @@ function Project45GunFireReload:update(dt, fireMode, shiftHeld)
             and (self.weapon.reloadTimer < 0 or self.weapon.isReloading)
             and not self.triggered
             then
-                self:sendReloadSignal()
+                self.weapon.abilities[self.abilityIndex]:ejectMag()
+                -- self:sendReloadSignal()
                 self.triggered = true
             else
-                storage.reloadSignal = false
+                -- storage.reloadSignal = false
                 self.triggered = false
             end
             self.shiftTriggerTimer = -1
@@ -42,10 +52,11 @@ function Project45GunFireReload:update(dt, fireMode, shiftHeld)
         and (self.weapon.reloadTimer < 0 or self.weapon.isReloading)
         and not self.triggered
         then
-            self:sendReloadSignal()
+            self.weapon.abilities[self.abilityIndex]:ejectMag()
+            -- self:sendReloadSignal()
             self.triggered = true
         else
-            storage.reloadSignal = false
+            -- storage.reloadSignal = false
         end
 
     end
