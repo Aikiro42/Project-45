@@ -1630,7 +1630,10 @@ end
 
 function Project45GunFire:updateStockAmmo(delta, willReplace)
   storage.project45GunState.stockAmmo = willReplace and delta or math.max(0, storage.project45GunState.stockAmmo + delta)
-  self.weapon.stockAmmoDamageMult = formulas.stockAmmoDamageMult(storage.project45GunState.stockAmmo, self.maxAmmo)
+  storage.project45GunState.damageModifiers['stockAmmoDamageMult'] = {
+    type = "mult",
+    value = formulas.stockAmmoDamageMult(storage.project45GunState.stockAmmo, self.maxAmmo)
+  }
   world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UIField" .. self.infoSide, "stockAmmo", storage.project45GunState.stockAmmo)
 end
 
