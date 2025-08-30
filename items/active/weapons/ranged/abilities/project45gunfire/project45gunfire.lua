@@ -1190,11 +1190,12 @@ function Project45GunFire:stopFireLoop()
 end
 
 function Project45GunFire:fireProjectile(projectileType, projectileParameters, inaccuracy, firePosition, projectileCount, aimVector, addOffset)
-  local params = sb.jsonMerge(
-       self.projectileKind == "summoned" and (self.summonedProjectileParameters or {speed = 0})
-    or self.projectileParameters,
-    projectileParameters or {}
-  )
+  -- FIXME: This part of the code keeps bugging out.
+  -- Can we write this better please?
+  local params = projectileParameters
+    or self.projectileKind == "summoned" and (self.summonedProjectileParameters or {speed = 0})
+    or self.projectileParameters
+    or {}
   
   if not params.speed then
     params.speed = 0
