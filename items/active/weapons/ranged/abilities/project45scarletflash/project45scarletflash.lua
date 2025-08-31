@@ -129,10 +129,12 @@ function Project45ScarletFlash:activating()
         else
             position = world.entityPosition(detectedEntities[entityIndex])
         end
-
+        
         -- spawn slash at entity
+        position = position or mcontroller.position() -- make sure position is not null
         world.spawnProjectile(
             "project45scarletslash",
+            -- FIXME: attempt to index a nil value
             slashedEntities[id] and position or vec2.add(position, {
                 sb.nrand(slashFuzz[1], 0),
                 sb.nrand(slashFuzz[2], 0)

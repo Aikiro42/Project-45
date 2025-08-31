@@ -5,16 +5,16 @@
 # Todo
 
 ## General Changes
-
 - [ ] Version Control System for Weapons to avoid necessitating wipes
 - [ ] Ability to stack ammo mods
   > out of scope?
 - [x] Settings menu
+
 ## Bugfixes
 - [ ] UI disappears on some planets (seby marx, licflagg)
 - [x] Essential Gun Oil causes weapon to disappear (FU incompatibility?) (Trogdude)
 - [x] The Protector uncraftable (Trogdude)
-- [ ] Fleetly Fading buff does not work (花无十日红) (Fixed?)
+- [x] Fleetly Fading buff does not work (花无十日红) (Fixed?)
 - [ ] Test Vanilla Altfire Compatibility with current iteration of gunfire mechanics
 - [ ] Enemy flares are usable in B.Y.O.S. Ships
 - [x] Energy weapon upgrades applicable on ballistic weapons
