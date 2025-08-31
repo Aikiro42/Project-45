@@ -16,9 +16,14 @@
   "applyBeforeBuild": true,
 
   "augment": {
+    // Upgrade Status 1: essential gun oil applied
+    // Upgrade Status 2: weapon upgraded
+    // Upgrade Status 3: weapon reassembled
+    "weaponUpgradeStatus": 1,
     "upgradeParameters": {
       "seed": 69420,
       "level": 1,
+      "weaponUpgradeStatus": 2,
       // "isRandomized": false, // necessary to regenerate the stats on upgrade
       "isModded": true // allows for immediate disassembly
     }

@@ -175,7 +175,7 @@ function build(directory, config, parameters, level, seed)
   elseif currentLevel > 1 then
     local maxUpgradeLevel = root.assetJson("/interface/scripted/weaponupgrade/weaponupgradegui.config:upgradeLevel")
     local levelColor = currentLevel < maxUpgradeLevel and "^#96cbe7;" or "^yellow;"
-    parameters.shortdescription = config.shortdescription .. string.format(" %sT%d^reset;", levelColor, currentLevel)
+    parameters.shortdescription = config.shortdescription .. string.format(" %sT%d^reset;", levelColor, math.floor(currentLevel))
   end
 
   -- retrieve ability animation scripts
@@ -838,8 +838,13 @@ function build(directory, config, parameters, level, seed)
       if parameters.tooltipFields.customStatsLabel then
         config.tooltipFields.technicalLabel = config.tooltipFields.technicalLabel .. "^cyan;Awakened.^reset;\n"
       end
-
-      if config.lore then
+      
+      -- see project45-essentialgunoil.augment
+      if configParameter("weaponUpgradeStatus", 0) == 1 then
+        config.description = config.description .. " " .. project45util.colorText("#9da8af", "Can be upgraded on a weapon upgrade anvil now that it's greased with essential gun oil.")
+      elseif configParameter("weaponUpgradeStatus", 0) == 2 then
+        config.description = config.description .. " " .. project45util.colorText("#9da8af", "Recently upgraded on a weapon upgrade anvil. Needs to be reassembled to bring out its full potential.")
+      elseif config.lore then
         config.description = config.description .. " " .. project45util.colorText("#9da8af", config.lore)
       end
 

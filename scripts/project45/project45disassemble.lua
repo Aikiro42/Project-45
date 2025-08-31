@@ -9,6 +9,11 @@ function disassemble(input)
     local savedGunSeed = input.parameters.seed
     local wasBought = input.parameters.bought  
     local savedUpgradeParameters = input.parameters.upgradeParameters
+    local weaponUpgradeStatus = input.parameters.weaponUpgradeStatus
+
+    if weaponUpgradeStatus >= 2 then
+      savedUpgradeParameters = nil
+    end
 
     if input.parameters.project45GunModInfo and input.parameters.isModded then
 
@@ -56,7 +61,12 @@ function disassemble(input)
       local gun = root.itemConfig(input)
       local gunConfig = gun.config
 
-      output:setInstanceValue("gunItem", {name = input.name, parameters = {upgradeParameters = savedUpgradeParameters, seed = savedGunSeed, bought = wasBought}})
+      output:setInstanceValue("gunItem", {name = input.name, parameters = {
+        upgradeParameters = savedUpgradeParameters,
+        seed = savedGunSeed,
+        bought = wasBought,
+        weaponUpgradeStatus = weaponUpgradeStatus >= 2 and 3 or 0  -- see project45-essentialgunoil.augment
+      }})
       output:setInstanceValue("shortdescription", gunConfig.shortdescription)
       output:setInstanceValue("rarity", gunConfig.rarity)
       output:setInstanceValue("disassembledItems", disassembledItems)
