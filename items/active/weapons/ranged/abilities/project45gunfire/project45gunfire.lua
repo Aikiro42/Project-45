@@ -1352,6 +1352,7 @@ end
 
 -- Ejects mag
 -- can immediately begin reloading minigame
+-- will act as a trigger for the minigame if the weapon is currently being reloaded
 function Project45GunFire:ejectMag()
 
   if not self.weapon.isReloading then
@@ -1372,6 +1373,9 @@ function Project45GunFire:ejectMag()
         self:setState(self.reloading)
         return
       end
+  else
+      storage.reloadSignal = true
+      return
   end
 
   self.passiveClass.onEjectMag(self)

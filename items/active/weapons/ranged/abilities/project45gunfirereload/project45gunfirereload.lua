@@ -48,7 +48,7 @@ function Project45GunFireReload:update(dt, fireMode, shiftHeld)
         end
         
         if self.fireMode == "alt"
-        and not self.weapon.currentAbility
+        and not (self.checkAbility and self.weapon.currentAbility)
         and (self.weapon.reloadTimer < 0 or self.weapon.isReloading)
         and not self.triggered
         then
