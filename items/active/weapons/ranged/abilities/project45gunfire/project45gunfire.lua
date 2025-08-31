@@ -1355,7 +1355,7 @@ end
 -- will act as a trigger for the minigame if the weapon is currently being reloaded
 function Project45GunFire:ejectMag()
 
-  if not self.weapon.isReloading then
+  if not self.weapon.isReloading and not self.weapon.currentAbility then
       if storage.project45GunState.ammo >= 0 and not self.triggered then
         if storage.project45GunState.jamAmount > 0 then
           self:updateJamAmount(0, true)
