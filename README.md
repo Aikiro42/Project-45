@@ -11,7 +11,7 @@
 - [ ] Fleetly Fading buff does not work (花无十日红) (Fixed?)
 - [ ] Test Vanilla Altfire Compatibility with current iteration of gunfire mechanics
 - [ ] Enemy flares are usable in B.Y.O.S. Ships
-- [ ] Energy weapon upgrades applicable on ballistic weapons
+- [x] Energy weapon upgrades applicable on ballistic weapons
 
 ## Balance Changes
 - [ ] Balance Economy
