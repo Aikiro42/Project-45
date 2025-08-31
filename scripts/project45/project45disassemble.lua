@@ -9,7 +9,7 @@ function disassemble(input)
     local savedGunSeed = input.parameters.seed
     local wasBought = input.parameters.bought  
     local savedUpgradeParameters = input.parameters.upgradeParameters
-    local weaponUpgradeStatus = input.parameters.weaponUpgradeStatus
+    local weaponUpgradeStatus = input.parameters.weaponUpgradeStatus or 0
 
     if weaponUpgradeStatus >= 2 then
       savedUpgradeParameters = nil

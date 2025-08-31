@@ -1,0 +1,17 @@
+{
+  "itemName" : "project45-devgdk",
+  "price" : 4545,
+  "rarity" : "essential",
+  "tooltipKind" : "project45gunmod",
+  "category" : "uniqueWeapon",
+  "itemTags": ["weapon"],
+  "tooltipFields":{
+    "subtitle": "Applied Utility",
+    "objectImage": "/items/augments/project45-gunmods/util/project45-portablegdk/project45-devgdk.png"
+  },
+  "inventoryIcon" : "/items/augments/project45-gunmods/util/project45-portablegdk/project45-devgdk-icon.png",
+  "description" : "A unique Portable G.D.K used by Project 45 engineers. ^#FF9000;Apply on modified Project 45 weapons to disassemble them.^reset;",
+  "shortdescription" : "Developer's G.D.K.",
+  "consume": false,
+  "scripts" : [ "/scripts/augments/project45-gundisassembler.lua" ]
+}
