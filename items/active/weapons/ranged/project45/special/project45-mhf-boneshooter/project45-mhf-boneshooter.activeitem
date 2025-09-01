@@ -17,7 +17,7 @@
   "inventoryIcon" : "project45-mhf-boneshooter-icon.png",
 
   "project45GunModInfo": {
-    "category": "universal",
+    "category": "ballistic",
     "uniqueType": "special",
     "incompatibleMods": [],
     "allowsConversion": [],
