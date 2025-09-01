@@ -173,11 +173,15 @@ function apply(output, augment)
 
   -- Alter general Fire Time
   if augment.fireTimeGroup then
+
+    -- initialize fireTimeGroup if necessary
     statModifiers.fireTimeGroup = statModifiers.fireTimeGroup or {
       base = {},
       additive = 0,
       multiplicative = 1
     }
+
+    -- reobtain the base stats to do recalculations
     for _, fireTimeStat in ipairs(groupStats.fireTimeGroup) do
       statModifiers.fireTimeGroup.base[fireTimeStat] = baseStat(fireTimeStat)
     end
@@ -190,8 +194,15 @@ function apply(output, augment)
     local newChargeTime = statModifiers.fireTimeGroup.base.chargeTime
     local newOverchargeTime = statModifiers.fireTimeGroup.base.overchargeTime
 
-    local minFireTime = math.min(0.001, type(newCycleTime) == "table" and newCycleTime[1] or newCycleTime, newCockTime,
-        newFireTime)
+    --[[
+    local minFireTime = math.min(
+      0.001,
+      type(newCycleTime) == "table" and newCycleTime[1] or newCycleTime,
+      newCockTime,
+      newFireTime
+    )
+    --]]
+    local minFireTime = 0.001
 
     if augment.fireTimeGroup.additive then
       statModifiers.fireTimeGroup.additive = (statModifiers.fireTimeGroup.additive or 0) + augment.fireTimeGroup.additive
@@ -202,32 +213,14 @@ function apply(output, augment)
                                                   augment.fireTimeGroup.multiplicative
     end
 
-    --[[
-    Recall: calculation of displayed fire time
-    If gun is manualFeed:
-        fireTime* = cockTime + fireTime + chargeTime
-    else:
-        fireTime* = cycleTime + fireTime + chargeTime
-    --]]
-
     -- apply fireTime modifiers
 
     local fireTimeAdd, chargeAdd, overchargeAdd
 
     if statModifiers.fireTimeGroup.additive then
-      local isSemi = output.config.semi
-      if input.parameters.semi ~= nil then
-        isSemi = input.parameters.semi
-      end
-
-      local distributedStats = (isSemi and newChargeTime > 0) and 2 or 1
-
-      fireTimeAdd = statModifiers.fireTimeGroup.additive / distributedStats
-
-      chargeAdd = fireTimeAdd
-      if newChargeTime > 0 and not isSemi then
-        chargeAdd = statModifiers.fireTimeGroup.additive
-      end
+      
+      fireTimeAdd = statModifiers.fireTimeGroup.additive
+      chargeAdd = statModifiers.fireTimeGroup.additive
 
       -- ensures that same amount of time will be spent overcharging
       overchargeAdd = 0
@@ -252,10 +245,13 @@ function apply(output, augment)
         getModifiedStat(newCockTime, fireTimeAdd, statModifiers.fireTimeGroup.multiplicative, true))
     newFireTime = math.max(minFireTime,
         getModifiedStat(newFireTime, fireTimeAdd, statModifiers.fireTimeGroup.multiplicative, true))
+    newMidCockDelay = math.max(minFireTime,
+        getModifiedStat(newMidCockDelay, fireTimeAdd, statModifiers.fireTimeGroup.multiplicative, true))
 
     if newChargeTime > 0 then
       newChargeTime = math.max(0, getModifiedStat(newChargeTime, chargeAdd, statModifiers.fireTimeGroup.multiplicative, true))
     end
+    
     if newOverchargeTime > 0 then
       newOverchargeTime = math.max(0, getModifiedStat(newOverchargeTime, overchargeAdd,
           statModifiers.fireTimeGroup.multiplicative, true))
@@ -266,6 +262,7 @@ function apply(output, augment)
       cycleTime = newCycleTime,
       chargeTime = newChargeTime,
       overchargeTime = newOverchargeTime,
+      midCockDelay = newMidCockDelay,
       fireTime = newFireTime
     })
 

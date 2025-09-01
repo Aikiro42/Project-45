@@ -10,8 +10,7 @@
   "category" : "uniqueWeapon",
   "itemTags": ["weapon"],
   "inventoryIcon" : "/items/augments/project45-gunmods/stat/project45-firetimemod/project45-firetimeaddmod.png",
-  "description": "Decreases Fire Time by 40ms.",
-  "statInfo" : "^#E2C344;Fire Time -40ms^reset;",
+  "description": "Decreases overall fire time by 50ms.",
   "slot": "fireTime",
   "archetype": "Additive",
   "shortdescription" : "^#E2C344;Fire Time T3",
@@ -21,7 +20,7 @@
     
     "stat":{
       "fireTimeGroup": {
-        "additive": -0.04
+        "additive": -0.050
       }
     }
   },

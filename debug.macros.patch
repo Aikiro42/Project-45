@@ -1,6 +1,19 @@
 [
     {
         "op": "add",
+        "path": "/project45-firetimetest",
+        "value": [
+            "/spawnitem project45-devgdk",
+            "/spawnitem project45-firetimeaddmod1 20",
+            "/spawnitem project45-firetimeaddmod2 20",
+            "/spawnitem project45-firetimeaddmod3 20",
+            "/spawnitem project45-firetimemultmod1 20",
+            "/spawnitem project45-firetimemultmod2 20",
+            "/spawnitem project45-firetimemultmod3 20"
+        ]
+    },
+    {
+        "op": "add",
         "path": "/project45-test",
         "value": [
             "/spawnitem project45-devtestkit"

@@ -10,8 +10,7 @@
   "category" : "uniqueWeapon",
   "itemTags": ["weapon"],
   "inventoryIcon" : "/items/augments/project45-gunmods/stat/project45-firetimemod/project45-firetimemultmod.png",
-  "description": "Increases Fire Time denominator by 0.5.",
-  "statInfo" : "^#E2C344;Fire Time +0.5d^reset;",
+  "description": "Increases overall fire time denominator by 0.0625.",
   "slot": "fireTime",
   "archetype": "Multiplicative",
   "shortdescription" : "^#E2C344;Fire Time X2",
@@ -21,7 +20,7 @@
     
     "stat": {
       "fireTimeGroup": {
-        "multiplicative": 0.5
+        "multiplicative": 0.0625
       }
     }
   },
