@@ -41,6 +41,11 @@
     { "op" : "add", "path" : "/defaultBlueprints/tier1/-", "value" : { "item" : "project45-firetimemultmod2" } },
     { "op" : "add", "path" : "/defaultBlueprints/tier1/-", "value" : { "item" : "project45-firetimemultmod3" } },
     
+    { "op" : "add", "path" : "/defaultBlueprints/tier1/-", "value" : { "item" : "project45-reloadtimeaddmod2" } },
+    { "op" : "add", "path" : "/defaultBlueprints/tier1/-", "value" : { "item" : "project45-reloadtimeaddmod3" } },
+    { "op" : "add", "path" : "/defaultBlueprints/tier1/-", "value" : { "item" : "project45-reloadtimemultmod2" } },
+    { "op" : "add", "path" : "/defaultBlueprints/tier1/-", "value" : { "item" : "project45-reloadtimemultmod2" } },
+    
     { "op" : "add", "path" : "/defaultBlueprints/tier1/-", "value" : { "item" : "project45-reloadcostaddmod2" } },
     { "op" : "add", "path" : "/defaultBlueprints/tier1/-", "value" : { "item" : "project45-reloadcostaddmod3" } },
     { "op" : "add", "path" : "/defaultBlueprints/tier1/-", "value" : { "item" : "project45-reloadcostmultmod2" } },
