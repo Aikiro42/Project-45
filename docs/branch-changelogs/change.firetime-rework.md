@@ -1,5 +1,8 @@
 # `change/firetime-rework`
 
+## TODO
+- [ ] add reload time mods to treasure pools; do this after reworking the drop system
+
 ## New
 - Firetime is now divided into its constituents: charge time, cycle/cock time and trigger time. This should make it clear how fast guns can dole out damage.
 - Added dedicated labels for charge and trigger time on the gun tooltip.
