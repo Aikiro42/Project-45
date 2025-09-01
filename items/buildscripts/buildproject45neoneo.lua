@@ -572,9 +572,12 @@ function build(directory, config, parameters, level, seed)
         actualCycleTime = {actualCycleTime, actualCycleTime}
       end
 
+      --[[
+      -- FIXME: The fuck is this?
       if not primaryAbility("semi", true) then
         chargeTime = 0
       end
+      --]]
       
       local loFireTime = math.max(actualCycleTime[1], primaryAbility("fireTime", 0.1)) + chargeTime
       local hiFireTime = math.max(actualCycleTime[2], primaryAbility("fireTime", 0.1)) + chargeTime
