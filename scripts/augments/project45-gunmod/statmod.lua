@@ -216,6 +216,12 @@ function apply(output, augment)
     -- apply fireTime modifiers
 
     local fireTimeAdd, chargeAdd, overchargeAdd
+    -- NOTE: I know this is bad practice,
+    -- but the above variables being possibly nil is okay
+    -- because the function they're used in (getModifiedStat())
+    -- handles the case wherein they're nil.
+    -- Change this implementation if it actually
+    -- affects performance negatively.
 
     if statModifiers.fireTimeGroup.additive then
       
@@ -241,32 +247,40 @@ function apply(output, augment)
           getModifiedStat(newCycleTime, fireTimeAdd, statModifiers.fireTimeGroup.multiplicative, true))
     end
 
-    newCockTime = math.max(minFireTime,
-        getModifiedStat(newCockTime, fireTimeAdd, statModifiers.fireTimeGroup.multiplicative, true))
+    -- modify trigger time
     newFireTime = math.max(minFireTime,
-        getModifiedStat(newFireTime, fireTimeAdd, statModifiers.fireTimeGroup.multiplicative, true))
+      getModifiedStat(newFireTime, fireTimeAdd, statModifiers.fireTimeGroup.multiplicative, true))
+    
+    -- modify cock time
+    newCockTime = math.max(minFireTime,
+      getModifiedStat(newCockTime, fireTimeAdd, statModifiers.fireTimeGroup.multiplicative, true))
     newMidCockDelay = math.max(minFireTime,
-        getModifiedStat(newMidCockDelay, fireTimeAdd, statModifiers.fireTimeGroup.multiplicative, true))
+      getModifiedStat(newMidCockDelay, fireTimeAdd, statModifiers.fireTimeGroup.multiplicative, true))
 
+    -- modify charge time
     if newChargeTime > 0 then
       newChargeTime = math.max(0, getModifiedStat(newChargeTime, chargeAdd, statModifiers.fireTimeGroup.multiplicative, true))
     end
-    
     if newOverchargeTime > 0 then
       newOverchargeTime = math.max(0, getModifiedStat(newOverchargeTime, overchargeAdd,
           statModifiers.fireTimeGroup.multiplicative, true))
     end
 
+    -- apply modded values to primary ability
     newPrimaryAbility = sb.jsonMerge(newPrimaryAbility, {
-      cockTime = newCockTime,
       cycleTime = newCycleTime,
       chargeTime = newChargeTime,
       overchargeTime = newOverchargeTime,
-      midCockDelay = newMidCockDelay,
-      fireTime = newFireTime
+      fireTime = newFireTime,
+
+      cockTime = newCockTime,
+      midCockDelay = newMidCockDelay
     })
 
-    -- to be REALLY safe, nullify fireTime modification after processing
+    -- to be REALLY safe,
+    -- nullify fireTime modification after processing
+    -- to prevent the general stat applicators
+    -- to process this group at all
     augment.fireTimeGroup = nil
 
   end
