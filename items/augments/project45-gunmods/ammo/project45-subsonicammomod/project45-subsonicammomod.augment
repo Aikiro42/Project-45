@@ -1,0 +1,44 @@
+{
+  "itemName": "project45-subsonicammomod",
+  "price": 100,
+  "rarity": "uncommon",
+  "tooltipKind": "project45gunmod2",
+  "modCategory": "ammoMod",
+  "category": "uniqueWeapon",
+  "itemTags": ["weapon"],
+  "tooltipFields": {
+    "subtitle": "Ammo Mod",
+    "objectImage": "/items/augments/project45-gunmods/ammo/project45-subsonicammomod/project45-subsonicammomod.png"
+  },
+  "inventoryIcon": "/items/augments/project45-gunmods/ammo/project45-subsonicammomod/project45-subsonicammomodicon.png",
+  "description": "Low-pressure rounds that require manual feeding to cycle. Doubles damage.",
+  "technicalInfo": "Weapons manual-feed.",
+  "statInfo": "Damage: x2",
+  "shortdescription": "Subsonic Ammo",
+
+  "augment": {
+    "modName": "Subsonic Ammo",
+    "category": "ballistic",
+    "conversion": "projectile",
+    "ammo": {
+      "archetype": "bullet",
+      "projectileType": "project45stdbullet"
+    },
+    "gun": {
+      "primaryAbility": {
+        "manualFeed": {
+          "operation": "replace",
+          "value": true
+        }
+      }
+    },
+    "stat": {
+      "baseDamage": {
+        "rebaseMult": 2
+      }
+    }
+  },
+
+  "scripts": ["/scripts/augments/project45-gunmod/apply.lua"],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
+}
