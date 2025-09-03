@@ -1,0 +1,67 @@
+name: Make `public-test` branch
+
+on:
+  push:
+    branches:
+      - "change/**"
+      - "bugfix/**"
+      - "hotfix/**"
+      - "feat/**"
+      - "feature/**"
+      - "docs/**"
+      - "dev/**"
+      - "wip/experimental"
+permissions:
+  contents: write
+jobs:
+  rebuild-test:
+    if: github.repository_owner == 'Aikiro42'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Authenticate Git
+        uses: nodef/git-config.action@f277d0052367bb3e89337a79121d612f32b6297c # v1.0.0
+        with:
+          credentials: |-
+            github.com=${{secrets.GITHUB_TOKEN}}
+            gist.github.com=${{secrets.GITHUB_TOKEN}}
+      
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+                    
+      - name: Fetch branches
+        run: |
+          git fetch origin wip/experimental
+          git fetch --prune --all
+
+      - name: Reset public-test from wip/experimental
+        run: |
+          git checkout wip/experimental
+          git branch -D public-test || true
+          git checkout -B public-test
+
+      - name: Merge all dev/* into public-test
+        run: |
+          set -e
+          for branch in $(git branch -r | grep "origin/dev/" | sed 's|origin/||'); do
+            echo "Merging $branch into test..."
+            if ! git merge --no-ff origin/$branch -m "Merge $branch into public-test"; then
+              echo "Merge conflict in $branch!"
+              echo "Conflicting files:"
+              git diff --name-only --diff-filter=U
+              # Reset test back to wip/experimental
+              git reset --hard origin/wip/experimental
+              exit 1
+            fi
+          done
+
+      - name: Push new public-test branch
+        if: success()
+        run: |
+          git push origin public-test --force
