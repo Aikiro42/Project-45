@@ -19,6 +19,9 @@ function init()
 end
 
 function update(dt)
+  if world.type() == 'unknown' then
+    return
+  end
   if mcontroller.onGround() then
     if self.spawnTimer > 0 then
       self.spawnTimer = self.spawnTimer - dt

@@ -1,6 +1,7 @@
 require "/scripts/augments/item.lua"
 require "/scripts/set.lua"
 require "/scripts/util.lua"
+require "/scripts/augments/project45-gunmod/constants.lua"
 
 function print(...)
   sb.logInfo(...)
@@ -12,6 +13,7 @@ end
 Checker = {}
 
 function Checker:new(input, augmentConfig)
+
   self.input = input
   self.output = Item.new(input)
 
@@ -107,14 +109,20 @@ function Checker:check()
     return false
   end
 
+  -- Bad mod/augment if category mismatch
+  if modInfo.category ~= "universal"
+  and augment.category ~= "universal"
+  and modInfo.category ~= augment.category then
+    self:addError(string.format("Weapon does not accept %s mods", augment.category))
+    self.checked = false
+  end
+
   -- Bad if weapon does not accept mod slot
   local acceptsModSlot = set.new(modInfo.acceptsModSlot or {})
-  set.insert(acceptsModSlot, "ability")
-  set.insert(acceptsModSlot, "passive")
-  set.insert(acceptsModSlot, "intrinsic")
-  set.insert(acceptsModSlot, "stat")
-  set.insert(acceptsModSlot, "ammoType")
-  set.insert(acceptsModSlot, "manualReload")
+  -- FIXME: is there no set.union or table.append or something?
+  for _, slot in ipairs(INNATE_SLOTS) do
+    set.insert(acceptsModSlot, slot)
+  end
   if not acceptsModSlot[augment.slot] then
     self:addError(string.format("Weapon does not accept %s mods", augment.slot))
     self.checked = false

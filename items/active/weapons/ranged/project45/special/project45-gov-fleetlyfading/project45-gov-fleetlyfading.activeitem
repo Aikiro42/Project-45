@@ -210,6 +210,11 @@
   },
 
   "altAbilityType": "project45scarletflash",
+  "shiftAbilityType": "project45gunfirereload",
+  "shiftAbility": {
+    "shiftActivates": true,
+    "checkAbility": true
+  },
 
   "builder" : "/items/buildscripts/buildproject45neoneo.lua"
 }

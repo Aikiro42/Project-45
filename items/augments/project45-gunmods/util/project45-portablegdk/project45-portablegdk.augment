@@ -1,7 +1,7 @@
 {
   "itemName" : "project45-portablegdk",
   "price" : 100,
-  "rarity" : "essential",
+  "rarity" : "common",
   "tooltipKind" : "project45gunmod",
   "category" : "uniqueWeapon",
   "itemTags": ["weapon"],

@@ -86,6 +86,17 @@ function build(directory, config, parameters, level, seed)
   end
 
   config.itemTags = currentItemTags
+  config.LRDEProject45 = config.LRDEProject45 or {
+    upgradeCapacity=0,
+    randStatBonus=0
+  }
+
+  parameters.tooltipFields = parameters.tooltipFields or {}
+
+  -- LR's Dynamic Equipment: Turn gun to unique if awakened
+  if parameters.tooltipFields.customStatsLabel then
+    parameters.isUnique = true
+  end
 
 
   -- generate seed if supposed to be seeded
@@ -135,6 +146,7 @@ function build(directory, config, parameters, level, seed)
       gunmodCapacity = gunmodCapacity + 1
     end
   end
+
   local baseUpgradeCapacity = config.project45GunModInfo.upgradeCapacity
     or 10 + gunmodCapacity
       + (
@@ -143,10 +155,9 @@ function build(directory, config, parameters, level, seed)
           and 1 or 0
         )
 
-
-  parameters.project45GunModInfo.upgradeCapacity = baseUpgradeCapacity + (currentLevel - 1)
-  
-  -- sb.logInfo(string.format("Generated %s", configParameter("itemName")))
+  parameters.project45GunModInfo.upgradeCapacity =
+      baseUpgradeCapacity + (currentLevel - 1)
+    + (configParameter("LRDEProject45", {}).upgradeCapacity or 0)  -- LR's Dynamic Equipment: modify upgrade cap
 
   -- recalculate rarity
   local rarityLevel = currentLevel/10
@@ -164,7 +175,7 @@ function build(directory, config, parameters, level, seed)
   elseif currentLevel > 1 then
     local maxUpgradeLevel = root.assetJson("/interface/scripted/weaponupgrade/weaponupgradegui.config:upgradeLevel")
     local levelColor = currentLevel < maxUpgradeLevel and "^#96cbe7;" or "^yellow;"
-    parameters.shortdescription = config.shortdescription .. string.format(" %sT%d^reset;", levelColor, currentLevel)
+    parameters.shortdescription = config.shortdescription .. string.format(" %sT%d^reset;", levelColor, math.floor(currentLevel))
   end
 
   -- retrieve ability animation scripts
@@ -239,7 +250,8 @@ function build(directory, config, parameters, level, seed)
   end
 
   -- calculate damage level multiplier
-  config.damageLevelMultiplier = root.evalFunction("weaponDamageLevelMultiplier", currentLevel) * generalConfig.globalDamageMultiplier
+  config.damageLevelMultiplier = (root.evalFunction("weaponDamageLevelMultiplier", currentLevel) + (parameters.damageLevelMultiplier or 0))
+    * generalConfig.globalDamageMultiplier
 
   -- palette swaps
   config.paletteSwaps = ""
@@ -472,7 +484,8 @@ function build(directory, config, parameters, level, seed)
 
   -- tooltip
   -- populate tooltip fields
-  if config.tooltipKind == "project45gun" then
+  parameters.tooltipKind = "project45gun"
+  if configParameter("tooltipKind") == "project45gun" then
     config.tooltipFields = config.tooltipFields or {}
     if config.project45GunModInfo.uniqueType then
       config.tooltipFields.subtitle = generalTooltipConfig.categoryStringsX[config.project45GunModInfo.uniqueType][config.project45GunModInfo.category or "generic"]
@@ -524,7 +537,14 @@ function build(directory, config, parameters, level, seed)
       if upgradeCapacity > -1 then
         local count = parameters.upgradeCount or 0
         local max = parameters.project45GunModInfo.upgradeCapacity
-        config.tooltipFields.upgradeCapacityLabel = (count < max and "^#96cbe7;" or "^#777777;") .. (max - count) .. "/" .. max .. "^reset;"
+        -- LR's Dynamic Equipment: update cap color, can possibly be negative
+        local upgradeCapColor = "^#96cbe7;"
+        if count == max then
+          upgradeCapColor = "^#777777;"
+        elseif count > max then
+          upgradeCapColor = "^#FF0A0A;"
+        end
+        config.tooltipFields.upgradeCapacityLabel = upgradeCapColor .. (max - count) .. "/" .. max .. "^reset;"
         config.tooltipFields.itemDescriptionUpgradeCapLabel = project45util.colorText("#96cbe7", "U. Cap: " .. parameters.project45GunModInfo.upgradeCapacity)
       else
         config.tooltipFields.upgradeCapacityLabel = project45util.colorText("#96cbe7","Unlimited")
@@ -815,7 +835,16 @@ function build(directory, config, parameters, level, seed)
       finalDescription = finalDescription == "" and project45util.colorText("#777777", "No notable qualities.") or finalDescription      
       config.tooltipFields.technicalLabel = finalDescription
 
-      if config.lore then
+      if parameters.tooltipFields.customStatsLabel then
+        config.tooltipFields.technicalLabel = config.tooltipFields.technicalLabel .. "^cyan;Awakened.^reset;\n"
+      end
+      
+      -- see project45-essentialgunoil.augment
+      if configParameter("weaponUpgradeStatus", 0) == 1 then
+        config.description = config.description .. " " .. project45util.colorText("#9da8af", "Can be upgraded on a weapon upgrade anvil now that it's greased with essential gun oil.")
+      elseif configParameter("weaponUpgradeStatus", 0) == 2 then
+        config.description = config.description .. " " .. project45util.colorText("#9da8af", "Recently upgraded on a weapon upgrade anvil. Needs to be reassembled to bring out its full potential.")
+      elseif config.lore then
         config.description = config.description .. " " .. project45util.colorText("#9da8af", config.lore)
       end
 

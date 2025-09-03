@@ -88,5 +88,10 @@
         "op": "add",
         "path": "/project45meleeswipe",
         "value": "/items/active/weapons/ranged/abilities/project45meleeswipe/project45meleeswipe.weaponability"
+    },
+    {
+        "op": "add",
+        "path": "/project45challenger",
+        "value": "/items/active/weapons/ranged/abilities/project45challenger/project45challenger.weaponability"
     }
 ]

@@ -10,7 +10,10 @@
       "name" : "Manual Reload",
       "type" : "project45gunfirereload",
       "scripts" : ["/items/active/weapons/ranged/abilities/project45gunfirereload/project45gunfirereload.lua"],
-      "class" : "Project45GunFireReload"
+      "class" : "Project45GunFireReload",
+      
+      "shiftActivates": false,  // changes activation method from right-clicking to tapping shift
+      "checkAbility": false  // check for self.weapon.currentAbility when reloading
   }
 }
   

@@ -42,7 +42,9 @@ function Project45GunFire:init()
   self.weapon.armFrameAnimations = (player and player.getProperty or status.statusProperty)("project45_armFrameAnimations", not self.performanceMode)
   
   local powerMultFactor = (player and player.getProperty or status.statusProperty)("project45_damageScaling", generalConfig.damageScaling or 0)
+  local challengeMultFactor = (player and player.getProperty or status.statusProperty)("project45_challengeScaling", generalConfig.challengeScaling or 0)
   self.powerMultiplier = 1 + powerMultFactor * (activeItem.ownerPowerMultiplier() - 1)
+  storage.challengeMultiplier = util.clamp(challengeMultFactor, 0, 0.9)
   
   self.hideMuzzleSmoke = self.performanceMode or self.hideMuzzleSmoke
   self.weapon.startRecoil = 0
@@ -355,27 +357,11 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
   storage.project45GunState.current.recoverTime = self.recoverTime[movementState] * self.recoverMult
   activeItem.setCursor("/cursors/project45-neo-cursor-" .. movementState .. ".cursor")
 
-  -- manual/shift reload
-  if self:reloadTriggered() and not self.weapon.isReloading then
-      if storage.project45GunState.ammo >= 0 and not self.triggered then
-        if storage.project45GunState.jamAmount > 0 then
-          self:updateJamAmount(0, true)
-          self:openBolt(self.breakAction and storage.project45GunState.ammo or 0,
-            false, self.breakAction, true, true)
-        else
-          self:openBolt(self.breakAction and storage.project45GunState.ammo or math.min(storage.project45GunState.ammo, self.ammoPerShot),
-            false, self.breakAction, true, true)
-        end
-        if self.internalMag then
-          self:setState(self.reloading)
-        else
-          self:ejectMag()
-        end  
-      elseif self.weapon.reloadTimer < 0 then
-        self:setState(self.reloading)
-      end
+  -- Manual reload (keybind)
+  if input.bindDown("aikiro42-project45", "project45-reload-keybind") and not self.weapon.isReloading then
+    self:ejectMag()
   end
-
+  
   -- trigger i/o logic
   if self:triggering()
   and not self.weapon.currentAbility
@@ -1024,6 +1010,7 @@ function Project45GunFire:cocking()
   --]]
 
   -- [[
+  sb.logInfo(animator.animationState("chamber"))
   self:openBolt(animator.animationState("chamber") == "ready" and self.ammoPerShot or 0, false, false, not self.ejectCasingsWithMag, true)
   util.wait(self.cockTime/2)
   
@@ -1365,7 +1352,31 @@ end
 
 -- Ejects mag
 -- can immediately begin reloading minigame
+-- will act as a trigger for the minigame if the weapon is currently being reloaded
 function Project45GunFire:ejectMag()
+
+  if not self.weapon.isReloading and not self.weapon.currentAbility then
+      if storage.project45GunState.ammo >= 0 and not self.triggered then
+        if storage.project45GunState.jamAmount > 0 then
+          self:updateJamAmount(0, true)
+          self:openBolt(self.breakAction and storage.project45GunState.ammo or 0,
+            false, self.breakAction, true, true)
+        else
+          self:openBolt(self.breakAction and storage.project45GunState.ammo or math.min(storage.project45GunState.ammo, self.ammoPerShot),
+            false, self.breakAction, true, true)
+        end
+        if self.internalMag then
+          self:setState(self.reloading)
+          return
+        end
+      elseif storage.project45GunState.ammo < 0 then
+        self:setState(self.reloading)
+        return
+      end
+  else
+      storage.reloadSignal = true
+      return
+  end
 
   self.passiveClass.onEjectMag(self)
 
@@ -1628,7 +1639,10 @@ end
 
 function Project45GunFire:updateStockAmmo(delta, willReplace)
   storage.project45GunState.stockAmmo = willReplace and delta or math.max(0, storage.project45GunState.stockAmmo + delta)
-  self.weapon.stockAmmoDamageMult = formulas.stockAmmoDamageMult(storage.project45GunState.stockAmmo, self.maxAmmo)
+  storage.project45GunState.damageModifiers['stockAmmoDamageMult'] = {
+    type = "mult",
+    value = formulas.stockAmmoDamageMult(storage.project45GunState.stockAmmo, self.maxAmmo)
+  }
   world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UIField" .. self.infoSide, "stockAmmo", storage.project45GunState.stockAmmo)
 end
 
@@ -1996,6 +2010,10 @@ function Project45GunFire:damagePerShot(noDLM)
       powerMultiplier = {
         type = "mult",
         value = self.powerMultiplier
+      },
+      challengeMultiplier = {
+        type = "mult",
+        value = (1 - storage.challengeMultiplier)
       },
       critDamageMult = {
         type="mult",

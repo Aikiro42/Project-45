@@ -1,0 +1,31 @@
+{
+
+
+  "ability" : {
+    "name" : "Challenger's Will",
+    "type" : "project45challenger",
+    "scripts" : ["/items/active/weapons/ranged/abilities/project45challenger/project45challenger.lua"],
+    "class" : "Project45Challenger",
+
+    /*
+    Ability that provides an incentive to increasing the challenge scaling.
+    */
+
+    // Amount of currency gained per health lost
+    "currencyPerHealthLost": 0.1,
+    // Multiplier to currency gained
+    "currencyRewardMultiplier": 1,
+    
+    // Maximum amount of currency obtained before forcing a payout
+    // Useful for fights against enemies with high HP
+    "currencyRewardThreshold": 450,
+    
+    // Chance to spawn essence instead of money is based on challenge scaling
+    // Maximum chance to spawn essence, should challenge scaling surpass this number
+    "maxEssenceChance": 0.5,
+
+    // Minimum challenger scaling required for this ability to work
+    "challengerScalingThreshold": 0.2
+
+  }
+}

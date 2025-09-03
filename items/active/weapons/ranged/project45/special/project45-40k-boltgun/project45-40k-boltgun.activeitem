@@ -50,7 +50,8 @@
   },
 
   "project45GunModInfo":{
-    "category": "unique",
+    "category": "ballistic",
+    "uniqueType": "special",
     "acceptsModSlot": []
   },
 

@@ -129,10 +129,12 @@ function Project45ScarletFlash:activating()
         else
             position = world.entityPosition(detectedEntities[entityIndex])
         end
-
+        
         -- spawn slash at entity
+        position = position or mcontroller.position() -- make sure position is not null
         world.spawnProjectile(
             "project45scarletslash",
+            -- FIXME: attempt to index a nil value
             slashedEntities[id] and position or vec2.add(position, {
                 sb.nrand(slashFuzz[1], 0),
                 sb.nrand(slashFuzz[2], 0)
@@ -195,9 +197,9 @@ function Project45ScarletFlash:calculateDamage(ability)
     end
     if ability then
         self.baseDamage = ability.baseDamage
-            * ability.reloadRatingDamage
+            * storage.project45GunState.damageModifiers["reloadDamageMult"].value
+            * storage.project45GunState.damageModifiers["stockAmmoDamageMult"].value
             * (ability.passiveDamageMult or 1)
-            * self.weapon.stockAmmoDamageMult
             -- * ability:calculateCritDamage(false, storage.project45GunState.reloadRating)
             * formulas.critDamage(0, ability.critDamageMult, false, storage.project45GunState.reloadRating)
 
