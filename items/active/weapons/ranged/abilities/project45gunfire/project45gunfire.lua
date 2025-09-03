@@ -1193,9 +1193,10 @@ function Project45GunFire:fireProjectile(projectileType, projectileParameters, i
   -- FIXME: This part of the code keeps bugging out.
   -- Can we write this better please?
   local params = projectileParameters
-    or self.projectileKind == "summoned" and (self.summonedProjectileParameters or {speed = 0})
+    or sb.jsonMerge(self.projectileKind == "summoned" and (self.summonedProjectileParameters or {speed = 0})
     or self.projectileParameters
-    or {}
+    or {},
+    {}) -- make a copy of the projectile parameters
   
   if not params.speed then
     params.speed = 0
