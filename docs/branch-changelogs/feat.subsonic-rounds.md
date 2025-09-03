@@ -1,0 +1,1 @@
+- Add subsonic rounds which doubles damage but makes ballistic weapons manual-feed.
