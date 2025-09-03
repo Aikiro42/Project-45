@@ -24,3 +24,5 @@ feat: add unknown stat mod "rewardbags"
 
 init: reworked-drops
 - add project45-attachecase, project45-oldattachecase and project45-wornattachecase
+
+hi
