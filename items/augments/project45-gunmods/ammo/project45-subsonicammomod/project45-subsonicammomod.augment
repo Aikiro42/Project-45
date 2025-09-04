@@ -20,6 +20,7 @@
     "modName": "Subsonic Ammo",
     "category": "ballistic",
     "conversion": "projectile",
+    "slot": "ammoType",
     "ammo": {
       "archetype": "bullet",
       "projectileType": "project45stdbullet"
