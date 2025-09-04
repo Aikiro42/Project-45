@@ -1,50 +1,110 @@
 {
 
   "project45-stat-drop": [
+    // 3% T1/T2 random stat mod
+    // 1% level mod
     [0, {
-      "poolRounds" : [[0.7, 0], [0.15, 1], [0.15, 2]],
+      "poolRounds" : [[0.96, 0], [0.04, 1]],
       "pool" : [
-        {"weight" : 0.75, "pool" : "project45-stats-r"},
-        {"weight" : 0.25, "item" : "project45-levelmod"}
+        {"weight" : 1, "item" : "project45-unknownstatmod1"}
       ]
     }],
     [1.9, {
-      "poolRounds" : [[0.7, 0], [0.15, 1], [0.15, 2]],
+      "poolRounds" : [[0.96, 0], [0.04, 1]],
       "pool" : [
-        {"weight" : 0.75, "pool" : "project45-stats-r"},
-        {"weight" : 0.25, "item" : "project45-levelmod"}
+        {"weight" : 1, "item" : "project45-unknownstatmod1"}
       ]
     }],
     [2.9, {
-      "poolRounds" : [[0.7, 0], [0.3, 1]],
+      "poolRounds" : [[0.96, 0], [0.04, 1]],
       "pool" : [
-        {"weight" : 0.85, "pool" : "project45-stats-sr"},
-        {"weight" : 0.15, "item" : "project45-levelmod"}
+        {"weight" : 1, "item" : "project45-unknownstatmod2"}
       ]
     }],
     [3.9, {
-      "poolRounds" : [[0.7, 0], [0.3, 1]],
+      "poolRounds" : [[0.96, 0], [0.04, 1]],
       "pool" : [
-        {"weight" : 0.85, "pool" : "project45-stats-sr"},
-        {"weight" : 0.15, "item" : "project45-levelmod"}
+        {"weight" : 1, "item" : "project45-unknownstatmod2"}
       ]
     }],
+
+    
+    // 1% T3 random stat mod
+    // 1% level mod
     [4.9, {
-      "poolRounds" : [[0.8, 0], [0.2, 1]],
+      "poolRounds" : [[0.98, 0], [0.02, 1]],
       "pool" : [
-        {"weight" : 1, "pool" : "project45-stats-ssr"}
+        {"weight" : 1, "item" : "project45-unknownstatmod3"}
       ]
     }],
     [5.9, {
-      "poolRounds" : [[0.8, 0], [0.2, 1]],
+      "poolRounds" : [[0.98, 0], [0.02, 1]],
       "pool" : [
-        {"weight" : 1, "pool" : "project45-stats-ssr"}
+        {"weight" : 1, "item" : "project45-unknownstatmod3"}
       ]
     }],
+    
+    // 0.5% T3 random stat mod
+    // 0.5% XSSR stat mod
     [6.9, {
       "poolRounds" : [[0.99, 0], [0.01, 1]],
       "pool" : [
-        {"weight" : 1, "pool" : "project45-stats-xssr"}
+        {"weight" : 0.5, "item" : "project45-unknownstatmod3"},
+        {"weight" : 0.5, "pool" : "project45-stats-xssr"}
+      ]
+    }]
+  ],
+
+  "project45-mod-drop": [
+    // 3% T1/T2 random stat mod
+    // 1% level mod
+    [0, {
+      "poolRounds" : [[0.96, 0], [0.04, 1]],
+      "pool" : [
+        {"weight" : 1, "item" : "project45-wornattachecase"}
+      ]
+    }],
+    [1.9, {
+      "poolRounds" : [[0.96, 0], [0.04, 1]],
+      "pool" : [
+        {"weight" : 1, "item" : "project45-wornattachecase"}
+      ]
+    }],
+    [2.9, {
+      "poolRounds" : [[0.96, 0], [0.04, 1]],
+      "pool" : [
+        {"weight" : 1, "item" : "project45-oldattachecase"}
+      ]
+    }],
+    [3.9, {
+      "poolRounds" : [[0.96, 0], [0.04, 1]],
+      "pool" : [
+        {"weight" : 1, "item" : "project45-oldattachecase"}
+      ]
+    }],
+
+    
+    // 1% T3 random stat mod
+    // 1% level mod
+    [4.9, {
+      "poolRounds" : [[0.98, 0], [0.02, 1]],
+      "pool" : [
+        {"weight" : 1, "item" : "project45-attachecase"}
+      ]
+    }],
+    [5.9, {
+      "poolRounds" : [[0.98, 0], [0.02, 1]],
+      "pool" : [
+        {"weight" : 1, "item" : "project45-attachecase"}
+      ]
+    }],
+    
+    // 0.5% T3 random stat mod
+    // 0.5% XSSR stat mod
+    [6.9, {
+      "poolRounds" : [[0.99, 0], [0.01, 1]],
+      "pool" : [
+        {"weight" : 1, "item" : "project45-prototypecase"}
       ]
     }]
   ],
@@ -75,8 +135,8 @@
         {"weight" : 0.02, "pool" : "project45-gacha-xssr"}
       ],
       "poolRounds" : [
-        [0.75, 0],
-        [0.25, 1]
+        [0.5, 0],
+        [0.5, 1]
       ],
       "allowDuplication" : false
     }]

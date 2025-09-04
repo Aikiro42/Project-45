@@ -1,0 +1,34 @@
+{
+  "itemName" : "project45-wornattachecase",
+  "price" : 100,
+  "level" : 1,
+  "maxStack" : 999,
+  "rarity" : "Uncommon",
+  "category" : "mysteriousReward",
+  "description" : "A worn Project 45 case. Still has some kinda gunk on it. ^#eab3db;Open it to receive a gun mod.^reset;",
+  "shortdescription" : "Worn Attache Case",
+  "twoHanded" : false,
+
+  "inventoryIcon" : "project45-wornattachecase.png",
+  "animation" : "/items/active/unsorted/project45/project45-attachecase/project45-attachecase.animation",
+  "animationCustom" : {
+    "animatedParts": {
+      "parts": {
+        "gun": {
+          "properties": {
+            "image": "project45-wornattachecase.png"
+          }
+        }
+      }
+    }
+  },
+  "scripts" : ["/items/active/unsorted/superrewardbag/superrewardbag.lua"],
+
+  "fireTime" : 2.0,
+  "fireOffset" : [1.0, 0.0],
+
+  "treasure" : {
+    "pool" : "project45-unknowngunmod1",
+    "level": 1
+  }
+}
