@@ -54,7 +54,18 @@ function apply(output, augment)
   -- 3. from the `statDefaults` dictionary in `statmod.config`
   -- @param stat: string
   -- * can either be a member or individual stat/alias
-  local baseStat = function(stat)
+  -- @param getRaw: boolean
+  -- * whether the stat skips the stat config checks
+  -- and just attempts to get the value straight from
+  -- the weapon's parameter or config.
+  -- This is useful for non-numerical stats like `quickReloadTimeframe`
+  local baseStat = function(stat, getRaw)
+
+    if getRaw then
+      local configPrimaryAbility = sb.jsonMerge(output.config.primaryAbility, output.parameters.primaryAbility)
+      return configPrimaryAbility[stat]
+    end
+
     stat = statAlias[stat] or stat
 
     if isStatGroup[stat] then
@@ -171,27 +182,104 @@ function apply(output, augment)
     end  
   end
 
+  
+  -- Alter general Reload Time
+  if augment.reloadTimeGroup then
+    -- initialize reloadTimeGroup if necessary
+    statModifiers.reloadTimeGroup = statModifiers.reloadTimeGroup or {
+      base = {},
+      additive = 0,
+      multiplicative = 1
+    }
+
+    -- reobtain the base stats to do recalculations
+    for _, reloadTimeStat in ipairs(groupStats.reloadTimeGroup) do
+      statModifiers.reloadTimeGroup.base[reloadTimeStat] = baseStat(reloadTimeStat)
+    end
+
+    local newCockTime = statModifiers.reloadTimeGroup.base.cockTime
+    local newMidCockDelay = statModifiers.reloadTimeGroup.base.midCockDelay
+    local newReloadTime = statModifiers.reloadTimeGroup.base.reloadTime
+
+    local minReloadTime = 0.5
+    local minCockTime = 0.001
+
+    if augment.reloadTimeGroup.additive then
+      statModifiers.reloadTimeGroup.additive =
+          (statModifiers.reloadTimeGroup.additive or 0)
+        + augment.reloadTimeGroup.additive
+    end
+
+    if augment.reloadTimeGroup.multiplicative then
+      statModifiers.reloadTimeGroup.multiplicative =
+          (statModifiers.reloadTimeGroup.multiplicative or 1)
+        + augment.reloadTimeGroup.multiplicative
+    end
+
+    local reloadTimeAdd = statModifiers.reloadTimeGroup.additive
+
+    -- modify reload time and get how much the reload window should increase
+    newReloadTime = math.max(minReloadTime,
+      getModifiedStat(newReloadTime, reloadTimeAdd, statModifiers.reloadTimeGroup.multiplicative, true))
+    
+    -- "quickReloadTimeframe": [0.5, 0.6, 0.7, 0.8], // [ good% [ perfect% ] good% ] of <reloadTime>
+    -- TODO: modify quick reload time frame; remember that you need to know how much
+    -- the reload time has decreased to do this.
+    -- local quickReloadTimeFrame = baseStat("quickReloadTimeframe", true)
+
+    -- modify cock time
+    newCockTime = math.max(minCockTime,
+      getModifiedStat(newCockTime, reloadTimeAdd, statModifiers.reloadTimeGroup.multiplicative, true))
+    newMidCockDelay = math.max(0,
+      getModifiedStat(newMidCockDelay, reloadTimeAdd, statModifiers.reloadTimeGroup.multiplicative, true))
+
+    -- apply modded values to primary ability
+    newPrimaryAbility = sb.jsonMerge(newPrimaryAbility, {
+      reloadTime = newReloadTime,
+      cockTime = newCockTime,
+      midCockDelay = newMidCockDelay
+    })
+
+    -- to be REALLY safe,
+    -- nullify fireTime modification after processing
+    -- to prevent the general stat applicators
+    -- to process this group at all
+    augment.reloadTimeGroup = nil
+
+  end
+
   -- Alter general Fire Time
   if augment.fireTimeGroup then
+
+    -- initialize fireTimeGroup if necessary
     statModifiers.fireTimeGroup = statModifiers.fireTimeGroup or {
       base = {},
       additive = 0,
       multiplicative = 1
     }
+
+    -- reobtain the base stats to do recalculations
     for _, fireTimeStat in ipairs(groupStats.fireTimeGroup) do
       statModifiers.fireTimeGroup.base[fireTimeStat] = baseStat(fireTimeStat)
     end
 
-    local newCockTime = statModifiers.fireTimeGroup.base.cockTime
-    local newMidCockDelay = statModifiers.fireTimeGroup.base.midCockDelay
+    -- local newCockTime = statModifiers.fireTimeGroup.base.cockTime
+    -- local newMidCockDelay = statModifiers.fireTimeGroup.base.midCockDelay
     local newCycleTime = statModifiers.fireTimeGroup.base.cycleTime
     local newFireTime = statModifiers.fireTimeGroup.base.fireTime
 
     local newChargeTime = statModifiers.fireTimeGroup.base.chargeTime
     local newOverchargeTime = statModifiers.fireTimeGroup.base.overchargeTime
 
-    local minFireTime = math.min(0.001, type(newCycleTime) == "table" and newCycleTime[1] or newCycleTime, newCockTime,
-        newFireTime)
+    --[[
+    local minFireTime = math.min(
+      0.001,
+      type(newCycleTime) == "table" and newCycleTime[1] or newCycleTime,
+      newCockTime,
+      newFireTime
+    )
+    --]]
+    local minFireTime = 0.001
 
     if augment.fireTimeGroup.additive then
       statModifiers.fireTimeGroup.additive = (statModifiers.fireTimeGroup.additive or 0) + augment.fireTimeGroup.additive
@@ -202,32 +290,20 @@ function apply(output, augment)
                                                   augment.fireTimeGroup.multiplicative
     end
 
-    --[[
-    Recall: calculation of displayed fire time
-    If gun is manualFeed:
-        fireTime* = cockTime + fireTime + chargeTime
-    else:
-        fireTime* = cycleTime + fireTime + chargeTime
-    --]]
-
     -- apply fireTime modifiers
 
     local fireTimeAdd, chargeAdd, overchargeAdd
+    -- NOTE: I know this is bad practice,
+    -- but the above variables being possibly nil is okay
+    -- because the function they're used in (getModifiedStat())
+    -- handles the case wherein they're nil.
+    -- Change this implementation if it actually
+    -- affects performance negatively.
 
     if statModifiers.fireTimeGroup.additive then
-      local isSemi = output.config.semi
-      if input.parameters.semi ~= nil then
-        isSemi = input.parameters.semi
-      end
-
-      local distributedStats = (isSemi and newChargeTime > 0) and 2 or 1
-
-      fireTimeAdd = statModifiers.fireTimeGroup.additive / distributedStats
-
-      chargeAdd = fireTimeAdd
-      if newChargeTime > 0 and not isSemi then
-        chargeAdd = statModifiers.fireTimeGroup.additive
-      end
+      
+      fireTimeAdd = statModifiers.fireTimeGroup.additive
+      chargeAdd = statModifiers.fireTimeGroup.additive
 
       -- ensures that same amount of time will be spent overcharging
       overchargeAdd = 0
@@ -248,11 +324,19 @@ function apply(output, augment)
           getModifiedStat(newCycleTime, fireTimeAdd, statModifiers.fireTimeGroup.multiplicative, true))
     end
 
-    newCockTime = math.max(minFireTime,
-        getModifiedStat(newCockTime, fireTimeAdd, statModifiers.fireTimeGroup.multiplicative, true))
+    -- modify trigger time
     newFireTime = math.max(minFireTime,
-        getModifiedStat(newFireTime, fireTimeAdd, statModifiers.fireTimeGroup.multiplicative, true))
+      getModifiedStat(newFireTime, fireTimeAdd, statModifiers.fireTimeGroup.multiplicative, true))
+    
+    -- modify cock time
+    --[[
+    newCockTime = math.max(minFireTime,
+      getModifiedStat(newCockTime, fireTimeAdd, statModifiers.fireTimeGroup.multiplicative, true))
+    newMidCockDelay = math.max(minFireTime,
+      getModifiedStat(newMidCockDelay, fireTimeAdd, statModifiers.fireTimeGroup.multiplicative, true))
+    --]]
 
+    -- modify charge time
     if newChargeTime > 0 then
       newChargeTime = math.max(0, getModifiedStat(newChargeTime, chargeAdd, statModifiers.fireTimeGroup.multiplicative, true))
     end
@@ -261,15 +345,22 @@ function apply(output, augment)
           statModifiers.fireTimeGroup.multiplicative, true))
     end
 
+    -- apply modded values to primary ability
     newPrimaryAbility = sb.jsonMerge(newPrimaryAbility, {
-      cockTime = newCockTime,
+
+      -- cockTime = newCockTime,
+      -- midCockDelay = newMidCockDelay,
+
       cycleTime = newCycleTime,
       chargeTime = newChargeTime,
       overchargeTime = newOverchargeTime,
-      fireTime = newFireTime
+      fireTime = newFireTime,
     })
 
-    -- to be REALLY safe, nullify fireTime modification after processing
+    -- to be REALLY safe,
+    -- nullify fireTime modification after processing
+    -- to prevent the general stat applicators
+    -- to process this group at all
     augment.fireTimeGroup = nil
 
   end
@@ -437,8 +528,11 @@ function apply(output, augment)
         -- restricting stats and statGroups only allow rebasing
         -- and rebase multiplication due to special cases
         -- e.g. fireTime is calculated according to weapon parameters
+        -- FIXME: cast-local-type
+---@diagnostic disable-next-line: cast-local-type
         statModifiers, newPrimaryAbility = updateStatModifiers(stat, op.rebase, op.rebaseMult, nil, nil) --> will recalculateStat
       else
+---@diagnostic disable-next-line: cast-local-type
         statModifiers, newPrimaryAbility = updateStatModifiers(stat, op.rebase, op.rebaseMult, op.additive, op.multiplicative) --> will recalculateStat
       end
 

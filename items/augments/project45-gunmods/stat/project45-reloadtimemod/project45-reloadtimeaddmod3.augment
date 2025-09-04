@@ -1,6 +1,6 @@
 {
-  "itemName" : "project45-firetimeaddmod3",
-  "price" : 100,
+  "itemName" : "project45-reloadtimeaddmod3",
+  "price" : 1000,
   "rarity" : "Legendary",
   "tooltipKind" : "project45gunmod2",
   "tooltipFields": {
@@ -9,18 +9,18 @@
   "modCategory" : "statMod",
   "category" : "uniqueWeapon",
   "itemTags": ["weapon"],
-  "inventoryIcon" : "/items/augments/project45-gunmods/stat/project45-firetimemod/project45-firetimeaddmod.png",
-  "description": "Decreases overall fire time by 50ms.",
-  "slot": "fireTime",
+  "inventoryIcon" : "/items/augments/project45-gunmods/stat/project45-reloadtimemod/project45-reloadtimeaddmod.png",
+  "description": "Decreases cocking and reload time by 50ms.",
+  "slot": "reloadTime",
   "archetype": "Additive",
-  "shortdescription" : "^#E2C344;Fire Time T3",
+  "shortdescription" : "^#DBE2E5;Reload Time T3",
   "augment":{
     "cost": 3,
     "pureStatMod": true,
     
     "stat":{
-      "fireTimeGroup": {
-        "additive": -0.050
+      "reloadTimeGroup": {
+        "additive": -0.05
       }
     }
   },

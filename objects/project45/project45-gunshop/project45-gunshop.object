@@ -216,6 +216,8 @@
         "project45-maxlevelmod",
         "project45-reloadcostaddmod1",
         "project45-reloadcostmultmod1",
+        "project45-reloadtimeaddmod1",
+        "project45-reloadtimemultmod1",
         "project45-firetimeaddmod1",
         "project45-firetimemultmod1",
         "project45-damageaddmod1",
