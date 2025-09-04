@@ -199,6 +199,27 @@ function Checker:check()
     self.checked = true
   end
 
+  -- Check json
+  if augment.checks then
+    local current_eval = true
+    local next = "and"
+    for _, check in augment.checks do
+      if next == nil or next == "and" then
+        current_eval = current_eval and self:checkJson(check.path, check.comp, check.value)
+      else
+        current_eval = current_eval or self:checkJson(check.path, check.comp, check.value)
+      end
+      next = check.next
+    end
+
+    if not current_eval then
+      self:addError(string.format("Mod incompatible with weapon"))
+      self.checked = false
+      return false
+    end
+  end
+
+  -- Done Checking
   if self.checked == nil then
     self.checked = true
   else
@@ -411,4 +432,50 @@ function Checker:checkStat()
   self.checked = self.checked and true
   return true
 
+end
+
+-- @param path - json path string to a primitive json field
+-- @param comp - comparison operation
+-- @param value - value to compare the path's value against
+function Checker:checkJson(path, comp, value)
+
+  local function getJsonPath(str)
+      if string.sub(str, 1, 1) == "/" then
+        str = string.sub(str, 2)
+      end
+      
+      -- FIXME: could be replaced with util.split() from util.lua?
+      local result = {}
+      for part in string.gmatch(str, "([^/]+)") do
+          table.insert(result, part)
+      end
+      
+      return result
+  end
+
+  path = getJsonPath(path)
+
+  -- FIXME: may impact performance negatively
+  local jsonValue = sb.jsonMerge(self.input, {})
+  for _, field in ipairs(path) do
+    jsonValue = jsonValue[field]
+    if not jsonValue then
+      -- vacuous truth
+      return true
+    end
+  end
+
+  if comp == "!=" or comp == "~=" then
+    return jsonValue ~= value
+  elseif comp == "=" then
+    return jsonValue == value
+  elseif comp == "<=" then
+    return jsonValue >= value
+  elseif comp == "<" then
+    return jsonValue < value
+  elseif comp == ">=" then
+    return jsonValue >= value
+  elseif comp == ">" then
+    return jsonValue > value
+  end
 end
