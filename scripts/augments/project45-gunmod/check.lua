@@ -199,6 +199,27 @@ function Checker:check()
     self.checked = true
   end
 
+  -- Check json
+  if augment.checks then
+    local current_eval = true
+    local next = "and"
+    for _, check in augment.checks do
+      if next == nil or next == "and" then
+        current_eval = current_eval and self:checkJson(check.path, check.comp, check.value)
+      else
+        current_eval = current_eval or self:checkJson(check.path, check.comp, check.value)
+      end
+      next = check.next
+    end
+
+    if not current_eval then
+      self:addError(string.format("Mod incompatible with weapon"))
+      self.checked = false
+      return false
+    end
+  end
+
+  -- Done Checking
   if self.checked == nil then
     self.checked = true
   else
@@ -411,4 +432,9 @@ function Checker:checkStat()
   self.checked = self.checked and true
   return true
 
+end
+
+-- see project45util.checkJson()
+function Checker:checkJson(path, comp, value)
+  return project45util.checkJson(self.input, path, comp, value)
 end

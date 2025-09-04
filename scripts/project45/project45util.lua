@@ -326,3 +326,42 @@ function project45util.printObject(x, tab, depth)
     end
   end
 end
+
+-- @param path - json path string to a primitive json field
+-- @param comp - comparison operation
+-- @param value - value to compare the path's value against
+function project45util.checkJson(json, path, comp, value)
+  
+  local function getJsonPath(str)
+      if string.sub(str, 1, 1) == "/" then
+        str = string.sub(str, 2)
+      end
+      return project45util.split(str, "/")
+  end
+
+  path = getJsonPath(path)
+
+  -- FIXME: may affect passed value
+  local jsonValue = json
+  for _, field in ipairs(path) do
+    jsonValue = jsonValue[field]
+    if not jsonValue then
+      -- vacuous truth
+      return true
+    end
+  end
+
+  if comp == "!=" or comp == "~=" then
+    return jsonValue ~= value
+  elseif comp == "=" then
+    return jsonValue == value
+  elseif comp == "<=" then
+    return jsonValue >= value
+  elseif comp == "<" then
+    return jsonValue < value
+  elseif comp == ">=" then
+    return jsonValue >= value
+  elseif comp == ">" then
+    return jsonValue > value
+  end
+end
