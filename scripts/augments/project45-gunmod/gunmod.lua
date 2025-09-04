@@ -74,13 +74,13 @@ function apply(output, augment)
           -- do them in order
           local newValue = newPrimaryAbility[parameter] or oldPrimaryAbility[parameter]
           for _, op in ipairs(operation) do
-            newValue = modify(newValue, op.operation, op.value)
+            newValue = modify(input, newValue, op.operation, op.value, op.checks)
           end
           newModifications[parameter] = newValue
 
         else
-          newModifications[parameter] = modify(newPrimaryAbility[parameter] or oldPrimaryAbility[parameter],
-              operation.operation, operation.value)
+          newModifications[parameter] = modify(input, newPrimaryAbility[parameter] or oldPrimaryAbility[parameter],
+              operation.operation, operation.value, operation.checks)
         end
       end
 
@@ -212,13 +212,22 @@ end
 --
 -- Warning: Does not validate whether the old value is a numeric data type
 -- if the operation is not a replacement operation.
-function modify(oldValue, operation, modValue, check)
+function modify(input, oldValue, operation, modValue, checks)
 
-  if check then
-    if not project45util.checkJson({v=oldValue}, "v", check.comp, check.value) then
-      return oldValue
+  local checkEval = true
+  if checks then
+    local next = "and"
+    for _, check in ipairs(checks) do
+      if next == nil or next == "and" then
+        checkEval = checkEval and project45util.checkJson(input, check.path, check.comp, check.value)
+      else
+        checkEval = checkEval or project45util.checkJson(input, check.path, check.comp, check.value)
+      end
+      next = check.next
     end
   end
+
+  if not checkEval then return oldValue end
 
   local newValue
 
@@ -241,7 +250,7 @@ function modify(oldValue, operation, modValue, check)
     newValue = {}
     -- for each value in oldValue, modify it
     for key, val in pairs(oldValue) do
-      newValue[key] = modify(val, operation, modValue)
+      newValue[key] = modify(input, val, operation, modValue, checks)
     end
 
   -- if old value is atomic, modify as such
