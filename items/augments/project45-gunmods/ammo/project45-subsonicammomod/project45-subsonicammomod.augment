@@ -11,9 +11,9 @@
     "objectImage": "/items/augments/project45-gunmods/ammo/project45-subsonicammomod/project45-subsonicammomod.png"
   },
   "inventoryIcon": "/items/augments/project45-gunmods/ammo/project45-subsonicammomod/project45-subsonicammomodicon.png",
-  "description": "Low-pressure rounds that require manual feeding to cycle. Doubles damage.",
+  "description": "Low-pressure rounds that require manual feeding to cycle. Increases damage and decreases recoil.",
   "technicalInfo": "Weapons manual-feed.",
-  "statInfo": "Damage: x2",
+  "statInfo": "?",
   "shortdescription": "Subsonic Ammo",
 
   "augment": {
@@ -23,7 +23,7 @@
     "slot": "ammoType",
     "ammo": {
       "archetype": "bullet",
-      "projectileType": "project45stdbullet"
+      "projectileType": "project45stdsubsonicbullet"
     },
     "gun": {
       "primaryAbility": {
@@ -35,7 +35,10 @@
     },
     "stat": {
       "baseDamage": {
-        "rebaseMult": 2
+        "rebaseMult": 1.2
+      },
+      "recoilAmount": {
+        "rebaseMult": 0.7
       }
     }
   },
