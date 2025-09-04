@@ -169,8 +169,15 @@ function build(directory, config, parameters, level, seed)
   config.tooltipFields.categoryLabel = generalTooltipConfig.categoryStrings[deepConfigParameter("universal", "augment", "category")] or ""
 
   -- Change slot label
-  config.tooltipFields.slotLabel = project45util.capitalize(deepConfigParameter(nil, "augment", "slot"))
-  if not config.tooltipFields.slotLabel then
+  local slot = deepConfigParameter(nil, "augment", "slot")
+  if slot then
+    if generalTooltipConfig.slotStrings[slot] then
+      config.tooltipFields.slotLabel = generalTooltipConfig.slotStrings[slot]
+    else
+      config.tooltipFields.slotLabel = project45util.capitalize(slot)
+    end
+  else
+    -- Infer slot
     -- Stat < Passive < Ammo/Conversion < Ability < Unknown/Intrinsic
     config.tooltipFields.slotLabel = "^#7e7e7e;???"
     if deepConfigParameter(nil, "augment", "ability") then
