@@ -1,7 +1,7 @@
 {
   "itemName" : "project45-riotshield",
   "fixedLevel" : false,
-  "price" : 5000,
+  "price" : 500,
   "maxStack" : 1,
   "rarity" : "Legendary",
   "category" : "shield",

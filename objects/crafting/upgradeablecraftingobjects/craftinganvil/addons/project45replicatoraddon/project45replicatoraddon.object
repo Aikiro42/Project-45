@@ -3,7 +3,7 @@
   "colonyTags" : ["crafting"],
   "rarity" : "Legendary",
   "category" : "crafting",
-  "price" : 1250,
+  "price" : 125,
   "description" : "A module that adds Project 45 items and miscellany to the replicator.",
   "shortdescription" : "^orange;Gunsmith Addon^white;",
   "race" : "generic",

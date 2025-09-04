@@ -1,7 +1,7 @@
 {
   "itemName" : "project45-energystim",
   "rarity" : "Rare",
-  "price" : 500,
+  "price" : 50,
   "category" : "medicine",
   "inventoryIcon" : "project45-energystim.png",
   "description" : "A fast-acting combat stimulant. Instantly restores all your energy.",

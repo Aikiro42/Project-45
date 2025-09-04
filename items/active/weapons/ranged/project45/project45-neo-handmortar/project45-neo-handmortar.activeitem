@@ -1,6 +1,6 @@
 {
   "itemName" : "project45-neo-handmortar",
-  "price" : 2500,
+  "price" : 250,
   "maxStack" : 1,
   "rarity" : "Rare",
   "description" : "A single-shot launcher.",

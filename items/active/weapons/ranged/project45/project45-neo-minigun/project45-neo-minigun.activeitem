@@ -1,6 +1,6 @@
 {
   "itemName" : "project45-neo-minigun",
-  "price" : 10000,
+  "price" : 1000,
   "maxStack" : 1,
   "rarity" : "Essential",
   "description" : "A heavy minigun with a compact magazine.",

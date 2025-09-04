@@ -1,6 +1,6 @@
 {
   "itemName" : "project45-ammostock",
-  "price" : 100,
+  "price" : 10,
   "rarity" : "Common",
   "tooltipKind" : "project45gunmod",
   "category" : "upgradeComponent",
@@ -13,7 +13,7 @@
   "description" : "^#e2c344;Contains 50 rounds.^reset;\nUse on weapon to stock up to ^#e2c344;6x max ammo capacity^reset;. Can be used on Stock Ammo to stack them.",
   
   "shortdescription" : "Stock Ammo",
-  "pricePerAmmo": 5,
+  "pricePerAmmo": 0.5,
   
   "scripts" : [ "/scripts/augments/project45-ammostock.lua" ],
   "builder": "/items/buildscripts/buildproject45ammostock.lua"

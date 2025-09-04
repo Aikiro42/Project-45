@@ -36,6 +36,9 @@ function init()
     config.getParameter("seededItems", {})
   )
   self.seededItems = set.union(self.seededItems, set.new(self.goods.guns))
+  self.noInflation = set.new(
+    config.getParameter("noInflation", {})
+  )
   
   self.mode = "guns"
   widget.setSelectedOption("shopTabs", 1)
@@ -77,7 +80,7 @@ end
 function updateListItemText(listItem, newListItemData, isSelected)
   local item = newListItemData.item
   local name = configParameter(item, "shortdescription", "Failed to reach item name")
-  local cost = configParameter(item, "price", 1)
+  local cost = configParameter(item, "price", 1) * (configParameter(item, "noInflation", false) and 1 or 10)
 
   -- widget.setItemSlotItem(string.format("%s.itemIcon", listItem), generatedItem)
   widget.setText(string.format("%s.itemName", listItem), "^#FF9000;" .. name .. (item.count > 1 and (" (" .. item.count .. ")") or ""))
@@ -106,10 +109,13 @@ function populateItemList(forceRepop, mode, idle)
           name = item,
           count = 1,
           parameters= {
-            noSeed = true
+            noSeed = true,
+            noInflation = self.noInflation[item]
           }
         }
       else
+        item.parameters = item.parameters or {}
+        item.parameters.noInflation = self.noInflation[item]
         item.count = item.count or 1
       end
 
@@ -125,7 +131,7 @@ function populateItemList(forceRepop, mode, idle)
       local listItem = string.format("%s.%s", self.itemList, widget.addListItem(self.itemList))
       table.insert(self.listItems, listItem)
       local name = configParameter(generatedItem, "shortdescription", "Failed to reach item name")
-      local cost = configParameter(generatedItem, "price", 1)
+      local cost = configParameter(generatedItem, "price", 1) * (configParameter(generatedItem, "noInflation", false) and 1 or 10)
       local icon
       if not pcall(function()
         icon = util.absolutePath(generatedItem.directory, generatedItem.config.inventoryIcon)

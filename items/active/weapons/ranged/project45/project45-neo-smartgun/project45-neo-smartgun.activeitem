@@ -1,6 +1,6 @@
 {
   "itemName" : "project45-neo-smartgun",
-  "price" : 10000,
+  "price" : 1000,
   "maxStack" : 1,
   "rarity" : "Essential",
   "description" : "An SMG that fires projectiles that home in on enemies.",

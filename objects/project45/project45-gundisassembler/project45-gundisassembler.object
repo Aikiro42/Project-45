@@ -5,7 +5,7 @@
   "shortdescription" : "^#FF9000;Gun Disassembly Kit^reset;",
   "race" : "generic",
   "category" : "crafting",
-  "price" : 1000,
+  "price" : 100,
   "objectType" : "container",
   "printable" : false,
 

@@ -4,7 +4,7 @@ Credits: 343 Industries, Bungie, Creative Assembly, Ensemble Studios
 */
 {
   "itemName" : "project45-hlo-maxx",
-  "price" : 50000,
+  "price" : 5000,
   "maxStack" : 1,
   "rarity" : "Essential",
   "description" : "A reliable assault rifle.",

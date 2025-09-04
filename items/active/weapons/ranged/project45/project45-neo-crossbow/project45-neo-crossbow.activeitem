@@ -1,6 +1,6 @@
 {
   "itemName" : "project45-neo-crossbow",
-  "price" : 5000,
+  "price" : 500,
   "maxStack" : 1,
   "rarity" : "Legendary",
   "description" : "An auto-loaded crossbow.",

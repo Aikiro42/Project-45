@@ -1,6 +1,6 @@
 {
   "itemName" : "project45-neo-rocketlauncher",
-  "price" : 10000,
+  "price" : 1000,
   "maxStack" : 1,
   "rarity" : "Essential",
   "description" : "A massive yet lightweight rocket launcher.",
