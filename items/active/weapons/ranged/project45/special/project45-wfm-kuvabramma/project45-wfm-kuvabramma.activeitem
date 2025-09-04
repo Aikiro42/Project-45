@@ -160,7 +160,8 @@
     "ejectMagOnEmpty": "firing",
     "dischargeDelayTime": 0.1,
     "laser": {
-      "enabled": true
+      "enabled": true,
+      "color": [255,128,0]
     },
 
     "hideGunWhenCharging": true,

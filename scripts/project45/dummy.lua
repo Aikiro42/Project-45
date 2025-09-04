@@ -1,0 +1,3 @@
+-- Script that does nothing.
+-- This is used to fix the bug with project45stdfirebullet not running the first script for some reason,
+-- thus not generating tracer trails.

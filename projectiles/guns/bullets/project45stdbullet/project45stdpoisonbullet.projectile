@@ -1,9 +1,10 @@
 {
   "projectileName" : "project45stdpoisonbullet",
-  "image" : "project45stdbullet.png?multiply=AAFF00FF",
-  "scripts": ["/projectiles/scripts/project45-killprojectileonstick.lua"],
-  "physics" : "sticky",
-  "animationCycle" : 0.25,
+  "image" : "project45stdpoisonbullet.png",
+  "scripts": ["/projectiles/scripts/project45/project45tracer.lua"],
+  "physics" : "project45projectile",
+  "animationCycle" : 1,
+  "windupFrames": 7,
   "frameNumber" : 1,
   "damageKind" : "poison",
   "pointLight" : true,
@@ -26,32 +27,11 @@
   },
 
   "bounces" : 0,
-
-  "periodicActions" : [
-    {
-      "time" : 0.01,
-      "repeat" : true,
-      "action" : "particle",
-      "rotate" : true,
-      
-      "specification" : {
-        "type" : "streak",
-        "layer" : "back",
-        "fullbright" : true,
-        "destructionAction" : "shrink",
-        "size" : 1,
-        "color" : [178, 232, 157, 255],
-        "collidesForeground" : false,
-        "length" : 40,
-        "position" : [0, 0],
-        "timeToLive" : 0.01,
-        "destructionTime" : 0.2,
-        "initialVelocity" : [0.5, 0],
-        "variance" : {"length": 0}
-      }
-
-    }
-  ],
+  
+  "tracerParameters": {
+    "color": [64, 255, 64, 64],
+    "fullbright": true
+  },
 
   "actionOnReap": [
     { 

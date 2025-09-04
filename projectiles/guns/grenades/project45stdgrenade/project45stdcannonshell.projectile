@@ -7,37 +7,18 @@
   "animationCycle" : 0.5,
   "frameNumber" : 4,
   "speed": 200,
-  "periodicActions" : [
-    {
-      "time" : 0.01,
-      "repeat" : true,
-      "action" : "particle",
-      "rotate" : true,
-      
-      "specification" : {
-        "type" : "streak",
-        "layer" : "back",
-        "fullbright" : true,
-        "destructionAction" : "shrink",
-        "size" : 2,
-        "color" : [200, 200, 200, 255],
-        "collidesForeground" : false,
-        "length" : 27,
-        "position" : [0, 0],
-        "timeToLive" : 0.01,
-        "destructionTime" : 0.2,
-        "initialVelocity" : [0.5, 0],
-        "variance" : {"length": 0}
-      }
-
-    }
-  ],
+  "tracerParameters": {
+    "color": [200, 200, 200, 128],
+    "fullbright": false,
+    "width": 4
+  },
   "actionOnReap" : [
     {
       "action" : "config",
       "file" : "/projectiles/explosions/project45_stdexplosion/project45_stdsmallexplosion.config"
     }
   ],
+  "scripts": ["/projectiles/scripts/project45/project45tracer.lua"],
   "power" : 50,
   "damageType" : "NoDamage",
   "damageKind" : "default"

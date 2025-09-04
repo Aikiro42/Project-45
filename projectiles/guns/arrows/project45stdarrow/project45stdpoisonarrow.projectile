@@ -1,9 +1,10 @@
 {
   "projectileName" : "project45stdpoisonarrow",
-  "image" : "project45stdarrow.png?multiply=AAFF00FF",
-  "scripts": ["/projectiles/scripts/project45-killprojectileonstick.lua"],
+  "image" : "project45stdpoisonarrow.png",
+  "scripts": ["/projectiles/scripts/project45/project45tracer.lua"],
   "physics" : "arrow",
-  "animationCycle" : 0.25,
+  "animationCycle" : 0.1,
+  "windupFrames": 3,
   "frameNumber" : 1,
   "damageKind" : "poison",
   "pointLight" : false,
@@ -25,33 +26,11 @@
     "collisionEnabled": true
   },
   "bounces" : 0,
+  "tracerParameters": {
+    "color": [178, 232, 157, 64],
+    "fullbright": false
+  },
 
-  "periodicActions" : [
-    {
-      "time" : 0.01,
-      "repeat" : true,
-      "action" : "particle",
-      "rotate" : true,
-      
-      "specification" : {
-        "type" : "streak",
-        "layer" : "back",
-        "fullbright" : false,
-        "destructionAction" : "shrink",
-        "size" : 1,
-        "color" : [178, 232, 157, 255],
-        "collidesForeground" : false,
-        "length" : 20,
-        "position" : [0, 0],
-        "timeToLive" : 0,
-        "destructionTime" : 0.2,
-        "initialVelocity" : [0.001, 0],
-        "variance" : {"length": 0}
-      }
-
-    }
-    //*/
-  ],
   "actionOnReap": [
     { 
       "action" : "sound",

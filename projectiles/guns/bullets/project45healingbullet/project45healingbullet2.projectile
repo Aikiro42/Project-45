@@ -1,7 +1,7 @@
 {
   // copied from unbound
   "projectileName" : "project45healingbullet2",
-  "image" : "project45healingbullet.png?setcolor=FF0000",
+  "image" : "project45healingbullet2.png?setcolor=FF0000",
   "animationCycle" : 0.2,
   "frameNumber" : 1,
   "damageKindImage" : "icon.png",

@@ -1190,11 +1190,26 @@ function Project45GunFire:stopFireLoop()
 end
 
 function Project45GunFire:fireProjectile(projectileType, projectileParameters, inaccuracy, firePosition, projectileCount, aimVector, addOffset)
-  local params = sb.jsonMerge(self.projectileKind == "summoned" and self.summonedProjectileParameters or self.projectileParameters, projectileParameters or {})
+  -- FIXME: This part of the code keeps bugging out.
+  -- Can we write this better please?
+  local params = projectileParameters
+    or sb.jsonMerge(self.projectileKind == "summoned" and (self.summonedProjectileParameters or {speed = 0})
+    or self.projectileParameters
+    or {},
+    {}) -- make a copy of the projectile parameters
+  
+  if not params.speed then
+    params.speed = 0
+  end
+
   params.power = self:damagePerShot()
   -- params.powerMultiplier = activeItem.ownerPowerMultiplier()
   params.powerMultiplier = 1
-  params.speed = util.randomInRange(params.speed)
+
+  if type(params.speed) == "table" then
+    params.speed = util.randomInRange(params.speed)
+  end
+  
   local selectedProjectileType = nil
 
   if not projectileType then
@@ -1231,13 +1246,20 @@ function Project45GunFire:fireProjectile(projectileType, projectileParameters, i
       params.timeToLive = util.randomInRange(params.timeToLive)
     end
 
+    local randomSpeedFactor = 1
+    if self.projectileKind == "projectile" then
+      randomSpeedFactor = math.abs(sb.nrand(params.randomSpeed or 0.1, 1))
+    end
+    local finalParams = self.critFlag and sb.jsonMerge(params, {statusEffects = {"project45critdamaged"}}) or params
+    finalParams.speed = finalParams.speed * randomSpeedFactor
+
     projectileId = world.spawnProjectile(
       selectedProjectileType,
       firePosition or self:firePosition(nil, addOffset),
       activeItem.ownerEntityId(),
       aimVector or self:aimVector(inaccuracy or self.spread),
       false,
-      self.critFlag and sb.jsonMerge(params, {statusEffects = {"project45critdamaged"}}) or params
+      finalParams
     )
 
   end
@@ -1895,15 +1917,16 @@ function Project45GunFire:evalProjectileKind()
         activeItem.setScriptedAnimationParameter("primaryLaserColor", self.laser.color)
         activeItem.setScriptedAnimationParameter("primaryLaserWidth", self.laser.width)
       end
+      
+      local projectileType = type(self.projectileType) == "table" and self.projectileType[1] or self.projectileType
+      self.projectileParameters = util.mergeTable(root.projectileConfig(projectileType), self.projectileParameters)
+      self.projectileParameters.speed = self.projectileParameters.speed or 50
 
       if self.projectileKind == "projectile" then          
-        local projectileType = type(self.projectileType) == "table" and self.projectileType[1] or self.projectileType
-        local projectileConfig = util.mergeTable(root.projectileConfig(projectileType), self.projectileParameters)
-        local projSpeed = projectileConfig.speed or 50
         if root.projectileGravityMultiplier(projectileType) ~= 0 then
           activeItem.setScriptedAnimationParameter("primaryLaserArcSteps", self.laser.trajectoryConfig.renderSteps)
-          activeItem.setScriptedAnimationParameter("primaryLaserArcSpeed", projSpeed)
-          activeItem.setScriptedAnimationParameter("primaryLaserArcRenderTime", projectileConfig.timeToLive)
+          activeItem.setScriptedAnimationParameter("primaryLaserArcSpeed", self.projectileParameters.speed)
+          activeItem.setScriptedAnimationParameter("primaryLaserArcRenderTime", self.projectileParameters.timeToLive)
           activeItem.setScriptedAnimationParameter("primaryLaserArcGravMult", root.projectileGravityMultiplier(projectileType))
         end
       else

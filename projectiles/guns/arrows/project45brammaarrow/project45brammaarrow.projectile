@@ -1,9 +1,13 @@
 {
   "projectileName" : "project45brammaarrow",
   "image" : "project45brammaarrow.png",
-  "scripts": ["/projectiles/scripts/project45-killprojectileonstick.lua"],
+  "scripts": [
+    "/projectiles/scripts/project45/project45tracer.lua",
+    "/projectiles/scripts/project45-killprojectileonstick.lua"
+  ],
   "physics" : "arrow",
-  "animationCycle" : 0.25,
+  "animationCycle" : 0.1,
+  "windupFrames": 8,
   "frameNumber" : 1,
   "damageKind" : "bow",
   "pointLight" : true,
@@ -25,6 +29,10 @@
     "collisionEnabled": true
   },
   "bounces" : 0,
+  "tracerParameters": {
+    "color": [200,128,64,64],
+    "fullbright": false
+  },
 
   "periodicActions" : [
     {
@@ -36,29 +44,6 @@
         "/sfx/project45neosfx/special/kuvabramma/GrnBowProjectileB.ogg",
         "/sfx/project45neosfx/special/kuvabramma/GrnBowProjectileC.ogg"
       ]
-    },
-    {
-      "time" : 0.01,
-      "repeat" : true,
-      "action" : "particle",
-      "rotate" : true,
-      
-      "specification" : {
-        "type" : "streak",
-        "layer" : "back",
-        "fullbright" : false,
-        "destructionAction" : "shrink",
-        "size" : 1,
-        "color" : [255, 255, 255, 255],
-        "collidesForeground" : false,
-        "length" : 45,
-        "position" : [0, 0],
-        "timeToLive" : 0,
-        "destructionTime" : 0.2,
-        "initialVelocity" : [0.001, 0],
-        "variance" : {"length": 0}
-      }
-
     }
     //*/
   ],

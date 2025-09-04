@@ -1,9 +1,10 @@
 {
   "projectileName" : "project45stdexplosivearrow",
-  "image" : "project45stdarrow.png",
-  "scripts": ["/projectiles/scripts/project45-killprojectileonstick.lua"],
+  "image" : "project45stdexplosivearrow.png",
+  "scripts": ["/projectiles/scripts/project45/project45tracer.lua"],
   "physics" : "arrow",
-  "animationCycle" : 0.25,
+  "animationCycle" : 0.1,
+  "windupFrames": 3,
   "frameNumber" : 1,
   "damageKind" : "standardbullet",
   "pointLight" : true,
@@ -25,33 +26,11 @@
     "collisionEnabled": true
   },
   "bounces" : 0,
+  "tracerParameters": {
+    "color": [255,255,200,64],
+    "fullbright": false
+  },
 
-  "periodicActions" : [
-    {
-      "time" : 0.01,
-      "repeat" : true,
-      "action" : "particle",
-      "rotate" : true,
-      
-      "specification" : {
-        "type" : "streak",
-        "layer" : "back",
-        "fullbright" : false,
-        "destructionAction" : "shrink",
-        "size" : 1,
-        "color" : [255, 255, 255, 255],
-        "collidesForeground" : false,
-        "length" : 14,
-        "position" : [0, 0],
-        "timeToLive" : 0,
-        "destructionTime" : 0.2,
-        "initialVelocity" : [0.001, 0],
-        "variance" : {"length": 0}
-      }
-
-    }
-    //*/
-  ],
   "actionOnReap": [
     { 
       "action" : "sound",

@@ -1,7 +1,7 @@
 {
   "projectileName" : "project45splitbladefragment",
   "image" : "project45splitbladefragment.png",
-  "scripts": ["/projectiles/scripts/project45-killprojectileonstick.lua"],
+  "scripts": ["/projectiles/scripts/project45/project45tracer.lua"],
   "physics" : "sticky",
   "animationCycle" : 0.1,
   "frameNumber" : 2,
@@ -13,7 +13,7 @@
   "piercing": true,
   "statusEffects" : [ "project45bleed" ],
   "power" : 5.0,
-  "speed" : 150,
+  "speed" : 90,
   "knockback" : 0,
   "collisionPoly": [
     [-8.5, 0],
@@ -25,35 +25,10 @@
     "collisionEnabled": true
   },
   "bounces" : 0,
-
-  "periodicActions" : [
-    {
-      "time" : 0,
-      "repeat" : true,
-      "action" : "particle",
-      "rotate" : true,
-      
-      "specification" : {
-        "type" : "streak",
-        "layer" : "back",
-        "fullbright" : true,
-        "destructionAction" : "shrink",
-        "size" : 1,
-        "color" : [154, 93, 160],
-        "collidesForeground" : false,
-        "length" : 20,
-        "position" : [0, 0],
-        "timeToLive" : 0,
-        "destructionTime" : 0.2,
-        "initialVelocity" : [0.001, 0],
-        "variance" : {
-          "length": 0
-        }
-      }
-
-    }
-    //*/
-  ],
+  "tracerParameters": {
+    "color": [154,93,160,128],
+    "fullbright": false
+  },
 
   "actionOnReap": [
     { 

@@ -1,9 +1,14 @@
 {
   "projectileName" : "project45stdbullet",
   "image" : "project45stdbullet.png",
-  "scripts": ["/projectiles/scripts/project45-killprojectileonstick.lua"],
-  "physics" : "sticky",
-  "animationCycle" : 0.25,
+  "scripts": [
+    "/projectiles/scripts/project45/project45tracer.lua"
+  ],
+  "physics" : "project45projectile",
+  "animationCycle" : 1,
+  "animationLoops" : false,
+  "timeToLive": 3,
+  "windupFrames": 7,
   "frameNumber" : 1,
   "damageKind" : "standardbullet",
   "pointLight" : true,
@@ -25,8 +30,13 @@
     "collisionEnabled": true
   },
   "bounces" : 0,
-
+  "tracerParameters": {
+    "enabled": true,
+    "color": [255,255,200,128],
+    "fullbright": true
+  },
   "periodicActions" : [
+    /*
     {
       "time" : 0.01,
       "repeat" : true,
