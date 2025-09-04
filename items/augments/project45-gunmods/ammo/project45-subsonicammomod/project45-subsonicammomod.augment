@@ -27,6 +27,10 @@
     },
     "gun": {
       "primaryAbility": {
+        "semi": {
+          "operation": "replace",
+          "value": true
+        },
         "manualFeed": {
           "operation": "replace",
           "value": true
