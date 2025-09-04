@@ -212,7 +212,14 @@ end
 --
 -- Warning: Does not validate whether the old value is a numeric data type
 -- if the operation is not a replacement operation.
-function modify(oldValue, operation, modValue)
+function modify(oldValue, operation, modValue, check)
+
+  if check then
+    if not project45util.checkJson({v=oldValue}, "v", check.comp, check.value) then
+      return oldValue
+    end
+  end
+
   local newValue
 
   -- if operation is replacement old value doesn't matter

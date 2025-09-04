@@ -434,48 +434,7 @@ function Checker:checkStat()
 
 end
 
--- @param path - json path string to a primitive json field
--- @param comp - comparison operation
--- @param value - value to compare the path's value against
+-- see project45util.checkJson()
 function Checker:checkJson(path, comp, value)
-
-  local function getJsonPath(str)
-      if string.sub(str, 1, 1) == "/" then
-        str = string.sub(str, 2)
-      end
-      
-      -- FIXME: could be replaced with util.split() from util.lua?
-      local result = {}
-      for part in string.gmatch(str, "([^/]+)") do
-          table.insert(result, part)
-      end
-      
-      return result
-  end
-
-  path = getJsonPath(path)
-
-  -- FIXME: may impact performance negatively
-  local jsonValue = sb.jsonMerge(self.input, {})
-  for _, field in ipairs(path) do
-    jsonValue = jsonValue[field]
-    if not jsonValue then
-      -- vacuous truth
-      return true
-    end
-  end
-
-  if comp == "!=" or comp == "~=" then
-    return jsonValue ~= value
-  elseif comp == "=" then
-    return jsonValue == value
-  elseif comp == "<=" then
-    return jsonValue >= value
-  elseif comp == "<" then
-    return jsonValue < value
-  elseif comp == ">=" then
-    return jsonValue >= value
-  elseif comp == ">" then
-    return jsonValue > value
-  end
+  return project45util.checkJson(self.input, path, comp, value)
 end
