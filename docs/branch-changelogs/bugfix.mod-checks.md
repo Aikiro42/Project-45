@@ -1,0 +1,3 @@
+# Fixes
+- improved how buildproject45mod.lua change the string of the slot shown in the mod's tooltip.\
+<!-- Motivation: I attempted to make a subsonic ammo mod that turns semi/auto guns manual-feed. Despite showing that I have indeed made an "ammo" mod, the presence of augment.gun makes my code classify it as a mod belonging to the "unknown" slot unless I specify the slot it belongs to. If I do specify the slot, the slot shows up in the tooltip as "ammoType", which looks ugly. This change will allow me and other modders to be explicit with the slot under the hood. -->
