@@ -601,7 +601,14 @@ function hitscanLib:fireHitscan(projectileType)
           vfxCurve = vfxCurve,
           vfxDecay = vfxDecay
         })
-      end   
+      end
+      
+      -- spawn projectile at end of hitscan for sfx
+      world.spawnProjectile(
+        "project45_terminalexplosion_ballistic",
+        hitscanInfo[3][2]
+      )
+
     end
 
     -- hitscan vfx
