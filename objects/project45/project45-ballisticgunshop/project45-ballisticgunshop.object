@@ -1,0 +1,287 @@
+{
+  "objectName" : "project45-ballisticgunshop",
+  "colonyTags" : ["human","humanbunker","mechanical","commerce"],
+  "rarity" : "Essential",
+  "shortdescription" : "^#FF9000;Project 45 Ballistic Shop",
+  "description" : "A vending machine that sells products developed by M.K. Ballistics.",
+  "race" : "human",
+  "category" : "decorative",
+  "price" : 10000, // price of crafting is 4500; at least this provides a way for the player to make a profit
+  "lightColor" : [120, 65, 0],
+  "printable" : false,
+
+  "apexDescription" : "The design of this vending machine couldn't be any more crude...",
+  "avianDescription" : "The weapons sold here seem blasphemous... How tempting.",
+  "floranDescription" : "GUNSSSS!! KILL!!",
+  "glitchDescription" : "Amazed. What a big selection of weapons!",
+  "humanDescription" : "Hey cool, they sell tacticool stuff.",
+  "hylotlDescription" : "Letheia Corp. has outdone themselves this time.",
+  "novakidDescription" : "THEY SELL 'DEM BIG IRONS? GIMME IT!",
+
+  "inventoryIcon" : "project45-ballisticgunshopicon.png",
+  
+  "orientations" : [
+    
+    {
+      "imageLayers" : [
+        { "image" : "project45-ballisticgunshopright.png:default.<frame>" },
+        { "image" : "project45-ballisticgunshoprightfullbright.png:default.<frame>", "fullbright" : true  }
+      ],
+      "imagePosition" : [0, 0],
+      "direction": "left",
+
+      "frames" : 68,
+      "animationCycle" : 5,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ],
+      "collision" : "platform"
+    },
+    {
+      "imageLayers" : [
+        { "image" : "project45-ballisticgunshopright.png:default.<frame>" },
+        { "image" : "project45-ballisticgunshoprightfullbright.png:default.<frame>", "fullbright" : true  }
+      ],
+      "imagePosition" : [0, 0],
+      "direction": "right",
+
+      "frames" : 68,
+      "animationCycle" : 5,
+
+      "spaceScan" : 0.1,
+      "anchors" : [ "bottom" ],
+      "collision" : "platform"
+    }
+  ],
+
+  "soundEffect" : "/sfx/objects/fluorescent_light_loud.ogg",
+  "soundEffectRangeMultiplier" : 0.5,
+
+  "scripts": ["/objects/scripts/project45-gunshop.lua"],
+
+  "guiConfig" : {
+    "baseConfig" : "/interface/scripted/project45-gunshop/project45-gunshopscripted.config",
+    "gui" : {
+      "windowtitle" : {
+        "title" : "^#FF9000;M.K. Ballistics",
+        "subtitle" : "^#c48636;A novel way to fling lead."
+      }
+    },
+    "goods":{
+      "guns": [
+
+        // "project45-neo-custom-x",
+        "project45-neo-pipegun",
+        "project45-neo-bow",
+        
+        // Pistols
+        "project45-neo-pistol",
+        "project45-neo-revolver",
+        "project45-neo-deagle",
+        "project45-neo-wristgun",
+        
+        // SMGs
+        "project45-neo-tmp",
+        "project45-neo-smg",
+        "project45-neo-smartgun",
+        
+        // Shotguns
+        "project45-neo-sawedoff",
+        "project45-neo-shotgun",
+        "project45-neo-doublebarrel",
+        "project45-neo-autoshotgun",
+
+        // Rifles
+        "project45-neo-leveraction",
+        "project45-neo-handmaderifle",
+        "project45-neo-assaultrifle",
+        "project45-neo-combatrifle",
+        "project45-neo-carbine",
+
+        // Marksman Rifles
+        "project45-neo-servicerifle",
+        "project45-neo-huntingrifle",
+        "project45-neo-sniper",
+        "project45-neo-crossbow",
+
+        // Machine guns
+        "project45-neo-machinegun",
+        
+        // Heavies
+        "project45-neo-amr",
+        "project45-neo-handmortar",
+        "project45-neo-grenadelauncher",
+        "project45-neo-rocketlauncher",
+        "project45-neo-minigun",
+        "project45-neo-autocannon",
+        "project45-neo-flamethrower",
+        "project45-neo-gaussrifle"
+
+      ],
+      "mods": [
+        // abilities
+        "project45-manualreloadmod",
+        "project45-shiftreloadmod",
+        "project45-challengerswillmod",
+        "project45-gunscopemod",
+        "project45-supergunscopemod",
+        "project45-mlgscopemod",
+        "project45-orbitaltranspondermod",
+        "project45-enemyradarmod",
+        "project45-flashlasermod",
+        "project45-grenadelaunchermod",
+        "project45-bayonetgripmod",
+        "project45-chainsawmod",
+        "project45-underbarrelshotgunmod",
+        "project45-armadillomod",
+
+        // sights
+        "project45-reflexsightsmod",
+        
+        // rail
+        "project45-lasermod",
+        "project45-bowstabilizermod",
+
+        // receiver
+        "project45-autofiremod",
+        "project45-multithreadermod",
+
+        // magazine
+        "project45-extendedmagmod",
+        "project45-alofsmagmod",
+        "project45-overampmod",
+
+        // magwell
+        "project45-speedloadermod",
+        "project45-syringeloadermod",
+
+        // bowstring
+        "project45-customnockmod",  
+        "project45-multinockmod",
+
+        // muzzle mods
+        "project45-muzzlebrakemod",
+        "project45-silencermod",
+        "project45-extendedbarrelmod",
+        "project45-convergermod",
+        "project45-splittermod",
+        "project45-chokemod",
+        
+        // underbarrel mods
+        "project45-gripmod",
+        "project45-gunshieldmod",
+        
+        // misc mods
+        "project45-aegisaltmod",
+        "project45-feroziummod",
+        "project45-violiummod",
+        "project45-solariummod",
+        "project45-stockmod"
+      ],
+
+      "stat": [
+        "project45-wildcardstatmod",
+        "project45-levelmod",
+        "project45-maxlevelmod",
+        "project45-reloadcostaddmod1",
+        "project45-reloadcostmultmod1",
+        "project45-firetimeaddmod1",
+        "project45-firetimemultmod1",
+        "project45-damageaddmod1",
+        "project45-damagemultmod1",
+        "project45-critdamageaddmod1",
+        "project45-critdamagemultmod1",
+        "project45-critchanceaddmod1",
+        "project45-critchancemultmod1"
+      ],
+      
+      "ammo": [
+        // converters
+        "project45-projectileconverter",
+        "project45-hitscanconverter",
+        "project45-beamconverter",
+        "project45-summonconverter",
+        
+        // ballistic ammo
+        "project45-explosiveammomod",
+        "project45-incendiaryammomod",
+        "project45-poisonammomod",
+        "project45-sanguineammomod",
+
+        // shotgun ammo
+        "project45-flechettemod",
+        "project45-slugshellsmod",
+        "project45-dragonsbreathmod",
+        "project45-fourgaugemod",
+
+        // energy ammo
+        "project45-iceammomod",
+        "project45-elecammomod",
+        "project45-firebeammod",
+        "project45-poisonbeammod",
+
+        // arrows
+        "project45-bladedarrowsmod",
+        "project45-incendiaryarrowsmod",
+        "project45-poisonarrowsmod",
+        "project45-elecarrowsmod",
+        "project45-explosivearrowsmod",
+        
+        // grenade ammo
+        "project45-clustergrenademod",
+        "project45-thermitegrenademod",
+        "project45-jumpgrenademod",
+
+        // rocket ammo
+        "project45-homingrocketmod",
+        "project45-itanorocketsmod",
+
+        // experimental ammo
+        "project45-gasmod",
+        "project45-tarmod",
+
+        "project45-homingbladesmod",
+        "project45-splitbladesmod",
+
+        "project45-gravbombmod",
+        "project45-gravpullmod",
+        "project45-haloburstmod",
+        "project45-incineratemod"
+        
+      ],
+
+      "util": [
+        "project45manual-codex",
+        "project45-gundisassembler",
+        "project45-gunseller",
+
+        "project45-portablegdk",
+        "project45-gunrepairkit",
+        "project45-ammostock",
+        "project45-elementoil",
+        "project45-essentialgunoil",
+        "project45-modhider",
+        
+        "project45-riotshield",
+        "project45-supplytransponder",
+        "project45-gachapull",
+        "project45-gachapull10",
+        
+        "project45-energystim",
+        "project45-enemyflare",
+        
+        "nanowrap",        
+        "manipulatormodule",
+        "techcard",
+        "upgrademodule",
+        "dubloon"
+      ]
+    },
+          
+    "seededItems": [
+      "project45-wildcardstatmod"
+    ]
+
+  }
+}
+
