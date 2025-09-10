@@ -1,0 +1,28 @@
+{
+  "projectileName" : "project45_terminalexplosion_ballistic",
+  "image" : "/projectiles/invisibleprojectile/invisibleprojectile.png",
+  "frameNumber" : 1,
+  "timeToLive": 0,
+  "speed" : 0,
+  "power": 0,
+  "damagePoly" : [ [0, 0] ],
+  "collisionEnabled": false,
+  "movementSettings":{
+    "collisionEnabled": false
+  },
+  "animationLoops" : false,
+  "flippable" : true,
+  "damageTeam" : { "type" : "indiscriminate" },
+  "damageType" : "NoDamage",
+  "damageKind" : "hidden",
+  "actionOnReap": [
+    {
+      "action" : "sound",
+      "options" : [
+        "/sfx/project45neosfx/bulletimpact/bulletimpact-generic1.ogg",
+        "/sfx/project45neosfx/bulletimpact/bulletimpact-generic2.ogg",
+        "/sfx/project45neosfx/bulletimpact/bulletimpact-generic3.ogg"
+      ]
+    }
+  ]
+}
