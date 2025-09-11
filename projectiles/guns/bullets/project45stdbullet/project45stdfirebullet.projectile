@@ -1,15 +1,20 @@
 {
   "projectileName" : "project45stdfirebullet",
-  "image" : "project45stdbullet.png",
-  "scripts": ["/projectiles/scripts/project45-killprojectileonstick.lua"],
-  "physics" : "sticky",
+  "image" : "project45stdfirebullet.png",
+  "scripts": [
+    "/scripts/project45/dummy.lua",
+    "/projectiles/scripts/project45/project45tracer.lua"
+  ],
+  "physics" : "project45projectile",
   "animationCycle" : 0.25,
+  "windupFrames": 7,
   "frameNumber" : 1,
   "damageKind" : "fire",
   "pointLight" : true,
   "lightColor": [175, 78, 0],
   "fullbright": true,
   "flippable" : true,
+  "piercing": false,
   "statusEffects" : ["burning"],
   "power" : 5.0,
   "speed" : 300,
@@ -26,31 +31,10 @@
 
   "bounces" : 0,
 
-  "periodicActions" : [
-    {
-      "time" : 0.01,
-      "repeat" : true,
-      "action" : "particle",
-      "rotate" : true,
-      
-      "specification" : {
-        "type" : "streak",
-        "layer" : "back",
-        "fullbright" : true,
-        "destructionAction" : "shrink",
-        "size" : 1,
-        "color" : [255, 170, 0, 255],
-        "collidesForeground" : false,
-        "length" : 40,
-        "position" : [0, 0],
-        "timeToLive" : 0.01,
-        "destructionTime" : 0.2,
-        "initialVelocity" : [0.5, 0],
-        "variance" : {"length": 0}
-      }
-
-    }
-  ],
+  "tracerParameters": {
+    "color": [255, 170, 0, 128],
+    "fullbright": true
+  },
 
   "actionOnReap": [
     { 

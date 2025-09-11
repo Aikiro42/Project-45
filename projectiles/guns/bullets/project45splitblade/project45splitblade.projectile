@@ -1,11 +1,11 @@
 {
   "projectileName" : "project45splitblade",
   "image" : "project45splitblade.png",
-  "scripts": ["/projectiles/scripts/project45-killprojectileonstick.lua"],
+  "scripts": ["/projectiles/scripts/project45/project45tracer.lua"],
   "physics" : "grenade",
   "animationCycle" : 0.1,
   "frameNumber" : 2,
-  "timeToLive": 0.05,
+  "timeToLive": 0.1,
   "damageKind" : "standardbullet",
   "pointLight" : true,
   "lightColor": [75, 36, 0],
@@ -14,7 +14,7 @@
   "piercing": true,
   "statusEffects" : [ ],
   "power" : 5.0,
-  "speed" : 150,
+  "speed" : 100,
   "knockback" : 0,
   "collisionPoly": [
     [-8.5, 0],
@@ -26,36 +26,10 @@
     "collisionEnabled": true
   },
   "bounces" : 0,
-
-  "periodicActions" : [
-    {
-      "time" : 0,
-      "repeat" : true,
-      "action" : "particle",
-      "rotate" : true,
-      
-      "specification" : {
-        "type" : "streak",
-        "layer" : "back",
-        "fullbright" : true,
-        "destructionAction" : "shrink",
-        "size" : 1,
-        // "color" : [154, 93, 160, 128],
-        "color" : [255, 255, 255, 200],
-        "collidesForeground" : false,
-        "length" : 20,
-        "position" : [0, 0],
-        "timeToLive" : 0,
-        "destructionTime" : 0.2,
-        "initialVelocity" : [0.001, 0],
-        "variance" : {
-          "length": 0
-        }
-      }
-
-    }
-    //*/
-  ],
+  "tracerParameters": {
+    "color": [255, 255, 255, 64],
+    "fullbright": true
+  },
   "actionOnReap": [
     {
       "action" : "projectile",

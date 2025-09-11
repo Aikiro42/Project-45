@@ -1,0 +1,129 @@
+{
+  "itemName" : "project45-neo-debug",
+  "price" : 1,
+  "maxStack" : 1,
+  "rarity" : "Essential",
+  "description" : "A prototype Carbine.",
+  "lore": "Despite being a prototype, this weapon is widely used to eradicate bugs.",
+  "shortdescription" : "P45 Debugger",
+  "tooltipKind" : "project45gun",
+  "gunArchetype": "smg",
+  "category" : "assaultRifle",
+  "twoHanded" : true,
+  "itemTags" : ["weapon","ranged","assaultrifle"],
+  "level" : 1,
+  "muzzleFlashColor": [255, 255, 200],
+  "inventoryIcon" : "project45-neo-debug-icon.png",
+
+  "animationParts" : {
+    "middle" : "project45-neo-debug.png",
+    "middleFullbright" : "",
+    "charge": "",
+    "chargeFullbright": "",
+    "magazine": "project45-neo-carbine-mag.png",
+    "magazineFullbright": ""
+  },
+
+  "animationCustom": {
+    "particleEmitters": {
+      "ejectionPort": {
+        "particles": [
+          {"particle": "project45bulletcase"}
+        ]
+      },
+      "magazine": {
+        "particles": [
+          {"particle": "project45carbinemag"}
+        ]
+      }
+    },
+
+    "sounds": {
+      "fire" : [
+        "/sfx/project45neosfx/fire/fire-pistol1.ogg"
+      ],
+      "boltPull": [
+        "/sfx/project45neosfx/boltpull/boltpull-rifle1.ogg"
+      ],
+      "boltPush": [
+        "/sfx/project45neosfx/boltpush/boltpush-rifle1.ogg"
+      ]
+    }
+  },
+
+  "project45GunModInfo":{
+    "category": "universal",
+    "upgradeCapacity": 99,
+    "incompatibleMods": [],
+    "allowsConversion": [
+      "projectile",
+      "hitscan",
+      "beam",
+      "summoned"
+    ],
+    "acceptsAmmoArchetype": [
+      "universal"
+    ],
+    "acceptsModSlot": [
+      "rail",
+      "sights",
+      "muzzle",
+      "underbarrel",
+      "stock",
+      
+      "material",
+      "magazine",
+      "receiver"
+    ]
+  },
+
+  "baseOffset" : [1.25, 0.125],
+  "muzzleOffset" : [1.75, 0.375],
+  "ejectionPortOffset": [-0.25, 0.75],
+  "magazineOffset": [0, 0],
+
+  /*
+  "railOffset" : [1.5, 0.375],
+  "sightsOffset": [0.625, 0.75],
+  "stockOffset": [-0.5, 0.375],
+  "underbarrelOffset": [1.5, 0.125],
+  */
+  
+  "railOffset" : [0.875, 0.25],
+  "sightsOffset": [-0.625, 0.8125],
+  "stockOffset": [-1.625, 0.25],
+  "underbarrelOffset": [0.5, 0],
+
+
+  "debugPointColors": {
+    "rail": "red",
+    "sights": "orange",
+    "underbarrel": "green"
+  },
+
+  "scripts" : ["/items/active/weapons/ranged/project45gunneo.lua"],
+    
+  "primaryAbilityType": "project45gunfire",
+  "primaryAbility": {
+    "reloadCost": 25,
+    "maxAmmo": 27,
+    "bulletsPerReload": 27,
+    "semi": false,
+    "burstCount": 1,
+    "inaccuracy": 1,
+
+    "recoilAmount": 1,
+    "recoilMaxDeg": 7.5,
+    "recoverDelay": 0.05,
+    
+    "cycleTime": 0.1,
+    "projectileKind": "projectile",
+    "laser":{
+      "enabled": false
+    }
+  },
+
+  "altAbilityType": "project45meleeswipe",
+  
+  "builder" : "/items/buildscripts/buildproject45neoneo.lua"
+}
