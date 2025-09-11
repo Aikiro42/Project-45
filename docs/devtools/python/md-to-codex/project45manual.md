@@ -11,7 +11,6 @@ a block comment
 - Misc Stats
 - Ammo & Reloading
 - Reload Rating
-
 #
 - Per-Bullet Reload
 - Stock Ammo
@@ -23,7 +22,8 @@ a block comment
 
 # ^#E2C344;Introduction^reset;
 Project 45 guns are different from vanilla guns in the following aspects:
-1. They have the ability to ^#D93A3A;crit^reset; (and supercrit beyond 100% chance).
+
+1. They have the ability to ^#D93A3A;crit^reset; (and ^#f4988c;supercrit beyond 100% chance^reset;).
 2. They are more ^#51BD3B;energy-efficient^reset; due to being ammo-based.
 3. They are ^#d29ce7;modifiable and upgradable^reset; on the fly.
 4. Some fire different kinds of projectiles.
@@ -32,12 +32,14 @@ Project 45 guns are different from vanilla guns in the following aspects:
 # ^#E2C344;Weapon Stats^reset;
 - ^#95d1f3;Upgrade Capacity^reset;: The number of Stat Mods you can install on the weapon.
 - ^#EA9931;Damage per Shot^reset;: The range of damage a gun's (initial) projectiles will deal at 100% power multiplier, disregarding the target's defense.
-- ^#E2C344;Fire Time^reset;: the overall time it takes for the gun to fire a round.
-- ^#51BD3B;Reload Cost^reset;: the total percentage of energy required to reload a gun to its full capacity.
-
+- ^#E2C344;Fire Time^reset;: the overall time it takes for the gun to fire: ^#f4988c;Charge Time^reset;, ^#E2C344;Cycle Time^reset; and ^#9da8af;Trigger Time^reset;.
 #
-- ^#cccccc;Reload Time^reset;: the maximum possible amount of time it takes to reload a gun to its full capacity.
-- ^#D93A3A;Crit Chance^reset;: the chance of the gun dealing increased damage. Odds beyond 100% give shots a chance to deal even more damage (i.e. a \"Supercrit\").
+
+- ^#51BD3B;Reload Cost^reset;: the total percentage of energy required to reload a gun to its full capacity.
+- ^#cccccc;Reload Time^reset;: the maximum possible amount of time it takes to reload a gun to its full capacity. This also includes the <span style="color: #E2C344">Cock Time</span> of the weapon.
+#
+
+- ^#D93A3A;Crit Chance^reset;: the chance of the gun dealing increased damage. Odds beyond 100% give shots a chance to deal even more damage (i.e. a <span style="color: #f4988c">\"Supercrit\"</span>).
 - ^#D93A3A;Crit Damage^reset;: the number multiplied to the projectile's damage when it deals a super/crit.
 
 
@@ -93,9 +95,9 @@ Your weapon's performance will change depending on whether you executed an Activ
 
 ^#E2C344;PERFECT^reset; - Hitting the lighter-colored region gives your gun a ^#E2C344;1.3x damage bonus^reset; and ^#E2C344;completely prevents jamming^reset;
 
+#
 ^#60B8EA;GOOD^reset; - Hitting the darker-colored region gives your gun a ^#60B8EA;1.1x damage bonus^reset; and ^#60B8EA;completely prevents jamming^reset;.
 
-#
 OK - Allowing the red line to reach the end of the bar will simply reload your gun.
 
 ^#D93A3A;BAD^reset; - Hitting the white region will ^#D93A3A;increase the chance of a gun jam happening^reset;
@@ -110,12 +112,15 @@ Some guns allow you to reload them on a per-bullet or per-clip basis. The \"relo
 #
 Allowing the red line to reach the end of the bar will end the reload sequence, leaving your gun with the amount of ammo you ended up with.
 
-^#EA9931;Your reload score will be evaluated at the end of the reload sequence:^reset;
+Your <span style="color: #EA9931">reload score</span> will be evaluated at the end of the reload sequence: This is the <span style="color: #EA9931">total reload rating points divided by the number of bullets/clips you loaded</span>.
 
-- ^#E2C344;Perfect reloads are worth 2 points.^reset;
-- ^#60B8EA;Good reloads are worth 1 point.^reset;
-- ^#D93A3A;Bad reloads are worth 0 points^reset;.
+#
+Your per-bullet reload rating is evaluated as thus:
 
+- ^#E2C344;>1 (i.e. more points than reloads): PERFECT RATING^reset;
+- ^#60B8EA;>0.66 (i.e. two-thirds of reloads): GOOD RATING^reset;
+- >0.33 (i.e. one-thirds of reloads): OK RATING
+- ^#D93A3A;Worse: BAD RATING^reset;.
 
 # ^#E2C344;Stock Ammo^reset;
 You can stock ammo on your gun to ^#ea9931;increase its damage (up to 2x)^reset; based on the amount of ammo stocked.
@@ -152,19 +157,25 @@ For example, if a weapon is indicated to bear a \"60% bonus\", this means that t
 Items bought from the Project 45 Gun Shop can only have a maximum bonus ratio of ^#d93a3a;50%.^reset;
 
 # ^#E2C344;The Supply Transponder^reset;
-^#eab3db;The Supply Transponder^reset; provides a relatively affordable way to obtain various Project 45 items.
+^#eab3db;The Supply Transponder^reset; provides a relatively affordable way to obtain various Project 45 items. You can purchase one from the Gun Shop, and it comes with 10 free Cipher Keys applied.
 
-# 
-This item has the following odds for calling in:
+It is recommended to use this on the surface of a planet: To call in a Project 45 item, activate the transponder and a supply pod will drop down. Attack and destroy the pod to obtain the item(s).
+
+#
+The transponder can call in supplies via applied Cipher Keys, or via Essence. ^#a451c4;(300 essence per pull)^reset; To add Cipher keys to the transponder, simply apply them like a weapon mod.
+
+#
+The transponder has the following odds for calling in a pod with:
+
 - a ^#96cbe7;50%^reset; chance to drop a ^#96cbe7;Common or Rare Supply Drop (R)^reset;,
 - a ^#cb44ff;46%^reset; chance to drop a ^#cb44ff;Rare or higher rarity Supply Drop (SR)^reset;,
 - a ^#ffffa7;2%^reset; chance to drop an ^#ffffa7;Essential Supply Drop (SSR)^reset;, and
 - a ^#f4988c;2%^reset; chance to drop ^#f4988c;Unique Essential Supply Drop (XSSR)^reset;.
 
 # ^#E2C344;The Supply Transponder^reset;
-The Supply Transponder will guarantee you a ^#fdd14d;Unique (XSSR)^reset; drop within the first 25 calls. After that, it will guarantee you either a ^#fdd14d;Unique (XSSR)^reset; or ^#ffffa7;Essential (SSR)^reset; drop within the next 25 calls thereafter.
+The transponder will guarantee you a ^#f4988c;Unique (XSSR)^reset; drop within the first 25 calls. After that, it will guarantee you either a ^#f4988c;Unique (XSSR)^reset; or ^#ffffa7;Essential (SSR)^reset; drop within the next 25 calls thereafter.
 
-If you obtain an ^#ffffa7;Essential (SSR)^reset; drop, you are guaranteed a ^#fdd14d;Unique (XSSR)^reset; drop within the next 25 calls.
+If you obtain an ^#ffffa7;Essential (SSR)^reset; drop, you are guaranteed a ^##f4988c;Unique (XSSR)^reset; drop within the next 25 calls. This guarantee is indicated with a ^#e2c344;yellow pity counter^reset;.
 
 # ^#E2C344;(Quickbar) Mod Settings^reset;
 If you have Stardust Core/Lite or Quickbar Mini installed, you can change the following settings:

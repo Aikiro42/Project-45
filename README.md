@@ -20,8 +20,8 @@
 - [x] Energy weapon upgrades applicable on ballistic weapons
 
 ## Balance Changes
-- [ ] Balance Economy
-- [ ] Upgrades too common (Pancakes and Syrup)
+- [x] Balance Economy
+- [x] Upgrades too common (Pancakes and Syrup)
 - [x] Nerf overpowered damage of guns
   - Make them be on par with other popular gun mods like Project Knightfall, Starforge, Raizzys Guns, Feast of Fire and Smoke
 - [x] Strengthen Base Guns?
@@ -43,7 +43,7 @@
 ## Docs
 - [ ] `project45gunfire` documentation
 - [ ] Item Catalog (AtomicBeaverCleaver)
-- [ ] IGD (in-game documentation) for Transponder and Supply Drops, and how to open them (Vaporwave Mrej)
+- [x] IGD (in-game documentation) for Transponder and Supply Drops, and how to open them (Vaporwave Mrej)
 - [ ] Clarify what the Damage Scaling option does (Flynt)
 - [ ] IGD for extrinsic mod slots (Carl)
 - [ ] IGD for manual reloading (Moq-Rubiaac; MadCat)
