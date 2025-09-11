@@ -3,12 +3,6 @@ name: Make `public-test` branch
 on:
   push:
     branches:
-      - "change/**"
-      - "bugfix/**"
-      - "hotfix/**"
-      - "feat/**"
-      - "feature/**"
-      - "docs/**"
       - "dev/**"
       - "wip/experimental"
 permissions:
