@@ -1,6 +1,7 @@
 {
   "itemName" : "project45-devgdk",
   "price" : 4545,
+  "maxStack": 1,
   "rarity" : "essential",
   "tooltipKind" : "project45gunmod",
   "category" : "uniqueWeapon",
