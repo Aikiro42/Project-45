@@ -1,6 +1,6 @@
 {
-  "itemName" : "project45-firetimemultmod1",
-  "price" : 25,
+  "itemName" : "project45-reloadtimemultmod1",
+  "price" : 250,
   "rarity" : "Uncommon",
   "tooltipKind" : "project45gunmod2",
   "tooltipFields": {
@@ -9,17 +9,17 @@
   "modCategory" : "statMod",
   "category" : "uniqueWeapon",
   "itemTags": ["weapon"],
-  "inventoryIcon" : "/items/augments/project45-gunmods/stat/project45-firetimemod/project45-firetimemultmod.png",
-  "description": "Increases overall fire time denominator by 0.025.",
-  "slot": "fireTime",
+  "inventoryIcon" : "/items/augments/project45-gunmods/stat/project45-reloadtimemod/project45-reloadtimemultmod.png",
+  "description": "Increases cocking and reload time denominators by 0.025.",
+  "slot": "reloadTime",
   "archetype": "Multiplicative",
-  "shortdescription" : "^#E2C344;Fire Time X1",
+  "shortdescription" : "^#DBE2E5;Reload Time X1",
   "augment":{
     "cost": 1,
     "pureStatMod": true,
     
     "stat": {
-      "fireTimeGroup": {
+      "reloadTimeGroup": {
         "multiplicative": 0.025
       }
     }

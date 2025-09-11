@@ -572,9 +572,12 @@ function build(directory, config, parameters, level, seed)
         actualCycleTime = {actualCycleTime, actualCycleTime}
       end
 
+      --[[
+      -- FIXME: The fuck is this?
       if not primaryAbility("semi", true) then
         chargeTime = 0
       end
+      --]]
       
       local loFireTime = math.max(actualCycleTime[1], primaryAbility("fireTime", 0.1)) + chargeTime
       local hiFireTime = math.max(actualCycleTime[2], primaryAbility("fireTime", 0.1)) + chargeTime
@@ -689,13 +692,52 @@ function build(directory, config, parameters, level, seed)
         config.tooltipFields.damagePerShotLabel = project45util.colorText("#FF9000", primaryAbility("baseDamage", 0))
       end
 
-      if loFireTime == hiFireTime then
-        config.tooltipFields.fireTimeLabel = project45util.colorText("#FFD400", util.round(loFireTime*1000, 1) .. "ms")
-      else
-        config.tooltipFields.fireTimeLabel = project45util.colorText("#FFD400",
-          util.round(loFireTime*1000, 1) .. " - " .. util.round(hiFireTime*1000, 1) .. "ms")
-      end
+      -- Write to firetime field
       
+      local fireTime = math.floor(1000 * primaryAbility("fireTime", 0))
+      local manualFeed = primaryAbility("manualFeed", false)
+      local cycleTime = primaryAbility(manualFeed and "cockTime" or "cycleTime", 0)
+      
+      
+      if manualFeed and primaryAbility("slamFire", false) then
+        cycleTime = cycleTime / 2
+      end
+
+      if manualFeed then
+        cycleTime = cycleTime + primaryAbility("midCockDelay", 0)
+      end
+
+      
+      if manualFeed then
+        config.tooltipFields.cycleTimeTitleLabel = "Cock Time"
+      else
+        config.tooltipFields.cycleTimeTitleLabel = "Cycle Time"
+      end
+
+      if type(cycleTime) == "table" then
+        config.tooltipFields.cycleTimeLabel = project45util.colorText("#FFD400",
+          string.format(
+            "%d-%dms"
+          , math.floor(cycleTime[1] * 1000)
+          , math.floor(cycleTime[2] * 1000)
+          )
+        )
+      else
+        config.tooltipFields.cycleTimeLabel = project45util.colorText("#FFD400",
+          string.format("%dms", math.floor(cycleTime * 1000))
+        )
+      end
+
+      if chargeTime > 0 then
+        config.tooltipFields.chargeTimeLabel = project45util.colorText("#f4988c", string.format("%.1fs", chargeTime))
+      else
+        config.tooltipFields.chargeTimeLabel = project45util.colorText("#777777", "--")
+      end
+
+      if fireTime > 0 then
+        config.tooltipFields.triggerTimeLabel = project45util.colorText("#9da8af", string.format(" %dms", fireTime))
+      end
+            
       -- reload cost
       config.tooltipFields.reloadCostLabel = project45util.colorText("#b0ff78", util.round(primaryAbility("reloadCost", 0), 1))
 
@@ -769,12 +811,6 @@ function build(directory, config, parameters, level, seed)
         multishotDesc = project45util.colorText(multishot > 1 and "#9dc6f5" or "#FF5050", util.round(multishot, 1) .. "x multishot") .. "\n"
       end
 
-      local chargeDesc = ""
-      if primaryAbility("chargeTime", 0) > 0 then
-        descriptionScore = descriptionScore + 1
-        chargeDesc = project45util.colorText("#FF5050", project45util.truncatef(primaryAbility("chargeTime", 0), 2) .. "s charge time.") .. "\n"
-      end
-
       local overchargeDesc = ""
       if primaryAbility("overchargeTime", 0) > 0 and (chargeDamageMult ~= 1 or perfectChargeDamageMult ~= 1) then
         
@@ -831,7 +867,7 @@ function build(directory, config, parameters, level, seed)
         end
       end
 
-      local finalDescription = passiveDesc .. heavyDesc .. chargeDesc .. overchargeDesc .. multishotDesc .. acceptsModDesc .. modListDesc
+      local finalDescription = passiveDesc .. heavyDesc .. overchargeDesc .. multishotDesc .. acceptsModDesc .. modListDesc
       finalDescription = finalDescription == "" and project45util.colorText("#777777", "No notable qualities.") or finalDescription      
       config.tooltipFields.technicalLabel = finalDescription
 
