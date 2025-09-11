@@ -1,0 +1,35 @@
+{
+  "itemName" : "project45-attachecase",
+  "price" : 400,
+  "level" : 1,
+  "maxStack" : 999,
+  "rarity" : "Legendary",
+  "category" : "mysteriousReward",
+  "description" : "A case typically carried around by Project 45 mercs. ^#eab3db;Open it to receive a gun mod.^reset;",
+  "shortdescription" : "Attache Case",
+  "twoHanded" : false,
+
+  "inventoryIcon" : "project45-attachecase.png",
+  
+  "animation" : "/items/active/unsorted/project45/project45-attachecase/project45-attachecase.animation",
+  "animationCustom" : {
+    "animatedParts": {
+      "parts": {
+        "gun": {
+          "properties": {
+            "image": "project45-attachecase.png"
+          }
+        }
+      }
+    }
+  },
+  "scripts" : ["/items/active/unsorted/superrewardbag/superrewardbag.lua"],
+
+  "fireTime" : 2.0,
+  "fireOffset" : [1.0, 0.0],
+
+  "treasure" : {
+    "pool" : "project45-unknowngunmod3",
+    "level": 1
+  }
+}

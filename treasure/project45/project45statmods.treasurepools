@@ -1,0 +1,36 @@
+{
+  // SECTION: STATS
+  
+  "project45-unknownstatmod1": [
+    [0, {
+      "pool" : [
+        // 1
+        {"weight" : 0.75, "pool" : "project45-stats-r"},
+        {"weight" : 0.25, "item" : "project45-levelmod"}
+      ],
+      "poolRounds" : 1,
+      "allowDuplication" : false
+    }]
+  ],
+
+  "project45-unknownstatmod2": [
+    [0, {
+      "pool" : [
+        {"weight" : 1, "pool" : "project45-stats-sr"}
+      ],
+      "poolRounds" : 1,
+      "allowDuplication" : false
+    }]
+  ],
+
+  "project45-unknownstatmod3": [
+    [0, {
+      "pool" : [
+        {"weight" : 1, "pool" : "project45-stats-ssr"}
+      ],
+      "poolRounds" : 1,
+      "allowDuplication" : false
+    }]
+  ]
+  
+}

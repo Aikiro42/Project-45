@@ -1,0 +1,34 @@
+{
+  "itemName" : "project45-prototypecase",
+  "price" : 800,
+  "level" : 1,
+  "maxStack" : 999,
+  "rarity" : "Essential",
+  "category" : "mysteriousReward",
+  "description" : "A durable case that belonged to a Letheia researcher. ^#eab3db;Open it to receive a gun mod.^reset;",
+  "shortdescription" : "Prototype Case",
+  "twoHanded" : false,
+
+  "inventoryIcon" : "project45-prototypecase.png",
+  "animation" : "/items/active/unsorted/project45/project45-attachecase/project45-attachecase.animation",
+  "animationCustom" : {
+    "animatedParts": {
+      "parts": {
+        "gun": {
+          "properties": {
+            "image": "project45-prototypecase.png"
+          }
+        }
+      }
+    }
+  },
+  "scripts" : ["/items/active/unsorted/superrewardbag/superrewardbag.lua"],
+
+  "fireTime" : 2.0,
+  "fireOffset" : [1.0, 0.0],
+
+  "treasure" : {
+    "pool" : "project45-unknowngunmod4",
+    "level": 1
+  }
+}

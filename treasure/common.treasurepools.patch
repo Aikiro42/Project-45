@@ -4,6 +4,7 @@
     "path": "/basicTreasure/0/1/fill",
     "value": [
       {"weight" : 1, "pool" : "project45-stat-drop"},
+      {"weight" : 1, "pool" : "project45-mod-drop"},
       {"weight" : 1, "pool" : "project45-portablegdk-drop"}
     ]
   }
