@@ -145,8 +145,10 @@
   "project45-natural-spawns": [
     [0, {
       "pool": [
+        {"weight" : 0.125, "item" : "project45-gachapull"},
+        {"weight" : 0.125, "item" : "project45-gachapull10"},
         {"weight" : 0.25, "pool" : "project45-guns-r"},
-        {"weight" : 0.5, "pool" : "project45-stats-r"},
+        {"weight" : 0.25, "pool" : "project45-stats-r"},
         {"weight" : 0.25, "pool" : "project45-mods-r"}
       ],
       "poolRounds" : [
