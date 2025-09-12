@@ -1,0 +1,12 @@
+{
+  "id" : "project45catalog",
+  "title" : "^#FF9000;Project 45 Catalog",
+  "description" : "A codex listing all Project 45 products and their shipping IDs.",
+  "icon" : "project45catalogcover.png",
+  "contentPages" : [],
+  "itemConfig" : {
+    "rarity" : "essential",
+    "price" : 5,
+    "inventoryIcon": "/codex/project45/project45catalogcover.png"
+  }
+}

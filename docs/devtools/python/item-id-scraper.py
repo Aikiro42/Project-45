@@ -9,38 +9,59 @@ def list_files(startpath):
         for f in files:
             print('{}{}'.format(subindent, f))
 
-def listItemIds(itemSet=("activeitem", "augment", "object", "thrownitem", "consumable"), commandPrefix=True):
+def listItemIds(itemSet=("activeitem", "augment", "object", "thrownitem", "consumable"), commandPrefix=False, verbose=False):
     startpath = os.getcwd()
+    listed = {}
     for root, dirs, files in os.walk(startpath):
         for f in files:
             if f[f.rfind(".")+1:] in itemSet and f != "default":
                 with open(f"{root}\\{f}") as itemFile:
                     d = pyjson5.decode_io(itemFile)
-                    try:
-                      print(f"{'/spawnitem ' if commandPrefix else '' }{d['itemName']}")
-                    except:
-                      print(f"{'/spawnitem ' if commandPrefix else '' }{d['objectName']}")
+                    
+                    cat = "no_category"
+
+                    if d.get('isUnique'): cat = "unique"
+                    else:
+                        cat = d.get('project45GunModInfo',{}).get('category', 'no_category')
+                        if cat == "no_category":
+                            cat = d.get('modCategory', 'no_category')
+                    
+                    if verbose: print(f"{cat}- ", end="")
 
 
-print("[h2]Active Items[/h2]")
-print("[code]")
-listItemIds(("activeitem"))
-print("[/code]")
+                    itemId = d.get('itemName', d.get('objectName', '???'))
+                    description = d.get('shortdescription', '???')
+                    out = f"{'/spawnitem ' if commandPrefix else '- ' }<span style=\"color: #00FF00\">{itemId}</span>: {description}^reset;"
+                    if verbose: print(out)
+                    listed[cat] = listed.get(cat, []) + [out]
+    return listed
+
+
+
+stuffs = {
+    "out-activeitems.md": ("activeitem"),
+    "out-mods.md": ("augment"),
+    "out-items.md": ("thrownitem", "consumable"),
+    "out-objects.md": ("object")
+}
+
+for outfile, ext in stuffs.items():
+    stuff = listItemIds(ext)
+    with open(outfile, "w") as out:
+        for category, outstrings in stuff.items():
+            out.write(f"# {category}\n")
+            for item in outstrings:
+                out.write(item + "\n")
+
 
 print()
-print("[h2]Mods[/h2]")
-print("[code]")
+print("Mods")
 listItemIds(("augment"))
-print("[/code]")
 
 print()
-print("[h2]Items[/h2]")
-print("[code]")
+print("Items")
 listItemIds(("thrownitem", "consumable"))
-print("[/code]")
 
 print()
-print("[h2]Objects[/h2]")
-print("[code]")
+print("Objects")
 listItemIds(("object"))
-print("[/code]")
