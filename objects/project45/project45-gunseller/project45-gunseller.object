@@ -5,7 +5,7 @@
   "shortdescription" : "^#FF9000;Reimburser^reset;",
   "race" : "generic",
   "category" : "shippingContainer",
-  "price" : 5000,
+  "price" : 500,
   "objectType" : "container",
   "printable" : false,
 

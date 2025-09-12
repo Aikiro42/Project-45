@@ -285,6 +285,7 @@
 
       "util": [
         "project45manual-codex",
+        "project45catalog-codex",
         "project45-gundisassembler",
         "project45-gunseller",
 
