@@ -11,7 +11,7 @@
   "category" : "rocketLauncher",
   "twoHanded" : true,
   "isUnique": true,
-  "itemTags" : ["weapon","ranged","rocketlauncher"],
+  "itemTags" : ["weapon","ranged","rocketlauncher","uniqueproject45item"],
   "level" : 1,
   "muzzleFlashColor": [255, 255, 200],
   "inventoryIcon" : "project45-40k-boltgun-icon.png",

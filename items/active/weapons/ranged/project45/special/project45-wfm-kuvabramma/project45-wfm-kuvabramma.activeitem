@@ -11,7 +11,7 @@
   "gunArchetype": "grenadeLauncher",
   "category" : "bow",
   "twoHanded" : true,
-  "itemTags" : ["weapon","ranged","bow"],
+  "itemTags" : ["weapon","ranged","bow","uniqueproject45item"],
   "level" : 1,
   "muzzleFlashColor": [255, 255, 255],
   "inventoryIcon" : "project45-wfm-kuvabramma-icon.png",

@@ -15,7 +15,7 @@ Credits: 343 Industries, Bungie, Creative Assembly, Ensemble Studios
   "gunArchetype": "assaultRifle",
   "category" : "uniqueWeapon",
   "twoHanded" : true,
-  "itemTags" : ["weapon","ranged","assaultrifle"],
+  "itemTags" : ["weapon","ranged","assaultrifle","uniqueproject45item"],
   "level" : 1,
   "muzzleFlashColor": [255, 255, 200],
   "inventoryIcon" : "project45-hlo-maxx-icon.png",
