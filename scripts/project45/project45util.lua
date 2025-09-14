@@ -406,7 +406,7 @@ function project45util.doOperationChecks(rootJson, checks)
 
   local opCheckResult = true
   local nextOperation = "and"
-  for _, check in checks do
+  for _, check in ipairs(checks) do
     if nextOperation == "and" then
       opCheckResult = opCheckResult
         and project45util.check(rootJson, check.path, check.operation, check.value)
