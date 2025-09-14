@@ -11,7 +11,7 @@
   "gunArchetype": "pistol",
   "category" : "pistol",
   "twoHanded" : false,
-  "itemTags" : ["weapon","ranged","pistol"],
+  "itemTags" : ["weapon","ranged","pistol","uniqueproject45item"],
   "level" : 1,
   "muzzleFlashColor": [255, 255, 200],
   "inventoryIcon" : "project45-cop-auto9-icon.png",

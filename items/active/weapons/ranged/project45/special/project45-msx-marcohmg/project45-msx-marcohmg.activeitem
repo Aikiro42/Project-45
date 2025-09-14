@@ -11,7 +11,7 @@
   "gunArchetype": "machineGun",
   "category" : "uniqueWeapon",
   "twoHanded" : true,
-  "itemTags" : ["weapon","ranged","assaultrifle"],
+  "itemTags" : ["weapon","ranged","assaultrifle","uniqueproject45item"],
   "level" : 1,
   "muzzleFlashColor": [240, 168, 72],
   "inventoryIcon" : "project45-msx-marcohmg-icon.png",

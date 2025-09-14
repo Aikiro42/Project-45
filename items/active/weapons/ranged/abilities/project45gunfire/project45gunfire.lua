@@ -572,7 +572,11 @@ function Project45GunFire:firing() -- state
   -- add unejected casings
 
   storage.project45GunState.unejectedCasings = storage.project45GunState.unejectedCasings + (self.casingsPerShot or math.min(self.ammoPerShot, storage.project45GunState.ammo))
-  self:updateAmmo(project45util.diceroll(self.ammoConsumeChance) and -self.ammoPerShot or 0)
+  if project45util.diceroll(self.ammoConsumeChance) then
+    self:updateAmmo(-self.ammoPerShot)
+  else
+    self:consumeEnergy(AMMO, 1)
+  end
   
   self.triggered = storage.project45GunState.ammo == 0 or self.triggered
   
@@ -1010,7 +1014,7 @@ function Project45GunFire:cocking()
   --]]
 
   -- [[
-  sb.logInfo(animator.animationState("chamber"))
+  -- sb.logInfo(animator.animationState("chamber"))
   self:openBolt(animator.animationState("chamber") == "ready" and self.ammoPerShot or 0, false, false, not self.ejectCasingsWithMag, true)
   util.wait(self.cockTime/2)
   

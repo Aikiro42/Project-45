@@ -1,0 +1,47 @@
+{
+  "itemName" : "project45-beginnermod",
+  "price" : 300,
+  "rarity" : "Legendary",
+  "isUnique": true,
+  "tooltipKind" : "project45gunmod2",
+  "tooltipFields": {
+    "subtitle": "Stat Mod"
+  },
+  "modCategory" : "statMod",
+  "category" : "uniqueWeapon",
+  "itemTags": ["weapon"],
+  "inventoryIcon" : "/items/augments/project45-gunmods/stat/project45-godmod/project45-beginnermod.png",
+  "statInfo" : "",
+  "description": "A starter Project 45 mod that improves a weapon's handling and damage.",
+  "slot": "multiple",
+  "archetype": "Mixed",
+  "shortdescription" : "^#72d54f;Beginner's Crutch^reset;",
+
+  "augment":{
+    "cost": 8,
+    "pureStatMod": true,
+    
+    "stat": {
+      "stackLimit": 1,
+      "baseDamage": {
+        "multiplicative": 0.8
+      },
+      "critChance": {
+        "additive": 0.2
+      },
+      "fireTimeGroup": {
+        "multiplicative": 0.75
+      },
+      "reloadTimeGroup": {
+        "multiplicative": 0.75
+      },
+      "recoilAmount": {
+        "rebaseMult": 0.9
+      }
+    }
+  },
+
+  "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
+
+}

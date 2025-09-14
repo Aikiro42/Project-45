@@ -1,1 +1,0 @@
-- [x] ~~Sanshi: A good portion of weapon mods uses the running animations for the holding animations, and because of this, it makes certain species visually incompatible (e.g. avali), as it has different arm animations for its run cycle.~~ (Partial fix implemented)

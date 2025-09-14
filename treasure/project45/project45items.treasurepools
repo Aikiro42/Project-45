@@ -96,7 +96,9 @@
         {"weight" : 1, "item" : "project45-wfm-kuvabramma"},
         {"weight" : 1, "item" : "project45-mhf-boneshooter"},
         {"weight" : 1, "item" : "project45-cbp-malorian"},
-        {"weight" : 1, "item" : "project45-utk-revolver"}
+        {"weight" : 1, "item" : "project45-utk-revolver"},
+        {"weight" : 1, "item" : "project45-cop-auto9"},
+        {"weight" : 1, "item" : "project45-40k-boltgun"}
       ],
       "poolRounds" : 1,
       "allowDuplication" : false

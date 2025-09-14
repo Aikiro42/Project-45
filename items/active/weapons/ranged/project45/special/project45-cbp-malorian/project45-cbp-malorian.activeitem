@@ -16,7 +16,7 @@
   "gunArchetype": "revolver",
   "category" : "uniqueWeapon",
   "twoHanded" : true,
-  "itemTags" : ["weapon","ranged","pistol"],
+  "itemTags" : ["weapon","ranged","pistol","uniqueproject45item"],
   "level" : 1,
   "muzzleFlashColor": [255, 255, 200],
   "inventoryIcon" : "project45-cbp-malorian-icon.png",

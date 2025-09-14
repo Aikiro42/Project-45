@@ -196,7 +196,7 @@ If you have Stardust Core/Lite or Quickbar Mini installed, you can change the fo
 
   "itemConfig" : {
     "rarity" : "rare",
-    "price" : 50,
+    "price" : 5,
     "inventoryIcon": "/codex/project45/project45manualcover.png"
   }
 }

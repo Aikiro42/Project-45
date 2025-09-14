@@ -212,6 +212,7 @@
 
       "stat": [
         "project45-wildcardstatmod",
+        "project45-beginnermod",
         "project45-levelmod",
         "project45-maxlevelmod",
         "project45-reloadcostaddmod1",
@@ -285,6 +286,7 @@
 
       "util": [
         "project45manual-codex",
+        "project45catalog-codex",
         "project45-gundisassembler",
         "project45-gunseller",
 

@@ -11,7 +11,7 @@
   "gunArchetype": "antiMateriel",
   "category" : "uniqueWeapon",
   "twoHanded" : true,
-  "itemTags" : ["weapon","ranged","assaultrifle"],
+  "itemTags" : ["weapon","ranged","assaultrifle","uniqueproject45item"],
   "level" : 1,
   "muzzleFlashColor": [161, 178, 255],
   "inventoryIcon" : "project45-neb-warbolter-icon.png",

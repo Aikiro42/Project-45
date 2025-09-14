@@ -1,6 +1,6 @@
 {
   "objectName" : "project45-materializer",
-  "colonyTags" : ["cooking","light"],
+  "colonyTags" : ["light"],
   "printable" : false,
   "price" : 30,
   "rarity" : "Uncommon",
@@ -14,22 +14,21 @@
       "project45craftable-stat"
     ]  
   },
-  "description" : "Embers dance away from the campfire, warming the air. The heat can be used for cooking.",
-  "shortdescription" : "^orange;Project 45 Materializer^white;",
+  "description" : "Sparks fly away from the device, exciting the air. This object can be used to craft Project 45 items.",  "shortdescription" : "^orange;Project 45 Materializer^white;",
   "race" : "generic",
   "category" : "crafting",
   
-  "radioMessagesOnPickup" : [ "pickupcampfire" ],
+  "radioMessagesOnPickup" : [ ],
 
   "maximumLiquidLevel" : 0.2,
 
-  "apexDescription" : "A healthy campfire. I could cook some food using it.",
-  "avianDescription" : "A campfire. It's useful for very basic cooking.",
-  "floranDescription" : "Floran hate flames, but likesss to cook. Cooking leadss to eating.",
-  "glitchDescription" : "Informed. Heating meat with fire is a basic form of cooking.",
-  "humanDescription" : "I've always enjoyed watching the flames of a campfire dance.",
-  "hylotlDescription" : "A campfire, I enjoy the simplicity of flame-cooked food.",
-  "novakidDescription" : "A toasty campfire for cookin'. What more d'ya need?",
+  "apexDescription" : "Advanced technology, though oddly unregulated.",
+  "avianDescription" : "Its sparks remind me of Kluex’s lightning.",
+  "floranDescription" : "Floran likesss tool that makesss stronger hunt-gear.",
+  "glitchDescription" : "Analytical. Power flow is stable and efficient.",
+  "humanDescription" : "Looks like something straight out of a sci-fi flick.",
+  "hylotlDescription" : "A crude yet effective means of channeling energy.",
+  "novakidDescription" : "Sparky little contraption. Bet it’s good for buildin’ stuff.",
 
   "lightColor" : [0, 65, 100],
 

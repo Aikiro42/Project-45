@@ -11,7 +11,7 @@
   "gunArchetype": "antiMateriel",
   "category" : "uniqueWeapon",
   "twoHanded" : true,
-  "itemTags" : ["weapon","ranged","sniperrifle"],
+  "itemTags" : ["weapon","ranged","sniperrifle","uniqueproject45item"],
   "level" : 1,
   "muzzleFlashColor": [255, 255, 200],
   "inventoryIcon" : "project45-scz-spacecowboy-icon.png",
