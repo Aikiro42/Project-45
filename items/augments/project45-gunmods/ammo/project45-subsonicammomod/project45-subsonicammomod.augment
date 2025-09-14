@@ -39,10 +39,16 @@
     },
     "stat": {
       "baseDamage": {
-        "rebaseMult": 1.2
+        "multiplicative": -0.1
       },
       "recoilAmount": {
         "rebaseMult": 0.7
+      },
+      "critChance": {
+        "rebaseMult": 2
+      },
+      "critDamage": {
+        "rebaseMult": 2
       }
     }
   },
