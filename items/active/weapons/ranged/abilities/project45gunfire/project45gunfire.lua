@@ -1058,7 +1058,7 @@ end
 
 -- Returns true if the weapon successfully jammed.
 function Project45GunFire:jam()
-  if project45util.diceroll(self.jamChances[storage.project45GunState.reloadRating]) then
+  if project45util.diceroll(self.jamChances[storage.project45GunState.reloadRating] * (self.jamChanceMult or 1)) then
     self.passiveClass.onJam(self)
 
     self:stopFireLoop()
