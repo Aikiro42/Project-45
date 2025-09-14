@@ -49,6 +49,9 @@
       },
       "critDamage": {
         "rebaseMult": 2
+      },
+      "jamChanceMult": {
+        "rebaseMult": 0.5
       }
     }
   },
