@@ -11,14 +11,17 @@ a block comment
 - Misc Stats
 - Ammo & Reloading
 - Reload Rating
-#
 - Per-Bullet Reload
+#
 - Stock Ammo
 - Jamming
 - Gun Modding
+- Extrinsic Mods
 - Stat Bonuses
 - The Supply Transponder
 - (Quickbar) Mod Settings
+    - Damage Scaling
+    - Challenge Scaling
 
 # <span style="color: #E2C344">Introduction</span>
 Project 45 guns are different from vanilla guns in the following aspects:
@@ -36,12 +39,13 @@ Project 45 guns are different from vanilla guns in the following aspects:
 #
 
 - <span style="color: #51BD3B">Reload Cost</span>: the total percentage of energy required to reload a gun to its full capacity.
+
 - <span style="color: #cccccc">Reload Time</span>: the maximum possible amount of time it takes to reload a gun to its full capacity. This also includes the <span style="color: #E2C344">Cock Time</span> of the weapon.
 #
 
 - <span style="color: #D93A3A">Crit Chance</span>: the chance of the gun dealing increased damage. Odds beyond 100% give shots a chance to deal even more damage (i.e. a <span style="color: #f4988c">\"Supercrit\"</span>).
-- <span style="color: #D93A3A">Crit Damage</span>: the number multiplied to the projectile's damage when it deals a super/crit.
 
+- <span style="color: #D93A3A">Crit Damage</span>: the number multiplied to the projectile's damage when it deals a super/crit.
 
 # <span style="color: #E2C344">Firing & Recoil</span>
 Project 45 guns fire like any other gun, except they have a relatively predictable recoil.
@@ -142,6 +146,15 @@ Modding weapons is similar to installing augments on EPPs. Whether you can insta
 
 If a mod cannot be installed on a weapon, it will be indicated the next time you hold your weapon via red text that appears above the player character's head.
 
+# <span style="color: #E2C344">Extrinsic Mods</span>
+Weapons can have up to five <span style="color: #9da8af">mods that appear on their sprite</span>, shown in the 2x3 grid beside the weapon's tooltip image. From <span style="color: #E2C344">left to right, top to bottom</span>, these slots are the:
+- <span style="color: #9da8af">Sights</span>
+- <span style="color: #9da8af">Rail</span>
+- <span style="color: #9da8af">Muzzle</span>
+- <span style="color: #9da8af">Underbarrel</span>
+- <span style="color: #9da8af">Stock</span>
+- <span style="color: #9da8af">Ammo</span>
+
 # <span style="color: #E2C344">Stat Bonuses</span>
 Weapons spawn with a seeded stat <span style="color: #96cbe7">bonus ratio</span>.
 
@@ -194,3 +207,21 @@ If you have Stardust Core/Lite or Quickbar Mini installed, you can change the fo
 #
 - <span style="color: #EA9931">Accurate Reload/Charge Bars:</span> If this setting is ticked, drawables will be used to render both the reload ranges and arrow and the charge bar progress.
     - <span style="color: #D93A3A">Enabling Performance Mode disables this setting.</span>
+- <span style="color: #EA9931">Lights On During Reload:</span> If this setting is ticked, any lasers or light sources will remain active while reloading.
+    - <span style="color: #D93A3A">Enabling Performance Mode disables this setting.</span>
+
+#
+- <span style="color: #EA9931">Accurate Reload/Charge Bars:</span> If this setting is ticked, the arms will change when doing various actions with the gun.
+    - <span style="color: #D93A3A">Enabling Performance Mode disables this setting.</span>
+    - It is recommended to untick this setting if a modded race looks weird while wielding the weapon.
+
+#
+- <span style="color: #d29ce7">Damage Scaling</span> dictates how well your weapon's damage scales with your current Power level.
+    - e.g: If you have the Seeker's set on and thus have <span style="color: #d29ce7">400% power</span>, and the Damage Scaling is set to <span style="color: #d29ce7">50%</span>, then the <span style="color: #d29ce7">weapon's final damage will increase by 200%</span>.
+    - For an added challenge, it is recommended to set this value lower.
+
+#
+- <span style="color: #f4988c">Challenge Scaling</span> dictates how much your weapon's final damage is decreased, up to a maximum of <span style="color: #f4988c">90%</span>.
+    - e.g. If the Challenge Scaling is set to <span style="color: #f4988c">50%</span>, your weapon's final damage will be <span style="color: #f4988c">halved</span>.
+    - e.g: If you have <span style="color: #d29ce7">400% power</span>, <span style="color: #d29ce7">50% Damage Scaling</span>, and <span style="color: #f4988c">40% Challenge Scaling</span>,then <span style="color: #d29ce7">final damage will increase by 120%</span>.
+    - Increase this value for an added challenge, and to benefit from a certain mod.

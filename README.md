@@ -42,9 +42,9 @@
 
 ## Docs
 - [ ] Clarify what the Damage Scaling option does (Flynt)
-- [ ] IGD for extrinsic mod slots (Carl)
-- [ ] IGD for manual reloading (Moq-Rubiaac; MadCat)
 - [ ] `project45gunfire` documentation
+- [x] IGD for extrinsic mod slots (Carl)
+- [x] IGD for manual reloading (Moq-Rubiaac; MadCat)
 - [x] IGD (in-game documentation) for Transponder and Supply Drops, and how to open them (Vaporwave Mrej)
 - [x] Item Catalog (AtomicBeaverCleaver)
 

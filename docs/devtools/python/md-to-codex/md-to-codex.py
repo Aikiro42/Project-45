@@ -1,8 +1,8 @@
 import os, re, sys
 from io import StringIO
 
-defaultMarkdownPath = "docs/devtools/python/md-to-codex/project45catalog.md"
-defaultCodexPath = "codex/project45/project45catalog.codex"
+defaultMarkdownPath = "docs/devtools/python/md-to-codex/project45manual.md"
+defaultCodexPath = "codex/project45/project45manual.codex"
 
 markdownPath = sys.argv[1] if len(sys.argv) >= 2 else input("Enter path of markdown file to convert: ")
 codexPath = sys.argv[2] if len(sys.argv) >= 3 else input("Enter path of codex file to patch: ")
