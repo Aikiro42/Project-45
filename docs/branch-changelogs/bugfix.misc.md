@@ -13,3 +13,51 @@
   - Unique Project 45 Items
 
 - Balanced the effects of Ammo Consume Chance; If a gun fails to consume ammo, then it will consume exactly 1 energy or 1 stocked ammo.
+
+# New (modders)
+- Add 'jamChanceMult' to modifiable stats
+- Add checks for gun modifications:
+```json
+{
+  "augment": {
+    "gun": {
+      "primaryAbility": {
+        "manualFeed": {
+          "checks": [
+            {
+              "path": "primaryAbility.semi",
+              "operation": "!=",
+              "value": false
+            }
+          ],
+          "operation": "replace",
+          "value": true
+        },
+        "jamChanceMult": [
+          {
+            "operation": "add",
+            "value": -0.5
+          },
+          {
+            "checks": [
+              {
+                "path": "primaryAbility.semi",
+                "operation": "!=",
+                "value": false,
+                "next": "or"
+              },
+              {
+                "path": "primaryAbility.autoChargeAfterFire",
+                "operation": "!=",
+                "value": true
+              }
+            ],
+            "operation": "add",
+            "value": 0.2
+          }
+        ]
+      }
+    }
+  }
+}
+```
