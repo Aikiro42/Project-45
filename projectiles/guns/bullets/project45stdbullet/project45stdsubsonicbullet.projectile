@@ -18,7 +18,7 @@
   "piercing": false,
   "statusEffects" : [ ],
   "power" : 5.0,
-  "speed" : 175,
+  "speed" : 200,
   "knockback" : 0,
   "collisionPoly": [
     [-8.5, 0],
