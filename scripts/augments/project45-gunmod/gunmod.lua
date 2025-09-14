@@ -74,14 +74,14 @@ function apply(output, augment)
           -- check and do them in order
           local newValue = newPrimaryAbility[parameter] or oldPrimaryAbility[parameter]
           for _, op in ipairs(operation) do
-            if project45util.doOperationChecks(newPrimaryAbility, op.checks or {}) then
+            if project45util.doOperationChecks(input.parameters, op.checks or {}) then
               newValue = modify(newValue, op.operation, op.value)
             end
           end
           newModifications[parameter] = newValue
 
         else
-          if project45util.doOperationChecks(newPrimaryAbility, operation.checks or {}) then
+          if project45util.doOperationChecks(input.parameters, operation.checks or {}) then
             newModifications[parameter] = modify(newPrimaryAbility[parameter] or oldPrimaryAbility[parameter],
                 operation.operation, operation.value)
           end
