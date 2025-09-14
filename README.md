@@ -22,12 +22,12 @@
 ## Balance Changes
 - [ ] Improve ballistic shield
 - [ ] Rebalance Indiscriminate Explosions (Юрий Цеванов)
-- [ ] Rebalance infinite ammo (MortemFoE)
-- [x] Move balance closer to early game
-- [x] Add cipher keys to drop tables (Mabra)
-- [x] Balance Economy
-- [x] Upgrades too common (Pancakes and Syrup)
-- [x] Nerf overpowered damage of guns
+- [x] Rebalance infinite ammo (MortemFoE) (verify fix)
+- [x] Move balance closer to early game (verify fix)
+- [x] Add cipher keys to drop tables (Mabra) (verify fix)
+- [x] Balance Economy (verify fix)
+- [x] Upgrades too common (Pancakes and Syrup) (verify fix)
+- [x] Nerf overpowered damage of guns (verify fix)
   - Make them be on par with other popular gun mods like Project Knightfall, Starforge, Raizzys Guns, Feast of Fire and Smoke
 - [x] Strengthen Base Guns?
   - New hand-craftable gun, "The Protector", added

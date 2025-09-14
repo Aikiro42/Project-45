@@ -16,29 +16,14 @@
   "shortdescription" : "Test statMod",
 
   "augment":{
-    "cost": 5,
+    "cost": 0,
     "pureStatMod": true,
-    
-    "baseDamage": {
-      "additive": 1,
-      "multiplicative": 1
-    },
-    "fireTimeGroup": {
-      "additive": -0.001,
-      "multiplicative": 1
-    },
-    "critChance": {
-      "additive": 0.01,
-      "multiplicative": 1
-    },
-    "critDamage": {
-      "additive": 1,
-      "multiplicative": 1
-    },
-    "reloadCost": {
-      "additive": -1,
-      "multiplicative": 1
+    "stat": {
+      "ammoConsumeChance": {
+        "rebase": 0
+      }
     }
+
   },
 
   "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],

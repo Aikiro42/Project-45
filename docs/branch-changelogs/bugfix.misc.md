@@ -9,3 +9,5 @@
 - Added increased selling prices for particular items sold via the Reimburser:
   - reagents
   - Unique Project 45 Items
+  
+- Balanced the effects of Ammo Consume Chance; If a gun fails to consume ammo, then it will consume exactly 1 energy or 1 stocked ammo.
