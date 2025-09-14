@@ -1,20 +1,26 @@
 {
 
   "project45-stat-drop": [
-    // 3% T1/T2 random stat mod
-    // 1% level mod
+    // 2% beginner's crutch
+    // 6% T1 random stat mod
+    // 2% level mod
     [0, {
-      "poolRounds" : [[0.96, 0], [0.04, 1]],
+      "poolRounds" : [[0.90, 0], [0.1, 1]],
       "pool" : [
-        {"weight" : 1, "item" : "project45-unknownstatmod1"}
+        {"weight" : 0.2, "item" : "project45-beginnermod"},
+        {"weight" : 0.8, "item" : "project45-unknownstatmod1"}
       ]
     }],
     [1.9, {
-      "poolRounds" : [[0.96, 0], [0.04, 1]],
+      "poolRounds" : [[0.90, 0], [0.1, 1]],
       "pool" : [
-        {"weight" : 1, "item" : "project45-unknownstatmod1"}
+        {"weight" : 0.2, "item" : "project45-beginnermod"},
+        {"weight" : 0.8, "item" : "project45-unknownstatmod1"}
       ]
     }],
+
+    // 3% T2 random stat mod
+    // 1% level mod
     [2.9, {
       "poolRounds" : [[0.96, 0], [0.04, 1]],
       "pool" : [

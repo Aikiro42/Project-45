@@ -21,9 +21,9 @@
 
 ## Balance Changes
 - [ ] Improve ballistic shield
-- [ ] Move balance closer to early game
 - [ ] Rebalance Indiscriminate Explosions (Юрий Цеванов)
 - [ ] Rebalance infinite ammo (MortemFoE)
+- [x] Move balance closer to early game
 - [x] Add cipher keys to drop tables (Mabra)
 - [x] Balance Economy
 - [x] Upgrades too common (Pancakes and Syrup)

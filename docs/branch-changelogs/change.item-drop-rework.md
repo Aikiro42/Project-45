@@ -13,10 +13,11 @@ feat: rework stat and mod drops
 
 fix: decrease stat drops
 - Made stat drops more consistent:
-  - for planet difficulties 0-3, there is a 3% chance to drop ONE tier 1 (diff. 0-1)/tier 2 (diff. 2) unknown stat mod. or ONE level mod.
-  - for planet difficulties 4-5, there is a 1% chance to drop ONE tier 3 unknown stat mod, or ONE level mod.
-  - for planet difficulty 6, there is a 0.5% chance to drop either ONE tier 3 unknown stat mod or ONE level mod.
-  - for planet difficulty 7 and beyond, there is a 0.5% chance to drop either ONE tier 3 unknown stat mod or ONE XSSR mod (i.e. either a god mod or an admin mod).
+  - for planet difficulties 0-1, there is a 6% chance to drop a tier 1 unknown stat mod, and a 4% chance to either drop a level mod or a Beginner's Crutch.
+  - for planet difficulties 2-3, there is a 3% chance to drop a tier 2 (diff. 2) unknown stat mod and a 1% chance to drop a level mod.
+  - for planet difficulties 4-5, there is a 1% chance to drop a tier 3 unknown stat mod, or a level mod.
+  - for planet difficulty 6, there is a 0.5% chance to drop either ONE tier 3 unknown stat mod or a level mod.
+  - for planet difficulty 7 and beyond, there is a 0.5% chance to drop either ONE tier 3 unknown stat mod or a XSSR mod (i.e. either a god mod or an admin mod).
 
 feat: add unknown stat mod "rewardbags"
 - added unknown stat mod reward bags to help with inventory congestion
