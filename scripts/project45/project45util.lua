@@ -1,3 +1,5 @@
+require "/scripts/util.lua"
+
 project45util = {}
 
 function project45util.split(str, sep)  
@@ -325,4 +327,94 @@ function project45util.printObject(x, tab, depth)
       sb.logInfo(project45util.sanitize(tab .. key .. " : " .. sb.print(val)))
     end
   end
+end
+
+-- Checks if the comparison operation between the jsonPath value and checkValue (in that order) returns true. If the pathString is nonexistent, returns true (vacuous truth)
+-- @warning This function fails aggressively. Make sure the operation between the json value and check value is valid.
+-- @param json - the json object containing the value to be checked against
+-- @param pathString - String delimited by periods e.g. "path.to.a.json.field"
+-- @param operation - "and", "or", "not", "xor", "xnor", "nand", "nor", "eq"/"==", "neq"/"!="/"~=", ">", "<", ">=", "<=", "imply", "converse"
+-- @param checkValue - value to check against the value of the specified pathString; operation is between
+function project45util.check(json, pathString, operation, checkValue)
+  local jsonValue = jsonPath(json, pathString)
+
+  if not jsonValue then return true end -- vacuous truth
+
+  local function xor(a, b)
+    return (a and not b) or (b and not a)
+  end
+
+  local function imply(a, b)
+    return (not a) or b
+  end
+
+  local a = jsonValue
+  local b = checkValue
+  if operation == "and" then
+    return jsonValue and checkValue
+  elseif operation == "or" then
+    return jsonValue or checkValue
+  elseif operation == "not" then
+    return jsonValue or checkValue
+  elseif operation == "eq" or operation == "==" then
+    return jsonValue == checkValue
+  elseif operation == "neq" or operation == "!=" or operation == "~="then
+    return jsonValue ~= checkValue
+  elseif operation == ">" then
+    return jsonValue > checkValue
+  elseif operation == "<" then
+    return jsonValue < checkValue
+  elseif operation == ">=" then
+    return jsonValue >= checkValue
+  elseif operation == "<=" then
+    return jsonValue <= checkValue
+  elseif operation == "xor" then
+    return xor(jsonValue, checkValue)
+  elseif operation == "xnor" then
+    return not xor(jsonValue, checkValue)
+  elseif operation == "nand" then
+    return not (jsonValue and checkValue)
+  elseif operation == "nor" then
+    return not (jsonValue or checkValue)
+  elseif operation == "imply" then
+    return imply(jsonValue, checkValue)
+  elseif operation == "converse" then
+    return imply(checkValue, jsonValue)
+  end
+end
+
+function project45util.doOperationChecks(rootJson, checks)
+
+  
+--[[ example in augment json:
+"augment": {
+  "gun": {
+    "manualFeed": {
+      "checks": [
+        {
+          "path": "primaryAbility.manualFeed",
+          "operation": "==",
+          "value": false
+        }
+      ],
+      "operation": "replace",
+      "value": true
+    }
+  }
+}
+--]]
+
+  local opCheckResult = true
+  local nextOperation = "and"
+  for _, check in ipairs(checks) do
+    if nextOperation == "and" then
+      opCheckResult = opCheckResult
+        and project45util.check(rootJson, check.path, check.operation, check.value)
+    elseif nextOperation == "or" then
+      opCheckResult = opCheckResult
+        or project45util.check(rootJson, check.path, check.operation, check.value)
+    end
+    nextOperation = check.next or "and"
+  end
+  return opCheckResult
 end

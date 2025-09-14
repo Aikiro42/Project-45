@@ -71,16 +71,20 @@ function apply(output, augment)
       for parameter, operation in pairs(augment.primaryAbility) do
         if #operation > 0 then
           -- if operation is an array of operations
-          -- do them in order
+          -- check and do them in order
           local newValue = newPrimaryAbility[parameter] or oldPrimaryAbility[parameter]
           for _, op in ipairs(operation) do
-            newValue = modify(newValue, op.operation, op.value)
+            if project45util.doOperationChecks(input.parameters, op.checks or {}) then
+              newValue = modify(newValue, op.operation, op.value)
+            end
           end
           newModifications[parameter] = newValue
 
         else
-          newModifications[parameter] = modify(newPrimaryAbility[parameter] or oldPrimaryAbility[parameter],
-              operation.operation, operation.value)
+          if project45util.doOperationChecks(input.parameters, operation.checks or {}) then
+            newModifications[parameter] = modify(newPrimaryAbility[parameter] or oldPrimaryAbility[parameter],
+                operation.operation, operation.value)
+          end
         end
       end
 
