@@ -1,10 +1,14 @@
 {
-  // TODO: update bullet vfx
   "projectileName" : "project45stdsubsonicbullet",
   "image" : "project45stdbullet.png",
-  "scripts": ["/projectiles/scripts/project45-killprojectileonstick.lua"],
-  "physics" : "grenade",
-  "animationCycle" : 0.25,
+  "scripts": [
+    "/projectiles/scripts/project45/project45tracer.lua"
+  ],
+  "physics" : "arrownosticky",
+  "animationCycle" : 1,
+  "animationLoops" : false,
+  "timeToLive": 3,
+  "windupFrames": 7,
   "frameNumber" : 1,
   "damageKind" : "standardbullet",
   "pointLight" : true,
@@ -14,7 +18,7 @@
   "piercing": false,
   "statusEffects" : [ ],
   "power" : 5.0,
-  "speed" : 175,
+  "speed" : 200,
   "knockback" : 0,
   "collisionPoly": [
     [-8.5, 0],
@@ -26,8 +30,13 @@
     "collisionEnabled": true
   },
   "bounces" : 0,
-
+  "tracerParameters": {
+    "enabled": true,
+    "color": [255,255,200,128],
+    "fullbright": true
+  },
   "periodicActions" : [
+    /*
     {
       "time" : 0.01,
       "repeat" : true,
