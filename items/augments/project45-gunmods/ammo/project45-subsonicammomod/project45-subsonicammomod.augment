@@ -38,6 +38,9 @@
       }
     },
     "stat": {
+      "burstCount": {
+        "rebase": 1
+      },
       "baseDamage": {
         "multiplicative": -0.1
       },
