@@ -1,0 +1,180 @@
+{
+  "itemName" : "project45-neo-phasma",
+  "price" : 250,
+  "maxStack" : 1,
+  "rarity" : "Rare",
+  "description" : "Generates a stable plasma trail through which high-power destructive energy is channeled.",
+  "lore": "It took a while for the folks at Letheia to make this work.",
+  "shortdescription" : "Phasma",
+  "gunArchetype": "pistol",
+  "tooltipKind" : "project45gun",
+  "category" : "pistol",
+  "twoHanded" : false,
+  "itemTags" : ["weapon","ranged","pistol"],
+  "level" : 1,
+  "muzzleFlashColor": [109, 255, 57],
+  "inventoryIcon" : "project45-neo-phasma-icon.png",
+
+  "animationParts" : {
+    "middle" : "project45-neo-phasma.png",
+    "middleFullbright" : "project45-neo-phasma-fullbright.png",
+    "charge": "project45-neo-phasma.png",
+    "chargeFullbright": "project45-neo-phasma-fullbright.png",
+    "magazine": "project45-neo-phasma-mag.png",
+    "magazineFullbright": ""
+  },
+
+  "project45GunModInfo": {
+    "category": "energy",
+    
+    "allowsConversion": [
+      "beam",
+      "summoned"
+    ],
+    "acceptsModSlot": [
+      "rail",
+      "sights",
+      
+      "magazine",
+      "material"
+    ],
+    "acceptsAmmoArchetype": [
+      "laser",
+      "beam",
+      "summoned",
+      "plasma"
+    ]
+  },
+
+  "animationCustom": {
+    "particleEmitters": {
+      "ejectionPort": {
+        "particles": [
+        ]
+      },
+      "magazine": {
+        "particles": [
+          {"particle": "project45energygunmag3"}
+        ]
+      },
+      "muzzleFlash": {
+        "particles": [
+          {"particle": "project45muzzle"},
+          {"particle": "project45muzzle"},
+          {"particle": "project45muzzle"}
+        ]
+      }
+    },
+
+    "sounds": {
+      "chargeWhine" : ["/sfx/project45neosfx/chargewhine/chargedrone-02.ogg"],
+      "chargeDrone" : ["/sfx/project45neosfx/chargedrone/chargedrone-03.ogg"],  
+      "fire" : ["/sfx/project45neosfx/fire/fire-energy1.ogg"]
+    },
+    "animatedParts": {
+      "parts":{
+        "chargeFullbright": {"properties": {
+          "zLevel": 2
+        }},
+        "middleFullbright": {"properties": {
+          "zLevel": 3
+        }}
+      },
+      "stateTypes": {
+        "charge":{
+          "states":{
+            "charging":{
+              "frames": 4
+            }
+          }
+        },
+        "gun": {
+          "states":{
+            "feeding": {
+              "frames": 1
+            },
+            "unjamming": {
+              "frames": 1
+            }
+          }
+        }
+      }
+    }
+  },
+
+  "baseOffset" : [0.75, 0.25],
+  "muzzleOffset" : [1, 0.25],
+  "ejectionPortOffset": [-0.25, 0.5],
+  "magazineOffset": [0.25, 0],
+
+  "debugPointColors": {
+    "rail": "red",
+    "sights": "orange",
+    "underbarrel": "green"
+  },
+
+  "sightsOffset": [-0.45, 1],
+  "railOffset": [0.5, 0.625],
+
+  "scripts" : ["/items/active/weapons/ranged/project45gunneo.lua"],
+    
+  "primaryAbilityType": "project45gunfire",
+  "primaryAbility": {
+    "reloadCost": 75,
+    "critChance": 0.35,
+    "critDamageMult": 2,
+    "maxAmmo": 15,
+    "bulletsPerReload": 15,
+    
+    "semi": true,
+    "manualFeed": false,
+    "slamFire": false,
+
+    "muzzleProjectiles": [
+      {
+        "type": "project45_muzzleshockwave",
+        "offset": [5, 0],
+        "parameters": {
+          "speed": -5
+        },
+        "firePerShot": true
+      }
+    ],
+
+    "resetChargeOnFire": true,
+    "fireBeforeOvercharge": false,
+    "autoFireOnFullCharge": true,
+    "chargeWhenObstructed": true,
+
+    "hideMuzzleSmoke": true,
+    "chargeSmoke": false,
+
+    "cycleTime": 0.125,
+    "chargeFrames": 4,
+    "chargeTime": 0.125,
+    "dischargeTimeMult": 0.25,
+    
+    "inaccuracy": 0.05, // affects arm movement as the trigger is pulled
+    "recoilDelay": 0.1,
+    "recoilAmount": 3, // amount of recoil per shot, in degrees; arm and weapon will rotate by half of this
+    "recoilMaxDeg": 15, // the most the arm and weapon will rotate, in degrees.
+    "recoverTime": 1, // time it takes to recover aim completely, in seconds
+    "screenShakeAmount": 0.25, // amount of screenshake per shot
+
+
+    "projectileKind": "hitscan",
+    "hitscanParameters": {
+      "hitscanWidth": 6,
+      "hitscanBrightness": 0.3,
+      "ignoresTerrainOnFullCharge": false
+    }
+    /*
+    "beamParameters": {
+      "consumeAmmoOverTime": false,
+      "ejectCasingsOnBeamEnd": true
+    }
+    */
+  },
+
+  "builder" : "/items/buildscripts/buildproject45neoneo.lua"
+}
