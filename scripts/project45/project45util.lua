@@ -73,7 +73,7 @@ function project45util.drawBezierCurve(nsegments, spoint, epoint, cpoint, tCondF
   
 end
 
-function project4util.drawLightning(nsegments, spoint, epoint, intensity)
+function project45util.drawLightning(nsegments, spoint, epoint, intensity)
   intensity = intensity or 1
   local lightning = {}
   local normVector = vec2.norm(vec2.sub(epoint, spoint))
