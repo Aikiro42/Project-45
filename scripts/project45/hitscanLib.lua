@@ -487,7 +487,12 @@ function hitscanLib:fireHitscan(projectileType)
     -- get damage source (line) information
     for i=1, math.min(modConfig.hitscanProjectileLimit, nProjs) do
 
-      local hitReg = self:hitscan(false, nil, self.hitscanParameters.range, ignoresTerrain, punchThrough, self.hitscanParameters.scanUntilCursor)
+      local hitReg = self:hitscan(
+        false, nil, self.hitscanParameters.range,
+        ignoresTerrain, punchThrough, self.hitscanParameters.scanUntilCursor,
+        self.spread, nil, nil,
+        self.hitscanParameters.smartScanParameters)
+
       local damageArea = {
         vec2.sub(hitReg[1], mcontroller.position()),
         vec2.sub(hitReg[2], mcontroller.position())
@@ -534,14 +539,28 @@ function hitscanLib:fireHitscan(projectileType)
     -- each bullet trail in the stack is rendered, and the lifetime is updated in this very script too
     local life = self.hitscanParameters.hitscanFadeTime or 0.5
     for _, hitscanInfo in ipairs(hitscanInfos) do
-      
+
+
+      local hitscanOrigin = hitscanInfo[3][1]
+      local hitscanDestination = hitscanInfo[3][2]
+      local bezierControlPoint
+      if self.hitscanParameters.bezierParameters then
+        local controlPointRatio = self.hitscanParameters.bezierParameters.controlPointRatio or 0.5
+        bezierControlPoint = vec2.add(
+          hitscanOrigin,
+          vec2.mul(self:aimVector(), world.magnitude(hitscanDestination, hitscanOrigin) * controlPointRatio)
+        )
+      end
+
       table.insert(self.projectileStack, {
         width = self.hitscanParameters.hitscanWidth,
-        origin = hitscanInfo[3][1],
-        destination = hitscanInfo[3][2],
+        origin = hitscanOrigin,
+        destination = hitscanDestination,
         lifetime = life,
         maxLifetime = life,
-        color = self.hitscanParameters.hitscanColor
+        color = self.hitscanParameters.hitscanColor,
+        bezierParameters = self.hitscanParameters.bezierParameters,
+        bezierControlPoint = bezierControlPoint
       })
 
       if self.hitscanParameters.hitscanBrightness > 0 then
@@ -879,7 +898,7 @@ end
 
 -- Utility function that scans for an entity to damage.
 -- @return {hitscan_line_origin, hitscan_line_destination, entity_id[]}
-function hitscanLib:hitscan(isLaser, degAdd, scanLength, ignoresTerrain, punchThrough, scanUntilCursor, spread, hitscanLineOrigin, chain)
+function hitscanLib:hitscan(isLaser, degAdd, scanLength, ignoresTerrain, punchThrough, scanUntilCursor, spread, hitscanLineOrigin, chain, smartScanParameters)
 
   -- initialize hitscan parameters
   scanLength = scanLength or 100
@@ -888,6 +907,33 @@ function hitscanLib:hitscan(isLaser, degAdd, scanLength, ignoresTerrain, punchTh
   -- if chain is truthy i.e. the hitscan is for the initial hit of a chain, then punchthrough is set to 0
   punchThrough = chain and 0 or punchThrough
 
+  -- smart scan
+  local smartTargetPosition
+  if smartScanParameters then
+    -- -0.707106781187 = 1/sqrt(2)
+    local startPos = vec2.add(activeItem.ownerAimPosition(), vec2.mul(smartScanParameters.dimensions or {8, 6}, -0.707106781187))
+    local endPos = vec2.add(activeItem.ownerAimPosition(), vec2.mul(smartScanParameters.dimensions or {8, 6}, 0.707106781187))
+    local smartHitEntities = world.entityQuery(
+      startPos,
+      endPos,
+      {
+        withoutEntityId = entity.id(),
+        includedTypes = {"monster", "npc", "player"},
+        order="nearest"
+      }
+    )
+    
+    if #smartHitEntities > 0 then
+      punchThrough = 99
+      -- local targetedEntity = util.randomFromList(smartHitEntities)
+      local targetedEntity = smartHitEntities[1]
+      
+      if world.entityExists(targetedEntity) then
+        smartTargetPosition = world.entityPosition(targetedEntity)
+      end
+    end
+  end
+
   -- establish origin and scan length
   hitscanLineOrigin = hitscanLineOrigin or self:firePosition()
   if scanUntilCursor then
@@ -895,10 +941,11 @@ function hitscanLib:hitscan(isLaser, degAdd, scanLength, ignoresTerrain, punchTh
   end
 
   -- using scan length and origin, determine hitscan endpoint
-  local hitscanLineDestination = vec2.add(hitscanLineOrigin, vec2.mul(self:aimVector(spread or self.spread or 0, degAdd or 0), scanLength))
+  local hitscanLineDestination = smartTargetPosition or vec2.add(hitscanLineOrigin, vec2.mul(self:aimVector(spread or self.spread or 0, degAdd or 0), scanLength))
   local fullHitscanLineDestination = not ignoresTerrain and world.lineCollision(hitscanLineOrigin, hitscanLineDestination, {"Block", "Dynamic"}) or hitscanLineDestination
   -- chain: {"targeted" | "spread" | nil}
 
+  -- determine hit entities
   local hitEntityIds
   hitEntityIds = world.entityLineQuery(hitscanLineOrigin, fullHitscanLineDestination, {
     withoutEntityId = entity.id(),
@@ -958,12 +1005,23 @@ function hitscanLib:updateLaser()
       nil,
       nil,
       self.laser.renderUntilCursor,
-      0
+      0,
+      nil,
+      nil,
+      (self.hitscanParameters or {}).smartScanParameters
     )
+
+    local bezierParameters = (self.hitscanParameters or {}).bezierParameters
+    if bezierParameters then
+      local bezierControlPoint = vec2.add(laser[1], vec2.mul(self:aimVector(), world.magnitude(laser[2], laser[1]) * (bezierParameters.controlPointRatio or 0.5)))
+      activeItem.setScriptedAnimationParameter("primaryLaserBezierParameters", bezierParameters)
+      activeItem.setScriptedAnimationParameter("primaryLaserBezierControlPoint", bezierControlPoint)
+    end
     activeItem.setScriptedAnimationParameter("primaryLaserEnabled", not self.performanceMode)
     activeItem.setScriptedAnimationParameter("primaryLaserStart", laser[1])
     activeItem.setScriptedAnimationParameter("primaryLaserEnd", laser[2])
   else
+    activeItem.setScriptedAnimationParameter("primaryLaserBezierParameters", nil)
     activeItem.setScriptedAnimationParameter("primaryLaserEnabled", false)
     activeItem.setScriptedAnimationParameter("primaryLaserStart", nil)
     activeItem.setScriptedAnimationParameter("primaryLaserEnd", nil)
