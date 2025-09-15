@@ -56,6 +56,13 @@ function Project45GunFire:init()
 
   self.recoilOffsetProgress = 1
 
+  self.overrideCursors = self.overrideCursors or {
+    mobile="/cursors/project45-neo-cursor-mobile.cursor",
+    crouching="/cursors/project45-neo-cursor-crouching.cursor",
+    stationary="/cursors/project45-neo-cursor-stationary.cursor",
+    walking="/cursors/project45-neo-cursor-walking.cursor"
+  }
+
   -- separate cock time and reload time
   -- self.reloadTime = self.reloadTime * 0.8
   self:updateReloadTimer(-1, true)
@@ -105,7 +112,7 @@ function Project45GunFire:init()
     crouching = self.inaccuracy * self.inaccuracyMults.crouching,
   }
 
-  activeItem.setCursor("/cursors/project45-neo-cursor-mobile.cursor")
+  activeItem.setCursor(self.overrideCursors["mobile"])
 
   -- make recoverTime a table
   if type(self.recoverTime) ~= "table" then
@@ -355,7 +362,7 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
   local movementState = self:getMovementState()
   storage.project45GunState.current.inaccuracy = self.inaccuracyValues[movementState]
   storage.project45GunState.current.recoverTime = self.recoverTime[movementState] * self.recoverMult
-  activeItem.setCursor("/cursors/project45-neo-cursor-" .. movementState .. ".cursor")
+  activeItem.setCursor(self.overrideCursors[movementState])
 
   -- Manual reload (keybind)
   if input.bindDown("aikiro42-project45", "project45-reload-keybind") and not self.weapon.isReloading then

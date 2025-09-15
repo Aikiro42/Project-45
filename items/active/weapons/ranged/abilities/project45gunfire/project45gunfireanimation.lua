@@ -187,13 +187,32 @@ function renderLaser()
     return
   end
 
+  local bezierParameters = animationConfig.animationParameter("primaryLaserBezierParameters")
   local laserLine = worldify(laserStart, laserEnd)
-  localAnimator.addDrawable({
-    line = laserLine,
-    width = laserWidth,
-    fullbright = true,
-    color = laserColor
-  }, "Player-2")
+  if bezierParameters then
+    local bezierCurve = project45util.drawBezierCurve(
+        bezierParameters.segments or 8,
+        laserLine[1],
+        laserLine[2],
+        animationConfig.animationParameter("primaryLaserBezierControlPoint", laserLine[2])
+      )
+    for _, line in ipairs(bezierCurve) do
+      localAnimator.addDrawable({
+        line = line,
+        width = laserWidth,
+        fullbright = true,
+        color = laserColor
+      }, "Player-2")
+    end
+  else
+    localAnimator.addDrawable({
+      line = laserLine,
+      width = laserWidth,
+      fullbright = true,
+      color = laserColor
+    }, "Player-2")
+  end
+
 
 end
 
@@ -244,12 +263,33 @@ function renderHitscanTrails()
     -- there is no scanline if projectiles are shot
     if projectile.origin ~= projectile.destination then
       local bulletLine = worldify(projectile.origin, projectile.destination)
-      localAnimator.addDrawable({
-        line = bulletLine,
-        width = (projectile.width or 1) * projectile.lifetime/projectile.maxLifetime,
-        fullbright = true,
-        color = projectile.color or {0, 0, 0}
-      }, "Player-1")
+      if projectile.bezierParameters then
+
+        local bezierCurve = project45util.drawBezierCurve(
+          projectile.bezierParameters.segments or 8,
+          bulletLine[1],
+          bulletLine[2],
+          projectile.bezierControlPoint or bulletLine[2]
+        )
+        
+        for _, line in ipairs(bezierCurve) do
+          
+          localAnimator.addDrawable({
+            line = line,
+            width = (projectile.width or 1) * projectile.lifetime/projectile.maxLifetime,
+            fullbright = true,
+            color = projectile.color or {0, 0, 0}
+          }, "Player-1")
+
+        end
+      else
+        localAnimator.addDrawable({
+          line = bulletLine,
+          width = (projectile.width or 1) * projectile.lifetime/projectile.maxLifetime,
+          fullbright = true,
+          color = projectile.color or {0, 0, 0}
+        }, "Player-1")
+      end
     end
   end
 end
