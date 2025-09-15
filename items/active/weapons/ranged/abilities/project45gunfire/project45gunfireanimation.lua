@@ -188,17 +188,17 @@ function renderLaser()
   end
 
   local bezierParameters = animationConfig.animationParameter("primaryLaserBezierParameters")
-  local laserLine = worldify(laserStart, laserEnd)
   if bezierParameters then
     local bezierCurve = project45util.drawBezierCurve(
         bezierParameters.segments or 8,
-        laserLine[1],
-        laserLine[2],
-        animationConfig.animationParameter("primaryLaserBezierControlPoint", laserLine[2])
+        laserStart,
+        laserEnd,
+        animationConfig.animationParameter("primaryLaserBezierControlPoint", laserEnd)
       )
     for _, line in ipairs(bezierCurve) do
+      local laserLine = worldify(line[1], line[2])
       localAnimator.addDrawable({
-        line = line,
+        line = laserLine,
         width = laserWidth,
         fullbright = true,
         color = laserColor
@@ -262,27 +262,26 @@ function renderHitscanTrails()
     -- don't calculate the bullet line when the origin is the same as the destination
     -- there is no scanline if projectiles are shot
     if projectile.origin ~= projectile.destination then
-      local bulletLine = worldify(projectile.origin, projectile.destination)
       if projectile.bezierParameters then
 
         local bezierCurve = project45util.drawBezierCurve(
           projectile.bezierParameters.segments or 8,
-          bulletLine[1],
-          bulletLine[2],
-          projectile.bezierControlPoint or bulletLine[2]
+          projectile.origin,
+          projectile.destination,
+          projectile.bezierControlPoint or projectile.destination
         )
         
         for _, line in ipairs(bezierCurve) do
-          
+          local bulletLine = worldify(line[1], line[2])
           localAnimator.addDrawable({
-            line = line,
+            line = bulletLine,
             width = (projectile.width or 1) * projectile.lifetime/projectile.maxLifetime,
             fullbright = true,
             color = projectile.color or {0, 0, 0}
           }, "Player-1")
-
         end
       else
+        local bulletLine = worldify(projectile.origin, projectile.destination)
         localAnimator.addDrawable({
           line = bulletLine,
           width = (projectile.width or 1) * projectile.lifetime/projectile.maxLifetime,
