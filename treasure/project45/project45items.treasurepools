@@ -98,7 +98,8 @@
         {"weight" : 1, "item" : "project45-cbp-malorian"},
         {"weight" : 1, "item" : "project45-utk-revolver"},
         {"weight" : 1, "item" : "project45-cop-auto9"},
-        {"weight" : 1, "item" : "project45-40k-boltgun"}
+        {"weight" : 1, "item" : "project45-40k-boltgun"},
+        {"weight" : 1, "item" : "project45-ttf-smartpistol"}
       ],
       "poolRounds" : 1,
       "allowDuplication" : false
