@@ -149,14 +149,19 @@
     "cycleTime": 0.1,
     "projectileKind": "hitscan",
     "hitscanParameters": {
-      "bezierParameters": {
+      "hitscanWidth": 2,
+      "hitscanBrightness": 0.5,
+      "hitscanFadeTime": 0.3,
+      "vfxParameters": {
+        "mode": "bezier",
         "segments": 8,
-        "controlPointRatio": 0.75
+        "controlPointRatio": 0.75,
+        "decay": 1
       },
       "smartScanParameters": {
         "dimensions": [8, 6] // 8x6 block scan centered on cursor
       }
-      ,"hitscanColor": [200,255,255]
+      ,"hitscanColor": [85,136,212]
     },
 
     // "reloadTime": 10,

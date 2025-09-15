@@ -544,12 +544,42 @@ function hitscanLib:fireHitscan(projectileType)
       local hitscanOrigin = hitscanInfo[3][1]
       local hitscanDestination = hitscanInfo[3][2]
       local bezierControlPoint
-      if self.hitscanParameters.bezierParameters then
-        local controlPointRatio = self.hitscanParameters.bezierParameters.controlPointRatio or 0.5
-        bezierControlPoint = vec2.add(
-          hitscanOrigin,
-          vec2.mul(self:aimVector(), world.magnitude(hitscanDestination, hitscanOrigin) * controlPointRatio)
-        )
+      local vfxCurve
+      local vfxDecay
+
+      if self.hitscanParameters.vfxParameters then
+        local vfxParameters = self.hitscanParameters.vfxParameters
+        if vfxParameters.mode == "bezier" or vfxParameters.mode == "bezierLightning" then
+          local controlPointRatio = vfxParameters.controlPointRatio or 0.5
+          bezierControlPoint = vec2.add(
+            hitscanOrigin,
+            vec2.mul(self:aimVector(), world.magnitude(hitscanDestination, hitscanOrigin) * controlPointRatio)
+          )
+          if vfxParameters.mode == "bezier" then
+            vfxCurve = project45util.drawBezierCurve(
+              vfxParameters.segments,
+              hitscanOrigin,
+              hitscanDestination,
+              bezierControlPoint,
+              vfxParameters.intensity
+            )
+          elseif vfxParameters.mode == "bezierLightning" then
+            vfxCurve = project45util.drawBezierLightning(
+              vfxParameters.segments,
+              hitscanOrigin,
+              hitscanDestination,
+              bezierControlPoint
+            )
+          end
+        elseif vfxParameters.mode == "lightning" then
+          vfxCurve = project45util.drawLightning(
+            vfxParameters.segments,
+            hitscanOrigin,
+            hitscanDestination,
+            vfxParameters.intensity
+          )
+        end
+        vfxDecay = vfxParameters.decay or 0.5
       end
 
       table.insert(self.projectileStack, {
@@ -559,8 +589,8 @@ function hitscanLib:fireHitscan(projectileType)
         lifetime = life,
         maxLifetime = life,
         color = self.hitscanParameters.hitscanColor,
-        bezierParameters = self.hitscanParameters.bezierParameters,
-        bezierControlPoint = bezierControlPoint
+        vfxCurve = vfxCurve,
+        vfxDecay = vfxDecay
       })
 
       if self.hitscanParameters.hitscanBrightness > 0 then
@@ -570,7 +600,9 @@ function hitscanLib:fireHitscan(projectileType)
           destination = hitscanInfo[3][2],
           lifetime = life,
           maxLifetime = life,
-          color = {255,255,255}
+          color = {255,255,255},
+          vfxCurve = vfxCurve,
+          vfxDecay = vfxDecay
         })
       end   
     end
@@ -1011,11 +1043,13 @@ function hitscanLib:updateLaser()
       (self.hitscanParameters or {}).smartScanParameters
     )
 
-    local bezierParameters = (self.hitscanParameters or {}).bezierParameters
-    if bezierParameters then
-      local bezierControlPoint = vec2.add(laser[1], vec2.mul(self:aimVector(), world.magnitude(laser[2], laser[1]) * (bezierParameters.controlPointRatio or 0.5)))
-      activeItem.setScriptedAnimationParameter("primaryLaserBezierParameters", bezierParameters)
-      activeItem.setScriptedAnimationParameter("primaryLaserBezierControlPoint", bezierControlPoint)
+    local vfxParameters = (self.hitscanParameters or {}).vfxParameters
+    if vfxParameters then
+      if vfxParameters.mode == "bezier" or vfxParameters.mode == "bezierLightning" then -- lightning does not apply to laser
+        local bezierControlPoint = vec2.add(laser[1], vec2.mul(self:aimVector(), world.magnitude(laser[2], laser[1]) * (vfxParameters.controlPointRatio or 0.5)))
+        activeItem.setScriptedAnimationParameter("primaryLaserBezierParameters", vfxParameters)
+        activeItem.setScriptedAnimationParameter("primaryLaserBezierControlPoint", bezierControlPoint)
+      end
     end
     activeItem.setScriptedAnimationParameter("primaryLaserEnabled", not self.performanceMode)
     activeItem.setScriptedAnimationParameter("primaryLaserStart", laser[1])

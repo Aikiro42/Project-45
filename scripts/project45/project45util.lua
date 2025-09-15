@@ -35,6 +35,16 @@ function project45util.truncatef(n, places)
   return math.floor(n * ten) / ten
 end
 
+function project45util.drawBezierLightning(nsegments, spoint, epoint, cpoint, intensity, tCondFunc, tCondFuncLastPoint)
+  local bezierCurve = project45util.drawBezierCurve(nsegments, spoint, epoint, cpoint, tCondFunc, tCondFuncLastPoint)
+  intensity = intensity or 0.5
+  for i = 1, #bezierCurve-1 do
+    bezierCurve[i][2] = vec2.add(bezierCurve[i][2], vec2.rotate({sb.nrand(intensity, intensity), 0}, sb.nrand(2*math.pi, 0)))
+    bezierCurve[i+1][1] = bezierCurve[i][2]
+  end
+  return bezierCurve
+end
+
 -- draws a quadratic bezier curve from spoint to epoint
 function project45util.drawBezierCurve(nsegments, spoint, epoint, cpoint, tCondFunc, tCondFuncLastPoint)
   
@@ -74,7 +84,8 @@ function project45util.drawBezierCurve(nsegments, spoint, epoint, cpoint, tCondF
 end
 
 function project45util.drawLightning(nsegments, spoint, epoint, intensity)
-  intensity = intensity or 1
+  intensity = intensity or 0.1
+  
   local lightning = {}
   local normVector = vec2.norm(vec2.sub(epoint, spoint))
   local segmentLength = world.magnitude(epoint, spoint)/nsegments
@@ -91,11 +102,13 @@ function project45util.drawLightning(nsegments, spoint, epoint, intensity)
   local currSegPos = vec2.add(spoint, segmentVector)
   local segStart = spoint -- segment start
   local segEnd  -- segment end
+  local neg = 1
   for i = 1, nsegments-1 do
-    local lightningPos = vec2.add(currSegPos, vec2.mul(normVector, segmentLength * sb.nrand(1, 0.5)))
-    segEnd = getPerpendicularPoint(lightningPos, sb.nrand(0, intensity))
+    local lightningPos = vec2.add(currSegPos, vec2.mul(normVector, segmentLength * sb.nrand(0.25, 1)))
+    segEnd = getPerpendicularPoint(lightningPos, neg * sb.nrand(intensity, 0))
     table.insert(lightning, {segStart, segEnd})
     segStart = segEnd
+    neg = neg * -1
     currSegPos = vec2.add(currSegPos, segmentVector)
   end
   table.insert(lightning, {segStart, epoint})

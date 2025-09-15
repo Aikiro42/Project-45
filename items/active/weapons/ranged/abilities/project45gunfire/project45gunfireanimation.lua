@@ -205,6 +205,7 @@ function renderLaser()
       }, "Player-2")
     end
   else
+    local laserLine = worldify(laserStart, laserEnd)
     localAnimator.addDrawable({
       line = laserLine,
       width = laserWidth,
@@ -262,20 +263,29 @@ function renderHitscanTrails()
     -- don't calculate the bullet line when the origin is the same as the destination
     -- there is no scanline if projectiles are shot
     if projectile.origin ~= projectile.destination then
-      if projectile.bezierParameters then
+      if projectile.vfxCurve then
+        for i, segment in ipairs(projectile.vfxCurve) do
 
-        local bezierCurve = project45util.drawBezierCurve(
-          projectile.bezierParameters.segments or 8,
-          projectile.origin,
-          projectile.destination,
-          projectile.bezierControlPoint or projectile.destination
-        )
-        
-        for _, line in ipairs(bezierCurve) do
-          local bulletLine = worldify(line[1], line[2])
+          -- fucking algebra
+
+          local n = #projectile.vfxCurve
+          local wmax = (projectile.width or 1)
+
+          local Tn = projectile.maxLifetime
+          local tn = projectile.lifetime
+
+          local Ti = Tn * (n - i) * util.clamp(projectile.vfxDecay or 0.5, 0, 1) / n
+          
+          local x = tn
+          local mi = wmax / (Tn - Ti)
+          local y = mi * (x - Ti)
+          
+          -- local segmentLifetime = projectile.lifetime / projectile.maxLifetime
+
+          local bulletLine = worldify(segment[1], segment[2])
           localAnimator.addDrawable({
             line = bulletLine,
-            width = (projectile.width or 1) * projectile.lifetime/projectile.maxLifetime,
+            width = math.max(0, y),
             fullbright = true,
             color = projectile.color or {0, 0, 0}
           }, "Player-1")

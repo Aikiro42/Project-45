@@ -26,9 +26,16 @@
       "hitscanParameters": {
         "hitscanColor": [210, 156, 231],
         "hitscanBrightness": 0.5,
+        "hitscanFadeTime": 0.25,
         "hitscanDamageConfig": {
           "damageSourceKind": "electric",
           "statusEffects": ["electrified"]
+        },
+        "vfxParameters": {
+          "mode": "lightning",
+          "segments": 8,
+          "intensity": 0.3,
+          "decay": 0.5
         },
         "hitscanActionOnHit": [
           {
