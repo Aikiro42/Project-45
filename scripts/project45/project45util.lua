@@ -73,6 +73,36 @@ function project45util.drawBezierCurve(nsegments, spoint, epoint, cpoint, tCondF
   
 end
 
+function project4util.drawLightning(nsegments, spoint, epoint, intensity)
+  intensity = intensity or 1
+  local lightning = {}
+  local normVector = vec2.norm(vec2.sub(epoint, spoint))
+  local segmentLength = world.magnitude(epoint, spoint)/nsegments
+  local segmentVector = vec2.mul(normVector, segmentLength)
+  
+  -- returns a point perpendicular to the given position along the line
+  local function getPerpendicularPoint(pos, height)
+    local pVector = vec2.rotate(normVector, math.pi/2)
+    local add = vec2.mul(pVector, height)
+    return vec2.add(pos, add)
+  end
+
+  -- current even segment position
+  local currSegPos = vec2.add(spoint, segmentVector)
+  local segStart = spoint -- segment start
+  local segEnd  -- segment end
+  for i = 1, nsegments-1 do
+    local lightningPos = vec2.add(currSegPos, vec2.mul(normVector, segmentLength * sb.nrand(1, 0.5)))
+    segEnd = getPerpendicularPoint(lightningPos, sb.nrand(0, intensity))
+    table.insert(lightning, {segStart, segEnd})
+    segStart = segEnd
+    currSegPos = vec2.add(currSegPos, segmentVector)
+  end
+  table.insert(lightning, {segStart, epoint})
+
+  return lightning
+end
+
 function project45util.colorText(color, text)
   if not color then return text end
   if type(color) == "table" then
