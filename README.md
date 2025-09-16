@@ -14,6 +14,10 @@
 - [ ] UI disappears on some planets (seby marx, licflagg)
 - [ ] Test Vanilla Altfire Compatibility with current iteration of gunfire mechanics
 - [ ] Enemy flares are usable in B.Y.O.S. Ships
+- [ ] Fix Pyroclast description and lore
+- [ ] Fix Smart Pistol description and lore
+- [ ] Fix Pyroclast Projectiles
+- [ ] Fix individual stat drops still dropping on planets
 - [x] Energy weapon upgrades applicable on ballistic weapons
 - [x] Essential Gun Oil causes weapon to disappear (FU incompatibility?) (Trogdude)
 - [x] The Protector uncraftable (Trogdude)
