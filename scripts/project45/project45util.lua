@@ -47,7 +47,7 @@ end
 
 -- draws a quadratic bezier curve from spoint to epoint
 function project45util.drawBezierCurve(nsegments, spoint, epoint, cpoint, tCondFunc, tCondFuncLastPoint)
-  
+  nsegments = nsegments or 8
   tCondFunc = tCondFunc or function(a, b) return false end
   
   local curve = {}

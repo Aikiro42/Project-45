@@ -1076,8 +1076,8 @@ end
 -- SECTION: ACTION FUNCTIONS
 
 -- Returns true if the weapon successfully jammed.
-function Project45GunFire:jam()
-  if project45util.diceroll(self.jamChances[storage.project45GunState.reloadRating] * (self.jamChanceMult or 1)) then
+function Project45GunFire:jam(forceJam)
+  if forceJam or project45util.diceroll(self.jamChances[storage.project45GunState.reloadRating] * (self.jamChanceMult or 1)) then
     self.passiveClass.onJam(self)
 
     self:stopFireLoop()
@@ -2177,7 +2177,10 @@ function Project45GunFire:saveGunState()
     savedProjectileIndex = storage.project45GunState.savedProjectileIndex,
     lastUsedTime = os.time(),
   }
+
   activeItem.setInstanceValue("savedGunState", gunState)
+
+  self.passiveClass.onSaveGunState(self)
 end
 
 function Project45GunFire:validateState()
@@ -2209,6 +2212,8 @@ end
 function Project45GunFire:loadGunState()
 
   local loadedGunState = self:validateState()
+
+  self.passiveClass.onLoadGunState(self)
 
   --[[
   if not loadedGunState.loadSuccess then

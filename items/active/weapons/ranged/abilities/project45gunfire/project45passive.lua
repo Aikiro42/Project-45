@@ -19,3 +19,6 @@ function Project45Passive:onReloadStart() end
 function Project45Passive:onLoadRound() end
 function Project45Passive:onReloadEnd() end
 function Project45Passive:onCrit() end
+
+function Project45Passive:onSaveGunState() end
+function Project45Passive:onLoadGunState() end
