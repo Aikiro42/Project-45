@@ -120,7 +120,8 @@ function renderSide(dt, side)
     renderChamberIndicator(
       self["gunStatus" .. side].aimPosition,
       vec2.add(ammoOffset, {0, -1}),
-      self["gunStatus" .. side].chamberState
+      self["gunStatus" .. side].chamberState,
+      self["gunInfo" .. side].chamberIndicatorSprite
     )
   end
 
@@ -249,7 +250,8 @@ function renderStockAmmoCounter(uiPosition, offset, stockAmmo)
   )
 end
 
-function renderChamberIndicator(uiPosition, offset, chamberState)
+function renderChamberIndicator(uiPosition, offset, chamberState, chamberIndicatorSprite)
+  chamberIndicatorSprite = chamberIndicatorSprite or "/scripts/project45/ui/chamber-ballistic.png"
   if not uiPosition then return end
   if not chamberState then return end
 
@@ -267,7 +269,7 @@ function renderChamberIndicator(uiPosition, offset, chamberState)
 
   offset = offset or {0, 0}
   localAnimator.addDrawable({
-    image = "/scripts/project45/ui/chamber.png:" .. chamberState,
+    image = chamberIndicatorSprite .. ":" .. chamberState,
     position = vec2.add(uiPosition, offset),
     color = {255,255,255},
     fullbright = true,

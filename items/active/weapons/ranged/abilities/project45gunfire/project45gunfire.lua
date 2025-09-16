@@ -63,6 +63,16 @@ function Project45GunFire:init()
     walking="/cursors/project45-neo-cursor-walking.cursor"
   }
 
+  -- chamber indicator
+  if not self.chamberIndicatorSprite then
+    local category = config.getParameter("project45GunModInfo", {}).category
+    if category == "energy" then
+      self.chamberIndicatorSprite = self.chamberIndicatorSprite or "/scripts/project45/ui/chamber-energy.png"
+    else
+      self.chamberIndicatorSprite = self.chamberIndicatorSprite or "/scripts/project45/ui/chamber-ballistic.png"
+    end
+  end
+
   -- separate cock time and reload time
   -- self.reloadTime = self.reloadTime * 0.8
   self:updateReloadTimer(-1, true)
@@ -446,7 +456,9 @@ function Project45GunFire:initUI()
 
     chargeTime = self.chargeTime,
     overchargeTime = self.overchargeTime,
-    perfectChargeRange = self.perfectChargeRange
+    perfectChargeRange = self.perfectChargeRange,
+
+    chamberIndicatorSprite = self.chamberIndicatorSprite
   }
 
 end
