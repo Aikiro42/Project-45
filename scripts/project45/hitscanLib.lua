@@ -578,6 +578,12 @@ function hitscanLib:fireHitscan(projectileType)
             hitscanDestination,
             vfxParameters.intensity
           )
+        elseif vfxParameters.mode == "linear" then
+          vfxCurve = project45util.drawSegmentedLine(
+            vfxParameters.segments,
+            hitscanOrigin,
+            hitscanDestination
+          )
         end
         vfxDecay = vfxParameters.decay or 0.5
       end
@@ -955,13 +961,14 @@ function hitscanLib:hitscan(isLaser, degAdd, scanLength, ignoresTerrain, punchTh
       }
     )
     
-    if #smartHitEntities > 0 then
-      punchThrough = 99
-      -- local targetedEntity = util.randomFromList(smartHitEntities)
-      local targetedEntity = smartHitEntities[1]
-      
-      if world.entityExists(targetedEntity) then
-        smartTargetPosition = world.entityPosition(targetedEntity)
+    for _, entityId in smartHitEntities do
+      if world.entityCanDamage(entity.id(), entityId)
+      and world.entityDamageTeam(entityId) ~= "ghostly"
+      then
+        if world.entityExists(entityId) then
+          smartTargetPosition = world.entityPosition(entityId)
+          punchThrough = 99
+        end
       end
     end
   end

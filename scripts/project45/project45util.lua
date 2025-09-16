@@ -35,6 +35,24 @@ function project45util.truncatef(n, places)
   return math.floor(n * ten) / ten
 end
 
+function project45util.drawSegmentedLine(nSegments, spoint, epoint)
+  nSegments = nSegments or 8
+  local line = {}
+  local normVector = vec2.norm(world.distance(epoint, spoint))
+  local segmentLength = world.magnitude(epoint, spoint)/nSegments
+  local segmentVector = vec2.mul(normVector, segmentLength)
+  
+  local prevPoint = spoint
+  local nextPoint = vec2.add(spoint, segmentVector)
+  for _=1, nSegments do
+    table.insert(line, {prevPoint, nextPoint})
+    prevPoint = nextPoint
+    nextPoint = vec2.add(nextPoint, segmentVector)
+  end
+  
+  return line
+end
+
 function project45util.drawBezierLightning(nsegments, spoint, epoint, cpoint, intensity, tCondFunc, tCondFuncLastPoint)
   local bezierCurve = project45util.drawBezierCurve(nsegments, spoint, epoint, cpoint, tCondFunc, tCondFuncLastPoint)
   intensity = intensity or 0.5
@@ -87,7 +105,7 @@ function project45util.drawLightning(nsegments, spoint, epoint, intensity)
   intensity = intensity or 0.1
   
   local lightning = {}
-  local normVector = vec2.norm(vec2.sub(epoint, spoint))
+  local normVector = vec2.norm(world.distance(epoint, spoint))
   local segmentLength = world.magnitude(epoint, spoint)/nsegments
   local segmentVector = vec2.mul(normVector, segmentLength)
   

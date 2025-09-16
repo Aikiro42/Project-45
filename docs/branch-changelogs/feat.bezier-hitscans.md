@@ -4,7 +4,7 @@
 {
   "hitscanParameters": {
       "vfxParameters": {
-        "mode": "bezier",  // "bezier", "lightning", "bezierLightning"
+        "mode": "bezier",  // "bezier", "lightning", "bezierLightning", "linear" (linear is just better-looking regular hitscans)
         "segments": 8,
         "controlPointRatio": 0.5,  // only matters if bezier
         "intensity": 1,  // only matters if lightning
