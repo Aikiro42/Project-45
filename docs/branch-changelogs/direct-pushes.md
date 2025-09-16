@@ -7,3 +7,4 @@
 # New (modders)
 - add a way for passives to act on load and save state
 - add a way for passives to force-jam a weapon
+- add a way for passives to determine the weapon's position

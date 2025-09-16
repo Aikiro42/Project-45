@@ -2087,6 +2087,18 @@ function Project45GunFire:canTrigger()
   return (self.semi and not self.triggered) or not self.semi
 end
 
+function Project45GunFire:weaponPosition(offset)
+    return vec2.add(
+    mcontroller.position(),
+    activeItem.handPosition(
+      vec2.rotate(
+        vec2.add(offset, self.weapon.weaponOffset),
+        self.weapon.relativeWeaponRotation
+      )
+    )
+  )
+end
+
 -- Returns the muzzle of the gun
 function Project45GunFire:firePosition(altOverride, addOffset)
   local muzzleOffset = self.weapon.muzzleOffset
