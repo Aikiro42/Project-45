@@ -961,7 +961,7 @@ function hitscanLib:hitscan(isLaser, degAdd, scanLength, ignoresTerrain, punchTh
       }
     )
     
-    for _, entityId in smartHitEntities do
+    for _, entityId in ipairs(smartHitEntities) do
       if world.entityCanDamage(entity.id(), entityId)
       and world.entityDamageTeam(entityId) ~= "ghostly"
       then
