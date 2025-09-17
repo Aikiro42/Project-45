@@ -11,11 +11,11 @@
 - [x] Settings menu
 
 ## Bugfixes
-- [ ] Fix Smart Pistol description and lore
-- [ ] Fix individual stat drops still dropping on planets
 - [ ] UI disappears on some planets (seby marx, licflagg)
 - [ ] Test Vanilla Altfire Compatibility with current iteration of gunfire mechanics
 - [ ] Enemy flares are usable in B.Y.O.S. Ships
+- [x] Fix Smart Pistol description and lore
+- [x] Fix individual stat drops still dropping on planets
 - [x] Fix Pyroclast description and lore
 - [x] Fix Pyroclast Projectiles
 - [x] Energy weapon upgrades applicable on ballistic weapons
