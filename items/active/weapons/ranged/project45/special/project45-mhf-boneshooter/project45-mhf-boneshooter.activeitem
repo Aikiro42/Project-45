@@ -160,6 +160,9 @@
     
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
+
+    "chamberIndicatorSprite": "/items/active/weapons/ranged/project45/special/project45-mhf-boneshooter/chamber-boneshooter.png",
+
     "baseDamageMultiplier": 1.2,
     "reloadCost": 100,
     "maxAmmo": 7,

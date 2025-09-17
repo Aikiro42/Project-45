@@ -1,5 +1,5 @@
 # New
-- Added distinct chamber indicator sprites for ballistic and energy weapons (experimental is WIP)
+- Added distinct chamber indicator sprites for ballistic, energy and experimental weapons
 - Added the Pyroclast, a weapon that deals substantial fire damage but explodes and jams when you overcharge it.
 - Added the Bullet Cutter, a barrel mod for ballistic weapons that increases multishot. Incompatible with ballistic shotguns and other certain ballistic weapons.
 

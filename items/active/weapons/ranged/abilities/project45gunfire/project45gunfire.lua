@@ -68,6 +68,8 @@ function Project45GunFire:init()
     local category = config.getParameter("project45GunModInfo", {}).category
     if category == "energy" then
       self.chamberIndicatorSprite = self.chamberIndicatorSprite or "/scripts/project45/ui/chamber-energy.png"
+    elseif category == "experimental" then
+      self.chamberIndicatorSprite = self.chamberIndicatorSprite or "/scripts/project45/ui/chamber-experimental.png"
     else
       self.chamberIndicatorSprite = self.chamberIndicatorSprite or "/scripts/project45/ui/chamber-ballistic.png"
     end

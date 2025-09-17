@@ -64,7 +64,7 @@
   },
 
   "project45GunModInfo":{
-    "category": "energy",
+    "category": "experimental",
     
     "acceptsModSlot": [
       "rail",
