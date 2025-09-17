@@ -33,7 +33,8 @@
       "underbarrel",
       "stock",
       
-      "material"
+      "material",
+      "barrel"
     ],
     "flipSlot": [
       "stock"

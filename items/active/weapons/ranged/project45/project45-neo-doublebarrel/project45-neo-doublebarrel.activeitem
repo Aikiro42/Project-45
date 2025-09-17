@@ -31,7 +31,8 @@
     "acceptsModSlot": [      
       "material",
       "magazine",
-      "choke"
+      "choke",
+      "barrel"
     ],
     "flipSlot": [
     ]

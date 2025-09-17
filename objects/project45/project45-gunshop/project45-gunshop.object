@@ -193,6 +193,9 @@
         "project45-customnockmod",  
         "project45-multinockmod",
 
+        // barrel mods
+        "project45-bulletcuttermod",
+
         // muzzle mods
         "project45-muzzlebrakemod",
         "project45-silencermod",

@@ -89,7 +89,8 @@
       "stock",
       
       "material",
-      "receiver"
+      "receiver",
+      "barrel"
     ],
     "acceptsAmmoArchetype":[
       "bullet"

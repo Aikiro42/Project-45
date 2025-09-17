@@ -62,7 +62,8 @@
       "underbarrel",
       
       "magazine",
-      "material"
+      "material",
+      "barrel"
     ],
     "acceptsAmmoArchetype":[
       "bullet"

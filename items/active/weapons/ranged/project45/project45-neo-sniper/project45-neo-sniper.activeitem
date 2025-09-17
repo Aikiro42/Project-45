@@ -62,7 +62,8 @@
       "muzzle",
       
       "magazine",
-      "material"
+      "material",
+      "barrel"
     ]
   },
 

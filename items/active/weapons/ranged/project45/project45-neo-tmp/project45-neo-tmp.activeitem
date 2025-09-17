@@ -71,7 +71,8 @@
       
       "magazine",
       "material",
-      "receiver"
+      "receiver",
+      "barrel"
     ],
     "acceptsAmmoArchetype":[
       "bullet"

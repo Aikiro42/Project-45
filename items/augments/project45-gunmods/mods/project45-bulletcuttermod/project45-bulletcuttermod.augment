@@ -1,0 +1,41 @@
+{
+  "itemName": "project45-bulletcuttermod",
+  "price": 500,
+  "rarity": "Rare",
+  "tooltipKind": "project45gunmod2",
+  "modCategory": "gunMod",
+  "category": "uniqueWeapon",
+  "itemTags": ["weapon"],
+  "tooltipFields": {
+    "subtitle": "Gun Mod",
+    "objectImage": "/items/augments/project45-gunmods/mods/project45-bulletcuttermod/project45-bulletcuttermod.png"
+  },
+  "inventoryIcon": "/items/augments/project45-gunmods/mods/project45-bulletcuttermod/project45-bulletcuttermodicon.png",
+  "description": "A barrel with an integrated laser cutter that splits bullets as they pass through.",
+  "statInfo": "Multishot +2\nSpread: 1 deg.",
+  "shortdescription": "Bullet Cutter",
+
+  "augment": {
+    "modName": "Bullet Cutter",
+    "category": "ballistic",
+    "slot": "barrel",
+    "incompatibleWeapons": [
+      "project45-neo-autocannon",
+      "project45-neo-autoshotgun",
+      "project45-neo-doublebarrel",
+      "project45-neo-sawedoff",
+      "project45-neo-shotgun"
+    ],
+    "stat": {
+      "multishot": {
+        "additive": 2
+      },
+      "spread": {
+        "rebase": 1
+      }
+    }
+  },
+
+  "scripts": ["/scripts/augments/project45-gunmod/apply.lua"],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
+}

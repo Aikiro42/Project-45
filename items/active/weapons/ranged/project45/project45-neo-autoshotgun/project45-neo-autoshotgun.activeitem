@@ -71,7 +71,8 @@
       "receiver",
       "magazine",
       "material",
-      "choke"
+      "choke",
+      "barrel"
     ]
   },
 

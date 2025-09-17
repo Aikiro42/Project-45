@@ -45,8 +45,8 @@
 - [x] Wildfire Compatibility
 
 ## Docs
-- [ ] Clarify what the Damage Scaling option does (Flynt)
 - [ ] `project45gunfire` documentation
+- [x] Clarify what the Damage Scaling option does (Flynt)
 - [x] IGD for extrinsic mod slots (Carl)
 - [x] IGD for manual reloading (Moq-Rubiaac; MadCat)
 - [x] IGD (in-game documentation) for Transponder and Supply Drops, and how to open them (Vaporwave Mrej)
@@ -77,11 +77,11 @@
 - [x] Bleed Status Effect
 
 ### Guns
-- [ ] Plasma Launcher
 - [ ] Energy Grenade Launcher
 - [ ] Ballista / harpoon gun - A heavier crossbow that launches something closer to spears or harpoons.
 - [ ] Ballistic Knife - You can swing it like a normal knife, but with the alt-fire, can launch the blade forward, if possible it can do bleed dmg.
   - out of scope?
+- [x] Plasma Launcher
 - [x] Autocannon
 - [x] Drum-fed Shotgun
 - [x] Mortar Launcher
@@ -90,7 +90,7 @@
 - [x] Sawblade Launcher
 
 ### Special Guns
-- [ ] Titanfall Smart Pistol (Orifan1)
+- [x] Titanfall Smart Pistol (Orifan1)
 - [ ] Half-life's Tau Cannon. (Trogdude)
 - [ ] Unreal Tournament's Flak Cannon. (Trogdude, AtomicBeaverCleaver)
 - [ ] Rage 2; 
@@ -107,7 +107,6 @@
 - [x] Ultrakill Coin
 
 ### Mods
-- [ ] Intrabarrel Splitter (ballistic, muzzle)
   - increases multishot
 - [ ] Pneumatic Mechanism (receiver)
   - increases projectile time to live and range
@@ -116,6 +115,7 @@
 - [ ] Rail Light (Slot: Rail) light that's always on that you can stick on a rail slot. Basically an alternative to the laser sight. - Rylasasin
 - [ ] Underbarrel Drill (omba)
 - [ ] Underbarrel Flare Launcher: No damage, fires harmless lights (omba)
+- [x] Intrabarrel Splitter (ballistic, muzzle)
 - [x] Underbarrel Chainsaw
 
 ### Ammo
