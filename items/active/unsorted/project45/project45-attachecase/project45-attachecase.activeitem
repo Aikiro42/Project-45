@@ -3,10 +3,10 @@
   "price" : 400,
   "level" : 1,
   "maxStack" : 999,
-  "rarity" : "Legendary",
+  "rarity" : "Essential",
   "category" : "mysteriousReward",
-  "description" : "A case typically carried around by Project 45 mercs. ^#eab3db;Open it to receive a gun mod.^reset;",
-  "shortdescription" : "Attache Case",
+  "description" : "A case typically carried around by Project 45 mercs. ^#eab3db;Open it to receive an SSR gun mod.^reset;",
+  "shortdescription" : "^#e2c344;Attache Case^reset;",
   "twoHanded" : false,
 
   "inventoryIcon" : "project45-attachecase.png",
@@ -29,7 +29,7 @@
   "fireOffset" : [1.0, 0.0],
 
   "treasure" : {
-    "pool" : "project45-unknowngunmod3",
+    "pool" : "project45-mods-ssr",
     "level": 1
   }
 }

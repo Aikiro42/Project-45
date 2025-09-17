@@ -130,6 +130,7 @@
         "project45-neo-powerstave",
         "project45-neo-gunfist",
         "project45-neo-sawblader",
+        "project45-neo-pyroclast",
 
         // Special
         "project45-neb-zweibrandyr",
@@ -147,8 +148,7 @@
         "project45-utk-revolver",
         "project45-40k-boltgun",
         "project45-cop-auto9",
-        "project45-ttf-smartpistol",
-        "project45-neo-pyroclast"
+        "project45-ttf-smartpistol"
 
       ],
       "mods": [

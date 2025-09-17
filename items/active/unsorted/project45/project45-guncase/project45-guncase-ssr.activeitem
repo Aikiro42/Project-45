@@ -1,0 +1,38 @@
+{
+  "itemName" : "project45-guncase-ssr",
+  "price" : 4000,
+  "level" : 1,
+  "maxStack" : 999,
+  "rarity" : "Legendary",
+  "category" : "mysteriousReward",
+  "description" : "A super-super-rare Project 45 gun case. ^#eab3db;Open it to receive an SSR weapon.^reset;",
+  "shortdescription" : "^#e2c344;SSR-type Gun Case^reset;",
+  "twoHanded" : false,
+
+  "inventoryIcon" : "project45-guncase-ssr-icon.png",
+  "tooltipFields":{
+    "objectImage": "/items/active/unsorted/project45/project45-guncase/project45-guncase-ssr.png"
+  },
+
+  "animation" : "/items/active/unsorted/project45/project45-guncase/project45-guncase.animation",
+  "animationCustom" : {
+    "animatedParts": {
+      "parts": {
+        "gun": {
+          "properties": {
+            "image": "project45-guncase-ssr-icon.png"
+          }
+        }
+      }
+    }
+  },
+  "scripts" : ["/items/active/unsorted/superrewardbag/superrewardbag.lua"],
+
+  "fireTime" : 2.0,
+  "fireOffset" : [1.0, 0.0],
+
+  "treasure" : {
+    "pool" : "project45-guns-ssr",
+    "level": 1
+  }
+}

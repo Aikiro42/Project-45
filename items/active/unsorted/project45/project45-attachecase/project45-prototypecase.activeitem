@@ -5,8 +5,8 @@
   "maxStack" : 999,
   "rarity" : "Essential",
   "category" : "mysteriousReward",
-  "description" : "A durable case that belonged to a Letheia researcher. ^#eab3db;Open it to receive a gun mod.^reset;",
-  "shortdescription" : "Prototype Case",
+  "description" : "A durable case that belonged to a Letheia researcher. ^#eab3db;Open it to receive an XSSR gun mod.^reset;",
+  "shortdescription" : "^#d93a3a;Prototype Case^reset;",
   "twoHanded" : false,
 
   "inventoryIcon" : "project45-prototypecase.png",
@@ -28,7 +28,7 @@
   "fireOffset" : [1.0, 0.0],
 
   "treasure" : {
-    "pool" : "project45-unknowngunmod4",
+    "pool" : "project45-mods-xssr",
     "level": 1
   }
 }

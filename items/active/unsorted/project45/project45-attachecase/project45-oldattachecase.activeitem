@@ -3,10 +3,10 @@
   "price" : 200,
   "level" : 1,
   "maxStack" : 999,
-  "rarity" : "Rare",
+  "rarity" : "Legendary",
   "category" : "mysteriousReward",
-  "description" : "An old case that's seen better days. ^#eab3db;Open it to receive a gun mod.^reset;",
-  "shortdescription" : "Old Attache Case",
+  "description" : "An old case that's seen better days. ^#eab3db;Open it to receive an SR gun mod.^reset;",
+  "shortdescription" : "^#d29ce7;Old Attache Case^reset;",
   "twoHanded" : false,
 
   "inventoryIcon" : "project45-oldattachecase.png",
@@ -28,7 +28,7 @@
   "fireOffset" : [1.0, 0.0],
 
   "treasure" : {
-    "pool" : "project45-unknowngunmod2",
+    "pool" : "project45-mods-sr",
     "level": 1
   }
 }

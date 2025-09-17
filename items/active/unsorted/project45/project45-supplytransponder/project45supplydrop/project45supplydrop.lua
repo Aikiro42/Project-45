@@ -73,7 +73,7 @@ function Project45SupplyDrop:triggering()
 end
 
 function Project45SupplyDrop:canPull()
-  return self.pulls > 0 or player.currency("essence") > self.pullEssenceCost
+  return player.isAdmin() or self.pulls > 0 or player.currency("essence") > self.pullEssenceCost
 end
 
 function Project45SupplyDrop:consumePull()

@@ -3,10 +3,10 @@
   "price" : 100,
   "level" : 1,
   "maxStack" : 999,
-  "rarity" : "Uncommon",
+  "rarity" : "Rare",
   "category" : "mysteriousReward",
-  "description" : "A worn Project 45 case. Still has some kinda gunk on it. ^#eab3db;Open it to receive a gun mod.^reset;",
-  "shortdescription" : "Worn Attache Case",
+  "description" : "A worn Project 45 case. Still has some kinda gunk on it. ^#eab3db;Open it to receive an R gun mod.^reset;",
+  "shortdescription" : "^#96cbe7;Worn Attache Case^reset;",
   "twoHanded" : false,
 
   "inventoryIcon" : "project45-wornattachecase.png",
@@ -28,7 +28,7 @@
   "fireOffset" : [1.0, 0.0],
 
   "treasure" : {
-    "pool" : "project45-unknowngunmod1",
+    "pool" : "project45-mods-r",
     "level": 1
   }
 }

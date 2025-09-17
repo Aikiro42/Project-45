@@ -1,0 +1,38 @@
+{
+  "itemName" : "project45-guncase-r",
+  "price" : 1000,
+  "level" : 1,
+  "maxStack" : 999,
+  "rarity" : "Rare",
+  "category" : "mysteriousReward",
+  "description" : "A rare Project 45 gun case. ^#eab3db;Open it to receive an R weapon.^reset;",
+  "shortdescription" : "^#96cbe7;R-type Gun Case^reset;",
+  "twoHanded" : false,
+
+  "inventoryIcon" : "project45-guncase-r-icon.png",
+  "tooltipFields":{
+    "objectImage": "/items/active/unsorted/project45/project45-guncase/project45-guncase-r.png"
+  },
+
+  "animation" : "/items/active/unsorted/project45/project45-guncase/project45-guncase.animation",
+  "animationCustom" : {
+    "animatedParts": {
+      "parts": {
+        "gun": {
+          "properties": {
+            "image": "project45-guncase-r-icon.png"
+          }
+        }
+      }
+    }
+  },
+  "scripts" : ["/items/active/unsorted/superrewardbag/superrewardbag.lua"],
+
+  "fireTime" : 2.0,
+  "fireOffset" : [1.0, 0.0],
+
+  "treasure" : {
+    "pool" : "project45-guns-r",
+    "level": 1
+  }
+}
