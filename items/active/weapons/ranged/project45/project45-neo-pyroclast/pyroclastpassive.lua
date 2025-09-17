@@ -4,12 +4,24 @@ require "/items/active/weapons/ranged/abilities/project45gunfire/project45passiv
 Passive = Project45Passive:new()
 
 function Passive:init()
+  self.chargeTimer = self.heat
   self.maxHeat = self.overchargeTime
+  self.ignitionDelay = 0.2
+  self.reloadDisabled = true
 end
 
 function Passive:update(dt, fireMode, shiftHeld)
 
+
   if storage.project45GunState.jamAmount <= 0 and animator.animationState("bolt") ~= "jammed" then
+    animator.stopAllSounds("cooldownHiss")
+    self.reloadDisabled = false
+    if self.ignitionDelay == 0 then
+      animator.playSound("flameIgnition")
+      self.ignitionDelay = -1
+    elseif self.ignitionDelay > 0 then
+      self.ignitionDelay = math.max(0, self.ignitionDelay - dt)
+    end
     self.flamePosition = self:weaponPosition(self.passiveParameters.flameOffset)
     activeItem.setScriptedAnimationParameter("flamePosition", self.flamePosition)
     activeItem.setScriptedAnimationParameter("renderFlame", true)
@@ -22,6 +34,8 @@ function Passive:update(dt, fireMode, shiftHeld)
   else
     animator.setLightActive("pyroclastFlame", false)
     activeItem.setScriptedAnimationParameter("renderFlame", false)
+    animator.setSoundVolume("cooldownHiss", storage.project45GunState.jamAmount / 1)
+    animator.burstParticleEmitter("ejectionPort")
   end
 
   if self.heat >= self.maxHeat then
@@ -46,6 +60,9 @@ function Passive:onJam()
     }
   )
   self.heat = 0
+  self.ignitionDelay = 0.1
+  self.reloadDisabled = true
+  animator.playSound("cooldownHiss", 1)
 end
 
 function Passive:onLoadGunState()

@@ -52,7 +52,7 @@ function update()
     local frameString = string.format("%s.%d", self.currentState, self.currentFrame)
     
     localAnimator.addDrawable({
-        image="/items/active/weapons/ranged/project45/special/project45-neb-pyroclast/project45-neb-pyroclast-flame.png:".. frameString,
+        image="/items/active/weapons/ranged/project45/project45-neo-pyroclast/project45-neo-pyroclast-flame.png:".. frameString,
         position=flamePosition,
         rotation=0,
         fullbright=true,

@@ -292,7 +292,7 @@ function hitscanLib:fireChain()
         if self.enableMuzzleCritParticles then
           animator.burstParticleEmitter("muzzleCrit")
         end
-        damageConfig.statusEffects = sb.jsonMerge(damageConfig.statusEffects, {"project45critdamaged"})
+        damageConfig.statusEffects = sb.jsonMerge(damageConfig.statusEffects or {}, {"project45critdamaged"})
         self.critFlag = false
       end
       damageConfig.timeoutGroup = "project45projectile" .. i
@@ -441,8 +441,6 @@ function hitscanLib:chainScan(scanLength, ignoresTerrain, punchThrough, scanUnti
       
       if not nextEntityId then break end
       
-      
-      
       local nextPosition = world.entityPosition(nextEntityId)
 
       chainScanLengthLimit = chainScanLengthLimit - world.magnitude(chain[#chain], nextPosition)
@@ -539,7 +537,6 @@ function hitscanLib:fireHitscan(projectileType)
     -- each bullet trail in the stack is rendered, and the lifetime is updated in this very script too
     local life = self.hitscanParameters.hitscanFadeTime or 0.5
     for _, hitscanInfo in ipairs(hitscanInfos) do
-
 
       local hitscanOrigin = hitscanInfo[3][1]
       local hitscanDestination = hitscanInfo[3][2]

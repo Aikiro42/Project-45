@@ -171,7 +171,6 @@ function Project45GunFire:init()
 
   -- grab stored data
   self:loadGunState()
-  self.passiveClass.init(self)
 
   storage.recoilProgress = storage.recoilProgress or 0 -- stance progress is stored in storage so that other abilities may recoil the gun
   -- self.reloadRatingDamage = self.reloadRatingDamageMults[storage.project45GunState.reloadRating]
@@ -287,6 +286,12 @@ function Project45GunFire:init()
   self.debugModPositions.underbarrel = config.getParameter("underbarrelOffset", {0, 0})
   self.debugModPositions.stock = config.getParameter("stockOffset", {0, 0})
 
+  -- Finally, run init of passive class
+  -- We run it this late to allow the passive to manipulate any
+  -- initially-set value.
+  -- The responsibiliy of re-evaluation and visual updates
+  -- lies in the passive's init function.
+  self.passiveClass.init(self)
   animator.playSound("init")
 
   self:initUI()
@@ -1399,6 +1404,8 @@ end
 -- can immediately begin reloading minigame
 -- will act as a trigger for the minigame if the weapon is currently being reloaded
 function Project45GunFire:ejectMag()
+
+  if self.reloadDisabled then return end
 
   if not self.weapon.isReloading and not self.weapon.currentAbility then
       if storage.project45GunState.ammo >= 0 and not self.triggered then

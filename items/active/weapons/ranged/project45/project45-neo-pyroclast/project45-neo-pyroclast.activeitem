@@ -1,33 +1,35 @@
 {
-  "itemName" : "project45-neb-pyroclast",
-  "price" : 5000,
+  "itemName" : "project45-neo-pyroclast",
+  "price" : 1000,
   "maxStack" : 1,
   "rarity" : "Essential",
-  "description" : "An SMG that fires projectiles that home in on enemies.",
-  "lore": "A group of Miniknog soldiers felt too lazy to aim, and pooled their brainpower together to develop this.",
+  "description" : "Experimental firebolt launcher with guided munitions.",
+  "lore": "Has unmatched battlefield control despite its tendency to hurt the user.",
   "shortdescription" : "Pyroclast",
   "tooltipKind" : "project45gun",
-  "gunArchetype": "smg",
+  "gunArchetype": "machineGun",
   "category" : "assaultRifle",
   "twoHanded" : true,
   "itemTags" : ["weapon","ranged","assaultrifle"],
   "level" : 1,
   "muzzleFlashColor": [253, 143, 77],
-  "inventoryIcon" : "project45-neb-pyroclast.png:idle.1",
+  "inventoryIcon" : "project45-neo-pyroclast.png:idle.1",
 
   "animationParts" : {
-    "middle" : "project45-neb-pyroclast.png",
+    "middle" : "project45-neo-pyroclast.png",
     "middleFullbright" : "",
     "charge": "",
     "chargeFullbright": "",
-    "magazine": "project45-neb-pyroclast-mag.png",
+    "magazine": "project45-neo-pyroclast-mag.png",
     "magazineFullbright": ""
   },
 
   "animationCustom": {
     "particleEmitters": {
       "ejectionPort": {
-        "particles": []
+        "particles": [
+          {"particle": "rocketbarrelpuff"}
+        ]
       },
       "magazine": {
         "particles": [
@@ -51,6 +53,10 @@
       }
     },
     "sounds": {
+      "flameIgnition": ["/sfx/objects/torch_off2.ogg"],
+      "cooldownHiss": ["/sfx/project45neosfx/chargedrone/chargedrone-03.ogg"],
+      "chargeDrone": ["/sfx/project45neosfx/chargedrone/chargedrone-03.ogg"],
+      "unjam": ["/sfx/melee/soulseeker_swing.ogg"],
       "fire" : [
         "/sfx/project45neosfx/fire/fire-energy1.ogg"
       ]
@@ -62,20 +68,15 @@
     
     "acceptsModSlot": [
       "rail",
-      "sights",
-      "muzzle",
       
       "magazine",
       "material"
-    ],
-    "acceptsAmmoArchetype": [
-      "bullet"
     ]
   },
 
   "baseOffset" : [0.625, 0.125],
   "muzzleOffset" : [1.5, 0.0625],
-  "ejectionPortOffset": [-1, 0.125],
+  "ejectionPortOffset": [-0.125, 0.625],
   "magazineOffset": [0.125, 0.5],
   
   "railOffset": [0.5, 0],
@@ -90,20 +91,21 @@
 
   "scripts" : ["/items/active/weapons/ranged/project45gunneo.lua"],
   "animationScripts": [
-    "/items/active/weapons/ranged/project45/special/project45-neb-pyroclast/project45-neo-pyroclast-animation.lua"
+    "/items/active/weapons/ranged/project45/project45-neo-pyroclast/project45-neo-pyroclast-animation.lua"
   ],
 
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
 
-    "passiveDescription": "Explodes.",
-    "passiveScript": "/items/active/weapons/ranged/project45/special/project45-neb-pyroclast/pyroclastpassive.lua",
+    "passiveDescription": "On max ovecharge: Jams.\nOn jam: Explodes, dealing 50% of health as mitigatable damage.",
+    "passiveScript": "/items/active/weapons/ranged/project45/project45-neo-pyroclast/pyroclastpassive.lua",
     "passiveParameters": {
       "flameOffset": [0.875, 0.75]
     },
 
-    "critChance": 0.75,
-    "critDamageMult": 1.1,
+    "chargeDamageMult": 2,
+    "critChance": 0.3,
+    "critDamageMult": 1.3,
     "reloadCost": 60,
     
     "maxAmmo": 40,
@@ -116,12 +118,14 @@
     "recoilMaxDeg": 7.5,
     "recoverDelay": 0.125,
 
-    "overchargeTime": 1,
+    "overchargeTime": 3,
+    "dischargeDelayTime": 1,
+    "dischargeTimeMult": 0.5,
     "resetChargeOnJam": true,
     
     "cycleTime": 0.005,
     "jamChances": [0.5, 0.01, 0, 0],
-    "screenShakeAmount": 0.1,
+    "screenShakeAmount": 0.2,
 
     /*
     "projectileKind": "projectile",
@@ -130,9 +134,19 @@
     
     "projectileKind": "hitscan",
     "hitscanParameters": {
+      "hitscanDamageConfig": {
+        "damageSourceKind" : "fire",
+        "statusEffects" : [ "burning" ]
+      },
       "smartScanParameters": {
         "dimensions": [4, 4]
       },
+      "hitscanActionOnHit": [
+        {
+          "action": "particle",
+          "specification": "smoke"
+        }
+      ],
       "hitscanWidth": 3,
       "hitscanBrightness": 0.3,
       "hitscanFadeTime": 0.3,

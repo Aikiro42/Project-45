@@ -8,5 +8,9 @@
 # New (modders)
 - add a way for passives to act on load and save state
 - add a way for passives to force-jam a weapon
+- add a crude way for passives to prevent a weapon from reloading.
 - add a way for passives to determine the weapon's position
 - add new projectiles
+
+# Changes (modders)
+- Passive init function is now called further down the main init function.
