@@ -531,17 +531,14 @@ function Project45GunFire:jammed() -- state
   self.weapon:setStance(self.stances.jammed)
 end
 
-function Project45GunFire:prepareFiringStance()
-
-  if self.stances.firing then
-    local waitTime = 0
-    if not self.weapon.allowRotate then
-      waitTime = self.stances.firing.duration or (5 * self.dt)
-    end
-    self.weapon:setStance(self.stances.firing)
-    util.wait(waitTime)
+function Project45GunFire:prepareStanceInCycle(stance)
+  if not stance then return end
+  local waitTime = 0
+  if not self.weapon.allowRotate then
+    waitTime = stance.duration or (5 * self.dt)
   end
-
+  self.weapon:setStance(stance)
+  util.wait(waitTime)
 end
 
 function Project45GunFire:firing() -- state
@@ -568,7 +565,7 @@ function Project45GunFire:firing() -- state
   self.isFiring = true
   animator.setAnimationState("gun", self.loopFiringAnimation and "firingLoop" or "firing")
 
-  self:prepareFiringStance()
+  self:prepareStanceInCycle(self.stances.firing)
 
   -- reset burst count if already max
   storage.burstCounter = (storage.burstCounter >= self.burstCount) and 0 or storage.burstCounter
@@ -658,6 +655,8 @@ end
 
 function Project45GunFire:ejecting()
 
+  self:prepareStanceInCycle(self.stances.ejecting)
+
   self.passiveClass.onEject(self)
 
   if not self.ejectCasingsWithMag then
@@ -732,6 +731,8 @@ function Project45GunFire:ejecting()
 end
 
 function Project45GunFire:feeding()
+
+  self:prepareStanceInCycle(self.stances.feeding)
 
   if storage.project45GunState.ammo > 0 then
     self.passiveClass.onFeed(self)
