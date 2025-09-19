@@ -18,6 +18,8 @@ Project45GunFire = GunFire:new()
 
 function Project45GunFire:init()
 
+  sb.logInfo(sb.printJson(storage.gunfireSwitchMarker))
+
   input = input or {}
   input.bindDown = input.bindDown or function(_, _) end
   
@@ -484,7 +486,9 @@ function Project45GunFire:updateUI()
 
     aimPosition = aimPosition,
     uiPosition = self.modSettings.renderBarsAtCursor and aimPosition or {0, 0},
-    reloadTimer = self.weapon.reloadTimer
+    reloadTimer = self.weapon.reloadTimer,
+
+    gunfireSwitchMarker = storage.gunfireSwitchMarker
   })
 
   --[[

@@ -644,7 +644,7 @@ function hitscanLib:fireHitscan(projectileType)
       }
     }
 
-    for i, a in ipairs(self.hitscanParameters.hitscanActionOnHit) do
+    for i, a in ipairs(self.hitscanParameters.hitscanActionOnHit or {}) do
       table.insert(hitscanActionsOnReap, a)
     end
 

@@ -116,23 +116,35 @@ function renderSide(dt, side)
     side
   )
 
+  local chamberIndicatorOffset = ammoOffset
+  local chamberIndicatorRendered = not performanceMode
   if not performanceMode then
+    chamberIndicatorOffset = vec2.add(ammoOffset, {0, -1})
     renderChamberIndicator(
       self["gunStatus" .. side].aimPosition,
-      vec2.add(ammoOffset, {0, -1}),
+      chamberIndicatorOffset,
       self["gunStatus" .. side].chamberState,
       self["gunInfo" .. side].chamberIndicatorSprite
     )
   end
-
-  renderChargeBar(
+ 
+  local chargeBarOffset = vec2.add(chamberIndicatorOffset, {0, chamberIndicatorRendered and -0.75 or -1})
+  local chargeBarRendered = renderChargeBar(
     self["gunStatus" .. side].aimPosition,
-    vec2.add(ammoOffset, {0, performanceMode and -1 or -1.75}),
+    chargeBarOffset,
     self["gunInfo" .. side].chargeTime,
     self["gunInfo" .. side].overchargeTime,
     self["gunInfo" .. side].perfectChargeRange,
     self["gunStatus" .. side].chargeTimer
   )
+
+  local gunfireSwitchMarkerOffset = vec2.add(chargeBarRendered and chargeBarOffset or chamberIndicatorOffset, {0, -0.6})
+  renderGunfireSwitchMarker(
+    self["gunStatus" .. side].aimPosition,
+    gunfireSwitchMarkerOffset,
+    self["gunStatus" .. side].gunfireSwitchMarker
+  )
+
 
   if isReloading then
     if not (self["gunInfo" .. side].modSettings or {}).performanceMode then
@@ -163,6 +175,19 @@ end
 function wieldsProject45Weapon(side)
   local tags = side == "L" and set.new(player.primaryHandItemTags() or {}) or set.new(player.altHandItemTags() or {})
   return tags.project45
+end
+
+function renderGunfireSwitchMarker(uiPosition, offset, marker)
+  if not uiPosition then return end
+  if not marker then return end
+  renderText(
+    vec2.add(uiPosition, offset or {0, 0}),
+    marker,
+    0.625,
+    true,
+    {0,255,0},
+    -0.5
+  )
 end
 
 function renderAmmoCounter(uiPosition, offset, reloadRating, ammo, isReloading, side)
@@ -422,12 +447,12 @@ function renderJamBar(uiPosition, offset, jamAmount)
 end
 
 function renderChargeBar(uiPosition, offset, chargeTime, overchargeTime, perfectChargeRange, chargeTimer)
-  if not uiPosition then return end
-  if not chargeTimer then return end
-  if chargeTimer <= 0 then return end
+  if not uiPosition then return false end
+  if not chargeTimer then return false end
+  if chargeTimer <= 0 then return false end
   chargeTime = chargeTime or 0
   overchargeTime = overchargeTime or 0
-  if chargeTime + overchargeTime <= 0 then return end
+  if chargeTime + overchargeTime <= 0 then return false end
   perfectChargeRange = perfectChargeRange or {-1, -1}
 
   local fadeMult = 32
@@ -510,6 +535,7 @@ function renderChargeBar(uiPosition, offset, chargeTime, overchargeTime, perfect
     }, "Overlay")
   end
 
+  return true
   
 end
 
