@@ -1,0 +1,57 @@
+{
+  "itemName": "project45-fanhammermod",
+  "price": 400,
+  "rarity": "Rare",
+  "tooltipKind": "project45gunmod2",
+  "modCategory": "gunMod",
+  "category": "uniqueWeapon",
+  "itemTags": ["weapon"],
+  "tooltipFields": {
+    "subtitle": "Gun Mod",
+    "objectImage": "/items/augments/project45-gunmods/mods/project45-fanhammermod/project45-fanhammermod.png"
+  },
+  "inventoryIcon": "/items/augments/project45-gunmods/mods/project45-fanhammermod/project45-fanhammermodicon.png",
+  "description": "Revolver hammer with an ergonomic elongated thumbpiece that allows full-auto firing.",
+  "technicalInfo": "Manual-feed weapons auto-feed.\nCharge weapons automatically fire when fully charged.",
+  "statInfo": "Trigger time: 0.1s",
+  "shortdescription": "Fan Hammer",
+
+  "augment": {
+    "modName": "Fan Hammer",
+    "category": "ballistic",
+    "slot": "hammer",
+    "incompatibleWeapons": [
+      
+    ],
+    "gun": {
+      "primaryAbility": {
+        "semi": {
+          "operation": "replace",
+          "value": false
+        },
+        "manualFeed": {
+          "operation": "replace",
+          "value": false
+        },
+        "autoFireAfterCharge": {
+          "operation": "replace",
+          "value": true
+        }
+      }
+    },
+    "stat": {
+      "fireTime": {
+        "rebaseMult": 0.5
+      },
+      "cycleTime": {
+        "rebaseMult": 0.5
+      },
+      "fireTimeGroup": {
+        "additive": 0.01
+      }
+    }
+  },
+
+  "scripts": ["/scripts/augments/project45-gunmod/apply.lua"],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
+}
