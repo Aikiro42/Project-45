@@ -1234,7 +1234,7 @@ function Project45GunFire:fireProjectile(projectileType, projectileParameters, i
     {}) -- make a copy of the projectile parameters
   
   if not params.speed then
-    params.speed = 0
+    params.speed = self.projectileKind == "summoned" and 0 or 60
   end
 
   params.power = self:damagePerShot()
