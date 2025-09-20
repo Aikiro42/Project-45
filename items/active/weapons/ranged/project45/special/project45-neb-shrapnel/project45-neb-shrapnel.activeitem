@@ -1,0 +1,302 @@
+{
+  "itemName" : "project45-neb-shrapnel",
+  "price" : 500,
+  "maxStack" : 1,
+  "rarity" : "Essential",
+  "description" : "A hi-power revolver that packs quite a punch.",
+  "lore": "Fires bullets made out of ^#f4988c;raiizy^reset;-^#d29ce7;nebulox^reset; alloy.",
+  "shortdescription" : "^#fdd14d;Shrapnel^reset;",
+  "isUnique": true,
+  "tooltipKind" : "project45gun",
+  "gunArchetype": "revolver",
+  "category" : "pistol",
+  "twoHanded" : true,
+  "itemTags" : ["weapon","ranged","pistol"],
+  "level" : 1,
+  "muzzleFlashColor": [255, 255, 200],
+  "inventoryIcon" : "project45-neb-shrapnel-icon.png",
+
+  "animationParts" : {
+    "middle" : "project45-neb-shrapnel.png",
+    "middleFullbright" : "",
+    "charge": "",
+    "chargeFullbright": "",
+    "magazine": "project45-neb-shrapnel-mag.png",
+    "magazineFullbright": "",
+    "muzzleFlash": "/items/active/weapons/ranged/project45-muzzleflash.png"
+  },
+
+  "project45GunModInfo": {
+    "category": "ballistic",
+    "compatibleMods": [
+      "project45-speedloadermod"
+    ],
+    "allowsConversion": [
+      "hitscan",
+      "beam",
+      "summoned"
+    ],
+    "acceptsModSlot": [
+      "stock",
+      "magazine",
+      "material",
+      "barrel"
+    ],
+    "acceptsAmmoArchetype": [
+      "bullet"
+    ],
+    "flipSlot": [
+      "stock"
+    ]
+  },
+
+  "animationCustom": {
+    "particleEmitters": {
+      "ejectionPort": {
+        "particles": [
+          {"particle": "project45bulletcasesmall"}
+        ]
+      },
+      "magazine": {
+        "particles": [
+          {"particle": "project45shrapnelmag"}
+        ]
+      }
+    },
+
+    "sounds": {
+      "ejectMag": [ "/sfx/project45neosfx/boltpull/boltpull-generic1.ogg" ],
+      "boltPush": [ ],
+      "boltPull": ["/sfx/project45neosfx/click/click-03.ogg"],
+      "fire" : ["/sfx/project45neosfx/special/shrapnel/shrapnel_fire1.ogg"],
+      "reloadEnd" : ["/sfx/project45neosfx/loadmag/loadmag-revolver1.ogg"],
+      "loadRound": ["/sfx/project45neosfx/loadround/loadround-revolver1.ogg"],
+      "goodReload": [ ],
+      "ejectCasing": [
+        "/sfx/project45neosfx/ejectcasing/ejectcasing-brass1.ogg",
+        "/sfx/project45neosfx/ejectcasing/ejectcasing-brass2.ogg",
+        "/sfx/project45neosfx/ejectcasing/ejectcasing-brass3.ogg",
+        "/sfx/project45neosfx/ejectcasing/ejectcasing-brass4.ogg",
+        "/sfx/project45neosfx/ejectcasing/ejectcasing-brass5.ogg"
+      ]
+    },
+    "animatedParts": {
+      "parts":{
+        "middle":{
+          "partStates":{
+            "gun":{
+              "fired": {
+                "properties": {
+                  "image": "<partImage>:firing.1"
+                }
+              }
+            }
+          }
+        },
+        "charge":{
+          "partStates":{
+            "charge":{
+              "off": {
+                "properties": {
+                  "image": "<partImage>:charging.1"
+                }
+              }
+            }
+          }
+        }
+      },
+      "stateTypes": {
+        "charge":{
+          "states":{
+            "charging":{
+              "frames": 2
+            }
+          }
+        },
+        "gun": {
+          "states":{
+            "open": {
+              "frames": 1
+            },
+            "firing": {
+              "frames": 1,
+              "transition": "fired"
+            },
+            "fired": {
+              "frames": 1
+            }
+          }
+        }
+      }
+    }
+  },
+
+  // "baseOffset" : [0.75, 0.125],
+  "baseOffset": [0.25, -0.5],
+  "muzzleOffset" : [1.25, 0.625],
+  "ejectionPortOffset": [-0.25, 0.5],
+  "magazineOffset": [0, 0],
+
+  "stockOffset": [-1.25, 0],
+
+  "debugPointColors": {
+    "rail": "red",
+    "sights": "orange",
+    "underbarrel": "green",
+    "stock": "magenta"
+  },
+
+  "scripts" : ["/items/active/weapons/ranged/project45gunneo.lua"],
+    
+  "primaryAbilityType": "project45gunfire",
+  "primaryAbility": {
+    "baseDamageMultiplier": 1.5,
+    "critChance": 0.4,
+    "critDamageMult": 1.55,
+    "maxAmmo": 5,
+    "bulletsPerReload": 5,
+    "inaccuracy": 1,
+    "spread": 0,
+    "semi": true,
+    "fireTime": 0.01,
+    "cycleTime": 0.05,
+    "cockTime": 0.1,
+    "projectileKind": "projectile",
+    "projectileType": "project45frangiblebullet",
+    "reloadTime": 0.75,
+
+    "manualFeed": false,
+    // "internalMag": true,
+    // "loadRoundsThroughBolt": true,
+    "ejectCasingsWithMag": true,
+    "breakAction": true,
+    
+    "recoilAmount": 5, // amount of recoil per shot, in degrees; arm and weapon will rotate by half of this
+    "recoilMaxDeg": 5, // the most the arm and weapon will rotate, in degrees.
+    "recoverDelay": 0,
+    "recoverTime": 0.1, // time it takes to recover aim completely, in seconds
+    "screenShakeAmount": 0.8,
+    // "reloadTime": 10,
+
+    "muzzleProjectiles": [
+      {
+        "type": "project45_muzzleshockwavesmall",
+        "parameters": {
+          "speed": -2.5
+        },
+        "firePerShot": true
+      }
+    ],
+
+    "laser":{
+      "enabled": false
+    },
+  
+    "stances":{
+      "aimStance": {
+        "frontArmFrame": "run.3",
+        "backArmFrame": "run.5",
+        "twoHanded": true
+      },
+      ///*
+      "ejecting": {
+        "frontArmFrame": "run.3",
+        "backArmFrame": "run.3",
+        "twoHanded": true,
+        "duration": 0.01
+      },
+      "feeding": {
+        "frontArmFrame": "run.3",
+        "backArmFrame": "swim.1",
+        "twoHanded": true,
+        "duration": 0.01
+      },
+      //*/
+
+      "ejectmag" : {
+        "armRotation" : -45,
+        "weaponRotation" : 45,
+        "twoHanded" : false,
+        "allowRotate" : false,
+        "allowFlip" : false
+      },
+      "empty": {
+        "twoHanded": false
+      },
+
+      "reloading" : {
+        "lock": true,
+        "armRotation" : 45,
+        "weaponRotation" : 0,
+        "weaponAngularVelocity": 3600,
+        "twoHanded" : false,
+        "allowRotate" : false,
+        "aimAngle": 0,
+        "allowFlip" : false,
+        
+        // "weaponOffset" : [0.25, 0.575],
+        "frontArmFrame" : "rotation"
+        // "backArmFrame" : "jump.3"
+      },
+
+      "reloaded" : {
+        "armRotation" : 45,
+        "weaponRotation" : 45,
+        "twoHanded" : false,
+        "allowRotate" : false,
+        "allowFlip" : false,
+        "frontArmFrame" : "rotation"
+      },
+      "loadRound": {
+        "disabled": true
+      },
+      "boltPull": {
+        "disabled": true,
+        "twoHanded": false
+      },
+      "boltPush": {
+        "disabled": true,
+        "twoHanded": false
+      },
+      "jammed": {
+        "twoHanded": false
+      },
+      "unjam": {
+        "armRotation": -45,
+        "weaponRotation": -5,
+        "frontArmFrame": "rotation",
+        "twoHanded": false      
+      }
+    }
+  },
+  "altAbilityType": "project45gunfireswitch",
+  "altAbility": {
+    "modes": [
+      {
+        "burstCount": 8,
+        "maxAmmo": 5,
+        "projectileKind": "hitscan",
+        "recoilAmount": 1,
+        "cycleTime": 0.8,
+        "hitscanParameters": {
+          "hitscanWidth": 2,
+          "hitscanBrightness": 0.5,
+          "hitscanFadeTime": 0.3,
+          "vfxParameters": {
+            "mode": "bezier",
+            "segments": 8,
+            "controlPointRatio": 0.75,
+            "decay": 1
+          },
+          "smartScanParameters": {
+            "radius": 3
+          }
+          ,"hitscanColor": [226,195,68]
+        }
+
+      }
+    ]
+  },
+
+  "builder" : "/items/buildscripts/buildproject45neoneo.lua"
+}
