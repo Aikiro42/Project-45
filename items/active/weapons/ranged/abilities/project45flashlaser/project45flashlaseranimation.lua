@@ -1,6 +1,7 @@
 require "/scripts/vec2.lua"
 require "/scripts/util.lua"
 require "/scripts/poly.lua"
+require "/scripts/project45/project45util.lua"
 
 flashLaser_oldUpdate = update or function() end
 
@@ -153,6 +154,10 @@ function renderLaser()
 -- that allows `localAnimator.addDrawable()`
 -- to render it correctly
 function worldify(pos1, pos2)
+
+  return project45util.worldify(pos1, pos2)
+
+  --[[
     
     local playerPos = activeItemAnimation.ownerPosition()
     local worldLength = world.size()[1]
@@ -185,4 +190,7 @@ function worldify(pos1, pos2)
     pos2 = vec2.add(pos1, distance)
 
     return {pos1, pos2}
+
+  --]]
+  
 end
