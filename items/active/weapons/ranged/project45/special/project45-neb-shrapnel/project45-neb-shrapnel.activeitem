@@ -277,7 +277,7 @@
         "maxAmmo": 5,
         "projectileKind": "hitscan",
         "recoilAmount": 1,
-        "cycleTime": 0.8,
+        "cycleTime": 0.08,
         "hitscanParameters": {
           "hitscanWidth": 2,
           "hitscanBrightness": 0.5,
@@ -289,9 +289,13 @@
             "decay": 1
           },
           "smartScanParameters": {
-            "radius": 3
+            "radius": 1
           }
           ,"hitscanColor": [226,195,68]
+        },
+        
+        "laser": {
+          "enabled": true
         }
 
       }
