@@ -126,10 +126,18 @@
     "screenShakeAmount": 0.1,
     "projectileKind": "projectile",
     "projectileType": "project45smartbullet",
+    "hitscanParameters": {
+      "vfxParameters": {
+        "mode": "bezier",
+        "controlPointRatio": 0.8
+      }
+    },
     "laser":{
       "enabled": true,
       "color": [255, 0, 255],
-      "renderUntilCursor": true
+      "renderUntilCursor": true,
+      "offset": [-0.25, 0.75],
+      "alwaysZeroed": true
     },
 
     "stances":{
