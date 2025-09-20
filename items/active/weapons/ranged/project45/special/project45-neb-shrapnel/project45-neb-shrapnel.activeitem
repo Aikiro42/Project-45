@@ -273,9 +273,11 @@
   "altAbility": {
     "modes": [
       {
-        "burstCount": 5,
+        "burstCount": 8,
         "maxAmmo": 5,
         "projectileKind": "hitscan",
+        "recoilAmount": 1,
+        "cycleTime": 0.8,
         "hitscanParameters": {
           "hitscanWidth": 2,
           "hitscanBrightness": 0.5,
@@ -287,9 +289,9 @@
             "decay": 1
           },
           "smartScanParameters": {
-            "dimensions": [3, 3] // 8x6 block scan centered on cursor
+            "radius": 3
           }
-          ,"hitscanColor": [247,190,121]
+          ,"hitscanColor": [226,195,68]
         }
 
       }
