@@ -1,0 +1,64 @@
+{
+  "itemName": "project45-subsonicammomod",
+  "price": 100,
+  "rarity": "uncommon",
+  "tooltipKind": "project45gunmod2",
+  "modCategory": "ammoMod",
+  "category": "uniqueWeapon",
+  "itemTags": ["weapon"],
+  "tooltipFields": {
+    "subtitle": "Ammo Mod",
+    "objectImage": "/items/augments/project45-gunmods/ammo/project45-subsonicammomod/project45-subsonicammomod.png"
+  },
+  "inventoryIcon": "/items/augments/project45-gunmods/ammo/project45-subsonicammomod/project45-subsonicammomodicon.png",
+  "description": "Low-pressure rounds that require manual feeding to cycle. Increases damage and decreases recoil.",
+  "technicalInfo": "Weapons manual-feed.",
+  "statInfo": "?",
+  "shortdescription": "Subsonic Ammo",
+
+  "augment": {
+    "modName": "Subsonic Ammo",
+    "category": "ballistic",
+    "conversion": "projectile",
+    "slot": "ammoType",
+    "ammo": {
+      "archetype": "bullet",
+      "projectileType": "project45stdsubsonicbullet"
+    },
+    "gun": {
+      "primaryAbility": {
+        "semi": {
+          "operation": "replace",
+          "value": true
+        },
+        "manualFeed": {
+          "operation": "replace",
+          "value": true
+        }
+      }
+    },
+    "stat": {
+      "burstCount": {
+        "rebase": 1
+      },
+      "baseDamage": {
+        "multiplicative": -0.1
+      },
+      "recoilAmount": {
+        "rebaseMult": 0.7
+      },
+      "critChance": {
+        "rebaseMult": 2
+      },
+      "critDamage": {
+        "rebaseMult": 2
+      },
+      "jamChanceMult": {
+        "rebaseMult": 0.5
+      }
+    }
+  },
+
+  "scripts": ["/scripts/augments/project45-gunmod/apply.lua"],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
+}
