@@ -10,6 +10,8 @@ function Weapon:init()
   self.recoilAmount = 0
   self.stanceProgress = 1
 
+  -- self.weaponRotationCenter = {0, 0}
+  
   self.relativeWeaponRotation = 0
   self.relativeArmRotation = 0
 
@@ -24,6 +26,8 @@ function Weapon:init()
 
   self.oldWeaponOffset = self.weaponOffset
   self.newWeaponOffset = self.weaponOffset
+  self.oldWeaponRotationCenter = {0, 0}
+  self.newWeaponRotationCenter = {0, 0}
 
 end
 
@@ -47,6 +51,20 @@ function Weapon:update(dt, fireMode, shiftHeld)
       interp[self.stanceInterpolationMethod](self.stanceProgress, self.oldWeaponOffset[1], self.newWeaponOffset[1]),
       interp[self.stanceInterpolationMethod](self.stanceProgress, self.oldWeaponOffset[2], self.newWeaponOffset[2])
     }
+
+    self.relativeWeaponRotationCenter = {
+      interp[self.stanceInterpolationMethod](self.stanceProgress, self.oldWeaponRotationCenter[1], self.newWeaponRotationCenter[1]),
+      interp[self.stanceInterpolationMethod](self.stanceProgress, self.oldWeaponRotationCenter[2], self.newWeaponRotationCenter[2])
+    }
+
+    local weaponPosition = vec2.add(
+      mcontroller.position(),
+      activeItem.handPosition(
+        self.weaponOffset
+      )
+    )
+
+    world.debugPoint(vec2.add(weaponPosition, self.relativeWeaponRotationCenter), "blue")
 
   end
   
@@ -123,6 +141,7 @@ function Weapon:setStance(stance)
 
   self.newWeaponRotation = util.toRadians(stance.weaponRotation or 0)
   self.newWeaponOffset = stance.weaponOffset or {0, 0}
+  self.newWeaponRotationCenter = stance.weaponRotationCenter or {0, 0}
   self.newArmRotation = util.toRadians(stance.armRotation or 0)
 
   self.stanceInterpolationMethod = stance.interpolationMethod or "sin"
@@ -130,13 +149,13 @@ function Weapon:setStance(stance)
   -- snap if was rotating
   self.oldWeaponRotation = snapWeapon and self.newWeaponRotation or self.relativeWeaponRotation
   self.oldWeaponOffset = snapWeapon and self.newWeaponOffset or self.weaponOffset
+  self.oldWeaponRotationCenter = snapWeapon and self.newWeaponRotationCenter or self.relativeWeaponRotationCenter
   self.oldArmRotation = snapArm and self.newArmRotation or self.relativeArmRotation
   
   self.stance = stance
   self.stanceTransitionSpeedMult = stance.transitionSpeedMult or 4
   self.weaponOffset = self.oldWeaponOffset
 
-  self.relativeWeaponRotationCenter = stance.weaponRotationCenter or {0, 0}
   
   self.armAngularVelocity = util.toRadians(stance.armAngularVelocity or 0)
   self.weaponAngularVelocity = util.toRadians(stance.weaponAngularVelocity or 0)
