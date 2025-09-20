@@ -1,5 +1,6 @@
 require "/scripts/util.lua"
 require "/items/active/weapons/project45neoweapon.lua"
+require "/items/active/weapons/ranged/abilities/project45gunfire/project45gunfire.lua"
 -- require "/items/active/weapons/ranged/gunfire.lua"
 
 Project45GunFireSwitch = WeaponAbility:new()
@@ -14,6 +15,8 @@ function Project45GunFireSwitch:init()
     end
   end
 
+  self.origConfig = {}
+
   -- initialize mode setting
   self.modeIndex = 0
   self.modes[0] = {}
@@ -22,7 +25,7 @@ function Project45GunFireSwitch:init()
 end
 
 function Project45GunFireSwitch:update(dt, fireMode, shiftHeld)
-
+  
   WeaponAbility.update(self, dt, fireMode, shiftHeld)
 
   if self.fireMode ~= (self.activatingFireMode or self.abilitySlot) then
@@ -31,10 +34,10 @@ function Project45GunFireSwitch:update(dt, fireMode, shiftHeld)
 
   if self.fireMode == "alt" and not self.triggered then
     -- triggered; switch modes
-    animator.playSound("click")
+    animator.playSound("switchMode")
     self.modeIndex = (self.modeIndex + 1) % (#self.modes + 1)
     if self.modeIndex ~= 0 then
-      self:switch(self.modes[self.modeIndex])      
+      self:switch(self.modes[self.modeIndex])
     else
       self:switch()
     end
@@ -43,30 +46,79 @@ function Project45GunFireSwitch:update(dt, fireMode, shiftHeld)
 
 end
 
-
 function Project45GunFireSwitch:switch(altConfig)
-  if not altConfig then
-    util.mergeTable(self.weapon.abilities[self.abilityIndex], self.modes[0])
-    for _, nilParam in ipairs(self.nilParams) do
-      self.weapon.abilities[self.abilityIndex][nilParam] = nil
-    end
-    return
+
+  -- reset functions
+  for _, f in ipairs({
+    "fireProjectile",
+    "firePosition",
+    "muzzlePosition",
+    "aimVector",
+  }) do
+      self:setParameter(f, Project45GunFire[f])
   end
+  self.weapon.damageSource = Weapon.damageSource
   
-  for param, _ in pairs(altConfig) do
-    if self.modes[0][param] == nil then
-      local val = self.weapon.abilities[self.abilityIndex][param]
-      if val == nil then
-        table.insert(self.nilParams, param)  
-      elseif type(val) == "table" then
-        self.modes[0][param] = sb.jsonMerge({}, val)
-      else
-        self.modes[0][param] = val
-      end
+  -- clear projectile stack
+  activeItem.setScriptedAnimationParameter("projectileStack", {})
+  activeItem.setScriptedAnimationParameter("primaryLaserEnabled", false) 
+
+  -- get ammo percent before change
+  local ammoPercent = storage.project45GunState.ammo / self:getParameter("maxAmmo")
+
+  -- apply changes
+  if not altConfig then
+    self:resetConfig()
+    storage.gunfireSwitchMarker = ""
+  else
+
+    for param, newVal in pairs(altConfig) do
+      self:setParameter(param, newVal)
+    end
+
+    -- set alt marker
+    if self.modeLabels[self.modeIndex] then
+      storage.gunfireSwitchMarker = self.modeLabels[self.modeIndex]
+    else
+      -- FIXME: limited to 26 discernible modes
+      storage.gunfireSwitchMarker = string.char(64 + (self.modeIndex % 26))
+    end
+
+  end
+
+  -- reset ammo
+  storage.project45GunState.ammo = math.floor(ammoPercent * self:getParameter("maxAmmo"))
+
+  self.weapon.abilities[self.abilityIndex]:init()
+
+end
+
+function Project45GunFireSwitch:setParameter(param, val)
+  if not self.origConfig[param] then
+    if not self.weapon.abilities[self.abilityIndex][param] then
+      table.insert(self.nilParams, param)
+    else
+      self.origConfig[param] = self.weapon.abilities[self.abilityIndex][param]
     end
   end
-  util.mergeTable(self.weapon.abilities[self.abilityIndex], altConfig)
-  -- self.weapon.forceReset = true
+  self.weapon.abilities[self.abilityIndex][param] = val
+end
+
+function Project45GunFireSwitch:getParameter(param, getOriginal)
+  if getOriginal then -- return original value of param
+    return self.origConfig[param]
+  else -- return current value of param
+    return self.weapon.abilities[self.abilityIndex][param]
+  end
+end
+
+function Project45GunFireSwitch:resetConfig()
+  for param, origVal in pairs(self.origConfig) do
+    self.weapon.abilities[self.abilityIndex][param] = origVal
+  end
+  for _, nilParam in ipairs(self.nilParams) do
+    self.weapon.abilities[self.abilityIndex][nilParam] = nil
+  end
 end
 
 function Project45GunFireSwitch:uninit()

@@ -2,7 +2,7 @@
 
   "animationCustom": {
     "sounds":{
-      "click": ["/sfx/project45neosfx/click/click-03.ogg"]
+      "switchMode": ["/sfx/project45neosfx/boltpull/boltpull-generic1.ogg"]
     }
   },
 
@@ -14,6 +14,7 @@
 
       "modes": [
         // autofire; can vary
+        /*
         {
           "burstCount": 1,
           "semi": true,
@@ -22,7 +23,9 @@
           "maxAmmo": 1,
           "projectileType": "project45stdgrenade"
         }
-      ]
+        */
+      ],
+      "modeLabels": []
   }
 }
   

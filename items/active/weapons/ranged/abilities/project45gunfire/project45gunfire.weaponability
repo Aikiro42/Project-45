@@ -205,6 +205,16 @@
         "statusEffects": []
       },
 
+      /*
+      // Parameters for homing hitscans.
+      // If smartScanParameters is not nullish, hitscans will home. 
+      "smartScanParameters": {
+        "radius": 3,  // query radius around cursor, takes priority over dimensions
+        "dimensions": [8, 6], // dimensions of query box centered on cursor
+        "queryOrder": "nearest"  // query order: "nearest" or "random'
+      },
+      */
+
       // if non-null, damages terrain at end of hitscan if true.
       // All fields are optional. tileDamageConfig can be an empty table and the weapon
       // will still end up dealing tile damage.
@@ -223,9 +233,12 @@
       "hitscanActionOnHit": []
 
       /*
-      
+      // VFX parameters for better-looking hitscans
       ,"vfxParameters": {
-        "mode": "bezier",  // "bezier", "lightning", "bezierLightning"
+        // "bezier", "lightning", "bezierLightning", "linear"
+        // "linear" is a segmented line
+        // if mode is bezier-esque, laser will be affected
+        "mode": "bezier",
         "segments": 8,
         "controlPointRatio": 0.5,  // only matters if bezier
         "intensity": 1,  // only matters if lightning

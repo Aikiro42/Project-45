@@ -644,7 +644,7 @@ function hitscanLib:fireHitscan(projectileType)
       }
     }
 
-    for i, a in ipairs(self.hitscanParameters.hitscanActionOnHit) do
+    for i, a in ipairs(self.hitscanParameters.hitscanActionOnHit or {}) do
       table.insert(hitscanActionsOnReap, a)
     end
 
@@ -945,16 +945,24 @@ function hitscanLib:hitscan(isLaser, degAdd, scanLength, ignoresTerrain, punchTh
   -- smart scan
   local smartTargetPosition
   if smartScanParameters then
-    -- -0.707106781187 = 1/sqrt(2)
-    local startPos = vec2.add(activeItem.ownerAimPosition(), vec2.mul(smartScanParameters.dimensions or {8, 6}, -0.707106781187))
-    local endPos = vec2.add(activeItem.ownerAimPosition(), vec2.mul(smartScanParameters.dimensions or {8, 6}, 0.707106781187))
+    local startPos, endPos
+    if smartScanParameters.radius then
+      startPos = activeItem.ownerAimPosition()
+      endPos = smartScanParameters.radius
+      world.debugLine(startPos, vec2.add(startPos, {endPos, 0}), "blue")
+    else
+      -- -0.707106781187 = 1/sqrt(2)
+      startPos = vec2.add(activeItem.ownerAimPosition(), vec2.mul(smartScanParameters.dimensions or {8, 6}, -0.707106781187))
+      endPos = vec2.add(activeItem.ownerAimPosition(), vec2.mul(smartScanParameters.dimensions or {8, 6}, 0.707106781187))
+      world.debugLine(startPos, endPos, "blue")
+    end
     local smartHitEntities = world.entityQuery(
       startPos,
       endPos,
       {
         withoutEntityId = entity.id(),
         includedTypes = {"monster", "npc", "player"},
-        order="nearest"
+        order=smartScanParameters.queryOrder or "nearest"
       }
     )
     
