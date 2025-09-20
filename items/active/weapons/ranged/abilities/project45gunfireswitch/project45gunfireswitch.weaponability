@@ -2,7 +2,7 @@
 
   "animationCustom": {
     "sounds":{
-      "click": ["/sfx/project45neosfx/boltpull/boltpull-generic1.ogg"]
+      "switchMode": ["/sfx/project45neosfx/boltpull/boltpull-generic1.ogg"]
     }
   },
 

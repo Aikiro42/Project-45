@@ -34,7 +34,7 @@ function Project45GunFireSwitch:update(dt, fireMode, shiftHeld)
 
   if self.fireMode == "alt" and not self.triggered then
     -- triggered; switch modes
-    animator.playSound("click")
+    animator.playSound("switchMode")
     self.modeIndex = (self.modeIndex + 1) % (#self.modes + 1)
     if self.modeIndex ~= 0 then
       self:switch(self.modes[self.modeIndex])
@@ -61,6 +61,7 @@ function Project45GunFireSwitch:switch(altConfig)
   
   -- clear projectile stack
   activeItem.setScriptedAnimationParameter("projectileStack", {})
+  activeItem.setScriptedAnimationParameter("primaryLaserEnabled", false) 
 
   -- get ammo percent before change
   local ammoPercent = storage.project45GunState.ammo / self:getParameter("maxAmmo")
@@ -68,9 +69,9 @@ function Project45GunFireSwitch:switch(altConfig)
   -- apply changes
   if not altConfig then
     self:resetConfig()
-    -- clear alt marker
     storage.gunfireSwitchMarker = ""
   else
+
     for param, newVal in pairs(altConfig) do
       self:setParameter(param, newVal)
     end
