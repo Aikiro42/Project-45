@@ -398,7 +398,7 @@ function hitscanLib:fireChain()
 end
 
 function hitscanLib:chainScan(scanLength, punchThrough, scanUntilCursor)
-    local firstHit = self:hitscan(true, 0, scanLength, 0, scanUntilCursor, 0, self:firePosition(), true)
+    local firstHit = self:hitscan(true, {0, 0}, false, 0, scanLength, 0, scanUntilCursor, 0, self:firePosition(), true)
     local chainScanLengthLimit = scanLength / 2
     local chain = {firstHit[1], firstHit[2]}
     local firstHitEntityIds = firstHit[3]
@@ -479,8 +479,8 @@ function hitscanLib:fireHitscan(projectileType)
     -- get damage source (line) information
     for i=1, math.min(modConfig.hitscanProjectileLimit, nProjs) do
 
-      local hitReg = self:hitscan(
-        false, nil, self.hitscanParameters.range,
+      local hitReg = self:hitscan(false, {0, 0}, false,
+        nil, self.hitscanParameters.range,
         punchThrough, self.hitscanParameters.scanUntilCursor,
         self.spread, nil, nil,
         self.hitscanParameters.smartScanParameters)
@@ -747,7 +747,7 @@ function hitscanLib:fireBeam()
     do
       self.isFiring = true
   
-      hitreg = self:hitscan(true, nil, self.beamParameters.range, punchThrough, self.beamParameters.scanUntilCursor)
+      hitreg = self:hitscan(true, {0, 0}, false, nil, self.beamParameters.range, punchThrough, self.beamParameters.scanUntilCursor)
       beamStart = hitreg[1]
       beamEnd = hitreg[2]
   
@@ -893,7 +893,7 @@ function hitscanLib:fireBeam()
     self.isFiring = false
     self.muzzleProjectileFired = false
 
-    hitreg = self:hitscan(true, nil, self.beamParameters.range, punchThrough, self.beamParameters.scanUntilCursor)
+    hitreg = self:hitscan(true, {0, 0}, false, nil, self.beamParameters.range, punchThrough, self.beamParameters.scanUntilCursor)
     beamEnd = hitreg[2]
 
     table.insert(self.projectileStack, {
@@ -925,9 +925,10 @@ end
 
 -- Utility function that scans for an entity to damage.
 -- @return {hitscan_line_origin, hitscan_line_destination, entity_id[]}
-function hitscanLib:hitscan(isLaser, degAdd, scanLength, punchThrough, scanUntilCursor, spread, hitscanLineOrigin, chain, smartScanParameters)
+function hitscanLib:hitscan(isLaser, offset, zero, degAdd, scanLength, punchThrough, scanUntilCursor, spread, hitscanLineOrigin, chain, smartScanParameters)
 
   -- initialize hitscan parameters
+  offset = offset or {0, 0}
   scanLength = scanLength or 100
   punchThrough = punchThrough or 0
 
@@ -971,14 +972,31 @@ function hitscanLib:hitscan(isLaser, degAdd, scanLength, punchThrough, scanUntil
   end
 
   -- establish origin and scan length
-  hitscanLineOrigin = hitscanLineOrigin or self:firePosition()
+  if offset == "rail" then
+    hitscanLineOrigin = self:weaponPosition(config.getParameter("railOffset", {0, 0}))
+  elseif offset == "sights" then
+    hitscanLineOrigin = self:weaponPosition(config.getParameter("sightsOffset", {0, 0}))
+  elseif offset == "underbarrel" then
+    hitscanLineOrigin = self:weaponPosition(config.getParameter("underbarrelOffset", {0, 0}))
+  end
+  
+  if type(offset) ~= "table" then
+    offset = {0, 0}
+  end
+  
+  hitscanLineOrigin = hitscanLineOrigin or self:firePosition(nil, offset)
+  
   if scanUntilCursor then
     scanLength = math.min(world.magnitude(hitscanLineOrigin, activeItem.ownerAimPosition()), scanLength)
   end
 
   -- using scan length and origin, determine hitscan endpoint
-  local hitscanLineDestination = smartTargetPosition or vec2.add(hitscanLineOrigin, vec2.mul(self:aimVector(spread or self.spread or 0, degAdd or 0), scanLength))
-  local fullHitscanLineDestination = world.lineCollision(hitscanLineOrigin, hitscanLineDestination, {"Block", "Dynamic"}) or hitscanLineDestination
+  local dest = vec2.mul(self:aimVector(spread or self.spread or 0, degAdd or 0), scanLength)
+  local hitscanLineDestination = smartTargetPosition or vec2.add(zero and self:firePosition() or hitscanLineOrigin, dest)
+  local fullHitscanLineDestination = world.lineCollision(zero and self:firePosition() or hitscanLineOrigin, hitscanLineDestination, {"Block", "Dynamic"}) or hitscanLineDestination
+  
+  -- world.debugLine(self:firePosition(), vec2.add(self:firePosition(), dest), "blue")
+  -- world.debugLine(hitscanLineOrigin, vec2.add(self:firePosition(), dest), "orange")
   -- chain: {"targeted" | "spread" | nil}
 
   -- determine hit entities
@@ -1036,6 +1054,8 @@ function hitscanLib:updateLaser()
   if not self:muzzleObstructed() then
     local laser = self:hitscan(
       true,
+      self.laser.offset or {0, 0},
+      self.laser.alwaysZeroed,
       nil,
       self.laser.range,
       nil,

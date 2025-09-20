@@ -37,6 +37,8 @@
       }
       // ,"renderUntilCursor": false // if true, laser is rendered up to player's aim position only
       // ,"alwaysActive": false
+      // ,"offset": [0, 0]  // offset from muzzle
+      // ,"alwaysZeroed": false  // whether laser will go through the center of the crosshair regardless of offset
     },
 
     /*
