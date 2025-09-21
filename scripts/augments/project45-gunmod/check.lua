@@ -3,13 +3,6 @@ require "/scripts/set.lua"
 require "/scripts/util.lua"
 require "/scripts/augments/project45-gunmod/constants.lua"
 
-function print(...)
-  sb.logInfo(...)
-end
-function json(...)
-  return sb.printJson(...)
-end
-
 Checker = {}
 
 function Checker:new(input, augmentConfig)

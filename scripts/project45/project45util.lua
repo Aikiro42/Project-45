@@ -480,11 +480,11 @@ function project45util.doOperationChecks(rootJson, checks)
   return opCheckResult
 end
 
-function print(x, format, printToChat)
+function print(x, printToChat)
   if printToChat == nil then
     printToChat = true
   end
-  local sx = project45util.sanitize(sb.printJson(x, format and 1 or nil))
+  local sx = project45util.sanitize(sb.print(x))
   sb.logInfo(sx)
   if printToChat then
     chat.addMessage(sx)

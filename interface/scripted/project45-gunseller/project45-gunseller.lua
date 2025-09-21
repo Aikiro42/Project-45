@@ -1,11 +1,3 @@
-function print(...)
-  return sb.logInfo(...)
-end
-
-function printJson(jsonValue)
-  return sb.logInfo(sb.printJson(jsonValue, 1))
-end
-
 function init()
   require "/scripts/set.lua"
   
@@ -62,7 +54,6 @@ function valueOfContents()
     end
     local itemConfig = self.cachedItems[item.name].config
     local itemCategory = item.parameters.category or itemConfig.category or "unknown"
-    print(itemCategory)
 
     -- get item cost
     local itemCost = item.parameters.price or itemConfig.price or 0

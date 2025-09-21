@@ -17,6 +17,7 @@
   - /project45-guns-ballistic
   - /project45-guns-energy
   - /project45-guns-experimental
+- add the 'print()' function to project45util
 
 # Changes (modders)
 - Passive init function is now called further down the main init function.
