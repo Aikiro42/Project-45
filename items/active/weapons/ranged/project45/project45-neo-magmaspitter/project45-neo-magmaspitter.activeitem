@@ -1,12 +1,11 @@
 {
-  "itemName" : "project45-neb-magmaspitter",
-  "price" : 5000,
+  "itemName" : "project45-neo-magmaspitter",
+  "price" : 1000,
   "maxStack" : 1,
   "rarity" : "Essential",
-  "isUnique": true,
   "description" : "A revolver that shoots magma.",
   "lore": "How the cylinder holds the magma is a mystery.",
-  "shortdescription" : "^#e15349;(!)^reset; ^#fdd14d;Magma Spitter^reset;",
+  "shortdescription" : "Magma Spitter",
   "tooltipKind" : "project45gun",
   "gunArchetype": "pistol",
   "category" : "uniqueWeapon",
@@ -14,17 +13,17 @@
   "itemTags" : ["weapon","ranged","shotgun","uniqueproject45item"],
   "level" : 1,
   "muzzleFlashColor": [255, 255, 200],
-  "inventoryIcon" : "project45-neb-magmaspitter-icon.png",
+  "inventoryIcon" : "project45-neo-magmaspitter-icon.png",
   "elementalType": "fire",
 
   "project45GunModInfo": {
-    "category": "experimental",
-    "uniqueType": "special",
+    "category": "ballistic",
+    "uniqueType": "experimental",
     "upgradeCapacity": 10
   },
 
   "animationParts" : {
-    "middle" : "project45-neb-magmaspitter.png",
+    "middle" : "project45-neo-magmaspitter.png",
     "middleFullbright" : "",
     "charge": "",
     "chargeFullbright": "",
@@ -124,6 +123,9 @@
     
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
+
+    "chamberIndicatorSprite": "/scripts/project45/ui/chamber-experimental-fire.png",
+    
     "reloadCost": 75,
     "critChance": 0.25,
     "critDamageMult": 2,

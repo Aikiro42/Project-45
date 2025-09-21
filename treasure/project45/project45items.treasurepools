@@ -76,7 +76,8 @@
         {"weight" : 1, "item" : "project45-neo-gaussrifle"},
         {"weight" : 1, "item" : "project45-neo-sawblader"},
         {"weight" : 1, "item" : "project45-neo-gunfist"},
-        {"weight" : 1, "item" : "project45-neo-pyroclast"}
+        {"weight" : 1, "item" : "project45-neo-pyroclast"},
+        {"weight" : 1, "item" : "project45-neo-magmaspitter"}
       ],
       "poolRounds" : 1,
       "allowDuplication" : false
@@ -87,7 +88,6 @@
     [0, {
       "pool" : [
         // UNIQUE
-        {"weight" : 1, "item" : "project45-neb-magmaspitter"},
         {"weight" : 1, "item" : "project45-neb-warbolter"},
         {"weight" : 1, "item" : "project45-neb-shrapnel"},
         {"weight" : 1, "item" : "project45-neb-reaper"},

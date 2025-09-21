@@ -148,6 +148,9 @@
     
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
+
+    "chamberIndicatorSprite": "/scripts/project45/ui/chamber-experimental-fire.png",
+
     "heavyWeapon": true,
     "reloadCost": 80,
     "maxAmmo": 100,

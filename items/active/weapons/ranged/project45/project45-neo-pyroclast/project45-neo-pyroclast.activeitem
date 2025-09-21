@@ -97,6 +97,8 @@
   "primaryAbilityType": "project45gunfire",
   "primaryAbility": {
 
+    "chamberIndicatorSprite": "/scripts/project45/ui/chamber-experimental-fire.png",
+
     "passiveDescription": "On max ovecharge: Jams.\nOn jam: Explodes, dealing 50% of health as mitigatable damage.",
     "passiveScript": "/items/active/weapons/ranged/project45/project45-neo-pyroclast/pyroclastpassive.lua",
     "passiveParameters": {

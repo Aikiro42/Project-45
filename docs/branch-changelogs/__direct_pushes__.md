@@ -1,5 +1,5 @@
 # New
-- Added distinct chamber indicator sprites for ballistic, energy and experimental weapons
+- Added distinct chamber indicator sprites for ballistic, energy and experimental weapons. Some weapons are also given their own chamber indicators.
 - Added the Pyroclast, a weapon that deals substantial fire damage but explodes and jams when you overcharge it.
 - Added the Bullet Cutter, a barrel mod for ballistic weapons that increases multishot. Incompatible with ballistic shotguns and other certain ballistic weapons.
 
@@ -7,6 +7,7 @@
 - Changed name of Neo-Compound Bow to 'Neo-Penobscot Bow'.
 - Improved Electric Ammo VFX
 - Improved Energy Weapon SFX
+- Demoted Magma Spitter into an SSR experimental weapon, and changed its item ID. Old Magma Spitters are marked with a red '(!)'; it is recommended you replace them with the changed Magma Spitter.
 
 # New (modders)
 - add a way for passives to act on load and save state
