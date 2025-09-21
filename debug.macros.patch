@@ -72,7 +72,6 @@
         "op": "add",
         "path": "/project45-guns-ballistic",
         "value": [
-            "/spawnitem project45-neo-accelerator",
             "/spawnitem project45-neo-amr",
             "/spawnitem project45-neo-assaultrifle",
             "/spawnitem project45-neo-autocannon",

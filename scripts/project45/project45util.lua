@@ -479,3 +479,15 @@ function project45util.doOperationChecks(rootJson, checks)
   end
   return opCheckResult
 end
+
+function print(x, format, printToChat)
+  if printToChat == nil then
+    printToChat = true
+  end
+  local sx = project45util.sanitize(sb.printJson(x, format and 1 or nil))
+  sb.logInfo(sx)
+  if printToChat then
+    chat.addMessage(sx)
+  end
+  return sx
+end
