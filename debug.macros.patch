@@ -47,18 +47,24 @@
         "op": "add",
         "path": "/project45-guns-experimental",
         "value": [
-            "/spawnitem project45-neo-accelerator",
+            "/spawnitem project45-neo-flamethrower",
+            "/spawnitem project45-neo-gunfist",
+            "/spawnitem project45-neo-powerstave",
+            "/spawnitem project45-neo-pyroclast",
+            "/spawnitem project45-neo-sawblader"
         ]
     },
     {
         "op": "add",
         "path": "/project45-guns-energy",
         "value": [
-            "/spawnitem project45-neo-flamethrower",
-            "/spawnitem project45-neo-gunfist",
-            "/spawnitem project45-neo-powerstave",
-            "/spawnitem project45-neo-pyroclast",
-            "/spawnitem project45-neo-sawblader"
+            "/spawnitem project45-neo-accelerator",
+            "/spawnitem project45-neo-beamgun",
+            "/spawnitem project45-neo-beamsplitter",
+            "/spawnitem project45-neo-covalence",
+            "/spawnitem project45-neo-cyclo",
+            "/spawnitem project45-neo-gazer",
+            "/spawnitem project45-neo-phasma"
         ]
     },
     {
