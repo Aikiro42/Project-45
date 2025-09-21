@@ -4,6 +4,7 @@
 - Added the Bullet Cutter, a barrel mod for ballistic weapons that increases multishot. Incompatible with ballistic shotguns and other certain ballistic weapons.
 
 # Changes
+- Changed name of Neo-Compound Bow to 'Neo-Penobscot Bow'.
 - Improved Electric Ammo VFX
 - Improved Energy Weapon SFX
 
