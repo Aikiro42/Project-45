@@ -171,7 +171,6 @@
     "hitscanParameters": {
       "hitscanWidth": 8,
       "hitscanBrightness": 0.3,
-      "ignoresTerrainOnFullCharge": true,
       "fullChargePunchThrough": 3
     }
     /*

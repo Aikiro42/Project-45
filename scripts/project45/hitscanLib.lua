@@ -13,13 +13,11 @@ function hitscanLib:fireChainBeam()
   self:prepareStanceInCycle(self.stances.firing)
 
   local punchThrough = self.beamParameters.punchThrough or 0
-  local ignoresTerrain = self.beamParameters.ignoresTerrain
 
   if self.chargeTime + self.overchargeTime > 0
   and self.chargeTimer >= self.chargeTime + self.overchargeTime
   then
     punchThrough = self.beamParameters.fullChargePunchThrough or punchThrough
-    ignoresTerrain = self.beamParameters.ignoresTerrainOnFullCharge or ignoresTerrain
   end
 
   self:startFireLoop()
@@ -59,7 +57,7 @@ function hitscanLib:fireChainBeam()
     self.isFiring = true
     self.ammoRechargeDelayTimer = self.ammoRechargeDelayTime
     -- TODO: make parameters dymamic
-    chainScanResults = self:chainScan(self.beamParameters.range, ignoresTerrain, punchThrough, self.beamParameters.scanUntilCursor)
+    chainScanResults = self:chainScan(self.beamParameters.range, punchThrough, self.beamParameters.scanUntilCursor)
     chain = chainScanResults[1]
     activeItem.setScriptedAnimationParameter("beamChain", chain)
     hitEntityIds = chainScanResults[2]
@@ -252,18 +250,16 @@ function hitscanLib:fireChain()
   -- TODO: make chainScan arguments dynamic
 
   local punchThrough = self.hitscanParameters.punchThrough or 0
-  local ignoresTerrain = self.hitscanParameters.ignoresTerrain
 
   if self.chargeTime + self.overchargeTime > 0
   and self.chargeTimer >= self.chargeTime + self.overchargeTime
   then
     punchThrough = self.hitscanParameters.fullChargePunchThrough or punchThrough
-    ignoresTerrain = self.hitscanParameters.ignoresTerrainOnFullCharge or ignoresTerrain
   end
 
   self.ammoRechargeDelayTimer = self.ammoRechargeDelayTime
 
-  local chainScanResults = self:chainScan(self.hitscanParameters.range, ignoresTerrain, punchThrough, self.hitscanParameters.scanUntilCursor)
+  local chainScanResults = self:chainScan(self.hitscanParameters.range, punchThrough, self.hitscanParameters.scanUntilCursor)
   local chain = chainScanResults[1]
   local hitEntityIds = chainScanResults[2]
   -- chain projectiles only fire one chain
@@ -401,8 +397,8 @@ function hitscanLib:fireChain()
 
 end
 
-function hitscanLib:chainScan(scanLength, ignoresTerrain, punchThrough, scanUntilCursor)
-    local firstHit = self:hitscan(true, 0, scanLength, ignoresTerrain, 0, scanUntilCursor, 0, self:firePosition(), true)
+function hitscanLib:chainScan(scanLength, punchThrough, scanUntilCursor)
+    local firstHit = self:hitscan(true, 0, scanLength, 0, scanUntilCursor, 0, self:firePosition(), true)
     local chainScanLengthLimit = scanLength / 2
     local chain = {firstHit[1], firstHit[2]}
     local firstHitEntityIds = firstHit[3]
@@ -432,7 +428,7 @@ function hitscanLib:chainScan(scanLength, ignoresTerrain, punchThrough, scanUnti
         if not alreadyHit[candidateId]
         and world.entityCanDamage(entity.id(), candidateId)
         and world.entityDamageTeam(candidateId) ~= "ghostly"
-        and (ignoresTerrain or not world.lineCollision(chain[#chain], world.entityPosition(candidateId)))
+        and (not world.lineCollision(chain[#chain], world.entityPosition(candidateId)))
         then
           nextEntityId = candidateId
           break
@@ -469,13 +465,11 @@ function hitscanLib:fireHitscan(projectileType)
 
         
     local punchThrough = self.hitscanParameters.punchThrough or 0
-    local ignoresTerrain = self.hitscanParameters.ignoresTerrain
 
     if self.chargeTime + self.overchargeTime > 0
     and self.chargeTimer >= self.chargeTime + self.overchargeTime
     then
       punchThrough = self.hitscanParameters.fullChargePunchThrough or punchThrough
-      ignoresTerrain = self.hitscanParameters.ignoresTerrainOnFullCharge or ignoresTerrain
     end
 
     local hitscanInfos = {}
@@ -487,7 +481,7 @@ function hitscanLib:fireHitscan(projectileType)
 
       local hitReg = self:hitscan(
         false, nil, self.hitscanParameters.range,
-        ignoresTerrain, punchThrough, self.hitscanParameters.scanUntilCursor,
+        punchThrough, self.hitscanParameters.scanUntilCursor,
         self.spread, nil, nil,
         self.hitscanParameters.smartScanParameters)
 
@@ -712,13 +706,11 @@ function hitscanLib:fireBeam()
     self:prepareStanceInCycle(self.stances.firing)
     
     local punchThrough = self.beamParameters.punchThrough or 0
-    local ignoresTerrain = self.beamParameters.ignoresTerrain
 
     if self.chargeTime + self.overchargeTime > 0
     and self.chargeTimer >= self.chargeTime + self.overchargeTime
     then
       punchThrough = self.beamParameters.fullChargePunchThrough or punchThrough
-      ignoresTerrain = self.beamParameters.ignoresTerrainOnFullCharge or ignoresTerrain
     end
 
     self:startFireLoop()
@@ -755,7 +747,7 @@ function hitscanLib:fireBeam()
     do
       self.isFiring = true
   
-      hitreg = self:hitscan(true, nil, self.beamParameters.range, ignoresTerrain, punchThrough, self.beamParameters.scanUntilCursor)
+      hitreg = self:hitscan(true, nil, self.beamParameters.range, punchThrough, self.beamParameters.scanUntilCursor)
       beamStart = hitreg[1]
       beamEnd = hitreg[2]
   
@@ -901,7 +893,7 @@ function hitscanLib:fireBeam()
     self.isFiring = false
     self.muzzleProjectileFired = false
 
-    hitreg = self:hitscan(true, nil, self.beamParameters.range, ignoresTerrain, punchThrough, self.beamParameters.scanUntilCursor)
+    hitreg = self:hitscan(true, nil, self.beamParameters.range, punchThrough, self.beamParameters.scanUntilCursor)
     beamEnd = hitreg[2]
 
     table.insert(self.projectileStack, {
@@ -933,7 +925,7 @@ end
 
 -- Utility function that scans for an entity to damage.
 -- @return {hitscan_line_origin, hitscan_line_destination, entity_id[]}
-function hitscanLib:hitscan(isLaser, degAdd, scanLength, ignoresTerrain, punchThrough, scanUntilCursor, spread, hitscanLineOrigin, chain, smartScanParameters)
+function hitscanLib:hitscan(isLaser, degAdd, scanLength, punchThrough, scanUntilCursor, spread, hitscanLineOrigin, chain, smartScanParameters)
 
   -- initialize hitscan parameters
   scanLength = scanLength or 100
@@ -986,7 +978,7 @@ function hitscanLib:hitscan(isLaser, degAdd, scanLength, ignoresTerrain, punchTh
 
   -- using scan length and origin, determine hitscan endpoint
   local hitscanLineDestination = smartTargetPosition or vec2.add(hitscanLineOrigin, vec2.mul(self:aimVector(spread or self.spread or 0, degAdd or 0), scanLength))
-  local fullHitscanLineDestination = not ignoresTerrain and world.lineCollision(hitscanLineOrigin, hitscanLineDestination, {"Block", "Dynamic"}) or hitscanLineDestination
+  local fullHitscanLineDestination = world.lineCollision(hitscanLineOrigin, hitscanLineDestination, {"Block", "Dynamic"}) or hitscanLineDestination
   -- chain: {"targeted" | "spread" | nil}
 
   -- determine hit entities
@@ -1046,7 +1038,6 @@ function hitscanLib:updateLaser()
       true,
       nil,
       self.laser.range,
-      nil,
       nil,
       self.laser.renderUntilCursor,
       0,

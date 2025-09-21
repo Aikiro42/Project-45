@@ -188,10 +188,7 @@
       
       "punchThrough": 0,  // number of entities to register before stopping the scan
       "fullChargePunchThrough": 0,
-      
-      // "ignoresTerrain": false,  // pierces through terrain if true
-      // "ignoresTerrainOnFullCharge": false,
-      
+            
       "hitscanFadeTime": 0.1, // how long the hitscan line fades away
       "hitscanWidth": 1, // visual width of hitscan line in pixels
       // "hitscanColor": [255,255,200], // color of hitscan projectile; also dictates muzzle flash color
@@ -262,11 +259,7 @@
       // if the beam passes through less entities it keeps going until it hits terrain
       "punchThrough": 3,
       "fullChargePunchThrough": 3,
-      
-      // whether the beam fires through terrain or not
-      // "ignoresTerrain": false,
-      // "ignoresTerrainOnFullCharge": false,
-      
+            
       "beamWidth": 5, // width of beam - beams that are too wide can look weird
       "beamInnerWidth": 3, // width of inner white beam - just for vfx
       "beamJitter": 1, // how much the beam width changes as it's shot - just a vfx

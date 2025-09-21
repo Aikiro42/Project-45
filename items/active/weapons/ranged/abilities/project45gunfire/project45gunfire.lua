@@ -550,8 +550,6 @@ function Project45GunFire:firing() -- state
 
   if self:jam() then return end
 
-  -- don't fire when muzzle collides with terrain
-  -- if not self.projectileParameters.hitscanIgnoresTerrain and world.lineTileCollision(mcontroller.position(), self:firePosition()) then
   if self:muzzleObstructed() then
     self:stopFireLoop()
     self.isFiring = false
