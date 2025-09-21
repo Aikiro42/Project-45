@@ -21,61 +21,94 @@
     },
     {
         "op": "add",
-        "path": "/project45-spawnguns",
+        "path": "/project45-guns-unique",
         "value": [
-            "/spawnitem project45-neo-pipegun",
-            "/spawnitem project45-neo-bow",
-            "/spawnitem project45-neo-pistol",
-            "/spawnitem project45-neo-revolver",
-            "/spawnitem project45-neo-deagle",
-            "/spawnitem project45-neo-smg",
-            "/spawnitem project45-neo-smartgun",
-            "/spawnitem project45-neo-sawedoff",
-            "/spawnitem project45-neo-shotgun",
-            "/spawnitem project45-neo-doublebarrel",
-            "/spawnitem project45-neo-leveraction",
-            "/spawnitem project45-neo-handmaderifle",
-            "/spawnitem project45-neo-assaultrifle",
-            "/spawnitem project45-neo-combatrifle",
-            "/spawnitem project45-neo-carbine",
-            "/spawnitem project45-neo-servicerifle",
-            "/spawnitem project45-neo-huntingrifle",
-            "/spawnitem project45-neo-sniper",
-            "/spawnitem project45-neo-machinegun",
-            "/spawnitem project45-neo-amr",
-            "/spawnitem project45-neo-grenadelauncher",
-            "/spawnitem project45-neo-rocketlauncher",
-            "/spawnitem project45-neo-minigun",
-            "/spawnitem project45-neo-flamethrower",
-            "/spawnitem project45-neo-gaussrifle",
-            "/spawnitem project45-neo-cyclo",
-            "/spawnitem project45-neo-accelerator",
-            "/spawnitem project45-neo-beamsplitter",
-            "/spawnitem project45-neo-beamgun",
-            "/spawnitem project45-neo-gazer",
-            "/spawnitem project45-neo-powerstave",
-            "/spawnitem project45-neb-zweibrandyr",
-            "/spawnitem project45-neb-warbolter",
-            "/spawnitem project45-neb-magmaspitter",
-            "/spawnitem project45-msx-marcohmg",
-            "/spawnitem project45-scz-spacecowboy",
+            "/spawnitem project45-40k-boltgun",
+            "/spawnitem project45-cbp-malorian",
+            "/spawnitem project45-cop-auto9",
             "/spawnitem project45-gov-fleetlyfading",
+            // "/spawnitem project45-gov-scarlet",
+            "/spawnitem project45-hlo-maxx",
+            "/spawnitem project45-mhf-boneshooter",
+            "/spawnitem project45-msx-marcohmg",
+            "/spawnitem project45-neb-reaper",
+            "/spawnitem project45-neb-shrapnel",
+            "/spawnitem project45-neb-warbolter",
+            "/spawnitem project45-neb-zweibrandyr",
+            "/spawnitem project45-pkf-typhon",
+            "/spawnitem project45-scz-spacecowboy",
             "/spawnitem project45-tcf-kineticarbiter",
-            "/spawnitem project45-pkf-typhon"
+            "/spawnitem project45-ttf-smartpistol",
+            "/spawnitem project45-utk-revolver",
+            "/spawnitem project45-wfm-kuvabramma"
         ]
     },
     {
         "op": "add",
-        "path": "/project45-punchy",
+        "path": "/project45-guns-experimental",
+        "value": [
+            "/spawnitem project45-neo-accelerator",
+        ]
+    },
+    {
+        "op": "add",
+        "path": "/project45-guns-energy",
+        "value": [
+            "/spawnitem project45-neo-flamethrower",
+            "/spawnitem project45-neo-gunfist",
+            "/spawnitem project45-neo-powerstave",
+            "/spawnitem project45-neo-pyroclast",
+            "/spawnitem project45-neo-sawblader"
+        ]
+    },
+    {
+        "op": "add",
+        "path": "/project45-guns-ballistic",
+        "value": [
+            "/spawnitem project45-neo-accelerator",
+            "/spawnitem project45-neo-amr",
+            "/spawnitem project45-neo-assaultrifle",
+            "/spawnitem project45-neo-autocannon",
+            "/spawnitem project45-neo-autoshotgun",
+            "/spawnitem project45-neo-bow",
+            "/spawnitem project45-neo-carbine",
+            "/spawnitem project45-neo-combatrifle",
+            "/spawnitem project45-neo-crossbow",
+            "/spawnitem project45-neo-deagle",
+            "/spawnitem project45-neo-doublebarrel",
+            "/spawnitem project45-neo-gaussrifle",
+            "/spawnitem project45-neo-grenadelauncher",
+            "/spawnitem project45-neo-handmaderifle",
+            "/spawnitem project45-neo-handmortar",
+            "/spawnitem project45-neo-huntingrifle",
+            "/spawnitem project45-neo-leveraction",
+            "/spawnitem project45-neo-machinegun",
+            "/spawnitem project45-neo-minigun",
+            "/spawnitem project45-neo-pipegun",
+            "/spawnitem project45-neo-pistol",
+            "/spawnitem project45-neo-revolver",
+            "/spawnitem project45-neo-rocketlauncher",
+            "/spawnitem project45-neo-sawedoff",
+            "/spawnitem project45-neo-servicerifle",
+            "/spawnitem project45-neo-shotgun",
+            "/spawnitem project45-neo-smartgun",
+            "/spawnitem project45-neo-smg",
+            "/spawnitem project45-neo-tmp",
+            "/spawnitem project45-neo-wristgun"
+        ]
+    },
+    {
+        "op": "add",
+        "path": "/punchy",
         "value": [
             "/spawnmonster punchy"
         ]
     },
     {
         "op": "add",
-        "path": "/project45-spawnenemy",
+        "path": "/enemy",
         "value": [
-            "/spawnnpc human arenafighter"
+            "/spawnnpc human arenafighter 7"
         ]
     },
     {

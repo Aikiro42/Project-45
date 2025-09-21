@@ -12,6 +12,11 @@
 - add a crude way for passives to prevent a weapon from reloading.
 - add a way for passives to determine the weapon's position
 - add new projectiles
+- add new macros:
+  - /project45-guns-unique
+  - /project45-guns-ballistic
+  - /project45-guns-energy
+  - /project45-guns-experimental
 
 # Changes (modders)
 - Passive init function is now called further down the main init function.

@@ -42,10 +42,12 @@
 - <span style="color: #00FF00">project45-neo-cyclo</span>: Cyclo^reset;
 - <span style="color: #00FF00">project45-neo-gazer</span>: Gazer^reset;
 - <span style="color: #00FF00">project45-neo-powerstave</span>: Powerstave^reset;
+- <span style="color: #00FF00">project45-neo-phasma</span>: Phasma^reset;
 
 # <span style="color: #f5ec86">Experimental Guns</span>
 - <span style="color: #00FF00">project45-neo-flamethrower</span>: Flamethrower^reset;
 - <span style="color: #00FF00">project45-neo-gunfist</span>: F.I.S.T. \"Guntlet\"^reset;
+- <span style="color: #00FF00">project45-neo-pyroclast</span>: Pyroclast^reset;
 
 # <span style="color: #e35a53">Unique Guns</span>
 - <span style="color: #00FF00">project45-40k-boltgun</span>: ^#fdd14d;Boltgun^reset;^reset;
@@ -58,6 +60,8 @@
 #
 - <span style="color: #00FF00">project45-neb-magmaspitter</span>: ^#fdd14d;Magma Spitter^reset;^reset;
 - <span style="color: #00FF00">project45-neb-warbolter</span>: ^#fdd14d;Warbolter^reset;^reset;
+- <span style="color: #00FF00">project45-neb-shrapnel</span>: ^#fdd14d;Zweibrandyr^reset;^reset;
+- <span style="color: #00FF00">project45-neb-reaper</span>: ^#fdd14d;Zweibrandyr^reset;^reset;
 - <span style="color: #00FF00">project45-neb-zweibrandyr</span>: ^#fdd14d;Zweibrandyr^reset;^reset;
 - <span style="color: #00FF00">project45-neo-protector</span>: The Protector^reset;
 - <span style="color: #00FF00">project45-pkf-typhon</span>: ^#fdd14d;Typhon P45^reset;^reset;
@@ -66,6 +70,7 @@
 #
 - <span style="color: #00FF00">project45-utk-revolver</span>: ^#fdd14d;Ultrakill Revolver^reset;^reset;
 - <span style="color: #00FF00">project45-wfm-kuvabramma</span>: ^#fdd14d;Kuva Bramma^reset;^reset;
+- <span style="color: #00FF00">project45-ttf-smartpistol</span>: ^#fdd14d;Smart Pistol^reset;^reset;
 
 # <span style="color: #f5ec86">Unique Mods</span>
 - <span style="color: #00FF00">project45-armadillomod</span>: A.R.M.D.L.O. Shield^reset;

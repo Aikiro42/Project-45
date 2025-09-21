@@ -18,8 +18,6 @@ Project45GunFire = GunFire:new()
 
 function Project45GunFire:init()
 
-  sb.logInfo(sb.printJson(storage.gunfireSwitchMarker))
-
   input = input or {}
   input.bindDown = input.bindDown or function(_, _) end
   
