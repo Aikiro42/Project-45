@@ -70,7 +70,8 @@
       "fire" : ["/sfx/project45neosfx/fire/fire-energy2.ogg"],
       "boltPull": [],
       "boltPush": ["/sfx/project45neosfx/click/click-03.ogg"],
-      "chargeDrone": ["/sfx/project45neosfx/chargedrone/chargedrone-03.ogg"]
+      "chargeDrone": ["/sfx/project45neosfx/chargedrone/chargedrone-03.ogg"],
+      "hollow": ["/sfx/project45neosfx/hollow/hollow-02.ogg"]
     },
 
     "animatedParts": {

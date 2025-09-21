@@ -4,7 +4,8 @@
 - Added the Bullet Cutter, a barrel mod for ballistic weapons that increases multishot. Incompatible with ballistic shotguns and other certain ballistic weapons.
 
 # Changes
-- Improve Electric Ammo VFX
+- Improved Electric Ammo VFX
+- Improved Energy Weapon SFX
 
 # New (modders)
 - add a way for passives to act on load and save state

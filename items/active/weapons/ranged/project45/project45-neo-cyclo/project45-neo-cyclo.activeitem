@@ -41,10 +41,10 @@
       "fireStart": ["/sfx/gun/mech_beamsniper_fire1.ogg"],
       "fireLoop": ["/sfx/gun/mech_beamdrill_loop.ogg"],
       "fireEnd": ["/sfx/gun/mech_beamdrill_winddown.ogg"],
-      "hollow": [ ],
       // "chargeWhine" : ["/sfx/project45neosfx/chargewhine/chargewhine-02.ogg"],
       // "chargeDrone" : ["/sfx/project45neosfx/chargedrone/chargedrone-05.ogg"]
-      "chargeWhine" : ["/sfx/project45neosfx/chargewhine/chargewhine-02.ogg"]
+      "chargeWhine" : ["/sfx/project45neosfx/chargewhine/chargewhine-02.ogg"],
+      "hollow": ["/sfx/project45neosfx/hollow/hollow-02.ogg"]
     }
   },
 

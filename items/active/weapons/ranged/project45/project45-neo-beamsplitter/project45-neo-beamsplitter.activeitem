@@ -47,7 +47,7 @@
 
     "sounds": {
       "fire" : ["/sfx/project45neosfx/fire/fire-energy1.ogg"],
-      "hollow": []
+      "hollow": ["/sfx/project45neosfx/hollow/hollow-02.ogg"]
     }
   },
 

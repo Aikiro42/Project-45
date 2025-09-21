@@ -67,9 +67,10 @@
     },
 
     "sounds": {
-      "chargeWhine" : ["/sfx/project45neosfx/chargedrone/chargedrone-02.ogg"],
+      "chargeWhine" : ["/sfx/project45neosfx/chargewhine/chargewhine-01.ogg"],
       "chargeDrone" : ["/sfx/project45neosfx/chargedrone/chargedrone-03.ogg"],  
-      "fire" : ["/sfx/project45neosfx/fire/fire-energy1.ogg"]
+      "fire" : ["/sfx/project45neosfx/fire/fire-energy6.ogg"],
+      "hollow": ["/sfx/project45neosfx/hollow/hollow-02.ogg"]
     },
     "animatedParts": {
       "parts":{
@@ -125,7 +126,7 @@
     "critDamageMult": 2,
     "maxAmmo": 15,
     "bulletsPerReload": 15,
-    
+
     "semi": true,
     "manualFeed": false,
     "slamFire": false,
