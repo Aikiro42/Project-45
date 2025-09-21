@@ -10,7 +10,7 @@ local modConfig = root.assetJson("/configs/project45/project45_general.config")
 function hitscanLib:fireChainBeam()
   if world.lineTileCollision(mcontroller.position(), self:firePosition()) then return end
   
-  self:prepareStanceInCycle(stances.firing)
+  self:prepareStanceInCycle(self.stances.firing)
 
   local punchThrough = self.beamParameters.punchThrough or 0
   local ignoresTerrain = self.beamParameters.ignoresTerrain
@@ -709,7 +709,7 @@ function hitscanLib:fireBeam()
 
     if world.lineTileCollision(mcontroller.position(), self:firePosition()) then return end
     
-    self:prepareStanceInCycle(stances.firing)
+    self:prepareStanceInCycle(self.stances.firing)
     
     local punchThrough = self.beamParameters.punchThrough or 0
     local ignoresTerrain = self.beamParameters.ignoresTerrain
