@@ -56,3 +56,67 @@ function formulas.damagePerShot(
   return baseDamage * mults + adds
 
 end
+
+-- @param reloadTime: float (seconds) - duration of reload
+-- @param goodTime: float (seconds) - duration of good reload timeframe
+-- @param perfectTime: float (seconds) - duration of perfect reload timeframe
+-- @param reloadOffsetRatio: float (%) - where along reload time center of timeframe is; 0.5 (center) by default
+-- @param perfectReloadRatio: float (%) - where along reload time center of perfect timeframe is; 0.5 (center by default)
+function formulas.quickReloadTimeframe(reloadTime, goodTime, perfectTime, reloadOffsetRatio,  perfectOffsetRatio)
+  
+  goodTime = math.min(reloadTime, goodTime)
+  perfectTime = math.min(goodTime, perfectTime)
+  reloadOffsetRatio = util.clamp(reloadOffsetRatio or 0.5, 0, 1)
+
+  -- [     |++++++|!!!|++++++|   ]
+  --       a      b   c      d
+  local a, b, c, d
+
+  local goodTimeRatio = goodTime / reloadTime
+  a = util.clamp(reloadOffsetRatio - (goodTimeRatio / 2), 0, 1)
+  d = util.clamp(reloadOffsetRatio + (goodTimeRatio / 2), 0, 1)
+  if d - a < goodTimeRatio then
+    if a == 0 then
+      d = goodTimeRatio
+    elseif d == 1 then
+      a = 1 - goodTimeRatio
+    end
+  end
+
+  perfectOffsetRatio = util.clamp(perfectOffsetRatio or reloadOffsetRatio, a, d)
+  local perfectTimeRatio = perfectTime / reloadTime
+  b = util.clamp(perfectOffsetRatio - (perfectTimeRatio / 2), a, d)
+  c = util.clamp(perfectOffsetRatio + (perfectTimeRatio / 2), a, d)
+  if c - b < perfectTimeRatio then
+    if b == a then
+      c = util.clamp(a + perfectTimeRatio, a, d)
+    elseif d == c then
+      b = util.clamp(d - perfectTimeRatio, a, d)
+    end
+  end
+
+  return {a, b, c, d}
+
+end
+
+-- Inverse of formulas.quickReloadTimeframe().
+-- @return {reloadTime:float, goodTime:float, perfectTime:float, reloadOffsetRatio:float, perfectOffsetRatio:float}
+function formulas.quickReloadParameters(reloadTime, quickReloadTimeframe)
+
+  local goodReloadRatio = quickReloadTimeframe[4] - quickReloadTimeframe[1]
+  local perfectReloadRatio = quickReloadTimeframe[3] - quickReloadTimeframe[2]
+
+  local reloadOffsetRatio = util.clamp( quickReloadTimeframe[1] + goodReloadRatio / 2, 0, 1)
+  local perfectOffsetRatio = util.clamp( quickReloadTimeframe[2] + perfectReloadRatio / 2, 0, 1)
+  local goodTime = reloadTime * goodReloadRatio
+  local perfectTime = reloadTime * perfectReloadRatio
+
+  return {
+    reloadTime = reloadTime,
+    goodTime = goodTime,
+    perfectTime = perfectTime,
+    reloadOffsetRatio = reloadOffsetRatio,
+    perfectOffsetRatio = perfectOffsetRatio
+  }
+
+end

@@ -165,11 +165,22 @@ function Project45GunFire:init()
   -- validate quick reload timeframe;
   -- perfect reload must be within bounds of good reload
   -- and quick reload time frame array must be an increasing sequence
-  if self.quickReloadTimeframe[4] < self.quickReloadTimeframe[1] then
-    self.quickReloadTimeframe[4], self.quickReloadTimeframe[1] = self.quickReloadTimeframe[1], self.quickReloadTimeframe[4]
+  if self.quickReloadParameters then
+    self.quickReloadTimeframe = formulas.quickReloadTimeframe(
+      self.reloadTime,
+      self.quickReloadParameters.goodTime,
+      self.quickReloadParameters.perfectTime,
+      self.quickReloadParameters.reloadOffsetRatio,
+      self.quickReloadParameters.perfectOffsetRatio
+    )
+  else
+    self.quickReloadTimeframe = self.quickReloadTimeframe or {0.5, 0.6, 0.7, 0.8}
+    if self.quickReloadTimeframe[4] < self.quickReloadTimeframe[1] then
+      self.quickReloadTimeframe[4], self.quickReloadTimeframe[1] = self.quickReloadTimeframe[1], self.quickReloadTimeframe[4]
+    end
+    self.quickReloadTimeframe[2] = math.max(self.quickReloadTimeframe[1], self.quickReloadTimeframe[2])
+    self.quickReloadTimeframe[3] = math.min(self.quickReloadTimeframe[3], self.quickReloadTimeframe[4])
   end
-  self.quickReloadTimeframe[2] = math.max(self.quickReloadTimeframe[1], self.quickReloadTimeframe[2])
-  self.quickReloadTimeframe[3] = math.min(self.quickReloadTimeframe[3], self.quickReloadTimeframe[4])
 
   -- grab stored data
   self:loadGunState()

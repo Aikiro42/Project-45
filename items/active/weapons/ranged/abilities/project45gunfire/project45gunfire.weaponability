@@ -306,6 +306,15 @@
     "bulletsPerReload": 15, // bullets reloaded every active reload; set to negative number to reload all bullets
     "ammoPerShot": 1,
     "ammoConsumeChance": 1,
+    
+    /*
+    "quickReloadParameters": {
+      "goodTime": 0.3,
+      "perfectTime": 0.1,
+      "reloadOffsetRatio": 0.65,
+      "perfectReloadOffsetRatio": 0.65
+    }
+    */
     "quickReloadTimeframe": [0.5, 0.6, 0.7, 0.8], // [ good% [ perfect% ] good% ] of <reloadTime>
 
     // Reload and Magazine Config
