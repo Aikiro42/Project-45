@@ -243,7 +243,9 @@
     "spread": 1,
 
     "laser": {
-      "enabled": true
+      "enabled": true,
+      "offset": [-0.25, -0.5],
+      "alwaysZeroed": true
     }
 
   },
