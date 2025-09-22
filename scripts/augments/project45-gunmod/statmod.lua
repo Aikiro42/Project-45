@@ -4,6 +4,7 @@ require "/scripts/util.lua"
 require "/scripts/vec2.lua"
 require "/scripts/set.lua"
 require "/scripts/project45/project45util.lua"
+require "/items/active/weapons/ranged/abilities/project45gunfire/formulas.lua"
 
 function apply(output, augment)
 
@@ -201,6 +202,10 @@ function apply(output, augment)
     local newMidCockDelay = statModifiers.reloadTimeGroup.base.midCockDelay
     local newReloadTime = statModifiers.reloadTimeGroup.base.reloadTime
 
+    -- obtain the quick reload parameters
+    local QRParams = baseStat("quickReloadParameters", true)
+      or formulas.quickReloadParameters(newReloadTime, baseStat("quickReloadTimeframe", true) or {0.5, 0.6, 0.7, 0.8})
+
     local minReloadTime = 0.5
     local minCockTime = 0.001
 
@@ -221,11 +226,6 @@ function apply(output, augment)
     -- modify reload time and get how much the reload window should increase
     newReloadTime = math.max(minReloadTime,
       getModifiedStat(newReloadTime, reloadTimeAdd, statModifiers.reloadTimeGroup.multiplicative, true))
-    
-    -- "quickReloadTimeframe": [0.5, 0.6, 0.7, 0.8], // [ good% [ perfect% ] good% ] of <reloadTime>
-    -- TODO: modify quick reload time frame; remember that you need to know how much
-    -- the reload time has decreased to do this.
-    -- local quickReloadTimeFrame = baseStat("quickReloadTimeframe", true)
 
     -- modify cock time
     newCockTime = math.max(minCockTime,
@@ -235,6 +235,7 @@ function apply(output, augment)
 
     -- apply modded values to primary ability
     newPrimaryAbility = sb.jsonMerge(newPrimaryAbility, {
+      quickReloadParameters = QRParams,
       reloadTime = newReloadTime,
       cockTime = newCockTime,
       midCockDelay = newMidCockDelay
