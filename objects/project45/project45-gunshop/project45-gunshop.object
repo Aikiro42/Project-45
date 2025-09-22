@@ -114,7 +114,6 @@
         "project45-neo-rocketlauncher",
         "project45-neo-minigun",
         "project45-neo-autocannon",
-        "project45-neo-flamethrower",
         "project45-neo-gaussrifle",
         
         // Energy Guns
@@ -127,16 +126,20 @@
         "project45-neo-gazer",
 
         // Experimental
+        "project45-neo-flamethrower",
         "project45-neo-powerstave",
         "project45-neo-gunfist",
         "project45-neo-sawblader",
         "project45-neo-pyroclast",
         "project45-neo-magmaspitter",
 
-        // Special
+        // Special (OC)
         "project45-neb-shrapnel",
         "project45-neb-reaper",
         "project45-neb-zweibrandyr",
+        
+        
+        // Special (References)
         "project45-neb-warbolter",
         "project45-msx-marcohmg",
         "project45-scz-spacecowboy",
