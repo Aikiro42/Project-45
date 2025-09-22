@@ -1,7 +1,10 @@
 {
   "projectileName" : "project45explosivebullet",
   "image" : "project45stdexplosivebullet.png",
-  "scripts": ["/projectiles/scripts/project45/project45tracer.lua"],
+  "scripts": [
+    "/projectiles/scripts/project45/project45tracer.lua",
+    "/projectiles/scripts/project45/project45arming.lua"
+  ],
   "physics" : "project45projectile",
   "animationCycle" : 0.25,
   "windupFrames": 7,
@@ -31,57 +34,22 @@
     "fullbright": true
   },
 
-  "actionOnReap": [
-    { 
-      "action" : "sound",
-      "options" : [
-        "/sfx/project45neosfx/bulletimpact/bulletimpact-generic1.ogg",
-        "/sfx/project45neosfx/bulletimpact/bulletimpact-generic2.ogg",
-        "/sfx/project45neosfx/bulletimpact/bulletimpact-generic3.ogg"
-      ]
-    },
-    /*
-    
-    {
-      "action": "config",
-      "file": "/projectiles/explosions/project45_hitexplosion/project45_hitexplosion.config"
-    },
-    
-    */
-    {
-      "action": "config",
-      "file": "/projectiles/explosions/regularexplosion/regularexplosion.config"
-    },
-    {
-      "action" : "loop",
-      "count" : 6,
-      "body" : [
-        {
-          "action" : "particle",
-          "specification" : {
-            "type" : "ember",
-            "size" : 1,
-            "color" : [255, 255, 200, 255],
-            "light" : [65, 65, 51],
-            "fullbright" : true,
-            "destructionTime" : 0.2,
-            "destructionAction" : "shrink",
-            "fade" : 0.9,
-            "initialVelocity" : [0, 5],
-            "finalVelocity" : [0, -50],
-            "approach" : [0, 30],
-            "timeToLive" : 0,
-            "layer" : "middle",
-            "variance" : {
-              "position" : [0.25, 0.25],
-              "size" : 0.5,
-              "initialVelocity" : [10, 10],
-              "timeToLive" : 0.2
-            }
-          }
-        }
-      ]
-    }
-  ]
+  "armingParameters": {
+    "armingDistance": 5,
+    "actionOnReap": [
+      {
+        "action" : "projectile",
+        "inheritDamageFactor" : 0,
+        "type" : "project45_dumbexplosion"
+      }
+    ],
+    "actionOnArmedReap": [
+      {
+        "action" : "projectile",
+        "inheritDamageFactor" : 0.3,
+        "type" : "project45_stdbulletexplosion"
+      }
+    ]
+  }
   
 }

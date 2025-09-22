@@ -11,12 +11,22 @@
     "fullbright": true,
     "width": 3
   },
-  "actionOnReap" : [
-    {
-      "action" : "config",
-      "file" : "/projectiles/explosions/project45_stdexplosion/project45_stdexplosion.config"
-    }
-  ],
+  "armingParameters": {
+    "armingDistance": 10,
+    "actionOnReap": [
+      {
+        "action" : "projectile",
+        "inheritDamageFactor" : 0,
+        "type" : "project45_dumbexplosion"
+      }
+    ],
+    "actionOnArmedReap": [
+      {
+        "action" : "config",
+        "file" : "/projectiles/explosions/project45_stdexplosion/project45_stdexplosion.config"
+      }
+    ]
+  },
   "statusEffects" : [ ],
   "emitters" : [ "tinyrocketsmoke" ],
   "flippable" : true,
@@ -28,7 +38,8 @@
 
   "scripts" : [
     "project45stdrocket.lua",
-    "/projectiles/scripts/project45/project45tracer.lua"
+    "/projectiles/scripts/project45/project45tracer.lua",
+    "/projectiles/scripts/project45/project45arming.lua"
   ],
   "maxSpeed" : 100,
   "controlForce" : 100,

@@ -1,0 +1,27 @@
+{
+  "projectileName" : "project45_dumbexplosion",
+  "image" : "/projectiles/invisibleprojectile/invisibleprojectile.png",
+  "frameNumber" : 1,
+  "speed" : 0,
+  "timeToLive": 0,
+  "damagePoly" : [ [0, 0], [0, 1], [1, 1], [1, 0] ],
+  "animationLoops" : false,
+  "flippable" : true,
+  "power": 0,
+  "damageTeam" : { "type" : "indiscriminate" },
+  "damageKind" : "default",
+  "actionOnReap": [
+    {
+      "action" : "sound",
+      "options" : [ "/sfx/tools/pickaxe_hit.ogg" ]
+    },
+    { "action": "particle", "specification": "deathfizz1left" },
+    { "action": "particle", "specification": "deathfizz1right" },
+    { "action": "particle", "specification": "deathfizz2left" },
+    { "action": "particle", "specification": "deathfizz2right" },
+    { "action": "particle", "specification": "deathfizz3left" },
+    { "action": "particle", "specification": "deathfizz3right" },
+    { "action": "particle", "specification": "deathfizz4left" },
+    { "action": "particle", "specification": "deathfizz4right" }
+  ]
+}

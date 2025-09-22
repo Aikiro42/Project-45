@@ -21,7 +21,7 @@
     "conversion": "projectile",
     "ammo": {
       "archetype": "grenade",
-      "projectileType": "clustergrenade",
+      "projectileType": "project45clustergrenade",
       "projectileParameters": {
         "bounces": 0
       }

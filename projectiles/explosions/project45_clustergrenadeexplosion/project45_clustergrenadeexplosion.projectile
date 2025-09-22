@@ -1,0 +1,54 @@
+{
+  "projectileName" : "project45_clustergrenadeexplosion",
+  "image" : "/projectiles/invisibleprojectile/invisibleprojectile.png",
+  "frameNumber" : 1,
+  "speed" : 0,
+  "timeToLive": 0,
+  "damagePoly" : [ [0, 0], [0, 1], [1, 1], [1, 0] ],
+  "animationLoops" : false,
+  "flippable" : true,
+  "power": 0,
+  "damageTeam" : { "type" : "indiscriminate" },
+  "damageKind" : "default",
+  "actionOnReap": [
+    {
+      "action" : "config",
+      "file" : "/projectiles/explosions/regularexplosion/regularexplosionuniversal.config"
+    },
+    {
+      "action" : "projectile",
+      "type" : "cluster",
+      "fuzzAngle" : 10,
+      "inheritDamageFactor" : 0.2,
+      "angleAdjust" : 35
+    },
+    {
+      "action" : "projectile",
+      "type" : "cluster",
+      "fuzzAngle" : 10,
+      "inheritDamageFactor" : 0.2,
+      "angleAdjust" : -35
+    },
+    {
+      "action" : "projectile",
+      "type" : "cluster",
+      "fuzzAngle" : 10,
+      "inheritDamageFactor" : 0.2,
+      "angleAdjust" : 1
+    },
+    {
+      "action" : "projectile",
+      "type" : "cluster",
+      "fuzzAngle" : 10,
+      "inheritDamageFactor" : 0.2,
+      "angleAdjust" : -18
+    },
+    {
+      "action" : "projectile",
+      "type" : "cluster",
+      "fuzzAngle" : 10,
+      "inheritDamageFactor" : 0.2,
+      "angleAdjust" : 18
+    }
+  ]
+}

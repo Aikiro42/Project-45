@@ -1,11 +1,15 @@
 {
-  "projectileName" : "project45stdgrenade",
+  "projectileName" : "project45clustergrenade",
   "physics" : "grenade",
-  "bounces" : 0,
-  "timeToLive" : 3,
-  "image" : "project45stdgrenade.png",
+  "bounces" : -1,
+  "timeToLive" : 0.7,
+  "image" : "project45clustergrenade.png",
   "animationCycle" : 0.5,
   "frameNumber" : 4,
+  "scripts": [
+    "/projectiles/scripts/project45/project45tracer.lua",
+    "/projectiles/scripts/project45/project45arming.lua"
+  ],
   "tracerParameters": {
     "color": [200, 200, 200, 128],
     "fullbright": false,
@@ -22,15 +26,12 @@
     ],
     "actionOnArmedReap": [
       {
-        "action" : "config",
-        "file" : "/projectiles/explosions/project45_stdexplosion/project45_stdexplosion.config"
+        "action" : "projectile",
+        "inheritDamageFactor" : 1,
+        "type" : "project45_clustergrenadeexplosion"
       }
     ]
   },
-  "scripts": [
-    "/projectiles/scripts/project45/project45tracer.lua",
-    "/projectiles/scripts/project45/project45arming.lua"
-  ],
   "power" : 50,
   "damageType" : "NoDamage",
   "damageKind" : "default"

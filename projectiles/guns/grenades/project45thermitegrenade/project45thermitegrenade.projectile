@@ -12,91 +12,27 @@
       "fullbright": false,
       "width": 4
     },
-    "scripts": ["/projectiles/scripts/project45/project45tracer.lua"],
-    "actionOnReap" : [
-      { 
-        "action" : "sound",
-        "options" : [
-          "/sfx/gun/grenadeblast_fire1.ogg",
-          "/sfx/gun/grenadeblast_fire2.ogg",
-          "/sfx/gun/grenadeblast_fire3.ogg"
-        ]
-      },
-      {
-        "action" : "config",
-        "file" : "/projectiles/explosions/project45_fireexplosion/project45_fireexplosion.config"
-      },
-      {
-        "action" : "projectile",
-        "type" : "project45_thermalflame",
-        "fuzzAngle" : 0,
-        "inheritDamageFactor" : 0.05,
-        "angleAdjust" : 35
-      },
-      {
-        "action" : "projectile",
-        "type" : "project45_thermalflame",
-        "fuzzAngle" : 0,
-        "inheritDamageFactor" : 0.05,
-        "angleAdjust" : -35
-      },
-      {
-        "action" : "projectile",
-        "type" : "project45_thermalflame",
-        "fuzzAngle" : 0,
-        "inheritDamageFactor" : 0.05,
-        "angleAdjust" : 1
-      },
-      {
-        "action" : "projectile",
-        "type" : "project45_thermalflame",
-        "fuzzAngle" : 0,
-        "inheritDamageFactor" : 0.05,
-        "angleAdjust" : -18
-      },
-      {
-        "action" : "projectile",
-        "type" : "project45_thermalflame",
-        "fuzzAngle" : 0,
-        "inheritDamageFactor" : 0.05,
-        "angleAdjust" : 18
-      },
-      {
-        "action" : "projectile",
-        "type" : "project45_thermalflame",
-        "fuzzAngle" : 0,
-        "inheritDamageFactor" : 0.05,
-        "angleAdjust" : 55
-      },
-      {
-        "action" : "projectile",
-        "type" : "project45_thermalflame",
-        "fuzzAngle" : 0,
-        "inheritDamageFactor" : 0.05,
-        "angleAdjust" : -55
-      },
-      {
-        "action" : "projectile",
-        "type" : "project45_thermalflame",
-        "fuzzAngle" : 0,
-        "inheritDamageFactor" : 0.05,
-        "angleAdjust" : -1
-      },
-      {
-        "action" : "projectile",
-        "type" : "project45_thermalflame",
-        "fuzzAngle" : 0,
-        "inheritDamageFactor" : 0.05,
-        "angleAdjust" : -65
-      },
-      {
-        "action" : "projectile",
-        "type" : "project45_thermalflame",
-        "fuzzAngle" : 0,
-        "inheritDamageFactor" : 0.05,
-        "angleAdjust" : 65
-      }
+    "scripts": [
+      "/projectiles/scripts/project45/project45tracer.lua",
+      "/projectiles/scripts/project45/project45arming.lua"
     ],
+    "armingParameters": {
+      "armingDistance": 10,
+      "actionOnReap": [
+        {
+          "action" : "projectile",
+          "inheritDamageFactor" : 0,
+          "type" : "project45_dumbexplosion"
+        }
+      ],
+      "actionOnArmedReap": [
+        {
+          "action" : "projectile",
+          "inheritDamageFactor" : 0,
+          "type" : "project45_thermitegrenadeexplosion"
+        }
+      ]
+    },
     "power" : 5.0,
     "damageKind" : "fire"
   }
