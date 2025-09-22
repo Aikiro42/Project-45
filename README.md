@@ -25,7 +25,7 @@
 
 ## Balance Changes
 - [ ] Improve ballistic shield
-- [ ] Rebalance Indiscriminate Explosions (Юрий Цеванов)
+- [ ] Rebalance ~~Indiscriminate Explosions~~ Kuva Bramma (Юрий Цеванов)
 - [x] Rebalance infinite ammo (MortemFoE) (verify fix)
 - [x] Move balance closer to early game (verify fix)
 - [x] Add cipher keys to drop tables (Mabra) (verify fix)
@@ -46,6 +46,7 @@
 
 ## Docs
 - [ ] `project45gunfire` documentation
+- [ ] Update Item Catalog
 - [x] Clarify what the Damage Scaling option does (Flynt)
 - [x] IGD for extrinsic mod slots (Carl)
 - [x] IGD for manual reloading (Moq-Rubiaac; MadCat)
@@ -61,12 +62,11 @@
 ## New Features
 
 ### General
-- [ ] Provide way to increase Stat Bonus (CursedJoys, 王源，中门封个烟)
-  - [ ] Provide way to get weapons with a set stat bonus (koyuki virus)
+- [ ] Dyeing (Notorious Penor Snipper)
 - [ ] Stat Limit Mod (joon208)
   - > Some weapon stats what player can customize, but they allow player only to add limitations, max ammo, max multishoot etc
+  - Warframe Acuity Mods
 - [ ] A station similar to G.D.K that instead changes underbarrel mods bind to shift would be really usefull for example a sniper with a bayonet - valkikot
-- [ ] Dyeing (Notorious Penor Snipper)
 - [ ] Admin Wildcard Mod Creator Station (xatreyu87)
 - [ ] Ability key reassignment (AtomicBeaverCleaver)
 - [x] Project 45 Item Crafting
@@ -75,12 +75,13 @@
 - [x] Ballistic Shield
 - [x] Manual Reload
 - [x] Bleed Status Effect
+- [x] Provide way to increase Stat Bonus (CursedJoys, 王源，中门封个烟)
+  - [x] Provide way to get weapons with a set stat bonus (koyuki virus)
+  - Ancient Gates are the way to go
 
 ### Guns
 - [ ] Energy Grenade Launcher
 - [ ] Ballista / harpoon gun - A heavier crossbow that launches something closer to spears or harpoons.
-- [ ] Ballistic Knife - You can swing it like a normal knife, but with the alt-fire, can launch the blade forward, if possible it can do bleed dmg.
-  - out of scope?
 - [x] Plasma Launcher
 - [x] Autocannon
 - [x] Drum-fed Shotgun
@@ -88,18 +89,20 @@
 - [x] Wrist blaster
 - [x] Crossbow
 - [x] Sawblade Launcher
+- [x] Ballistic Knife - You can swing it like a normal knife, but with the alt-fire, can launch the blade forward, if possible it can do bleed dmg.
+  - out of scope, better as a melee for RE: Project 42
 
 ### Special Guns
 - [x] Titanfall Smart Pistol (Orifan1)
 - [ ] Half-life's Tau Cannon. (Trogdude)
 - [ ] Unreal Tournament's Flak Cannon. (Trogdude, AtomicBeaverCleaver)
-- [ ] Rage 2; 
+- [ ] Rage 2
 
 ### Abilities:
 - [ ] Drone
   - lets a drone fly around and target nearby enemies
   - make projectile modifiable, make it able to fire hitscans
-- [ ] Underbarrel Micromissile Laundher
+- [ ] Underbarrel Micromissile Launcher
 - [x] Bayonet
 - [x] Underbarrel Chainsaw
 - [x] Melee Swipe
@@ -107,32 +110,31 @@
 - [x] Ultrakill Coin
 
 ### Mods
-  - increases multishot
+- [ ] Rail Light (Slot: Rail) light that's always on that you can stick on a rail slot. Basically an alternative to the laser sight. - Rylasasin
+- [ ] Underbarrel Drill (omba)
+- [ ] Underbarrel Flare Launcher: No damage, fires harmless lights (omba)
 - [ ] Pneumatic Mechanism (receiver)
   - increases projectile time to live and range
 - [ ] Conversion Kit (multiple slots)
   - Gun-specific; converts select guns into SMGs, etc.
-- [ ] Rail Light (Slot: Rail) light that's always on that you can stick on a rail slot. Basically an alternative to the laser sight. - Rylasasin
-- [ ] Underbarrel Drill (omba)
-- [ ] Underbarrel Flare Launcher: No damage, fires harmless lights (omba)
 - [x] Intrabarrel Splitter (ballistic, muzzle)
+  - increases multishot
 - [x] Underbarrel Chainsaw
 
 ### Ammo
-- [ ] Defense-ignoring ammo
-- [ ] Tree-cutting sawblades
-- [ ] "Volatile Erchius Rods": Explosive Gauss Rifle Ammo
-- [ ] "Slag": Flamethrower ammo that makes it fire lava blobs
-- [ ] Bouncy Saws
-  - Saws bounce around
-- [ ] Boomerang Saws
 - [ ] Astral Bullets
   - Bullets that apply a status effect that deal true DoT only when the enemy is invincible
 - [ ] Mining Beam
   - Hitscan that damages blocks
+- [ ] "Volatile Erchius Rods": Explosive Gauss Rifle Ammo
+- [ ] Defense-ignoring ammo
+- [ ] Tree-cutting sawblades
+- [ ] "Slag": Flamethrower ammo that makes it fire lava blobs
+- [ ] Bouncy Saws
+  - Saws bounce around
+- [ ] Boomerang Saws
 - [ ] Lava Rounds
   - Gravity-affected projectiles; spawns lava on projectile death
-- [ ] Volatile Erchius Rods (explosive rod ammunition for gauss rifles)
 - [ ] Flame Summons
 - [x] Weak Gravity Spell
   - Pulls enemies in and deals electric damage

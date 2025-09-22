@@ -14,18 +14,27 @@
   - Cluster Grenades
 
 # New (modders)
-- add a way for passives to act on load and save state
-- add a way for passives to force-jam a weapon
-- add a crude way for passives to prevent a weapon from reloading.
-- add a way for passives to determine the weapon's position
-- add new projectiles
-- add new macros:
+- added a way for passives to act on load and save state
+- added a way for passives to force-jam a weapon
+- added a crude way for passives to prevent a weapon from reloading.
+- added a way for passives to determine the weapon's position
+- added new projectiles
+- added new macros:
   - /project45-guns-unique
   - /project45-guns-ballistic
   - /project45-guns-energy
   - /project45-guns-experimental
-- add the 'print()' function to project45util
-- add a projectile script that causes projectiles to execute different actionOnReaps depending on whether it surpassed the arming distance or not.
+- added the 'print()' function to project45util
+- added a projectile script that causes projectiles to execute different actionOnReaps depending on whether it surpassed the arming distance or not.
+- added a new format for configuring quick reload timeframes beyond the array format, e.g.:
+```
+"quickReloadParameters": {
+  "goodTime": 0.5,  // duration of good reload timeframe in seconds, will never be longer than reload time
+  "perfectTime": 0.25,  // duration of perfect reload timeframe in seconds, will never be longer than goodTime
+  "reloadOffsetRatio": 0.5,  // where along reload time should the quick reload bar center be
+  "perfectOffsetRatio": 0.6  // where along reload time should the perfect offset ratio be
+}
+```
 
 # Changes (modders)
 - Passive init function is now called further down the main init function.
