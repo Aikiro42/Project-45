@@ -1,0 +1,21 @@
+{
+  "itemName" : "project45-trans-ez",
+  "price" : 1000,
+  "maxStack": 1,
+  "rarity" : "common",
+  "tooltipKind" : "project45gunmod",
+  "category" : "uniqueWeapon",
+  "itemTags": ["weapon"],
+  "tooltipFields":{
+    "subtitle": "Transformation Kit"
+  },
+  "inventoryIcon" : "/items/augments/project45-gunmods/transformer/project45-trans-ez/project45-trans-ez-icon.png",
+  "description" : "Transformation kit; Converts the weapon into a pistol. ^#FF9000;Apply on Project 45 weapons to transform them.^reset;",
+  "shortdescription" : "Electric Zi T-Kit",
+  "applicableWeapons": [
+    "project45-neo-tmp"
+  ],
+  "transformItemId": "project45-neo-ez",
+  "consume": false,
+  "scripts" : [ "/scripts/augments/project45-guntransformer.lua" ]
+}

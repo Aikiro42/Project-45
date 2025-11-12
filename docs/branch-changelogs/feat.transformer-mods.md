@@ -2,5 +2,7 @@
   - Mods are disassembled in the process.
   - Transformation kits require an activeitem itemid whitelist.
   - Transformation can be disassembled to its previous form.
+- Added project45-trans-ez, which transforms project45-neo-tmp to project45-neo-ez
 - TODO: custom tooltip for transformer mods that show weapon stats.
-- TODO: allow weapon to be transformed back to its original form when disassembled
+- TODO: make project45-trans-ez craftable at Gunsmith Addon
+- TODO: make transformer kits consumable and reobtainable from disassembly
