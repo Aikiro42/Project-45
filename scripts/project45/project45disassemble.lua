@@ -7,6 +7,9 @@ function disassemble(input, transformItemId)
   if input.parameters or transformItemId then
 
     input.parameters = input.parameters or {}
+    
+    local prevTransform = not transformItemId
+    transformItemId = transformItemId or input.parameters.prevItemId
 
     local savedGunSeed = input.parameters.seed or 0
     local wasBought = input.parameters.bought
@@ -72,7 +75,8 @@ function disassemble(input, transformItemId)
         upgradeParameters = savedUpgradeParameters,
         seed = savedGunSeed,
         bought = wasBought,
-        weaponUpgradeStatus = weaponUpgradeStatus >= 2 and 3 or 0  -- see project45-essentialgunoil.augment
+        weaponUpgradeStatus = weaponUpgradeStatus >= 2 and 3 or 0,  -- see project45-essentialgunoil.augment
+        prevItemId = (transformItemId and not prevTransform) and input.name or nil
       }})
       output:setInstanceValue("shortdescription", gunConfig.shortdescription)
       output:setInstanceValue("rarity", gunConfig.rarity)

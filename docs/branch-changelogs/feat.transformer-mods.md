@@ -1,5 +1,6 @@
 - add framework and template for transformation kits; these mods completely transform a weapon into a different activeitem entirely.
   - Mods are disassembled in the process.
   - Transformation kits require an activeitem itemid whitelist.
+  - Transformation can be disassembled to its previous form.
 - TODO: custom tooltip for transformer mods that show weapon stats.
 - TODO: allow weapon to be transformed back to its original form when disassembled
