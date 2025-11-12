@@ -2,12 +2,14 @@ require "/scripts/augments/item.lua"
 require "/scripts/util.lua"
 
 -- @param input: ItemDescriptor
-function disassemble(input)
+function disassemble(input, transformItemId)
 
-  if input.parameters then
+  if input.parameters or transformItemId then
 
-    local savedGunSeed = input.parameters.seed
-    local wasBought = input.parameters.bought  
+    input.parameters = input.parameters or {}
+
+    local savedGunSeed = input.parameters.seed or 0
+    local wasBought = input.parameters.bought
     local savedUpgradeParameters = input.parameters.upgradeParameters
     local weaponUpgradeStatus = input.parameters.weaponUpgradeStatus or 0
 
@@ -15,7 +17,7 @@ function disassemble(input)
       savedUpgradeParameters = nil
     end
 
-    if input.parameters.project45GunModInfo and input.parameters.isModded then
+    if input.parameters.project45GunModInfo and (input.parameters.isModded or transformItemId) then
 
       local disassembledItems = {}
 
@@ -58,10 +60,15 @@ function disassemble(input)
       end
 
       local output = Item.new({name="project45-disassembledguncase", count=1, parameters={}})
-      local gun = root.itemConfig(input)
+      local gun
+      if transformItemId then
+        gun = root.itemConfig({name = transformItemId})
+      else
+        gun = root.itemConfig(input)
+      end
       local gunConfig = gun.config
 
-      output:setInstanceValue("gunItem", {name = input.name, parameters = {
+      output:setInstanceValue("gunItem", {name = transformItemId or input.name, parameters = {
         upgradeParameters = savedUpgradeParameters,
         seed = savedGunSeed,
         bought = wasBought,
@@ -69,6 +76,7 @@ function disassemble(input)
       }})
       output:setInstanceValue("shortdescription", gunConfig.shortdescription)
       output:setInstanceValue("rarity", gunConfig.rarity)
+      sb.logInfo(sb.printJson(disassembledItems, 1))
       output:setInstanceValue("disassembledItems", disassembledItems)
 
       output:setInstanceValue("description", string.format("Left-click to reobtain the gun and mods.\n^#96cbe7;Contains %d distinct items.^reset;", 1 + #disassembledItems))

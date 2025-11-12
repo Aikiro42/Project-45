@@ -1,0 +1,18 @@
+{
+  "itemName" : "project45-trans-pistol",
+  "price" : 1000,
+  "maxStack": 1,
+  "rarity" : "essential",
+  "tooltipKind" : "project45gunmod",
+  "category" : "uniqueWeapon",
+  "itemTags": ["weapon"],
+  "tooltipFields":{
+    "subtitle": "Transformer"
+  },
+  "inventoryIcon" : "/items/augments/project45-gunmods/transformer/template/project45-trans-pistol.png",
+  "description" : "Transformation kit; Converts the weapon into a pistol. ^#FF9000;Apply on Project 45 weapons to transform them.^reset;",
+  "shortdescription" : "Pistol TK",
+  "transformItemId": "project45-neo-pistol",
+  "consume": true,
+  "scripts" : [ "/scripts/augments/project45-guntransformer.lua" ]
+}
