@@ -1,1 +1,2 @@
-- Added separate gun shops for each weapon category. (TODO)
+# New
+- Added dedicated gun shops for each weapon category.
