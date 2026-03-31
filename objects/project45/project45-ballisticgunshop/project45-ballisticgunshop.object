@@ -124,17 +124,14 @@
         "project45-shiftreloadmod",
         "project45-challengerswillmod",
         "project45-gunscopemod",
-        "project45-supergunscopemod",
         "project45-mlgscopemod",
         "project45-orbitaltranspondermod",
         "project45-enemyradarmod",
         "project45-flashlasermod",
         "project45-grenadelaunchermod",
         "project45-bayonetgripmod",
-        "project45-chainsawmod",
         "project45-underbarrelshotgunmod",
-        "project45-armadillomod",
-
+        
         // sights
         "project45-reflexsightsmod",
         
@@ -144,13 +141,11 @@
 
         // receiver
         "project45-autofiremod",
-        "project45-multithreadermod",
-
+        
         // magazine
         "project45-extendedmagmod",
         "project45-alofsmagmod",
-        "project45-overampmod",
-
+        
         // magwell
         "project45-speedloadermod",
         "project45-syringeloadermod",
@@ -163,8 +158,6 @@
         "project45-muzzlebrakemod",
         "project45-silencermod",
         "project45-extendedbarrelmod",
-        "project45-convergermod",
-        "project45-splittermod",
         "project45-chokemod",
         
         // underbarrel mods
@@ -172,10 +165,6 @@
         "project45-gunshieldmod",
         
         // misc mods
-        "project45-aegisaltmod",
-        "project45-feroziummod",
-        "project45-violiummod",
-        "project45-solariummod",
         "project45-stockmod"
       ],
 
@@ -214,12 +203,6 @@
         "project45-dragonsbreathmod",
         "project45-fourgaugemod",
 
-        // energy ammo
-        "project45-iceammomod",
-        "project45-elecammomod",
-        "project45-firebeammod",
-        "project45-poisonbeammod",
-
         // arrows
         "project45-bladedarrowsmod",
         "project45-incendiaryarrowsmod",
@@ -234,19 +217,7 @@
 
         // rocket ammo
         "project45-homingrocketmod",
-        "project45-itanorocketsmod",
-
-        // experimental ammo
-        "project45-gasmod",
-        "project45-tarmod",
-
-        "project45-homingbladesmod",
-        "project45-splitbladesmod",
-
-        "project45-gravbombmod",
-        "project45-gravpullmod",
-        "project45-haloburstmod",
-        "project45-incineratemod"
+        "project45-itanorocketsmod"
         
       ],
 

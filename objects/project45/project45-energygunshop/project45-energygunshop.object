@@ -69,53 +69,15 @@
     },
     "goods":{
       "guns": [
-
-        // "project45-neo-custom-x",
-        "project45-neo-pipegun",
-        "project45-neo-bow",
         
-        // Pistols
-        "project45-neo-pistol",
-        "project45-neo-revolver",
-        "project45-neo-deagle",
-        "project45-neo-wristgun",
-        
-        // SMGs
-        "project45-neo-tmp",
-        "project45-neo-smg",
-        "project45-neo-smartgun",
-        
-        // Shotguns
-        "project45-neo-sawedoff",
-        "project45-neo-shotgun",
-        "project45-neo-doublebarrel",
-        "project45-neo-autoshotgun",
-
-        // Rifles
-        "project45-neo-leveraction",
-        "project45-neo-handmaderifle",
-        "project45-neo-assaultrifle",
-        "project45-neo-combatrifle",
-        "project45-neo-carbine",
-
-        // Marksman Rifles
-        "project45-neo-servicerifle",
-        "project45-neo-huntingrifle",
-        "project45-neo-sniper",
-        "project45-neo-crossbow",
-
-        // Machine guns
-        "project45-neo-machinegun",
-        
-        // Heavies
-        "project45-neo-amr",
-        "project45-neo-handmortar",
-        "project45-neo-grenadelauncher",
-        "project45-neo-rocketlauncher",
-        "project45-neo-minigun",
-        "project45-neo-autocannon",
-        "project45-neo-flamethrower",
-        "project45-neo-gaussrifle"
+        // Energy Guns
+        "project45-neo-cyclo",
+        "project45-neo-phasma",
+        "project45-neo-covalence",
+        "project45-neo-accelerator",
+        "project45-neo-beamsplitter",
+        "project45-neo-beamgun",
+        "project45-neo-gazer"
 
       ],
       "mods": [
@@ -123,60 +85,35 @@
         "project45-manualreloadmod",
         "project45-shiftreloadmod",
         "project45-challengerswillmod",
-        "project45-gunscopemod",
+        
         "project45-supergunscopemod",
-        "project45-mlgscopemod",
-        "project45-orbitaltranspondermod",
-        "project45-enemyradarmod",
-        "project45-flashlasermod",
-        "project45-grenadelaunchermod",
-        "project45-bayonetgripmod",
         "project45-chainsawmod",
-        "project45-underbarrelshotgunmod",
         "project45-armadillomod",
 
         // sights
-        "project45-reflexsightsmod",
         
         // rail
-        "project45-lasermod",
-        "project45-bowstabilizermod",
 
         // receiver
-        "project45-autofiremod",
         "project45-multithreadermod",
 
         // magazine
-        "project45-extendedmagmod",
-        "project45-alofsmagmod",
         "project45-overampmod",
 
         // magwell
-        "project45-speedloadermod",
-        "project45-syringeloadermod",
 
         // bowstring
-        "project45-customnockmod",  
-        "project45-multinockmod",
 
         // muzzle mods
-        "project45-muzzlebrakemod",
-        "project45-silencermod",
-        "project45-extendedbarrelmod",
         "project45-convergermod",
         "project45-splittermod",
-        "project45-chokemod",
         
         // underbarrel mods
-        "project45-gripmod",
-        "project45-gunshieldmod",
         
         // misc mods
         "project45-aegisaltmod",
         "project45-feroziummod",
-        "project45-violiummod",
-        "project45-solariummod",
-        "project45-stockmod"
+        "project45-violiummod"
       ],
 
       "stat": [
@@ -202,51 +139,11 @@
         "project45-beamconverter",
         "project45-summonconverter",
         
-        // ballistic ammo
-        "project45-explosiveammomod",
-        "project45-incendiaryammomod",
-        "project45-poisonammomod",
-        "project45-sanguineammomod",
-
-        // shotgun ammo
-        "project45-flechettemod",
-        "project45-slugshellsmod",
-        "project45-dragonsbreathmod",
-        "project45-fourgaugemod",
-
         // energy ammo
         "project45-iceammomod",
         "project45-elecammomod",
         "project45-firebeammod",
-        "project45-poisonbeammod",
-
-        // arrows
-        "project45-bladedarrowsmod",
-        "project45-incendiaryarrowsmod",
-        "project45-poisonarrowsmod",
-        "project45-elecarrowsmod",
-        "project45-explosivearrowsmod",
-        
-        // grenade ammo
-        "project45-clustergrenademod",
-        "project45-thermitegrenademod",
-        "project45-jumpgrenademod",
-
-        // rocket ammo
-        "project45-homingrocketmod",
-        "project45-itanorocketsmod",
-
-        // experimental ammo
-        "project45-gasmod",
-        "project45-tarmod",
-
-        "project45-homingbladesmod",
-        "project45-splitbladesmod",
-
-        "project45-gravbombmod",
-        "project45-gravpullmod",
-        "project45-haloburstmod",
-        "project45-incineratemod"
+        "project45-poisonbeammod"
         
       ],
 
