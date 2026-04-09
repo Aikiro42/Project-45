@@ -8,5 +8,5 @@
   },
   "duration" : 5,
   // "groups" : [ "project45craftable-stat" ]
-  "groups" : ["project45craftable-guns"]
+  "groups" : ["project45craftable-stat"]
 }
