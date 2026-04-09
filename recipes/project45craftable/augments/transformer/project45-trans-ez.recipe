@@ -1,0 +1,12 @@
+{
+  "input" : [
+    { "item" : "money", "count" : 2000 }
+  ],
+  "output" : {
+    "item" : "project45-trans-ez",
+    "count" : 1
+  },
+  "duration" : 5,
+  // "groups" : [ "project45craftable-stat" ]
+  "groups" : ["project45craftable-guns"]
+}

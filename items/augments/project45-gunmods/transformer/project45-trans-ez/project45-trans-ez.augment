@@ -2,7 +2,7 @@
   "itemName" : "project45-trans-ez",
   "price" : 1000,
   "maxStack": 1,
-  "rarity" : "common",
+  "rarity" : "rare",
   "tooltipKind" : "project45gunmod",
   "category" : "uniqueWeapon",
   "itemTags": ["weapon"],
@@ -16,6 +16,6 @@
     "project45-neo-tmp"
   ],
   "transformItemId": "project45-neo-ez",
-  "consume": false,
+  "consume": true,
   "scripts" : [ "/scripts/augments/project45-guntransformer.lua" ]
 }
