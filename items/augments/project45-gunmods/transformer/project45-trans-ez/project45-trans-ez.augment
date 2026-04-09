@@ -17,5 +17,6 @@
   ],
   "transformItemId": "project45-neo-ez",
   "consume": true,
+  "builder" : "/items/buildscripts/buildproject45transmod.lua",
   "scripts" : [ "/scripts/augments/project45-guntransformer.lua" ]
 }
