@@ -76,27 +76,11 @@
         "project45-neo-pyroclast",
         "project45-neo-magmaspitter",
 
-        // Special (OC)
-        "project45-neb-shrapnel",
-        "project45-neb-reaper",
-        "project45-neb-zweibrandyr",
-        
-        
-        // Special (References)
-        "project45-neb-warbolter",
-        "project45-msx-marcohmg",
+        // Special
         "project45-scz-spacecowboy",
         "project45-gov-fleetlyfading",
-        "project45-tcf-kineticarbiter",
-        "project45-pkf-typhon",
-        "project45-hlo-maxx",
         "project45-wfm-kuvabramma",
-        "project45-mhf-boneshooter",
-        "project45-cbp-malorian",
-        "project45-utk-revolver",
-        "project45-40k-boltgun",
-        "project45-cop-auto9",
-        "project45-ttf-smartpistol"
+        "project45-utk-revolver"
 
       ],
       "mods": [

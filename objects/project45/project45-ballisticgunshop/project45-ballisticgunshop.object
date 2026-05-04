@@ -115,7 +115,19 @@
         "project45-neo-minigun",
         "project45-neo-autocannon",
         "project45-neo-flamethrower",
-        "project45-neo-gaussrifle"
+        "project45-neo-gaussrifle",
+
+        // Special
+        "project45-neb-shrapnel",
+        "project45-neb-reaper",
+        "project45-neb-zweibrandyr",
+        "project45-msx-marcohmg",
+        "project45-hlo-maxx",
+        "project45-mhf-boneshooter",
+        "project45-cbp-malorian",
+        "project45-40k-boltgun",
+        "project45-cop-auto9"
+        
 
       ],
       "mods": [

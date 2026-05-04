@@ -77,7 +77,13 @@
         "project45-neo-accelerator",
         "project45-neo-beamsplitter",
         "project45-neo-beamgun",
-        "project45-neo-gazer"
+        "project45-neo-gazer",
+
+        // Special
+        "project45-tcf-kineticarbiter",
+        "project45-pkf-typhon",
+        "project45-ttf-smartpistol",
+        "project45-neb-warbolter"
 
       ],
       "mods": [
