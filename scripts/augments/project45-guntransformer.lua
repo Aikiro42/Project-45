@@ -7,7 +7,11 @@ function apply(input)
   local applicableWeapons = set.new(config.getParameter("applicableWeapons", {nil}))
 
   if applicableWeapons[input.name] then
-    return disassemble(input, config.getParameter("transformItemId", "project45-neo-pistol")), config.getParameter("consume") == false and 0 or 1
+    return disassemble(
+      input,
+      config.getParameter("itemName", nil),  -- should never be nil
+      config.getParameter("transformItemId", "project45-neo-pistol")
+    ), 1  -- transformer is always consumed
   end
 
 end
