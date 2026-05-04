@@ -21,56 +21,6 @@
     "color" : [185, 181, 178],
     "value" : ""
   },
-
-  "itemDescription-railImage": {
-    "type" : "image",
-    "position" : [84, 154],
-    "file" : "/interface/itemdescriptions/project45gun/modslots/rail.png",
-    "centered" : true,
-    "maxSize" : [8, 8],
-    "minSize" : [8, 8]
-  },
-  "itemDescription-sightsImage": {
-    "type" : "image",
-    "position" : [94, 154],
-    "file" : "/interface/itemdescriptions/project45gun/modslots/sights.png",
-    "centered" : true,
-    "maxSize" : [8, 8],
-    "minSize" : [8, 8]
-  },
-  "itemDescription-muzzleImage": {
-    "type" : "image",
-    "position" : [104, 154],
-    "file" : "/interface/itemdescriptions/project45gun/modslots/muzzle.png",
-    "centered" : true,
-    "maxSize" : [8, 8],
-    "minSize" : [8, 8]
-  },
-  "itemDescription-underbarrelImage": {
-    "type" : "image",
-    "position" : [114, 154],
-    "file" : "/interface/itemdescriptions/project45gun/modslots/underbarrel.png",
-    "centered" : true,
-    "maxSize" : [8, 8],
-    "minSize" : [8, 8]
-  },
-  "itemDescription-stockImage": {
-    "type" : "image",
-    "position" : [124, 154],
-    "file" : "/interface/itemdescriptions/project45gun/modslots/stock.png",
-    "centered" : true,
-    "maxSize" : [8, 8],
-    "minSize" : [8, 8]
-  },
-  "itemDescription-ammoImage": {
-    "type" : "image",
-    "position" : [134, 154],
-    "file" : "/interface/itemdescriptions/project45gun/modslots/ammo.png",
-    "centered" : true,
-    "maxSize" : [8, 8],
-    "minSize" : [8, 8]
-  },
-  
     
   "itemDescriptionUpgradeCapLabel" : {
     "type" : "label",
@@ -85,116 +35,25 @@
     "position" : [120, 105],
     "file" : "",
     "centered" : true,
-    "maxSize" : [16, 16],
-    "minSize" : [16, 16]
+    "maxSize" : [120, 60],
+    "minSize" : [120, 60]
   },
   "objectImage" : {
     "type" : "image",
-    "position" : [70, 120],
-    "file" : "",
+    "position" : [74, 128],
+    "file" : "/interface/tooltips/project45gun/project45tooltipimage.png",
     "centered" : true,
-    "maxSize" : [60, 60],
-    "minSize" : [60, 60]
+    "maxSize" : [125, 64],
+    "minSize" : [125, 64]
   },
 
-  "damagePerShotTitleLabel" : {
+  "descriptionLabel" : {
     "type" : "label",
-    "position" : [16, 84],
+    "fontSize": 7,
+    "position" : [16, 92],
     "hAnchor" : "left",
-    "fontSize": 7,
-    "value" : "Damage Per Shot:"
-  },
-  "damagePerShotLabel" : {
-    "type" : "label",
-    "position" : [134, 84],
-    "hAnchor" : "right",
-    "fontSize": 7,
-    "wrapWidth" : 126
-  },
-
-  "speedTitleLabel" : {
-    "type" : "label",
-    "position" : [16, 76],
-    "hAnchor" : "left",
-    "fontSize": 7,
-    "value" : "Fire Time:"
-  },
-  "fireTimeLabel" : {
-    "type" : "label",
-    "position" : [134, 76],
-    "hAnchor" : "right",
-    "fontSize": 7,
-    "wrapWidth" : 126
-  },
-
-  "energyPerShotTitleLabel" : {
-    "type" : "label",
-    "position" : [16, 68],
-    "hAnchor" : "left",
-    "fontSize": 7,
-    "value" : "Reload Cost:"
-  },
-  "reloadLabel" : {
-    "type" : "label",
-    "position" : [134, 68],
-    "hAnchor" : "right",
-    "fontSize": 7,
-    "wrapWidth" : 126
-  },
-
-  "critTitleLabel" : {
-    "type" : "label",
-    // "position" : [16, 56],
-    "position" : [16, 60],
-    "hAnchor" : "left",
-    "fontSize": 7,
-    "value" : "CC/CD:"
-  },
-  "critLabel" : {
-    "type" : "label",
-    "position" : [133, 60],
-    "hAnchor" : "right",
-    "centered" : true,
-    "fontSize": 7,
-    "wrapWidth" : 126,
-    "value" : "9999% (9999x)"
-  },
-
-  "altAbilityTitleLabel" : {
-    "type" : "label",
-    // "position" : [16, 56],
-    "position" : [16, 52],
-    "hAnchor" : "left",
-    "fontSize": 7,
-    "value" : "Alt Ability:"
-  },
-  "altAbilityLabel" : {
-    "type" : "label",
-    "position" : [133, 52],
-    "hAnchor" : "right",
-    "centered" : true,
-    "fontSize": 7,
-    "wrapWidth" : 126
-  },
-  
-  "rarityLabel" : {
-    "type" : "label",
-    "position" : [12, 30],
-    "hAnchor" : "left",
-    "centered" : true,
-    "wrapWidth" : 126
-  },
-
-
-  "moneyIcon" : {
-    "type" : "image",
-    "position" : [102, 30],
-    "file" : "/interface/money.png"
-  },
-  "priceLabel" : {
-    "type" : "label",
-    "position" : [115, 30],
-    "hAnchor" : "left",
-    "value" : "tree"
+    "vAnchor" : "top",
+    "wrapWidth" : 118
   }
+
 }
