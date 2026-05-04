@@ -1,0 +1,8 @@
+- add framework and template for transformation kits; these mods completely transform a weapon into a different activeitem entirely.
+  - Mods are disassembled in the process.
+  - Transformation kits require an activeitem itemid whitelist.
+  - Transformation can be disassembled to its previous form.
+  - Transformation kits are consumed upon use.
+- Added the Electric Zi Transformation Kit (project45-trans-ez), which transforms Machine Pistols (project45-neo-tmp) into Electriz Zis (project45-neo-ez)
+  - The Electric Zi is craftable at the Gunsmith Addon, under the new "TRNS" section
+- TODO: custom tooltip for transformer mods that show weapon stats.

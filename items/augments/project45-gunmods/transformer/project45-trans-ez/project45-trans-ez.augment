@@ -1,0 +1,21 @@
+{
+  "itemName" : "project45-trans-ez",
+  "price" : 1000,
+  "maxStack": 1,
+  "rarity" : "rare",
+  "tooltipKind" : "project45gunmod",
+  "category" : "uniqueWeapon",
+  "itemTags": ["weapon"],
+  "tooltipFields":{
+    "subtitle": "Transformation Kit"
+  },
+  "inventoryIcon" : "/items/augments/project45-gunmods/transformer/project45-trans-ez/project45-trans-ez-icon.png",
+  "description" : "A kit that converts the weapon into an SMG that fires arcing bolts.",
+  "shortdescription" : "Electric Zi",
+  "applicableWeapons": [
+    "project45-neo-tmp"
+  ],
+  "transformItemId": "project45-neo-ez",
+  "builder" : "/items/buildscripts/buildproject45transmod.lua",
+  "scripts" : [ "/scripts/augments/project45-guntransformer.lua" ]
+}

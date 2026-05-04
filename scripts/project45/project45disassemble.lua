@@ -2,12 +2,23 @@ require "/scripts/augments/item.lua"
 require "/scripts/util.lua"
 
 -- @param input: ItemDescriptor
-function disassemble(input)
+-- @param transformerId: string
+-- ID of the transformer mod applied to the weapon that caused it to be disassembled
+-- Can be `nil`. If it is, then the item is transformed into the previous item ID stored in the stack.
+-- @param transformerItemId: string
+-- ID of the item into which the disassembled will turn into
+-- Can be `nil`, Irrelevant if `transformerId` is nil
+function disassemble(input, transformerId, transformItemId)
 
-  if input.parameters then
+  if input.parameters or transformerId then
 
-    local savedGunSeed = input.parameters.seed
-    local wasBought = input.parameters.bought  
+    input.parameters = input.parameters or {}
+    
+    -- [(firstPrevTransformItemId, firstTransformerId), ..., (lastPrevTransformItemId, lastTransformerId)]
+    local transformerStack = input.parameters.transformerStack or {}
+    
+    local savedGunSeed = input.parameters.seed or 0
+    local wasBought = input.parameters.bought
     local savedUpgradeParameters = input.parameters.upgradeParameters
     local weaponUpgradeStatus = input.parameters.weaponUpgradeStatus or 0
 
@@ -15,10 +26,12 @@ function disassemble(input)
       savedUpgradeParameters = nil
     end
 
-    if input.parameters.project45GunModInfo and input.parameters.isModded then
-
+    if input.parameters.project45GunModInfo and (input.parameters.isModded or transformerId or #transformerStack > 0) then
+      -- modded or transformed; do transformation process
+      
       local disassembledItems = {}
 
+      -- add mods to disassembledItems
       if input.parameters.modSlots then
         for k, v in pairs(input.parameters.modSlots) do
           local isAbility = {ability=true, shiftAbility=true}
@@ -27,7 +40,8 @@ function disassemble(input)
           end
         end
       end
-
+      
+      -- add installed stats to disassembledItems
       if input.parameters.statList then
         for k, v in pairs(input.parameters.statList) do
           if k ~= "wildcards" then
@@ -48,6 +62,7 @@ function disassemble(input)
         end
       end
 
+      -- add stockAmmo to disassembledItems
       local stockAmmo = (input.parameters.savedGunState or {stockAmmo = 0}).stockAmmo or 0
       if stockAmmo > 0 then
         table.insert(disassembledItems, {
@@ -58,14 +73,34 @@ function disassemble(input)
       end
 
       local output = Item.new({name="project45-disassembledguncase", count=1, parameters={}})
-      local gun = root.itemConfig(input)
+      local gun, prevTransformItemId, prevTransformer, nextForm
+      if transformerId then -- transformation
+        prevTransformItemId = input.name
+        prevTransformer = transformerId
+        table.insert(transformerStack, {prevTransformItemId, prevTransformer})
+        gun = root.itemConfig({name = transformItemId})
+        nextForm = transformItemId
+      else  -- disassembly
+        if #transformerStack > 0 then -- transformation stack has elements, pop and revert to previous transformation
+          local prevTransform = table.remove(transformerStack, #transformerStack)
+          prevTransformItemId = prevTransform[1]
+          prevTransformer = prevTransform[2]
+          table.insert(disassembledItems, prevTransformer)  -- add previous transformer to disassembled items
+          gun = root.itemConfig({name = prevTransformItemId})
+          nextForm = prevTransformItemId
+        else  -- transformation stack empty; item is in original form, so just disassemble item
+          gun = root.itemConfig(input)
+          nextForm = input.name
+        end
+      end
       local gunConfig = gun.config
 
-      output:setInstanceValue("gunItem", {name = input.name, parameters = {
+      output:setInstanceValue("gunItem", {name = nextForm, parameters = {
         upgradeParameters = savedUpgradeParameters,
         seed = savedGunSeed,
         bought = wasBought,
-        weaponUpgradeStatus = weaponUpgradeStatus >= 2 and 3 or 0  -- see project45-essentialgunoil.augment
+        weaponUpgradeStatus = weaponUpgradeStatus >= 2 and 3 or 0,  -- see project45-essentialgunoil.augment
+        transformerStack = transformerStack  -- update transformerStack
       }})
       output:setInstanceValue("shortdescription", gunConfig.shortdescription)
       output:setInstanceValue("rarity", gunConfig.rarity)
