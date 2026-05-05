@@ -20,6 +20,9 @@ function configParameter(item, keyName, defaultValue)
 end
 
 function init()
+
+  local universalStockJson = root.assetJson("/objects/project45/project45-gunshop/universal_stock.json")
+
   self.itemList = "itemScrollArea.itemList"
   self.totalCost = "lblCostTotal"
   self.listItems = {}
@@ -31,11 +34,20 @@ function init()
     ammo = {},
     util = {}
   })
+  
+  for _, cat in ipairs({"guns", "mods", "ammo", "stat", "util"}) do
+    for _, item in ipairs(universalStockJson.goods[cat]) do
+      table.insert(self.goods[cat], item)
+    end
+  end
+
+  sb.logInfo(sb.printJson(self.goods, 1))
 
   self.seededItems = set.new(
-    config.getParameter("seededItems", {})
+    sb.jsonMerge(universalStockJson.seededItems, config.getParameter("seededItems", {}))
   )
-  self.seededItems = set.union(self.seededItems, set.new(self.goods.guns))
+
+  self.seededItems = set.union(self.seededItems, self.goods.guns)
   self.noInflation = set.new(
     config.getParameter("noInflation", {})
   )

@@ -122,21 +122,7 @@
         "project45-violiummod"
       ],
 
-      "stat": [
-        "project45-wildcardstatmod",
-        "project45-levelmod",
-        "project45-maxlevelmod",
-        "project45-reloadcostaddmod1",
-        "project45-reloadcostmultmod1",
-        "project45-firetimeaddmod1",
-        "project45-firetimemultmod1",
-        "project45-damageaddmod1",
-        "project45-damagemultmod1",
-        "project45-critdamageaddmod1",
-        "project45-critdamagemultmod1",
-        "project45-critchanceaddmod1",
-        "project45-critchancemultmod1"
-      ],
+      "stat": [],
       
       "ammo": [
         // converters
@@ -153,32 +139,7 @@
         
       ],
 
-      "util": [
-        "project45manual-codex",
-        "project45-gundisassembler",
-        "project45-gunseller",
-
-        "project45-portablegdk",
-        "project45-gunrepairkit",
-        "project45-ammostock",
-        "project45-elementoil",
-        "project45-essentialgunoil",
-        "project45-modhider",
-        
-        "project45-riotshield",
-        "project45-supplytransponder",
-        "project45-gachapull",
-        "project45-gachapull10",
-        
-        "project45-energystim",
-        "project45-enemyflare",
-        
-        "nanowrap",        
-        "manipulatormodule",
-        "techcard",
-        "upgrademodule",
-        "dubloon"
-      ]
+      "util": []
     },
           
     "seededItems": [
