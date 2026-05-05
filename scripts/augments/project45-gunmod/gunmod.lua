@@ -31,8 +31,9 @@ function apply(output, augment)
         local laser = newPrimaryAbility.laser or oldPrimaryAbility.laser
         if laser and laser.enabled then
           -- compare more vivid color first
+          sb.logInfo(sb.printJson(augment.primaryAbility.laser))
           if laser.color and augment.primaryAbility.laser.value.color then
-            laser.color = project45util.moreVividColor(laser.color, augment.primaryAbility.laser.value.color)
+            laser = project45util.moreVividLaser(laser, augment.primaryAbility.laser.value)
           end
 
           -- compare thicker laser first

@@ -243,7 +243,9 @@ function project45util.__vividness(color)
   )
 end
 
-function project45util.moreVividColor(color1, color2)
+function project45util.moreVividLaser(laser1, laser2)
+  local color1 = laser1.color
+  local color2 = laser2.color
   local alpha = 255
 
   -- compare color transparency; choose less transparent color
@@ -252,9 +254,18 @@ function project45util.moreVividColor(color1, color2)
   end
   
   -- choose more vivid color
-  local chosen = project45util.__vividness(color1) > project45util.__vividness(color2) and color1 or color2
-  table.insert(chosen, alpha)
+  local chosen
+  if project45util.__vividness(color1) > project45util.__vividness(color2) then
+    chosen = laser1
+  else
+    chosen = laser2
+  end
+  table.insert(chosen.color, alpha)
   return chosen
+end
+
+function project45util.isMoreVivid(color1, color2)
+  return project45util.__vividness(color1) > project45util.__vividness(color2)
 end
 
 function project45util.complement(color)
