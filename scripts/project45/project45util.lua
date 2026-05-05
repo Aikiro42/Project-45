@@ -264,10 +264,6 @@ function project45util.moreVividLaser(laser1, laser2)
   return chosen
 end
 
-function project45util.isMoreVivid(color1, color2)
-  return project45util.__vividness(color1) > project45util.__vividness(color2)
-end
-
 function project45util.complement(color)
   local newColor = {color[1], color[2], color[3]}
   if #color == 4 then
