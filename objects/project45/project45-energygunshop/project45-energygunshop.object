@@ -67,84 +67,16 @@
         "subtitle" : "^#c48636;Enlighten your enemies."
       }
     },
+    "category": "energy",
     "goods":{
-      "guns": [
-        
-        // Energy Guns
-        "project45-neo-cyclo",
-        "project45-neo-phasma",
-        "project45-neo-covalence",
-        "project45-neo-accelerator",
-        "project45-neo-beamsplitter",
-        "project45-neo-beamgun",
-        "project45-neo-gazer",
-
-        // Special
-        "project45-tcf-kineticarbiter",
-        "project45-pkf-typhon",
-        "project45-ttf-smartpistol",
-        "project45-neb-warbolter"
-
-      ],
-      "mods": [
-        // abilities
-        "project45-manualreloadmod",
-        "project45-shiftreloadmod",
-        "project45-challengerswillmod",
-        
-        "project45-supergunscopemod",
-        "project45-chainsawmod",
-        "project45-armadillomod",
-
-        // sights
-        
-        // rail
-
-        // receiver
-        "project45-multithreadermod",
-
-        // magazine
-        "project45-overampmod",
-
-        // magwell
-
-        // bowstring
-
-        // muzzle mods
-        "project45-convergermod",
-        "project45-splittermod",
-        
-        // underbarrel mods
-        
-        // misc mods
-        "project45-aegisaltmod",
-        "project45-feroziummod",
-        "project45-violiummod"
-      ],
-
+      "guns": [],
+      "mods": [],
       "stat": [],
-      
-      "ammo": [
-        // converters
-        "project45-projectileconverter",
-        "project45-hitscanconverter",
-        "project45-beamconverter",
-        "project45-summonconverter",
-        
-        // energy ammo
-        "project45-iceammomod",
-        "project45-elecammomod",
-        "project45-firebeammod",
-        "project45-poisonbeammod"
-        
-      ],
-
+      "ammo": [],
       "util": []
     },
           
-    "seededItems": [
-      "project45-wildcardstatmod"
-    ]
+    "seededItems": []
 
   }
 }

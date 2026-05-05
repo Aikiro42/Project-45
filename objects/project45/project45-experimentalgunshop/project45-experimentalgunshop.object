@@ -65,116 +65,16 @@
         "subtitle" : "^#c48636;Project 45 Repository"
       }
     },
+    "category": "experimental",
     "goods":{
-      "guns": [
-
-        // Experimental
-        "project45-neo-flamethrower",
-        "project45-neo-powerstave",
-        "project45-neo-gunfist",
-        "project45-neo-sawblader",
-        "project45-neo-pyroclast",
-        "project45-neo-magmaspitter",
-
-        // Special
-        "project45-scz-spacecowboy",
-        "project45-gov-fleetlyfading",
-        "project45-wfm-kuvabramma",
-        "project45-utk-revolver"
-
-      ],
-      "mods": [
-        // abilities
-        "project45-phaseshiftmod",
-
-        // sights
-        
-        // rail
-
-        // receiver
-
-        // magazine
-
-        // magwell
-
-        // bowstring
-
-        // muzzle mods
-        
-        // underbarrel mods
-        
-        // misc mods
-        "project45-solariummod"
-      ],
-
-      "stat": [
-        "project45-wildcardstatmod",
-        "project45-levelmod",
-        "project45-maxlevelmod",
-        "project45-reloadcostaddmod1",
-        "project45-reloadcostmultmod1",
-        "project45-firetimeaddmod1",
-        "project45-firetimemultmod1",
-        "project45-damageaddmod1",
-        "project45-damagemultmod1",
-        "project45-critdamageaddmod1",
-        "project45-critdamagemultmod1",
-        "project45-critchanceaddmod1",
-        "project45-critchancemultmod1"
-      ],
-      
-      "ammo": [
-        // converters
-        "project45-projectileconverter",
-        "project45-hitscanconverter",
-        "project45-beamconverter",
-        "project45-summonconverter",
-
-        // experimental ammo
-        "project45-gasmod",
-        "project45-tarmod",
-
-        "project45-homingbladesmod",
-        "project45-splitbladesmod",
-
-        "project45-gravbombmod",
-        "project45-gravpullmod",
-        "project45-haloburstmod",
-        "project45-incineratemod"
-        
-      ],
-
-      "util": [
-        "project45manual-codex",
-        "project45-gundisassembler",
-        "project45-gunseller",
-
-        "project45-portablegdk",
-        "project45-gunrepairkit",
-        "project45-ammostock",
-        "project45-elementoil",
-        "project45-essentialgunoil",
-        "project45-modhider",
-        
-        "project45-riotshield",
-        "project45-supplytransponder",
-        "project45-gachapull",
-        "project45-gachapull10",
-        
-        "project45-energystim",
-        "project45-enemyflare",
-        
-        "nanowrap",        
-        "manipulatormodule",
-        "techcard",
-        "upgrademodule",
-        "dubloon"
-      ]
+      "guns": [],
+      "mods": [],
+      "stat": [],
+      "ammo": [],
+      "util": []
     },
           
-    "seededItems": [
-      "project45-wildcardstatmod"
-    ]
+    "seededItems": []
 
   }
 }

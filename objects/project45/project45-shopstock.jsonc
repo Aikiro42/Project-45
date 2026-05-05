@@ -1,0 +1,292 @@
+{
+  "goods":{
+
+    "guns": {
+      "universal": [
+        // "project45-neo-custom-x",
+        "project45-neo-pipegun",
+        "project45-neo-bow",
+        // Pistols
+        "project45-neo-pistol",
+        // SMGs
+        "project45-neo-tmp",
+        // Rifles
+        "project45-neo-handmaderifle",
+        // Heavies
+        "project45-neo-amr"
+      ],
+      "ballistic": [
+        // Pistols
+        "project45-neo-revolver",
+        "project45-neo-deagle",
+        "project45-neo-wristgun",
+        // SMGs
+        "project45-neo-smg",
+        "project45-neo-smartgun",
+        // Shotguns
+        "project45-neo-sawedoff",
+        "project45-neo-shotgun",
+        "project45-neo-doublebarrel",
+        "project45-neo-autoshotgun",
+        // Rifles
+        "project45-neo-leveraction",
+        "project45-neo-assaultrifle",
+        "project45-neo-combatrifle",
+        "project45-neo-carbine",
+        // Marksman Rifles
+        "project45-neo-servicerifle",
+        "project45-neo-huntingrifle",
+        "project45-neo-sniper",
+        "project45-neo-crossbow",
+        // Machine guns
+        "project45-neo-machinegun",
+        // Heavies
+        "project45-neo-handmortar",
+        "project45-neo-grenadelauncher",
+        "project45-neo-rocketlauncher",
+        "project45-neo-minigun",
+        "project45-neo-autocannon",
+        "project45-neo-gaussrifle",
+        // Special
+        "project45-neb-shrapnel",
+        "project45-neb-reaper",
+        "project45-neb-zweibrandyr",
+        "project45-msx-marcohmg",
+        "project45-hlo-maxx",
+        "project45-mhf-boneshooter",
+        "project45-cbp-malorian",
+        "project45-40k-boltgun",
+        "project45-cop-auto9"
+      ],
+      "energy": [
+        // Energy Guns
+        "project45-neo-cyclo",
+        "project45-neo-phasma",
+        "project45-neo-covalence",
+        "project45-neo-accelerator",
+        "project45-neo-beamsplitter",
+        "project45-neo-beamgun",
+        "project45-neo-gazer",
+        // Special
+        "project45-tcf-kineticarbiter",
+        "project45-pkf-typhon",
+        "project45-ttf-smartpistol",
+        "project45-neb-warbolter"
+      ],
+      "experimental": [
+        // Experimental
+        "project45-neo-flamethrower",
+        "project45-neo-powerstave",
+        "project45-neo-gunfist",
+        "project45-neo-sawblader",
+        "project45-neo-pyroclast",
+        "project45-neo-magmaspitter",
+        // Special
+        "project45-scz-spacecowboy",
+        "project45-gov-fleetlyfading",
+        "project45-wfm-kuvabramma",
+        "project45-utk-revolver"
+      ]
+    },
+    
+    "mods": {
+      "universal": [
+        "project45-manualreloadmod",
+        "project45-shiftreloadmod",
+        "project45-challengerswillmod"
+      ],
+      "ballistic": [        
+        // sights
+        "project45-reflexsightsmod",
+        "project45-gunscopemod",
+        "project45-mlgscopemod",
+        // rail
+        "project45-lasermod",
+        "project45-bowstabilizermod",
+        "project45-orbitaltranspondermod",
+        "project45-enemyradarmod",
+        "project45-flashlasermod",
+        // receiver
+        "project45-autofiremod",
+        // magazine
+        "project45-extendedmagmod",
+        "project45-alofsmagmod",
+        // magwell
+        "project45-speedloadermod",
+        "project45-syringeloadermod",
+        // bowstring
+        "project45-customnockmod",  
+        "project45-multinockmod",
+        // muzzle mods
+        "project45-muzzlebrakemod",
+        "project45-silencermod",
+        "project45-extendedbarrelmod",
+        "project45-chokemod",
+        // underbarrel mods
+        "project45-gripmod",
+        "project45-gunshieldmod",
+        "project45-grenadelaunchermod",
+        "project45-bayonetgripmod",
+        "project45-underbarrelshotgunmod",
+        // misc mods
+        "project45-stockmod"
+      ],
+      "energy": [
+        // abilities
+        // sights
+        "project45-supergunscopemod",
+        // rail
+        // receiver
+        "project45-multithreadermod",
+        // magazine
+        "project45-overampmod",
+        // magwell
+        // bowstring
+        // muzzle mods
+        "project45-convergermod",
+        "project45-splittermod",
+        // underbarrel mods
+        // misc mods
+        "project45-aegisaltmod",
+        "project45-feroziummod",
+        "project45-violiummod"
+      ],
+      "experimental": [
+        // abilities
+        "project45-phaseshiftmod",
+        // sights
+        // rail
+        // receiver
+        // magazine
+        // magwell
+        // bowstring
+        // muzzle mods
+        "project45-bulletcuttermod",
+        // underbarrel mods
+        "project45-armadillomod",
+        "project45-chainsawmod",
+        // misc mods
+        "project45-solariummod"
+      ]
+    },
+    "stat": {
+      "universal": [
+        "project45-wildcardstatmod",
+        "project45-levelmod",
+        "project45-maxlevelmod",
+        "project45-reloadcostaddmod1",
+        "project45-reloadcostmultmod1",
+        "project45-firetimeaddmod1",
+        "project45-firetimemultmod1",
+        "project45-damageaddmod1",
+        "project45-damagemultmod1",
+        "project45-critdamageaddmod1",
+        "project45-critdamagemultmod1",
+        "project45-critchanceaddmod1",
+        "project45-critchancemultmod1"
+      ],
+      "ballistic": [],
+      "energy": [],
+      "experimental": []
+    },
+    "ammo": {
+      "universal": [
+        // converters
+        "project45-projectileconverter",
+        "project45-hitscanconverter",
+        "project45-beamconverter",
+        "project45-summonconverter"
+      ],
+      "ballistic": [
+        // bullet ammo
+        "project45-explosiveammomod",
+        "project45-incendiaryammomod",
+        "project45-poisonammomod",
+        "project45-sanguineammomod",
+        // shotgun ammo
+        "project45-flechettemod",
+        "project45-slugshellsmod",
+        "project45-dragonsbreathmod",
+        "project45-fourgaugemod",
+        // arrows
+        "project45-bladedarrowsmod",
+        "project45-incendiaryarrowsmod",
+        "project45-poisonarrowsmod",
+        "project45-elecarrowsmod",
+        "project45-explosivearrowsmod",
+        // grenade ammo
+        "project45-clustergrenademod",
+        "project45-thermitegrenademod",
+        "project45-jumpgrenademod",
+        // rocket ammo
+        "project45-homingrocketmod",
+        "project45-itanorocketsmod"
+      ],
+      "energy": [
+        // lasers
+        "project45-iceammomod",
+        "project45-elecammomod",
+        // beams
+        "project45-firebeammod",
+        "project45-poisonbeammod"  
+      ],
+      "experimental": [
+        // gas
+        "project45-gasmod",
+        "project45-tarmod",
+        // blades
+        "project45-homingbladesmod",
+        "project45-splitbladesmod",
+        // spells
+        "project45-gravbombmod",
+        "project45-gravpullmod",
+        "project45-haloburstmod",
+        "project45-incineratemod"
+      ]
+    },
+    "util": {
+      "universal": [
+        "project45manual-codex",
+        "project45-gundisassembler",
+        "project45-gunseller",
+
+        "project45-portablegdk",
+        "project45-gunrepairkit",
+        "project45-ammostock",
+        "project45-elementoil",
+        "project45-essentialgunoil",
+        "project45-modhider",
+        
+        "project45-riotshield",
+        "project45-supplytransponder",
+        "project45-gachapull",
+        "project45-gachapull10",
+        
+        "project45-energystim",
+        "project45-enemyflare",
+        
+        "nanowrap",        
+        "manipulatormodule",
+        "techcard",
+        "upgrademodule",
+        "dubloon"
+      ],
+      "ballistic": [],
+      "energy": [],
+      "experimental": []
+    }
+  },
+
+  "noInflation": [
+    "nanowrap",        
+    "manipulatormodule",
+    "techcard",
+    "upgrademodule",
+    "dubloon"
+  ],
+        
+  "seededItems": [
+    "project45-wildcardstatmod"
+  ]
+
+}
