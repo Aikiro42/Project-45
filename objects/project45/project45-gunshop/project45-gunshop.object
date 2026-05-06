@@ -67,24 +67,25 @@
         "subtitle" : "^#c48636;A new standard for gunplay."
       }
     },
+    "category": "universal",
     "goods":{
       "guns": [],
       "mods": [],
       "stat": [],
       "ammo": [],
-      "util": []
+      "util": [
+        "project45-ballisticgunshop",
+        "project45-energygunshop",
+        "project45-experimentalgunshop"
+      ]
     },
+
     "noInflation": [
-      "nanowrap",        
-      "manipulatormodule",
-      "techcard",
-      "upgrademodule",
-      "dubloon"
+      "project45-ballisticgunshop",
+      "project45-energygunshop",
+      "project45-experimentalgunshop"
     ],
-          
-    "seededItems": [
-      "project45-wildcardstatmod"
-    ]
+    "seededItems": []
 
   }
 }

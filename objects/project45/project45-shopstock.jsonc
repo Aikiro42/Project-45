@@ -173,7 +173,7 @@
       "universal": [
         "project45-wildcardstatmod",
         "project45-levelmod",
-        "project45-maxlevelmod",
+        "project45-beginnermod",
         "project45-reloadcostaddmod1",
         "project45-reloadcostmultmod1",
         "project45-firetimeaddmod1",
@@ -185,9 +185,18 @@
         "project45-critchanceaddmod1",
         "project45-critchancemultmod1"
       ],
-      "ballistic": [],
-      "energy": [],
-      "experimental": []
+      "ballistic": [
+        "project45-wildcardstatmodssr",
+        "project45-maxlevelmod"
+      ],
+      "energy": [
+        "project45-wildcardstatmodssr",
+        "project45-maxlevelmod"
+      ],
+      "experimental": [
+        "project45-wildcardstatmodssr",
+        "project45-maxlevelmod"
+      ]
     },
     "ammo": {
       "universal": [
@@ -286,7 +295,8 @@
   ],
         
   "seededItems": [
-    "project45-wildcardstatmod"
+    "project45-wildcardstatmod",
+    "project45-wildcardstatmodssr"
   ]
 
 }
