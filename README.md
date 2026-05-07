@@ -1,4 +1,4 @@
-<img src="docs/Project 45/repository-structure.png" />
+<img src="docs/readme_assets/repository-structure.png" />
 
 # Project-45
 
