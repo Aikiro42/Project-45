@@ -20,25 +20,45 @@ function configParameter(item, keyName, defaultValue)
 end
 
 function init()
+
+  local shopStocks = root.assetJson("/objects/project45/project45-shopstock.jsonc")
+
   self.itemList = "itemScrollArea.itemList"
   self.totalCost = "lblCostTotal"
   self.listItems = {}
+  self.category = config.getParameter("category", "universal")
 
-  self.goods = config.getParameter("goods", {
+  self.goods = sb.jsonMerge({
     guns = {},
     mods = {},
     stat = {},
     ammo = {},
     util = {}
-  })
+  }, config.getParameter("goods", {}))
+  
+
+  for _, cat in ipairs({"guns", "mods", "ammo", "stat", "util"}) do
+    sb.logInfo(sb.printJson(shopStocks.goods[cat], 1))
+    for _, item in ipairs(shopStocks.goods[cat].universal) do
+      table.insert(self.goods[cat], item)
+    end
+    if self.category ~= "universal" then
+      for _, item in ipairs(shopStocks.goods[cat][self.category]) do
+        table.insert(self.goods[cat], item)
+      end
+    end
+  end
 
   self.seededItems = set.new(
     config.getParameter("seededItems", {})
   )
-  self.seededItems = set.union(self.seededItems, set.new(self.goods.guns))
+
+  self.seededItems = set.union(self.seededItems, shopStocks.seededItems)
+  self.seededItems = set.union(self.seededItems, self.goods.guns)
   self.noInflation = set.new(
     config.getParameter("noInflation", {})
   )
+  self.noInflation = set.union(self.noInflation, shopStocks.noInflation)
   
   self.mode = "guns"
   widget.setSelectedOption("shopTabs", 1)

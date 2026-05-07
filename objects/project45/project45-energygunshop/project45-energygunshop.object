@@ -1,12 +1,12 @@
 {
-  "objectName" : "project45-gunshop",
+  "objectName" : "project45-energygunshop",
   "colonyTags" : ["human","humanbunker","mechanical","commerce"],
   "rarity" : "Essential",
-  "shortdescription" : "^#FF9000;Project 45 Gun Shop",
-  "description" : "A revolutionary standard for weapons of war, brought to you in a nifty vending machine.",
-  "race" : "human",
+  "shortdescription" : "^#FF9000;Project 45 Energy Shop",
+  "description" : "A vending machine that sells products developed by Letheia Tactical Solutions.",
+  "race" : "hylotl",
   "category" : "decorative",
-  "price" : 1000, // price of crafting is 4500; at least this provides a way for the player to make a profit
+  "price" : 10000, // price of crafting is 4500; at least this provides a way for the player to make a profit
   "lightColor" : [120, 65, 0],
   "printable" : false,
 
@@ -18,20 +18,20 @@
   "hylotlDescription" : "Letheia Corp. has outdone themselves this time.",
   "novakidDescription" : "THEY SELL 'DEM BIG IRONS? GIMME IT!",
 
-  "inventoryIcon" : "project45-gunshopicon.png",
+  "inventoryIcon" : "project45-energygunshopicon.png",
   
   "orientations" : [
     
     {
       "imageLayers" : [
-        { "image" : "project45-gunshopleft.png:default.<frame>" },
-        { "image" : "project45-gunshopleftfullbright.png:default.<frame>", "fullbright" : true  }
+        { "image" : "project45-energygunshopright.png:default.<frame>" },
+        { "image" : "project45-energygunshoprightfullbright.png:default.<frame>", "fullbright" : true  }
       ],
       "imagePosition" : [0, 0],
       "direction": "left",
 
-      "frames" : 60,
-      "animationCycle" : 5,
+      "frames" : 39,
+      "animationCycle" : 4,
 
       "spaceScan" : 0.1,
       "anchors" : [ "bottom" ],
@@ -39,14 +39,14 @@
     },
     {
       "imageLayers" : [
-        { "image" : "project45-gunshopright.png:default.<frame>" },
-        { "image" : "project45-gunshoprightfullbright.png:default.<frame>", "fullbright" : true  }
+        { "image" : "project45-energygunshopright.png:default.<frame>" },
+        { "image" : "project45-energygunshoprightfullbright.png:default.<frame>", "fullbright" : true  }
       ],
       "imagePosition" : [0, 0],
       "direction": "right",
 
-      "frames" : 60,
-      "animationCycle" : 5,
+      "frames" : 39,
+      "animationCycle" : 4,
 
       "spaceScan" : 0.1,
       "anchors" : [ "bottom" ],
@@ -63,28 +63,19 @@
     "baseConfig" : "/interface/scripted/project45-gunshop/project45-gunshopscripted.config",
     "gui" : {
       "windowtitle" : {
-        "title" : "^#FF9000;Gun Shop",
-        "subtitle" : "^#c48636;A new standard for gunplay."
+        "title" : "^#FF9000;Letheia Tactical Solutions",
+        "subtitle" : "^#c48636;Enlighten your enemies."
       }
     },
-    "category": "universal",
+    "category": "energy",
     "goods":{
       "guns": [],
       "mods": [],
       "stat": [],
       "ammo": [],
-      "util": [
-        "project45-ballisticgunshop",
-        "project45-energygunshop",
-        "project45-experimentalgunshop"
-      ]
+      "util": []
     },
-
-    "noInflation": [
-      "project45-ballisticgunshop",
-      "project45-energygunshop",
-      "project45-experimentalgunshop"
-    ],
+          
     "seededItems": []
 
   }
