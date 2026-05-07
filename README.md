@@ -42,6 +42,7 @@
   - Should Rework passives?
 - [ ] Feast of Fire and Smoke (FFS) Ammo mods
 - [ ] LR's Dynamic Weapons
+  - [x] Partial Compatibility
 - [x] Wildfire Compatibility
 
 ## Docs
@@ -82,6 +83,7 @@
 ### Guns
 - [ ] Energy Grenade Launcher
 - [ ] Ballista / harpoon gun - A heavier crossbow that launches something closer to spears or harpoons.
+- [ ] Saint HLO - A regular laser pistol with a cross motif (also a pun on Han Solo)
 - [x] Plasma Launcher
 - [x] Autocannon
 - [x] Drum-fed Shotgun
@@ -93,10 +95,10 @@
   - out of scope, better as a melee for RE: Project 42
 
 ### Special Guns
-- [x] Titanfall Smart Pistol (Orifan1)
 - [ ] Half-life's Tau Cannon. (Trogdude)
 - [ ] Unreal Tournament's Flak Cannon. (Trogdude, AtomicBeaverCleaver)
 - [ ] Rage 2
+- [x] Titanfall Smart Pistol (Orifan1)
 
 ### Abilities:
 - [ ] Drone
@@ -145,7 +147,8 @@
 - [ ] Guided (Ammo type: Rocket): Rocket will home in towards your cursor. (I honestly prefer this over homing rockets) - Rylasasin
 - [ ] Proximity mine (Ammo Type: Grenade shell): Grenades will stick to where they are shot and explode on proximity after a 1 second arming timer. indiscriminate!! - Rylasasin
 - [ ] Mining bomb (Ammo type: Grenade shell): Grenades do very little damage to enemies but destroy frontal blocks, allowing for quick and messy mining. - Rylasasin
-- [ ] Fanning ('Stock', Revolver) converts the revolver into a 2-handed weapon where you 'fan' the action. Halves fire time and decreases loading time (if no speedloader present) - Rylasasin
+- [x] Fanning ('Stock', Revolver) converts the revolver into a 2-handed weapon where you 'fan' the action. Halves fire time and decreases loading time (if no speedloader present) - Rylasasin
+  - Somewhat present as a special firing mode of the Reaper
 - [x] Rocket Jump Ammo
 - [x] Localized Gravity Ammo Mod
 - [x] 4 Gau Shotgun Shells
