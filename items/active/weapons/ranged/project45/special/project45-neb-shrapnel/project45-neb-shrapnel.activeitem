@@ -28,6 +28,7 @@
 
   "project45GunModInfo": {
     "category": "ballistic",
+    "uniqueType": "special",
     "compatibleMods": [
       "project45-speedloadermod"
     ],

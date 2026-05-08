@@ -117,8 +117,15 @@
 - [ ] Underbarrel Flare Launcher: No damage, fires harmless lights (omba)
 - [ ] Pneumatic Mechanism (receiver)
   - increases projectile time to live and range
-- [ ] Conversion Kit (multiple slots)
+- [ ] Electromagnetic Accelerator (ballistic rail, legendary)
+  - +3 base damage, +50% multiplicative damage, +50% additive critical damage
+  - Accelerates outgoing bullets electromagnetically, increasing penetration
+- [ ] Lensed focuser (energy barrel, legendary)
+  - +3 base damage, +50% multiplicative damage, +50% additive critical damage
+  - Intensifies hardlight beamed from the gun's core, increasing damage.
+- [x] Conversion Kit (multiple slots)
   - Gun-specific; converts select guns into SMGs, etc.
+  - Implemented  as transformer kits, completely replacing the weapon
 - [x] Intrabarrel Splitter (ballistic, muzzle)
   - increases multishot
 - [x] Underbarrel Chainsaw

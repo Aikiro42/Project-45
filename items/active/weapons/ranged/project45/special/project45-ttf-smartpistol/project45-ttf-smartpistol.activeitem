@@ -80,7 +80,8 @@
   },
 
   "project45GunModInfo":{
-    "category": "ballistic",
+    "category": "energy",
+    "uniqueType": "special",
     "allowsConversion": [],
     "acceptsModSlot": [
       "rail",

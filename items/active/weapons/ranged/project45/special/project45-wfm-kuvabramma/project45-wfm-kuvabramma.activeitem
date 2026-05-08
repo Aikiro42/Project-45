@@ -17,7 +17,8 @@
   "inventoryIcon" : "project45-wfm-kuvabramma-icon.png",
 
   "project45GunModInfo": {
-    "category": "ballistic",
+    "category": "experimental",
+    "uniqueType": "special",
     "isSpecial": true,
     "allowsConversion": [],
     "acceptsModSlot": [

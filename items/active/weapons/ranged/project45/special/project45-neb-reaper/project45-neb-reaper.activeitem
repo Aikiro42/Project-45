@@ -18,6 +18,7 @@
 
   "project45GunModInfo":{
     "category": "ballistic",
+    "uniqueType": "special",
     "allowsConversion": [],
     "acceptsModSlot": [],
     "acceptsAmmoArchetype": []
