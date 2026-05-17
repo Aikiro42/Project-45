@@ -1949,6 +1949,7 @@ function Project45GunFire:evalProjectileKind()
       
       -- laser uses the hitscan helper function, so assign that
       self.hitscan = hitscanLib.hitscan
+      self.hitscanSfx = hitscanLib.hitscanSfx
       -- initialize projectile stack
       -- this stack is used by the hitscan functions and the animator
       -- to animate hitscan trails.

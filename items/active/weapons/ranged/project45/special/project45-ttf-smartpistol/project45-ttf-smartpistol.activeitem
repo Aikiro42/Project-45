@@ -153,6 +153,7 @@
       "hitscanWidth": 2,
       "hitscanBrightness": 0.5,
       "hitscanFadeTime": 0.3,
+      "sfxType": "ballistic",
       "vfxParameters": {
         "mode": "bezier",
         "segments": 8,

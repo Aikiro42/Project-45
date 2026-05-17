@@ -7,6 +7,18 @@ hitscanLib = {}
 
 local modConfig = root.assetJson("/configs/project45/project45_general.config")
 
+function hitscanLib:hitscanSfx(pos)
+  local category = (config.getParameter("project45GunModInfo", {})).category or "ballistic"
+  category = self.hitscanParameters.sfxType or category
+  
+  -- spawn projectile at end of hitscan for sfx
+  local terminalExplosion = "project45_terminalexplosion_" .. category
+  world.spawnProjectile(
+    terminalExplosion,
+    pos
+  )
+end
+
 function hitscanLib:fireChainBeam()
   if world.lineTileCollision(mcontroller.position(), self:firePosition()) then return end
   
@@ -380,6 +392,10 @@ function hitscanLib:fireChain()
     end
     
     for _, chainScanInfo in ipairs(chainScanInfos) do
+  
+      -- hitscan sfx
+      self:hitscanSfx(chainScanInfo[3][2])
+
       world.spawnProjectile(
         "invisibleprojectile",
         chainScanInfo[3][2],
@@ -603,11 +619,8 @@ function hitscanLib:fireHitscan(projectileType)
         })
       end
       
-      -- spawn projectile at end of hitscan for sfx
-      world.spawnProjectile(
-        "project45_terminalexplosion_ballistic",
-        hitscanInfo[3][2]
-      )
+      self:hitscanSfx(hitscanInfo[3][2])
+
 
     end
 
