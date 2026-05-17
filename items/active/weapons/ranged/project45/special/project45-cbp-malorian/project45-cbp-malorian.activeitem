@@ -63,7 +63,7 @@
         "/sfx/project45neosfx/special/malorian/malorian_fire6.ogg",
         "/sfx/project45neosfx/special/malorian/malorian_fire7.ogg"
       ],
-      "altFire": ["/sfx/project45neosfx/special/typhon/altfire-typhon.ogg"],
+      "altFire": ["/sfx/project45neosfx/special/malorian/malorian_altfire1.ogg"],
       "boltPull": [
         "/sfx/project45neosfx/special/malorian/malorian_boltpull1.ogg",
         "/sfx/project45neosfx/special/malorian/malorian_boltpull2.ogg",
@@ -260,7 +260,7 @@
   },
 
   	"altAbility": {
-		"name": "Stasis Shockwave",
+		"name": "Silverhand Burst",
 		"scripts": ["/items/active/weapons/ranged/abilities/altfire.lua"],
 		"class": "AltFireAttack",
 
@@ -268,12 +268,13 @@
 		"energyUsage": 0,
 		"projectileCount": 5,
 		"baseDps": 10,
-		"inaccuracy": 0.1,
+		"inaccuracy": 5,
+    "spread": 5,
 		"fireType": "auto",
 
     "ammoPerShot": 2,
-    "screenShakeAmount": 0.5,
-    "recoilAmount": 5,
+    "screenShakeAmount": 1.5,
+    "recoilAmount": 25,
 
     "useAltMuzzleFlash": false,
 		"hidePrimaryMuzzleFlash" : false,
