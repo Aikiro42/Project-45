@@ -63,6 +63,7 @@
         "/sfx/project45neosfx/special/malorian/malorian_fire6.ogg",
         "/sfx/project45neosfx/special/malorian/malorian_fire7.ogg"
       ],
+      "altFire": ["/sfx/project45neosfx/special/typhon/altfire-typhon.ogg"],
       "boltPull": [
         "/sfx/project45neosfx/special/malorian/malorian_boltpull1.ogg",
         "/sfx/project45neosfx/special/malorian/malorian_boltpull2.ogg",
@@ -129,6 +130,7 @@
 
   "baseOffset" : [0.375, 0.125],
   "muzzleOffset" : [1.375, 0.375],
+  "altMuzzleOffset" : [1.375, 0.375],
   "ejectionPortOffset": [-0.375, 0.5],
   "magazineOffset": [0.1875, 0.125],
 
@@ -257,11 +259,28 @@
     }
   },
 
-  "altAbilityType": "explosiveburst",
-  "altAbility": {
-    "recoilAmount": 0,
-    "burstCount": 3
-  },
+  	"altAbility": {
+		"name": "Stasis Shockwave",
+		"scripts": ["/items/active/weapons/ranged/abilities/altfire.lua"],
+		"class": "AltFireAttack",
+
+		"fireTime": 0.5,
+		"energyUsage": 0,
+		"projectileCount": 5,
+		"baseDps": 10,
+		"inaccuracy": 0.1,
+		"fireType": "auto",
+
+    "ammoPerShot": 2,
+    "screenShakeAmount": 0.5,
+    "recoilAmount": 5,
+
+    "useAltMuzzleFlash": false,
+		"hidePrimaryMuzzleFlash" : false,
+		"usePrimaryFireSound" : false,
+
+		"projectileType": "project45dragonsbreath"
+	},
 
   "builder" : "/items/buildscripts/buildproject45neoneo.lua"
 }
