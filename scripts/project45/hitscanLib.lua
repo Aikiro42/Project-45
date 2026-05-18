@@ -75,15 +75,18 @@ function hitscanLib:fireChainBeam()
     hitEntityIds = chainScanResults[2]
     chainWorldLines = {}
     chainDamageAreas = {}
+    local chainEnd = {0, 0}
     for i=2, #chain do
       table.insert(chainWorldLines, {chain[i-1], chain[i]})
+      chainEnd = vec2.sub(chain[i], mcontroller.position())
       table.insert(chainDamageAreas, 
         {
           vec2.sub(chain[i-1], mcontroller.position()),
-          vec2.sub(chain[i], mcontroller.position())
+          chainEnd
         }
       )
-    end  
+    end
+    animator.setSoundPosition("beamImpact", chainEnd)
 
     if ammoConsumeTimer >= beamTimeout then
 
