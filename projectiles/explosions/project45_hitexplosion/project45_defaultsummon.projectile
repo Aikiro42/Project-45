@@ -24,5 +24,15 @@
   "bounces" : -1,
   "flippable" : true,
   "power": 1,
-  "damageKind" : "standardbullet"
+  "damageKind" : "standardbullet",
+  "actionOnReap": [
+    {
+      "action": "sound",
+      "options": [
+        "/sfx/project45neosfx/bulletimpact/bulletimpact-generic1.ogg",
+        "/sfx/project45neosfx/bulletimpact/bulletimpact-generic2.ogg",
+        "/sfx/project45neosfx/bulletimpact/bulletimpact-generic3.ogg"
+      ]
+    }
+  ]
 }

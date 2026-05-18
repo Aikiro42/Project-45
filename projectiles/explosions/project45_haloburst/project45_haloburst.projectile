@@ -78,6 +78,12 @@
           ]
         }
       ]
+    },
+    {
+      "action": "sound",
+      "options": [
+        "/sfx/project45neosfx/bulletimpact/bulletimpact-holy1.ogg"
+      ]
     }
   ]
 }

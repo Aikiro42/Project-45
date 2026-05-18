@@ -119,7 +119,7 @@
   },
 
   "project45GunModInfo":{
-    "category": "energy",
+    "category": "experimental",
     "uniqueType": "experimental",
     "allowsConversion": [
       "hitscan",
