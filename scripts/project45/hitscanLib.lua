@@ -792,6 +792,7 @@ function hitscanLib:fireBeam()
             self.weapon.relativeWeaponRotation
           )
         local beamLength = world.magnitude(beamStart, beamEnd)
+        animator.setSoundPosition("beamImpact", {beamLength, 0})
         local actualDamageEnd = vec2.rotate(
           {self.weapon.muzzleOffset[1] + beamLength, self.weapon.muzzleOffset[2]},
           self.weapon.relativeWeaponRotation
@@ -839,7 +840,7 @@ function hitscanLib:fireBeam()
       activeItem.setScriptedAnimationParameter("beamLine", {beamStart, beamEnd})
       activeItem.setScriptedAnimationParameter("beamWidth", self.beamParameters.beamWidth + sb.nrand(self.beamParameters.beamJitter, 0))
       activeItem.setScriptedAnimationParameter("beamInnerWidth", self.beamParameters.beamInnerWidth + sb.nrand(self.beamParameters.beamJitter, 0))
-  
+
       local hitscanActionsOnReap = {
         {
           action="loop",
@@ -888,7 +889,7 @@ function hitscanLib:fireBeam()
           )
         )
       end
-  
+
       world.spawnProjectile(
         "invisibleprojectile",
         beamEnd,

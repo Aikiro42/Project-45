@@ -1217,6 +1217,7 @@ function Project45GunFire:startFireLoop()
   if not self.fireLoopPlaying then
     animator.playSound("fireStart")
     animator.playSound("fireLoop", -1)
+    if self.projectileKind == "beam" then animator.playSound("beamImpact", -1) end
     self.fireLoopPlaying = true
   end
 end
@@ -1226,6 +1227,7 @@ function Project45GunFire:stopFireLoop()
   -- A temporary fix is to change the sounds of the gun...
   if self.fireLoopPlaying then
     animator.stopAllSounds("fireLoop")
+    animator.stopAllSounds("beamImpact")
     animator.playSound("fireEnd")
     self.fireLoopPlaying = false
   end
