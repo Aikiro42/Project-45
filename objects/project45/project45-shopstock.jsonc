@@ -1,8 +1,11 @@
 {
   "goods":{
-
+    // universal: all stores have these
+    // general: only the orange store has this
+    // ballistic/energy/experimental: only the respective stores have this
     "guns": {
-      "universal": [
+      "universal": [],
+      "general":[
         // "project45-neo-custom-x",
         "project45-neo-pipegun",
         "project45-neo-bow",
@@ -16,11 +19,15 @@
         "project45-neo-amr"
       ],
       "ballistic": [
+        // Bows
+        "project45-neo-bow",
         // Pistols
+        "project45-neo-pistol",
         "project45-neo-revolver",
         "project45-neo-deagle",
         "project45-neo-wristgun",
         // SMGs
+        "project45-neo-tmp",
         "project45-neo-smg",
         "project45-neo-smartgun",
         // Shotguns
@@ -29,6 +36,7 @@
         "project45-neo-doublebarrel",
         "project45-neo-autoshotgun",
         // Rifles
+        "project45-neo-handmaderifle",
         "project45-neo-leveraction",
         "project45-neo-assaultrifle",
         "project45-neo-combatrifle",
@@ -41,6 +49,7 @@
         // Machine guns
         "project45-neo-machinegun",
         // Heavies
+        "project45-neo-amr",
         "project45-neo-handmortar",
         "project45-neo-grenadelauncher",
         "project45-neo-rocketlauncher",
@@ -94,6 +103,12 @@
         "project45-manualreloadmod",
         "project45-shiftreloadmod",
         "project45-challengerswillmod"
+      ],
+      "general": [
+        "project45-reflexsightsmod",
+        "project45-lasermod",
+        "project45-extendedmagmod",
+        "project45-stockmod"
       ],
       "ballistic": [        
         // sights
@@ -171,9 +186,7 @@
     },
     "stat": {
       "universal": [
-        "project45-wildcardstatmod",
         "project45-levelmod",
-        "project45-beginnermod",
         "project45-reloadcostaddmod1",
         "project45-reloadcostmultmod1",
         "project45-firetimeaddmod1",
@@ -185,15 +198,22 @@
         "project45-critchanceaddmod1",
         "project45-critchancemultmod1"
       ],
+      "general": [
+        "project45-beginnermod",
+        "project45-wildcardstatmod"
+      ],
       "ballistic": [
+        "project45-beginnermod",
         "project45-wildcardstatmodssr",
         "project45-maxlevelmod"
       ],
       "energy": [
+        "project45-beginnermod",
         "project45-wildcardstatmodssr",
         "project45-maxlevelmod"
       ],
       "experimental": [
+        "project45-beginnermod",
         "project45-wildcardstatmodssr",
         "project45-maxlevelmod"
       ]
@@ -206,10 +226,14 @@
         "project45-beamconverter",
         "project45-summonconverter"
       ],
+      "general": [
+        "project45-incendiaryammomod",
+        "project45-iceammomod"
+      ],
       "ballistic": [
         // bullet ammo
-        "project45-explosiveammomod",
         "project45-incendiaryammomod",
+        "project45-explosiveammomod",
         "project45-poisonammomod",
         "project45-sanguineammomod",
         // shotgun ammo
@@ -273,8 +297,9 @@
         "project45-gachapull10",
         
         "project45-energystim",
-        "project45-enemyflare",
-        
+        "project45-enemyflare"
+      ],
+      "general": [
         "nanowrap",        
         "manipulatormodule",
         "techcard",
