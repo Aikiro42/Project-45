@@ -1,0 +1,149 @@
+{
+  "itemName" : "project45-neo-sainthalo",
+  "price" : 250,
+  "maxStack" : 1,
+  "rarity" : "Rare",
+  "description" : "A compact energy pistol.",
+  "lore": "A standard-issue Saint series energy gun used by Project 45 Research Escort Troops. Shoots Hyperdense Aetherlight.",
+  "shortdescription" : "Saint H.A.L.O.",
+  "tooltipKind" : "project45gun",
+  "gunArchetype": "beam",
+  "category" : "pistol",
+  "twoHanded" : false,
+  "itemTags" : ["weapon","ranged","pistol"],
+  "level" : 1,
+  "muzzleFlashColor": [0, 200, 255],
+  "inventoryIcon" : "project45-neo-sainthalo-icon.png",
+
+  "animationParts" : {
+    "middle" : "project45-neo-sainthalo.png",
+    "middleFullbright" : "",
+    "charge": "",
+    "chargeFullbright": "",
+    "magazine": "project45-neo-sainthalo-mag.png",
+    "magazineFullbright": ""
+  },
+
+  "animationCustom": {
+    "particleEmitters": {
+      "ejectionPort": {
+        "particles": [
+        ]
+      },
+      "magazine": {
+        "particles": [
+          {"particle": "project45energygunmag3"}
+        ]
+      }
+    },
+
+    "sounds": {
+      "fire": ["/sfx/gun/plasma_pistol4.ogg"],
+      "hollow": ["/sfx/project45neosfx/hollow/hollow-02.ogg"]
+    }
+  },
+
+  "project45GunModInfo":{
+    "category": "energy",
+    
+    "allowsConversion": [
+      "projectile",
+      "beam",
+      "hitscan",
+      "summoned"
+    ],
+    "acceptsAmmoArchetype": [
+      "beam",
+      "laser"
+    ],
+    "acceptsModSlot": [
+      "muzzle",
+      "receiver",
+      
+      "material",
+      "magazine"
+    ]
+  },
+
+  "baseOffset" : [0.5, 0.25],
+  "muzzleOffset" : [1.125, 0.25],
+  "ejectionPortOffset": [-0.25, 0.5],
+  "magazineOffset": [-1, -0.25],
+
+  "scripts" : ["/items/active/weapons/ranged/project45gunneo.lua"],
+    
+  "primaryAbilityType": "project45gunfire",
+  "primaryAbility": {
+    "reloadCost": 35,
+    "critChance": 0.3,
+    "maxAmmo": 30,
+    "bulletsPerReload": 30,
+    "inaccuracy": 1,
+    "recoilAmount": 0.5,
+    "recoilMaxDeg": 5,
+    "recoverDelay": 0,
+    "semi": true,
+    "cycleTime": 0.02,
+    "projectileKind": "projectile",
+    "projectileType": "project45stdlaser",
+    "screenShakeAmount": 0.25,
+
+    // "reloadTime": 10,
+
+    "laser":{
+      "enabled": false
+    },
+  
+    "stances":{
+      "idleneo": {
+        "twoHanded": false
+      },
+      "aim": {
+        "twoHanded": false
+      },
+      "empty": {
+        "twoHanded": false
+      },
+      "ejectmag" : {
+        "armRotation" : -45,
+        "weaponRotation" : 45,
+        "twoHanded" : false,
+        "allowRotate" : false,
+        "allowFlip" : false
+      },
+      "reloading" : {
+        "armRotation" : 45,
+        "weaponRotation" : 0,
+        "weaponAngularVelocity": 3600,
+        "twoHanded": false,
+        "frontArmFrame" : "rotation"
+      },
+      "reloaded" : {
+        "armRotation" : -45,
+        "weaponRotation" : 0,
+        "twoHanded" : false,
+        "allowRotate" : false,
+        "allowFlip" : false,
+        "frontArmFrame" : "rotation",
+        "snap": true
+      },
+      "boltPull": {
+        "twoHanded": false
+      },
+      "boltPush": {
+        "twoHanded": false
+      },
+      "jammed": {
+        "twoHanded": false
+      },
+      "unjam": {
+        "armRotation": -45,
+        "weaponRotation": -5,
+        "frontArmFrame": "rotation",
+        "twoHanded": false      
+      }
+    }
+  },
+
+  "builder" : "/items/buildscripts/buildproject45neoneo.lua"
+}
