@@ -244,8 +244,9 @@
 
     "laser": {
       "enabled": true,
-      "offset": [-0.25, -0.5],
-      "alwaysZeroed": true
+      "layer": "Player+1",
+      "offset": [-1.25, -0.5],
+      "alwaysZeroed": false
     }
 
   },

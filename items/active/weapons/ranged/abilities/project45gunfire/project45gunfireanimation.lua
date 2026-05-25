@@ -187,6 +187,8 @@ function renderLaser()
     return
   end
 
+  local laserLayer = animationConfig.animationParameter("primaryLaserLayer") or "Player-2"
+
   local bezierParameters = animationConfig.animationParameter("primaryLaserBezierParameters")
   if bezierParameters then
     local bezierCurve = project45util.drawBezierCurve(
@@ -202,7 +204,7 @@ function renderLaser()
         width = laserWidth,
         fullbright = true,
         color = laserColor
-      }, "Player-2")
+      }, laserLayer)
     end
   else
     local laserLine = worldify(laserStart, laserEnd)
@@ -211,7 +213,7 @@ function renderLaser()
       width = laserWidth,
       fullbright = true,
       color = laserColor
-    }, "Player-2")
+    }, laserLayer)
   end
 
 

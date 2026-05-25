@@ -1968,6 +1968,7 @@ function Project45GunFire:evalProjectileKind()
         activeItem.setScriptedAnimationParameter("primaryLaserEnabled", not self.performanceMode)
         activeItem.setScriptedAnimationParameter("primaryLaserColor", self.laser.color)
         activeItem.setScriptedAnimationParameter("primaryLaserWidth", self.laser.width)
+        activeItem.setScriptedAnimationParameter("primaryLaserLayer", self.laser.layer)
       end
 
     else
@@ -1986,6 +1987,7 @@ function Project45GunFire:evalProjectileKind()
         activeItem.setScriptedAnimationParameter("primaryLaserEnabled", not self.performanceMode)    
         activeItem.setScriptedAnimationParameter("primaryLaserColor", self.laser.color)
         activeItem.setScriptedAnimationParameter("primaryLaserWidth", self.laser.width)
+        activeItem.setScriptedAnimationParameter("primaryLaserLayer", self.laser.layer)
       end
       
       local projectileType = type(self.projectileType) == "table" and self.projectileType[1] or self.projectileType

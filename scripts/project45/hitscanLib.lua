@@ -424,7 +424,7 @@ function hitscanLib:fireChain()
 end
 
 function hitscanLib:chainScan(scanLength, punchThrough, scanUntilCursor)
-    local firstHit = self:hitscan(true, {0, 0}, false, 0, scanLength, 0, scanUntilCursor, 0, self:firePosition(), true)
+    local firstHit = self:hitscan(true, {0, 0}, {0, 0}, false, 0, scanLength, 0, scanUntilCursor, 0, self:firePosition(), true)
     local chainScanLengthLimit = scanLength / 2
     local chain = {firstHit[1], firstHit[2]}
     local firstHitEntityIds = firstHit[3]
@@ -505,7 +505,7 @@ function hitscanLib:fireHitscan(projectileType)
     -- get damage source (line) information
     for i=1, math.min(modConfig.hitscanProjectileLimit, nProjs) do
 
-      local hitReg = self:hitscan(false, {0, 0}, false,
+      local hitReg = self:hitscan(false, {0, 0}, {0, 0}, false,
         nil, self.hitscanParameters.range,
         punchThrough, self.hitscanParameters.scanUntilCursor,
         self.spread, nil, nil,
@@ -777,7 +777,7 @@ function hitscanLib:fireBeam()
     do
       self.isFiring = true
   
-      hitreg = self:hitscan(true, {0, 0}, false, nil, self.beamParameters.range, punchThrough, self.beamParameters.scanUntilCursor)
+      hitreg = self:hitscan(true, {0, 0}, {0, 0}, false, nil, self.beamParameters.range, punchThrough, self.beamParameters.scanUntilCursor)
       beamStart = hitreg[1]
       beamEnd = hitreg[2]
   
@@ -924,7 +924,7 @@ function hitscanLib:fireBeam()
     self.isFiring = false
     self.muzzleProjectileFired = false
 
-    hitreg = self:hitscan(true, {0, 0}, false, nil, self.beamParameters.range, punchThrough, self.beamParameters.scanUntilCursor)
+    hitreg = self:hitscan(true, {0, 0}, {0, 0}, false, nil, self.beamParameters.range, punchThrough, self.beamParameters.scanUntilCursor)
     beamEnd = hitreg[2]
 
     table.insert(self.projectileStack, {
@@ -956,7 +956,7 @@ end
 
 -- Utility function that scans for an entity to damage.
 -- @return {hitscan_line_origin, hitscan_line_destination, entity_id[]}
-function hitscanLib:hitscan(isLaser, offset, zero, degAdd, scanLength, punchThrough, scanUntilCursor, spread, hitscanLineOrigin, chain, smartScanParameters)
+function hitscanLib:hitscan(isLaser, offset, offsetAdd, zero, degAdd, scanLength, punchThrough, scanUntilCursor, spread, hitscanLineOrigin, chain, smartScanParameters)
 
   -- initialize hitscan parameters
   offset = offset or {0, 0}
@@ -1004,15 +1004,15 @@ function hitscanLib:hitscan(isLaser, offset, zero, degAdd, scanLength, punchThro
 
   -- establish origin and scan length
   if offset == "rail" then
-    hitscanLineOrigin = self:weaponPosition(config.getParameter("railOffset", {0, 0}))
+    hitscanLineOrigin = self:weaponPosition(vec2.add(config.getParameter("railOffset", {0, 0}), offsetAdd or {0, 0}))
   elseif offset == "sights" then
-    hitscanLineOrigin = self:weaponPosition(config.getParameter("sightsOffset", {0, 0}))
+    hitscanLineOrigin = self:weaponPosition(vec2.add(config.getParameter("sightsOffset", {0, 0}), offsetAdd or {0, 0}))
   elseif offset == "underbarrel" then
-    hitscanLineOrigin = self:weaponPosition(config.getParameter("underbarrelOffset", {0, 0}))
+    hitscanLineOrigin = self:weaponPosition(vec2.add(config.getParameter("underbarrelOffset", {0, 0}), offsetAdd or {0, 0}))
   end
   
   if type(offset) ~= "table" then
-    offset = {0, 0}
+    offset = vec2.add({0, 0}, offsetAdd or {0, 0})
   end
   
   hitscanLineOrigin = hitscanLineOrigin or self:firePosition(nil, offset)
@@ -1086,6 +1086,7 @@ function hitscanLib:updateLaser()
     local laser = self:hitscan(
       true,
       self.laser.offset or {0, 0},
+      self.laser.offsetAdd or {0, 0},
       self.laser.alwaysZeroed,
       nil,
       self.laser.range,

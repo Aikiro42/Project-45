@@ -36,7 +36,8 @@
             "enabled": true,
             "color": [255, 0, 0, 200],
             "width": 0.2,
-            "offset": "rail"
+            "offset": "rail",
+            "offsetAdd": [0.25, 0]
           }
         }
       },
