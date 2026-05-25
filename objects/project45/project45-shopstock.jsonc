@@ -144,7 +144,8 @@
         "project45-bayonetgripmod",
         "project45-underbarrelshotgunmod",
         // misc mods
-        "project45-stockmod"
+        "project45-stockmod",
+        "project45-fanhammermod"
       ],
       "energy": [
         // abilities
