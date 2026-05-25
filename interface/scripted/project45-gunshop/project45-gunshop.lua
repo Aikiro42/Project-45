@@ -38,7 +38,6 @@ function init()
   
 
   for _, cat in ipairs({"guns", "mods", "ammo", "stat", "util"}) do
-    sb.logInfo(sb.printJson(shopStocks.goods[cat], 1))
     for _, item in ipairs(shopStocks.goods[cat].universal) do
       table.insert(self.goods[cat], item)
     end
