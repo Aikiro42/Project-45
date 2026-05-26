@@ -263,6 +263,34 @@ function build(directory, config, parameters, level, seed)
       config.paletteSwaps = string.format("%s?replace=%s=%s", config.paletteSwaps, k, v)
     end
   end
+
+  -- dynamic magazine particle
+  -- allows palette swaps to affect dropped magazine
+  -- completely replaces config.animationCustom.particleEmitters.magazine.particles
+  local magParticles = configParameter("magazineParticles", {nil})
+  if magParticles then
+      construct(config, "animationCustom", "particleEmitters", "magazine", "particles")
+      config.animationCustom.particleEmitters.magazine.particles = {nil}
+      for _, particleConfig in ipairs(magParticles) do
+        
+        local particleSpecs = root.assetJson(
+             particleConfig.specificationConfig
+          or particleConfig.specs
+          or "/particles/project45/defaultmagparticle.config"
+        )
+        
+        local cfg = sb.jsonMerge(
+          {
+            type="textured",
+            image=(particleConfig.image or "/particles/project45/pixel.png")
+          },
+          particleSpecs
+        )
+        cfg.image = cfg.image .. config.paletteSwaps
+        
+        table.insert(config.animationCustom.particleEmitters.magazine.particles, {particle=cfg})
+      end
+  end
   
   if type(config.inventoryIcon) == "string" then
     config.inventoryIcon = config.inventoryIcon .. config.paletteSwaps

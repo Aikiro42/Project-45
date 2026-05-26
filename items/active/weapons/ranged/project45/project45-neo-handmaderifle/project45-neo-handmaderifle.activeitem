@@ -24,6 +24,13 @@
     "magazineFullbright": ""
   },
 
+  "magazineParticles": [
+    {
+      "image": "/items/active/weapons/ranged/project45/project45-neo-handmaderifle/magparticle.png",
+      "specs": "/items/active/weapons/ranged/project45/project45-neo-handmaderifle/magparticle.config"
+    }
+  ],
+
   "animationCustom": {
     "particleEmitters": {
       "ejectionPort": {
@@ -32,9 +39,7 @@
         ]
       },
       "magazine": {
-        "particles": [
-          {"particle": "project45handmaderiflemag"}
-        ]
+        "particles": []
       }
     },
 
