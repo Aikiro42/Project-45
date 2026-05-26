@@ -11,7 +11,7 @@
             "centered" : true,
             "offset": [0, 0],
             "transformationGroups" : ["weapon"],
-            "image" : "/items/active/weapons/ranged/abilities/project45armadillo/project45armadillosprite.png<shieldDirectives>"
+            "image" : "/items/active/weapons/ranged/abilities/project45armadillo/project45armadillosprite.png<paletteSwaps><shieldDirectives>"
           }
         }
       }

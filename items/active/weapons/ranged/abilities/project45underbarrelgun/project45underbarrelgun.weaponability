@@ -11,7 +11,7 @@
             "centered" : true,
             "offset": [0, -0.3],
             "transformationGroups" : ["weapon"],
-            "image" : "/items/active/weapons/ranged/abilities/project45underbarrelgun/project45underbarrelgunsprite.png<directives>",
+            "image" : "/items/active/weapons/ranged/abilities/project45underbarrelgun/project45underbarrelgunsprite.png<paletteSwaps><directives>",
             "firePosition" : [0.75, 0.125]
           }
         }

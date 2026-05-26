@@ -19,24 +19,24 @@
             "centered" : true,
             "offset": [0.25, -0.25],
             "transformationGroups" : ["weapon"],
-            "image" : "/items/active/weapons/ranged/abilities/project45grenadelauncher/project45grenadelauncher.png:closed<directives>",
+            "image" : "/items/active/weapons/ranged/abilities/project45grenadelauncher/project45grenadelauncher.png:closed<paletteSwaps><directives>",
             "firePosition" : [0.375, 0.125]
           },
           "partStates": {
             "grenadelauncher": {
               "closed": {
                 "properties": {
-                  "image" : "/items/active/weapons/ranged/abilities/project45grenadelauncher/project45grenadelauncher.png:closed<directives>"
+                  "image" : "/items/active/weapons/ranged/abilities/project45grenadelauncher/project45grenadelauncher.png:closed<paletteSwaps><directives>"
                 }
               },
               "open": {
                 "properties": {
-                  "image" : "/items/active/weapons/ranged/abilities/project45grenadelauncher/project45grenadelauncher.png:open<directives>"
+                  "image" : "/items/active/weapons/ranged/abilities/project45grenadelauncher/project45grenadelauncher.png:open<paletteSwaps><directives>"
                 }
               },
               "loading": {
                 "properties": {
-                  "image" : "/items/active/weapons/ranged/abilities/project45grenadelauncher/project45grenadelauncher.png:loading<directives>"
+                  "image" : "/items/active/weapons/ranged/abilities/project45grenadelauncher/project45grenadelauncher.png:loading<paletteSwaps><directives>"
                 }
               }
             }

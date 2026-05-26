@@ -16,7 +16,7 @@
             "zLevel": 5,
             "centered": true,
             "transformationGroups": ["weapon"],
-            "image": "/items/active/weapons/ranged/abilities/project45orbitalstrike/project45orbitalstrike.png<directives>"
+            "image": "/items/active/weapons/ranged/abilities/project45orbitalstrike/project45orbitalstrike.png<paletteSwaps><directives>"
           }
         },
         "railFullbright": {
