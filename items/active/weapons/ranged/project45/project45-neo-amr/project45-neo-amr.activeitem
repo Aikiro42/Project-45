@@ -48,6 +48,10 @@
     ]
   },
 
+  "magazineParticles": [
+    {"specs": "/particles/project45/magazines/project45antimaterielmag/project45antimaterielmag.particle:definition"}
+  ],
+
   "animationCustom": {
     "particleEmitters": {
       "ejectionPort": {
@@ -57,9 +61,7 @@
         ]
       },
       "magazine": {
-        "particles": [
-          {"particle": "project45antimaterielmag"}
-        ]
+        "particles": []
       },
       "muzzleFlash" : {
         "particles" : [ 

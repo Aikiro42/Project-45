@@ -19,7 +19,7 @@
     ...
   ]
   ```
-  If the "specs" field is empty, defaults to /particles/project45/defaultmagparticle.config. It accepts any JSON file, so you can even link to a .particle file and it'll be applied as is.
+  If the "specs" field is empty, defaults to /particles/project45/defaultmagparticle.config. It accepts any JSON file, so you can even link to a .particle file (as "/path/to/my.particle:definition") and it'll be applied as is.
 
   If you still wanna configure the particles via animationCustom, then just omit this field.
 - You can now make gun mods dye the weapon by configuring their 'augment.dyeColorIndex' field
