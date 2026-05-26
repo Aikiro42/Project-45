@@ -55,7 +55,7 @@
             "charge":{
               "off": {
                 "properties": {
-                  "image": "<partImage>:charging.1"
+                  "image": "<partImage>:charging.1<paletteSwaps>"
                 }
               }
             }

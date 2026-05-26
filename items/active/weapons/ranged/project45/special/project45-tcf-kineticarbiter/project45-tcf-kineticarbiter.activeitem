@@ -88,7 +88,7 @@
             "gun":{
               "fired": {
                 "properties": {
-                  "image": "<partImage>:firing.1"
+                  "image": "<partImage>:firing.1<paletteSwaps>"
                 }
               }
             }
@@ -99,7 +99,7 @@
             "charge":{
               "off": {
                 "properties": {
-                  "image": "<partImage>:charging.1"
+                  "image": "<partImage>:charging.1<paletteSwaps>"
                 }
               }
             }

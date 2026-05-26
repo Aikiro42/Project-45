@@ -90,7 +90,7 @@
       "parts":{"magazine":{"partStates":{"magazine":{
         "absent": {
           "properties" : {
-            "image" : "<partImage>:absent"
+            "image" : "<partImage>:absent<paletteSwaps>"
           }
         }
       }}}},

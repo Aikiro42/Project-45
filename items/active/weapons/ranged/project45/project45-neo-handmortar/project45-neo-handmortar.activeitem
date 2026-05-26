@@ -85,7 +85,7 @@
             "gun":{
               "fired": {
                 "properties": {
-                  "image": "<partImage>:firing.1"
+                  "image": "<partImage>:firing.1<paletteSwaps>"
                 }
               }
             }

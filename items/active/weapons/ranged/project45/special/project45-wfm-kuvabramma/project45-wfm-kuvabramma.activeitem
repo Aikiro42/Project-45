@@ -93,7 +93,7 @@
             "charge":{
               "off": {
                 "properties": {
-                  "image": "<partImage>:fired.1"
+                  "image": "<partImage>:fired.1<paletteSwaps>"
                 }
               }
             }
@@ -104,7 +104,7 @@
             "charge":{
               "off": {
                 "properties": {
-                  "image": "<partImage>:fired.1"
+                  "image": "<partImage>:fired.1<paletteSwaps>"
                 }
               }
             }

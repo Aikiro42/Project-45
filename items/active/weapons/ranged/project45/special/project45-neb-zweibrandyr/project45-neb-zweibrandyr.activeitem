@@ -70,7 +70,7 @@
       "parts":{"middle": {"partStates":{"gun":{
         "boltPulling" : {
           "properties" : {
-            "image" : "<partImage>:boltpulling.<frame>"
+            "image" : "<partImage>:boltpulling.<frame><paletteSwaps>"
           }
         }
       }}}},

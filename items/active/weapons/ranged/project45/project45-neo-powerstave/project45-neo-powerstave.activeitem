@@ -97,7 +97,7 @@
             "gun": {
               "firingLoop": {
                 "properties": {
-                  "image" : "<partImage>:firingloop.<frame>"
+                  "image" : "<partImage>:firingloop.<frame><paletteSwaps>"
                 }
               }
             }
@@ -108,7 +108,7 @@
             "gun": {
               "firingLoop": {
                 "properties": {
-                  "image" : "<partImage>:firingloop.<frame>"
+                  "image" : "<partImage>:firingloop.<frame><paletteSwaps>"
                 }
               }
             }
