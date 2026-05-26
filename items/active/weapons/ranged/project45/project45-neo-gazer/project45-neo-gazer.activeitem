@@ -118,6 +118,9 @@
       "enabled": false
     }
   },
+  
+  "palette" : "/configs/project45/project45.weaponcolors",
+  "colorIndex": 4,
 
   "builder" : "/items/buildscripts/buildproject45neoneo.lua"
 }

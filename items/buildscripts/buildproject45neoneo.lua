@@ -267,7 +267,7 @@ function build(directory, config, parameters, level, seed)
   -- dynamic magazine particle
   -- allows palette swaps to affect dropped magazine
   -- completely replaces config.animationCustom.particleEmitters.magazine.particles
-  local magParticles = configParameter("magazineParticles", {nil})
+  local magParticles = configParameter("magazineParticles", nil)
   if magParticles then
       construct(config, "animationCustom", "particleEmitters", "magazine", "particles")
       config.animationCustom.particleEmitters.magazine.particles = {nil}
