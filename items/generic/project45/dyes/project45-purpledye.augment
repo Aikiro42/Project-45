@@ -1,0 +1,15 @@
+{
+  "itemName" : "project45-purpledye",
+  "price" : 25,
+  "rarity" : "Essential",
+  "category" : "clothingDye",
+  "inventoryIcon" : "project45-purpledye.png",
+  "description" : "This coloured dye can be applied to a piece of armour or clothing with a right-click.",
+  "shortdescription" : "Project 45 Dye",
+
+  "dyeColorIndex" : 2,
+
+  "radioMessagesOnPickup" : [ "pickupdye" ],
+
+  "scripts" : [ "/scripts/augments/project45-dye.lua" ]
+}

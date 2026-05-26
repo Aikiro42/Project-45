@@ -125,7 +125,7 @@ function apply(output, augment)
       newAnimationCustom.animatedParts.parts[augment.slot].properties.offset = vec2.add(
           output.config[augment.slot .. "Offset"] or {0, 0}, augment.sprite.offset or {0, 0})
       newAnimationCustom.animatedParts.parts[augment.slot].properties.image =
-          augment.sprite.image .. flipDirective .. "<directives>"
+          augment.sprite.image .. flipDirective .. "<paletteSwaps><directives>"
 
       if augment.sprite.imageFullbright then
         
@@ -141,7 +141,7 @@ function apply(output, augment)
         newAnimationCustom.animatedParts.parts[fullbrightSlot].properties.offset = vec2.add(
             output.config[augment.slot .. "Offset"] or {0, 0}, augment.sprite.offset or {0, 0})
         newAnimationCustom.animatedParts.parts[fullbrightSlot].properties.image =
-          augment.sprite.imageFullbright .. flipDirective .. "<directives>"
+          augment.sprite.imageFullbright .. flipDirective .. "<paletteSwaps><directives>"
       end
     elseif flipSlots[augment.slot] then
       -- if the sprite is set up in the weaponability and we need to fiddle with it,

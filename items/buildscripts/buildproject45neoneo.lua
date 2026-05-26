@@ -255,13 +255,15 @@ function build(directory, config, parameters, level, seed)
 
   -- palette swaps
   config.paletteSwaps = ""
-  if config.palette then
+  local colorIndex = configParameter("colorIndex", 0)
+  if config.palette and colorIndex > 0 then
     local palette = root.assetJson(util.absolutePath(directory, config.palette))
-    local selectedSwaps = palette.swaps[configParameter("colorIndex", 1)]
+    local selectedSwaps = palette.swaps[colorIndex]
     for k, v in pairs(selectedSwaps) do
       config.paletteSwaps = string.format("%s?replace=%s=%s", config.paletteSwaps, k, v)
     end
   end
+  
   if type(config.inventoryIcon) == "string" then
     config.inventoryIcon = config.inventoryIcon .. config.paletteSwaps
   else
