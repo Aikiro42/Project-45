@@ -36,13 +36,13 @@
       "sawblade"
     ]
   },
-
+  "magazineParticles": [
+    {"specs": "/particles/project45/magazines/project45sawbladermag/project45sawbladermag.particle:definition"}
+  ],
   "animationCustom": {
     "particleEmitters": {
       "magazine": {
-        "particles": [
-          {"particle": "project45sawbladermag"}
-        ]
+        "particles": [ ]
       },
       "ejectionPort": {
         "particles": []

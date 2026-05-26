@@ -48,13 +48,13 @@
       ]
     }
   },
-
+  "magazineParticles": [
+    {"specs": "/particles/project45/magazines/project45gaussriflemag/project45gaussriflemag.particle:definition"}
+  ],
   "animationCustom": {
     "particleEmitters": {
       "magazine": {
-        "particles": [
-          {"particle": "project45gaussriflemag"}
-        ]
+        "particles": [ ]
       },
       "muzzleFlash": {
         "particles": [

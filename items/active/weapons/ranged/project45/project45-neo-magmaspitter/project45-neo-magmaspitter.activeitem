@@ -30,7 +30,9 @@
     "magazine": "",
     "magazineFullbright": ""
   },
-
+  "magazineParticles": [
+    {"specs": "/particles/project45/magazines/project45magmaspittermag/project45magmaspittermag.particle:definition"}
+  ],
   "animationCustom": {
     "particleEmitters": {
       "ejectionPort": {
@@ -42,9 +44,7 @@
         ]
       },
       "magazine": {
-        "particles": [
-          {"particle": "project45magmaspittermag"}
-        ]
+        "particles": [ ]
       },
       "muzzleFlash": {
         "particles": [

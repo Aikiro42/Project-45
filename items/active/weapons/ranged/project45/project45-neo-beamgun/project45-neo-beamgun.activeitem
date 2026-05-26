@@ -45,13 +45,13 @@
       "magazine"
     ]
   },
-
+  "magazineParticles": [
+    {"specs": "/particles/project45/magazines/project45energygunmag/project45energygunmag3.particle:definition"}
+  ],
   "animationCustom": {
     "particleEmitters": {
       "magazine": {
-        "particles": [
-          {"particle": "project45energygunmag3"}
-        ]
+        "particles": []
       },
       "ejectionPort": {
         "particles": [

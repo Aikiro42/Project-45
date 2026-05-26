@@ -24,7 +24,9 @@
     "magazineFullbright": "",
     "muzzleFlash": "/items/active/weapons/ranged/project45-muzzleflash.png"
   },
-
+  "magazineParticles": [
+    {"specs": "/particles/project45/magazines/project45pistolmag/project45pistolmag.particle:definition"}
+  ],
   "animationCustom": {
     "particleEmitters": {
       "ejectionPort": {
@@ -33,9 +35,7 @@
         ]
       },
       "magazine": {
-        "particles": [
-          {"particle": "project45pistolmag"}
-        ]
+        "particles": [ ]
       }
     },
 

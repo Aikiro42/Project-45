@@ -23,7 +23,9 @@
     "magazine": "project45-neo-smg-mag.png",
     "magazineFullbright": ""
   },
-
+  "magazineParticles": [
+    {"specs": "/particles/project45/magazines/project45smgmag/project45smgmag.particle:definition"}
+  ],
   "animationCustom": {
     "particleEmitters": {
       "ejectionPort": {
@@ -32,9 +34,7 @@
         ]
       },
       "magazine": {
-        "particles": [
-          {"particle": "project45smgmag"}
-        ]
+        "particles": [ ]
       }
     },
 

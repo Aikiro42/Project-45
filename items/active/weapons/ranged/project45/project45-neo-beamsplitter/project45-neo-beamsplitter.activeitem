@@ -23,7 +23,9 @@
     "magazine": "project45-neo-beamsplitter-mag.png",
     "magazineFullbright": ""
   },
-
+  "magazineParticles": [
+    {"specs": "/particles/project45/magazines/project45energygunmag/project45energygunmag.particle:definition"}
+  ],
   "animationCustom": {
     "particleEmitters": {
       "ejectionPort": {
@@ -31,9 +33,7 @@
         ]
       },
       "magazine": {
-        "particles": [
-          {"particle": "project45energygunmag"}
-        ]
+        "particles": [ ]
       },
       "muzzleFlash": {
         "particles": [

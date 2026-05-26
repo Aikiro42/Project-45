@@ -23,7 +23,9 @@
     "magazine": "project45-neo-wristgun-mag.png",
     "magazineFullbright": ""
   },
-
+  "magazineParticles": [
+    {"specs": "/particles/project45/magazines/project45pistolmag/project45pistolmag.particle:definition"}
+  ],
   "animationCustom": {
     "particleEmitters": {
       "ejectionPort": {
@@ -37,9 +39,7 @@
         ]
       },
       "magazine": {
-        "particles": [
-          {"particle": "project45pistolmag"}
-        ]
+        "particles": [ ]
       }
     },
 

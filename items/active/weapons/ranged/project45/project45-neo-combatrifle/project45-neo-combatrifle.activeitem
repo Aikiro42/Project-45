@@ -24,6 +24,9 @@
     "magazineFullbright": ""
   },
 
+  "magazineParticles": [
+    {"specs": "/particles/project45/magazines/project45combatriflemag/project45combatriflemag.particle:definition"}
+  ],
   "animationCustom": {
     "particleEmitters": {
       "ejectionPort": {
@@ -32,9 +35,7 @@
         ]
       },
       "magazine": {
-        "particles": [
-          {"particle": "project45combatriflemag"}
-        ]
+        "particles": [ ]
       }
     },
 

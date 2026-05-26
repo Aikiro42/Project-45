@@ -30,7 +30,9 @@
     "magazine": "project45-scz-spacecowboy-mag.png",
     "magazineFullbright": ""
   },
-
+  "magazineParticles": [
+    {"specs": "/particles/project45/magazines/special/project45spacecowboymag/project45spacecowboymag.particle:definition"}
+  ],
   "animationCustom": {
     "animatedParts": {
       "parts":{
@@ -60,9 +62,7 @@
         ]
       },
       "magazine": {
-        "particles": [
-          {"particle": "project45spacecowboymag"}
-        ]
+        "particles": [ ]
       }
     },
 

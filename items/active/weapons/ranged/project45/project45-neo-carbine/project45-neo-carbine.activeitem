@@ -23,7 +23,9 @@
     "magazine": "project45-neo-carbine-mag.png",
     "magazineFullbright": ""
   },
-
+  "magazineParticles": [
+    {"specs": "/particles/project45/magazines/project45carbinemag/project45carbinemag.particle:definition"}
+  ],
   "animationCustom": {
     "particleEmitters": {
       "ejectionPort": {
@@ -32,9 +34,7 @@
         ]
       },
       "magazine": {
-        "particles": [
-          {"particle": "project45carbinemag"}
-        ]
+        "particles": [ ]
       }
     },
 

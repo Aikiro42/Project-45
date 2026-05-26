@@ -28,7 +28,9 @@ Credits: 343 Industries, Bungie, Creative Assembly, Ensemble Studios
     "magazine": "project45-hlo-maxx-mag.png",
     "magazineFullbright": ""
   },
-
+  "magazineParticles": [
+    {"specs": "/particles/project45/magazines/special/project45maxxmag/project45maxxmag.particle:definition"}
+  ],
   "animationCustom": {
     "particleEmitters": {
       "ejectionPort": {

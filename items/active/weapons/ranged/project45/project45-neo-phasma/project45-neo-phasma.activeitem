@@ -45,7 +45,9 @@
       "plasma"
     ]
   },
-
+  "magazineParticles": [
+    {"specs": "/particles/project45/magazines/project45energygunmag/project45energygunmag3.particle:definition"}
+  ],
   "animationCustom": {
     "particleEmitters": {
       "ejectionPort": {

@@ -38,7 +38,9 @@
       "grenade"
     ]
   },
-
+  "magazineParticles": [
+    {"specs": "/particles/project45/magazines/project45grenadelaunchermag/project45grenadelaunchermag.particle:definition"}
+  ],
   "animationCustom": {
     "particleEmitters": {
       "muzzleFlash": { "particles": [
@@ -56,9 +58,7 @@
         ]
       },
       "magazine": {
-        "particles": [
-          {"particle": "project45grenadelaunchermag"}
-        ]
+        "particles": [ ]
       }
     },
 

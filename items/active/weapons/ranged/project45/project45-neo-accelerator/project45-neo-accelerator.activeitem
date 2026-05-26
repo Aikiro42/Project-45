@@ -45,6 +45,10 @@
     "magazineFullbright": ""
   },
 
+  "magazineParticles": [
+    {"specs": "/particles/project45/magazines/project45energygunmag/project45energygunmag3.particle:definition"}
+  ],
+
   "animationCustom": {
     "particleEmitters": {
       "ejectionPort": {
@@ -52,9 +56,7 @@
         ]
       },
       "magazine": {
-        "particles": [
-          {"particle": "project45energygunmag3"}
-        ]
+        "particles": []
       },
       "muzzleFlash": {
         "particles": [

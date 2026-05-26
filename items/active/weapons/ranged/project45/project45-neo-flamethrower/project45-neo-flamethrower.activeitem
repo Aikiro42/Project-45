@@ -40,7 +40,9 @@
       "gas"
     ]
   },
-
+  "magazineParticles": [
+    {"specs": "/particles/project45/magazines/project45flamethrowertank/project45flamethrowertank.particle:definition"}
+  ],
   "animationCustom": {
     "particleEmitters": {
       "ejectionPort": {
@@ -48,9 +50,7 @@
         ]
       },
       "magazine": {
-        "particles": [
-          {"particle": "project45flamethrowertank"}
-        ]
+        "particles": [ ]
       },
       "muzzleFlash": {
         "particles": [

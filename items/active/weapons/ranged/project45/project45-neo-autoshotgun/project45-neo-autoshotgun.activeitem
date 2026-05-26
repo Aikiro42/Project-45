@@ -23,7 +23,9 @@
     "magazine": "project45-neo-autoshotgun-mag.png",
     "magazineFullbright": ""
   },
-
+  "magazineParticles": [
+    {"specs": "/particles/project45/magazines/project45autoshotgunmag/project45autoshotgunmag.particle:definition"}
+  ],
   "animationCustom": {
     "particleEmitters": {
       "ejectionPort": {
@@ -31,9 +33,7 @@
         ]
       },
       "magazine": {
-        "particles": [
-          {"particle": "project45autoshotgunmag"}
-        ]
+        "particles": []
       }
     },
 

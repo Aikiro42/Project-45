@@ -41,7 +41,9 @@
     "magazine": "project45-neo-crossbow-mag.png",
     "magazineFullbright": ""
   },
-
+  "magazineParticles": [
+    {"specs": "/particles/project45/magazines/project45crossbowmag/project45crossbowmag.particle:definition"}
+  ],
   "animationCustom": {
     "particleEmitters": {
       "ejectionPort": {
@@ -50,9 +52,7 @@
         ]
       },
       "magazine": {
-        "particles": [
-          {"particle": "project45crossbowmag"}
-        ]
+        "particles": [ ]
       },
       "muzzleFlash": {
         "particles": [

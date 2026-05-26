@@ -23,7 +23,9 @@
     "magazine": "project45-neo-smartgun-mag.png",
     "magazineFullbright": ""
   },
-
+  "magazineParticles": [
+    {"specs": "/particles/project45/magazines/project45smartgunmag/project45smartgunmag.particle:definition"}
+  ],
   "animationCustom": {
     "particleEmitters": {
       "ejectionPort": {
@@ -51,9 +53,7 @@
         ]
       },
       "magazine": {
-        "particles": [
-          {"particle": "project45smartgunmag"}
-        ]
+        "particles": [ ]
       },
       "muzzleFlash": {
         "particles": [

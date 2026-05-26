@@ -1,8 +1,10 @@
 - TODO: make vanilla dyes affect project 45 weapons (if a mod does it, great nvm)
-- TODO: make dyes affect magazine particles?
 # New
 - dyeing works now but needs a custom script and items that use that script.
 - The Solarium Alloy mod can now change a weapon's color (if the weapon is properly configured)
+
+# Changes
+- Changed how certain guns spawn magazine particles on reload.
 
 # New (Modders)
 - you can now set magazine particles differently in a way that they're affected by the palette swaps:
@@ -23,3 +25,8 @@
 
   If you still wanna configure the particles via animationCustom, then just omit this field.
 - You can now make gun mods dye the weapon by configuring their 'augment.dyeColorIndex' field
+
+# Changes (Modders)
+- Moved around some magazine particle files, particularly:
+  - project45boneshootermag
+  - project45magmaspittermag
