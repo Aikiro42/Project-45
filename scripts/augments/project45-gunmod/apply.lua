@@ -287,6 +287,11 @@ function apply(input)
     table.insert(newModSlots[checker.augment.slot], config.getParameter("inventoryIcon"))
   end
 
+  -- dye
+  if checker.augment.dyeColorIndex then
+    checker.output:setInstanceValue("colorIndex", checker.augment.dyeColorIndex)
+  end
+
   checker.output:setInstanceValue("moddedPrice", checker.output:instanceValue("moddedPrice", 0) + priceAdd)
   checker.output:setInstanceValue("modSlots", newModSlots)
   checker.output:setInstanceValue("upgradeCount", checker.output:instanceValue("upgradeCount", 0) + checker.augment.cost)

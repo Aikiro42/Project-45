@@ -4,6 +4,8 @@
   "swaps" : [
     // monochrome
     {
+      // ceramic -> mono
+      "dbe2e5" : "555555", "c2c9cc" : "373737", "747d7b" : "262626", "5b6564" : "151515",
       // ballistic polymer -> mono
       "7a7c6d" : "808080", "4f5047" : "606060", "353630" : "404040", "1a1a17" : "202020",
       // energy polymer -> mono
@@ -16,22 +18,39 @@
 
     // ballistic
     {
-      // energy polymer -> ballistic polymer
-      "9a5da0" : "7a7c6d", "593363" : "4f5047", "321842" : "353630", "120322" : "1a1a17"
+      // energy polymer, ceramic -> ballistic polymer
+      "9a5da0" : "7a7c6d", "593363" : "4f5047", "321842" : "353630", "120322" : "1a1a17",
+      "dbe2e5" : "7a7c6d", "c2c9cc" : "4f5047", "747d7b" : "353630", "5b6564" : "1a1a17"
     },
 
     // pure ballistic
     {
-      // energy polymer, wood -> ballistic polymer
+      // energy polymer, wood, ceramic -> ballistic polymer
       "9a5da0" : "7a7c6d", "593363" : "4f5047", "321842" : "353630", "120322" : "1a1a17",
-      "8b431f" : "7a7c6d", "68341b" : "4f5047", "56280c" : "353630", "321807" : "1a1a17"
+      "8b431f" : "7a7c6d", "68341b" : "4f5047", "56280c" : "353630", "321807" : "1a1a17",
+      "dbe2e5" : "7a7c6d", "c2c9cc" : "4f5047", "747d7b" : "353630", "5b6564" : "1a1a17"
     },
     
     // pure energy
     {
-      // ballistic polymer, wood -> energy polymer
+      // ballistic polymer, wood, ceramic -> energy polymer
       "7a7c6d" : "9a5da0", "4f5047" : "593363", "353630" : "321842", "1a1a17" : "120322",
-      "8b431f" : "9a5da0", "68341b" : "593363", "56280c" : "321842", "321807" : "120322"
+      "8b431f" : "9a5da0", "68341b" : "593363", "56280c" : "321842", "321807" : "120322",
+      "dbe2e5" : "7a7c6d", "c2c9cc" : "4f5047", "747d7b" : "353630", "5b6564" : "1a1a17"
+    },
+
+    // solarium
+    {
+      // ceramic -> solarium
+      "dbe2e5" : "ffffa7", "c2c9cc" : "e2c344", "747d7b" : "a46e06", "5b6564" : "642f00",
+      // ballistic polymer -> solarium
+      "7a7c6d" : "ffffa7", "4f5047" : "e2c344", "353630" : "a46e06", "1a1a17" : "642f00",
+      // energy polymer -> solarium
+      "9a5da0" : "ffffa7", "593363" : "e2c344", "321842" : "a46e06", "120322" : "642f00",
+      // gunmetal -> mono
+      "5c6d74" : "707070", "3f4855" : "505050", "292b3b" : "303030", "130f1b" : "101010",
+      // wood -> mono
+      "8b431f" : "555555", "68341b" : "373737", "56280c" : "262626", "321807" : "151515"
     }
   ]
 }
