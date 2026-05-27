@@ -63,13 +63,13 @@
 ## New Features
 
 ### General
-- [ ] Dyeing (Notorious Penor Snipper)
 - [ ] Stat Limit Mod (joon208)
   - > Some weapon stats what player can customize, but they allow player only to add limitations, max ammo, max multishoot etc
   - Warframe Acuity Mods
 - [ ] A station similar to G.D.K that instead changes underbarrel mods bind to shift would be really usefull for example a sniper with a bayonet - valkikot
 - [ ] Admin Wildcard Mod Creator Station (xatreyu87)
 - [ ] Ability key reassignment (AtomicBeaverCleaver)
+- [x] Dyeing (Notorious Penor Snipper)
 - [x] Project 45 Item Crafting
   - Possible via the craftable Gunsmith Addon (Inventor's Table)
 - [x] Portable Gun Disassembly Kit
