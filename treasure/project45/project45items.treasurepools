@@ -208,6 +208,7 @@
         // UNCOMMON
         {"weight" : 0.5, "item" : "project45-reflexsightsmod"},
         {"weight" : 0.5, "item" : "project45-lasermod"},
+        {"weight" : 0.5, "item" : "project45-flashlightmod"},
         {"weight" : 0.5, "item" : "project45-extendedmagmod"},
         {"weight" : 0.5, "item" : "project45-alofsmagmod"},
         {"weight" : 0.5, "item" : "project45-overampmod"},

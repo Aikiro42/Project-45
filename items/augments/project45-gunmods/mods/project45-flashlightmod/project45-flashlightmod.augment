@@ -1,0 +1,48 @@
+{
+  "itemName": "project45-flashlightmod",
+  "price": 300,
+  "rarity": "Uncommon",
+  "tooltipKind": "project45gunmod2",
+  "modCategory": "gunMod",
+  "category": "uniqueWeapon",
+  "itemTags": ["weapon"],
+  "tooltipFields": {
+    "subtitle": "Gun Mod",
+    "objectImage": "/items/augments/project45-gunmods/mods/project45-flashlightmod/project45-flashlightmod.png"
+  },
+  "inventoryIcon": "/items/augments/project45-gunmods/mods/project45-flashlightmod/project45-flashlightmodicon.png",
+  "description": "A flashlight that can't be turned off. It oddly never runs out of battery.",
+  "technicalInfo": "Enables flashlight.",
+  "statInfo": "--",
+  "shortdescription": "Flashlight",
+
+  "augment": {
+    "modName": "Flashlight",
+    "category": "universal",
+    "slot": "rail",
+    "gun": {
+      "sprite": {
+        "zLevel": 5,
+        "centered": true,
+        "image": "/items/augments/project45-gunmods/mods/project45-flashlightmod/project45-flashlightmodsprite.png",
+        "offset": [0, 0]
+      },
+      "animationCustom": {
+        "lights" : {
+          "flashlight" : {
+            "active" : true,
+            "position" : [-0.25, -0.5],
+            "transformationGroups" : ["muzzle"],
+            "color" : [200, 200, 200],
+            "pointLight" : true,
+            "pointAngle" : 0.00,
+            "pointBeam" : 2.5
+          }
+        }
+      }
+    }
+  },
+
+  "scripts": ["/scripts/augments/project45-gunmod/apply.lua"],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
+}

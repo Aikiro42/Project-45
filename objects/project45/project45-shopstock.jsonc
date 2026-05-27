@@ -107,6 +107,7 @@
       "general": [
         "project45-reflexsightsmod",
         "project45-lasermod",
+        "project45-flashlightmod",
         "project45-extendedmagmod",
         "project45-stockmod"
       ],
@@ -117,6 +118,7 @@
         "project45-mlgscopemod",
         // rail
         "project45-lasermod",
+        "project45-flashlightmod",
         "project45-bowstabilizermod",
         "project45-orbitaltranspondermod",
         "project45-enemyradarmod",
