@@ -305,6 +305,7 @@
       "general": [
         "project45-dye-monochrome",
         "project45-dye-ballistic",
+        "project45-dye-ornate",
         "project45-dye-energy",
         "project45-dye-adamantite",
         "nanowrap",
@@ -314,7 +315,8 @@
         "dubloon"
       ],
       "ballistic": [
-        "project45-dye-ballistic"
+        "project45-dye-ballistic",
+        "project45-dye-ornate"
       ],
       "energy": [
         "project45-dye-energy"
@@ -326,9 +328,12 @@
   },
 
   "noInflation": [
+    "project45-dye-monochrome",
     "project45-dye-ballistic",
+    "project45-dye-ornate",
     "project45-dye-energy",
     "project45-dye-adamantite",
+
     "nanowrap",        
     "manipulatormodule",
     "techcard",

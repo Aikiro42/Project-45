@@ -8,8 +8,9 @@
     "pure_energy": 4,
     "solarium": 5,
     "adamantite": 6,
-    "default": 7,
-    "debug": 8
+    "ornate": 7,
+    "default": 8,
+    "debug": 9
   },
   "swaps" : [
     // monochrome
@@ -35,6 +36,7 @@
     // ballistic
     {
       // energy polymer, ceramic -> ballistic polymer
+      "e7c474" : "7a7c6d", "c88b28" : "4f5047", "8d581c" : "353630", "663b14" : "1a1a17",
       "9a5da0" : "7a7c6d", "593363" : "4f5047", "321842" : "353630", "120322" : "1a1a17",
       "dbe2e5" : "7a7c6d", "c2c9cc" : "4f5047", "747d7b" : "353630", "5b6564" : "1a1a17"
     },
@@ -96,6 +98,15 @@
       // wood -> red
       "8b431f" : "e15349", "68341b" : "9e2118", "56280c" : "520803", "321807" : "300603",  // deep ornate
       "a47844" : "e15349", "754c23" : "9e2118", "472b13" : "520803", "201205" : "300603"   // fresh cut
+    },
+
+    // ornate
+    {
+      // polymer, ceramic -> deep ornate
+      "7a7c6d" : "8b431f", "4f5047" : "68341b", "353630" : "56280c", "1a1a17" : "321807", // ballistic
+      "9a5da0" : "8b431f", "593363" : "68341b", "321842" : "56280c", "120322" : "321807", // energy
+      "e7c474" : "8b431f", "c88b28" : "68341b", "8d581c" : "56280c", "663b14" : "321807", // protectorate
+      "dbe2e5" : "8b431f", "c2c9cc" : "68341b", "747d7b" : "56280c", "5b6564" : "321807"
     },
 
     // default
