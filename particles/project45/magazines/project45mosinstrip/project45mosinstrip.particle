@@ -1,8 +1,8 @@
 {
   "kind" : "project45mosinstrip",
   "definition" : {
-    "type" : "animated",
-    "image" : "/particles/project45/magazines/project45mosinstrip/project45mosinstrip.animation",
+    "type" : "textured",
+    "image" : "/particles/project45/magazines/project45mosinstrip/project45mosinstrip.png",
     "fade" : 0.9,
 	"position" : [0, 0],
 	"size" : 1.0,
