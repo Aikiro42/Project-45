@@ -59,6 +59,9 @@
     "class" : "AltFireAttack",
 
     "projectileType" : "project45stdbullet",
+    "projectileParameters": {
+      "speed": 241
+    },
 
     // use baseDps and fireTime from primary fire
 
