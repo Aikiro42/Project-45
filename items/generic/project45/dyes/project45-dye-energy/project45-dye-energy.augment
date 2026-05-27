@@ -1,0 +1,23 @@
+{
+  "itemName" : "project45-dye-energy",
+  "price" : 25,
+  "rarity" : "Rare",
+  "category" : "clothingDye",
+  "inventoryIcon" : "project45-dye-energyicon.png",
+  "description" : "Apply to paint your weapon ^#9a5da0;Energy Purple^reset;!",
+  "shortdescription" : "P45 Energy Dye",
+
+  "tooltipKind" : "project45gunmod",
+  "tooltipFields":{
+    "subtitle": "Applied Utility",
+    "objectImage": "/items/generic/project45/dyes/project45-dye-energy/project45-dye-energy.png"
+  },
+
+  // Can be a number (1-based index) corresponding to the swap in configs/project45/project45.weaponcolors
+  // Can also be an alias, as shown here.
+  "dyeColorIndex" : "pure_energy",
+
+  "radioMessagesOnPickup" : [ "pickupdye" ],
+
+  "scripts" : [ "/scripts/augments/project45-dye.lua" ]
+}

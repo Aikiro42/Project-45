@@ -1,0 +1,23 @@
+{
+  "itemName" : "project45-dye-ballistic",
+  "price" : 25,
+  "rarity" : "Rare",
+  "category" : "clothingDye",
+  "inventoryIcon" : "project45-dye-ballisticicon.png",
+  "description" : "Apply to paint your weapon ^#7a7c6d;Ballistic Green^reset;!",
+  "shortdescription" : "P45 Ballistic Dye",
+
+  "tooltipKind" : "project45gunmod",
+  "tooltipFields":{
+    "subtitle": "Applied Utility",
+    "objectImage": "/items/generic/project45/dyes/project45-dye-ballistic/project45-dye-ballistic.png"
+  },
+
+  // Can be a number (1-based index) corresponding to the swap in configs/project45/project45.weaponcolors
+  // Can also be an alias, as shown here.
+  "dyeColorIndex" : "pure_ballistic",
+
+  "radioMessagesOnPickup" : [ "pickupdye" ],
+
+  "scripts" : [ "/scripts/augments/project45-dye.lua" ]
+}

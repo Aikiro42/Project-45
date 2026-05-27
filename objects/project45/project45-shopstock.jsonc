@@ -303,19 +303,32 @@
         "project45-enemyflare"
       ],
       "general": [
-        "nanowrap",        
+        "project45-dye-monochrome",
+        "project45-dye-ballistic",
+        "project45-dye-energy",
+        "project45-dye-adamantite",
+        "nanowrap",
         "manipulatormodule",
         "techcard",
         "upgrademodule",
         "dubloon"
       ],
-      "ballistic": [],
-      "energy": [],
-      "experimental": []
+      "ballistic": [
+        "project45-dye-ballistic"
+      ],
+      "energy": [
+        "project45-dye-energy"
+      ],
+      "experimental": [
+        "project45-dye-adamantite"
+      ]
     }
   },
 
   "noInflation": [
+    "project45-dye-ballistic",
+    "project45-dye-energy",
+    "project45-dye-adamantite",
     "nanowrap",        
     "manipulatormodule",
     "techcard",

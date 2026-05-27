@@ -2,6 +2,7 @@
 # New
 - dyeing works now but needs a custom script and items that use that script.
 - The Solarium Alloy mod can now change a weapon's color (if the weapon is properly configured)
+- Added new dyes to the shops under the "Util" section.
 
 # Changes
 - Changed how certain guns spawn magazine particles on reload.

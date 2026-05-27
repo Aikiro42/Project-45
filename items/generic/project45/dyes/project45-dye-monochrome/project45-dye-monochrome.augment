@@ -1,0 +1,23 @@
+{
+  "itemName" : "project45-dye-monochrome",
+  "price" : 25,
+  "rarity" : "Rare",
+  "category" : "clothingDye",
+  "inventoryIcon" : "project45-dye-monochromeicon.png",
+  "description" : "Apply to paint your weapon Monochrome!",
+  "shortdescription" : "P45 Monochrome Dye",
+
+  "tooltipKind" : "project45gunmod",
+  "tooltipFields":{
+    "subtitle": "Applied Utility",
+    "objectImage": "/items/generic/project45/dyes/project45-dye-monochrome/project45-dye-monochrome.png"
+  },
+
+  // Can be a number (1-based index) corresponding to the swap in configs/project45/project45.weaponcolors
+  // Can also be an alias, as shown here.
+  "dyeColorIndex" : "monochrome",
+
+  "radioMessagesOnPickup" : [ "pickupdye" ],
+
+  "scripts" : [ "/scripts/augments/project45-dye.lua" ]
+}
