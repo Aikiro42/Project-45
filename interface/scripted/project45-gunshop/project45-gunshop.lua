@@ -51,14 +51,21 @@ function init()
   self.seededItems = set.new(
     config.getParameter("seededItems", {})
   )
-
-  self.seededItems = set.union(self.seededItems, shopStocks.seededItems)
-  self.seededItems = set.union(self.seededItems, self.goods.guns)
+  for _, v in ipairs(shopStocks.seededItems) do
+    self.seededItems[v] = true
+  end
+  for _, v in ipairs(self.goods.guns) do
+    self.seededItems[v] = true
+  end
+  -- self.seededItems = set.union(self.seededItems, self.goods.guns)
+  
   self.noInflation = set.new(
     config.getParameter("noInflation", {})
   )
-  self.noInflation = set.union(self.noInflation, shopStocks.noInflation)
-  
+  for _, v in ipairs(shopStocks.noInflation) do
+    self.noInflation[v] = true
+  end
+
   self.mode = "guns"
   widget.setSelectedOption("shopTabs", 1)
 
