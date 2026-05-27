@@ -215,6 +215,6 @@
     "shiftActivates": true,
     "checkAbility": true
   },
-
+  "disallowDyeing": true,
   "builder" : "/items/buildscripts/buildproject45neoneo.lua"
 }

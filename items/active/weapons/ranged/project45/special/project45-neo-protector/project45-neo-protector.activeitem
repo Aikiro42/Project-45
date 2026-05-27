@@ -24,7 +24,9 @@
     "magazine": "project45-neo-protector-mag.png",
     "magazineFullbright": ""
   },
-
+  "magazineParticles": [
+    {"specs": "/particles/project45/magazines/project45assaultriflemag/project45assaultriflemag.particle:definition"}
+  ],
   "animationCustom": {
     "particleEmitters": {
       "ejectionPort": {
@@ -33,9 +35,7 @@
         ]
       },
       "magazine": {
-        "particles": [
-          {"particle": "project45assaultriflemag"}
-        ]
+        "particles": [ ]
       }
     },
 

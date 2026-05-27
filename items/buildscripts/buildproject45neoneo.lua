@@ -254,13 +254,22 @@ function build(directory, config, parameters, level, seed)
     * generalConfig.globalDamageMultiplier
 
   -- palette swaps
+  -- if weapon can't be dyed anyway, just skip this code
   config.paletteSwaps = ""
-  local colorIndex = configParameter("colorIndex", 0)
-  if config.palette and colorIndex > 0 then
-    local palette = root.assetJson(util.absolutePath(directory, config.palette))
-    local selectedSwaps = palette.swaps[colorIndex]
-    for k, v in pairs(selectedSwaps) do
-      config.paletteSwaps = string.format("%s?replace=%s=%s", config.paletteSwaps, k, v)
+  if not configParameter("disallowDyeing", false) then
+    config.palette = "/configs/project45/project45.weaponcolors"
+    local colorIndex = configParameter("colorIndex", "debug")
+    if config.palette then
+      local palette = root.assetJson(util.absolutePath(directory, config.palette))
+      if type(colorIndex) == "string" then
+        colorIndex = palette.aliases[colorIndex]
+      end
+      if colorIndex > 0 then
+        local selectedSwaps = palette.swaps[colorIndex]
+        for k, v in pairs(selectedSwaps) do
+          config.paletteSwaps = string.format("%s?replace=%s=%s", config.paletteSwaps, k, v)
+        end
+      end
     end
   end
 

@@ -156,6 +156,8 @@ function apply(input)
     "conversion": string
     --]]
     local conversionStatAugment = {}
+-- FIXME:
+---@diagnostic disable-next-line: cast-local-type
     checker.output, conversionStatAugment = applyConversion(checker.output, checker.augment.conversion)
     
     if conversionStatAugment then
@@ -288,7 +290,7 @@ function apply(input)
   end
 
   -- dye
-  if checker.augment.dyeColorIndex then
+  if checker.augment.dyeColorIndex and not checker.output:instanceValue("disallowDyeing") then
     checker.output:setInstanceValue("colorIndex", checker.augment.dyeColorIndex)
   end
 

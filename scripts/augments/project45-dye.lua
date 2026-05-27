@@ -7,7 +7,7 @@ function apply(input)
 
   local dyeColorIndex = config.getParameter("dyeColorIndex")
   
-  if dyeColorIndex then
+  if dyeColorIndex and not output:instanceValue("disallowDyeing") then
     output:setInstanceValue("colorIndex", dyeColorIndex)
     output:setInstanceValue("project45GunModInfo", {})
     output:setInstanceValue("isModded", true)
