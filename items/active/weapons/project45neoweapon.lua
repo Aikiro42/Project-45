@@ -28,6 +28,7 @@ function Weapon:init()
   self.newWeaponOffset = self.weaponOffset
   self.oldWeaponRotationCenter = {0, 0}
   self.newWeaponRotationCenter = {0, 0}
+  self.relativeWeaponRotationCenter = {0, 0}
 
 end
 
