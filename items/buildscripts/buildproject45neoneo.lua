@@ -258,7 +258,7 @@ function build(directory, config, parameters, level, seed)
   config.paletteSwaps = ""
   if not configParameter("disallowDyeing", false) then
     config.palette = "/configs/project45/project45.weaponcolors"
-    local colorIndex = configParameter("colorIndex", "debug")
+    local colorIndex = configParameter("colorIndex", "default")
     if config.palette then
       local palette = root.assetJson(util.absolutePath(directory, config.palette))
       if type(colorIndex) == "string" then
