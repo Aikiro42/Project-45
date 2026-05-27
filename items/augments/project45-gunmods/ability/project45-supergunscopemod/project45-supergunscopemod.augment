@@ -39,7 +39,7 @@
           "parts":{
             "sights": {
               "properties": {
-                "image" : "/items/augments/project45-gunmods/ability/project45-supergunscopemod/project45-supergunscopemodsprite.png<directives>"
+                "image" : "/items/augments/project45-gunmods/ability/project45-supergunscopemod/project45-supergunscopemodsprite.png<paletteSwaps><directives>"
               }
             }
           }
