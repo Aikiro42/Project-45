@@ -44,7 +44,7 @@ function Project45GunFire:init()
   local powerMultFactor = (player and player.getProperty or status.statusProperty)("project45_damageScaling", generalConfig.damageScaling or 0)
   local challengeMultFactor = (player and player.getProperty or status.statusProperty)("project45_challengeScaling", generalConfig.challengeScaling or 0)
   self.powerMultiplier = 1 + powerMultFactor * (activeItem.ownerPowerMultiplier() - 1)
-  storage.challengeMultiplier = util.clamp(challengeMultFactor, 0, 0.9)
+  storage.challengeMultiplier = util.clamp(challengeMultFactor, 0, 0.99)
   
   self.hideMuzzleSmoke = self.performanceMode or self.hideMuzzleSmoke
   self.weapon.startRecoil = 0
