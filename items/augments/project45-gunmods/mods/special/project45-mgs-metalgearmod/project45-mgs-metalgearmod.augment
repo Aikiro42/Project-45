@@ -1,0 +1,40 @@
+{
+  "itemName" : "project45-mgs-metalgearmod",
+  "price" : 5000,
+  "rarity" : "Essential",
+  "isUnique": true,
+  "tooltipKind" : "project45gunmod2",
+  "modCategory" : "gunMod",
+  "category" : "uniqueWeapon",
+  "itemTags": ["weapon"],
+  "tooltipFields":{
+    "subtitle": "Gun Mod",
+    "objectImage": "/items/augments/project45-gunmods/mods/special/project45-mgs-metalgearmod/project45-mgs-metalgearmod.png"
+  },
+  "inventoryIcon" : "/items/augments/project45-gunmods/mods/special/project45-mgs-metalgearmod/project45-mgs-metalgearmodicon.png",
+  "description" : "A solid metal gear. You couldn't even name it.",
+  "technicalInfo": "Has the memory gone? Are you feeling numb?",
+  "shortdescription" : "Metal Gear",
+
+  "augment":{
+    "modName": "Metal Gear",
+    "category": "ballistic",
+    "slot": "material",
+    "cost": 5,
+    "passive": {
+      "passiveScript" : "/items/augments/project45-gunmods/mods/special/project45-mgs-metalgearmod/project45-mgs-metalgearmod.lua",
+      "passiveDescription": "Infinite ammo if wearing Tough Headband."
+    },
+    "stat": {
+      "baseDamage": {
+        "rebase": 1
+      },
+      "critChance": {
+        "rebaseMult": 0
+      }
+    }
+  },
+   
+  "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
+}
