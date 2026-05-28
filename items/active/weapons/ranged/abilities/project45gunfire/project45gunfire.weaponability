@@ -39,6 +39,12 @@
       // ,"alwaysActive": false
     },
 
+    // Flashlight settings.
+    "flashlight": {
+      "color": [255, 255, 200],
+      "enabled": false
+    },
+
     /*
     Movement settings
     */

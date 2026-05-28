@@ -53,6 +53,38 @@ function apply(output, augment)
         end
       end
 
+      if augment.primaryAbility.flashlight then
+        local flashlight = newPrimaryAbility.flashlight or oldPrimaryAbility.flashlight
+        if flashlight and flashlight.enabled then
+          -- compare more vivid color first
+          if flashlight.color and augment.primaryAbility.flashlight.value.color then
+            local gunBrightness = (
+              flashlight.color[1] + 
+              flashlight.color[2] + 
+              flashlight.color[3]
+            ) / 3
+            local augmentBrightness = (
+              augment.primaryAbility.flashlight.value.color[1] + 
+              augment.primaryAbility.flashlight.value.color[2] + 
+              augment.primaryAbility.flashlight.value.color[3]
+            ) / 3
+            if gunBrightness < augmentBrightness then
+              flashlight.color = augment.primaryAbility.flashlight.value.color
+            end
+          end
+
+          augment.primaryAbility.flashlight = {augment.primaryAbility.flashlight}
+          flashlight.enabled = nil
+          flashlight.alwaysActive = nil
+
+          table.insert(augment.primaryAbility.flashlight, {
+            operation = "merge",
+            value = flashlight
+          })
+          -- sb.logInfo(#augment.primaryAbility.laser)
+        end
+      end
+
       if augment.primaryAbility.heavyWeapon and newPrimaryAbility.heavyWeapon == false then
         augment.primaryAbility.heavyWeapon = nil
       end

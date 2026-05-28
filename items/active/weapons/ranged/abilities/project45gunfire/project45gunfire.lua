@@ -299,6 +299,13 @@ function Project45GunFire:init()
   self.debugModPositions.underbarrel = config.getParameter("underbarrelOffset", {0, 0})
   self.debugModPositions.stock = config.getParameter("stockOffset", {0, 0})
 
+  -- flashlight
+  if self.flashlight.enabled then
+    animator.setLightColor("flashlight", self.flashlight.color)
+    animator.setLightActive("flashlight", true)
+  end
+
+
   -- Finally, run init of passive class
   -- We run it this late to allow the passive to manipulate any
   -- initially-set value.

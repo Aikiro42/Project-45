@@ -14,31 +14,27 @@
   "description": "A flashlight that can't be turned off. It oddly never runs out of battery.",
   "technicalInfo": "Enables flashlight.",
   "statInfo": "--",
-  "shortdescription": "Flashlight",
+  "shortdescription": "Rail Flashlight",
 
   "augment": {
-    "modName": "Flashlight",
+    "modName": "Rail Flashlight",
     "category": "universal",
     "slot": "rail",
     "gun": {
+      "primaryAbility": {
+        "flashlight": {
+          "operation": "replace",
+          "value": {
+            "color": [255,255,200],
+            "enabled": true
+          }
+        }
+      },
       "sprite": {
         "zLevel": 5,
         "centered": true,
         "image": "/items/augments/project45-gunmods/mods/project45-flashlightmod/project45-flashlightmodsprite.png",
         "offset": [0, 0]
-      },
-      "animationCustom": {
-        "lights" : {
-          "flashlight" : {
-            "active" : true,
-            "position" : [-0.25, -0.5],
-            "transformationGroups" : ["muzzle"],
-            "color" : [200, 200, 200],
-            "pointLight" : true,
-            "pointAngle" : 0.00,
-            "pointBeam" : 2.5
-          }
-        }
       }
     }
   },
