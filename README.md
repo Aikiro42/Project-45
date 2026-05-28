@@ -83,7 +83,7 @@
 ### Guns
 - [ ] Energy Grenade Launcher
 - [ ] Ballista / harpoon gun - A heavier crossbow that launches something closer to spears or harpoons.
-- [ ] Saint HLO - A regular laser pistol with a cross motif (also a pun on Han Solo)
+- [x] Saint HLO - A regular laser pistol with a cross motif (also a pun on Han Solo)
 - [x] Plasma Launcher
 - [x] Autocannon
 - [x] Drum-fed Shotgun
@@ -112,7 +112,6 @@
 - [x] Ultrakill Coin
 
 ### Mods
-- [ ] Rail Light (Slot: Rail) light that's always on that you can stick on a rail slot. Basically an alternative to the laser sight. - Rylasasin
 - [ ] Underbarrel Drill (omba)
 - [ ] Underbarrel Flare Launcher: No damage, fires harmless lights (omba)
 - [ ] Pneumatic Mechanism (receiver)
@@ -123,6 +122,7 @@
 - [ ] Lensed focuser (energy barrel, legendary)
   - +3 base damage, +50% multiplicative damage, +50% additive critical damage
   - Intensifies hardlight beamed from the gun's core, increasing damage.
+- [x] Rail Light (Slot: Rail) light that's always on that you can stick on a rail slot. Basically an alternative to the laser sight. - Rylasasin
 - [x] Conversion Kit (multiple slots)
   - Gun-specific; converts select guns into SMGs, etc.
   - Implemented  as transformer kits, completely replacing the weapon
@@ -145,8 +145,6 @@
 - [ ] Lava Rounds
   - Gravity-affected projectiles; spawns lava on projectile death
 - [ ] Flame Summons
-- [x] Weak Gravity Spell
-  - Pulls enemies in and deals electric damage
 - [ ] Ice Spell
   - Encases enemies in an ice cage, dealing damage over time.
 - [ ] Poison Spell
@@ -154,6 +152,8 @@
 - [ ] Guided (Ammo type: Rocket): Rocket will home in towards your cursor. (I honestly prefer this over homing rockets) - Rylasasin
 - [ ] Proximity mine (Ammo Type: Grenade shell): Grenades will stick to where they are shot and explode on proximity after a 1 second arming timer. indiscriminate!! - Rylasasin
 - [ ] Mining bomb (Ammo type: Grenade shell): Grenades do very little damage to enemies but destroy frontal blocks, allowing for quick and messy mining. - Rylasasin
+- [x] Weak Gravity Spell
+  - Pulls enemies in and deals electric damage
 - [x] Fanning ('Stock', Revolver) converts the revolver into a 2-handed weapon where you 'fan' the action. Halves fire time and decreases loading time (if no speedloader present) - Rylasasin
   - Somewhat present as a special firing mode of the Reaper
 - [x] Rocket Jump Ammo
