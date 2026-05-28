@@ -367,6 +367,7 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
   -- update relevant stuff
   self:renderModPositionDebug()
   self:updateUI()
+  self:updateFlashlight()
   self:updateLaser()
   self:updateCharge()
   self:updateAmmoRecharge()
@@ -1543,6 +1544,15 @@ function Project45GunFire:screenShake(amount, shakeTime, random)
 end
 
 -- SECTION:  UPDATE FUNCTIONS
+
+function Project45GunFire:updateFlashlight()
+  if not self.flashlight.enabled then return end
+  if not self.weapon.reloadFlashLasers and (storage.project45GunState.ammo < 0 or self.weapon.reloadTimer >= 0) then
+    animator.setLightActive("flashlight", false)
+  else
+    animator.setLightActive("flashlight", true)
+  end
+end
 
 function Project45GunFire:updateAmmoRecharge(timeDelta)
   if not self.hasRechargingAmmo then return end

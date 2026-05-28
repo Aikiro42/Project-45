@@ -34,6 +34,7 @@
         "zLevel": 5,
         "centered": true,
         "image": "/items/augments/project45-gunmods/mods/project45-flashlightmod/project45-flashlightmodsprite.png",
+        "imageFullbright": "/items/augments/project45-gunmods/mods/project45-flashlightmod/project45-flashlightmodspritefullbright.png",
         "offset": [0, 0]
       }
     }
