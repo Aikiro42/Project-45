@@ -68,6 +68,18 @@
           ]
         }
       ]
+    },
+    {
+      "action": "sound",
+      "options": ["/sfx/melee/laser_weapon_hit.ogg"]
+    },
+    {
+      "action": "sound",
+      "options": ["/sfx/melee/sawblade_hit_robotic.ogg"]
+    },
+    {
+      "action": "sound",
+      "options": ["/sfx/melee/swing_broadsword.ogg"]
     }
   ],
   "animationLoops" : false,

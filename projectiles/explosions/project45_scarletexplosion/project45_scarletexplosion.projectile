@@ -68,6 +68,10 @@
           ]
         }
       ]
+    },
+    {
+      "action": "sound",
+      "options": ["/sfx/melee/laser_weapon_hit.ogg"]
     }
   ],
   "animationLoops" : false,
