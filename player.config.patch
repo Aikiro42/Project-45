@@ -14,6 +14,11 @@
     { "op" : "add", "path" : "/defaultBlueprints/tier1/-", "value" : { "item" : "project45-utk-revolver" } },
     { "op" : "add", "path" : "/defaultBlueprints/tier1/-", "value" : { "item" : "project45-wfm-kuvabramma" } },
     { "op" : "add", "path" : "/defaultBlueprints/tier1/-", "value" : { "item" : "project45-40k-boltgun" } },
+    { "op" : "add", "path" : "/defaultBlueprints/tier1/-", "value" : { "item" : "project45-neb-reaper" } },
+    { "op" : "add", "path" : "/defaultBlueprints/tier1/-", "value" : { "item" : "project45-neb-shrapnel" } },
+    { "op" : "add", "path" : "/defaultBlueprints/tier1/-", "value" : { "item" : "project45-neb-zweibrandyr" } },
+    { "op" : "add", "path" : "/defaultBlueprints/tier1/-", "value" : { "item" : "project45-pkf-typhon" } },
+    { "op" : "add", "path" : "/defaultBlueprints/tier1/-", "value" : { "item" : "project45-ttf-smartpistol" } },
 
     // stats
     { "op" : "add", "path" : "/defaultBlueprints/tier1/-", "value" : { "item" : "project45-godmod" } },
