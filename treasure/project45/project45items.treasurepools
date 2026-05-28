@@ -284,7 +284,9 @@
         {"weight" : 1, "item" : "project45-phaseshiftmod"},
         {"weight" : 1, "item" : "project45-supergunscopemod"},
         {"weight" : 1, "item" : "project45-orbitaltranspondermod"},
-        {"weight" : 1, "item" : "project45-armadillomod"}
+        {"weight" : 1, "item" : "project45-armadillomod"},
+
+        {"weight" : 1, "item" : "project45-mgs-metalgearmod"}
       ],
       "poolRounds" : 1,
       "allowDuplication" : false
