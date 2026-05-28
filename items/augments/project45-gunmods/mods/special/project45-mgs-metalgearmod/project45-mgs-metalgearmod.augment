@@ -33,6 +33,16 @@
         "rebaseMult": 0
       }
     }
+    /*
+    ,"gun": {
+      "animationCustom": {
+        "sounds": {
+          // replace this with Duran Duran - Invisible perhaps lmao
+          "perfectReload": ["/sfx/project45neosfx/reloads/perfectreload1.ogg"]
+        }
+      }
+    }
+    */
   },
    
   "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
