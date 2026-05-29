@@ -85,6 +85,10 @@ function Project45GunFire:init()
   -- initialize charge damage
   self.chargeDamageMult = math.max(self.chargeDamageMult or 1, 0)
 
+  -- calculate and save crit scaling
+  -- so that we won't recalc every time we crit
+  self.critScaling = formulas.critScaling(self.critDamageMult)
+
   -- initialize burst counter
   storage.burstCounter = storage.burstCounter or self.burstCount
 
@@ -2081,7 +2085,12 @@ function Project45GunFire:crit()
   if self.critFlag then
     self.passiveClass.onCrit(self)
   end
-  return formulas.critDamage(storage.currentCritChance, self.critDamageMult, isCrit, critTier)
+  return formulas.critDamage(
+    storage.currentCritChance,
+    self.critDamageMult,
+    isCrit, critTier,
+    self.critScaling
+  )
 end
 
 -- Calculates the damage per shot of the weapon.

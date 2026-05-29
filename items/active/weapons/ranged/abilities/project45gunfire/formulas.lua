@@ -5,15 +5,31 @@ function formulas.stockAmmoDamageMult(stockAmmo, maxAmmo)
   return 1 + (stockAmmo * 0.1 / maxAmmo * 3)
 end
 
-function formulas.critDamage(critChance, baseCritDamageMult, isCrit, critTier)
-  critTier = critTier or math.floor(critChance)
+function formulas.critScaling(baseCritDamageMult, alpha)
+  local alpha = alpha or 0.6 -- anti-scaling factor
+  return (baseCritDamageMult / (1 + alpha * (baseCritDamageMult - 1)))
+end
+
+function formulas.critDamage(critChance, baseCritDamageMult, isCrit, critTier, scaling, alpha)
+  
+  critTier = critTier or math.floor(math.max(0, critChance))
+  local scaling = scaling or formulas.critScaling(baseCritDamageMult, alpha)
+  --[[
+  
+  When critting below or at 100% crit (i.e. max crit tier is 1),
+  finalCritDamage is consistent with baseCritDamageMult.
+  Beyond critTier1, finalCritDamage scales logarithmically.
+  The higher baseCritDamageMult is, the lower the benefits of each tier.
+
+  --]]
+
+  -- finalCritDamage is undefined if critTier == 0
   if critTier == 0 then -- base
     return isCrit and baseCritDamageMult or 1
   end
-  -- crit tier = floor(crit chance)
-  -- crit damage = base crit damage + crit tier
-  -- crit damage + 1 if super crit; crit damage + 0 otherwise
-  return math.max(1, baseCritDamageMult + critTier + (isCrit and 1 or 0))
+  
+  local finalCritTier = critTier + (isCrit and 1 or 0)
+  return baseCritDamageMult + baseCritDamageMult * math.log(finalCritTier) * scaling
 end
 
 -- Calculates the damage per shot of the weapon.
