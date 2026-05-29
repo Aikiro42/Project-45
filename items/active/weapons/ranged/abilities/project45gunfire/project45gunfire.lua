@@ -1756,6 +1756,7 @@ end
 
 function Project45GunFire:updateReloadRating(newReloadRating)
   storage.project45GunState.reloadRating = newReloadRating
+  storage.project45GunState.damageModifiers.reloadDamageMult.value = self.reloadRatingDamageMults[storage.project45GunState.reloadRating]
   world.sendEntityMessage(activeItem.ownerEntityId(), "updateProject45UIField" .. self.infoSide, "reloadRating", ReloadRatingList[newReloadRating])
 end
 

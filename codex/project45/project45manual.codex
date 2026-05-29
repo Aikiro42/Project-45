@@ -99,10 +99,10 @@ Take a moment to ready your aim after reloading; firing immediately can shoot pr
 "# ^#E2C344;Reload Rating^reset;
 Your weapon's performance will change depending on whether you executed an Active Reload and whether you hit the colored regions:
 
-^#E2C344;PERFECT^reset; - Hitting the lighter-colored region gives your gun a ^#E2C344;1.3x damage bonus^reset; and ^#E2C344;completely prevents jamming^reset;
+^#E2C344;PERFECT^reset; - Hitting the lighter-colored region gives your gun a ^#E2C344;1.25x damage bonus^reset; and ^#E2C344;completely prevents jamming^reset;
 ",
 "# ^#E2C344;Reload Rating^reset;
-^#60B8EA;GOOD^reset; - Hitting the darker-colored region gives your gun a ^#60B8EA;1.1x damage bonus^reset; and ^#60B8EA;completely prevents jamming^reset;.
+^#60B8EA;GOOD^reset; - Hitting the darker-colored region gives your gun a ^#60B8EA;1.125x damage bonus^reset; and ^#60B8EA;completely prevents jamming^reset;.
 
 OK - Allowing the red line to reach the end of the bar will simply reload your gun.
 

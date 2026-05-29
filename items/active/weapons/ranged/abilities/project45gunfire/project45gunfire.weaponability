@@ -375,7 +375,7 @@
     "magAmmoRange": [1, 1],
 
     // [bad, ok, good, perfect] reload damage multiplier
-    "reloadRatingDamageMults": [0.8, 1, 1.25, 1.5],
+    "reloadRatingDamageMults": [0.8, 1, 1.125, 1.25],
     "jamChances": [0.05, 0.013, 0, 0],
 
     // ____________________________________[ SECTION: Accuracy and Recoil Config ] ____________________________________

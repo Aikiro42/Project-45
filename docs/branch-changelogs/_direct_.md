@@ -14,6 +14,7 @@
   This way, a Tier 1 crit is still consistently the BCD, and higher tiers increase the FCD with diminishing returns. The higher the BCD is, the harsher the diminishing; the damage increase from a T1 crit to a T2 crit is higher than the damage increase from a T7 crit to a T8 crit, and the damage increase from a T2 crit to a T3 crit is higher on a gun with 2x BCD than a gun with 4x BCD.
 
   Before this formula, a weapon with 300% CC and 5x CD can deal a minimum of 7x damage. Now, it deals ~6.6x damage.
+  - Decreased reload Rating Multiplicative Damage for Good and Perfect Reloads from 1.25 to 1.125 and 1.5 to 1.25, respectively.
 
 
 # New (Modders)
