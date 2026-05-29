@@ -180,8 +180,5 @@
     }
   },
   
-  "palette" : "/configs/project45/project45.weaponcolors",
-  "colorIndex": 2,
-
   "builder" : "/items/buildscripts/buildproject45neoneo.lua"
 }
