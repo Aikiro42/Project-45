@@ -250,7 +250,7 @@ function build(directory, config, parameters, level, seed)
   end
 
   -- calculate damage level multiplier
-  config.damageLevelMultiplier = (root.evalFunction("weaponDamageLevelMultiplier", currentLevel) + (parameters.damageLevelMultiplier or 0))
+  config.damageLevelMultiplier = (root.evalFunction("project45WeaponDamageLevelMultiplier", currentLevel) + (parameters.damageLevelMultiplier or 0))
     * generalConfig.globalDamageMultiplier
 
   -- palette swaps
