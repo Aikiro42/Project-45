@@ -15,6 +15,7 @@
 
   Before this formula, a weapon with 300% CC and 5x CD can deal a minimum of 7x damage. Now, it deals ~6.6x damage.
   - Decreased reload Rating Multiplicative Damage for Good and Perfect Reloads from 1.25 to 1.125 and 1.5 to 1.25, respectively.
+- Fixed how the damage multipler from stocking ammo is calculated.
 
 
 # New (Modders)

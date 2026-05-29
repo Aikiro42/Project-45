@@ -2,7 +2,9 @@
 formulas = {}
 
 function formulas.stockAmmoDamageMult(stockAmmo, maxAmmo)
-  return 1 + (stockAmmo * 0.1 / maxAmmo * 3)
+  local dmgMult = 1 + ((stockAmmo * 0.1) / (maxAmmo * 6))
+  sb.logInfo(string.format("stockAmmo=%d maxAmmo=%d dmgMult=%.2f", stockAmmo, maxAmmo, dmgMult))
+  return dmgMult
 end
 
 function formulas.critScaling(baseCritDamageMult, alpha)
@@ -65,14 +67,18 @@ function formulas.damagePerShot(
     for k, v in pairs(damageModifiers) do
       -- sb.logInfo(string.format("%s %s to damage", v.type or "???", k))
       if v.type == "mult" then
-        --[[  if v.value ~= 1 then
+        --[[
+        if v.value ~= 1 then
           multsText = multsText .. (multsText == "" and "" or " * ") .. string.format("%.2f (%s)", v.value or 1, k)
-        end  --]]
+        end
+        --]]
         mults = mults * (v.value or 1)
       elseif v.type == "add" then
-        --[[  if v.value ~= 0 then
+        --[[
+        if v.value ~= 0 then
           addsText = addsText .. (addsText == "" and "" or " + ") .. string.format("%.2f (%s)", v.value or 0, k)
-        end  --]]
+        end
+        --]]
         adds = adds + (v.value or 0)
       end
     end
