@@ -85,7 +85,7 @@ function renderSide(dt, side)
   local ammoOffset = self["gunInfo" .. side].uiElementOffset or {0, 0}
   local isReloading = (self["gunStatus" .. side].reloadTimer or -1) >= 0
   local jamAmount = self["gunStatus" .. side].jamAmount or 0
-  local fireTime = self["gunStatus" .. side].fireTime or 0.001
+  local fireTime = self["gunInfo" .. side].fireTime or 0.001
   local reloadProgress
 
   if (isReloading or jamAmount > 0) then
