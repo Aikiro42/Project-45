@@ -94,7 +94,7 @@ function renderDebug(debugText, debugOffset)
   localAnimator.spawnParticle({
     type = "text",
     text= "^shadow;" .. debugText,
-    color = {255, 128, 128},
+    color = {255, 0, 255},
     size = 0.5,
     fullbright = true,
     flippable = false,
