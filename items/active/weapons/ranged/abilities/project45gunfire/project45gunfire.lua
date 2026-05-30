@@ -360,6 +360,12 @@ function Project45GunFire:renderModPositionDebug()
 
 end
 
+function Project45GunFire:renderDebugText()
+  local debugText = ""
+  debugText = debugText .. string.format("%.0f", self.cooldownTimer * 1000)
+  activeItem.setScriptedAnimationParameter("__debug__", debugText)
+end
+
 function Project45GunFire:update(dt, fireMode, shiftHeld)
 
   WeaponAbility.update(self, dt, fireMode, shiftHeld)
@@ -370,6 +376,7 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
 
   -- update relevant stuff
   self:renderModPositionDebug()
+  self:renderDebugText()
   self:updateUI()
   self:updateFlashlight()
   self:updateLaser()
