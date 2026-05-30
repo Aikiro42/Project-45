@@ -836,11 +836,19 @@ function Project45GunFire:feeding()
   if (
     self.chargeTimer >= self.chargeTime
     and self.projectileKind ~= "beam"
-    and storage.burstCounter < self.burstCount
+    and (  -- FIXME:
+      storage.burstCounter < self.burstCount
+      or (
+        self.burstCount <= 1
+        and self:triggering()
+        and not self.semi
+      )
+    )
   )
   and self.weapon.reloadTimer < 0
   then
     self:setState(self.firing)
+    self.cooldownTimer = self.fireTime
   end
 
   -- prevent triggering
