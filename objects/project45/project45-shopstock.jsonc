@@ -126,6 +126,7 @@
         "project45-flashlasermod",
         // receiver
         "project45-autofiremod",
+        "project45-burstfiremod",
         // magazine
         "project45-extendedmagmod",
         "project45-alofsmagmod",
