@@ -1,0 +1,51 @@
+{
+  "itemName": "project45-burstfiremod",
+  "price": 500,
+  "rarity": "Rare",
+  "tooltipKind": "project45gunmod2",
+  "modCategory": "gunMod",
+  "category": "uniqueWeapon",
+  "itemTags": ["weapon"],
+  "tooltipFields": {
+    "subtitle": "Gun Mod",
+    "objectImage": "/items/augments/project45-gunmods/mods/project45-burstfiremod/project45-burstfiremod.png"
+  },
+  "inventoryIcon": "/items/augments/project45-gunmods/mods/project45-burstfiremod/project45-burstfiremodicon.png",
+  "description": "Turns weapons into burst weapons. Easy to install despite having lots of moving parts.",
+  "technicalInfo": "Sets weapons' burst count into 3. Cannot be applied onto manual-feed weapons.",
+  "statInfo": "--",
+  "shortdescription": "Burstfire Receiver",
+
+  "augment": {
+    "modName": "Burstfire Receiver",
+    "category": "ballistic",
+    "slot": "receiver",
+    "incompatibleWeapons": [
+      "project45-neo-assaultrifle"
+    ],
+    "incompatibleMods": [
+      "project45-subsonicammomod"
+    ],
+    "stat": {
+      "checks": [
+        {
+          "path": "primaryAbility.manualFeed",
+          "operation": "!=",
+          "value": true
+        }
+      ],
+      "burstCount": {
+        "rebase": 3
+      },
+      "fireTime": {
+        "rebase": 0.3
+      },
+      "cycleTime": {
+        "rebaseMult": 0.5
+      }
+    }
+  },
+
+  "scripts": ["/scripts/augments/project45-gunmod/apply.lua"],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
+}
