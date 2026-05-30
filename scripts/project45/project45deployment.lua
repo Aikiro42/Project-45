@@ -107,16 +107,6 @@ function renderSide(dt, side)
     vec2.add(ammoOffset, {0, 1}),
     self["gunStatus" .. side].stockAmmo or 0
   )
-  
-  if not performanceMode and fireTime < self.project45UiConfig.cooldownThreshold then
-    renderCooldownTimer(
-      self["gunStatus" .. side].aimPosition,
-      ammoOffset,
-      self["gunStatus" .. side].cooldownTimer,
-      self["gunInfo" .. side].fireTime,
-      side
-    )
-  end
 
   renderAmmoCounter(
     self["gunStatus" .. side].aimPosition,
@@ -136,6 +126,16 @@ function renderSide(dt, side)
       chamberIndicatorOffset,
       self["gunStatus" .. side].chamberState,
       self["gunInfo" .. side].chamberIndicatorSprite
+    )
+  end
+
+  if not performanceMode and fireTime < self.project45UiConfig.cooldownThreshold then
+    renderCooldownTimer(
+      self["gunStatus" .. side].aimPosition,
+      chamberIndicatorOffset,
+      self["gunStatus" .. side].cooldownTimer,
+      self["gunInfo" .. side].fireTime,
+      side
     )
   end
  
@@ -242,6 +242,7 @@ function renderCooldownTimer(uiPosition, offset, cooldownTimer, fireTime, side)
   if not uiPosition then return end
   if cooldownTimer <= 0 then return end
   offset = offset or {0, 0}
+  local signOffset = vec2.add(offset, {(side == "L" and -1 or 1)*1, 0})
   local imageScale = 0.5
   local x = cooldownTimer/fireTime
   --[[
@@ -270,7 +271,7 @@ function renderCooldownTimer(uiPosition, offset, cooldownTimer, fireTime, side)
       {
         image="/scripts/project45/ui/cooldownsign.png"
         .. string.format("?multiply=FFFFFF%02X", math.ceil(255*x)),
-        position = vec2.add(uiPosition, vec2.add(offset, {0, 1})),
+        position = vec2.add(uiPosition, signOffset),
         color = {255,255,255},
         transformation = {
           {signScale, 0, 0},
