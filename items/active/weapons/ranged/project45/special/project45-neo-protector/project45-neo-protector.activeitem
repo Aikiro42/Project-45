@@ -122,6 +122,9 @@
     "projectileKind": "projectile"
 
   },
+
+  "palette" : "/configs/project45/project45.weaponcolors",
+  "colorIndex": "protectorate",
   
   "builder" : "/items/buildscripts/buildproject45neoneo.lua"
 }
