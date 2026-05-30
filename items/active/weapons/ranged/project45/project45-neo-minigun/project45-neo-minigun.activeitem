@@ -170,6 +170,7 @@
     
     "progressiveCharge": false,
     "cycleTime": [0.1, 0.001],
+    "fireTime": 1,
     "chargeFrames": 2,
     "chargeTime": 1,
     "overchargeTime": 1,
