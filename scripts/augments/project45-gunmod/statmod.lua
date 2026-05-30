@@ -490,7 +490,8 @@ function apply(output, augment)
   local specFields = {
     randomStatParams = true,
     pureStatMod = true,
-    stackLimit = true
+    stackLimit = true,
+    checks = true
   }
 
   -- Actual general case handling
@@ -514,10 +515,10 @@ function apply(output, augment)
         -- and rebase multiplication due to special cases
         -- e.g. fireTime is calculated according to weapon parameters
         -- FIXME: cast-local-type
----@diagnostic disable-next-line: cast-local-type
+        ---@diagnostic disable-next-line: cast-local-type
         statModifiers, newPrimaryAbility = updateStatModifiers(stat, op.rebase, op.rebaseMult, nil, nil) --> will recalculateStat
       else
----@diagnostic disable-next-line: cast-local-type
+        ---@diagnostic disable-next-line: cast-local-type
         statModifiers, newPrimaryAbility = updateStatModifiers(stat, op.rebase, op.rebaseMult, op.additive, op.multiplicative) --> will recalculateStat
       end
 
