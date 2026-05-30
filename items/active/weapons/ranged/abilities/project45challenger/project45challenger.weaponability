@@ -7,6 +7,8 @@
     "scripts" : ["/items/active/weapons/ranged/abilities/project45challenger/project45challenger.lua"],
     "class" : "Project45Challenger",
 
+    "magicNumber": "Throughout heaven and earth, I alone am the chosen one.",
+
     /*
     Ability that provides an incentive to increasing the challenge scaling.
     */

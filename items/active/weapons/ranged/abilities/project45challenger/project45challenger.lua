@@ -16,7 +16,7 @@ function Project45Challenger:init()
             * self.currencyRewardMultiplier
             * (1 - storage.challengeMultiplier)
         storage.challengerRewardBank = storage.challengerRewardBank + rewardedCurrency
-        sb.logInfo("Current Bank: " .. storage.challengerRewardBank)
+        -- sb.logInfo("Current Bank: " .. storage.challengerRewardBank)
         
         -- on kill or on reward threshold, reward banked currency
         -- chance to reward essence instead based on the challengeMultiplier
@@ -47,7 +47,7 @@ function Project45Challenger:update(dt, fireMode, shiftHeld)
     storage.challengeMultiplier = 0.2
   end
   
-  if storage.challengeMultiplier > self.challengerScalingThreshold then
+  if storage.challengeMultiplier >= self.challengerScalingThreshold then
     self.killListener:update()
   end
 end

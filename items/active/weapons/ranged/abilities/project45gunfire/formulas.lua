@@ -2,9 +2,8 @@
 formulas = {}
 
 function formulas.stockAmmoDamageMult(stockAmmo, maxAmmo)
-  local dmgMult = 1 + ((stockAmmo * 0.1) / (maxAmmo * 6))
-  sb.logInfo(string.format("stockAmmo=%d maxAmmo=%d dmgMult=%.2f", stockAmmo, maxAmmo, dmgMult))
-  return dmgMult
+  -- sb.logInfo(string.format("stockAmmo=%d maxAmmo=%d dmgMult=%.2f", stockAmmo, maxAmmo, dmgMult))
+  return 1 + ((stockAmmo * 0.1) / (maxAmmo * 6))
 end
 
 function formulas.critScaling(baseCritDamageMult, alpha)
