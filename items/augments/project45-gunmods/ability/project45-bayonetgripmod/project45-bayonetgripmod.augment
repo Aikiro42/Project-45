@@ -11,7 +11,7 @@
     "objectImage": "/items/augments/project45-gunmods/ability/project45-bayonetgripmod/project45-bayonetgripmod.png"
   },
   "inventoryIcon" : "/items/augments/project45-gunmods/ability/project45-bayonetgripmod/project45-bayonetgripmodicon.png",
-  "description" : "Its handle is designed as an ergonomic foregrip, so it's difficult to use as a dagger without a weapon.",
+  "description" : "Its handle is designed as an ergonomic foregrip, so it's difficult to wield it without a gun to attach it to.",
   "technicalInfo": "Right-click to attack. Damage scales with armor and world level.",
   "shortdescription" : "Bayonet Grip",
   "archetype": "Active Ability",
