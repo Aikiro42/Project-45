@@ -20,7 +20,7 @@
     "modName": "Solarium Alloy Parts",
     "category": "universal",
     "slot": "material",
-    "dyeColorIndex": 5,
+    "dyeColorIndex": "solarium",
     "passive": {
       "passiveScript" : "/items/augments/project45-gunmods/mods/project45-solariummod/project45-solariummod.lua",
       "passiveParameters": {

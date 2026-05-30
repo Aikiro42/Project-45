@@ -2,17 +2,42 @@
   
   "name" : "project45",
   "aliases": {
-    "monochrome": 1,
-    "ballistic": 2,
-    "pure_ballistic": 3,
-    "pure_energy": 4,
-    "solarium": 5,
-    "adamantite": 6,
-    "ornate": 7,
-    "default": 8,
-    "debug": 9
+    "default": 1,
+    "debug": 2,
+    "monochrome": 3,
+    "ballistic": 4,
+    "pure_ballistic": 5,
+    "pure_energy": 6,
+    "experimental": 7,
+    "solarium": 8,
+    "adamantite": 9,
+    "ornate": 10
   },
   "swaps" : [
+    
+    // default
+    {},
+
+    // debug
+    {
+      // ceramic -> pink
+      "dbe2e5" : "eab3db", "c2c9cc" : "d35eae", "747d7b" : "97276d", "5b6564" : "59163f",
+      // ballistic polymer -> pink
+      "7a7c6d" : "eab3db", "4f5047" : "d35eae", "353630" : "97276d", "1a1a17" : "59163f",
+      // energy polymer -> mono
+      "9a5da0" : "808080", "593363" : "606060", "321842" : "404040", "120322" : "202020",
+      // protectorate polymer -> pink
+      "e7c474" : "eab3db", "c88b28" : "d35eae", "8d581c" : "97276d", "663b14" : "59163f",
+      // gunmetal -> blue
+      "5c6d74" : "7b9bc8", "3f4855" : "325b96", "292b3b" : "1b304e", "130f1b" : "0b182a",  // blue
+      "555555" : "7b9bc8", "373737" : "325b96", "262626" : "1b304e", "151515" : "0b182a",  // gray
+      // wood -> mono
+      "8b431f" : "6e765a", "68341b" : "4b513e", "56280c" : "363a2c", "321807" : "1e2018",  // deep ornate
+      "a47844" : "6e765a", "754c23" : "4b513e", "472b13" : "363a2c", "201205" : "1e2018",  // fresh cut
+      // gold -> blue
+      "f7be79" : "7b9bc8", "ea9931" : "325b96", "af4e00" : "1b304e", "6e2900" : "0b182a"
+    },
+    
     // monochrome
     {
       // ceramic -> mono
@@ -64,6 +89,17 @@
       
     },
 
+    // experimental
+    {
+      // protectorate polymer, ballistic polymer, energy polymer, fresh cut wood -> experimental white
+      "e7c474" : "dbe2e5", "c88b28" : "c2c9cc", "8d581c" : "747d7b", "663b14" : "5b6564",
+      "7a7c6d" : "dbe2e5", "4f5047" : "c2c9cc", "353630" : "747d7b", "1a1a17" : "5b6564",
+      "9a5da0" : "dbe2e5", "593363" : "c2c9cc", "321842" : "747d7b", "120322" : "5b6564",
+      "a47844" : "dbe2e5", "754c23" : "c2c9cc", "472b13" : "747d7b", "201205" : "5b6564",   // fresh cut
+      // wood -> red
+      "8b431f" : "ffb1a3", "68341b" : "e35a53", "56280c" : "a94a43", "321807" : "722621"  // deep ornate
+    },
+
     // solarium
     {
       // ceramic -> solarium
@@ -107,29 +143,6 @@
       "9a5da0" : "8b431f", "593363" : "68341b", "321842" : "56280c", "120322" : "321807", // energy
       "e7c474" : "8b431f", "c88b28" : "68341b", "8d581c" : "56280c", "663b14" : "321807", // protectorate
       "dbe2e5" : "8b431f", "c2c9cc" : "68341b", "747d7b" : "56280c", "5b6564" : "321807"
-    },
-
-    // default
-    {},
-
-    // debug
-    {
-      // ceramic -> pink
-      "dbe2e5" : "eab3db", "c2c9cc" : "d35eae", "747d7b" : "97276d", "5b6564" : "59163f",
-      // ballistic polymer -> pink
-      "7a7c6d" : "eab3db", "4f5047" : "d35eae", "353630" : "97276d", "1a1a17" : "59163f",
-      // energy polymer -> mono
-      "9a5da0" : "808080", "593363" : "606060", "321842" : "404040", "120322" : "202020",
-      // protectorate polymer -> pink
-      "e7c474" : "eab3db", "c88b28" : "d35eae", "8d581c" : "97276d", "663b14" : "59163f",
-      // gunmetal -> blue
-      "5c6d74" : "7b9bc8", "3f4855" : "325b96", "292b3b" : "1b304e", "130f1b" : "0b182a",  // blue
-      "555555" : "7b9bc8", "373737" : "325b96", "262626" : "1b304e", "151515" : "0b182a",  // gray
-      // wood -> mono
-      "8b431f" : "6e765a", "68341b" : "4b513e", "56280c" : "363a2c", "321807" : "1e2018",  // deep ornate
-      "a47844" : "6e765a", "754c23" : "4b513e", "472b13" : "363a2c", "201205" : "1e2018",  // fresh cut
-      // gold -> blue
-      "f7be79" : "7b9bc8", "ea9931" : "325b96", "af4e00" : "1b304e", "6e2900" : "0b182a"
     }
   ]
 }

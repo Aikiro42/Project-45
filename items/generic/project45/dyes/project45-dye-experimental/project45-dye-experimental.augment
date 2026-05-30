@@ -1,0 +1,23 @@
+{
+  "itemName" : "project45-dye-experimental",
+  "price" : 25,
+  "rarity" : "Rare",
+  "category" : "clothingDye",
+  "inventoryIcon" : "project45-dye-experimentalicon.png",
+  "description" : "Apply to paint your weapon ^#d6d8da;Experimental White^reset;!",
+  "shortdescription" : "P45 Experimental Dye",
+
+  "tooltipKind" : "project45gunmod",
+  "tooltipFields":{
+    "subtitle": "Applied Utility",
+    "objectImage": "/items/generic/project45/dyes/project45-dye-experimental/project45-dye-experimental.png"
+  },
+
+  // Can be a number (1-based index) corresponding to the swap in configs/project45/project45.weaponcolors
+  // Can also be an alias, as shown here.
+  "dyeColorIndex" : "experimental",
+
+  "radioMessagesOnPickup" : [ "pickupdye" ],
+
+  "scripts" : [ "/scripts/augments/project45-dye.lua" ]
+}

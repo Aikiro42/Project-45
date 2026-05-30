@@ -310,6 +310,7 @@
         "project45-dye-ballistic",
         "project45-dye-ornate",
         "project45-dye-energy",
+        "project45-dye-experimental",
         "project45-dye-adamantite",
         "nanowrap",
         "manipulatormodule",
@@ -325,6 +326,7 @@
         "project45-dye-energy"
       ],
       "experimental": [
+        "project45-dye-experimental",
         "project45-dye-adamantite"
       ]
     }
@@ -335,6 +337,7 @@
     "project45-dye-ballistic",
     "project45-dye-ornate",
     "project45-dye-energy",
+    "project45-dye-experimental",
     "project45-dye-adamantite",
 
     "nanowrap",        
