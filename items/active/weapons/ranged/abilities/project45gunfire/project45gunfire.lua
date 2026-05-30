@@ -365,7 +365,7 @@ end
 function Project45GunFire:renderDebugText()
   local debugText = ""
   debugText = debugText .. string.format("%.0f", self.cooldownTimer * 1000) .. "\n"
-  debugText = debugText .. (self.triggered and "T" or "")
+  debugText = debugText .. (self.triggered and "T" or " ")
   activeItem.setScriptedAnimationParameter("__debug__", debugText)
 end
 
@@ -376,13 +376,14 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
 
   -- update timers
   if storage.project45GunState.ammo <= 0
-  or storage.project45GunState.jamAmount > 0
   or self.weapon.isReloading
   then
     self:resetCooldownTimer(true, quickCooldown)
   end
 
   self.cooldownTimer = math.max(0, self.cooldownTimer - self.dt)
+  
+  local triggerHeld = false
   if self.cooldownTimer > 0 then
     self.cueAudio = false
     if not self.cooldownAudio then
@@ -396,6 +397,7 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
       self.cueAudio = true
       animator.playSound("triggerCue")
     end
+    triggerHeld = self.triggered
   end
 
   -- update relevant stuff
@@ -485,7 +487,9 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
 
     end
 
-    self:resetCooldownTimer()
+    if not triggerHeld then
+      self:resetCooldownTimer()
+    end
     
   end
 
@@ -866,6 +870,7 @@ function Project45GunFire:feeding()
         self.burstCount <= 1
         and self:triggering()
         and not self.semi
+        and storage.project45GunState.ammo > 0
       )
     )
   )
@@ -1123,6 +1128,7 @@ function Project45GunFire:unjamming()
   if self.triggered then return end
   self:updateJamAmount(-self.unjamAmount * math.abs(sb.nrand(self.unjamStDev, 1)))
   self.triggered = true
+  self:resetCooldownTimer(true, quickCooldown)
   self:screenShake()
   self:recoil(true, 0.5)
   animator.setAnimationState("gun", "unjamming") -- should transist back to being jammed
@@ -1172,7 +1178,7 @@ function Project45GunFire:jam(forceJam)
     if self.screenShakeTimer then self.screenShakeTimer = 0 end
     storage.burstCounter = self.burstCount
     self.chargeTimer = self.resetChargeOnJam and 0 or self.chargeTimer
-    
+    self:resetCooldownTimer(true)
     self:updateJamAmount(1, true)
     self:setState(self.jammed)
     return true
@@ -2454,7 +2460,7 @@ function Project45GunFire:auto()
   or storage.project45GunState.jamAmount > 0
   then
     animator.playSound("click")
-    self:resetCooldownTimer(true)
+    self.cooldownTimer = self.fireTime
     return
   end
   
@@ -2468,7 +2474,7 @@ function Project45GunFire:auto()
     util.wait(self.stances.fire.duration)
   end
 
-  self:resetCooldownTimer(true)
+  self.cooldownTimer = self.fireTime
 end
 
 
@@ -2478,7 +2484,7 @@ function Project45GunFire:burst()
   or storage.project45GunState.jamAmount > 0
   then
     animator.playSound("click")
-    self:resetCooldownTimer(true)
+    self.cooldownTimer = self.fireTime
     return
   end
   
@@ -2501,7 +2507,7 @@ function Project45GunFire:burst()
     util.wait(self.burstTime)
   end
 
-  self:resetCooldownTimer(true, (self.fireTime - self.burstTime) * self.burstCount)
+  self.cooldownTimer = (self.fireTime - self.burstTime) * self.burstCount
 end
 
 function Project45GunFire:altMuzzleFlash()
