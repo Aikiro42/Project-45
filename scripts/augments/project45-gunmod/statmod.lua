@@ -264,23 +264,12 @@ function apply(output, augment)
       statModifiers.fireTimeGroup.base[fireTimeStat] = baseStat(fireTimeStat)
     end
 
-    -- local newCockTime = statModifiers.fireTimeGroup.base.cockTime
-    -- local newMidCockDelay = statModifiers.fireTimeGroup.base.midCockDelay
     local newCycleTime = statModifiers.fireTimeGroup.base.cycleTime
-    local newFireTime = statModifiers.fireTimeGroup.base.fireTime
 
     local newChargeTime = statModifiers.fireTimeGroup.base.chargeTime
     local newOverchargeTime = statModifiers.fireTimeGroup.base.overchargeTime
 
-    --[[
-    local minFireTime = math.min(
-      0.001,
-      type(newCycleTime) == "table" and newCycleTime[1] or newCycleTime,
-      newCockTime,
-      newFireTime
-    )
-    --]]
-    local minFireTime = 0.001
+    local minCycleTime = 0.001
 
     if augment.fireTimeGroup.additive then
       statModifiers.fireTimeGroup.additive = (statModifiers.fireTimeGroup.additive or 0) + augment.fireTimeGroup.additive
@@ -293,7 +282,7 @@ function apply(output, augment)
 
     -- apply fireTime modifiers
 
-    local fireTimeAdd, chargeAdd, overchargeAdd
+    local chargeAdd, overchargeAdd
     -- NOTE: I know this is bad practice,
     -- but the above variables being possibly nil is okay
     -- because the function they're used in (getModifiedStat())
@@ -303,7 +292,7 @@ function apply(output, augment)
 
     if statModifiers.fireTimeGroup.additive then
       
-      fireTimeAdd = statModifiers.fireTimeGroup.additive
+      cycleTimeAdd = statModifiers.fireTimeGroup.additive
       chargeAdd = statModifiers.fireTimeGroup.additive
 
       -- ensures that same amount of time will be spent overcharging
@@ -316,18 +305,14 @@ function apply(output, augment)
 
     -- modify cycle time to be at least minFiretime
     if type(newCycleTime) == "table" then
-      newCycleTime = {math.max(minFireTime,
-          getModifiedStat(newCycleTime[1], fireTimeAdd, statModifiers.fireTimeGroup.multiplicative, true)),
-                      math.max(minFireTime,
-          getModifiedStat(newCycleTime[2], fireTimeAdd, statModifiers.fireTimeGroup.multiplicative, true))}
+      newCycleTime = {math.max(minCycleTime,
+          getModifiedStat(newCycleTime[1], cycleTimeAdd, statModifiers.fireTimeGroup.multiplicative, true)),
+                      math.max(minCycleTime,
+          getModifiedStat(newCycleTime[2], cycleTimeAdd, statModifiers.fireTimeGroup.multiplicative, true))}
     else
-      newCycleTime = math.max(minFireTime,
-          getModifiedStat(newCycleTime, fireTimeAdd, statModifiers.fireTimeGroup.multiplicative, true))
+      newCycleTime = math.max(minCycleTime,
+          getModifiedStat(newCycleTime, cycleTimeAdd, statModifiers.fireTimeGroup.multiplicative, true))
     end
-
-    -- modify trigger time
-    newFireTime = math.max(minFireTime,
-      getModifiedStat(newFireTime, fireTimeAdd, statModifiers.fireTimeGroup.multiplicative, true))
     
     -- modify cock time
     --[[
@@ -354,8 +339,7 @@ function apply(output, augment)
 
       cycleTime = newCycleTime,
       chargeTime = newChargeTime,
-      overchargeTime = newOverchargeTime,
-      fireTime = newFireTime,
+      overchargeTime = newOverchargeTime
     })
 
     -- to be REALLY safe,
