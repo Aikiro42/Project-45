@@ -881,6 +881,7 @@ function Project45GunFire:feeding()
   then
     self:setState(self.firing)
     self:resetCooldownTimer(true)
+    return
   end
 
   -- prevent triggering
