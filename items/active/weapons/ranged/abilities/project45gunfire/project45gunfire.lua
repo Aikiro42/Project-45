@@ -13,6 +13,8 @@ require "/items/active/weapons/ranged/abilities/project45gunfire/formulas.lua"
 require "/items/active/weapons/ranged/abilities/project45gunfire/constants.lua"
 
 local generalConfig = root.assetJson("/configs/project45/project45_general.config")
+local quickCooldown = 0.01
+local cooldownLoopThreshold = 0.1
 
 Project45GunFire = GunFire:new()
 
@@ -362,7 +364,8 @@ end
 
 function Project45GunFire:renderDebugText()
   local debugText = ""
-  debugText = debugText .. string.format("%.0f", self.cooldownTimer * 1000)
+  debugText = debugText .. string.format("%.0f", self.cooldownTimer * 1000) .. "\n"
+  debugText = debugText .. (self.triggered and "T" or "")
   activeItem.setScriptedAnimationParameter("__debug__", debugText)
 end
 
@@ -372,7 +375,28 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
   self.passiveClass.update(self, dt, fireMode, shiftHeld)
 
   -- update timers
+  if storage.project45GunState.ammo <= 0
+  or storage.project45GunState.jamAmount > 0
+  or self.weapon.isReloading
+  then
+    self:resetCooldownTimer(true, quickCooldown)
+  end
+
   self.cooldownTimer = math.max(0, self.cooldownTimer - self.dt)
+  if self.cooldownTimer > 0 then
+    self.cueAudio = false
+    if not self.cooldownAudio then
+      self.cooldownAudio = true
+      animator.playSound("cooldownLoop", -1)
+    end
+  elseif self.cooldownTimer <= 0 then
+    self.cooldownAudio = false
+    animator.stopAllSounds("cooldownLoop")
+    if not self.cueAudio then
+      self.cueAudio = true
+      animator.playSound("triggerCue")
+    end
+  end
 
   -- update relevant stuff
   self:renderModPositionDebug()
@@ -384,6 +408,7 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
   self:updateAmmoRecharge()
   self:updateRecoil()
   self:updateCycleTime()
+  self:updateCooldownAudio()
   self:updateScreenShake()
   self:updateProjectileStack()
   self:updateMovementControlModifiers()
@@ -460,9 +485,8 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
 
     end
 
-      
-    self.cooldownTimer = self.fireTime
-
+    self:resetCooldownTimer()
+    
   end
 
 
@@ -666,7 +690,7 @@ function Project45GunFire:postFiringTransitionHandler()
         if storage.project45GunState.ammo == 0 and self.ejectMagOnEmpty and self.ejectMagOnEmpty == "firing" then
           self:ejectMag()
           self:stopFireLoop()
-          self.cooldownTimer = self.fireTime
+          self:resetCooldownTimer(true)
           self.isFiring = false    
           return
         end  
@@ -678,7 +702,7 @@ function Project45GunFire:postFiringTransitionHandler()
         self:ejectMag()
       end
       self:stopFireLoop()
-      self.cooldownTimer = self.fireTime
+      self:resetCooldownTimer(true)
       self.isFiring = false
     end
 end
@@ -805,7 +829,7 @@ function Project45GunFire:feeding()
     return
   elseif self.manualFeed or self.isCocking then
     self.weapon:setStance(self.stances.boltPush)
-    self.cooldownTimer = self.postCockCooldown or self.cooldownTimer
+    self:resetCooldownTimer(true, self.postCockCooldown or self.cooldownTimer)
   end
 
   -- otherwise, we wait
@@ -848,7 +872,7 @@ function Project45GunFire:feeding()
   and self.weapon.reloadTimer < 0
   then
     self:setState(self.firing)
-    self.cooldownTimer = self.fireTime
+    self:resetCooldownTimer(true)
   end
 
   -- prevent triggering
@@ -1058,7 +1082,7 @@ function Project45GunFire:reloading()
 end
 
 function Project45GunFire:cocking()
-  self.cooldownTimer = self.fireTime
+  self:resetCooldownTimer(true)
   self.isCocking = true
 
   --[[
@@ -1120,6 +1144,13 @@ function Project45GunFire:unjamming()
 end
 
 -- SECTION: ACTION FUNCTIONS
+
+function Project45GunFire:resetCooldownTimer(force, fireTime)
+  fireTime = fireTime or self.fireTime
+  if self.cooldownTimer <= 0 or force then
+    self.cooldownTimer = fireTime
+  end
+end
 
 -- Returns true if the weapon successfully jammed.
 function Project45GunFire:jam(forceJam)
@@ -1563,6 +1594,15 @@ function Project45GunFire:screenShake(amount, shakeTime, random)
 end
 
 -- SECTION:  UPDATE FUNCTIONS
+
+function Project45GunFire:updateCooldownAudio(m)
+  if self.cooldownTimer <= 0 or self.fireTime <= cooldownLoopThreshold then return end
+  m = m or 0.1
+  local a = (-4 * (m - 1))/(self.fireTime^2)
+  local b = (4 * (m - 1))/(self.fireTime)
+  local x = self.fireTime - self.cooldownTimer
+  animator.setSoundVolume("cooldownLoop", a*x^2 + b*x + 1)
+end
 
 function Project45GunFire:updateFlashlight()
   if not self.flashlight.enabled then return end
@@ -2414,7 +2454,7 @@ function Project45GunFire:auto()
   or storage.project45GunState.jamAmount > 0
   then
     animator.playSound("click")
-    self.cooldownTimer = self.fireTime
+    self:resetCooldownTimer(true)
     return
   end
   
@@ -2428,7 +2468,7 @@ function Project45GunFire:auto()
     util.wait(self.stances.fire.duration)
   end
 
-  self.cooldownTimer = self.fireTime
+  self:resetCooldownTimer(true)
 end
 
 
@@ -2438,7 +2478,7 @@ function Project45GunFire:burst()
   or storage.project45GunState.jamAmount > 0
   then
     animator.playSound("click")
-    self.cooldownTimer = self.fireTime
+    self:resetCooldownTimer(true)
     return
   end
   
@@ -2461,7 +2501,7 @@ function Project45GunFire:burst()
     util.wait(self.burstTime)
   end
 
-  self.cooldownTimer = (self.fireTime - self.burstTime) * self.burstCount
+  self:resetCooldownTimer(true, (self.fireTime - self.burstTime) * self.burstCount)
 end
 
 function Project45GunFire:altMuzzleFlash()
