@@ -12,7 +12,7 @@
   },
   "inventoryIcon" : "/items/augments/project45-gunmods/ability/project45-bayonetgripmod/project45-bayonetgripmodicon.png",
   "description" : "Its handle is designed as an ergonomic foregrip, so it's difficult to use as a dagger.",
-  "technicalInfo": "Right-click to attack. Damage scales with squared power mult times world level.",
+  "technicalInfo": "Right-click to attack. Damage scales with armor and world level.",
   "shortdescription" : "Bayonet Grip",
   "archetype": "Active Ability",
 
@@ -46,8 +46,8 @@
               "playSounds": ["fire1"],
               "damage": {
                 "config": {
-                  "baseDamageFactor": 2,
-                  "damageSourceKind" : "hammer",
+                  "baseDamageFactor": 8,
+                  "damageSourceKind" : "dagger",
                   "statusEffects" : [ ],
                   "knockbackMode" : "facing",
                   "knockback" : 10,
@@ -87,7 +87,8 @@
               "playSounds": ["fire1"],
               "damage": {
                 "config": {
-                  "damageSourceKind" : "hammer",
+                  "baseDamageFactor": 10,
+                  "damageSourceKind" : "dagger",
                   "statusEffects" : [ ],
                   "knockbackMode" : "facing",
                   "knockback" : 40,
