@@ -12,7 +12,7 @@
   },
   "inventoryIcon" : "/items/augments/project45-gunmods/ability/project45-chainsawmod/project45-chainsawmodicon.png",
   "description" : "A portable chainsaw with gears customized for warfare.",
-  "technicalInfo": "Right-click to attack. Damage scales with squared power mult times world level.",
+  "technicalInfo": "Right-click to attack. Damage scales with armor and world level.",
   "shortdescription" : "Underbarrel Chainsaw",
   "archetype": "Active Ability",
 
@@ -81,17 +81,6 @@
       },
       "overrideTwoHanded": true,
       "twoHanded": true
-    },
-    "stat": {
-      "recoverDelay":{
-        "rebaseMult": 1.1
-      },
-      "recoverTime":{
-        "rebaseMult": 1.1
-      },
-      "recoilAmount":{
-        "rebaseMult": 0.75
-      }
     },
     "gun": {
       "animationCustom": {

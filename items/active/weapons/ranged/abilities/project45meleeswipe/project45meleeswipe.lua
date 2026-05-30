@@ -3,6 +3,7 @@ require "/scripts/poly.lua"
 require "/scripts/vec2.lua"
 require "/scripts/status.lua"
 require "/items/active/weapons/project45neoweapon.lua"
+require "/items/active/weapons/ranged/abilities/project45gunfire/formulas.lua"
 require "/scripts/project45/project45util.lua"
 -- require "/items/active/weapons/ranged/gunfire.lua"
 
@@ -59,11 +60,13 @@ function Project45MeleeSwipe:slashing(comboStep)
     
     if stance.damage then
       
+      local damageModifiers = sb.jsonMerge(storage.project45GunState.damageModifiers, {})
+      damageModifiers["ownerPowerMultiplier"] = {
+        type="mult",
+        value=activeItem.ownerPowerMultiplier()
+      }
       damageConfig = stance.damage.config
-      damageConfig.baseDamage =
-          world.threatLevel()
-        * (activeItem.ownerPowerMultiplier()^2)
-        * (damageConfig.baseDamageFactor or 1)
+      damageConfig.baseDamage = formulas.damagePerShot(world.threatLevel() * (damageConfig.baseDamageFactor or 1), damageModifiers)
 
       offset = vec2.add(self.defaultOffset, stance.damage.offset or {0, 0})
       rotation = util.toRadians(stance.damage.rotate or 0)
