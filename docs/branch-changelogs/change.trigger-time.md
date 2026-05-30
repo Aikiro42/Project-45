@@ -1,2 +1,3 @@
 # Changes
 - Separated trigger time from the actual firing rate. That is, if you have an autofire gun that has a higher trigger time than the cycle time, the time it takes to start firing the weapon is longer than the time it takes for the weapon to fire subsequent shots.
+- Added a visual indicator for long trigger cooldowns.
