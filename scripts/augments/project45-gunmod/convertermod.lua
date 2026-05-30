@@ -29,6 +29,10 @@ function apply(output, augment)
   local oldProjectileKind = primaryAbility.projectileKind
   local gunCategory = output.config.project45GunModInfo.category
   newPrimaryAbility.projectileKind = conversion -- conversion must be a valid projectile kind
+  newPrimaryAbility.projectileType = "project45stdbullet"
+  if gunCategory ~= "ballistic" then
+    newPrimaryAbility.projectileType = "project45stdlaser"
+  end
 
   -- Conversion balance changes
   --[[
