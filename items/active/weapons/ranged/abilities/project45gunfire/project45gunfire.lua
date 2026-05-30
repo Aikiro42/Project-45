@@ -204,6 +204,8 @@ function Project45GunFire:init()
   storage.altMuzzleFlashTimer = 0
   self.muzzleSmokeTimer = 0
 
+  self.cueAudio = true
+
   -- initialize animation stuff
 
   -- animator.setSoundVolume("ejectCasing", 0.8)

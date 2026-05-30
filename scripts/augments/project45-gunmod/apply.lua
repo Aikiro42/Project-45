@@ -294,6 +294,20 @@ function apply(input)
     checker.output:setInstanceValue("colorIndex", checker.augment.dyeColorIndex)
   end
 
+  -- add incompatible mods from mod to weapon
+  if checker.augment.incompatibleMods then
+    local incompatibleMods = checker.modInfo.incompatibleMods
+    if not incompatibleMods then
+      incompatibleMods = checker.augment.incompatibleMods
+    else
+      for _, mod in ipairs(checker.augment.incompatibleMods) do
+        table.insert(incompatibleMods, mod)
+      end
+    end
+    checker.modInfo.incompatibleMods = incompatibleMods
+    checker.output:setInstanceValue("project45GunModInfo", checker.modInfo)
+  end
+
   checker.output:setInstanceValue("moddedPrice", checker.output:instanceValue("moddedPrice", 0) + priceAdd)
   checker.output:setInstanceValue("modSlots", newModSlots)
   checker.output:setInstanceValue("upgradeCount", checker.output:instanceValue("upgradeCount", 0) + checker.augment.cost)
