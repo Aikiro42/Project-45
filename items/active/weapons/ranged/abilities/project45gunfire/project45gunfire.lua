@@ -364,10 +364,12 @@ function Project45GunFire:renderModPositionDebug()
 end
 
 function Project45GunFire:renderDebugText()
+  --[[
   local debugText = ""
   debugText = debugText .. string.format("%.0f", self.cooldownTimer * 1000) .. "\n"
   debugText = debugText .. (self.triggered and "T" or " ")
   activeItem.setScriptedAnimationParameter("__debug__", debugText)
+  --]]
 end
 
 function Project45GunFire:update(dt, fireMode, shiftHeld)
