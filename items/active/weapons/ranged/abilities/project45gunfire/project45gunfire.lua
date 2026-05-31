@@ -170,6 +170,7 @@ function Project45GunFire:init()
   -- perfect reload must be within bounds of good reload
   -- and quick reload time frame array must be an increasing sequence
   if self.quickReloadParameters then
+    self.reloadTime = self.quickReloadParameters.reloadTime
     self.quickReloadTimeframe = formulas.quickReloadTimeframe(
       self.reloadTime,
       self.quickReloadParameters.goodTime,
