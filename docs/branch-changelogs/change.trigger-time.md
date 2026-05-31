@@ -1,3 +1,40 @@
+# TODO:
+- [ ] increase and diversify trigger times of all weapons.
+- [ ] I'll make some mods increase or decrease trigger time.
+  - [ ] energy muzzle mods
+- [ ] I'll make new mods that decrease trigger time.
+  - [ ] Violium Trigger: heavyweight but responsive trigger that increases damage output
+    - [ ] Titanium Electrigger
+    - Decreases trigger time minimally
+    - Increases crit chance
+    - What other damage-themed features that isn't just "increase damage"?
+  - [ ] Ferozium Trigger: mysterious trigger that assists in ammo-related concerns
+    - [ ] Cerulium Electrigger
+    - Decreases trigger time averagely
+    - Decreases jam chance
+    - Increases ammo efficiency (decreases ammo per shot, i.e. gives a chance to nnot consume bullets on fire)
+  - [ ] Aegisalt Trigger: lightweight trigger that assists shooter speed
+    - [ ] Alloy Electrigger
+    - Decreases trigger time greatly
+    - Increases fire rate minimally, similar to T1
+    - What other speed-themed features that isn't just "increase movement speed"? I already have a gun mod that does that.
+  - [ ] Ornate Hair trigger: themed after competition pistol triggers
+    - Very costly
+    - Eliminates trigger time (set to 1ms)
+    - Increases recoil and inaccuracy when moving
+  - [ ] Electromagnetic Ballistic Driver (Ballistic Barrel)
+    - Mod that gives overcharge and increases substantial charge damage
+    - Re-bases trigger time substantially (0.5ms)
+  - [ ] Charge Stabilizer (Energy Magazine)
+    - Increases trigger time
+    - Increases reload rating damage
+  - [ ] Internal Crystal Calibrator (Energy Receiver)
+    - Increases trigger time
+    - Provides charge time and increases overcharge damage above 1x
+- [x] I'll cause fire time stat mods to ONLY affect the cycle time.
+- [x] I'll make sure cycle time is truly separate from trigger time.
+- [x] I'll make a burst fire gun mod that increases the burst count, and decreases cycle time but increases trigger time.
+
 # New
 - Added the **Burstfire Receiver**, which makes weapons burstfire. This cannot be installed on manual-feed weapons.
 
