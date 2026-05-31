@@ -127,6 +127,11 @@
         // receiver
         "project45-autofiremod",
         "project45-burstfiremod",
+        // trigger
+        "project45-violiumtriggermod",
+        "project45-feroziumtriggermod",
+        "project45-aegisalttriggermod",
+        "project45-ornatetriggermod",
         // magazine
         "project45-extendedmagmod",
         "project45-alofsmagmod",

@@ -118,6 +118,9 @@
     "category": "ballistic",
     "uniqueType": "special",
     "upgradeCapacity": 10,
+    "acceptsModSlot": [
+      "trigger"
+    ],
     "allowsConversion": [
       "hitscan",
       "summoned"
