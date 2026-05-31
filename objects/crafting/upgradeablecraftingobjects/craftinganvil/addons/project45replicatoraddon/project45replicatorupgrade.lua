@@ -13,7 +13,8 @@ function currentStageData()
       "project45craftable-mods",
       "project45craftable-ammo",
       "project45craftable-stat",
-      "project45craftable-trans"
+      "project45craftable-trans",
+      "project45craftable-util"
     }
   end
   return res
