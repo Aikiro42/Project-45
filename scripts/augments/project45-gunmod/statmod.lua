@@ -282,7 +282,7 @@ function apply(output, augment)
 
     -- apply fireTime modifiers
 
-    local chargeAdd, overchargeAdd
+    local cycleTimeAdd, chargeAdd, overchargeAdd
     -- NOTE: I know this is bad practice,
     -- but the above variables being possibly nil is okay
     -- because the function they're used in (getModifiedStat())
