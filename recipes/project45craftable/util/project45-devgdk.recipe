@@ -1,0 +1,11 @@
+{
+  "input" : [
+    { "item" : "money", "count" : 45 }
+  ],
+  "output" : {
+    "item" : "project45-devgdk",
+    "count" : 1
+  },
+  "duration" : 5,
+  "groups" : [ "project45craftable-util" ]
+}

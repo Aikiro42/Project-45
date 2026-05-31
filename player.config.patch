@@ -56,6 +56,12 @@
     { "op" : "add", "path" : "/defaultBlueprints/tier1/-", "value" : { "item" : "project45-reloadcostmultmod2" } },
     { "op" : "add", "path" : "/defaultBlueprints/tier1/-", "value" : { "item" : "project45-reloadcostmultmod3" } },
 
+    // util
+    { "op" : "add", "path" : "/defaultBlueprints/tier1/-", "value" : { "item" : "project45-devgdk" } },
+
+    // trans
+    { "op" : "add", "path" : "/defaultBlueprints/tier1/-", "value" : { "item" : "project45-trans-ez" } },
+
     // other
     
     {
