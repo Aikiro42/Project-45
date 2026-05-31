@@ -1,0 +1,33 @@
+{
+  "itemName" : "project45-testmod",
+  "price" : 10000,
+  "rarity" : "uncommon",
+  "isUnique": true,
+  "tooltipKind" : "project45gunmod2",
+  "tooltipFields": {
+    "subtitle": "Stat Mod"
+  },
+  "modCategory" : "statMod",
+  "category" : "uniqueWeapon",
+  "itemTags": ["weapon"],
+  "inventoryIcon" : "/items/augments/project45-gunmods/project45-testmod/project45-testmod.png",
+  "statInfo" : "You're not supposed to see this.",
+  "description": "A mod used for testing. How'd you get ahold of this?",
+  "techincalInfo": "Dude, get rid of this. No knowing what'll happen to your gun if you install this.",
+  "slot": "multiple",
+  "archetype": "Mixed",
+  "shortdescription" : "^#72d54f;The Test Mod^reset;",
+
+  "augment":{
+    "cost": 0,
+    "stat": {
+      "baseDamage": {
+        "multiplicative": 1
+      }
+    }
+  },
+
+  "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
+
+}

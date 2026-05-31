@@ -25,3 +25,4 @@
 
 # New (Modders)
 - Added a new evalFunction 'project45WeaponDamageLevelMultiplier' that linearly increases damage from1.2 to 1.8 based on weapon level.
+- Added 'project45-testmod' for easily testing mods.

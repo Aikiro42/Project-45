@@ -1,0 +1,9 @@
+{
+  "input" : [],
+  "output" : {
+    "item" : "project45-testmod",
+    "count" : 10
+  },
+  "duration" : 0,
+  "groups" : [ "project45craftable-util" ]
+}
