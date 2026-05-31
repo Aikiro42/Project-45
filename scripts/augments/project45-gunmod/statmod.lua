@@ -206,9 +206,6 @@ function apply(output, augment)
     local QRParams = baseStat("quickReloadParameters", true)
       or formulas.quickReloadParameters(newReloadTime, baseStat("quickReloadTimeframe", true) or {0.5, 0.6, 0.7, 0.8})
 
-    local minReloadTime = 0.5
-    local minCockTime = 0.001
-
     if augment.reloadTimeGroup.additive then
       statModifiers.reloadTimeGroup.additive =
           (statModifiers.reloadTimeGroup.additive or 0)
@@ -222,21 +219,34 @@ function apply(output, augment)
     end
 
     local reloadTimeAdd = statModifiers.reloadTimeGroup.additive
+    local reloadTimeMult = statModifiers.reloadTimeGroup.multiplicative
 
     -- modify reload time and get how much the reload window should increase
-    newReloadTime = math.max(minReloadTime,
-      getModifiedStat(newReloadTime, reloadTimeAdd, statModifiers.reloadTimeGroup.multiplicative, true))
-
+    newReloadTime = getModifiedStat(
+        newReloadTime,
+        reloadTimeAdd,
+        reloadTimeMult,
+        true, false, statBounds.reloadTime
+      )
     -- modify cock time
-    newCockTime = math.max(minCockTime,
-      getModifiedStat(newCockTime, reloadTimeAdd, statModifiers.reloadTimeGroup.multiplicative, true))
+    newCockTime = getModifiedStat(
+        newCockTime,
+        reloadTimeAdd,
+        reloadTimeMult,
+        true, false, statBounds.cockTime
+      )
     newMidCockDelay = math.max(0,
-      getModifiedStat(newMidCockDelay, reloadTimeAdd, statModifiers.reloadTimeGroup.multiplicative, true))
+      getModifiedStat(
+        newMidCockDelay,
+        reloadTimeAdd,
+        reloadTimeMult,
+        true, false, statBounds.midCockDelay
+      ))
 
     -- apply modded values to primary ability
+    QRParams.reloadTime = newReloadTime
     newPrimaryAbility = sb.jsonMerge(newPrimaryAbility, {
       quickReloadParameters = QRParams,
-      reloadTime = newReloadTime,
       cockTime = newCockTime,
       midCockDelay = newMidCockDelay
     })
