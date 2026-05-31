@@ -559,9 +559,17 @@ function getModifiedStat(base, additive, multiplicative, isDiv, isInt, bounds)
   multiplicative = multiplicative or 1
   local result = 0
   if isDiv then
-    result = (base / multiplicative) + additive
+    if multiplicative > 0 then
+      result = (base / multiplicative) + additive
+    else
+      result = (base * -multiplicative) + additive
+    end
   else
-    result = base * multiplicative + additive
+    if multiplicative > 0 then
+      result = base * multiplicative + additive
+    else
+      result = (base / -multiplicative) + additive
+    end
   end
 
   if bounds then
