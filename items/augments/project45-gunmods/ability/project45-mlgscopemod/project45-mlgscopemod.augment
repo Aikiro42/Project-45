@@ -20,10 +20,31 @@
   "augment":{
     "category": "universal",
     "slot": "sights",
+    "passive": {
+      "passiveScript" : "/items/augments/project45-gunmods/ability/project45-mlgscopemod/project45-mlgscopemod.lua",
+      "passiveDescription": "Reloading perfectly 6x in a row gives invincibility for 19s."
+    },
+    "gun": {
+      "animationCustom": {
+        "sounds": {
+          "mlgReloadFail": [ "/items/augments/project45-gunmods/ability/project45-mlgscopemod/reload0.ogg"],
+          "mlgReload1": [ "/items/augments/project45-gunmods/ability/project45-mlgscopemod/reload1.ogg"],
+          "mlgReload2": [ "/items/augments/project45-gunmods/ability/project45-mlgscopemod/reload2.ogg"],
+          "mlgReload3": [ "/items/augments/project45-gunmods/ability/project45-mlgscopemod/reload3.ogg"],
+          "mlgReload4": [ "/items/augments/project45-gunmods/ability/project45-mlgscopemod/reload4.ogg"],
+          "mlgReload5": [ "/items/augments/project45-gunmods/ability/project45-mlgscopemod/reload5.ogg"]
+        }
+      }
+    },
     "ability": {
       "altAbilityType" : "project45mlgnoscope",
       "overrideTwoHanded": true,
       "twoHanded": true
+    },
+    "stat": {
+      "reloadTimeGroup": {
+        "multiplicative": 0
+      }
     }
   },
 
