@@ -120,6 +120,8 @@ function apply(output, augment)
         end
       end
 
+      -- sb.logInfo(string.format("%s : %s", config.getParameter("itemName"), sb.printJson(newModifications, 1)))
+
       -- END OF MODIFICATION
       newPrimaryAbility = sb.jsonMerge(newPrimaryAbility, newModifications)
 
