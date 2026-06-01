@@ -937,7 +937,7 @@ function Project45GunFire:reloading()
       
       -- update ammo
       if self.bulletsPerReload < self.maxAmmo then
-        self.passiveClass.onLoadRound(self)
+        self.passiveClass.onLoadRound(self, reloadRating)
         self.weapon:setStance(self.stances.loadRound)  -- player visually loads round
       end
       local reloadedBullets = storage.project45GunState.ammo -- prevents energy overconsumption when reloaded bullets is greater than max ammo
@@ -990,7 +990,7 @@ function Project45GunFire:reloading()
   
   -- if there hasn't been any input, just load round
   if storage.project45GunState.ammo < self.maxAmmo and not energyDepletedFlag then
-    self.passiveClass.onLoadRound(self)
+    self.passiveClass.onLoadRound(self, OK)
     sumRating = sumRating + 0.5 -- OK: 0.5
     reloads = reloads + 1 -- we did a reload
     animator.playSound("loadRound")
@@ -1004,8 +1004,6 @@ function Project45GunFire:reloading()
     -- proportionally consume energy; break out of loop once out of energy
     self:consumeEnergy(AMMO, reloadedBullets)
   end
-  
-  self.passiveClass.onReloadEnd(self)
 
   -- begin final reload evaluation
   --                     MAX AVERAGE
@@ -1025,6 +1023,7 @@ function Project45GunFire:reloading()
     animator.playSound("perfectReload")
   end
   self:updateReloadRating(finalReloadRating)
+  self.passiveClass.onReloadEnd(self)
 
   self.reloadRatingDamage = self.reloadRatingDamageMults[storage.project45GunState.reloadRating]
   animator.playSound("reloadEnd")  -- sound of magazine inserted

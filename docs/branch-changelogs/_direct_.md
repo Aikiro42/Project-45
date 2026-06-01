@@ -23,7 +23,10 @@
   - Nerfed the Underbarrel Chainsaw by removing its recoil stats.
 - Nerfed the recoil recovery time and delay of Malorian Arms 3516. The low firerate of the gun allowed it to recover completely before the player can shoot again, ensuring consistent accurate fire, so I gave it a bit of recoil.
 
-
 # New (Modders)
 - Added a new evalFunction 'project45WeaponDamageLevelMultiplier' that linearly increases damage from1.2 to 1.8 based on weapon level.
 - Added 'project45-testmod' for easily testing mods.
+
+# Changes (Modders)
+- Moved up the 'onReloadEnd' function so that it can determine the reload rating.
+- Added a new 'reloadRating' parameter to the 'onLoadRound' function.

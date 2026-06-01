@@ -16,7 +16,7 @@ function Project45Passive:onUnjam() end
 function Project45Passive:onFullUnjam() end
 function Project45Passive:onEjectMag() end
 function Project45Passive:onReloadStart() end
-function Project45Passive:onLoadRound() end
+function Project45Passive:onLoadRound(reloadRating) end
 function Project45Passive:onReloadEnd() end
 function Project45Passive:onCrit() end
 
