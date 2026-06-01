@@ -1082,6 +1082,7 @@ end
 
 function Project45GunFire:unjamming()
   if self.triggered then return end
+  self:updateJamAmount(-self.unjamAmount * math.abs(sb.nrand(self.unjamStDev, 1)))
   self.triggered = true
   self:screenShake()
   self:recoil(true, 0.5)
@@ -1092,7 +1093,6 @@ function Project45GunFire:unjamming()
   self.weapon:setStance(self.stances.jammed)
   self.passiveClass.onUnjam(self)
 
-  self:updateJamAmount(-self.unjamAmount * math.abs(sb.nrand(self.unjamStDev, 1)))
   if storage.project45GunState.jamAmount <= 0 then
     -- animator.playSound("click")
     self.passiveClass.onFullUnjam(self)
@@ -1808,6 +1808,7 @@ end
 -- Amount is clamped between 0 and 1.
 function Project45GunFire:updateJamAmount(delta, set)
   storage.project45GunState.jamAmount = set and delta or util.clamp(storage.project45GunState.jamAmount + delta, 0, 1)
+  self:updateUI()
 end
 
 function Project45GunFire:updateCycleTime()

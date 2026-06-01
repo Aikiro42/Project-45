@@ -145,27 +145,64 @@ function renderSide(dt, side)
     self["gunStatus" .. side].gunfireSwitchMarker
   )
 
-
+  local ratingScaleAdds = {
+    BAD=0.15,
+    GOOD=0.2,
+    PERFECT=0.3
+  }
   if isReloading then
-    if not (self["gunInfo" .. side].modSettings or {}).performanceMode then
+    if not performanceMode then
+      
+      if self["gunStatus" .. side].reloadRating ~= "OK" then
+        self["barVfxScaleAdd" .. side] = self["barVfxScaleAdd" .. side] or ratingScaleAdds[self["gunStatus" .. side].reloadRating]
+      else
+        self["barVfxScaleAdd" .. side] = nil
+      end
+
+      if self["gunStatus" .. side].reloadRating == "BAD" then
+        self["barVFXShake" .. side] = 0.1
+      else
+        self["barVFXShake" .. side] = self["barVfxScaleAdd" .. side] or 0
+      end
+
+      if self["barVfxScaleAdd" .. side] then
+        self["barVfxScaleAdd" .. side] = math.max(0, self["barVfxScaleAdd" .. side] - dt)
+      end
+
       renderReloadRatingText(
         self["gunStatus" .. side].uiPosition,
         vec2.add(self["gunInfo" .. side].uiElementOffset, {0, 2.5}),
         self["gunStatus" .. side].reloadRating
       )
     end
+
     renderReloadBar(
       self["gunStatus" .. side].uiPosition,
       self["gunInfo" .. side].uiElementOffset,
       self["gunInfo" .. side].reloadTimeframe,
       reloadProgress,
-      self["gunStatus" .. side].reloadRating
+      self["gunStatus" .. side].reloadRating,
+      1 + (self["barVfxScaleAdd" .. side] or 0),
+      self["barVFXShake" .. side]
     )
+
   elseif jamAmount > 0 then
+    local shake = nil
+    if not performanceMode then
+      if self["currentJamAmount" .. side] ~= jamAmount then
+        self["jamScale" .. side] = 1.5
+        self["currentJamAmount" .. side] = jamAmount
+      end
+      self["jamScale" .. side] = math.max(1, self["jamScale" .. side] * 0.975)
+      shake = (self["jamScale" .. side] - 1) * 0.5
+    end
+    
     renderJamBar(
       self["gunStatus" .. side].uiPosition,
       self["gunInfo" .. side].uiElementOffset,
-      jamAmount
+      jamAmount,
+      self["jamScale" .. side],
+      shake
     )
   end
   --]]
@@ -190,7 +227,7 @@ function renderGunfireSwitchMarker(uiPosition, offset, marker)
   )
 end
 
-function renderAmmoCounter(uiPosition, offset, reloadRating, ammo, isReloading, side)
+function renderAmmoCounter(uiPosition, offset, reloadRating, ammo, isReloading, side, shake)
 
   local reloadRatingColors = {
     PERFECT = {255, 241, 191},
@@ -321,7 +358,7 @@ function renderReloadRatingText(uiPosition, offset, reloadRating)
   )
 end
 
-function renderReloadBar(uiPosition, offset, reloadTimeframe, reloadProgress, reloadRating)
+function renderReloadBar(uiPosition, offset, reloadTimeframe, reloadProgress, reloadRating, scale, shake)
   if not uiPosition then return end
   if not reloadProgress then return end
   offset = offset or {0, 0}
@@ -340,6 +377,9 @@ function renderReloadBar(uiPosition, offset, reloadTimeframe, reloadProgress, re
   }
 
   local basePosition = vec2.add(uiPosition, offset)
+  if shake ~= nil and shake ~= 0 then
+    basePosition = vec2.add(basePosition, vec2.rotate({shake or 0, 0}, math.random()*6.28))
+  end
   
   reloadTimeframe = reloadTimeframe or {0.5, 0.6, 0.7, 0.8}
   local perfectReloadTimeframe = {reloadTimeframe[2], reloadTimeframe[3]}
@@ -349,6 +389,11 @@ function renderReloadBar(uiPosition, offset, reloadTimeframe, reloadProgress, re
     image = "/scripts/project45/ui/reloadbar-base.png",
     position = basePosition,
     color = {255,255,255},
+    transformation = {
+      {scale, 0, 0},
+      {0, scale, 0},
+      {0, 0, 1}
+    },
     fullbright = true,
   }, "Overlay")
 
@@ -358,6 +403,11 @@ function renderReloadBar(uiPosition, offset, reloadTimeframe, reloadProgress, re
       image = "/scripts/project45/ui/reloadbar.png:" .. reloadRating,
       position = basePosition,
       color = {255,255,255},
+      transformation = {
+        {scale, 0, 0},
+        {0, scale, 0},
+        {0, 0, 1}
+      },
       fullbright = true,
     }, "Overlay")
   end
@@ -370,8 +420,8 @@ function renderReloadBar(uiPosition, offset, reloadTimeframe, reloadProgress, re
     position = vec2.add(basePosition, {0, (-0.5 + goodY)*4}),
     color = zoneColors.good,
     transformation = {
-      {1, 0, 0},
-      {0, goodScale, 0},
+      {scale, 0, 0},
+      {0, scale*goodScale, 0},
       {0, 0, 1}
     },
     fullbright = true,
@@ -386,8 +436,8 @@ function renderReloadBar(uiPosition, offset, reloadTimeframe, reloadProgress, re
     position = vec2.add(basePosition, {0, (-0.5 + perfectY)*4}),
     color = zoneColors.perfect,
     transformation = {
-      {1, 0, 0},
-      {0, perfectScale, 0},
+      {scale, 0, 0},
+      {0, scale*perfectScale, 0},
       {0, 0, 1}
     },
     fullbright = true,
@@ -409,8 +459,8 @@ function renderReloadBar(uiPosition, offset, reloadTimeframe, reloadProgress, re
     position = vec2.add(basePosition, {0, (-0.5 + reloadProgress)*4}),
     color = zoneComplements[currentZone] or project45util.complement(zoneColors[currentZone]),
     transformation = {
-      {self.project45UiConfig.reloadArrow.scale, 0, 0},
-      {0, self.project45UiConfig.reloadArrow.scale, 0},
+      {scale*self.project45UiConfig.reloadArrow.scale, 0, 0},
+      {0, scale*self.project45UiConfig.reloadArrow.scale, 0},
       {0 ,0 ,1}
     },
     fullbright = true,
@@ -418,27 +468,39 @@ function renderReloadBar(uiPosition, offset, reloadTimeframe, reloadProgress, re
 
 end
 
-function renderJamBar(uiPosition, offset, jamAmount)
+function renderJamBar(uiPosition, offset, jamAmount, scale, shake)
   if not uiPosition then return end
   jamAmount = jamAmount or 0
   if jamAmount <= 0 then return end
+  scale = scale or 1
+
+  local basePosition = vec2.add(uiPosition, offset)
+  
+  if shake ~= nil and shake ~= 0 then
+    basePosition = vec2.add(basePosition, vec2.rotate({shake or 0, 0}, math.random()*6.28))
+  end
   
   -- base
   localAnimator.addDrawable({
     image = "/scripts/project45/ui/jambar-base.png",
-    position = vec2.add(uiPosition, offset),
+    position = basePosition,
     color = {255,255,255},
+    transformation = {
+      {scale, 0, 0},
+      {0, scale, 0},
+      {0, 0, 1}
+    },
     fullbright = true,
   }, "Overlay")
 
   -- bar
   localAnimator.addDrawable({
     image = "/scripts/project45/ui/jambar.png",
-    position = vec2.add(uiPosition, offset),
+    position = basePosition,
     color = {255,255,255},
     transformation = {
-      {1, 0, 0},
-      {0, jamAmount, 0},
+      {scale, 0, 0},
+      {0, scale*jamAmount, 0},
       {0, 0, 1}
     },
     fullbright = true,
