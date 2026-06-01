@@ -26,8 +26,8 @@
           "checks": [
             {
               "path": "primaryAbility.semi",
-              "operation": "!=",
-              "value": true
+              "operation": "==",
+              "value": null
             }
           ],
           "operation": "replace",
@@ -37,8 +37,8 @@
           "checks": [
             {
               "path": "primaryAbility.manualFeed",
-              "operation": "!=",
-              "value": true
+              "operation": "==",
+              "value": null
             }
           ],
           "operation": "replace",

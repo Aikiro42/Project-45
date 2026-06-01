@@ -82,6 +82,7 @@ function apply(output, augment)
     end
 
     -- merge changes
+    -- FIXME: try installing an ammo mod then the automatic receiver.
     output:setInstanceValue("primaryAbility", sb.jsonMerge(oldPrimaryAbility, newPrimaryAbility))
 
     -- elemental type
