@@ -12,7 +12,7 @@
   },
   "inventoryIcon": "/items/augments/project45-gunmods/ammo/project45-subsonicammomod/project45-subsonicammomodicon.png",
   "description": "Low-pressure rounds that require manual feeding to cycle. Increases damage and decreases recoil.",
-  "technicalInfo": "Weapons manual-feed.",
+  "technicalInfo": "Weapons manual-feed. Decreases damage, but increases crit. Removes overcharge.",
   "statInfo": "?",
   "shortdescription": "Subsonic Ammo",
 
@@ -29,11 +29,13 @@
       "primaryAbility": {
         "semi": {
           "operation": "replace",
-          "value": true
+          "value": true,
+          "lock": true
         },
         "manualFeed": {
           "operation": "replace",
-          "value": true
+          "value": true,
+          "lock": true
         }
       }
     },
@@ -55,6 +57,9 @@
       },
       "jamChanceMult": {
         "rebaseMult": 0.5
+      },
+      "overchargeTime": {
+        "rebase": 0
       }
     }
   },
