@@ -16,13 +16,6 @@ jobs:
         uses: actions/checkout@main
         with:
           fetch-depth: 0
-
-      - name: Authenticate Git
-        uses: nodef/git-config.action@f277d0052367bb3e89337a79121d612f32b6297c # v1.0.0
-        with:
-          credentials: |-
-            github.com=${{secrets.GITHUB_TOKEN}}
-            gist.github.com=${{secrets.GITHUB_TOKEN}}
       
       - name: Configure Git
         run: |
