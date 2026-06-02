@@ -25,7 +25,8 @@
     ],
     "stat": {
       "maxAmmo": {
-        "rebaseMult": 2
+        "rebaseMult": 2,
+        "additive": 5
       }
     }
   },

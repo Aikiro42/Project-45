@@ -81,7 +81,8 @@
       "primaryAbility": {
         "heavyWeapon": {
           "operation": "replace",
-          "value": false
+          "value": false,
+          "lock": true
         }
       }
     }
