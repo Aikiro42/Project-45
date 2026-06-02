@@ -26,8 +26,8 @@
           "checks": [
             {
               "path": "primaryAbility.manualFeed",
-              "operation": "==",
-              "value": null
+              "operation": "!=",
+              "value": true
             }
           ],
           "operation": "replace",
