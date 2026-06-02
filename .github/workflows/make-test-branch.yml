@@ -3,12 +3,6 @@ name: Make `public-test` branch
 on:
   push:
     branches:
-      - "change/**"
-      - "bugfix/**"
-      - "hotfix/**"
-      - "feat/**"
-      - "feature/**"
-      - "docs/**"
       - "dev/**"
       - "wip/experimental"
 permissions:
@@ -19,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@main
         with:
           fetch-depth: 0
 
