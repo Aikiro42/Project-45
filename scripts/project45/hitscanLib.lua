@@ -11,12 +11,19 @@ function hitscanLib:hitscanSfx(pos)
   local category = (config.getParameter("project45GunModInfo", {})).category or "ballistic"
   category = self.hitscanParameters.sfxType or category
   
+  local categories = {
+    ballistic=true,
+    energy=true,
+    experimental=true,
+  }
   -- spawn projectile at end of hitscan for sfx
-  local terminalExplosion = "project45_terminalexplosion_" .. category
-  world.spawnProjectile(
-    terminalExplosion,
-    pos
-  )
+  if categories[category] then
+    local terminalExplosion = "project45_terminalexplosion_" .. category
+    world.spawnProjectile(
+      terminalExplosion,
+      pos
+    )
+  end
 end
 
 function hitscanLib:fireChainBeam()
