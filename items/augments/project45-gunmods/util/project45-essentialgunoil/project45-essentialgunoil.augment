@@ -10,7 +10,7 @@
     "objectImage": "/items/augments/project45-gunmods/util/project45-essentialgunoil/project45-essentialgunoil.png"
   },
   "inventoryIcon" : "/items/augments/project45-gunmods/util/project45-essentialgunoil/project45-essentialgunoilicon.png",
-  "description" : "Gun oil made from Ancient Essence. ^#d29ce7;Allows your weapon to be upgraded in an Upgrade Anvil.^reset;",
+  "description" : "Gun oil made from Ancient Essence. ^#d29ce7;Allows your weapon to be upgraded in an Upgrade Anvil, and refunds dyes on use.^reset;",
   "shortdescription" : "Essential Gun Oil",
   
   "applyBeforeBuild": true,
@@ -26,10 +26,11 @@
       "weaponUpgradeStatus": 2,
       // "isRandomized": false, // necessary to regenerate the stats on upgrade
       "isModded": true // allows for immediate disassembly
-    }
+    },
+    "ecoDye": true
   },
 
-  // do not modify if any of the stuff in checks
+  // do not modify if any of the stuff in checks is present
   "checks": [
     "upgradeParameters"
   ],

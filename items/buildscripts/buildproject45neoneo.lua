@@ -73,10 +73,11 @@ function build(directory, config, parameters, level, seed)
 
   -- update item tags
   local currentItemTags = configParameter("itemTags", {})
+  local weaponUpgradeStatus = configParameter("weaponUpgradeStatus", 0)
 
   if parameters.upgradeParameters then
     config.upgradeParameters = sb.jsonMerge(config.upgradeParameters or {}, parameters.upgradeParameters)
-    if not set.new(currentItemTags)["upgradeableWeapon"] then
+    if not set.new(currentItemTags)["upgradeableWeapon"] and weaponUpgradeStatus < 2 then
       table.insert(currentItemTags, "upgradeableWeapon")
     end
   end
@@ -113,6 +114,7 @@ function build(directory, config, parameters, level, seed)
     -- sb.logInfo(string.format("Seed of %s: %d", config.itemName, parameters.seed))
     if parameters.seed == 69420 or configParameter("itemName") == "project45-neo-protector" then
       randStatBonus = 1
+      parameters.ecoDye = true
     elseif parameters.seed == 42069 then
       randStatBonus = 0
     else
@@ -915,9 +917,9 @@ function build(directory, config, parameters, level, seed)
       end
       
       -- see project45-essentialgunoil.augment
-      if configParameter("weaponUpgradeStatus", 0) == 1 then
+      if weaponUpgradeStatus == 1 then
         config.description = config.description .. " " .. project45util.colorText("#9da8af", "Can be upgraded on a weapon upgrade anvil now that it's greased with essential gun oil.")
-      elseif configParameter("weaponUpgradeStatus", 0) == 2 then
+      elseif weaponUpgradeStatus == 2 then
         config.description = config.description .. " " .. project45util.colorText("#9da8af", "Recently upgraded on a weapon upgrade anvil. Needs to be reassembled to bring out its full potential.")
       elseif config.lore then
         config.description = config.description .. " " .. project45util.colorText("#9da8af", config.lore)

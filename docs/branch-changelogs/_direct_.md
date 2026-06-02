@@ -2,6 +2,7 @@
 - Improved Project 45 Configuration UI to be more informative.
 - The projectile conversion mod now changes the weapon's projectile based on its category; ballistics will fire bullets, energy and experimentals fire lasers.
 - Added VFX to reload and jam bars, affected by the Performance Mode setting.
+- The Essential Gun Oil now causes any dye applied onto the weapon to be conserved and not consumed.
 
 # Balance
 - Reduced the damage multiplier provided per weapon level.
@@ -22,6 +23,9 @@
   - Buffed the damage factors of the Bayonet Grip's swipes.
   - Nerfed the Underbarrel Chainsaw by removing its recoil stats.
 - Nerfed the recoil recovery time and delay of Malorian Arms 3516. The low firerate of the gun allowed it to recover completely before the player can shoot again, ensuring consistent accurate fire, so I gave it a bit of recoil.
+
+# Fixes
+- Fixed upgradeable guns still appearing in the upgrade anvil UI even after upgrading it.
 
 # New (Modders)
 - Added a new evalFunction 'project45WeaponDamageLevelMultiplier' that linearly increases damage from1.2 to 1.8 based on weapon level.
