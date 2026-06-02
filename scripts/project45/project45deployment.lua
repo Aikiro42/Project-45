@@ -129,7 +129,7 @@ function renderSide(dt, side)
     )
   end
 
-  if not performanceMode and fireTime < self.project45UiConfig.cooldownThreshold then
+  if not performanceMode and fireTime >= self.project45UiConfig.cooldownThreshold then
     renderCooldownTimer(
       self["gunStatus" .. side].aimPosition,
       chamberIndicatorOffset,
