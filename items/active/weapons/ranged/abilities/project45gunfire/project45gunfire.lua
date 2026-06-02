@@ -990,6 +990,7 @@ function Project45GunFire:reloading()
   
   -- if there hasn't been any input, just load round
   if storage.project45GunState.ammo < self.maxAmmo and not energyDepletedFlag then
+    ---@diagnostic disable-next-line: redundant-parameter
     self.passiveClass.onLoadRound(self, OK)
     sumRating = sumRating + 0.5 -- OK: 0.5
     reloads = reloads + 1 -- we did a reload
