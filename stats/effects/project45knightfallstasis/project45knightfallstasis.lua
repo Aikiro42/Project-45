@@ -26,6 +26,13 @@ function update(dt)
   if status.isResource("stunned") then
     status.setResource("stunned", math.max(status.resource("stunned"), effect.duration()))
   end
+
+  if status.resource("health") <= 0 then
+    status.setResource("stunned", 0)
+    effect.modifyDuration(0)
+    animator.setAnimationRate(1)
+    effect.expire()
+  end
   
 end
 

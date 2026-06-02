@@ -26,6 +26,7 @@
 
 # Fixes
 - Fixed upgradeable guns still appearing in the upgrade anvil UI even after upgrading it.
+- Fixed the Stasis status effect preventing entities from dying until the effect expires.
 
 # New (Modders)
 - Added a new evalFunction 'project45WeaponDamageLevelMultiplier' that linearly increases damage from1.2 to 1.8 based on weapon level.
