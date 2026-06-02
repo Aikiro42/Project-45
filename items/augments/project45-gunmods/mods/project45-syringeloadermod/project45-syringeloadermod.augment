@@ -12,7 +12,6 @@
   },
   "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-syringeloadermod/project45-syringeloadermodicon.png",
   "description": "It's named as such because you \"inject\" shells into tube magazines with it.",
-  "technicalInfo" : "",
   "statInfo": "If I appear anywhere, something's wrong; check the scripts and tooltips.",
   "shortdescription" : "Syringe Loader",
    

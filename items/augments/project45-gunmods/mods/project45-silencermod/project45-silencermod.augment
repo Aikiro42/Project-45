@@ -32,18 +32,21 @@
       "primaryAbility": {
         "flashHidden": {
           "operation": "replace",
-          "value": true
+          "value": true,
+          "lock": true
         },
         "hideMuzzleFlash": {
           "operation": "replace",
-          "value": true
+          "value": true,
+          "lock": true
         },
         // TODO: turn me into a stat?
         "hollowSoundMult": {
           // suppressors are kinda hard on weapons because they keep air in the barrel
           // and increase internal pressure
           "operation": "replace",
-          "value": 1.1
+          "value": 1.1,
+          "lock": true
         }
       },
 
