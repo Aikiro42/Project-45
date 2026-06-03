@@ -2,6 +2,7 @@ function init()
   require "/scripts/set.lua"
   
   self.sellFactor = config.getParameter("sellFactor", 1)
+  widget.setText("countLabel", string.format("^#9a5da0;Sell Items For %.0f%% Price^reset;", self.sellFactor * 100))
   self.cachedItems = {}
   self.appreciateItems = {}
   self.appreciateTags = {}
@@ -69,7 +70,7 @@ function valueOfContents()
     -- add calculated itemvalue to item cost
     value = value + itemCost * item.count * self.sellFactor * itemFactor
   end
-  return value
+  return math.floor(value)
 end
 
 function shorthand(num)

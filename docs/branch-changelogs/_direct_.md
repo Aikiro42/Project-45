@@ -1,3 +1,6 @@
+# Fixes
+- Made fixes to Reimburser UI
+
 # Changes
 - Improved Project 45 Configuration UI to be more informative.
 - The projectile conversion mod now changes the weapon's projectile based on its category; ballistics will fire bullets, energy and experimentals fire lasers.

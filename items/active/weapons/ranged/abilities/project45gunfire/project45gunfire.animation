@@ -757,7 +757,7 @@
     // plays once when charging ends;
     "chargeEnd": [ ],
     
-    "beamImpact": [ "/sfx/project45neosfx/chargedrone/chargedrone-03.ogg" ],
+    "beamImpact": [ "/sfx/melee/mech_drill_active2.ogg" ],
     
     // properties present for compatibility
     "altFire": [ ],
