@@ -18,11 +18,11 @@
   "shortdescription" : "^#fdd14d;The God Mod^reset;",
 
   "augment":{
-    "cost": 3,
+    "cost": 5,
     "pureStatMod": true,
     
     "stat": {
-      "stackLimit": 3,
+      "stackLimit": 2,
       "baseDamage": {
         "multiplicative": 1
       },

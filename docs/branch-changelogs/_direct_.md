@@ -23,6 +23,7 @@
   - Buffed the damage factors of the Bayonet Grip's swipes.
   - Nerfed the Underbarrel Chainsaw by removing its recoil stats and decreasing its per-tick damage from 0.5x to 0.3x.
 - Nerfed the recoil recovery time and delay of Malorian Arms 3516. The low firerate of the gun allowed it to recover completely before the player can shoot again, ensuring consistent accurate fire, so I gave it a bit of recoil.
+- Nerfed the God Mod by increasing its upgrade cost from 3 to 5 and decreasing its stack limit from 3 to 2.
 
 # Fixes
 - Fixed upgradeable guns still appearing in the upgrade anvil UI even after upgrading it.
