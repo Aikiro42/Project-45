@@ -398,7 +398,7 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
     animator.stopAllSounds("cooldownLoop")
     if not self.cueAudio then
       self.cueAudio = true
-      animator.playSound("triggerCue")
+      animator.playSound("readyCue")
     end
     triggerHeld = self.triggered
   end
@@ -430,6 +430,7 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
 
   if not self.isFiring then
     if not self:triggering() then
+      self.triggerCue = false
       self.triggered = false
     end
     self:stopFireLoop()
@@ -448,11 +449,19 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
   end
   
   -- trigger i/o logic
-  if self:triggering()
-  and not self.weapon.currentAbility
+  if self:triggering() then
+    
+    if not self.triggerCue and (self.fireTime >= cooldownThreshold or self.chargeTime > 0) then
+      self.triggerCue = true
+      animator.playSound("triggerCue")
+      self:recoil(true, 1, 0.1, 0)
+    end
+
+  if not self.weapon.currentAbility
   and self.cooldownTimer == 0
   and not self.isFiring
   then
+
     if storage.project45GunState.jamAmount <= 0 then
 
       if storage.project45GunState.ammo > 0 then
@@ -496,6 +505,8 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
       self:resetCooldownTimer()
     end
     
+  end
+
   end
 
 
@@ -1406,6 +1417,10 @@ function Project45GunFire:discardCasings(numCasings)
 end
 
 -- Kicks gun muzzle up and backward, shakes screen
+-- @param down : boolean
+-- @param mult : float
+-- @param amount : float
+-- @param recoverDelay : float
 function Project45GunFire:recoil(down, mult, amount, recoverDelay)
   if self.disableRecoil then return end
 
