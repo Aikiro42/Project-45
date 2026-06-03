@@ -21,7 +21,7 @@
 - Fixed how the damage multipler from stocking ammo is calculated.
 - Changed how Melee Swipe damage is calculated.
   - Buffed the damage factors of the Bayonet Grip's swipes.
-  - Nerfed the Underbarrel Chainsaw by removing its recoil stats.
+  - Nerfed the Underbarrel Chainsaw by removing its recoil stats and decreasing its per-tick damage from 0.5x to 0.3x.
 - Nerfed the recoil recovery time and delay of Malorian Arms 3516. The low firerate of the gun allowed it to recover completely before the player can shoot again, ensuring consistent accurate fire, so I gave it a bit of recoil.
 
 # Fixes

@@ -1,5 +1,13 @@
 <img src="docs/readme_assets/repository-structure.png" />
 
+
+<!--
+Test with Project Knightfall:
+
+/warp InstanceWorld:syndicate_firebase
+
+-->
+
 # Project-45
 
 # Todo
