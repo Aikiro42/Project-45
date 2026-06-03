@@ -1,2 +1,2 @@
 # Changes
-- Added rarity colors to tooltips.
+- Added rarity colors to gun and mod tooltips.

@@ -6,6 +6,12 @@
     "fileFooter" : "/interface/tooltips/project45gunmod2/project45gunmod2-tooltipfooter.png"
   },
 
+  "tooltipBackground":{
+    "type" : "image",
+    "position" : [0, 14],
+    "file" : "/interface/tooltips/project45gunmod2/project45gunmod2-tooltipbody-bg.png"
+  },
+
   "objectImage" : {
     "type" : "image",
     "position" : [54, 133],
@@ -251,6 +257,12 @@
     "position" : [185, 4],
     "hAnchor" : "right",
     "value" : "0"
+  },
+
+  "rarityImage":{
+    "type" : "image",
+    "position" : [0, 14],
+    "file" : ""
   }
 
 }
