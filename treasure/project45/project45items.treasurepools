@@ -124,12 +124,14 @@
         {"weight" : 1, "item" : "project45-damageaddmod1"},
         {"weight" : 1, "item" : "project45-firetimeaddmod1"},
         {"weight" : 1, "item" : "project45-reloadcostaddmod1"},
+        {"weight" : 1, "item" : "project45-reloadtimeaddmod1"},
 
         {"weight" : 1, "item" : "project45-critchancemultmod1"},
         {"weight" : 1, "item" : "project45-critdamagemultmod1"},
         {"weight" : 1, "item" : "project45-damagemultmod1"},
         {"weight" : 1, "item" : "project45-firetimemultmod1"},
-        {"weight" : 1, "item" : "project45-reloadcostmultmod1"}
+        {"weight" : 1, "item" : "project45-reloadcostmultmod1"},
+        {"weight" : 1, "item" : "project45-reloadtimemultmod1"}
 
       ],
       "poolRounds" : 1,
@@ -146,12 +148,14 @@
         {"weight" : 1, "item" : "project45-damageaddmod2"},
         {"weight" : 1, "item" : "project45-firetimeaddmod2"},
         {"weight" : 1, "item" : "project45-reloadcostaddmod2"},
+        {"weight" : 1, "item" : "project45-reloadtimeaddmod2"},
 
         {"weight" : 1, "item" : "project45-critchancemultmod2"},
         {"weight" : 1, "item" : "project45-critdamagemultmod2"},
         {"weight" : 1, "item" : "project45-damagemultmod2"},
         {"weight" : 1, "item" : "project45-firetimemultmod2"},
         {"weight" : 1, "item" : "project45-reloadcostmultmod2"},
+        {"weight" : 1, "item" : "project45-reloadtimemultmod2"},
       
         {"weight" : 1, "item" : "project45-levelmod"},
         {"weight" : 1, "item" : "project45-wildcardstatmod"}
@@ -170,12 +174,14 @@
         {"weight" : 1, "item" : "project45-damageaddmod3"},
         {"weight" : 1, "item" : "project45-firetimeaddmod3"},
         {"weight" : 1, "item" : "project45-reloadcostaddmod3"},
+        {"weight" : 1, "item" : "project45-reloadtimeaddmod3"},
 
         {"weight" : 1, "item" : "project45-critchancemultmod3"},
         {"weight" : 1, "item" : "project45-critdamagemultmod3"},
         {"weight" : 1, "item" : "project45-damagemultmod3"},
         {"weight" : 1, "item" : "project45-firetimemultmod3"},
         {"weight" : 1, "item" : "project45-reloadcostmultmod3"},
+        {"weight" : 1, "item" : "project45-reloadtimemultmod3"},
 
         {"weight" : 0.5, "item" : "project45-maxlevelmod"},
         {"weight" : 2, "item" : "project45-wildcardstatmodssr"}
