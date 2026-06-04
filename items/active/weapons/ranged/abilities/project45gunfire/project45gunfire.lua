@@ -454,58 +454,58 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
     if not self.triggerCue and (self.fireTime >= cooldownThreshold or self.chargeTime > 0) then
       self.triggerCue = true
       animator.playSound("triggerCue")
-      self:recoil(true, 1, 0.1, 0)
+      self:recoil(true, 0.1, 0, 0)
     end
 
-  if not self.weapon.currentAbility
-  and self.cooldownTimer == 0
-  and not self.isFiring
-  then
+    if not self.weapon.currentAbility
+    and self.cooldownTimer == 0
+    and not self.isFiring
+    then
 
-    if storage.project45GunState.jamAmount <= 0 then
+      if storage.project45GunState.jamAmount <= 0 then
 
-      if storage.project45GunState.ammo > 0 then
+        if storage.project45GunState.ammo > 0 then
 
-          if animator.animationState("chamber") == "ready"
-          and not self.triggered then
+            if animator.animationState("chamber") == "ready"
+            and not self.triggered then
 
-            if not self:muzzleObstructed() then
-            
-              if self.chargeTime + self.overchargeTime > 0 then
-                self:setState(self.charging)
-                triggerHeld = true  -- FIXME: check if i fix or break somethign
-              else
-                self:setState(self.firing)
+              if not self:muzzleObstructed() then
+              
+                if self.chargeTime + self.overchargeTime > 0 then
+                  self:setState(self.charging)
+                  triggerHeld = true  -- FIXME: check if i fix or break somethign
+                else
+                  self:setState(self.firing)
+                end
+
               end
 
+            elseif not self.triggered then
+              self:setState(self.cocking)
+
             end
-
-          elseif not self.triggered then
-            self:setState(self.cocking)
-
+        elseif storage.project45GunState.ammo == 0 and not self.triggered then
+          if self.loadRoundsThroughBolt then
+            self:openBolt(animator.animationState("chamber") == "ready" and self.ammoPerShot, false, true, true, true)
           end
-      elseif storage.project45GunState.ammo == 0 and not self.triggered then
-        if self.loadRoundsThroughBolt then
-          self:openBolt(animator.animationState("chamber") == "ready" and self.ammoPerShot, false, true, true, true)
+          self:ejectMag()
+        else
+          if not self.triggered then
+            self:setState(self.reloading)
+          end
+
         end
-        self:ejectMag()
+
       else
-        if not self.triggered then
-          self:setState(self.reloading)
-        end
+        self:setState(self.unjamming)
 
       end
 
-    else
-      self:setState(self.unjamming)
-
+      if not triggerHeld then
+        self:resetCooldownTimer()
+      end
+      
     end
-
-    if not triggerHeld then
-      self:resetCooldownTimer()
-    end
-    
-  end
 
   end
 
