@@ -220,10 +220,11 @@
         "allowFlip" : false
       },
       "reloading" : {
+        "backArmFrame": "rotation",
         "armRotation" : 0,
         "weaponRotation" : 0,
         "weaponAngularVelocity": -2700,
-        "twoHanded": false
+        "twoHanded": true
       },
       "reloaded" : {
         "armRotation" : 0,
