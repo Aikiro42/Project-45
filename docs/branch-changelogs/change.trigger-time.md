@@ -42,6 +42,7 @@ that does that.
 # New
 - Added the **Burstfire Receiver**, which makes weapons burstfire. This cannot be installed on manual-feed weapons.
 - Added the **Aegisalt, Ferozium, Violium and Ornate Triggers**, which decrease weapon trigger time. Can only be installed on ballistic weapons.
+- Added the **Gauss Driver**, which gives the weapon some charge time for overcharge damage.
 
 # Changes
 - Separated trigger time from the actual firing rate. That is, if you have an autofire gun that has a higher trigger time than the cycle time, the time it takes to start firing the weapon is longer than the time it takes for the weapon to fire subsequent shots.

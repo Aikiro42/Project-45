@@ -157,7 +157,8 @@
         "project45-underbarrelshotgunmod",
         // misc mods
         "project45-stockmod",
-        "project45-fanhammermod"
+        "project45-fanhammermod",
+        "project45-gaussdrivermod"
       ],
       "energy": [
         // abilities

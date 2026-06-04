@@ -1,0 +1,54 @@
+{
+  "itemName": "project45-gaussdrivermod",
+  "price": 800,
+  "rarity": "Legendary",
+  "tooltipKind": "project45gunmod2",
+  "modCategory": "gunMod",
+  "category": "uniqueWeapon",
+  "itemTags": ["weapon"],
+  "tooltipFields": {
+    "subtitle": "Gun Mod",
+    "objectImage": "/items/augments/project45-gunmods/mods/project45-gaussdrivermod/project45-gaussdrivermod.png"
+  },
+  "inventoryIcon": "/items/augments/project45-gunmods/mods/project45-gaussdrivermod/project45-gaussdrivermodicon.png",
+  "description": "An recharging electromagnetic system installed on the barrel. Increases damage at the cost of firerate.",
+  "technicalInfo": "Weapons gain charge and overcharge; automatically fires when fully charged.",
+  "statInfo": "",
+  "shortdescription": "Gauss Driver",
+
+  "augment": {
+    "modName": "Gauss Driver",
+    "category": "ballistic",
+    "slot": "barrel",
+    "gun": {
+      "primaryAbility": {
+        "autoFireAfterCharge": {
+          "operation": "replace",
+          "value": true
+        }
+      },
+      "animationCustom": {
+        "sounds": {
+          "chargeWhine": [ "/sfx/project45neosfx/chargewhine/chargewhine-02.ogg" ]
+        }
+      }
+    },
+    "stat": {
+      "overchargeTime": {
+        "rebase": 0.5
+      },
+      "chargeTime": {
+        "rebase": 0.5
+      },
+      "fireTime": {
+        "rebase": 0.3
+      },
+      "chargeDamageMult": {
+        "rebase": 2
+      }
+    }
+  },
+
+  "scripts": ["/scripts/augments/project45-gunmod/apply.lua"],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
+}
