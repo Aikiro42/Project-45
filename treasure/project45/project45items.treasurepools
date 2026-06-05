@@ -246,13 +246,20 @@
         {"weight" : 1, "item" : "project45-speedloadermod"},
         {"weight" : 1, "item" : "project45-syringeloadermod"},
         {"weight" : 1, "item" : "project45-fanhammermod"},
+        {"weight" : 1, "item" : "project45-burstfiremod"},
+        {"weight" : 1, "item" : "project45-aegissalttriggermod"},
 
         // LEGENDARY
         {"weight" : 0.5, "item" : "project45-flashlasermod"},
         {"weight" : 0.5, "item" : "project45-autofiremod"},
         {"weight" : 0.5, "item" : "project45-multithreadermod"},
+        {"weight" : 0.5, "item" : "project45-crystalcalibratormod"},
         {"weight" : 0.5, "item" : "project45-splittermod"},
-        {"weight" : 0.5, "item" : "project45-bayonetgripmod"}
+        {"weight" : 0.5, "item" : "project45-bayonetgripmod"},
+        {"weight" : 0.5, "item" : "project45-violiumtriggermod"},
+        {"weight" : 0.5, "item" : "project45-feroziumtriggermod"},
+        {"weight" : 0.5, "item" : "project45-gaussdrivermod"},
+        {"weight" : 0.5, "item" : "project45-stabilizingadaptermod"}
         
       ],
       "poolRounds" : 1,
@@ -269,7 +276,8 @@
         {"weight" : 1, "item" : "project45-chainsawmod"},
         {"weight" : 1, "item" : "project45-grenadelaunchermod"},
         {"weight" : 1, "item" : "project45-underbarrelshotgunmod"},
-        {"weight" : 1, "item" : "project45-solariummod"}
+        {"weight" : 1, "item" : "project45-solariummod"},
+        {"weight" : 1, "item" : "project45-ornatetriggermod"}
       ],
       "poolRounds" : 1,
       "allowDuplication" : false

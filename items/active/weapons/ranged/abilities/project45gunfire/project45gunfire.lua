@@ -13,6 +13,7 @@ require "/items/active/weapons/ranged/abilities/project45gunfire/formulas.lua"
 require "/items/active/weapons/ranged/abilities/project45gunfire/constants.lua"
 
 local generalConfig = root.assetJson("/configs/project45/project45_general.config")
+local cooldownThreshold = (generalConfig.uiConfig or {}).cooldownThreshold or 0.01
 
 Project45GunFire = GunFire:new()
 
@@ -203,6 +204,8 @@ function Project45GunFire:init()
   storage.altMuzzleFlashTimer = 0
   self.muzzleSmokeTimer = 0
 
+  self.cueAudio = true
+
   -- initialize animation stuff
 
   -- animator.setSoundVolume("ejectCasing", 0.8)
@@ -360,16 +363,49 @@ function Project45GunFire:renderModPositionDebug()
 
 end
 
+function Project45GunFire:renderDebugText()
+  --[[
+  local debugText = ""
+  debugText = debugText .. string.format("%.0f", self.cooldownTimer * 1000) .. "\n"
+  debugText = debugText .. (self.triggered and "T" or " ")
+  activeItem.setScriptedAnimationParameter("__debug__", debugText)
+  --]]
+end
+
 function Project45GunFire:update(dt, fireMode, shiftHeld)
 
   WeaponAbility.update(self, dt, fireMode, shiftHeld)
   self.passiveClass.update(self, dt, fireMode, shiftHeld)
 
   -- update timers
+  if storage.project45GunState.ammo <= 0
+  or self.weapon.isReloading
+  then
+    self:resetCooldownTimer(true, generalConfig.quickCooldown)
+  end
+
   self.cooldownTimer = math.max(0, self.cooldownTimer - self.dt)
+  
+  local triggerHeld = false
+  if self.cooldownTimer > 0 then
+    self.cueAudio = false
+    if not self.cooldownAudio then
+      self.cooldownAudio = true
+      animator.playSound("cooldownLoop", -1)
+    end
+  elseif self.cooldownTimer <= 0 then
+    self.cooldownAudio = false
+    animator.stopAllSounds("cooldownLoop")
+    if not self.cueAudio then
+      self.cueAudio = true
+      animator.playSound("readyCue")
+    end
+    triggerHeld = self.triggered
+  end
 
   -- update relevant stuff
   self:renderModPositionDebug()
+  self:renderDebugText()
   self:updateUI()
   self:updateFlashlight()
   self:updateLaser()
@@ -377,6 +413,7 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
   self:updateAmmoRecharge()
   self:updateRecoil()
   self:updateCycleTime()
+  self:updateCooldownAudio()
   self:updateScreenShake()
   self:updateProjectileStack()
   self:updateMovementControlModifiers()
@@ -393,6 +430,7 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
 
   if not self.isFiring then
     if not self:triggering() then
+      self.triggerCue = false
       self.triggered = false
     end
     self:stopFireLoop()
@@ -407,54 +445,67 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
   -- Manual reload (keybind)
   if input.bindDown("aikiro42-project45", "project45-reload-keybind") and not self.weapon.isReloading then
     self:ejectMag()
+    self:resetCooldownTimer(true, generalConfig.quickCooldown)
   end
   
   -- trigger i/o logic
-  if self:triggering()
-  and not self.weapon.currentAbility
-  and self.cooldownTimer == 0
-  and not self.isFiring
-  then
-    if storage.project45GunState.jamAmount <= 0 then
+  if self:triggering() then
+    
+    if not self.triggerCue and (self.fireTime >= cooldownThreshold or self.chargeTime > 0) then
+      self.triggerCue = true
+      animator.playSound("triggerCue")
+      self:recoil(true, 0.1, 0, 0)
+    end
 
-      if storage.project45GunState.ammo > 0 then
+    if not self.weapon.currentAbility
+    and self.cooldownTimer == 0
+    and not self.isFiring
+    then
 
-          if animator.animationState("chamber") == "ready"
-          and not self.triggered then
+      if storage.project45GunState.jamAmount <= 0 then
 
-            if not self:muzzleObstructed() then
-            
-              if self.chargeTime + self.overchargeTime > 0 then
-                self:setState(self.charging)
-              else
-                self:setState(self.firing)
+        if storage.project45GunState.ammo > 0 then
+
+            if animator.animationState("chamber") == "ready"
+            and not self.triggered then
+
+              if not self:muzzleObstructed() then
+              
+                if self.chargeTime + self.overchargeTime > 0 then
+                  self:setState(self.charging)
+                  triggerHeld = true  -- FIXME: check if i fix or break somethign
+                else
+                  self:setState(self.firing)
+                end
+
               end
 
+            elseif not self.triggered then
+              self:setState(self.cocking)
+
             end
-
-          elseif not self.triggered then
-            self:setState(self.cocking)
-
+        elseif storage.project45GunState.ammo == 0 and not self.triggered then
+          if self.loadRoundsThroughBolt then
+            self:openBolt(animator.animationState("chamber") == "ready" and self.ammoPerShot, false, true, true, true)
           end
-      elseif storage.project45GunState.ammo == 0 and not self.triggered then
-        if self.loadRoundsThroughBolt then
-          self:openBolt(animator.animationState("chamber") == "ready" and self.ammoPerShot, false, true, true, true)
+          self:ejectMag()
+        else
+          if not self.triggered then
+            self:setState(self.reloading)
+          end
+
         end
-        self:ejectMag()
+
       else
-        if not self.triggered then
-          self:setState(self.reloading)
-        end
+        self:setState(self.unjamming)
 
       end
 
-    else
-      self:setState(self.unjamming)
-
-    end
-
+      if not triggerHeld then
+        self:resetCooldownTimer()
+      end
       
-    self.cooldownTimer = self.fireTime
+    end
 
   end
 
@@ -484,6 +535,7 @@ function Project45GunFire:initUI()
     reloadTime = self.reloadTime,
     reloadTimeframe = self.quickReloadTimeframe,
 
+    fireTime = self.fireTime,
     chargeTime = self.chargeTime,
     overchargeTime = self.overchargeTime,
     perfectChargeRange = self.perfectChargeRange,
@@ -504,6 +556,7 @@ function Project45GunFire:updateUI()
     reloadRating = ReloadRatingList[storage.project45GunState.reloadRating],
     chamberState = animator.animationState("chamber"),
     jamAmount = storage.project45GunState.jamAmount,
+    cooldownTimer = self.cooldownTimer,
 
     aimPosition = aimPosition,
     uiPosition = self.modSettings.renderBarsAtCursor and aimPosition or {0, 0},
@@ -586,6 +639,7 @@ function Project45GunFire:firing() -- state
   self.passiveClass.onFire(self)
   
   self.isFiring = true
+  self:resetCooldownTimer(true)
   animator.setAnimationState("gun", self.loopFiringAnimation and "firingLoop" or "firing")
 
   self:prepareStanceInCycle(self.stances.firing)
@@ -659,8 +713,8 @@ function Project45GunFire:postFiringTransitionHandler()
         if storage.project45GunState.ammo == 0 and self.ejectMagOnEmpty and self.ejectMagOnEmpty == "firing" then
           self:ejectMag()
           self:stopFireLoop()
-          self.cooldownTimer = self.fireTime
-          self.isFiring = false    
+          -- self:resetCooldownTimer(true)
+          self.isFiring = false
           return
         end  
         self:setState(self.ejecting)
@@ -671,7 +725,7 @@ function Project45GunFire:postFiringTransitionHandler()
         self:ejectMag()
       end
       self:stopFireLoop()
-      self.cooldownTimer = self.fireTime
+      -- self:resetCooldownTimer(true)
       self.isFiring = false
     end
 end
@@ -798,7 +852,7 @@ function Project45GunFire:feeding()
     return
   elseif self.manualFeed or self.isCocking then
     self.weapon:setStance(self.stances.boltPush)
-    self.cooldownTimer = self.postCockCooldown or self.cooldownTimer
+    self:resetCooldownTimer(true, self.postCockCooldown or self.cooldownTimer)
   end
 
   -- otherwise, we wait
@@ -829,11 +883,21 @@ function Project45GunFire:feeding()
   if (
     self.chargeTimer >= self.chargeTime
     and self.projectileKind ~= "beam"
-    and storage.burstCounter < self.burstCount
+    and (  -- FIXME:
+      storage.burstCounter < self.burstCount
+      or (
+        self.burstCount <= 1
+        and self:triggering()
+        and not self.semi
+        and storage.project45GunState.ammo > 0
+      )
+    )
   )
   and self.weapon.reloadTimer < 0
   then
     self:setState(self.firing)
+    -- self:resetCooldownTimer(true)
+    return
   end
 
   -- prevent triggering
@@ -1043,7 +1107,7 @@ function Project45GunFire:reloading()
 end
 
 function Project45GunFire:cocking()
-  self.cooldownTimer = self.fireTime
+  self:resetCooldownTimer(true)
   self.isCocking = true
 
   --[[
@@ -1084,6 +1148,7 @@ function Project45GunFire:unjamming()
   if self.triggered then return end
   self:updateJamAmount(-self.unjamAmount * math.abs(sb.nrand(self.unjamStDev, 1)))
   self.triggered = true
+  self:resetCooldownTimer(true, generalConfig.quickCooldown)
   self:screenShake()
   self:recoil(true, 0.5)
   animator.setAnimationState("gun", "unjamming") -- should transist back to being jammed
@@ -1106,6 +1171,13 @@ end
 
 -- SECTION: ACTION FUNCTIONS
 
+function Project45GunFire:resetCooldownTimer(force, fireTime)
+  fireTime = fireTime or self.fireTime
+  if self.cooldownTimer <= 0 or force then
+    self.cooldownTimer = fireTime
+  end
+end
+
 -- Returns true if the weapon successfully jammed.
 function Project45GunFire:jam(forceJam)
   if forceJam or project45util.diceroll(self.jamChances[storage.project45GunState.reloadRating] * (self.jamChanceMult or 1)) then
@@ -1126,7 +1198,7 @@ function Project45GunFire:jam(forceJam)
     if self.screenShakeTimer then self.screenShakeTimer = 0 end
     storage.burstCounter = self.burstCount
     self.chargeTimer = self.resetChargeOnJam and 0 or self.chargeTimer
-    
+    self:resetCooldownTimer(true)
     self:updateJamAmount(1, true)
     self:setState(self.jammed)
     return true
@@ -1346,6 +1418,10 @@ function Project45GunFire:discardCasings(numCasings)
 end
 
 -- Kicks gun muzzle up and backward, shakes screen
+-- @param down : boolean
+-- @param mult : float
+-- @param amount : float
+-- @param recoverDelay : float
 function Project45GunFire:recoil(down, mult, amount, recoverDelay)
   if self.disableRecoil then return end
 
@@ -1548,6 +1624,15 @@ function Project45GunFire:screenShake(amount, shakeTime, random)
 end
 
 -- SECTION:  UPDATE FUNCTIONS
+
+function Project45GunFire:updateCooldownAudio(m)
+  if self.cooldownTimer <= 0 or self.fireTime <= cooldownThreshold then return end
+  m = m or 0.1
+  local a = (-4 * (m - 1))/(self.fireTime^2)
+  local b = (4 * (m - 1))/(self.fireTime)
+  local x = self.fireTime - self.cooldownTimer
+  animator.setSoundVolume("cooldownLoop", a*x^2 + b*x + 1)
+end
 
 function Project45GunFire:updateFlashlight()
   if not self.flashlight.enabled then return end

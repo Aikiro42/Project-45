@@ -155,13 +155,14 @@
   "primaryAbility": {
     "reloadCost": 100,
     "cycleTime": 1,
+    "fireTime": 0.2,
     "semi": true,
     "chargeFrames": 1,
     "overchargeTime": 0.5,
     "chargeDamageMult": 1.25,
     "inaccuracy": 5, // affects arm movement as the trigger is pulled
-    "maxAmmo": 1,
-    "bulletsPerReload": 1,
+    "maxAmmo": 4,
+    "bulletsPerReload": 4,
     "projectileType": "project45stdrocket",
     "hideMuzzleFlash": true,
     "resetChargeOnFire": true,

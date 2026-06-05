@@ -1,0 +1,41 @@
+{
+  "itemName" : "project45-violiumtriggermod",
+  "price" : 700,
+  "rarity" : "Legendary",
+  "tooltipKind" : "project45gunmod2",
+  "modCategory" : "gunMod",
+  "category" : "uniqueWeapon",
+  "itemTags": ["weapon"],
+  "tooltipFields":{
+    "subtitle": "Gun Mod",
+    "objectImage": "/items/augments/project45-gunmods/mods/project45-violiumtriggermod/project45-violiumtriggermod.png"
+  },
+  "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-violiumtriggermod/project45-violiumtriggermodicon.png",
+  "description" : "A reliable, heavy yet responsive trigger that boosts weapon damage capabilities.",
+  "statInfo": "",
+  "shortdescription" : "Violium Trigger",
+
+  "augment":{
+    "modName": "Violium Trigger",
+    "category": "ballistic",
+    "slot": "trigger",
+    "cost": 1,
+    "stat": {
+      "fireTime": {
+        "additive": -0.03
+      },
+      "critChance": {
+        "additive": 0.2
+      },
+      "critDamage": {
+        "multiplicative": 0.2
+      }
+    }
+  },
+
+
+   
+
+  "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
+}

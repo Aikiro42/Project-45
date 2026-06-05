@@ -16,6 +16,9 @@
 
   "project45GunModInfo": {
     "category": "energy",
+    "incompatibleMods": [
+      "project45-multithreadermod"
+    ],
     "allowsConversion": [
       "projectile",
       "beam",
@@ -32,7 +35,9 @@
       "underbarrel",
 
       "material",
-      "magazine"
+      "magazine",
+      "receiver",
+      "magwell"
     ]
   },
 
@@ -109,6 +114,7 @@
     "critDamageMult": 1.75,
     "projectileKind": "hitscan",
     "cycleTime": [0.25, 0.01],
+    "fireTime": 0.3,
     "semi": false,
     "chargeFrames": 5,
     "overchargeTime": 3,

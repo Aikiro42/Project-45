@@ -85,7 +85,22 @@ function update()
   renderHitscanTrails()
   renderBeam()
   renderBeamChain()
+  renderDebug(animationConfig.animationParameter("__debug__", ""))
 
+end
+
+function renderDebug(debugText, debugOffset)
+  if debugText == "" then return end
+  localAnimator.spawnParticle({
+    type = "text",
+    text= "^shadow;" .. debugText,
+    color = {255, 0, 255},
+    size = 0.5,
+    fullbright = true,
+    flippable = false,
+    timeToLive = 0,
+    layer = "front",
+  }, vec2.add(activeItemAnimation.ownerAimPosition(), debugOffset or {0, -2}))
 end
 
 function updateAnimTable()

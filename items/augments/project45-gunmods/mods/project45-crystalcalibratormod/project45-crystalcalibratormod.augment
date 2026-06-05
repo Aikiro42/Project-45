@@ -1,0 +1,54 @@
+{
+  "itemName": "project45-crystalcalibratormod",
+  "price": 800,
+  "rarity": "Legendary",
+  "tooltipKind": "project45gunmod2",
+  "modCategory": "gunMod",
+  "category": "uniqueWeapon",
+  "itemTags": ["weapon"],
+  "tooltipFields": {
+    "subtitle": "Gun Mod",
+    "objectImage": "/items/augments/project45-gunmods/mods/project45-crystalcalibratormod/project45-crystalcalibratormod.png"
+  },
+  "inventoryIcon": "/items/augments/project45-gunmods/mods/project45-crystalcalibratormod/project45-crystalcalibratormodicon.png",
+  "description": "A real-time crystal orientator that optimizes laser focus. Increases damage when charging the weapon.",
+  "technicalInfo": "Weapons gain charge and overcharge; automatically fires when fully charged.",
+  "statInfo": "",
+  "shortdescription": "Crystal Calibrator",
+
+  "augment": {
+    "modName": "Crystal Calibrator",
+    "category": "energy",
+    "slot": "receiver",
+    "gun": {
+      "primaryAbility": {
+        "autoFireAfterCharge": {
+          "operation": "replace",
+          "value": true
+        }
+      },
+      "animationCustom": {
+        "sounds": {
+          "chargeWhine": [ "/sfx/project45neosfx/chargewhine/chargewhine-02.ogg" ]
+        }
+      }
+    },
+    "stat": {
+      "overchargeTime": {
+        "rebase": 0.5
+      },
+      "chargeTime": {
+        "rebase": 0.5
+      },
+      "fireTime": {
+        "additive": 0.5
+      },
+      "chargeDamageMult": {
+        "rebase": 2
+      }
+    }
+  },
+
+  "scripts": ["/scripts/augments/project45-gunmod/apply.lua"],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
+}

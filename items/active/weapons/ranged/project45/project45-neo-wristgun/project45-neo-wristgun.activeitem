@@ -69,7 +69,8 @@
       "receiver",
       "material",
       "magazine",
-      "barrel"
+      "barrel",
+      "magwell"
     ]
   },
 
@@ -110,6 +111,7 @@
     
     "semi": true,
     "cycleTime": 0.1,
+    "fireTime": 0.05,
     "projectileKind": "projectile",
 
     "backHandFrame": ".back",

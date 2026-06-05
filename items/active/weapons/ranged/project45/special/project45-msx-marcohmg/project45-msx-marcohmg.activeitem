@@ -91,7 +91,8 @@
     "recoilAmount": 0,
     "recoilMaxDeg": 0,
     // "recoverDelay": 0.05,
-    "cycleTime": 0.005,
+    "cycleTime": 0.05,
+    "triggerTime": 0.001,
     "projectileType": "project45marcohmgbullet",
 
     "ejectMagOnEmpty": "firing",

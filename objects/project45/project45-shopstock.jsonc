@@ -126,6 +126,12 @@
         "project45-flashlasermod",
         // receiver
         "project45-autofiremod",
+        "project45-burstfiremod",
+        // trigger
+        "project45-violiumtriggermod",
+        "project45-feroziumtriggermod",
+        "project45-aegisalttriggermod",
+        "project45-ornatetriggermod",
         // magazine
         "project45-extendedmagmod",
         "project45-alofsmagmod",
@@ -148,7 +154,8 @@
         "project45-underbarrelshotgunmod",
         // misc mods
         "project45-stockmod",
-        "project45-fanhammermod"
+        "project45-fanhammermod",
+        "project45-gaussdrivermod"
       ],
       "energy": [
         // abilities
@@ -157,9 +164,11 @@
         // rail
         // receiver
         "project45-multithreadermod",
+        "project45-crystalcalibratormod",
         // magazine
         "project45-overampmod",
         // magwell
+        "project45-stabilizingadaptermod",
         // bowstring
         // muzzle mods
         "project45-convergermod",

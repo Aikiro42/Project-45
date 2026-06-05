@@ -67,7 +67,8 @@
       
       "material",
       "receiver",
-      "magazine"
+      "magazine",
+      "magwell"
     ]
   },
 
@@ -90,6 +91,7 @@
     "recoverDelay": 0,
     "semi": true,
     "cycleTime": 0.01,
+    "fireTime": 0.1,
     "chargeTime": 0.5,
     "overchargeTime": 1,
     "projectileKind": "beam",

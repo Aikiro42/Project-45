@@ -159,6 +159,21 @@ function Checker:check()
     end
   end
 
+  -- only check for each installed mod
+  -- if the mod to be installed is compatible so far
+  -- and has a list of incompatible mods.
+  -- skip otherwise, because loops take up processing time.
+  if not incompatible and augment.incompatibleMods then
+    local modBlacklist = set.new(augment.incompatibleMods)
+    for mod, _ in pairs(input.modSlots or {}) do
+      incompatible = modBlacklist[mod]
+    end
+    if incompatible then
+      self:addError("Incompatible mod installed on weapon")
+      self.checked = false
+    end
+  end
+
   -- Check whitelist
   local weaponWhitelist = set.new(augment.compatibleWeapons or {})
   local augmentWhitelist = set.new(modInfo.compatibleMods or {})
@@ -399,6 +414,15 @@ function Checker:checkStat()
     self.checked = self.checked and passedCheck
     return passedCheck
 
+  end
+
+  -- same checks as guns
+  if self.augment.stat.checks then
+    if not project45util.doOperationChecks(self.input.parameters, self.augment.stat.checks) then
+      self:addError("Weapon does not fit mod criteria.")
+      self.checked = false
+      return false
+    end
   end
 
   self.checked = self.checked and true
