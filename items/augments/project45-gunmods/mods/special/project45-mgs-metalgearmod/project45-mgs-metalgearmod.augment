@@ -14,7 +14,7 @@
   "inventoryIcon" : "/items/augments/project45-gunmods/mods/special/project45-mgs-metalgearmod/project45-mgs-metalgearmodicon.png",
   "description" : "A solid metal gear. You couldn't even name it.",
   "technicalInfo": "Has the memory gone? Are you feeling numb?",
-  "shortdescription" : "Metal Gear",
+  "shortdescription" : "^#fdd14d;Metal Gear^reset;",
 
   "augment":{
     "modName": "Metal Gear",
