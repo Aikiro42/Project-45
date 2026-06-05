@@ -62,8 +62,11 @@
       "muzzle",
       
       "magazine",
+      "receiver",
       "material",
-      "barrel"
+      "barrel",
+      "trigger",
+      "magwell"
     ]
   },
 

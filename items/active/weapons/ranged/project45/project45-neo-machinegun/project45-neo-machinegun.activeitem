@@ -31,9 +31,11 @@
       "underbarrel",
       "muzzle",
       
+      "receiver",
       "magazine",
       "material",
-      "barrel"
+      "barrel",
+      "trigger"
     ]
   },
 
