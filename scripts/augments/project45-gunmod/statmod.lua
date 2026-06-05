@@ -110,8 +110,20 @@ function apply(output, augment)
     }
     statModifiers[stat].baseOrig = rebase or statModifiers[stat].baseOrig or baseStat(stat)
     statModifiers[stat].baseMult = (statModifiers[stat].baseMult or 1) * (rebaseMult or 1)
-    
-    local recalculatedBase = statModifiers[stat].baseOrig * statModifiers[stat].baseMult
+
+    local baseOrig = statModifiers[stat].baseOrig
+
+    local recalculatedBase
+    if type(baseOrig) == "table" then
+      local rbTable = sb.jsonMerge({}, baseOrig)
+      for i=1,#rbTable do
+        sb.logInfo(string.format("%.2f * %.2f", rbTable[i], statModifiers[stat].baseMult))
+        rbTable[i] = rbTable[i] * statModifiers[stat].baseMult
+      end
+      recalculatedBase = rbTable
+    else
+      recalculatedBase = statModifiers[stat].baseOrig * statModifiers[stat].baseMult
+    end
     if statGroup[stat] then
       -- if stat is member, replace base value in group
       statModifiers[statGroup[stat]].base[stat] = recalculatedBase

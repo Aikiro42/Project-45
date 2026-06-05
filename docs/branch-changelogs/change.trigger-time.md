@@ -7,43 +7,24 @@
   - project45-neo-pistol
   - project45-cbp-malorian
 - [ ] I'll make new mods that decrease trigger time.
-  - [x] Violium Trigger: heavyweight but responsive trigger that increases damage output
-    - [ ] Titanium Electrigger
+  - [ ] Titanium Electrigger: heavyweight but responsive trigger that increases damage output
     - Decreases trigger time minimally
     - Increases crit chance
-  - [x] Ferozium Trigger: mysterious trigger that assists in ammo-related concerns
-    - [ ] Cerulium Electrigger
+  - [ ] Cerulium Electrigger: mysterious trigger that assists in ammo-related concerns
     - Decreases trigger time averagely
     - Decreases jam chance
     - Increases ammo efficiency (decreases ammo per shot, i.e. gives a chance to nnot consume bullets on fire)
-  - [x] Aegisalt Trigger: lightweight trigger that assists shooter speed
-    - [ ] Alloy Electrigger
+  - [ ] Alloy Electrigger: lightweight trigger that assists shooter speed
     - Decreases trigger time greatly
     - Increases fire rate minimally, similar to T1
     - decreases recoil delay and recovery time
 that does that.
-  - [x] Ornate Hair trigger: themed after competition pistol triggers
-    - Very costly
-    - Eliminates trigger time (set to 1ms)
-    - Increases recoil and inaccuracy when moving
-  - [ ] Electromagnetic Ballistic Driver (Ballistic Barrel)
-    - Mod that gives overcharge and increases substantial charge damage
-    - Re-bases trigger time substantially (0.5ms)
-  - [ ] Charge Stabilizer (Energy Magazine)
-    - Increases trigger time
-    - Increases reload rating damage
-  - [ ] Internal Crystal Calibrator (Energy Receiver)
-    - Increases trigger time
-    - Provides charge time and increases overcharge damage above 1x
-- [x] I'll cause fire time stat mods to ONLY affect the cycle time.
-- [x] I'll make sure cycle time is truly separate from trigger time.
-- [x] I'll make a burst fire gun mod that increases the burst count, and decreases cycle time but increases trigger time.
 
 # New
 - Added the **Burstfire Receiver**, which makes weapons burstfire. This cannot be installed on manual-feed weapons.
 - Added the **Aegisalt, Ferozium, Violium and Ornate Triggers**, which decrease weapon trigger time. Can only be installed on ballistic weapons.
-- Added the **Gauss Driver**, which gives the weapon some charge time for overcharge damage.
-- Added the **Stabilizing Adapter**, an energy magwell mod that increases damage and latency.
+- Added the **Gauss Driver** and **Crystal Calibrator**, which give weapons some charge time for overcharge damage.
+- Added the **Stabilizing Adapter**, an energy magwell mod that increases damage but also latency.
 
 # Changes
 - Separated trigger time from the actual firing rate. That is, if you have an autofire gun that has a higher trigger time than the cycle time, the time it takes to start firing the weapon is longer than the time it takes for the weapon to fire subsequent shots.
@@ -52,6 +33,9 @@ that does that.
 # Balance
 - Increased the stat bonus provided by the multiplicative firetime mods fivefold.
 - Nerfed the ergonomics (recoil recovery time and recovery delay) of the Malorian Arms 3516.
+
+# Fixes
+- Fixed script crash when attempting to install mods that affect cycle time on weapons that have windup cycle times (e.g. Minigun, Accelerator).
 
 # New (Modders)
 - Added a way to indicate mods with which a mod is incompatible:
