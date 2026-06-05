@@ -3,7 +3,7 @@
     { "item" : "money", "count" : 45 }
   ],
   "output" : {
-    "item" : "project45-testmod",
+    "item" : "project45-testmod2",
     "count" : 1
   },
   "duration" : 0,

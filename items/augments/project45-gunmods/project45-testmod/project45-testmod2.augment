@@ -1,7 +1,7 @@
 {
-  "itemName" : "project45-testmod",
+  "itemName" : "project45-testmod2",
   "price" : 1,
-  "rarity" : "uncommon",
+  "rarity" : "rare",
   "isUnique": true,
   "tooltipKind" : "project45gunmod2",
   "tooltipFields": {
@@ -10,13 +10,13 @@
   "modCategory" : "statMod",
   "category" : "uniqueWeapon",
   "itemTags": ["weapon"],
-  "inventoryIcon" : "/items/augments/project45-gunmods/project45-testmod/project45-testmod.png",
+  "inventoryIcon" : "/items/augments/project45-gunmods/project45-testmod/project45-testmod2.png",
   "statInfo" : "You're not supposed to see this.",
-  "description": "A mod used for testing. How'd you get ahold of this?",
+  "description": "Another mod used for testing. How'd you get ahold of this?",
   "techincalInfo": "Dude, get rid of this. No knowing what'll happen to your gun if you install this.",
   "slot": "multiple",
   "archetype": "Mixed",
-  "shortdescription" : "^#72d54f;The Test Mod^reset;",
+  "shortdescription" : "^#96cbe7;The Other Test Mod^reset;",
 
   "augment":{
     "cost": 0,
