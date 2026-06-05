@@ -96,19 +96,43 @@ function apply(output, augment)
   -- Recalculates the final base value of a given stat.
   -- Also initializes the individual/member entry of a stat, particularly its baseOrig and baseMult fields.
   -- WARNING: Must be called before any stat calculation
-  local updateBase = function(stat, rebase, rebaseMult)
+  -- @param stat : string
+  -- @param rebase : number
+  -- @param rebaseMult : number
+  -- @param isBad : boolean - minimizes rebase if true, maximizes otherwise
+  local updateBase = function(stat, rebase, rebaseMult, isBad)
     if isStatGroup[stat] then
       sb.logError("Attempted to recalculate base of group.")
       return nil
     end
     -- initalize stat entry
+    local base_stat = baseStat(stat) -- unconventional var name, i know
+    local baseOrig = (statModifiers[stat] or {}).baseOrig
     statModifiers[stat] = statModifiers[stat] or {
-      baseOrig = baseStat(stat),
+      baseOrig = base_stat,
       baseMult = 1,
       additive = 0,
       multiplicative = statGroup[stat] and 0 or 1
     }
-    statModifiers[stat].baseOrig = rebase or statModifiers[stat].baseOrig or baseStat(stat)
+    -- base_stat ALWAYS exists
+    -- if it's rebased or initialized at least once, baseOrig SHOULD always exist
+    -- if baseOrig exists, base_stat SHOULDN'T be considered
+    if isBad and baseOrig then -- minimize
+    sb.logInfo(string.format("min %s %.0f vs %.0f", stat, rebase or baseOrig, baseOrig))  
+    statModifiers[stat].baseOrig = math.min(
+        rebase or baseOrig,
+        baseOrig
+      )
+    elseif baseOrig then  -- maximize
+    sb.logInfo(string.format("max %s %.0f vs %.0f", stat, rebase or baseOrig, baseOrig))  
+      statModifiers[stat].baseOrig = math.max(
+        rebase or baseOrig,
+        baseOrig
+      )
+    else
+      sb.logInfo(string.format("obtained %s base %.0f", stat, rebase or baseOrig or base_stat))
+      statModifiers[stat].baseOrig = rebase or baseOrig or base_stat
+    end
     statModifiers[stat].baseMult = (statModifiers[stat].baseMult or 1) * (rebaseMult or 1)
     
     local recalculatedBase = statModifiers[stat].baseOrig * statModifiers[stat].baseMult
@@ -170,9 +194,9 @@ function apply(output, augment)
         multiplicative = 1
       }
 
-      statModifiers.fireTimeGroup.base[fireTimeGroupStat] = statModifiers.fireTimeGroup.base[fireTimeGroupStat] or baseStat(fireTimeGroupStat)
-      
-      updateBase(fireTimeGroupStat, augment[fireTimeGroupStat].rebase, augment[fireTimeGroupStat].rebaseMult)
+      local statBase = updateBase(fireTimeGroupStat, augment[fireTimeGroupStat].rebase, augment[fireTimeGroupStat].rebaseMult, true)
+
+      statModifiers.fireTimeGroup.base[fireTimeGroupStat] = statBase
         
       -- prompt recalculation
       augment.fireTimeGroup = augment.fireTimeGroup or {}
@@ -495,7 +519,7 @@ function apply(output, augment)
         }
       end
 
-      updateBase(stat, rebase, rebaseMult)
+      updateBase(stat, rebase, rebaseMult, isBadStat[stat])
 
     end
 
