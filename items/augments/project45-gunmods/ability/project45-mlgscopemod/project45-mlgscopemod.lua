@@ -7,47 +7,38 @@ Passive = Project45Passive:new()
 
 function Passive:init()
 
+  self.countMLGReload = function(reloadRating)
+    -- do not count if invincible
+    local statEffects = status.activeUniqueStatusEffectSummary()
+    for _, fx in ipairs(statEffects) do
+      if fx[1] == "project45mlgstyle" then return end
+    end
+
+    -- count if perfect
+    if reloadRating >= PERFECT then
+      self.perfectReloadCount = self.perfectReloadCount + 1
+      if self.perfectReloadCount >= 6 then
+        status.addEphemeralEffect("project45mlgstyle", 20)
+        self.perfectReloadCount = 0
+      else
+        animator.playSound("mlgReload" .. self.perfectReloadCount)
+      end
+    else
+      animator.playSound("mlgReloadFail")
+      self.perfectReloadCount = 0
+    end
+  end
+
   self.perfectReloadCount = 0
-  self.mlgStyleTimer = 0
 end
-
-function Project45Passive:update(dt, fireMode, shiftHeld)
-  self.mlgStyleTimer = math.max(0, self.mlgStyleTimer - dt)
-end
-
 
 function Passive:onLoadRound(reloadRating)
-  if self.mlgStyleTimer > 0 then return end
   self.mlgRoundLoaded = true
-  if reloadRating >= GOOD then
-    self.perfectReloadCount = self.perfectReloadCount + 1
-    if self.perfectReloadCount >= 6 then
-      status.addEphemeralEffect("project45mlgstyle", 18.08)
-      self.mlgStyleTimer = 18.08
-      self.perfectReloadCount = 0
-    else
-      animator.playSound("mlgReload" .. self.perfectReloadCount)
-    end
-  else
-    animator.playSound("mlgReloadFail")
-    self.perfectReloadCount = 0
-  end
+  self.countMLGReload(reloadRating)
 end
 
 function Passive:onReloadEnd()
-  if self.mlgRoundLoaded or self.mlgStyleTimer > 0 then return end
+  if self.mlgRoundLoaded then return end
   local reloadRating = storage.project45GunState.reloadRating
-  if reloadRating >= GOOD then
-    self.perfectReloadCount = self.perfectReloadCount + 1
-    if self.perfectReloadCount >= 6 then
-      status.addEphemeralEffect("project45mlgstyle", 18.08)
-      self.mlgStyleTimer = 18.08
-      self.perfectReloadCount = 0
-    else
-      animator.playSound("mlgReload" .. self.perfectReloadCount)
-    end
-  else
-    animator.playSound("mlgReloadFail")
-    self.perfectReloadCount = 0
-  end
+  self.countMLGReload(reloadRating)
 end
