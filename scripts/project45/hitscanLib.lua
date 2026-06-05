@@ -776,7 +776,7 @@ function hitscanLib:fireBeam()
     and not world.lineTileCollision(mcontroller.position(), self:firePosition())
     do
       self.isFiring = true
-  
+      -- self:resetCooldownTimer(true)
       hitreg = self:hitscan(true, {0, 0}, {0, 0}, false, nil, self.beamParameters.range, punchThrough, self.beamParameters.scanUntilCursor)
       beamStart = hitreg[1]
       beamEnd = hitreg[2]
