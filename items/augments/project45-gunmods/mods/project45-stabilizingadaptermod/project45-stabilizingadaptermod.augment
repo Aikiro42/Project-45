@@ -1,5 +1,5 @@
 {
-  "itemName": "project45-stabilizingadaptermod",
+  "itemName": "project45-stabilizingampmod",
   "price": 800,
   "rarity": "Legendary",
   "tooltipKind": "project45gunmod2",
@@ -11,13 +11,13 @@
     "objectImage": "/items/augments/project45-gunmods/mods/project45-stabilizingadaptermod/project45-stabilizingadaptermod.png"
   },
   "inventoryIcon": "/items/augments/project45-gunmods/mods/project45-stabilizingadaptermod/project45-stabilizingadaptermodicon.png",
-  "description": "A battery adapter. Stabilizes current and increases damage, but increases latency.",
+  "description": "A battery adapter. Stably amplifies current and increases damage, but increases latency.",
   // "technicalInfo": "",
   "statInfo": "",
-  "shortdescription": "Stabilizing Adapter",
+  "shortdescription": "Stabilizing Amp",
 
   "augment": {
-    "modName": "Stab. Adapter",
+    "modName": "Stab. Amp",
     "category": "energy",
     "slot": "magwell",
     "cost": 3,

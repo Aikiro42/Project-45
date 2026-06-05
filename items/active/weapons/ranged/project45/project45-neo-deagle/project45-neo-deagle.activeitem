@@ -132,7 +132,8 @@
     "recoverTime": 0.8, // time it takes to recover aim completely, in seconds
 
     "semi": true,
-    "cycleTime": 0.25,
+    "cycleTime": 0.3,
+    "fireTime": 0.25,
     "projectileKind": "projectile",
     "audibleEjection": true,
     // "reloadTime": 10,

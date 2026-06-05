@@ -135,6 +135,7 @@
     "maxChargePitch": 3,
     "chargePitchMult": 1,
     "cycleTime": 0.25,
+    "fireTime": 0.2,
     "chargeFrames": 4,
     "chargeTime": 0.5,
     "overchargeTime": 0.5,

@@ -116,6 +116,7 @@ Credits: 343 Industries, Bungie, Creative Assembly, Ensemble Studios
     "recoverTime": 0.5,
     
     "cycleTime": 0.1,
+    "fireTime": 0.05,
     "projectileKind": "projectile",
     "laser":{
       "enabled": true

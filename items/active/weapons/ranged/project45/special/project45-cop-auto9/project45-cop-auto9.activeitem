@@ -137,6 +137,7 @@
     "semi": true,
     "burstCount": 3,
     "cycleTime": 0.01,
+    "fireTime": 0.2,
     "projectileKind": "hitscan",
 
     // "reloadTime": 10,

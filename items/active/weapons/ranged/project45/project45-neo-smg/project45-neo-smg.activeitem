@@ -102,6 +102,7 @@
     "recoverTime": 1,
     
     "cycleTime": 0.005,
+    "fireTime": 0.1,
     "projectileKind": "projectile",
 
     "stances": {
