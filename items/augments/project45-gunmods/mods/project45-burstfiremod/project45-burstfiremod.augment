@@ -38,7 +38,7 @@
         "rebase": 3
       },
       "fireTime": {
-        "rebase": 0.3
+        "additive": 0.25
       },
       "cycleTime": {
         "rebaseMult": 0.5

@@ -74,6 +74,7 @@ function hitscanLib:fireChainBeam()
   do
 
     self.isFiring = true
+    self:resetCooldownTimer(true)
     self.ammoRechargeDelayTimer = self.ammoRechargeDelayTime
     -- TODO: make parameters dymamic
     chainScanResults = self:chainScan(self.beamParameters.range, punchThrough, self.beamParameters.scanUntilCursor)
@@ -776,7 +777,7 @@ function hitscanLib:fireBeam()
     and not world.lineTileCollision(mcontroller.position(), self:firePosition())
     do
       self.isFiring = true
-  
+      self:resetCooldownTimer(true)
       hitreg = self:hitscan(true, nil, self.beamParameters.range, punchThrough, self.beamParameters.scanUntilCursor)
       beamStart = hitreg[1]
       beamEnd = hitreg[2]
