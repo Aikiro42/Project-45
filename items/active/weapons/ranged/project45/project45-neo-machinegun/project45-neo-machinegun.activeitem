@@ -163,6 +163,7 @@
   "primaryAbility": {
     "reloadCost": 75,
     "cycleTime": 0.05,
+    "fireTime": 0.3,
     "semi": false,
     "chargeFrames": 4,
     "overchargeTime": 5,
