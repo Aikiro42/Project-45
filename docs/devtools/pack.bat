@@ -1,4 +1,4 @@
 set version=%1
 cd ../../../../win32/
-asset_packer.exe "../mods/Project 45" "../mods/Project 45/docs/devtools/packed/%version%.pak"
+asset_packer.exe "../mods/Project 45" "../mods/Project 45/docs/devtools/packed/%version%.pak" -c "../mods/Project 45/.github/tools/packing.config" -v 
 cd "../mods/Project 45/docs/devtools"
