@@ -11,7 +11,7 @@
     "objectImage": "/items/augments/project45-gunmods/mods/project45-gaussdrivermod/project45-gaussdrivermod.png"
   },
   "inventoryIcon": "/items/augments/project45-gunmods/mods/project45-gaussdrivermod/project45-gaussdrivermodicon.png",
-  "description": "An recharging electromagnetic system installed on the barrel. Increases damage at the cost of firerate.",
+  "description": "A recharging electromagnetic system installed on the barrel. Increases damage at the cost of firerate.",
   "technicalInfo": "Weapons gain charge and overcharge; automatically fires when fully charged.",
   "statInfo": "",
   "shortdescription": "Gauss Driver",
