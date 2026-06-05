@@ -29,6 +29,9 @@
       "critChance": {
         "additive": 0.2
       },
+      "fireTime": {
+        "additive": -0.025
+      },
       "fireTimeGroup": {
         "multiplicative": 0.75
       },

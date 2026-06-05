@@ -41,7 +41,7 @@
         "rebase": 0.5
       },
       "fireTime": {
-        "rebase": 0.3
+        "additive": 0.25
       },
       "chargeDamageMult": {
         "rebase": 2

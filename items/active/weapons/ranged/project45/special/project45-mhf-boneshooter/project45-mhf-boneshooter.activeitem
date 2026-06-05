@@ -187,6 +187,7 @@
     "screenShakeAmount": 1.25,
     
     "cycleTime": 0.8,
+    "fireTime": 0.2,
 
     "projectileKind": "projectile",
     "projectileType": "project45stdcannonshell",

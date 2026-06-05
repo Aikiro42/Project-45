@@ -156,6 +156,7 @@
     "chargeSmoke": false,
 
     "cycleTime": 0.125,
+    "fireTime": 0.3,
     "chargeFrames": 4,
     "chargeTime": 0.25,
     "overchargeTime": 0.25,

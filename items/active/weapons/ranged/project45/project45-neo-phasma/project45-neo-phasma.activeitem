@@ -155,6 +155,7 @@
     "chargeSmoke": false,
 
     "cycleTime": 0.125,
+    "fireTime": 0.2,
     "chargeFrames": 4,
     "chargeTime": 0.125,
     "dischargeTimeMult": 0.25,

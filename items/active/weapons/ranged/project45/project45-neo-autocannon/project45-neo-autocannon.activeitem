@@ -188,6 +188,7 @@
     "screenShakeAmount": 1,
     
     "cycleTime": 0.35,
+    "fireTime": 1,
 
     "muzzleProjectiles": [
       {

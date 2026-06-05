@@ -109,6 +109,7 @@
     "recoverTime": 1,
     
     "cycleTime": 0.1125,
+    "fireTime": 0.1,
     "projectileKind": "projectile",
     "laser":{
       "enabled": false

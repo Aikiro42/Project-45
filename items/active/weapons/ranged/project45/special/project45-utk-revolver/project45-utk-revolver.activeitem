@@ -140,7 +140,7 @@
     "chargeDamageMult": 3,
 
     "semi": true,
-    "cycleTime": 0.24,
+    "cycleTime": 0.2,
     "fireTime": 0.1,
     "multishot": 2,
     "projectileKind": "hitscan",

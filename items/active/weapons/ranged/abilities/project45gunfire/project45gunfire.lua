@@ -639,6 +639,7 @@ function Project45GunFire:firing() -- state
   self.passiveClass.onFire(self)
   
   self.isFiring = true
+  self:resetCooldownTimer(true)
   animator.setAnimationState("gun", self.loopFiringAnimation and "firingLoop" or "firing")
 
   self:prepareStanceInCycle(self.stances.firing)
@@ -712,7 +713,7 @@ function Project45GunFire:postFiringTransitionHandler()
         if storage.project45GunState.ammo == 0 and self.ejectMagOnEmpty and self.ejectMagOnEmpty == "firing" then
           self:ejectMag()
           self:stopFireLoop()
-          self:resetCooldownTimer(true)
+          -- self:resetCooldownTimer(true)
           self.isFiring = false
           return
         end  
@@ -724,7 +725,7 @@ function Project45GunFire:postFiringTransitionHandler()
         self:ejectMag()
       end
       self:stopFireLoop()
-      self:resetCooldownTimer(true)
+      -- self:resetCooldownTimer(true)
       self.isFiring = false
     end
 end
@@ -895,7 +896,7 @@ function Project45GunFire:feeding()
   and self.weapon.reloadTimer < 0
   then
     self:setState(self.firing)
-    self:resetCooldownTimer(true)
+    -- self:resetCooldownTimer(true)
     return
   end
 
