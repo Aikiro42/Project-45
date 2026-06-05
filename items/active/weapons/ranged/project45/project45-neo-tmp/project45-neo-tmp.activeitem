@@ -128,6 +128,7 @@
     "semi": false,
     "closeBoltOnEmpty": true,
     "cycleTime": 0.1,
+    "fireTime": 0.05,
     "projectileKind": "projectile",
 
     // "reloadTime": 10,

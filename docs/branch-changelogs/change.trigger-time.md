@@ -1,9 +1,8 @@
 # TODO:
-- [ ] fix recover time and recover delay stat mod calculation
-- [ ] increase and diversify trigger times of all weapons.
-- [ ] I'll make some mods increase or decrease trigger time.
+- [x] increase and diversify trigger times of all weapons.
+- [x] I'll make some mods increase or decrease trigger time.
   - [ ] energy muzzle mods
-- [ ] add mod slots to weapons
+- [x] add mod slots to weapons
   - project45-neo-pistol
   - project45-cbp-malorian
 - [ ] I'll make new mods that decrease trigger time.
@@ -34,6 +33,48 @@ that does that.
 # Balance
 - Increased the stat bonus provided by the multiplicative firetime mods fivefold.
 - Nerfed the ergonomics (recoil recovery time and recovery delay) of the Malorian Arms 3516.
+- Diversified trigger times of the following weapons (from 0.01s, unless specified otherwise):
+  - Accelerator: 0.3s
+  - AMR: 0.2s
+  - Assault Rifle: 0.3s (from 0.25s)
+  - Autocannon: 1s
+  - Beam gun: 0.3s
+  - Beamsplitter: 0.1s
+  - Carbine: 0.1s
+  - Combat Rifle: 0.1s
+  - Covalence: 0.1s
+  - Cyclo: 0.1s
+  - Hand Cannon: 0.25s
+  - Flamethrower: 1s
+  - Gauss Rifle: 0.3s
+  - Gazer: 0.15s
+  - Grenade Launcher: 0.1s
+  - Handmade Rifle: 0.1s
+  - Hand Mortar: 0.05s
+  - Hunting Rifle: 0.1s
+  - Machine Gun: 0.3s
+  - Rocket Launcher: 0.2s
+  - Sawblader: 0.2s
+  - Service Rifle: 0.05s
+  - Shotgun: 0.05s
+  - Smart Gun: 0.1s
+  - Submachine Gun: 0.1s
+  - Sniper: 0.1s
+  - TMP: 0.05s
+  - Wristgun: 0.05s,
+  - Boltgun: 0.1s
+  - Auto-9: 0.2s
+  - MAXX Assault Rifle: 0.05s
+  - Bone Shooter: 0.2
+  - Marco's HMG: 0.001s
+  - The Protector: 0.05s
+  - Typhon P45: 0.3s
+- Changed cycle time of Marco's HMG from 0.005s to 0.05s.
+- Changed cycle time of the Ultrakill Revolver from 0.24s to 0.2s.
+- Added trigger time affects on the following mods:
+  - Multithreader
+  - Fire time stat mods
+  - Beginner mod
 
 # Fixes
 - Fixed script crash when attempting to install mods that affect cycle time on weapons that have windup cycle times (e.g. Minigun, Accelerator).

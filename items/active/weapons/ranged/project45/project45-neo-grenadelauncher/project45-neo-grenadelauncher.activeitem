@@ -145,6 +145,7 @@
     "bulletsPerReload": 5,
     "semi": true,
     "cycleTime": 0.25,
+    "fireTime": 0.1,
     "cockTime": 0.25,
     "projectileKind": "projectile",
     "projectileType": "project45stdgrenade",

@@ -161,6 +161,7 @@
     "inaccuracy": 3,
     "semi": true,
     "cycleTime": 0.1,
+    "fireTime": 0.05,
     "cockTime": 0.2,
     "projectileKind": "projectile",
     "projectileType": "project45stdgrenade",

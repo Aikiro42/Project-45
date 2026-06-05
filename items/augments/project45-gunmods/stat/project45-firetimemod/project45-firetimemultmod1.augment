@@ -21,6 +21,9 @@
     "stat": {
       "fireTimeGroup": {
         "multiplicative": 0.125
+      },
+      "fireTime": {
+        "multiplicative": 0.5
       }
     }
   },

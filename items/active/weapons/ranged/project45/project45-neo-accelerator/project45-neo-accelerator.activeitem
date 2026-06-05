@@ -114,6 +114,7 @@
     "critDamageMult": 1.75,
     "projectileKind": "hitscan",
     "cycleTime": [0.25, 0.01],
+    "fireTime": 0.3,
     "semi": false,
     "chargeFrames": 5,
     "overchargeTime": 3,

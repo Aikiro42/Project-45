@@ -105,6 +105,7 @@
     "recoverDelay": 0,
     "semi": true,
     "cycleTime": 0.01,
+    "fireTime": 0.1,
     "projectileKind": "beam",
     "screenShakeAmount": 0.25,
 
