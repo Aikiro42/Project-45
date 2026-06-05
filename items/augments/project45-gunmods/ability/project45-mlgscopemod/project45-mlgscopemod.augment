@@ -22,7 +22,7 @@
     "slot": "sights",
     "passive": {
       "passiveScript" : "/items/augments/project45-gunmods/ability/project45-mlgscopemod/project45-mlgscopemod.lua",
-      "passiveDescription": "Reloading perfectly 6x in a row gives invincibility for 19s."
+      "passiveDescription": "Reloading perfectly 6x in a row gives invincibility for 20s."
     },
     "gun": {
       "animationCustom": {
