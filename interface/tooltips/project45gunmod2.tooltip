@@ -140,7 +140,7 @@
     "type" : "label",
     "position" : [283, 139],
     "hAnchor" : "right",
-    "wrapWidth" : 38,
+    "wrapWidth" : 85,
     "value": "^#7e7e7e;--"
   },
   
