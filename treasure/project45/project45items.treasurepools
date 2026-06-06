@@ -52,6 +52,7 @@
         {"weight" : 0.5, "item" : "project45-neo-machinegun"},
         {"weight" : 0.5, "item" : "project45-neo-grenadelauncher"},
         {"weight" : 0.5, "item" : "project45-neo-crossbow"},
+        {"weight" : 0.5, "item" : "project45-neo-smgk"},
 
         {"weight" : 0.5, "item" : "project45-neo-accelerator"},
         {"weight" : 0.5, "item" : "project45-neo-beamgun"},

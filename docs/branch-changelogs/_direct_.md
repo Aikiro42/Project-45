@@ -1,3 +1,5 @@
+# New
+- Added the **SMG-K**, a compact, more customizable version of the SMG.
 # Fixes
 - Made fixes to Reimburser UI
 
