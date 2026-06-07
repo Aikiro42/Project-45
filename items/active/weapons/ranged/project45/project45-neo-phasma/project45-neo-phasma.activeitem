@@ -38,7 +38,8 @@
       "magazine",
       "material",
       "magwell",
-      "receiver"
+      "receiver",
+      "E-trigger"
     ],
     "acceptsAmmoArchetype": [
       "laser",

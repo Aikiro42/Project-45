@@ -46,7 +46,8 @@
       "material",
       "magazine",
       "receiver",
-      "magwell"
+      "magwell",
+      "E-trigger"
     ]
   },
   "magazineParticles": [
