@@ -18,7 +18,7 @@
   "augment":{
     "modName": "Ceruleum E-Trigger",
     "category": "energy",
-    "slot": "trigger",
+    "slot": "E-trigger",
     "cost": 1,
     "stat": {
       "fireTime": {

@@ -259,6 +259,7 @@
         {"weight" : 0.5, "item" : "project45-splittermod"},
         {"weight" : 0.5, "item" : "project45-bayonetgripmod"},
         {"weight" : 0.5, "item" : "project45-violiumtriggermod"},
+        {"weight" : 0.5, "item" : "project45-titaniumtriggermod"},
         {"weight" : 0.5, "item" : "project45-feroziumtriggermod"},
         {"weight" : 0.5, "item" : "project45-ceruleumtriggermod"},
         {"weight" : 0.5, "item" : "project45-gaussdrivermod"},
