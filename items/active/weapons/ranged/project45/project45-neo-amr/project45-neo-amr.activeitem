@@ -40,7 +40,9 @@
       "barrel",
       "magazine",
       "receiver",
-      "choke"
+      "choke",
+      "trigger",
+      "magwell"
     ],
     "acceptsAmmoArchetype": [
       "bullet",

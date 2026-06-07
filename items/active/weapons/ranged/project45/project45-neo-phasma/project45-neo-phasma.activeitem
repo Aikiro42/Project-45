@@ -36,7 +36,9 @@
       "sights",
       
       "magazine",
-      "material"
+      "material",
+      "magwell",
+      "receiver"
     ],
     "acceptsAmmoArchetype": [
       "laser",

@@ -57,6 +57,9 @@
 
   "project45GunModInfo":{
     "category": "ballistic",
+    "incompatibleMods": [
+      "project45-autofiremod"
+    ],
     "allowsConversion": [
       "hitscan",
       "beam",
@@ -72,7 +75,9 @@
       "magazine",
       "material",
       "receiver",
-      "barrel"
+      "barrel",
+      "trigger",
+      "magwell"
     ],
     "acceptsAmmoArchetype":[
       "bullet"

@@ -32,7 +32,8 @@
       "rail",
       // "sights",
       
-      "material"
+      "material",
+      "trigger"
     ],
     "acceptsAmmoArchetype": [
       "grenade"
