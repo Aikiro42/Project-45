@@ -76,7 +76,9 @@
       "material",
       "magazine",
       "receiver",
-      "barrel"
+      "barrel",
+      "trigger",
+      "magwell"
     ]
   },
 

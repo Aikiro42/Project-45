@@ -81,7 +81,8 @@
       "muzzle",
       
       "magazine",
-      "material"
+      "material",
+      "trigger"
     ],
     "acceptsAmmoArchetype": [
       "bullet"

@@ -35,7 +35,9 @@
       "sights",
       
       "magazine",
-      "material"
+      "material",
+      "trigger",
+      "magwell"
     ],
     "acceptsAmmoArchetype": [
       "bullet",

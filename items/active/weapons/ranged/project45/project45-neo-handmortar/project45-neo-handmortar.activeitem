@@ -28,7 +28,8 @@
       "sights",
       "underbarrel",
       
-      "material"
+      "material",
+      "trigger"
     ],
     "flipSlot": [
       "stock"
