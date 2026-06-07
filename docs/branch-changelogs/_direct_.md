@@ -1,6 +1,7 @@
 # New
 - Added the **SMG-K**, a compact, more customizable version of the SMG.
 - Added the **Flared Magwell**, a mod that slightly decreases reload cost and time.
+
 # Fixes
 - Made fixes to Reimburser UI
 
@@ -10,6 +11,7 @@
 - Added VFX to reload and jam bars, affected by the Performance Mode setting.
 - The Essential Gun Oil now causes any dye applied onto the weapon to be conserved and not consumed.
 - Changed how recoil is applied onto the current weapon offset.
+- Changed the rarity and price of the Orbital Transponder from Legendary (SR) to Essential (XSSR).
 
 # Balance
 - Reduced the damage multiplier provided per weapon level.
