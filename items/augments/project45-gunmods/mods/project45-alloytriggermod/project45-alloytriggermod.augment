@@ -1,0 +1,41 @@
+{
+  "itemName" : "project45-alloytriggermod",
+  "price" : 500,
+  "rarity" : "Rare",
+  "tooltipKind" : "project45gunmod2",
+  "modCategory" : "gunMod",
+  "category" : "uniqueWeapon",
+  "itemTags": ["weapon"],
+  "tooltipFields":{
+    "subtitle": "Gun Mod",
+    "objectImage": "/items/augments/project45-gunmods/mods/project45-alloytriggermod/project45-alloytriggermod.png"
+  },
+  "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-alloytriggermod/project45-alloytriggermodicon.png",
+  "description" : "A slim and extremely responsive E-trigger with a sleek and ergonomic form factor.",
+  "statInfo": "",
+  "shortdescription" : "Alloy ElecTrigger",
+
+  "augment":{
+    "modName": "Alloy E-Trigger",
+    "category": "energy",
+    "slot": "E-trigger",
+    "cost": 1,
+    "stat": {
+      "fireTime": {
+        "additive": -0.07
+      },
+      "ergonomics": {
+        "multiplicative": 0.5
+      },
+      "jamChanceMult": {
+        "multiplicative": 0.5
+      }
+    }
+  },
+
+
+   
+
+  "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
+}
