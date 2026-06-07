@@ -8,6 +8,7 @@ local oldWeaponUpdate = Weapon.update
 function Weapon:init()
 
   self.recoilAmount = 0
+  self.recoilOffset = {0, 0}
   self.stanceProgress = 1
 
   -- self.weaponRotationCenter = {0, 0}
@@ -48,10 +49,10 @@ function Weapon:update(dt, fireMode, shiftHeld)
       self.baseWeaponRotation = interp[self.stanceInterpolationMethod](self.stanceProgress, self.oldWeaponRotation or 0, self.newWeaponRotation)
     end
 
-    self.weaponOffset = {
+    self.weaponOffset = vec2.add({
       interp[self.stanceInterpolationMethod](self.stanceProgress, self.oldWeaponOffset[1], self.newWeaponOffset[1]),
       interp[self.stanceInterpolationMethod](self.stanceProgress, self.oldWeaponOffset[2], self.newWeaponOffset[2])
-    }
+    }, self.recoilOffset)
 
     self.relativeWeaponRotationCenter = {
       interp[self.stanceInterpolationMethod](self.stanceProgress, self.oldWeaponRotationCenter[1], self.newWeaponRotationCenter[1]),

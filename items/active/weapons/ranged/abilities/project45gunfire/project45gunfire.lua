@@ -1366,7 +1366,7 @@ function Project45GunFire:recoil(down, mult, amount, recoverDelay)
       + util.toRadians((amount or self.recoilAmount or 1) * mult * angleMult)
   end
   
-  self.weapon.weaponOffset = {-0.125, 0}
+  self.weapon.recoilOffset = {-0.125, 0}
 
   -- inaccuracy (defaults to 3 degrees)
   local inaccuracy = util.toRadians(sb.nrand(storage.project45GunState.current.inaccuracy or 3, 0) * mult)
@@ -1905,7 +1905,7 @@ function Project45GunFire:updateRecoil()
 
   local offset_o = self.weapon.stance.weaponOffset or {0, 0}
   
-  self.weapon.weaponOffset = {
+  self.weapon.recoilOffset = {
     interp.sin(self.recoilOffsetProgress, -0.125, offset_o[1]),
     interp.sin(self.recoilOffsetProgress, 0, offset_o[2])
   }

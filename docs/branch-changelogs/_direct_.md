@@ -8,6 +8,7 @@
 - The projectile conversion mod now changes the weapon's projectile based on its category; ballistics will fire bullets, energy and experimentals fire lasers.
 - Added VFX to reload and jam bars, affected by the Performance Mode setting.
 - The Essential Gun Oil now causes any dye applied onto the weapon to be conserved and not consumed.
+- Changed how recoil is applied onto the current weapon offset.
 
 # Balance
 - Reduced the damage multiplier provided per weapon level.
