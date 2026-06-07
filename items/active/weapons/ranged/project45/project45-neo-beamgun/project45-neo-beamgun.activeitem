@@ -27,7 +27,9 @@
 
   "project45GunModInfo": {
     "category": "energy",
-    
+    "incompatibleMods": [
+      "project45-multithreadermod"
+    ],
     "allowsConversion": [
       "projectile",
       "hitscan",
@@ -42,7 +44,9 @@
       "sights",
 
       "material",
-      "magazine"
+      "magazine",
+      "receiver",
+      "magwell"
     ]
   },
   "magazineParticles": [

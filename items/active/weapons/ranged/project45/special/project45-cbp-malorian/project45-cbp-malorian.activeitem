@@ -118,9 +118,7 @@
     "category": "ballistic",
     "uniqueType": "special",
     "upgradeCapacity": 10,
-    "acceptsModSlot": [
-      "trigger"
-    ],
+    "acceptsModSlot": [ ],
     "allowsConversion": [
       "hitscan",
       "summoned"
@@ -153,7 +151,7 @@
   "primaryAbilityType": "project45gunfire",
   "overrideArchetypeDps": true,
   "primaryAbility": {
-    "baseDamageMultiplier": 2,
+    "baseDamageMultiplier": 2.1,
     "critChance": 0.3,
     "critDamageMult": 2,
     "reloadCost": 45,

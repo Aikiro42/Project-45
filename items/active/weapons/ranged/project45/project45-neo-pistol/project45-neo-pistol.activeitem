@@ -90,7 +90,8 @@
       "material",
       "receiver",
       "barrel",
-      "trigger"
+      "trigger",
+      "magwell"
     ],
     "acceptsAmmoArchetype":[
       "bullet"

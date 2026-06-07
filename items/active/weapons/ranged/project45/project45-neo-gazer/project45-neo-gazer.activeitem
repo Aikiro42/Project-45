@@ -63,7 +63,8 @@
 
       "receiver",
       "material",
-      "magazine"
+      "magazine",
+      "magwell"
     ]
   },
 
