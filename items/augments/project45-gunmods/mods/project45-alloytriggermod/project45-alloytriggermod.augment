@@ -17,7 +17,7 @@
 
   "augment":{
     "modName": "Alloy E-Trigger",
-    "category": "energy",
+    "category": "universal",
     "slot": "E-trigger",
     "cost": 1,
     "stat": {

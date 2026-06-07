@@ -28,7 +28,8 @@
       "sights",
       
       "magazine",
-      "material"
+      "material",
+      "E-trigger"
     ],
     "acceptsAmmoArchetype": [
       "bullet",

@@ -130,7 +130,8 @@
       "rail",
       "stock",
       
-      "material"
+      "material",
+      "E-trigger"
     ],
     "acceptsAmmoArchetype":[
       "summoned",
