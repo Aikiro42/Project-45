@@ -1,5 +1,6 @@
 # New
 - Added the **SMG-K**, a compact, more customizable version of the SMG.
+- Added the **Flared Magwell**, a mod that slightly decreases reload cost and time.
 # Fixes
 - Made fixes to Reimburser UI
 

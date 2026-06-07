@@ -1,0 +1,35 @@
+{
+  "itemName": "project45-flaredmagwellmod",
+  "price": 300,
+  "rarity": "Uncommon",
+  "tooltipKind": "project45gunmod2",
+  "modCategory": "gunMod",
+  "category": "uniqueWeapon",
+  "itemTags": ["weapon"],
+  "tooltipFields": {
+    "subtitle": "Gun Mod",
+    "objectImage": "/items/augments/project45-gunmods/mods/project45-flaredmagwellmod/project45-flaredmagwellmod.png"
+  },
+  "inventoryIcon": "/items/augments/project45-gunmods/mods/project45-flaredmagwellmod/project45-flaredmagwellmodicon.png",
+  "shortdescription": "Flared Magwell",
+  "statInfo": "",
+  "description": "Flared magwell, for easier and faster reloads. You'll appreciate the ease of sliding it in.",
+
+  "augment": {
+    "modName": "Flared Magwell",
+    "category": "ballistic",
+    "slot": "magwell",
+    "cost": 2,
+    "stat": {
+      "reloadCost": {
+        "multiplicative": 0.1
+      },
+      "reloadTime": {
+        "rebaseMult": 0.75
+      }
+    }
+  },
+
+  "scripts": ["/scripts/augments/project45-gunmod/apply.lua"],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
+}

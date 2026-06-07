@@ -222,7 +222,8 @@
         {"weight" : 0.5, "item" : "project45-overampmod"},
         {"weight" : 0.5, "item" : "project45-customnockmod"},
         {"weight" : 0.5, "item" : "project45-gripmod"},
-        {"weight" : 0.5, "item" : "project45-stockmod"}
+        {"weight" : 0.5, "item" : "project45-stockmod"},
+        {"weight" : 0.5, "item" : "project45-flaredmagwellmod"}
 
       ],
       "poolRounds" : 1,

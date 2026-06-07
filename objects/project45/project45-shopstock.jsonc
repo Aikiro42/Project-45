@@ -111,7 +111,8 @@
         "project45-lasermod",
         "project45-flashlightmod",
         "project45-extendedmagmod",
-        "project45-stockmod"
+        "project45-stockmod",
+        "project45-flaredmagwellmod"
       ],
       "ballistic": [        
         // sights
@@ -131,6 +132,7 @@
         "project45-extendedmagmod",
         "project45-alofsmagmod",
         // magwell
+        "project45-flaredmagwellmod",
         "project45-speedloadermod",
         "project45-syringeloadermod",
         // bowstring
