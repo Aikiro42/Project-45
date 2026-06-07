@@ -168,10 +168,12 @@
         // receiver
         "project45-multithreadermod",
         "project45-crystalcalibratormod",
+        // trigger
+        "project45-ceruleumtriggermod",
         // magazine
         "project45-overampmod",
         // magwell
-        "project45-stabilizingadaptermod",
+        "project45-stabilizingampmod",
         // bowstring
         // muzzle mods
         "project45-convergermod",
