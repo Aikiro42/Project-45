@@ -63,7 +63,9 @@
       
       "magazine",
       "material",
-      "barrel"
+      "barrel",
+      "trigger",
+      "magwell"
     ],
     "acceptsAmmoArchetype":[
       "bullet"
