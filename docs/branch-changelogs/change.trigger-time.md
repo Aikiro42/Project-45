@@ -21,7 +21,7 @@ that does that.
 
 # New
 - Added the **Burstfire Receiver**, which makes weapons burstfire. This cannot be installed on manual-feed weapons.
-- Added the **Aegisalt, Ferozium, Violium & Ornate Triggers** and the **Ceruleum ElecTriggers**, which decrease weapon trigger time. Can only be installed on ballistic weapons.
+- Added the **Aegisalt, Ferozium, Violium & Ornate Triggers** and the **Alloy, Ceruleum & Titanium ElecTriggers**, which decrease weapon trigger time. Can only be installed on ballistic weapons.
 - Added the **Gauss Driver** and **Crystal Calibrator**, which give weapons some charge time for overcharge damage.
 - Added the **Stabilizing Adapter**, an energy magwell mod that increases damage but also latency.
 
