@@ -30,7 +30,8 @@
       "projectile"
     ],
     "acceptsModSlot": [
-      "sights"
+      "sights",
+      "E-trigger"
     ],
     "acceptsAmmoArchetype": [
       "sawblade"
