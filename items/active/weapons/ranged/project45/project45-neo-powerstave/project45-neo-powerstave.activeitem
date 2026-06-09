@@ -64,7 +64,8 @@
       "goodReload": ["/sfx/melee/sword_parry.ogg"],
       "perfectReload": ["/sfx/melee/sword_parry_big.ogg"],
       "boltPull": ["/sfx/melee/charge_up15.ogg"],
-      "boltPush": ["/sfx/melee/charge_up13.ogg"]
+      "boltPush": ["/sfx/melee/charge_up13.ogg"],
+      "cooldownLoop": ["/sfx/melee/electrobaton_idle1.ogg"]
     },
     "animatedParts": {
       "stateTypes": {
