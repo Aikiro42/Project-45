@@ -16,8 +16,8 @@ function apply(output, augment)
     -- assume conversion is done from apply.lua
 
     -- prepare to alter stats and the primary ability in general
-    local oldPrimaryAbility = output.config.primaryAbility or {}
-    local newPrimaryAbility = output:instanceValue("primaryAbility", {})
+    local oldPrimaryAbility = output:instanceValue("primaryAbility", {})
+    local newPrimaryAbility = input.parameters.primaryAbility or {}
 
     -- alter general projectile settings
     --[[
@@ -30,8 +30,7 @@ function apply(output, augment)
     end
     --]]
 
-    -- alter specific projectile settings
-    -- newPrimaryAbility.projectileKind = augment.projectileKind or oldPrimaryAbility.projectileKind -- no need; conversion already done
+    -- alter specific projectile settings in the primaryAbility
     local specificSettingsList = {"projectileType", "summonedProjectileType", "projectileParameters",
                                   "hitscanParameters", "beamParameters", "summonedProjectileParameters",
                                   "hideMuzzleFlash", "hideMuzzleSmoke"}

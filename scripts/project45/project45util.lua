@@ -409,8 +409,6 @@ function project45util.check(json, pathString, operation, checkValue)
     return (not a) or b
   end
 
-  local a = jsonValue
-  local b = checkValue
   if operation == "and" then
     return jsonValue and checkValue
   elseif operation == "or" then
