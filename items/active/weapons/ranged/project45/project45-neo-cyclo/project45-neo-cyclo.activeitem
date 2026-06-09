@@ -44,7 +44,8 @@
       // "chargeWhine" : ["/sfx/project45neosfx/chargewhine/chargewhine-02.ogg"],
       // "chargeDrone" : ["/sfx/project45neosfx/chargedrone/chargedrone-05.ogg"]
       "chargeWhine" : ["/sfx/project45neosfx/chargewhine/chargewhine-02.ogg"],
-      "hollow": ["/sfx/project45neosfx/hollow/hollow-02.ogg"]
+      "hollow": ["/sfx/project45neosfx/hollow/hollow-02.ogg"],
+      "cooldownLoop": ["/sfx/melee/electrobaton_idle1.ogg"]
     }
   },
 
