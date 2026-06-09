@@ -39,7 +39,8 @@
 
     "sounds": {
       "fire": ["/sfx/gun/plasma_pistol4.ogg"],
-      "hollow": ["/sfx/project45neosfx/hollow/hollow-02.ogg"]
+      "hollow": ["/sfx/project45neosfx/hollow/hollow-02.ogg"],
+      "cooldownLoop": ["/sfx/melee/electrobaton_idle1.ogg"]
     }
   },
 
@@ -61,7 +62,9 @@
       "receiver",
       
       "material",
-      "magazine"
+      "magazine",
+      "magwell",
+      "E-trigger"
     ]
   },
 

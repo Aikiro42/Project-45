@@ -16,6 +16,9 @@
 
   "project45GunModInfo": {
     "category": "energy",
+    "incompatibleMods": [
+      "project45-multithreadermod"
+    ],
     "allowsConversion": [
       "projectile",
       "beam",
@@ -32,7 +35,10 @@
       "underbarrel",
 
       "material",
-      "magazine"
+      "magazine",
+      "receiver",
+      "magwell",
+      "E-trigger"
     ]
   },
 
@@ -73,7 +79,8 @@
       "boltPull": [],
       "boltPush": ["/sfx/project45neosfx/click/click-03.ogg"],
       "chargeDrone": ["/sfx/project45neosfx/chargedrone/chargedrone-03.ogg"],
-      "hollow": ["/sfx/project45neosfx/hollow/hollow-02.ogg"]
+      "hollow": ["/sfx/project45neosfx/hollow/hollow-02.ogg"],
+      "cooldownLoop": ["/sfx/melee/electrobaton_idle1.ogg"]
     },
 
     "animatedParts": {
@@ -109,6 +116,7 @@
     "critDamageMult": 1.75,
     "projectileKind": "hitscan",
     "cycleTime": [0.25, 0.01],
+    "fireTime": 0.3,
     "semi": false,
     "chargeFrames": 5,
     "overchargeTime": 3,

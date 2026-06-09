@@ -57,6 +57,9 @@
 
   "project45GunModInfo":{
     "category": "ballistic",
+    "incompatibleMods": [
+      "project45-autofiremod"
+    ],
     "allowsConversion": [
       "hitscan",
       "beam",
@@ -72,7 +75,9 @@
       "magazine",
       "material",
       "receiver",
-      "barrel"
+      "barrel",
+      "trigger",
+      "magwell"
     ],
     "acceptsAmmoArchetype":[
       "bullet"
@@ -123,6 +128,7 @@
     "semi": false,
     "closeBoltOnEmpty": true,
     "cycleTime": 0.1,
+    "fireTime": 0.05,
     "projectileKind": "projectile",
 
     // "reloadTime": 10,

@@ -1,0 +1,41 @@
+{
+  "itemName" : "project45-titaniumtriggermod",
+  "price" : 700,
+  "rarity" : "Legendary",
+  "tooltipKind" : "project45gunmod2",
+  "modCategory" : "gunMod",
+  "category" : "uniqueWeapon",
+  "itemTags": ["weapon"],
+  "tooltipFields":{
+    "subtitle": "Gun Mod",
+    "objectImage": "/items/augments/project45-gunmods/mods/project45-titaniumtriggermod/project45-titaniumtriggermod.png"
+  },
+  "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-titaniumtriggermod/project45-titaniumtriggermodicon.png",
+  "description" : "A low-latency, heavy-duty E-trigger that amplifies the weapon's internal voltage.",
+  "statInfo": "",
+  "shortdescription" : "Titanium ElecTrigger",
+
+  "augment":{
+    "modName": "Titanium E-Trigger",
+    "category": "universal",
+    "slot": "E-trigger",
+    "cost": 1,
+    "stat": {
+      "fireTime": {
+        "additive": -0.03
+      },
+      "critChance": {
+        "additive": 0.2
+      },
+      "critDamage": {
+        "multiplicative": 0.2
+      }
+    }
+  },
+
+
+   
+
+  "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
+}

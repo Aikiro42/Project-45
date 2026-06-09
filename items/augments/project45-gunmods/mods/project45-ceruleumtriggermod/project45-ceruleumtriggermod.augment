@@ -1,0 +1,38 @@
+{
+  "itemName" : "project45-ceruleumtriggermod",
+  "price" : 700,
+  "rarity" : "Legendary",
+  "tooltipKind" : "project45gunmod2",
+  "modCategory" : "gunMod",
+  "category" : "uniqueWeapon",
+  "itemTags": ["weapon"],
+  "tooltipFields":{
+    "subtitle": "Gun Mod",
+    "objectImage": "/items/augments/project45-gunmods/mods/project45-ceruleumtriggermod/project45-ceruleumtriggermod.png"
+  },
+  "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-ceruleumtriggermod/project45-ceruleumtriggermodicon.png",
+  "description" : "A responsive E-trigger made of unknown materials that affect guns' energy consumption.",
+  "statInfo": "",
+  "shortdescription" : "Ceruleum ElecTrigger",
+
+  "augment":{
+    "modName": "Ceruleum E-Trigger",
+    "category": "universal",
+    "slot": "E-trigger",
+    "cost": 1,
+    "stat": {
+      "fireTime": {
+        "additive": -0.05
+      },
+      "ammoConsumeChance": {
+        "additive": -0.15
+      },
+      "reloadCost": {
+        "multiplicative": 0.5
+      }
+    }
+  },
+
+  "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
+}
