@@ -29,7 +29,8 @@
       },
       "animationCustom": {
         "sounds": {
-          "chargeWhine": [ "/sfx/project45neosfx/chargewhine/chargewhine-02.ogg" ]
+          "chargeWhine": [ "/sfx/project45neosfx/chargewhine/chargewhine-02.ogg" ],
+          "cooldownLoop": [ "/sfx/melee/electrobaton_idle1.ogg" ]
         }
       }
     },

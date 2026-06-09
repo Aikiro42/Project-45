@@ -39,7 +39,8 @@
 
     "sounds": {
       "fire" : ["/sfx/project45neosfx/fire/fire-energy1.ogg"],
-      "hollow": ["/sfx/project45neosfx/hollow/hollow-02.ogg"]
+      "hollow": ["/sfx/project45neosfx/hollow/hollow-02.ogg"],
+      "cooldownLoop": ["/sfx/melee/electrobaton_idle1.ogg"]
     }
   },
 
