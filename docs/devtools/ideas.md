@@ -1,0 +1,32 @@
+# Weapons
+- Panzerschreck (Bazooka)
+  - A basic rocket launcher.
+  - You can fit a shield on it. (Gun Shield/ARMDLO)
+# XSSR Mods
+- Chicago Typewriter (Gun mod)
+  - "A typewriter used by hunks to protect residens from evil... misinformation."
+  - Makes weapons two-handed
+  - Gives infinite ammo to the following weapons:
+    - Pistol
+    - TMP
+    - SMG
+    - Panzerschreck
+- BFG Core (Ammo mod)
+  - Causes guns to fire the BFG's projectile.
+  - Equippable on energy weapons.
+- Gun Kata (Ammo mod) (Wanted)
+  - Fires standard bullets that curve.
+  - Equippable on ballistic weapons.
+- Puregold parts (Material Mod) (Goldeneye 007)
+  - Uses the Puregold logo
+  - Decreases magazine size to 1 and triples reload time, but gives same damage stat boosts as the admin mod.
+  - Colors the entire gun gold.
+- Flux Capacitor (Passive Mod) (Back to the Future)
+  - "When the hell is it?" 
+  - Firing a gun in a specific interval increases its damage. Damage resets on mistime.
+- Laser Scope (Sight mod) (Risk of Rain 2)
+  - "You'll lose more than your license if they catch you playing with this."
+  - Doubles final crit damage.
+- Unstable Tesla Coil (Passive Mod)
+  - "Get ready to behold the marvelous wonders of electricity!"
+  - Fire out lightning that hits 3 (+2 per stack) enemies for 200% base damage every 0.5s. The Tesla Coil switches off every 10 seconds.
