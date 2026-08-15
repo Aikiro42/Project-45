@@ -27,15 +27,18 @@
       "primaryAbility": {
         "semi": {
           "operation": "replace",
-          "value": false
+          "value": false,
+          "lock": true
         },
         "manualFeed": {
           "operation": "replace",
-          "value": false
+          "value": false,
+          "lock": true
         },
         "autoFireAfterCharge": {
           "operation": "replace",
-          "value": true
+          "value": true,
+          "lock": true
         }
       }
     },

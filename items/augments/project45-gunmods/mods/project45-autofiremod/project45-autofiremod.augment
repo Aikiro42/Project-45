@@ -25,7 +25,7 @@
         "semi": {
           "checks": [
             {
-              "path": "primaryAbility.semi",
+              "path": "primaryAbility.manualFeed",
               "operation": "!=",
               "value": true
             }
@@ -34,13 +34,6 @@
           "value": false
         },
         "manualFeed": {
-          "checks": [
-            {
-              "path": "primaryAbility.manualFeed",
-              "operation": "!=",
-              "value": true
-            }
-          ],
           "operation": "replace",
           "value": false
         },
