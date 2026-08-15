@@ -58,6 +58,15 @@ function build(directory, config, parameters, level, seed)
     unique = project45util.colorText("#f4988c", "XSSR (UNIQUE)")
   }
 
+  local rarityColors = {
+    common = "/interface/tooltips/project45gunmod2/project45gunmod2-tooltipbody-bg-r.png",
+    uncommon = "/interface/tooltips/project45gunmod2/project45gunmod2-tooltipbody-bg-r.png",
+    rare = "/interface/tooltips/project45gunmod2/project45gunmod2-tooltipbody-bg-sr.png",
+    legendary = "/interface/tooltips/project45gunmod2/project45gunmod2-tooltipbody-bg-sr.png",
+    essential = "/interface/tooltips/project45gunmod2/project45gunmod2-tooltipbody-bg-ssr.png",
+    unique = "/interface/tooltips/project45gunmod2/project45gunmod2-tooltipbody-bg-xssr.png"
+  }
+
   local statSlots = {
     baseDamage = "^#FF9000;Base Damage",
     fireTime = "^#FFD400;Fire Time",
@@ -256,7 +265,9 @@ function build(directory, config, parameters, level, seed)
     config.tooltipFields.technicalLabel = project45util.colorText("#a0a0a0","No technical info.")
   end
   
-  config.tooltipFields.rarityLabel = rarityConversions[configParameter("isUnique", false) and "unique" or string.lower(configParameter("rarity", "common"))]
+  local rarity = configParameter("isUnique", false) and "unique" or string.lower(configParameter("rarity", "common"))
+  config.tooltipFields.rarityLabel = rarityConversions[rarity]
+  config.tooltipFields.rarityImage = rarityColors[rarity]
 
   -- change stats field
   local statLimit = 7
