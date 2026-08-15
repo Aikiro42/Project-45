@@ -34,7 +34,8 @@
       "stock",
       
       "material",
-      "barrel"
+      "barrel",
+      "trigger"
     ],
     "flipSlot": [
       "stock"

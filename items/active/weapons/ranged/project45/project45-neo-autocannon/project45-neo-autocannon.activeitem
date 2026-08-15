@@ -28,13 +28,15 @@
       "sights",
       
       "magazine",
-      "material"
+      "material",
+      "E-trigger"
     ],
     "acceptsAmmoArchetype": [
       "bullet",
       "grenade",
       "shotgun",
-      "barrel"
+      "barrel",
+      "magwell"
     ]
   },
 
@@ -187,6 +189,7 @@
     "screenShakeAmount": 1,
     
     "cycleTime": 0.35,
+    "fireTime": 1,
 
     "muzzleProjectiles": [
       {

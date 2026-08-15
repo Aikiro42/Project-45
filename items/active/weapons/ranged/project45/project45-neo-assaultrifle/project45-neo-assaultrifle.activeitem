@@ -68,7 +68,9 @@
       "receiver",
       "magazine",
       "material",
-      "barrel"
+      "barrel",
+      "trigger",
+      "magwell"
     ]
   },
 
@@ -106,7 +108,7 @@
     "recoverTime": 1,
     
     "cycleTime": 0.05,
-    "fireTime": 0.25,
+    "fireTime": 0.3,
     "projectileKind": "projectile",
     "laser":{
       "enabled": false

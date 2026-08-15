@@ -30,7 +30,8 @@
       
       "magazine",
       "material",
-      "barrel"
+      "barrel",
+      "trigger"
     ],
     "acceptsAmmoArchetype": [
       "bullet"
@@ -102,6 +103,7 @@
 
     "semi": true,
     "cycleTime": 0.1,
+    "fireTime": 0.1,
     "cockTime": 0.4,
     "projectileKind": "projectile",
 
