@@ -18,6 +18,15 @@ function build(directory, config, parameters, level, seed)
     essential = project45util.colorText("#ffffa7", "SSR (Essential)"),
     unique = project45util.colorText("#f4988c", "XSSR (UNIQUE)")
   }
+
+  local rarityBackgrounds = {
+    common = "/interface/tooltips/project45gun/project45gun-tooltipbody-bg-r.png",
+    uncommon = "/interface/tooltips/project45gun/project45gun-tooltipbody-bg-r.png",
+    rare = "/interface/tooltips/project45gun/project45gun-tooltipbody-bg-sr.png",
+    legendary = "/interface/tooltips/project45gun/project45gun-tooltipbody-bg-sr.png",
+    essential = "/interface/tooltips/project45gun/project45gun-tooltipbody-bg-ssr.png",
+    unique = "/interface/tooltips/project45gun/project45gun-tooltipbody-bg-xssr.png",
+  }
   
   parameters = parameters or {}
   parameters.primaryAbility = parameters.primaryAbility or {}
@@ -527,14 +536,27 @@ function build(directory, config, parameters, level, seed)
   -- populate tooltip fields
   parameters.tooltipKind = "project45gun"
   if configParameter("tooltipKind") == "project45gun" then
+    
+    -- initialize tooltipFields
     config.tooltipFields = config.tooltipFields or {}
+    
+    -- type
     if config.project45GunModInfo.uniqueType then
       config.tooltipFields.subtitle = generalTooltipConfig.categoryStringsX[config.project45GunModInfo.uniqueType][config.project45GunModInfo.category or "generic"]
     else
       config.tooltipFields.subtitle = generalTooltipConfig.categoryStrings[config.project45GunModInfo.category or "generic"] -- .. "^#D1D1D1;" .. config.gunArchetype or config.category
     end
+
+    -- level
     config.tooltipFields.levelLabel = util.round(currentLevel, 1)
-    config.tooltipFields.rarityLabel = rarityConversions[configParameter("isUnique", false) and "unique" or string.lower(configParameter("rarity", "common"))]
+
+    -- rarity
+    local rarity = configParameter("isUnique", false) and "unique" or string.lower(configParameter("rarity", "common"))
+    config.tooltipFields.rarityLabel = rarityConversions[rarity]
+    sb.logInfo(rarityBackgrounds[rarity])
+    -- why the fuck do edited tooltip fields overlay the other layers
+    config.tooltipFields.rarityImage = rarityBackgrounds[rarity]
+
     if elementalType ~= "physical" then
       config.tooltipFields.elementImage = "/interface/elements/"..elementalType..".png"
     end
