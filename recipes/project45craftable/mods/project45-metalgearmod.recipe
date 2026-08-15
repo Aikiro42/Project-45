@@ -1,0 +1,11 @@
+{
+  "input" : [
+    { "item" : "dubloon", "count" : 45 }
+  ],
+  "output" : {
+    "item" : "project45-mgs-metalgearmod",
+    "count" : 1
+  },
+  "duration" : 5,
+  "groups" : [ "project45craftable-mods" ]
+}
