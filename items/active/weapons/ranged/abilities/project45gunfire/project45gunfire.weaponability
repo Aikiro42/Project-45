@@ -185,7 +185,8 @@
     "summonedProjectileType": "project45_defaultsummon",
     "summonedProjectileParameters": {
       // "summonAnywhere": false, // if true, can summon projectiles anywhere as long as it isn't within terrain
-      // "summonInTerrain": false // if true, can summon in terrain. Renders summonAnywhere true.
+      // "summonInTerrain": false, // if true, can summon in terrain. Renders summonAnywhere true.
+      // "preserveAimAngle": false // if true, angle of summoned projectile is based on aim angle and not randomized.
     },
 
     "hitscanParameters": {
