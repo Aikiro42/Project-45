@@ -1,0 +1,30 @@
+{
+  "projectileName" : "project45_zoltraakexplosion",
+  "image" : "/projectiles/explosions/project45_zoltraakexplosion/project45zoltraak.png",
+  "scripts": [
+    "/projectiles/explosions/project45_zoltraakexplosion/project45zoltraak.lua"
+  ],
+  "frameNumber" : 1,
+  "speed" : 0,
+  "timeToLive": 0.67,
+  "fullbright": true,
+  "pointLight" : true,
+  "lightColor": [102, 138, 191],
+  "damagePoly" : [ [0, 0], [0, 1], [1, 1], [1, 0] ],
+  "animationLoops" : false,
+  "flippable" : true,
+  "power": 0,
+  "damageType" : "NoDamage",
+  "damageKind" : "hidden",
+  "angularVelocity": 120,
+  "angularVelocityDecay": 120,
+  "actionOnReap": [
+    {
+      "action" : "projectile",
+      "type" : "project45stdbullet",
+      "fuzzAngle" : 0,
+      "inheritDamageFactor" : 1,
+      "angleAdjust" : 0
+    }
+  ]
+}
