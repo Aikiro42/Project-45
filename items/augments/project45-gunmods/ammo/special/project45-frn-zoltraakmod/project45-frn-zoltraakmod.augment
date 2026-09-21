@@ -1,0 +1,58 @@
+{
+  "itemName" : "project45-frn-zoltraakmod",
+  "price" : 300,
+  "rarity" : "Uncommon",
+  "tooltipKind" : "project45gunmod2",
+  "modCategory" : "gunMod",
+  "category" : "uniqueWeapon",
+  "itemTags": ["weapon"],
+  "tooltipFields":{
+    "subtitle": "Ammo Mod",
+    "objectImage": "/items/augments/project45-gunmods/ammo/special/project45-frn-zoltraakmod/project45-frn-zoltraakmod.png"
+  },
+  "inventoryIcon" : "/items/augments/project45-gunmods/ammo/special/project45-frn-zoltraakmod/project45-frn-zoltraakmodicon.png",
+  "description" : "A simple but effective spell that kills demons.",
+  "technicalInfo": "Fires guided demon-killing beams.",
+  "shortdescription" : "Zoltraak",
+
+  "augment":{
+    "modName": "Zoltraak",
+    "compatibleWeapons": [
+      "project45-neo-powerstave"
+    ],
+    "category": "universal",
+    "slot": "ammo",
+    "conversion": "summoned",
+    "ammo":{
+      "archetype": "summoned",
+      "summonedProjectileType": "project45_zoltraakexplosion",
+      "muzzleFlashColor": [64,64,64],
+      "summonedProjectileParameters":{
+        "speed": 0,
+        "preserveAimAngle": true
+      },
+      "muzzleFlashParticles": [
+        {"particle": "project45flashbang-blue"}
+      ],
+      "shootSmokeParticles": [],
+      "hideMuzzleSmoke": true 
+    },
+    "passive": {
+      "passiveScript" : "/items/augments/project45-gunmods/ammo/special/project45-frn-zoltraakmod/project45-frn-zoltraakmod.lua",
+      "passiveParameters": {},
+      "passiveDescription": "Fires guided demon-killing beams."
+    },
+    "stat": {
+      "baseDamage": {
+        "additive": 10,
+        "multiplicative": 1.2
+      }
+    }
+  },
+
+
+   
+
+  "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
+}
