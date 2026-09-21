@@ -1317,6 +1317,7 @@ function Project45GunFire:fireProjectile(projectileType, projectileParameters, i
       false,
       finalParams
     )
+    self.passiveClass.onSpawnProjectile(self, projectileId)
 
   end
 
