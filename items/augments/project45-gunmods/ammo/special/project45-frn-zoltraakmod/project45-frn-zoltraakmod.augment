@@ -35,7 +35,10 @@
         {"particle": "project45flashbang-blue"}
       ],
       "shootSmokeParticles": [],
-      "hideMuzzleSmoke": true 
+      "hideMuzzleSmoke": true,
+      "customSounds": {
+        "fire": []
+      }
     },
     "passive": {
       "passiveScript" : "/items/augments/project45-gunmods/ammo/special/project45-frn-zoltraakmod/project45-frn-zoltraakmod.lua",

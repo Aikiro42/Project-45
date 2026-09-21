@@ -4,7 +4,8 @@
   "scripts": [
     "/projectiles/explosions/project45_zoltraakexplosion/project45zoltraak.lua"
   ],
-  "frameNumber" : 1,
+  "animationCycle": 0.33,
+  "frameNumber" : 9,
   "speed" : 0,
   "timeToLive": 0.67,
   "fullbright": true,
@@ -18,13 +19,30 @@
   "damageKind" : "hidden",
   "angularVelocity": 120,
   "angularVelocityDecay": 120,
+  "periodicActions": [
+    {
+      "time" : 0,
+      "repeat" : false,
+      "action": "sound",
+      "options": [
+        "/sfx/project45neosfx/special/zoltraak/charge-zoltraak.ogg"
+      ]
+    }
+  ],
   "actionOnReap": [
     {
       "action" : "projectile",
-      "type" : "project45stdbullet",
+      "type" : "project45-stdexplosionshockwave",
       "fuzzAngle" : 0,
-      "inheritDamageFactor" : 1,
+      "inheritDamageFactor" : 0,
       "angleAdjust" : 0
-    }
+    },
+    { 
+      "action" : "sound",
+      "options" : [
+        "/sfx/project45neosfx/special/zoltraak/fire-zoltraak.ogg"
+      ]
+    },
+    { "action": "particle", "specification": "project45flashbang-white" }
   ]
 }
