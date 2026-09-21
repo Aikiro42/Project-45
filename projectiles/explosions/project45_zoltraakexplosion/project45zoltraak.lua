@@ -27,6 +27,31 @@ function update(dt)
 
   if projectile.timeToLive() <= 0 then
     mcontroller.setRotation(self.targetRotation)
+    local pos = mcontroller.position()
+    local posIncrement = vec2.rotate({1.5, 0}, self.targetRotation)
+    for _=1, 50 do
+      local nextPos = vec2.add(pos, posIncrement)
+      local beamEnd = world.pointCollision(nextPos)
+      if beamEnd then
+        world.spawnProjectile(
+          "project45-stdexplosionshockwave",
+          pos,
+          projectile.sourceEntity(),
+          posIncrement,
+          false
+        )
+        break
+      end
+
+      world.spawnProjectile(
+        "project45_zoltraaksegment",
+        pos,
+        projectile.sourceEntity(),
+        posIncrement,
+        false
+      )
+      pos = nextPos
+    end
   end
 end
 

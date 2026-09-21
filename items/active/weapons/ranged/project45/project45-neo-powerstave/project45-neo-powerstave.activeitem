@@ -172,10 +172,6 @@
     "semi": false,
     "cycleTime": 0.1,
     "projectileKind": "summoned",
-    "summonedProjectileType": "project45_zoltraakexplosion",
-    "summonedProjectileParameters": {
-      "preserveAimAngle": true
-    },
 
     // "reloadTime": 10,
 
