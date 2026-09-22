@@ -1,7 +1,8 @@
 {
   "itemName" : "project45-frn-zoltraakmod",
   "price" : 300,
-  "rarity" : "Uncommon",
+  "rarity" : "Essential",
+  "isUnique": true,
   "tooltipKind" : "project45gunmod2",
   "modCategory" : "gunMod",
   "category" : "uniqueWeapon",
@@ -11,8 +12,8 @@
     "objectImage": "/items/augments/project45-gunmods/ammo/special/project45-frn-zoltraakmod/project45-frn-zoltraakmod.png"
   },
   "inventoryIcon" : "/items/augments/project45-gunmods/ammo/special/project45-frn-zoltraakmod/project45-frn-zoltraakmodicon.png",
-  "description" : "A simple but effective spell that kills demons.",
-  "technicalInfo": "Fires guided demon-killing beams.",
+  "description" : "A simple but effective spell that kills demons and humans alike.",
+  "technicalInfo": "Summons a magic circle that fires at the direction of the cursor after a short delay.",
   "shortdescription" : "Zoltraak",
 
   "augment":{
@@ -43,7 +44,7 @@
     "passive": {
       "passiveScript" : "/items/augments/project45-gunmods/ammo/special/project45-frn-zoltraakmod/project45-frn-zoltraakmod.lua",
       "passiveParameters": {},
-      "passiveDescription": "Fires guided demon-killing beams."
+      "passiveDescription": "Summon a magic circle that fires at the direction of the cursor after a short delay."
     },
     "stat": {
       "baseDamage": {
