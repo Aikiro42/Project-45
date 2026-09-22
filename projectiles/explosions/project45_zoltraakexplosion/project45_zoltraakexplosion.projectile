@@ -32,7 +32,7 @@
   "actionOnReap": [
     {
       "action" : "projectile",
-      "type" : "project45-stdexplosionshockwave",
+      "type" : "project45_zoltraakexplosionend",
       "fuzzAngle" : 0,
       "inheritDamageFactor" : 0,
       "angleAdjust" : 0
