@@ -1,0 +1,19 @@
+{
+  "projectileName" : "project45_zoltraakexplosionend",
+  "image" : "/projectiles/explosions/project45_zoltraakexplosion/project45zoltraakend.png",
+  "animationCycle": 0.1,
+  "frameNumber" : 5,
+  "speed" : 0,
+  "timeToLive": 0.1,
+  "fullbright": true,
+  "pointLight" : true,
+  "lightColor": [168, 230, 226],
+  "damagePoly" : [ [0, 0], [0, 1], [1, 1], [1, 0] ],
+  "animationLoops" : false,
+  "flippable" : true,
+  "power": 0,
+  "damageType" : "NoDamage",
+  "damageKind" : "hidden",
+  "periodicActions": [],
+  "actionOnReap": []
+}
