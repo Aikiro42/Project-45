@@ -62,8 +62,11 @@
       "muzzle",
       
       "magazine",
+      "receiver",
       "material",
-      "barrel"
+      "barrel",
+      "trigger",
+      "magwell"
     ]
   },
 
@@ -107,6 +110,7 @@
     "postReloadDelay": 0.25,
     
     "cycleTime": 0.2,
+    "fireTime": 0.1,
     "cockTime": 0.75,
     "projectileKind": "projectile",
     "laser":{

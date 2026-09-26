@@ -53,7 +53,7 @@
         "rebase": 1
       },
       "fireTime": {
-        "rebaseMult": 0.5
+        "additive": 0.25
       },
       "cycleTime": {
         "rebaseMult": 0.5

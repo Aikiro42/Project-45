@@ -1,0 +1,50 @@
+{
+  "itemName" : "project45-ornatetriggermod",
+  "price" : 1000,
+  "rarity" : "Essential",
+  "tooltipKind" : "project45gunmod2",
+  "modCategory" : "gunMod",
+  "category" : "uniqueWeapon",
+  "itemTags": ["weapon"],
+  "tooltipFields":{
+    "subtitle": "Gun Mod",
+    "objectImage": "/items/augments/project45-gunmods/mods/project45-ornatetriggermod/project45-ornatetriggermod.png"
+  },
+  "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-ornatetriggermod/project45-ornatetriggermodicon.png",
+  "description" : "A competition-grade trigger. Makes the gun twitchy since the wielder's expected to be skilled.",
+  "statInfo": "",
+  "shortdescription" : "Ornate Hair-trigger",
+
+  "augment":{
+    "modName": "Ornate Hair-trigger",
+    "category": "ballistic",
+    "slot": "trigger",
+    "cost": 3,
+    "stat": {
+      "fireTime": {
+        "rebase": 0.001
+      },
+      "recoilAmount": {
+        "additive": 10
+      },
+      "ergonomics": {
+        "additive": -0.1
+      },
+      "critChance": {
+        "additive": 0.5
+      },
+      "reloadTimeGroup": {
+        "multiplicative": 2
+      },
+      "critDamage": {
+        "multiplicative": 0.5
+      }
+    }
+  },
+
+
+   
+
+  "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
+}

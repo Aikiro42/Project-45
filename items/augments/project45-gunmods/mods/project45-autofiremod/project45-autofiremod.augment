@@ -47,9 +47,6 @@
       "burstCount": {
         "rebase": 1
       },
-      "fireTime": {
-        "rebaseMult": 0.5
-      },
       "cycleTime": {
         "rebaseMult": 0.5
       },

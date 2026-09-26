@@ -110,8 +110,20 @@ function apply(output, augment)
     }
     statModifiers[stat].baseOrig = rebase or statModifiers[stat].baseOrig or baseStat(stat)
     statModifiers[stat].baseMult = (statModifiers[stat].baseMult or 1) * (rebaseMult or 1)
-    
-    local recalculatedBase = statModifiers[stat].baseOrig * statModifiers[stat].baseMult
+
+    local baseOrig = statModifiers[stat].baseOrig
+
+    local recalculatedBase
+    if type(baseOrig) == "table" then
+      local rbTable = sb.jsonMerge({}, baseOrig)
+      for i=1,#rbTable do
+        sb.logInfo(string.format("%.2f * %.2f", rbTable[i], statModifiers[stat].baseMult))
+        rbTable[i] = rbTable[i] * statModifiers[stat].baseMult
+      end
+      recalculatedBase = rbTable
+    else
+      recalculatedBase = statModifiers[stat].baseOrig * statModifiers[stat].baseMult
+    end
     if statGroup[stat] then
       -- if stat is member, replace base value in group
       statModifiers[statGroup[stat]].base[stat] = recalculatedBase
@@ -264,23 +276,12 @@ function apply(output, augment)
       statModifiers.fireTimeGroup.base[fireTimeStat] = baseStat(fireTimeStat)
     end
 
-    -- local newCockTime = statModifiers.fireTimeGroup.base.cockTime
-    -- local newMidCockDelay = statModifiers.fireTimeGroup.base.midCockDelay
     local newCycleTime = statModifiers.fireTimeGroup.base.cycleTime
-    local newFireTime = statModifiers.fireTimeGroup.base.fireTime
 
     local newChargeTime = statModifiers.fireTimeGroup.base.chargeTime
     local newOverchargeTime = statModifiers.fireTimeGroup.base.overchargeTime
 
-    --[[
-    local minFireTime = math.min(
-      0.001,
-      type(newCycleTime) == "table" and newCycleTime[1] or newCycleTime,
-      newCockTime,
-      newFireTime
-    )
-    --]]
-    local minFireTime = 0.001
+    local minCycleTime = 0.001
 
     if augment.fireTimeGroup.additive then
       statModifiers.fireTimeGroup.additive = (statModifiers.fireTimeGroup.additive or 0) + augment.fireTimeGroup.additive
@@ -293,7 +294,7 @@ function apply(output, augment)
 
     -- apply fireTime modifiers
 
-    local fireTimeAdd, chargeAdd, overchargeAdd
+    local cycleTimeAdd, chargeAdd, overchargeAdd
     -- NOTE: I know this is bad practice,
     -- but the above variables being possibly nil is okay
     -- because the function they're used in (getModifiedStat())
@@ -303,7 +304,7 @@ function apply(output, augment)
 
     if statModifiers.fireTimeGroup.additive then
       
-      fireTimeAdd = statModifiers.fireTimeGroup.additive
+      cycleTimeAdd = statModifiers.fireTimeGroup.additive
       chargeAdd = statModifiers.fireTimeGroup.additive
 
       -- ensures that same amount of time will be spent overcharging
@@ -316,18 +317,14 @@ function apply(output, augment)
 
     -- modify cycle time to be at least minFiretime
     if type(newCycleTime) == "table" then
-      newCycleTime = {math.max(minFireTime,
-          getModifiedStat(newCycleTime[1], fireTimeAdd, statModifiers.fireTimeGroup.multiplicative, true)),
-                      math.max(minFireTime,
-          getModifiedStat(newCycleTime[2], fireTimeAdd, statModifiers.fireTimeGroup.multiplicative, true))}
+      newCycleTime = {math.max(minCycleTime,
+          getModifiedStat(newCycleTime[1], cycleTimeAdd, statModifiers.fireTimeGroup.multiplicative, true)),
+                      math.max(minCycleTime,
+          getModifiedStat(newCycleTime[2], cycleTimeAdd, statModifiers.fireTimeGroup.multiplicative, true))}
     else
-      newCycleTime = math.max(minFireTime,
-          getModifiedStat(newCycleTime, fireTimeAdd, statModifiers.fireTimeGroup.multiplicative, true))
+      newCycleTime = math.max(minCycleTime,
+          getModifiedStat(newCycleTime, cycleTimeAdd, statModifiers.fireTimeGroup.multiplicative, true))
     end
-
-    -- modify trigger time
-    newFireTime = math.max(minFireTime,
-      getModifiedStat(newFireTime, fireTimeAdd, statModifiers.fireTimeGroup.multiplicative, true))
     
     -- modify cock time
     --[[
@@ -354,8 +351,7 @@ function apply(output, augment)
 
       cycleTime = newCycleTime,
       chargeTime = newChargeTime,
-      overchargeTime = newOverchargeTime,
-      fireTime = newFireTime,
+      overchargeTime = newOverchargeTime
     })
 
     -- to be REALLY safe,
@@ -506,7 +502,8 @@ function apply(output, augment)
   local specFields = {
     randomStatParams = true,
     pureStatMod = true,
-    stackLimit = true
+    stackLimit = true,
+    checks = true
   }
 
   -- Actual general case handling
@@ -530,10 +527,10 @@ function apply(output, augment)
         -- and rebase multiplication due to special cases
         -- e.g. fireTime is calculated according to weapon parameters
         -- FIXME: cast-local-type
----@diagnostic disable-next-line: cast-local-type
+        ---@diagnostic disable-next-line: cast-local-type
         statModifiers, newPrimaryAbility = updateStatModifiers(stat, op.rebase, op.rebaseMult, nil, nil) --> will recalculateStat
       else
----@diagnostic disable-next-line: cast-local-type
+        ---@diagnostic disable-next-line: cast-local-type
         statModifiers, newPrimaryAbility = updateStatModifiers(stat, op.rebase, op.rebaseMult, op.additive, op.multiplicative) --> will recalculateStat
       end
 

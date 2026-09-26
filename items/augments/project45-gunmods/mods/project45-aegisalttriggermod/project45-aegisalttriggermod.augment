@@ -1,0 +1,41 @@
+{
+  "itemName" : "project45-aegisalttriggermod",
+  "price" : 500,
+  "rarity" : "Rare",
+  "tooltipKind" : "project45gunmod2",
+  "modCategory" : "gunMod",
+  "category" : "uniqueWeapon",
+  "itemTags": ["weapon"],
+  "tooltipFields":{
+    "subtitle": "Gun Mod",
+    "objectImage": "/items/augments/project45-gunmods/mods/project45-aegisalttriggermod/project45-aegisalttriggermod.png"
+  },
+  "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-aegisalttriggermod/project45-aegisalttriggermodicon.png",
+  "description" : "A fast and quick trigger that augments the shooter's handling of the firearm.",
+  "statInfo": "",
+  "shortdescription" : "Aegisalt Trigger",
+
+  "augment":{
+    "modName": "Aegisalt Trigger",
+    "category": "ballistic",
+    "slot": "trigger",
+    "cost": 1,
+    "stat": {
+      "fireTime": {
+        "additive": -0.07
+      },
+      "ergonomics": {
+        "multiplicative": 0.5
+      },
+      "jamChanceMult": {
+        "multiplicative": 0.5
+      }
+    }
+  },
+
+
+   
+
+  "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
+}

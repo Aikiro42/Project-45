@@ -75,13 +75,18 @@
   "project45GunModInfo":{
     "category": "ballistic",
     
+    "incompatibleMods": [
+      "project45-autofiremod"
+    ],
     "acceptsModSlot": [
       "rail",
       "sights",
       "muzzle",
       
       "magazine",
-      "material"
+      "material",
+      "trigger",
+      "receiver"
     ],
     "acceptsAmmoArchetype": [
       "bullet"
@@ -122,6 +127,7 @@
     "recoverDelay": 0.125,
     
     "cycleTime": 0.005,
+    "fireTime": 0.1,
     "jamChances": [0.5, 0.01, 0, 0],
     "screenShakeAmount": 0.1,
     "projectileKind": "projectile",

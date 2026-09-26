@@ -35,7 +35,9 @@
       "sights",
       
       "magazine",
-      "material"
+      "material",
+      "E-trigger",
+      "magwell"
     ],
     "acceptsAmmoArchetype": [
       "bullet",
@@ -70,7 +72,8 @@
       "chargeDrone" : ["/sfx/project45neosfx/chargedrone/chargedrone-01.ogg"],  
       "fire" : ["/sfx/project45neosfx/fire/fire-energy3.ogg"],
       "ejectMag": [ "/sfx/project45neosfx/ejectmag/ejectmag-heavy1.ogg"],
-      "reloadEnd": ["/sfx/project45neosfx/loadmag/loadmag-heavy2.ogg"]
+      "reloadEnd": ["/sfx/project45neosfx/loadmag/loadmag-heavy2.ogg"],
+      "cooldownLoop": ["/sfx/melee/electrobaton_idle1.ogg"]
     },
     "animatedParts": {
       "parts":{
@@ -154,6 +157,7 @@
     "chargeSmoke": false,
 
     "cycleTime": 0.125,
+    "fireTime": 0.3,
     "chargeFrames": 4,
     "chargeTime": 0.25,
     "overchargeTime": 0.25,

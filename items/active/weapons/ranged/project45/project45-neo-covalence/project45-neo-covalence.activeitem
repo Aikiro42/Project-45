@@ -52,7 +52,8 @@
       "hollow": [ ],
       // "chargeWhine" : ["/sfx/project45neosfx/chargewhine/chargewhine-02.ogg"],
       // "chargeDrone" : ["/sfx/project45neosfx/chargedrone/chargedrone-05.ogg"]
-      "chargeWhine" : ["/sfx/project45neosfx/chargewhine/chargewhine-02.ogg"]
+      "chargeWhine" : ["/sfx/project45neosfx/chargewhine/chargewhine-02.ogg"],
+      "cooldownLoop": ["/sfx/melee/electrobaton_idle1.ogg"]
     }
   },
 
@@ -76,7 +77,10 @@
       "receiver",
       
       "material",
-      "magazine"
+      "magazine",
+      "magwell",
+      "receiver",
+      "E-trigger"
     ]
   },
 
@@ -103,6 +107,7 @@
     "recoverDelay": 0,
     "semi": true,
     "cycleTime": 0.01,
+    "fireTime": 0.1,
     "projectileKind": "beam",
     "screenShakeAmount": 0.25,
 
