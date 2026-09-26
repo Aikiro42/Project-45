@@ -1,19 +1,105 @@
 {
   "projectileName" : "project45_zoltraakexplosionend",
   "image" : "/projectiles/explosions/project45_zoltraakexplosion/project45zoltraakend.png",
-  "animationCycle": 0.1,
-  "frameNumber" : 5,
+  "animationCycle": 0.25,
+  "frameNumber" : 7,
   "speed" : 0,
-  "timeToLive": 0.1,
+  "timeToLive": 0.25,
   "fullbright": true,
-  "pointLight" : true,
-  "lightColor": [168, 230, 226],
   "damagePoly" : [ [0, 0], [0, 1], [1, 1], [1, 0] ],
   "animationLoops" : false,
   "flippable" : true,
   "power": 0,
   "damageType" : "NoDamage",
   "damageKind" : "hidden",
-  "periodicActions": [],
+  "collisionEnabled": false,
+  "movementSettings":{
+    "collisionEnabled": false
+  },
+  "periodicActions": [
+    {
+      "time" : 0,
+      "repeat" : false,
+      "action" : "loop",
+      "count" : 15,
+      "body" : [
+        {
+          "action" : "option",
+          "options" : [
+            {
+              "action" : "particle",
+              "specification" : {
+                "type" : "ember",
+                "size" : 1.0,
+                "color" : [255,255,255],
+                "light": [50,48,82],
+                "destructionAction" : "fade",
+                "destructionTime" : 1,
+                "fade": 0.5,
+                "initialVelocity" : [0, 0],
+                "finalVelocity" : [0, -50],
+                "fullbright": true,
+                "approach" : [10, 50],
+                "timeToLive" : 0.2,
+                "layer" : "back",
+                "variance" : {
+                  "initialVelocity" : [10, 10]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "action" : "option",
+          "options" : [
+            {
+              "action" : "particle",
+              "specification" : {
+                "type" : "ember",
+                "size" : 1.0,
+                "color" : [87,78,228],
+                "light": [50,48,82],
+                "destructionAction" : "fade",
+                "fade": 1,
+                "destructionTime" : 1,
+                "initialVelocity" : [0, 0],
+                "fullbright": true,
+                "timeToLive" : 0,
+                "layer" : "back",
+                "variance" : {
+                  "initialVelocity" : [50, 50]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "time" : 0,
+      "repeat" : false,
+      "action" : "actions",
+      "list" : [
+        {
+          "action" : "loop",
+          "count" : 5,
+          "body" : [
+            {
+              "action" : "option",
+              "options" : [
+                {
+                  "action" : "particle",
+                  "specification" : "project45shineparticle-white"
+                }
+              ]
+            },
+            {
+              "action" : "spark"
+            }
+          ]
+        }
+      ]
+    }
+  ],
   "actionOnReap": []
 }
