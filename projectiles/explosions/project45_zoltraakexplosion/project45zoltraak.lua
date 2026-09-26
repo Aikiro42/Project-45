@@ -65,11 +65,25 @@ function hitscan()
           projectile.power(),
           self.sourceEntity
         )
+        local statEffectInherit = config.getParameter("statusEffects", {})
+        if #statEffectInherit > 0 then
+          for _, effect in ipairs(statEffectInherit) do
+            world.sendEntityMessage(
+              id,
+              "applyStatusEffect",
+              effect
+            )
+          end
+        end
       end
     end
   end
 
   renderBeam(pos, scanEnd)
+  world.spawnProjectile(
+    "project45_terminalexplosion_zoltraak",
+    scanEnd
+  )
 
 end
 
