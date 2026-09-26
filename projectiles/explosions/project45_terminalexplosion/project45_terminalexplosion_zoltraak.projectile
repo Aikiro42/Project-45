@@ -1,0 +1,47 @@
+{
+  "projectileName" : "project45_terminalexplosion_zoltraak",
+  "image" : "/projectiles/invisibleprojectile/invisibleprojectile.png",
+  "frameNumber" : 1,
+  "timeToLive": 0,
+  "speed" : 0,
+  "power": 0,
+  "damagePoly" : [ [0, 0] ],
+  "collisionEnabled": false,
+  "movementSettings":{
+    "collisionEnabled": false
+  },
+  "animationLoops" : false,
+  "flippable" : true,
+  "damageTeam" : { "type" : "indiscriminate" },
+  "damageType" : "NoDamage",
+  "damageKind" : "hidden",
+  "actionOnReap": [
+    {
+      "action" : "sound",
+      "options" : [
+        "/sfx/project45neosfx/bulletimpact/bulletimpact-energy1.ogg",
+        "/sfx/project45neosfx/bulletimpact/bulletimpact-energy2.ogg",
+        "/sfx/project45neosfx/bulletimpact/bulletimpact-energy3.ogg"
+      ]
+    },
+    {
+      "action" : "loop",
+      "count" : 5,
+      "body" : [
+        {
+          "action" : "option",
+          "options" : [
+            {
+              "action" : "particle",
+              "specification" : "project45shineparticle-white"
+            }
+          ]
+        },
+        {
+          "action" : "config",
+          "file" : "/projectiles/explosions/project45_zoltraakexplosion/project45zoltraakterminus.config"
+        }
+      ]
+    }
+  ]
+}
