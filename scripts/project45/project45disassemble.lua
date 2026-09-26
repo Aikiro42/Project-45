@@ -30,13 +30,15 @@ function disassemble(input, transformerId, transformItemId)
       -- modded or transformed; do transformation process
       
       local disassembledItems = {}
+      local uniques = {}
 
       -- add mods to disassembledItems
       if input.parameters.modSlots then
         for k, v in pairs(input.parameters.modSlots) do
           local isAbility = {ability=true, shiftAbility=true}
-          if not isAbility[k] then
+          if not (isAbility[k] or uniques[v[2]]) then
             table.insert(disassembledItems, v[2])
+            uniques[v[2]] = true
           end
         end
       end
