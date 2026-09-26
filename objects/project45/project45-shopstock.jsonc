@@ -201,7 +201,8 @@
         "project45-armadillomod",
         "project45-chainsawmod",
         // misc mods
-        "project45-solariummod"
+        "project45-solariummod",
+        "project45-mgs-metalgearmod"
       ]
     },
     "stat": {
