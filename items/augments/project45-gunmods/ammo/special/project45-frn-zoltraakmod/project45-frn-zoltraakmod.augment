@@ -12,7 +12,7 @@
     "objectImage": "/items/augments/project45-gunmods/ammo/special/project45-frn-zoltraakmod/project45-frn-zoltraakmod.png"
   },
   "inventoryIcon" : "/items/augments/project45-gunmods/ammo/special/project45-frn-zoltraakmod/project45-frn-zoltraakmodicon.png",
-  "description" : "A simple but effective spell that kills demons and humans alike.",
+  "description" : "A simple, effective spell that can kill demons. Enough to defeat the soldiers of this age.",
   "technicalInfo": "Summons a magic circle that fires at the direction of the cursor after a short delay.",
   "shortdescription" : "Zoltraak",
 
