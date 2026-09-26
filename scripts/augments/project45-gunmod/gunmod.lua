@@ -17,12 +17,16 @@ function apply(output, augment)
     local oldPrimaryAbility = output.config.primaryAbility or {} -- retrieve old primary ability
     local newPrimaryAbility = input.parameters.primaryAbility or {} -- retrieve modified primary ability
     oldPrimaryAbility = sb.jsonMerge(oldPrimaryAbility, newPrimaryAbility)
-
+    
+    local lockedParams = input.parameters.lockedParams or {}
+    
     -- replace general primaryability parameters
     -- using json patch-esque operations
     if augment.primaryAbility then
 
       -- ADJUST SPECIAL CASES FIRST
+
+      -- SPECIAL CASE: Laser
       if augment.primaryAbility.laser then
         -- if laser is enabled
         -- merge laser config on top of primaryAbility
@@ -53,6 +57,7 @@ function apply(output, augment)
         end
       end
 
+      -- SPECIAL CASE: Flashlight
       if augment.primaryAbility.flashlight then
         local flashlight = newPrimaryAbility.flashlight or oldPrimaryAbility.flashlight
         if flashlight and flashlight.enabled then
@@ -84,13 +89,9 @@ function apply(output, augment)
           -- sb.logInfo(#augment.primaryAbility.laser)
         end
       end
-
-      if augment.primaryAbility.heavyWeapon and newPrimaryAbility.heavyWeapon == false then
-        augment.primaryAbility.heavyWeapon = nil
-      end
-
-      local protectedParameters = root.assetJson("/configs/project45/project45_generalstat.config:statDefaults")
+      
       -- protect gun from getting their stats modified directly
+      local protectedParameters = root.assetJson("/configs/project45/project45_generalstat.config:statDefaults")
       for param, _ in pairs(protectedParameters) do
         augment.primaryAbility[param] = nil
       end
@@ -101,23 +102,39 @@ function apply(output, augment)
       -- to merge into old primaryAbility table
       local newModifications = {} -- table to merge with newPrimaryAbility
       for parameter, operation in pairs(augment.primaryAbility) do
-        if #operation > 0 then
-          -- if operation is an array of operations
-          -- check and do them in order
-          local newValue = newPrimaryAbility[parameter] or oldPrimaryAbility[parameter]
-          for _, op in ipairs(operation) do
-            if project45util.doOperationChecks(input.parameters, op.checks or {}) then
-              newValue = modify(newValue, op.operation, op.value)
+        -- If parameter has been locked, skip
+        if not lockedParams[parameter] then
+        
+          if #operation > 0 then
+            -- if operation is an array of operations
+            -- check and do them in order
+            local newValue = newPrimaryAbility[parameter] or oldPrimaryAbility[parameter]
+            local lock = false
+            for _, op in ipairs(operation) do
+              if project45util.doOperationChecks(input.parameters, op.checks or {}) then
+                newValue = modify(newValue, op.operation, op.value)
+                lock = lock or op.lock
+              end
+            end
+            newModifications[parameter] = newValue
+            if lock then
+              lockedParams[parameter] = true
+            end
+
+          else
+            -- if operation isn't array,
+            -- it's a table and must be treated as an operation itself
+            if project45util.doOperationChecks(input.parameters, operation.checks or {}) then
+              newModifications[parameter] = modify(newPrimaryAbility[parameter] or oldPrimaryAbility[parameter],
+                  operation.operation, operation.value)
+              if operation.lock then
+                lockedParams[parameter] = true
+              end
             end
           end
-          newModifications[parameter] = newValue
 
-        else
-          if project45util.doOperationChecks(input.parameters, operation.checks or {}) then
-            newModifications[parameter] = modify(newPrimaryAbility[parameter] or oldPrimaryAbility[parameter],
-                operation.operation, operation.value)
-          end
         end
+
       end
 
       -- END OF MODIFICATION
@@ -128,6 +145,7 @@ function apply(output, augment)
     -- merge changes
     -- local finalPrimaryAbility = sb.jsonMerge(oldPrimaryAbility, newPrimaryAbility)
     -- sb.logInfo("(gunmod.lua) new parameters: " .. sb.printJson(finalPrimaryAbility))
+    output:setInstanceValue("lockedParams", lockedParams)
     output:setInstanceValue("primaryAbility", newPrimaryAbility)
 
     -- for visible weapon parts like grips, etc.

@@ -36,10 +36,6 @@
     "gun": {
       "muzzleOffset": [0.25, 0],
       "primaryAbility": {
-        "projectileCount": {
-          "operation": "replace",
-          "value": 1
-        },
         "hitscanParameters":{
           "operation": "merge",
           "value": {
