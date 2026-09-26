@@ -1,0 +1,12 @@
+{
+  "name" : "project45mlgstyle",
+  "effectConfig" : {},
+  "defaultDuration" : 20,
+  "animationConfig" : "project45mlgstyle.animation",
+  "label" : "Smokin' Sexy Style!",
+  "icon" : "project45mlgstyleicon.png",
+
+  "scripts" : [
+    "project45mlgstyle.lua"
+  ]
+}
