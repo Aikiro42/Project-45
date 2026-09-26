@@ -7,7 +7,7 @@
   "animationCycle": 0.33,
   "frameNumber" : 9,
   "speed" : 0,
-  "timeToLive": 0.67,
+  "timeToLive": 0.75,
   "fullbright": true,
   "pointLight" : true,
   "lightColor": [102, 138, 191],
@@ -17,8 +17,7 @@
   "power": 0,
   "damageType" : "NoDamage",
   "damageKind" : "hidden",
-  "angularVelocity": 120,
-  "angularVelocityDecay": 120,
+  "commitTime": 0.5,
   "periodicActions": [
     {
       "time" : 0,
