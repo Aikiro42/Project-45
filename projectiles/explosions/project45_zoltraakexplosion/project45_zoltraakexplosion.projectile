@@ -17,6 +17,7 @@
   "power": 0,
   "damageType" : "NoDamage",
   "damageKind" : "hidden",
+  "punchThrough": 1,
   "commitTime": 0.5,
   "periodicActions": [
     {

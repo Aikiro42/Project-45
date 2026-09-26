@@ -7,7 +7,7 @@ function init()
     -- sb.logInfo(world.entityType(entity.id()))
     if effectConfig == "project45zoltraakdamage" then
       status.applySelfDamageRequest({
-          damageType="IgnoresDef",
+          damageType="damage",
           damageSourceKind="project45holy",
           damage=duration,
           sourceEntityId=sourceEntityId,

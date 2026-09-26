@@ -11,6 +11,7 @@ local oldUninit = uninit or function() end
 function init()
   oldInit()
   self.range = config.getParameter("beamRange", 100)
+  self.punchThrough = config.getParameter("punchThrough", 0)
   self.sourceEntity = projectile.sourceEntity()
   self.currentRotation = mcontroller.rotation()
   self.targetRotation = self.currentRotation
@@ -46,37 +47,42 @@ function hitscan()
   local scanEnd = vec2.add(pos, vec2.rotate({self.range, 0}, self.targetRotation))
 
   scanEnd = world.lineCollision(pos, scanEnd, {"Block", "Dynamic"}) or scanEnd
+  local fullScanEnd = scanEnd
 
   local hitEntityIds = world.entityLineQuery(pos, scanEnd, {
     order = "nearest",
     withoutEntityId=self.sourceEntity,
   })
 
+  local damagedEntityIds = {}
+  local penetrated = 0
+
   -- if entities are hit,
   if #hitEntityIds > 0 then
     -- for each entity hit
-    for i, id in ipairs(hitEntityIds) do
+    for _, id in ipairs(hitEntityIds) do
       if world.entityCanDamage(self.sourceEntity, id)
       then
-        world.sendEntityMessage(
-          id,
-          "applyStatusEffect",
-          "project45zoltraakdamage",
-          projectile.power(),
-          self.sourceEntity
-        )
-        local statEffectInherit = config.getParameter("statusEffects", {})
-        if #statEffectInherit > 0 then
-          for _, effect in ipairs(statEffectInherit) do
-            world.sendEntityMessage(
-              id,
-              "applyStatusEffect",
-              effect
-            )
-          end
-        end
+        local aimAngle = vec2.angle(world.distance(scanEnd, pos))
+        local entityAngle = vec2.angle(world.distance(world.entityPosition(id), pos))
+        local rotation = aimAngle - entityAngle
+        
+        scanEnd = vec2.rotate(world.distance(world.entityPosition(id), pos), rotation)
+        scanEnd = vec2.add(scanEnd, pos)
+
+        table.insert(damagedEntityIds, id)
+        penetrated = penetrated + 1
+
+        if penetrated > (self.punchThrough) then break end
+
       end
     end
+  end
+  
+  if penetrated <= self.punchThrough then scanEnd = fullScanEnd end
+
+  for _, id in ipairs(damagedEntityIds) do
+    damageEntity(id)
   end
 
   renderBeam(pos, scanEnd)
@@ -87,15 +93,35 @@ function hitscan()
 
 end
 
+function damageEntity(entityId)
+  world.sendEntityMessage(
+    entityId,
+    "applyStatusEffect",
+    "project45zoltraakdamage",
+    projectile.power(),
+    self.sourceEntity
+  )
+  local statEffectInherit = config.getParameter("statusEffects", {})
+  if #statEffectInherit > 0 then
+    for _, effect in ipairs(statEffectInherit) do
+      world.sendEntityMessage(
+        entityId,
+        "applyStatusEffect",
+        effect
+      )
+    end
+  end
+end
+
 function renderBeam(origin, destination)
   origin = origin or {0, 0}
   destination = destination or {0, 0}
 
-  local length = self.range
-  local vector = vec2.rotate({1, 0}, self.targetRotation)
+  local length = world.magnitude(destination, origin)
+  local vector = world.distance(origin, destination)
   local primaryParameters = {
     length = length*8,
-    initialVelocity = {-0.01, 0}
+    initialVelocity = {0.01, 0}
   }
   local s = 20
   local pactions = {}
