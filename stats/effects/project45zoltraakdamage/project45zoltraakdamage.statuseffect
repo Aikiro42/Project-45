@@ -1,0 +1,7 @@
+{
+  "name" : "project45zoltraakdamage",
+  "defaultDuration" : 0,
+  "scripts" : [
+    "project45zoltraakdamage.lua"
+  ]
+}
