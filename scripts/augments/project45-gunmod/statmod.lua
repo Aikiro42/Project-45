@@ -96,19 +96,43 @@ function apply(output, augment)
   -- Recalculates the final base value of a given stat.
   -- Also initializes the individual/member entry of a stat, particularly its baseOrig and baseMult fields.
   -- WARNING: Must be called before any stat calculation
-  local updateBase = function(stat, rebase, rebaseMult)
+  -- @param stat : string
+  -- @param rebase : number
+  -- @param rebaseMult : number
+  -- @param isBad : boolean - minimizes rebase if true, maximizes otherwise
+  local updateBase = function(stat, rebase, rebaseMult, isBad)
     if isStatGroup[stat] then
       sb.logError("Attempted to recalculate base of group.")
       return nil
     end
     -- initalize stat entry
+    local base_stat = baseStat(stat) -- unconventional var name, i know
+    local baseOrig = (statModifiers[stat] or {}).baseOrig
     statModifiers[stat] = statModifiers[stat] or {
-      baseOrig = baseStat(stat),
+      baseOrig = base_stat,
       baseMult = 1,
       additive = 0,
       multiplicative = statGroup[stat] and 0 or 1
     }
-    statModifiers[stat].baseOrig = rebase or statModifiers[stat].baseOrig or baseStat(stat)
+    -- base_stat ALWAYS exists
+    -- if it's rebased or initialized at least once, baseOrig SHOULD always exist
+    -- if baseOrig exists, base_stat SHOULDN'T be considered
+    if isBad and baseOrig then -- minimize
+    sb.logInfo(string.format("min %s %.0f vs %.0f", stat, rebase or baseOrig, baseOrig))  
+    statModifiers[stat].baseOrig = math.min(
+        rebase or baseOrig,
+        baseOrig
+      )
+    elseif baseOrig then  -- maximize
+    sb.logInfo(string.format("max %s %.0f vs %.0f", stat, rebase or baseOrig, baseOrig))  
+      statModifiers[stat].baseOrig = math.max(
+        rebase or baseOrig,
+        baseOrig
+      )
+    else
+      sb.logInfo(string.format("obtained %s base %.0f", stat, rebase or baseOrig or base_stat))
+      statModifiers[stat].baseOrig = rebase or baseOrig or base_stat
+    end
     statModifiers[stat].baseMult = (statModifiers[stat].baseMult or 1) * (rebaseMult or 1)
 
     local baseOrig = statModifiers[stat].baseOrig
@@ -182,9 +206,9 @@ function apply(output, augment)
         multiplicative = 1
       }
 
-      statModifiers.fireTimeGroup.base[fireTimeGroupStat] = statModifiers.fireTimeGroup.base[fireTimeGroupStat] or baseStat(fireTimeGroupStat)
-      
-      updateBase(fireTimeGroupStat, augment[fireTimeGroupStat].rebase, augment[fireTimeGroupStat].rebaseMult)
+      local statBase = updateBase(fireTimeGroupStat, augment[fireTimeGroupStat].rebase, augment[fireTimeGroupStat].rebaseMult, true)
+
+      statModifiers.fireTimeGroup.base[fireTimeGroupStat] = statBase
         
       -- prompt recalculation
       augment.fireTimeGroup = augment.fireTimeGroup or {}
@@ -218,9 +242,6 @@ function apply(output, augment)
     local QRParams = baseStat("quickReloadParameters", true)
       or formulas.quickReloadParameters(newReloadTime, baseStat("quickReloadTimeframe", true) or {0.5, 0.6, 0.7, 0.8})
 
-    local minReloadTime = 0.5
-    local minCockTime = 0.001
-
     if augment.reloadTimeGroup.additive then
       statModifiers.reloadTimeGroup.additive =
           (statModifiers.reloadTimeGroup.additive or 0)
@@ -234,21 +255,34 @@ function apply(output, augment)
     end
 
     local reloadTimeAdd = statModifiers.reloadTimeGroup.additive
+    local reloadTimeMult = statModifiers.reloadTimeGroup.multiplicative
 
     -- modify reload time and get how much the reload window should increase
-    newReloadTime = math.max(minReloadTime,
-      getModifiedStat(newReloadTime, reloadTimeAdd, statModifiers.reloadTimeGroup.multiplicative, true))
-
+    newReloadTime = getModifiedStat(
+        newReloadTime,
+        reloadTimeAdd,
+        reloadTimeMult,
+        true, false, statBounds.reloadTime
+      )
     -- modify cock time
-    newCockTime = math.max(minCockTime,
-      getModifiedStat(newCockTime, reloadTimeAdd, statModifiers.reloadTimeGroup.multiplicative, true))
+    newCockTime = getModifiedStat(
+        newCockTime,
+        reloadTimeAdd,
+        reloadTimeMult,
+        true, false, statBounds.cockTime
+      )
     newMidCockDelay = math.max(0,
-      getModifiedStat(newMidCockDelay, reloadTimeAdd, statModifiers.reloadTimeGroup.multiplicative, true))
+      getModifiedStat(
+        newMidCockDelay,
+        reloadTimeAdd,
+        reloadTimeMult,
+        true, false, statBounds.midCockDelay
+      ))
 
     -- apply modded values to primary ability
+    QRParams.reloadTime = newReloadTime
     newPrimaryAbility = sb.jsonMerge(newPrimaryAbility, {
       quickReloadParameters = QRParams,
-      reloadTime = newReloadTime,
       cockTime = newCockTime,
       midCockDelay = newMidCockDelay
     })
@@ -481,7 +515,7 @@ function apply(output, augment)
         }
       end
 
-      updateBase(stat, rebase, rebaseMult)
+      updateBase(stat, rebase, rebaseMult, isBadStat[stat])
 
     end
 
@@ -556,9 +590,17 @@ function getModifiedStat(base, additive, multiplicative, isDiv, isInt, bounds)
   multiplicative = multiplicative or 1
   local result = 0
   if isDiv then
-    result = (base / multiplicative) + additive
+    if multiplicative > 0 then
+      result = (base / multiplicative) + additive
+    else
+      result = (base * -multiplicative) + additive
+    end
   else
-    result = base * multiplicative + additive
+    if multiplicative > 0 then
+      result = base * multiplicative + additive
+    else
+      result = (base / -multiplicative) + additive
+    end
   end
 
   if bounds then
