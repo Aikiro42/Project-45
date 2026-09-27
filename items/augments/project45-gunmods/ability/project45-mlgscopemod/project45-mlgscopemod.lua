@@ -18,7 +18,7 @@ function Passive:init()
     if reloadRating >= PERFECT then
       self.perfectReloadCount = self.perfectReloadCount + 1
       if self.perfectReloadCount >= 6 then
-        status.addEphemeralEffect("project45mlgstyle", 20)
+        status.addEphemeralEffect("project45mlgstyle")
         self.perfectReloadCount = 0
       else
         animator.playSound("mlgReload" .. self.perfectReloadCount)
