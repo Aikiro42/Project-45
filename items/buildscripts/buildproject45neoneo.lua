@@ -553,7 +553,7 @@ function build(directory, config, parameters, level, seed)
     -- rarity
     local rarity = configParameter("isUnique", false) and "unique" or string.lower(configParameter("rarity", "common"))
     config.tooltipFields.rarityLabel = rarityConversions[rarity]
-    sb.logInfo(rarityBackgrounds[rarity])
+    -- sb.logInfo(rarityBackgrounds[rarity])
     -- why the fuck do edited tooltip fields overlay the other layers
     config.tooltipFields.rarityImage = rarityBackgrounds[rarity]
 

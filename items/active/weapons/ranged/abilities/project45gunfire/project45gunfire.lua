@@ -583,7 +583,9 @@ function Project45GunFire:firing() -- state
     return
   end
 
-  self.passiveClass.onFire(self)
+  if self.projectileKind ~= "hitscan" and self.projectileKind ~= "beam" then
+    self.passiveClass.onFire(self)
+  end
   
   self.isFiring = true
   animator.setAnimationState("gun", self.loopFiringAnimation and "firingLoop" or "firing")

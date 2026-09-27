@@ -133,7 +133,7 @@ function hitscanLib:fireChainBeam()
         table.insert(finalDamageSources, self.weapon:damageSource(beamDamageConfig, chainDamageArea))
       end
       activeItem.setDamageSources(finalDamageSources)
-
+      self.passiveClass.onFire(self)
     else
       self.weapon:setDamage()
     end
@@ -335,7 +335,7 @@ function hitscanLib:fireChain()
       table.insert(finalDamageSources, self.weapon:damageSource(chainScanInfo[1], chainScanInfo[2]))
     end
     activeItem.setDamageSources(finalDamageSources)
-  
+    self.passiveClass.onFire(self)
     --vfx
 
     local life = self.hitscanParameters.hitscanFadeTime or 0.5
