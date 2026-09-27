@@ -52,6 +52,7 @@ function hitscan()
   local hitEntityIds = world.entityLineQuery(pos, scanEnd, {
     order = "nearest",
     withoutEntityId=self.sourceEntity,
+    includedTypes = {"creature"},
   })
 
   local damagedEntityIds = {}
