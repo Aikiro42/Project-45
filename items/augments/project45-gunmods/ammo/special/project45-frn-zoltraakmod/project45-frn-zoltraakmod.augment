@@ -48,8 +48,15 @@
     },
     "stat": {
       "baseDamage": {
-        "additive": 10,
-        "multiplicative": 1.2
+        "additive": 15,
+        "multiplicative": 1.35
+      },
+      "critChance": {
+        "additive": 0.25,
+        "multiplicative": 0.5
+      },
+      "critDamageMult": {
+        "additive": 1
       }
     }
   },
