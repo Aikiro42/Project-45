@@ -14,7 +14,7 @@
   "inventoryIcon" : "/items/augments/project45-gunmods/ammo/special/project45-dom-argentcoremod/project45-dom-argentcoremodicon.png",
   "description": "A core filled with powerful, demon-killing Argent energy, modified to fit into energy guns.",
   "technicalInfo" : "Fires a slow-moving orb that damages nearby enemies.",
-  "shortdescription" : "Argent Core",
+  "shortdescription" : "^#fdd14d;Argent Core^reset;",
 
   "augment":{
     "modName": "Argent Core",
