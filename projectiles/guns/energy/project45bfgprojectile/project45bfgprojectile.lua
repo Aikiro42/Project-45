@@ -16,12 +16,19 @@ function init()
   self.velocityVector = vec2.norm(currentVelocity)
   self.approach = 1
   self.targetSpeed = config.getParameter("targetSpeed", 13)
+
+  self.targetQueue = {}
+  self.targetCount = 0
   
-  self.range = config.getParameter("boltRange", 25)
+  self.range = config.getParameter("boltRange", 5)
   self.sourceEntity = projectile.sourceEntity()
+  self.scanCooldown = 0.25
+  self.scanCooldownTimer = 0
+  self.speedProgress = 0
+
   self.boltCooldown = config.getParameter("boltTime", 0.1)
   self.boltCooldownTimer = 0
-  self.speedProgress = 0
+
 end
 
 function update(dt)
@@ -33,42 +40,72 @@ function update(dt)
     self.velocityVector, self.initialSpeed + ((self.targetSpeed - self.initialSpeed) * self.speedProgress)
   ))
 
-  -- damage nearby enemies
-  if self.boltCooldownTimer <= 0 then
-    self.boltCooldownTimer = self.boltCooldown
+  -- scan nearby enemies
+  if self.scanCooldownTimer <= 0 then
+    self.scanCooldownTimer = self.scanCooldown
     local potentialTargets = world.entityQuery(mcontroller.position(), self.range, {
-      order = "nearest",
+      order = "random",
       withoutEntityId=self.sourceEntity,
       includedTypes = {"creature"},
     })
 
     -- get targets around the projectile
-    local targets = {}
+    self.targetCount = 0
     for _, potentialTargetId in ipairs(potentialTargets) do
       if world.entityExists(potentialTargetId) then
         if world.entityCanDamage(self.sourceEntity, potentialTargetId) then
-          table.insert(targets, potentialTargetId)
-        end
-      end
-    end
-    
-    -- hit the targets
-    for _, id in ipairs(targets) do
-      if world.entityExists(id) then
-        damageEntity(id, #targets)
-        local lightningSegments = 5
-        local lightning = project45util.drawLightning(
-          lightningSegments,
-          mcontroller.position(),
-          world.entityPosition(id),
-          1
-        )
-        for i=1, lightningSegments do
-          renderBeam(lightning[i][1], lightning[i][2])
+          table.insert(self.targetQueue, potentialTargetId)
+          self.targetCount = self.targetCount + 1
         end
       end
     end
 
+  else
+    self.scanCooldownTimer = self.scanCooldownTimer - dt
+  end
+  
+  -- damage nearby enemies
+  if self.boltCooldownTimer <= 0 then
+    if #self.targetQueue > 0 then
+
+      -- dequeue 1-3 targets and hit them
+      for _=1, math.random(1, 3) do
+        
+        if #self.targetQueue <= 0 then break end
+
+        local id = table.remove(self.targetQueue, 1)
+
+        if world.entityExists(id) then
+          damageEntity(id, self.targetCount)
+          local lightningSegments = 5
+          local lightning = project45util.drawLightning(
+            lightningSegments,
+            mcontroller.position(),
+            world.entityPosition(id),
+            1
+          )
+          for i=1, lightningSegments do
+            renderBeam(lightning[i][1], lightning[i][2])
+          end
+
+          projectile.processAction({
+            time = 0,
+            ["repeat"] = false,
+            rotate=true,
+            action = "sound",
+            options = {
+              "/sfx/project45neosfx/special/bfgprojectile/bfgprojectile_bolt01.ogg",
+              "/sfx/project45neosfx/special/bfgprojectile/bfgprojectile_bolt02.ogg",
+              "/sfx/project45neosfx/special/bfgprojectile/bfgprojectile_bolt03.ogg",
+              "/sfx/project45neosfx/special/bfgprojectile/bfgprojectile_bolt04.ogg"
+            }
+          })
+        end
+
+      end
+
+    end
+    self.boltCooldownTimer = self.boltCooldown
   else
     self.boltCooldownTimer = self.boltCooldownTimer - dt
   end
