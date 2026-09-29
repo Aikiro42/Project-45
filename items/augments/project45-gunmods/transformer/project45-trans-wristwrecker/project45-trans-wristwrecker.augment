@@ -1,0 +1,21 @@
+{
+  "itemName" : "project45-trans-wristwrecker",
+  "price" : 1000,
+  "maxStack": 1,
+  "rarity" : "rare",
+  "tooltipKind" : "project45gunmod",
+  "category" : "uniqueWeapon",
+  "itemTags": ["weapon"],
+  "tooltipFields":{
+    "subtitle": "Transformation Kit"
+  },
+  "inventoryIcon" : "/items/augments/project45-gunmods/transformer/project45-trans-wristwrecker/project45-trans-wristwrecker-icon.png",
+  "description" : "A kit that turns a pistol into one that fires a .50 BMG round.",
+  "shortdescription" : "WristWrecker5000",  
+  "applicableWeapons": [
+    "project45-neo-pistol"
+  ],
+  "transformItemId": "project45-neo-wristwrecker",
+  "builder" : "/items/buildscripts/buildproject45transmod.lua",
+  "scripts" : [ "/scripts/augments/project45-guntransformer.lua" ]
+}
