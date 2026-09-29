@@ -22,7 +22,7 @@
     "slot": "barrel",
     "gun": {
       "primaryAbility": {
-        "autoFireAfterCharge": {
+        "autoFireOnFullCharge": {
           "operation": "replace",
           "value": true
         }
