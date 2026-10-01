@@ -26,10 +26,15 @@
   "actionOnReap": [
     {
       "action" : "projectile",
-      "type" : "poisonplasmaexplosion",
-      "fuzzAngle" : 180,
-      "inheritDamageFactor" : 1,
+      //"type" : "poisonplasmaexplosion",
+      "type" : "project45bfgprojectileend",
+      "fuzzAngle" : 15,
+      "inheritDamageFactor" : 0.8,
       "angleAdjust" : 0
+    },
+    {
+      "action": "sound",
+      "options": ["/sfx/project45neosfx/special/bfgprojectile/bfgprojectile_explosion.ogg"]
     }
   ]
 }
