@@ -5,7 +5,7 @@
   "rarity" : "Essential",
   "isUnique": true,
   "description" : "A short, semi-auto personal defense weapon.",
-  "lore": "This weapon was commissioned by the now-lost Protectorate. The Matter Manpulator fabricates this using organic materials.",
+  "lore": "This weapon was commissioned by the now-lost Protectorate. The Matter Manipulator fabricates this using organic materials.",
   "shortdescription" : "The Protector",
   "tooltipKind" : "project45gun",
   "gunArchetype": "smg",
