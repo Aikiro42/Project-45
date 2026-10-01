@@ -107,6 +107,7 @@ function apply(output, augment)
     end
     -- initalize stat entry
     local base_stat = baseStat(stat) -- unconventional var name, i know
+    -- somehow baseOrig ALWAYS exists. idfk why.
     local baseOrig = (statModifiers[stat] or {}).baseOrig
     statModifiers[stat] = statModifiers[stat] or {
       baseOrig = base_stat,
@@ -117,21 +118,32 @@ function apply(output, augment)
     -- base_stat ALWAYS exists
     -- if it's rebased or initialized at least once, baseOrig SHOULD always exist
     -- if baseOrig exists, base_stat SHOULDN'T be considered
-    if isBad and baseOrig then -- minimize
-    sb.logInfo(string.format("min %s %.0f vs %.0f", stat, rebase or baseOrig, baseOrig))  
-    statModifiers[stat].baseOrig = math.min(
-        rebase or baseOrig,
-        baseOrig
-      )
-    elseif baseOrig then  -- maximize
-    sb.logInfo(string.format("max %s %.0f vs %.0f", stat, rebase or baseOrig, baseOrig))  
-      statModifiers[stat].baseOrig = math.max(
-        rebase or baseOrig,
-        baseOrig
-      )
+
+    -- god fucking dammit this is fucking stupid
+    -- i'm fucking stupid
+    -- FIXME: fix this piece of shit
+    if not statModifiers[stat].rebased and rebase then
+      -- if not yet rebased, apply new base first
+      statModifiers[stat].baseOrig = rebase
     else
-      sb.logInfo(string.format("obtained %s base %.0f", stat, rebase or baseOrig or base_stat))
-      statModifiers[stat].baseOrig = rebase or baseOrig or base_stat
+      -- otherwise, gun has been rebased before; minimize or maximize
+      if isBad and baseOrig then -- minimize
+      sb.logInfo(string.format("min %s %.0f vs %.0f", stat, rebase or baseOrig, baseOrig))  
+      statModifiers[stat].baseOrig = math.min(
+          rebase or baseOrig,
+          baseOrig
+        )
+      elseif baseOrig then  -- maximize
+      sb.logInfo(string.format("max %s %.0f vs %.0f", stat, rebase or baseOrig, baseOrig))  
+        statModifiers[stat].baseOrig = math.max(
+          rebase or baseOrig,
+          baseOrig
+        )
+      else
+        -- FIXME: wtf is this for then
+        sb.logInfo(string.format("obtained %s base %.0f", stat, rebase or baseOrig or base_stat))
+        statModifiers[stat].baseOrig = rebase or baseOrig or base_stat
+      end
     end
     statModifiers[stat].baseMult = (statModifiers[stat].baseMult or 1) * (rebaseMult or 1)
     
