@@ -163,7 +163,7 @@
         "backArmFrame": "fall.1",
         "flipWeapon": true,
         "allowRotate": false,
-        "weaponOffset": [0, 0.5],
+        "weaponOffset": [0, 0.125],
         "twoHanded": true
       },
       "loadRound": {
@@ -171,7 +171,7 @@
         "weaponRotation": 0,
         "flipWeapon": true,
         "allowRotate": false,
-        "weaponOffset": [0, 0.5],
+        "weaponOffset": [0, 0.125],
         "frontArmFrame": "rotation",
         "backArmFrame": "fall.1"
       }

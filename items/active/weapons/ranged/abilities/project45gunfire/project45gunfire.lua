@@ -636,7 +636,9 @@ function Project45GunFire:firing() -- state
     return
   end
 
-  self.passiveClass.onFire(self)
+  if self.projectileKind ~= "hitscan" and self.projectileKind ~= "beam" then
+    self.passiveClass.onFire(self)
+  end
   
   self.isFiring = true
   self:resetCooldownTimer(true)
@@ -1989,8 +1991,7 @@ end
 
 function Project45GunFire:updateRecoil()
 
-  local offset_o = self.weapon.stance.weaponOffset or {0, 0}
-  
+  local offset_o = {0, 0}
   self.weapon.recoilOffset = {
     interp.sin(self.recoilOffsetProgress, -0.125, offset_o[1]),
     interp.sin(self.recoilOffsetProgress, 0, offset_o[2])
