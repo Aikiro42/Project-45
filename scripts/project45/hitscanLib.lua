@@ -1124,7 +1124,7 @@ end
 --]]
 
 function hitscanLib:summonPosition()
-  local randRotate = math.random() * math.pi * 2
+  local randRotate = ((self.summonedProjectileParameters or {}).preserveAimAngle) and activeItem.aimAngle(0, activeItem.ownerAimPosition()) or (math.random() * math.pi * 2)
   local randRadius = math.random() * math.tan(util.toRadians((storage.project45GunState.current.inaccuracy or 7.5) + (self.spread or 0.01))) * world.magnitude(activeItem.ownerAimPosition(), mcontroller.position())
   randRadius = math.abs(randRadius)
   local randVector = vec2.rotate({randRadius, 0}, randRotate)
