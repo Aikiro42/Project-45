@@ -1,0 +1,16 @@
+{
+  "kind" : "project45targeted",
+  "definition" : {
+    "type" : "animated",
+    "animation" : "/animations/project45targeted/project45targeted.animation",
+    "fullbright": true,
+    "initialVelocity": [0, 0],
+    "position" : [0, 0],
+    "finalVelocity" : [0, 0],
+    "approach" : [0, 0],
+    "fade" : 0.1,
+    "size" : 1,
+    "layer" : "front",
+    "timeToLive" : 0.1
+  }
+}

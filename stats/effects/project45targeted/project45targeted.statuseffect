@@ -1,0 +1,21 @@
+{
+  "name" : "project45targeted",
+  "blockingStat" : "specialStatusImmunity",
+
+  "effectConfig" : {
+    "activateDelay" : 0.1,
+    "deactivateDelay" : 0.1,
+    "triggerDamageThreshold" : 5,
+    "explosionDamageAmount" : 10
+  },
+  "defaultDuration" : 3,
+
+  "scripts" : [
+    "project45targeted.lua"
+  ],
+
+  "animationConfig" : "project45targeted.animation",
+
+  "label" : "Doomed",
+  "icon" : "/interface/statuses/doomed.png"
+}
