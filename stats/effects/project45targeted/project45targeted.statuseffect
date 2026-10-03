@@ -16,6 +16,6 @@
 
   "animationConfig" : "project45targeted.animation",
 
-  "label" : "Doomed",
+  "label" : "Targeted! Get to cover!",
   "icon" : "/interface/statuses/doomed.png"
 }
