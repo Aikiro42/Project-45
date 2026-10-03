@@ -34,8 +34,8 @@
       ],
       "customSounds": {
         "chargeStart": ["/sfx/project45neosfx/special/bfgprojectile/bfgprojectile_chargestart.ogg"],
-        "chargeWhine": [],
-        "chargeDrone": [],
+        "chargeWhine": [ "/sfx/project45neosfx/chargewhine/chargewhine-02.ogg" ],
+        "chargeDrone": [ "/sfx/project45neosfx/chargedrone/chargedrone-01.ogg" ],
         "fire": ["/sfx/project45neosfx/special/bfgprojectile/bfgprojectile_fire.ogg"],
         "fireStart": ["/assetmissing.wav"],
         "fireLoop": ["/assetmissing.wav"],
