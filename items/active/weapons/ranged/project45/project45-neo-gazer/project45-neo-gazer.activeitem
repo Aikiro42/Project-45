@@ -39,7 +39,8 @@
 
     "sounds": {
       "fire" : ["/sfx/project45neosfx/fire/fire-energy1.ogg"],
-      "hollow": ["/sfx/project45neosfx/hollow/hollow-02.ogg"]
+      "hollow": ["/sfx/project45neosfx/hollow/hollow-02.ogg"],
+      "cooldownLoop": ["/sfx/melee/electrobaton_idle1.ogg"]
     }
   },
 
@@ -63,7 +64,9 @@
 
       "receiver",
       "material",
-      "magazine"
+      "magazine",
+      "magwell",
+      "E-trigger"
     ]
   },
 
@@ -98,6 +101,7 @@
     "recoverTime": 0.8,
     "semi": true,
     "cycleTime": 0.3,
+    "fireTime": 0.15,
     "projectileKind": "hitscan",
     "projectileCount": 1,
     "spread": 0.001,

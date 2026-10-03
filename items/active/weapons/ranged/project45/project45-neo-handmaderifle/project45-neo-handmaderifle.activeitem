@@ -75,7 +75,8 @@
       "material",
       "magazine",
       "receiver",
-      "barrel"
+      "barrel",
+      "trigger"
     ]
   },
 
@@ -109,6 +110,7 @@
     "recoilMaxDeg": 5,
     "recoverDelay": 0.1,
     "cycleTime": 0.0625,
+    "fireTime": 0.1,
     "jamChances": [0.01, 0, 0, 0],
     "projectileKind": "projectile",
     "laser":{

@@ -34,7 +34,8 @@
       "magazine",
       "material",
       "receiver",
-      "barrel"
+      "barrel",
+      "trigger"
     ]
   },
 
@@ -98,6 +99,7 @@
     "inaccuracy": 2,
     "semi": true,
     "cycleTime": 0.1,
+    "fireTime": 0.05,
     "cockTime": 0.4,
     "projectileKind": "projectile",
 
