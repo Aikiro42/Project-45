@@ -13,7 +13,7 @@
   },
   "inventoryIcon" : "/items/augments/project45-gunmods/ability/special/project45-ror-laserscopemod/project45-ror-laserscopemodicon.png",
   "description" : "\"You'll lose more than your license if they catch you playing with this.\"",
-  "technicalInfo": "- Hold RClick to aim.\n- Move cursor to move crosshairs.\n- Tap crouch to lock scope.\n+50% Crit Chance when aiming.",
+  "technicalInfo": "- See Scope Mod for ability details.\n- Hovering scope over enemies tags them.\n-Tagged enemies receive additional damage.",
   "statInfo": "???",
   "shortdescription" : "^#fdd14d;Laser Scope^reset;",
   "archetype": "Active Ability",
