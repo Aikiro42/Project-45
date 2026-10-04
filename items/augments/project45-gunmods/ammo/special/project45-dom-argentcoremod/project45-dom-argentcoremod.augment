@@ -13,7 +13,7 @@
   },
   "inventoryIcon" : "/items/augments/project45-gunmods/ammo/special/project45-dom-argentcoremod/project45-dom-argentcoremodicon.png",
   "description": "A core filled with powerful, demon-killing Argent energy, modified to fit into energy guns.",
-  "technicalInfo" : "Fires a slow-moving orb that damages nearby enemies.",
+  "technicalInfo" : "Fires a slow-moving orb that damages nearby enemies in exchange for 30% of max health.",
   "shortdescription" : "^#fdd14d;Argent Core^reset;",
 
   "augment":{
@@ -25,6 +25,9 @@
       "archetype": "universal",
       "elementalType": "electric",
       "projectileType": "project45bfgprojectile",
+      "projectileParameters": {
+        "healthPenalty": 0.30
+      },
       "muzzleFlashColor": [178, 232, 157],
       "muzzleFlashParticles": [
         {"particle": "project45muzzle"},

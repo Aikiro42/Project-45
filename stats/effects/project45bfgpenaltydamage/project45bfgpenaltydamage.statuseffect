@@ -1,0 +1,7 @@
+{
+  "name" : "project45bfgpenaltydamage",
+  "defaultDuration" : 0,
+  "scripts" : [
+    "project45bfgpenaltydamage.lua"
+  ]
+}

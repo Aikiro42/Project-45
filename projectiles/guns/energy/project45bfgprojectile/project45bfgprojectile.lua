@@ -10,6 +10,21 @@ local oldUninit = uninit or function() end
 
 function init()
   oldInit()
+
+  self.sourceEntity = projectile.sourceEntity()
+
+  -- before anything else, punish the player for shooting this projectile.
+  if world.entityExists(self.sourceEntity) then
+    world.sendEntityMessage(
+      self.sourceEntity,
+      "applyStatusEffect",
+      "project45bfgpenaltydamage",
+      world.entityHealth(self.sourceEntity)[1] * config.getParameter("healthPenalty", 0.1),
+      self.sourceEntity
+    )
+  end
+  
+
   local currentVelocity = mcontroller.velocity()
   
   self.initialSpeed = vec2.mag(currentVelocity)
@@ -21,12 +36,11 @@ function init()
   self.targetCount = 0
   
   self.range = config.getParameter("boltRange", 5)
-  self.sourceEntity = projectile.sourceEntity()
-  self.scanCooldown = 0.25
+  self.scanCooldown = config.getParameter("scanCooldown", 0.25)
   self.scanCooldownTimer = 0
   self.speedProgress = 0
 
-  self.boltCooldown = config.getParameter("boltTime", 0.1)
+  self.boltCooldown = config.getParameter("boltCooldown", 0.1)
   self.boltCooldownTimer = 0
 
 end
@@ -70,10 +84,25 @@ function update(dt)
 
       -- dequeue 1-3 targets and hit them
       for _=1, math.random(1, 3) do
+
+        -- determine id that is still near to the target
+        local hasTarget = false
+        local id
+        while ~hasTarget do
+        
+          if #self.targetQueue <= 0 then break end
+
+          id = table.remove(self.targetQueue, 1)
+
+          if world.entityExists(id) then
+            if world.magnitude(world.entityPosition(id), mcontroller.position()) <= (self.range * 2) then
+              hasTarget = true
+            end
+          end
+
+        end
         
         if #self.targetQueue <= 0 then break end
-
-        local id = table.remove(self.targetQueue, 1)
 
         if world.entityExists(id) then
           damageEntity(id, self.targetCount)
