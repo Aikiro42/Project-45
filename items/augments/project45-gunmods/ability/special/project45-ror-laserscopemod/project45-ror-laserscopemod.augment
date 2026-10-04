@@ -34,7 +34,7 @@
     },
     "stat": {
       "critDamage": {
-        "rebaseMult": 2
+        "multiplicative": 1
       }
     },
     "gun": {
