@@ -88,7 +88,7 @@ function update(dt)
         -- determine id that is still near to the target
         local hasTarget = false
         local id
-        while ~hasTarget do
+        while not hasTarget do
         
           if #self.targetQueue <= 0 then break end
 
