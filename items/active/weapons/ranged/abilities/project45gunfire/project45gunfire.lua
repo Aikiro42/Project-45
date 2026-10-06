@@ -396,7 +396,7 @@ function Project45GunFire:update(dt, fireMode, shiftHeld)
   elseif self.cooldownTimer <= 0 then
     self.cooldownAudio = false
     animator.stopAllSounds("cooldownLoop")
-    if not self.cueAudio then
+    if not self.cueAudio and not self:triggering() then
       self.cueAudio = true
       animator.playSound("readyCue")
     end
