@@ -1,0 +1,11 @@
+{
+  "input" : [
+    { "item" : "money", "count" : 2000 }
+  ],
+  "output" : {
+    "item" : "project45-trans-wristwrecker",
+    "count" : 1
+  },
+  "duration" : 5,
+  "groups" : ["project45craftable-trans"]
+}
