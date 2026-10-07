@@ -6,8 +6,9 @@ function init()
 
     -- sb.logInfo(world.entityType(entity.id()))
     if effectConfig == "project45bfgboltdamage" then
+      local damageType = world.entityTypeName(entity.id()) == "erchiusghost" and "IgnoresDef" or "damage"
       status.applySelfDamageRequest({
-          damageType="damage",
+          damageType=damageType,
           damageSourceKind="plasma",
           damage=duration,
           sourceEntityId=sourceEntityId,
