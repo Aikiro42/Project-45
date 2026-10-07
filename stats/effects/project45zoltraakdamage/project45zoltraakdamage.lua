@@ -4,10 +4,11 @@ function init()
 
     local hType = not status.statPositive("shieldHealth") and world.entityType(entity.id()) == "player" and "Hit" or "ShieldHit"
 
-    -- sb.logInfo(world.entityType(entity.id()))
     if effectConfig == "project45zoltraakdamage" then
+      -- damage the erchius ghost!
+      local damageType = world.entityTypeName(entity.id()) == "erchiusghost" and "IgnoresDef" or "damage"
       status.applySelfDamageRequest({
-          damageType="damage",
+          damageType=damageType,
           damageSourceKind="project45holy",
           damage=duration,
           sourceEntityId=sourceEntityId,
