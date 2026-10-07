@@ -1,0 +1,50 @@
+{
+  "itemName" : "project45-sr3-dubstepmod",
+  "price" : 5000,
+  "rarity" : "Essential",
+  "isUnique": true,
+  "tooltipKind" : "project45gunmod2",
+  "modCategory" : "gunMod",
+  "category" : "uniqueWeapon",
+  "itemTags": ["weapon"],
+  "tooltipFields":{
+    "subtitle": "Gun Mod",
+    "objectImage": "/items/augments/project45-gunmods/mods/special/project45-sr3-dubstepmod/project45-sr3-dubstepmod.png"
+  },
+  "inventoryIcon" : "/items/augments/project45-gunmods/mods/special/project45-sr3-dubstepmod/project45-sr3-dubstepmodicon.png",
+  "description" : "A module that increases damage when firing the gun in consistent intervals.",
+  "technicalInfo": "Firing on the beat for a full measure damages nearby enemies and buffs damage.",
+  "shortdescription" : "Dubstep Module",
+
+  "augment":{
+    "modName": "Dubstep Module",
+    "category": "universal",
+    "slot": "passive",
+    "passive": {
+      "passiveScript" : "/items/augments/project45-gunmods/mods/special/project45-sr3-dubstepmod/project45-sr3-dubstepmod.lua",
+      "passiveParameters": {
+        "interval": 0.46875,
+        "allowance": 0.1,
+        "initialOffset": 0,
+        "measure": 4
+      },
+      "passiveDescription": "Explode and buff damage when firing on beat for a full measure."
+    },
+    "gun": {
+      "animationCustom": {
+        "sounds": {
+          "music": [ "/items/augments/project45-gunmods/mods/special/project45-sr3-dubstepmod/hinkik_skystrike.ogg" ],
+          "fail": [ "/sfx/interface/clickon_error.ogg"],
+          "good": [ "/items/augments/project45-gunmods/mods/special/project45-sr3-dubstepmod/good.ogg"],
+          "beat": [ ]
+        }
+      }
+    }
+  },
+
+
+   
+
+  "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
+}
