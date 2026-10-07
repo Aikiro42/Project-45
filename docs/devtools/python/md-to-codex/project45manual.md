@@ -17,6 +17,8 @@ a block comment
 - Jamming
 - Gun Modding
 - Extrinsic Mods
+- Transformer Mods
+- Applied Utilities
 - Stat Bonuses
 - The Supply Transponder
 - (Quickbar) Mod Settings
@@ -79,7 +81,9 @@ These stats are not necessarily shown in the weapon's tooltip, but affect the we
 #
 - <span style="color: #f4988c">Inaccuracy</span>: Random movement of the arm as the weapon fires.
 - <span style="color: #f4988c">Spread</span>: Natural deviation of bullets from their trajectory.
-- <span style="color: #9da8af">Trigger Time</span>: Amount of time it takes before registering the next click. A factor of overall <span style="color: #E2C344">fire time</span>.
+- <span style="color: #9da8af">Fire Time</span>: Amount of time it takes fire, eject and feed a round.
+- <span style="color: #9da8af">Trigger Time</span>: Amount of time it takes before registering the next click. Subtly indicated by an hourglass next to the chamber indicator.
+- <span style="color: #9da8af">Lock n' Load Time</span>: Amount of time it takes to reload and cock the weapon. Lower values may make quick reloads harder.
 
 
 # <span style="color: #E2C344">Ammo & Reloading</span>
@@ -154,6 +158,28 @@ Weapons can have up to five <span style="color: #9da8af">mods that appear on the
 - <span style="color: #9da8af">Underbarrel</span>
 - <span style="color: #9da8af">Stock</span>
 - <span style="color: #9da8af">Ammo</span>
+<span style="color: #f4988c">Note: Some more powerful mods may take up multiple slots.</span>
+
+# <span style="color: #E2C344">Transformer Mods</span>
+You can craft Transformer Mods that transform your weapon into a completely different weapon with their own stats.
+
+<span style="color: #eab3db">Look out for future addons that allow you to transform the base weapons into those from other media!</span>
+
+# <span style="color: #E2C344">Applied Utilities</span>
+
+- <span style="color: #eab3db">Weapon Dyes:</span> You can now dye your weapons! (But only with the mod's dyes).
+
+Dyeing your weapon consumes the dye, and disassembling your weapon reverts its color, but if you apply <span style="color: #eab3db">Essential Gun Oil</span>, dyes don't get consumed on use (for that weapon).
+#
+
+- <span style="color: #eab3db">Elementoil Vanilla Flavour:</span> This applied utility gives your weapon a random element and consumed upon use.
+
+This mod is generally useless unless you use a mod that gives the weapon a vanilla alt ability that relies on the weapon's current element.
+#
+
+- <span style="color: #eab3db">Attachment Glamour:</span> If you feel like your mods don't fit the weapon, and you don't wanna change its colors, then you can opt to hide all of them via this applied utility.
+
+- <span style="color: #eab3db">Gun Repair Kit:</span> If you can't be bothered to unjam or achieve a good reload, applying this unjams and gives your weapon a good reload rating.
 
 # <span style="color: #E2C344">Stat Bonuses</span>
 Weapons spawn with a seeded stat <span style="color: #96cbe7">bonus ratio</span>.
@@ -205,13 +231,11 @@ If you have Stardust Core/Lite or Quickbar Mini installed, you can change the fo
     - <span style="color: #D93A3A">Enabling Performance Mode disables this setting.</span>
 
 #
-- <span style="color: #EA9931">Accurate Reload/Charge Bars:</span> If this setting is ticked, drawables will be used to render both the reload ranges and arrow and the charge bar progress.
-    - <span style="color: #D93A3A">Enabling Performance Mode disables this setting.</span>
 - <span style="color: #EA9931">Lights On During Reload:</span> If this setting is ticked, any lasers or light sources will remain active while reloading.
     - <span style="color: #D93A3A">Enabling Performance Mode disables this setting.</span>
 
 #
-- <span style="color: #EA9931">Accurate Reload/Charge Bars:</span> If this setting is ticked, the arms will change when doing various actions with the gun.
+- <span style="color: #EA9931">Arm Frame Animations:</span> If this setting is ticked, the arms will change when doing various actions with the gun.
     - <span style="color: #D93A3A">Enabling Performance Mode disables this setting.</span>
     - It is recommended to untick this setting if a modded race looks weird while wielding the weapon.
 

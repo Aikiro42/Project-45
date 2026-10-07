@@ -1,7 +1,7 @@
 import os, re, sys
 from io import StringIO
 
-codexName = "project45catalog"
+codexName = "project45manual"
 defaultMarkdownPath = f"docs/devtools/python/md-to-codex/{codexName}.md"
 defaultCodexPath = f"codex/project45/{codexName}.codex"
 
