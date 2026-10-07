@@ -9,6 +9,7 @@ function Project45Passive:init() end
 function Project45Passive:update(dt, fireMode, shiftHeld) end
 function Project45Passive:uninit() end
 function Project45Passive:onFire() end
+function Project45Passive:onSpawnProjectile(projectileId) end
 function Project45Passive:onEject() end
 function Project45Passive:onFeed() end
 function Project45Passive:onJam() end
