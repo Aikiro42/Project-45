@@ -699,6 +699,9 @@
 
     // plays when the gun isn't jammed and cannot be fired.
     "click": ["/sfx/project45neosfx/click/click-01.ogg"],
+    "cooldownLoop": [  ],
+    "readyCue": ["/sfx/project45neosfx/click/click-04.ogg"],
+    "triggerCue": ["/sfx/project45neosfx/click/click-05.ogg"],
 
     // plays when the gun jams
     "jam": ["/sfx/project45neosfx/jam.ogg"],

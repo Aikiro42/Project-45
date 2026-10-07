@@ -32,7 +32,8 @@
       "material",
       "magazine",
       "choke",
-      "barrel"
+      "barrel",
+      "trigger"
     ],
     "flipSlot": [
     ]

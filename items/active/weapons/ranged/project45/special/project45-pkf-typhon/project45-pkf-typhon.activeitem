@@ -224,6 +224,7 @@
   "primaryAbility": {
     "projectileType": ["project45knightfallplasmabullet", "project45knightfallpiercingplasmabullet"],
     "cycleTime": 0.01,
+    "fireTime": 0.3,
     "multishot": 1.5,
     "semi": false,
     "breakAction": true,

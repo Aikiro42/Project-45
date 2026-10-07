@@ -160,6 +160,7 @@
     "spread": 2,
     "semi": true,
     "cycleTime": 0.05,
+    "fireTime": 1,
     "loopFiringAnimation": true,
     "projectileKind": "projectile",
     "projectileType": "project45-starforge-firefluxbolt",

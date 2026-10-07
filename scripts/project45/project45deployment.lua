@@ -85,6 +85,7 @@ function renderSide(dt, side)
   local ammoOffset = self["gunInfo" .. side].uiElementOffset or {0, 0}
   local isReloading = (self["gunStatus" .. side].reloadTimer or -1) >= 0
   local jamAmount = self["gunStatus" .. side].jamAmount or 0
+  local fireTime = self["gunInfo" .. side].fireTime or 0.001
   local reloadProgress
 
   if (isReloading or jamAmount > 0) then
@@ -125,6 +126,16 @@ function renderSide(dt, side)
       chamberIndicatorOffset,
       self["gunStatus" .. side].chamberState,
       self["gunInfo" .. side].chamberIndicatorSprite
+    )
+  end
+
+  if not performanceMode and fireTime >= self.project45UiConfig.cooldownThreshold then
+    renderCooldownTimer(
+      self["gunStatus" .. side].aimPosition,
+      chamberIndicatorOffset,
+      self["gunStatus" .. side].cooldownTimer,
+      self["gunInfo" .. side].fireTime,
+      side
     )
   end
  
@@ -225,6 +236,53 @@ function renderGunfireSwitchMarker(uiPosition, offset, marker)
     {0,255,0},
     -0.5
   )
+end
+
+function renderCooldownTimer(uiPosition, offset, cooldownTimer, fireTime, side)
+  if not uiPosition then return end
+  if cooldownTimer <= 0 then return end
+  offset = offset or {0, 0}
+  local signOffset = vec2.add(offset, {(side == "L" and -1 or 1)*1, 0})
+  local imageScale = 0.5
+  local x = cooldownTimer/fireTime
+  --[[
+  local pow = 0.1
+  local progress = (1/((-4*(x^pow)/3) + 2)) - 0.5
+  --]]
+  local progress = x^0.1
+  self["animator" .. side]:render(
+    {
+      image="/scripts/project45/ui/cooldownindicator.png:" .. side
+      .. string.format("?multiply=FFFFFF%02X", math.ceil(64*progress)),
+      position = uiPosition,
+      color = {255,255,255},
+      transformation = {
+        {imageScale * progress, 0, 0},
+        {0, imageScale * progress, 0},
+        {0, 0, 1}
+      },
+      fullbright = true
+    },
+    2, "Overlay"
+  )
+  if progress > 0 then
+    local signScale = 0.5
+    self["animator" .. side]:render(
+      {
+        image="/scripts/project45/ui/cooldownsign.png"
+        .. string.format("?multiply=FFFFFF%02X", math.ceil(255*x)),
+        position = vec2.add(uiPosition, signOffset),
+        color = {255,255,255},
+        transformation = {
+          {signScale, 0, 0},
+          {0, signScale, 0},
+          {0, 0, 1}
+        },
+        fullbright = true
+      },
+      2, "Overlay"
+    )
+  end
 end
 
 function renderAmmoCounter(uiPosition, offset, reloadRating, ammo, isReloading, side, shake)

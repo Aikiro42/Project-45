@@ -3,7 +3,7 @@
   "price" : 500,
   "maxStack" : 1,
   "rarity" : "Legendary",
-  "description" : "A hi-power revolver.",
+  "description" : "A hi-power single-action revolver.",
   "lore": "Packs quite a punch. It is oddly effective against things that are even remotely colored red.",
   "shortdescription" : "Revolver",
   "tooltipKind" : "project45gun",
@@ -39,7 +39,9 @@
       "stock",
       "magazine",
       "material",
-      "barrel"
+      "barrel",
+      "trigger",
+      "hammer"
     ],
     "acceptsAmmoArchetype": [
       "bullet"

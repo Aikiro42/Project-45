@@ -1,0 +1,41 @@
+{
+  "itemName" : "project45-feroziumtriggermod",
+  "price" : 700,
+  "rarity" : "Legendary",
+  "tooltipKind" : "project45gunmod2",
+  "modCategory" : "gunMod",
+  "category" : "uniqueWeapon",
+  "itemTags": ["weapon"],
+  "tooltipFields":{
+    "subtitle": "Gun Mod",
+    "objectImage": "/items/augments/project45-gunmods/mods/project45-feroziumtriggermod/project45-feroziumtriggermod.png"
+  },
+  "inventoryIcon" : "/items/augments/project45-gunmods/mods/project45-feroziumtriggermod/project45-feroziumtriggermodicon.png",
+  "description" : "A reliable trigger made of mysterious materials that affect guns' ammo.",
+  "statInfo": "",
+  "shortdescription" : "Ferozium Trigger",
+
+  "augment":{
+    "modName": "Ferozium Trigger",
+    "category": "ballistic",
+    "slot": "trigger",
+    "cost": 1,
+    "stat": {
+      "fireTime": {
+        "additive": -0.05
+      },
+      "ammoConsumeChance": {
+        "additive": -0.15
+      },
+      "reloadCost": {
+        "multiplicative": 0.5
+      }
+    }
+  },
+
+
+   
+
+  "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
+}

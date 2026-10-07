@@ -27,7 +27,9 @@
 
   "project45GunModInfo": {
     "category": "energy",
-    
+    "incompatibleMods": [
+      "project45-multithreadermod"
+    ],
     "allowsConversion": [
       "projectile",
       "hitscan",
@@ -42,7 +44,10 @@
       "sights",
 
       "material",
-      "magazine"
+      "magazine",
+      "receiver",
+      "magwell",
+      "E-trigger"
     ]
   },
   "magazineParticles": [
@@ -91,7 +96,8 @@
       "fireLoop": ["/sfx/gun/mech_beamdrill_loop.ogg"],
       "fireEnd": ["/sfx/gun/mech_beamdrill_winddown.ogg"],
       "hollow": ["/sfx/project45neosfx/hollow/hollow-02.ogg"],
-      "chargeWhine" : ["/sfx/project45neosfx/chargewhine/chargewhine-01.ogg"]
+      "chargeWhine" : ["/sfx/project45neosfx/chargewhine/chargewhine-01.ogg"],
+      "cooldownLoop": ["/sfx/melee/electrobaton_idle1.ogg"]
     }
   },
 
@@ -130,6 +136,7 @@
     "chargeSmoke": false,
 
     "cycleTime": 0.01,
+    "fireTime": 0.3,
     "chargeFrames": 5,
     "chargeTime": 0.33,
     "overchargeTime": 1,

@@ -43,11 +43,8 @@
       }
     },
     "stat": {
-      "fireTime": {
-        "rebaseMult": 0.5
-      },
       "cycleTime": {
-        "rebaseMult": 0.5
+        "rebaseMult": 0.1
       },
       "fireTimeGroup": {
         "additive": 0.01
