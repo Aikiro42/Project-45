@@ -1,0 +1,48 @@
+{
+  "projectileName" : "project45_zoltraakexplosion",
+  "image" : "/projectiles/explosions/project45_zoltraakexplosion/project45zoltraak.png",
+  "scripts": [
+    "/projectiles/explosions/project45_zoltraakexplosion/project45zoltraak.lua"
+  ],
+  "animationCycle": 0.33,
+  "frameNumber" : 9,
+  "speed" : 0,
+  "timeToLive": 0.75,
+  "fullbright": true,
+  "pointLight" : true,
+  "lightColor": [102, 138, 191],
+  "damagePoly" : [ [0, 0], [0, 1], [1, 1], [1, 0] ],
+  "animationLoops" : false,
+  "flippable" : true,
+  "power": 0,
+  "damageType" : "NoDamage",
+  "damageKind" : "hidden",
+  "punchThrough": 1,
+  "commitTime": 0.5,
+  "periodicActions": [
+    {
+      "time" : 0,
+      "repeat" : false,
+      "action": "sound",
+      "options": [
+        "/sfx/project45neosfx/special/zoltraak/charge-zoltraak.ogg"
+      ]
+    }
+  ],
+  "actionOnReap": [
+    {
+      "action" : "projectile",
+      "type" : "project45_zoltraakexplosionend",
+      "fuzzAngle" : 0,
+      "inheritDamageFactor" : 0,
+      "angleAdjust" : 0
+    },
+    { 
+      "action" : "sound",
+      "options" : [
+        "/sfx/project45neosfx/special/zoltraak/fire-zoltraak.ogg"
+      ]
+    },
+    { "action": "particle", "specification": "project45flashbang-white" }
+  ]
+}
