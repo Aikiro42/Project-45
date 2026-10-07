@@ -1,0 +1,78 @@
+{
+  "itemName" : "project45-ror-laserscopemod",
+  "price" : 5000,
+  "rarity" : "Essential",
+  "isUnique": "true",
+  "tooltipKind" : "project45gunmod2",
+  "modCategory" : "gunMod",
+  "category" : "uniqueWeapon",
+  "itemTags": ["weapon"],
+  "tooltipFields":{
+    "subtitle": "Gun Mod",
+    "objectImage": "/items/augments/project45-gunmods/ability/special/project45-ror-laserscopemod/project45-ror-laserscopemod.png"
+  },
+  "inventoryIcon" : "/items/augments/project45-gunmods/ability/special/project45-ror-laserscopemod/project45-ror-laserscopemodicon.png",
+  "description" : "\"You'll lose more than your license if they catch you playing with this.\"",
+  "technicalInfo": "- See Scope Mod for ability details.\n- Hovering scope over enemies tags them.\n-Tagged enemies receive additional damage.",
+  "statInfo": "???",
+  "shortdescription" : "^#fdd14d;Laser Scope^reset;",
+  "archetype": "Active Ability",
+
+  "augment":{
+    "modName": "Laser Scope",
+    "category": "universal",
+    "slot": "sights",
+    "ability": {
+      "altAbilityType" : "project45gunscope",
+      "overrideTwoHanded": true,
+      "twoHanded": true,
+      "hasShiftAction": true,
+      "altAbility": {
+        "name": "Laser Scope",
+        "reticleProjectile": "project45-ror-laserscopecamera"
+      }
+    },
+    "stat": {
+      "critDamage": {
+        "multiplicative": 1
+      }
+    },
+    "gun": {
+      "primaryAbility": {
+        "laser": {
+          "operation": "replace",
+          "value": {
+            "enabled": true,
+            "color": [255, 0, 0, 200],
+            "width": 0.2
+          }
+        }
+      },
+      "animationCustom": {
+        "animatedParts":{
+          "parts":{
+            "sights": {
+              "properties": {
+                "image" : ""
+              }
+            }
+          }
+        }
+      },
+
+
+      "sprite": {
+        "zLevel" : 5,
+        "centered" : true,
+        "image" : "/items/augments/project45-gunmods/ability/special/project45-ror-laserscopemod/project45-ror-laserscopemodsprite.png<directives>",
+        "offset": [1.1875, 0.1875]
+      }
+    }
+  },
+
+
+   
+
+  "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
+}

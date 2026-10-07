@@ -1,0 +1,2 @@
+# New
+- Added the **Laser Scope** from Risk of Rain (2), a mod that increases a weapon's base critical damage by 100%. Hovering the scope over enemies tags them. Hitting tagged enemies deals additional damage.

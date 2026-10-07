@@ -1,0 +1,14 @@
+{
+  "particleEmitters" : {
+    "target" : {
+      "enabled" : true,
+      "emissionRate" : 10.0,
+      "burstCount" : 1,
+      "particles" : [
+        {
+          "particle" : "project45targeted"
+        }
+      ]
+    }
+  }
+}
