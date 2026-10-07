@@ -1,0 +1,2 @@
+# New (Modders)
+- You can now create gun mods that "lock" primary ability parameters on application. In other words, the mod's edit takes precedence. If two or more mods edit and lock the same parameter, the first mod applied takes precedence.
