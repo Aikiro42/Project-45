@@ -1,0 +1,42 @@
+{
+  "projectileName" : "project45bfgprojectile",
+  "image" : "/projectiles/guns/energy/project45bfgprojectile/project45bfgprojectile.png",
+  "scripts": [
+    "/projectiles/guns/energy/project45bfgprojectile/project45bfgprojectile.lua"
+  ],
+  "animationCycle": 0.67,
+  "frameNumber" : 11,
+  "speed" : 40,
+
+  "targetSpeed": 7,
+  "approach": 1.5,
+  "boltRange": 12.5,
+  "boltCooldown": 0.1,
+  "scanCooldown": 0.25,
+  "healthPenalty": 0.2,
+  "persistentAudio" : "/sfx/project45neosfx/special/bfgprojectile/bfgprojectile_loop.ogg",
+  "timeToLive": 3.5,
+  "fullbright": true,
+  "pointLight" : true,
+  "lightColor": [36, 120, 36],
+  "damagePoly" : [ [16, 16], [16, -16], [-16, -16], [-16, 16] ],
+  "animationLoops" : true,
+  "flippable" : true,
+  "power": 0,
+  "damageKind" : "standardbullet",
+  "periodicActions": [],
+  "actionOnReap": [
+    {
+      "action" : "projectile",
+      //"type" : "poisonplasmaexplosion",
+      "type" : "project45bfgprojectileend",
+      "fuzzAngle" : 15,
+      "inheritDamageFactor" : 0.8,
+      "angleAdjust" : 0
+    },
+    {
+      "action": "sound",
+      "options": ["/sfx/project45neosfx/special/bfgprojectile/bfgprojectile_explosion.ogg"]
+    }
+  ]
+}

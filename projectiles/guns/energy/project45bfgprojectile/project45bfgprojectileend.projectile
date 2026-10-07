@@ -1,0 +1,194 @@
+{
+  "projectileName" : "project45bfgprojectileend",
+  "image" : "project45bfgprojectileend.png",
+  "animationCycle" : 0.5,
+  "timeToLive": 0.5,
+  "fullbright": true,
+  "frameNumber" : 15,
+  "speed" : 0,
+  "renderLayer": "Player+1",
+  "collisionEnabled": false,
+  "movementSettings":{
+    "collisionEnabled": false
+  },
+  "damagePoly" : [
+    [ 50, 0 ],
+    [ 26.27, 42.55 ],
+    [ -22.4, 44.7 ],
+    [ -49.8, 4.42 ],
+    [ -29.92, -40.06 ],
+    [ 18.37, -46.5 ]
+  ],
+  "animationLoops" : false,
+  "piercing" : true,
+  "bounces" : -1,
+  "flippable" : true,
+  "power": 1,
+  "damageKind" : "standardbullet",
+  "periodicActions": [
+    {
+      "time": 0.4,
+      "repeat": false,
+      "action" : "projectile",
+      //"type" : "poisonplasmaexplosion",
+      "type" : "project45-stdexplosionshockwave",
+      "fuzzAngle" : 180,
+      "inheritDamageFactor" : 0,
+      "angleAdjust" : 0
+    },
+    {
+      "time": 0.0,
+      "repeat": false,
+      "action" : "loop",
+      "count" : 15,
+      "body" : [
+        {
+          "action" : "particle",
+          "specification": "project45chargeparticle-white"
+        }
+      ]
+    },
+    {
+      "time": 0.3,
+      "repeat": false,
+      "action" : "loop",
+      "count" : 15,
+      "body" : [
+        {
+          "action" : "particle",
+          "specification": {
+            "type" : "animated",
+            "animation" : "/particles/project45/experimental/project45shineparticle/project45shineparticle-white.animation",
+            "position" : [0, 0],
+            "initialVelocity" : [0, 0.1],
+            "collidesForeground" : false,
+            "timeToLive" : 1.0,
+            "destructionTime" : 0.1,
+            "destructionAction" : "fade",
+            "fullbright" : true,
+            "size" : 0.75,
+            "layer" : "front",
+            "variance" : {
+              "size" : 0.64,
+              "rotation" : 180
+            }
+          }
+        }
+      ]
+    },
+    {
+      "time": 0.3,
+      "repeat": true,
+      "action" : "loop",
+      "count" : 15,
+      "body" : [
+        {
+          "action" : "option",
+          "options" : [
+            {
+              "action" : "particle",
+              "specification" : {
+                "type" : "ember",
+                "size" : 1.0,
+                "color" : [255,255,255,128],
+                "light" : [36,120,36],
+                "destructionAction" : "fade",
+                "destructionTime" : 0.2,
+                "initialVelocity" : [0, 0],
+                "finalVelocity" : [0, 0],
+                "approach" : [25, 25],
+                "fullbright": true,
+                "timeToLive" : 0.2,
+                "layer" : "back",
+                "variance" : {
+                  "initialVelocity" : [25, 25]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "action" : "option",
+          "options" : [
+            {
+              "action" : "particle",
+              "specification" : {
+                "type" : "ember",
+                "size" : 1.0,
+                "color" : [81,189,59,255],
+                "destructionAction" : "fade",
+                "destructionTime" : 0.1,
+                "initialVelocity" : [0, 0],
+                "finalVelocity" : [0, 0],
+                "approach" : [25, 25],
+                "fullbright": true,
+                "timeToLive" : 0,
+                "layer" : "back",
+                "variance" : {
+                  "initialVelocity" : [50, 50]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "actionOnReap": [
+    {
+      "action" : "loop",
+      "count" : 15,
+      "body" : [
+        {
+          "action" : "option",
+          "options" : [
+            {
+              "action" : "particle",
+              "specification" : {
+                "type" : "ember",
+                "size" : 1.0,
+                "color" : [255,255,255,128],
+                "light" : [36,120,36],
+                "destructionAction" : "fade",
+                "destructionTime" : 0.2,
+                "initialVelocity" : [0, 0],
+                "finalVelocity" : [0, 0],
+                "approach" : [25, 25],
+                "fullbright": true,
+                "timeToLive" : 0.2,
+                "layer" : "back",
+                "variance" : {
+                  "initialVelocity" : [25, 25]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "action" : "option",
+          "options" : [
+            {
+              "action" : "particle",
+              "specification" : {
+                "type" : "ember",
+                "size" : 1.0,
+                "color" : [81,189,59,255],
+                "destructionAction" : "fade",
+                "destructionTime" : 0.1,
+                "initialVelocity" : [0, 0],
+                "finalVelocity" : [0, 0],
+                "approach" : [25, 25],
+                "fullbright": true,
+                "timeToLive" : 0,
+                "layer" : "back",
+                "variance" : {
+                  "initialVelocity" : [50, 50]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

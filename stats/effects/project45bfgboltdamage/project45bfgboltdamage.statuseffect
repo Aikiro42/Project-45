@@ -1,0 +1,7 @@
+{
+  "name" : "project45bfgboltdamage",
+  "defaultDuration" : 0,
+  "scripts" : [
+    "project45bfgboltdamage.lua"
+  ]
+}

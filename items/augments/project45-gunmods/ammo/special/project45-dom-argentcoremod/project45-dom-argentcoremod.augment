@@ -1,0 +1,96 @@
+{
+  "itemName" : "project45-dom-argentcoremod",
+  "price" : 5000,
+  "rarity" : "Essential",
+  "isUnique": true,
+  "tooltipKind" : "project45gunmod2",
+  "modCategory" : "ammoMod",
+  "category" : "uniqueWeapon",
+  "itemTags": ["weapon"],
+  "tooltipFields":{
+    "subtitle": "Ammo Mod",
+    "objectImage": "/items/augments/project45-gunmods/ammo/special/project45-dom-argentcoremod/project45-dom-argentcoremod.png"
+  },
+  "inventoryIcon" : "/items/augments/project45-gunmods/ammo/special/project45-dom-argentcoremod/project45-dom-argentcoremodicon.png",
+  "description": "A core filled with powerful, demon-killing Argent energy, modified to fit into energy guns.",
+  "technicalInfo" : "Fires a slow-moving orb that damages nearby enemies in exchange for 30% of max health.",
+  "shortdescription" : "^#fdd14d;Argent Core^reset;",
+
+  "augment":{
+    "modName": "Argent Core",
+    "category": "energy",
+    "conversion": "projectile",
+    "slot": "ammoType",
+    "ammo": {
+      "archetype": "universal",
+      "elementalType": "electric",
+      "projectileType": "project45bfgprojectile",
+      "projectileParameters": {
+        "healthPenalty": 0.30
+      },
+      "muzzleFlashColor": [178, 232, 157],
+      "muzzleFlashParticles": [
+        {"particle": "project45muzzle"},
+        {"particle": "project45muzzle"},
+        {"particle": "project45muzzle"},
+        {"particle": "project45flashbang-green"}  
+      ],
+      "customSounds": {
+        "chargeStart": ["/sfx/project45neosfx/special/bfgprojectile/bfgprojectile_chargestart.ogg"],
+        "chargeWhine": [ "/sfx/project45neosfx/chargewhine/chargewhine-02.ogg" ],
+        "chargeDrone": [ "/sfx/project45neosfx/chargedrone/chargedrone-01.ogg" ],
+        "fire": ["/sfx/project45neosfx/special/bfgprojectile/bfgprojectile_fire.ogg"],
+        "fireStart": ["/assetmissing.wav"],
+        "fireLoop": ["/assetmissing.wav"],
+        "fireEnd": ["/assetmissing.wav"]
+      }
+    },
+    "gun": {
+      "primaryAbility": {
+        "semi": {
+          "operation": "replace",
+          "value": true,
+          "lock": true
+        },
+        "autoFireOnFullCharge": {
+          "operation": "replace",
+          "value": true,
+          "lock": true
+        },
+        "resetChargeOnFire": {
+          "operation": "replace",
+          "value": true,
+          "lock": true
+        }
+      },
+      "animationCustom": {
+        "sounds": {
+          "chargeWhine": [ "/sfx/project45neosfx/chargewhine/chargewhine-02.ogg" ]
+        }
+      }
+    },
+    "stat": {
+      "baseDamage": {
+        "additive": 5,
+        "multiplicative": 1.7
+      },
+      "overchargeTime": {
+        "rebase": 0
+      },
+      "chargeTime": {
+        "rebase": 0.50
+      },
+      "fireTime": {
+        "rebase": 0.3
+      },
+      "maxAmmo": {
+        "rebase": 3
+      }
+    }
+  },
+
+   
+
+  "scripts" : [ "/scripts/augments/project45-gunmod/apply.lua" ],
+  "builder": "/items/buildscripts/buildproject45mod.lua"
+}
